@@ -22,6 +22,12 @@ INSERT INTO authorities (username, authority) VALUES ('tomas', 'ROLE_MEMBER_OF_S
 INSERT INTO authorities (username, authority) VALUES ('tomas', 'ROLE_MEMBER_OF_BOARD');
 INSERT INTO authorities (username, authority) VALUES ('tomas', 'ROLE_USER_ADMINISTRATOR');
 
+-- test, smaSMhv2
+INSERT INTO users (username, password, enabled, first_name, last_name, email, phone, is_test_user)
+	VALUES ('test', '420c92978256a8b74df82da598e37a03571f4415', true, 'test', 'test', null, null, true);
+INSERT INTO authorities (username, authority) VALUES ('test', 'ROLE_REGISTERED_USER');
+
+
 -- sections
 INSERT INTO wysiwyg_sections (name, last_save_time, source_code) VALUES ('BOARD', '1900-01-01 00:00:00', '<p><span style="background-color: #ffff00;">Členov&eacute; <a href="http://www.liboc.euweb.cz"><span style="background-color: #ffff00;">v&yacute;boru</span></a><img title="Je na prachy" src="/SVNavigatoru/tinymce/jscripts/tiny_mce/plugins/emotions/img/smiley-money-mouth.gif" alt="Je na prachy" border="0" /></span></p>');
 INSERT INTO wysiwyg_sections (name, last_save_time, source_code) VALUES ('REMOSTAV_CONTACT', '1900-01-01 00:00:00', '<p><span style="background-color: #ffff00;">Remostav - <a href="http://www.liboc.euweb.cz"><span style="background-color: #ffff00;">kontakty</span></a><img title="Je na prachy" src="/SVNavigatoru/tinymce/jscripts/tiny_mce/plugins/emotions/img/smiley-money-mouth.gif" alt="Je na prachy" border="0" /></span></p>');

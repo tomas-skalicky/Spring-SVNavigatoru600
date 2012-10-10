@@ -28,11 +28,13 @@ public class UserDaoImpl extends HibernateDaoSupport implements UserDao {
 		this.authorityDao = authorityDao;
 	}
 
+	@Override
 	public User findByUsername(String username) {
 		this.logger.info(String.format("Load an user with the username '%s'", username));
 		return this.getHibernateTemplate().load(User.class, username);
 	}
 
+	@Override
 	public User findByEmail(String email) {
 		String lowerCasedEmail = null;
 		if (email != null) {
@@ -56,6 +58,7 @@ public class UserDaoImpl extends HibernateDaoSupport implements UserDao {
 		return users.get(0);
 	}
 
+	@Override
 	@SuppressWarnings("unchecked")
 	public List<User> findByAuthority(String authority) {
 		this.logger.info(String.format("Load all users with the authority '%s')", authority));
@@ -66,13 +69,16 @@ public class UserDaoImpl extends HibernateDaoSupport implements UserDao {
 				"SELECT u FROM User u INNER JOIN u.authorities a WHERE a.id.authority = ?", authority);
 	}
 
+	@Override
 	@SuppressWarnings("unchecked")
-	public List<User> loadAllOrdered(OrderType order) {
+	public List<User> loadAllOrdered(OrderType order, boolean testUsers) {
 		this.logger.info(String.format("Load all users ordered %s.", order.name()));
-		String query = String.format("FROM User u ORDER BY u.lastName, u.firstName %s", order.getDatabaseCode());
+		String query = String.format("FROM User u WHERE u.is_test_user = %s ORDER BY u.lastName, u.firstName %s",
+				testUsers, order.getDatabaseCode());
 		return (List<User>) this.getHibernateTemplate().find(query);
 	}
 
+	@Override
 	public void update(User user) {
 		String lowerCasedEmail = null;
 		if ((user != null) && (user.getEmail() != null)) {
@@ -91,6 +97,7 @@ public class UserDaoImpl extends HibernateDaoSupport implements UserDao {
 		this.authorityDao.save(user.getAuthorities());
 	}
 
+	@Override
 	public void save(User user) {
 		String lowerCasedEmail = null;
 		if ((user != null) && (user.getEmail() != null)) {
@@ -109,6 +116,7 @@ public class UserDaoImpl extends HibernateDaoSupport implements UserDao {
 		// already done it.
 	}
 
+	@Override
 	public void delete(User user) {
 		this.getHibernateTemplate().delete(user);
 	}

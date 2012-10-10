@@ -48,7 +48,8 @@ public class ListUsersController extends UserController {
 
 		ShowAllUsers command = new ShowAllUsers();
 
-		List<User> users = this.userDao.loadAllOrdered(OrderType.ASCENDING);
+		final boolean testUsers = false;
+		List<User> users = this.userDao.loadAllOrdered(OrderType.ASCENDING, testUsers);
 		command.setUsers(users);
 
 		// Sets up all (but necessary) maps.

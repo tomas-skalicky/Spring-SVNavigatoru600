@@ -33,8 +33,7 @@ public class UserDaoImpl extends SimpleJdbcDaoSupport implements UserDao {
 	}
 
 	/**
-	 * Populates the <code>authorities</code> property of the given
-	 * <code>user</code>.
+	 * Populates the <code>authorities</code> property of the given <code>user</code>.
 	 */
 	private void populateAuthorities(User user) {
 		List<Authority> authorities = this.authorityDao.find(user.getUsername());
@@ -42,8 +41,7 @@ public class UserDaoImpl extends SimpleJdbcDaoSupport implements UserDao {
 	}
 
 	/**
-	 * Populates the <code>authorities</code> property of all the given
-	 * <code>users</code>.
+	 * Populates the <code>authorities</code> property of all the given <code>users</code>.
 	 */
 	private void populateAuthorities(List<User> users) {
 		for (User user : users) {
@@ -51,14 +49,14 @@ public class UserDaoImpl extends SimpleJdbcDaoSupport implements UserDao {
 		}
 	}
 
+	@Override
 	public User findByUsername(String username) {
 		return this.findByUsername(username, false);
 	}
 
 	/**
 	 * @param lazy
-	 *            {@link Authority}s of the desired {@link User} will not be
-	 *            loaded.
+	 *            {@link Authority}s of the desired {@link User} will not be loaded.
 	 */
 	public User findByUsername(String username, boolean lazy) {
 		this.logger.info(String.format("Load an user with the username '%s'", username));
@@ -76,6 +74,7 @@ public class UserDaoImpl extends SimpleJdbcDaoSupport implements UserDao {
 		return user;
 	}
 
+	@Override
 	public User findByEmail(String email) {
 		String lowerCasedEmail = null;
 		if (email != null) {
@@ -96,6 +95,7 @@ public class UserDaoImpl extends SimpleJdbcDaoSupport implements UserDao {
 		return user;
 	}
 
+	@Override
 	public List<User> findByAuthority(String authority) {
 		this.logger.info(String.format("Load all users with the authority '%s')", authority));
 
@@ -108,17 +108,19 @@ public class UserDaoImpl extends SimpleJdbcDaoSupport implements UserDao {
 		return users;
 	}
 
-	public List<User> loadAllOrdered(OrderType order) {
+	public List<User> loadAllOrdered(OrderType order, boolean testUsers) {
 		this.logger.info(String.format("Load all users ordered %s.", order.name()));
 
-		String query = String.format("SELECT * FROM %s u ORDER BY u.%s, u.%s %s", UserDaoImpl.TABLE_NAME,
-				UserRowMapper.getColumn("lastName"), UserRowMapper.getColumn("firstName"), order.getDatabaseCode());
+		String query = String.format("SELECT * FROM %s u WHERE u.is_test_user = %s ORDER BY u.%s, u.%s %s",
+				UserDaoImpl.TABLE_NAME, testUsers, UserRowMapper.getColumn("lastName"),
+				UserRowMapper.getColumn("firstName"), order.getDatabaseCode());
 		List<User> users = this.getSimpleJdbcTemplate().query(query, new UserRowMapper());
 
 		this.populateAuthorities(users);
 		return users;
 	}
 
+	@Override
 	public void update(User user) {
 		String lowerCasedEmail = null;
 		if ((user != null) && (user.getEmail() != null)) {
@@ -168,6 +170,7 @@ public class UserDaoImpl extends SimpleJdbcDaoSupport implements UserDao {
 		return parameters;
 	}
 
+	@Override
 	public void save(User user) {
 		String lowerCasedEmail = null;
 		if ((user != null) && (user.getEmail() != null)) {
@@ -191,6 +194,7 @@ public class UserDaoImpl extends SimpleJdbcDaoSupport implements UserDao {
 		this.authorityDao.save(user.getAuthorities());
 	}
 
+	@Override
 	public void delete(User user) {
 		String query = String.format("DELETE FROM %s WHERE %s = ?", UserDaoImpl.TABLE_NAME,
 				UserRowMapper.getColumn("username"));

@@ -29,8 +29,11 @@ public interface UserDao {
 	 * Returns all {@link User}s stored in the repository. The {@link User} are
 	 * arranged according to their last and first names in the given
 	 * <code>order</code>.
+	 * 
+	 * @param testUsers If <code>true</code>, the method returns only test users.
+	 * 					Otherwise, it returns only non-test users.
 	 */
-	public List<User> loadAllOrdered(OrderType order);
+	public List<User> loadAllOrdered(OrderType order, boolean testUsers);
 
 	/**
 	 * Updates the given <code>user</code> in the repository. The old version of

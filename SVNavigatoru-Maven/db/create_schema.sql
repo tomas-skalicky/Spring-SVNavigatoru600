@@ -7,6 +7,8 @@ USE skalicky_sv_navigatoru;
  *
  * The email is UNIQUE; hence it is necessary to use "null" as the default value, not
  * the empty string.
+ * 
+ * The default value of is_test_user is "false".
  */
 CREATE TABLE users (
 	username VARCHAR(50) PRIMARY KEY,
@@ -15,7 +17,8 @@ CREATE TABLE users (
 	first_name VARCHAR(20) NOT NULL,
 	last_name VARCHAR(20) NOT NULL,
 	email VARCHAR(100) UNIQUE,
-	phone VARCHAR(20)
+	phone VARCHAR(20),
+	is_test_user BOOLEAN NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE authorities (
