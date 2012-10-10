@@ -1,0 +1,26 @@
+/* blue sidebar titles */
+.box .blue .titlewrap {
+	background: transparent url(../images/options/box-title-left-blue.png) no-repeat top left;
+}
+
+.box .blue .titlewrap h4 {
+	background: transparent url(../images/options/box-title-bg-blue.png) no-repeat top right;
+}
+
+/* gray sidebar titles */
+.box .gray .titlewrap {
+	background: transparent url(../images/options/box-title-left-gray.png) no-repeat top left;
+}
+
+.box .gray .titlewrap h4 {
+	background: transparent url(../images/options/box-title-bg-gray.png) no-repeat top right;
+}
+
+/* green sidebar titles */
+.box .green .titlewrap {
+	background: transparent url(../images/options/box-title-left-green.png) no-repeat top left;
+}
+
+.box .green .titlewrap h4 {
+	background: transparent url(../images/options/box-title-bg-green.png) no-repeat top right;
+}

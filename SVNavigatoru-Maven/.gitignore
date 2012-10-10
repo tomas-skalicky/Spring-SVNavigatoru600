@@ -1,0 +1,13 @@
+#####
+# Compiled sources
+#####
+*.class
+target/
+
+
+
+#####
+# Some of the eclipse folders and files
+#####
+.metadata/
+Servers/

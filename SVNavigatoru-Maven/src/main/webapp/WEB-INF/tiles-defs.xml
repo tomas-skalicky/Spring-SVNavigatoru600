@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+
+<tiles-definitions>
+
+	<definition name="baseLayout" template="/WEB-INF/jsp/baseLayout.jsp">
+		<put-attribute name="title" value=""/>
+		<put-attribute name="logo" value="/WEB-INF/jsp/logo.jsp"/>
+		<put-attribute name="head-includes" value="/WEB-INF/jsp/head-includes.jsp"/>
+		<put-attribute name="logout" value=""/>
+		<put-attribute name="main-navigation" value="/WEB-INF/jsp/main-navigation.jsp"/>
+		<put-attribute name="main-content" value=""/>
+		<put-attribute name="sidebar" value=""/>
+		<put-attribute name="footer" value="/WEB-INF/jsp/footer.jsp"/>
+	</definition>
+
+	<definition name="errorsLayout" extends="baseLayout">
+		<put-attribute name="title" value="/WEB-INF/jsp/title/error.jsp"/>
+		<put-attribute name="logout" value="/WEB-INF/jsp/logout.jsp"/>
+	</definition>
+	<definition name="error403" extends="errorsLayout">
+		<put-attribute name="main-content" value="/WEB-INF/jsp/main-content/errors/403.jsp"/>
+	</definition>
+	<definition name="error404" extends="errorsLayout">
+		<put-attribute name="main-content" value="/WEB-INF/jsp/main-content/errors/404.jsp"/>
+	</definition>
+
+	<definition name="forgottenPassword" extends="baseLayout">
+		<put-attribute name="title" value="/WEB-INF/jsp/title/forgotten-password.jsp"/>
+		<put-attribute name="main-content" value="/WEB-INF/jsp/main-content/forgotten-password.jsp"/>
+	</definition>
+
+	<definition name="login" extends="baseLayout">
+		<put-attribute name="title" value="/WEB-INF/jsp/title/login.jsp"/>
+		<put-attribute name="main-content" value="/WEB-INF/jsp/main-content/login.jsp"/>
+	</definition>
+
+
+
+	<definition name="loggedInLayout" extends="baseLayout">
+		<put-attribute name="logout" value="/WEB-INF/jsp/logout.jsp"/>
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/sidebar.jsp"/>
+	</definition>
+
+	<definition name="editMyUserAccount" extends="loggedInLayout">
+		<put-attribute name="title" value="/WEB-INF/jsp/title/user-account.jsp"/>
+		<put-attribute name="main-content" value="/WEB-INF/jsp/main-content/users/edit-my-account.jsp"/>
+	</definition>
+
+
+
+	<!-- Board -->
+	<definition name="viewBoard" extends="loggedInLayout">
+		<put-attribute name="title" value="/WEB-INF/jsp/title/board.jsp"/>
+		<put-attribute name="main-content" value="/WEB-INF/jsp/main-content/board/view.jsp"/>
+	</definition>
+	<definition name="editBoard" extends="viewBoard">
+		<put-attribute name="main-content" value="/WEB-INF/jsp/main-content/board/edit.jsp"/>
+	</definition>
+
+	<!-- Event calendar -->
+	<definition name="eventCalendar" extends="loggedInLayout">
+		<put-attribute name="title" value="/WEB-INF/jsp/title/event-calendar.jsp"/>
+	</definition>
+	<definition name="listEvents" extends="eventCalendar">
+		<put-attribute name="main-content" value="/WEB-INF/jsp/main-content/event-calendar/list-events.jsp"/>
+	</definition>
+	<definition name="newEvent" extends="listEvents">
+		<put-attribute name="main-content" value="/WEB-INF/jsp/main-content/event-calendar/new-event.jsp"/>
+	</definition>
+	<definition name="editEvent" extends="listEvents">
+		<put-attribute name="main-content" value="/WEB-INF/jsp/main-content/event-calendar/edit-event.jsp"/>
+	</definition>
+
+	<!-- Forum -->
+	<definition name="forum" extends="loggedInLayout">
+		<put-attribute name="title" value="/WEB-INF/jsp/title/forum.jsp"/>
+	</definition>
+	<definition name="listThreads" extends="forum">
+		<put-attribute name="main-content" value="/WEB-INF/jsp/main-content/forum/threads/list-threads.jsp"/>
+	</definition>
+	<definition name="newThread" extends="listThreads">
+		<put-attribute name="main-content" value="/WEB-INF/jsp/main-content/forum/threads/new-thread.jsp"/>
+	</definition>
+	<definition name="editThread" extends="listThreads">
+		<put-attribute name="main-content" value="/WEB-INF/jsp/main-content/forum/threads/edit-thread.jsp"/>
+	</definition>
+	<definition name="listContributions" extends="forum">
+		<put-attribute name="main-content" value="/WEB-INF/jsp/main-content/forum/contributions/list-contributions.jsp"/>
+	</definition>
+	<definition name="newContribution" extends="listContributions">
+		<put-attribute name="main-content" value="/WEB-INF/jsp/main-content/forum/contributions/new-contribution.jsp"/>
+	</definition>
+	<definition name="editContribution" extends="listContributions">
+		<put-attribute name="main-content" value="/WEB-INF/jsp/main-content/forum/contributions/edit-contribution.jsp"/>
+	</definition>
+
+	<!-- News -->
+	<definition name="news" extends="loggedInLayout">
+		<put-attribute name="title" value="/WEB-INF/jsp/title/news.jsp"/>
+	</definition>
+	<definition name="listNews" extends="news">
+		<put-attribute name="main-content" value="/WEB-INF/jsp/main-content/news/list-news.jsp"/>
+	</definition>
+	<definition name="newNews" extends="listNews">
+		<put-attribute name="main-content" value="/WEB-INF/jsp/main-content/news/new-news.jsp"/>
+	</definition>
+	<definition name="editNews" extends="listNews">
+		<put-attribute name="main-content" value="/WEB-INF/jsp/main-content/news/edit-news.jsp"/>
+	</definition>
+
+	<!-- Other documents -->
+	<definition name="otherDocuments" extends="loggedInLayout">
+		<put-attribute name="title" value="/WEB-INF/jsp/title/other-documents.jsp"/>
+	</definition>
+	<definition name="listAllOtherDocuments" extends="otherDocuments">
+		<put-attribute name="main-content" value="/WEB-INF/jsp/main-content/records/other-documents/all/list-records.jsp"/>
+	</definition>
+	<definition name="newAllOtherDocument" extends="listAllOtherDocuments">
+		<put-attribute name="main-content" value="/WEB-INF/jsp/main-content/records/other-documents/all/new-record.jsp"/>
+	</definition>
+	<definition name="editAllOtherDocument" extends="listAllOtherDocuments">
+		<put-attribute name="main-content" value="/WEB-INF/jsp/main-content/records/other-documents/all/edit-record.jsp"/>
+	</definition>
+	<definition name="listAccountingDocuments" extends="otherDocuments">
+		<put-attribute name="main-content" value="/WEB-INF/jsp/main-content/records/other-documents/accounting/list-records.jsp"/>
+	</definition>
+	<definition name="newAccountingDocument" extends="listAccountingDocuments">
+		<put-attribute name="main-content" value="/WEB-INF/jsp/main-content/records/other-documents/accounting/new-record.jsp"/>
+	</definition>
+	<definition name="editAccountingDocument" extends="listAccountingDocuments">
+		<put-attribute name="main-content" value="/WEB-INF/jsp/main-content/records/other-documents/accounting/edit-record.jsp"/>
+	</definition>
+	<definition name="listContractDocuments" extends="otherDocuments">
+		<put-attribute name="main-content" value="/WEB-INF/jsp/main-content/records/other-documents/contracts/list-records.jsp"/>
+	</definition>
+	<definition name="newContractDocument" extends="listContractDocuments">
+		<put-attribute name="main-content" value="/WEB-INF/jsp/main-content/records/other-documents/contracts/new-record.jsp"/>
+	</definition>
+	<definition name="editContractDocument" extends="listContractDocuments">
+		<put-attribute name="main-content" value="/WEB-INF/jsp/main-content/records/other-documents/contracts/edit-record.jsp"/>
+	</definition>
+	<definition name="listRevisionDocuments" extends="otherDocuments">
+		<put-attribute name="main-content" value="/WEB-INF/jsp/main-content/records/other-documents/revisions/list-records.jsp"/>
+	</definition>
+	<definition name="newRevisionDocument" extends="listRevisionDocuments">
+		<put-attribute name="main-content" value="/WEB-INF/jsp/main-content/records/other-documents/revisions/new-record.jsp"/>
+	</definition>
+	<definition name="editRevisionDocument" extends="listRevisionDocuments">
+		<put-attribute name="main-content" value="/WEB-INF/jsp/main-content/records/other-documents/revisions/edit-record.jsp"/>
+	</definition>
+	<definition name="listOtherDocuments" extends="otherDocuments">
+		<put-attribute name="main-content" value="/WEB-INF/jsp/main-content/records/other-documents/others/list-records.jsp"/>
+	</definition>
+	<definition name="newOtherDocument" extends="listOtherDocuments">
+		<put-attribute name="main-content" value="/WEB-INF/jsp/main-content/records/other-documents/others/new-record.jsp"/>
+	</definition>
+	<definition name="editOtherDocument" extends="listOtherDocuments">
+		<put-attribute name="main-content" value="/WEB-INF/jsp/main-content/records/other-documents/others/edit-record.jsp"/>
+	</definition>
+
+	<!-- Remostav -->
+	<definition name="remostav" extends="loggedInLayout">
+		<put-attribute name="title" value="/WEB-INF/jsp/title/remostav.jsp"/>
+	</definition>
+	<definition name="viewRemostavContact" extends="remostav">
+		<put-attribute name="main-content" value="/WEB-INF/jsp/main-content/remostav/contact/view.jsp"/>
+	</definition>
+	<definition name="editRemostavContact" extends="viewRemostavContact">
+		<put-attribute name="main-content" value="/WEB-INF/jsp/main-content/remostav/contact/edit.jsp"/>
+	</definition>
+	<definition name="listRemostavDocuments" extends="remostav">
+		<put-attribute name="main-content" value="/WEB-INF/jsp/main-content/records/other-documents/remostav/list-records.jsp"/>
+	</definition>
+	<definition name="newRemostavDocument" extends="listRemostavDocuments">
+		<put-attribute name="main-content" value="/WEB-INF/jsp/main-content/records/other-documents/remostav/new-record.jsp"/>
+	</definition>
+	<definition name="editRemostavDocument" extends="listRemostavDocuments">
+		<put-attribute name="main-content" value="/WEB-INF/jsp/main-content/records/other-documents/remostav/edit-record.jsp"/>
+	</definition>
+
+	<!-- Session records -->
+	<definition name="sessionRecords" extends="loggedInLayout">
+		<put-attribute name="title" value="/WEB-INF/jsp/title/session-records.jsp"/>
+	</definition>
+	<definition name="listAllSessionRecords" extends="sessionRecords">
+		<put-attribute name="main-content" value="/WEB-INF/jsp/main-content/records/session/all/list-records.jsp"/>
+	</definition>
+	<definition name="newAllSessionRecords" extends="listAllSessionRecords">
+		<put-attribute name="main-content" value="/WEB-INF/jsp/main-content/records/session/all/new-record.jsp"/>
+	</definition>
+	<definition name="editAllSessionRecords" extends="listAllSessionRecords">
+		<put-attribute name="main-content" value="/WEB-INF/jsp/main-content/records/session/all/edit-record.jsp"/>
+	</definition>
+	<definition name="listSvSessionRecords" extends="sessionRecords">
+		<put-attribute name="main-content" value="/WEB-INF/jsp/main-content/records/session/sv/list-records.jsp"/>
+	</definition>
+	<definition name="newSvSessionRecords" extends="listSvSessionRecords">
+		<put-attribute name="main-content" value="/WEB-INF/jsp/main-content/records/session/sv/new-record.jsp"/>
+	</definition>
+	<definition name="editSvSessionRecords" extends="listSvSessionRecords">
+		<put-attribute name="main-content" value="/WEB-INF/jsp/main-content/records/session/sv/edit-record.jsp"/>
+	</definition>
+	<definition name="listBoardSessionRecords" extends="sessionRecords">
+		<put-attribute name="main-content" value="/WEB-INF/jsp/main-content/records/session/board/list-records.jsp"/>
+	</definition>
+	<definition name="newBoardSessionRecords" extends="listBoardSessionRecords">
+		<put-attribute name="main-content" value="/WEB-INF/jsp/main-content/records/session/board/new-record.jsp"/>
+	</definition>
+	<definition name="editBoardSessionRecords" extends="listBoardSessionRecords">
+		<put-attribute name="main-content" value="/WEB-INF/jsp/main-content/records/session/board/edit-record.jsp"/>
+	</definition>
+
+	<!-- Useful links -->
+	<definition name="viewUsefulLinks" extends="loggedInLayout">
+		<put-attribute name="title" value="/WEB-INF/jsp/title/useful-links.jsp"/>
+		<put-attribute name="main-content" value="/WEB-INF/jsp/main-content/useful-links/view.jsp"/>
+	</definition>
+	<definition name="editUsefulLinks" extends="viewUsefulLinks">
+		<put-attribute name="main-content" value="/WEB-INF/jsp/main-content/useful-links/edit.jsp"/>
+	</definition>
+
+	<!-- Users -->
+	<definition name="listUsers" extends="loggedInLayout">
+		<put-attribute name="title" value="/WEB-INF/jsp/title/users-administration.jsp"/>
+		<put-attribute name="main-content" value="/WEB-INF/jsp/main-content/users/administration/list-users.jsp"/>
+	</definition>
+	<definition name="newUser" extends="listUsers">
+		<put-attribute name="main-content" value="/WEB-INF/jsp/main-content/users/administration/new-user.jsp"/>
+	</definition>
+	<definition name="editUser" extends="listUsers">
+		<put-attribute name="main-content" value="/WEB-INF/jsp/main-content/users/administration/edit-user.jsp"/>
+	</definition>
+
+</tiles-definitions>

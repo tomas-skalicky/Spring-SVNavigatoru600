@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+						http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+						http://www.springframework.org/schema/context
+						http://www.springframework.org/schema/context/spring-context-3.1.xsd">
+
+	<!-- Database Configuration -->
+	<import resource="dataSource.xml" />
+	<!-- <import resource="hibernate.xml" /> -->
+
+	<!-- Beans Declaration -->
+	<import resource="model-beans/model-beans-direct.xml" />
+	<!-- <import resource="model-beans/model-beans-hibernate.xml"/> -->
+
+
+
+	<!-- ATTENTION: @Autowired annotation is not used anywhere. Therefore, this two tags are not necessary 
+		now. -->
+	<!-- Loads everything except @Controllers. They are loaded in the dispatcher-servlet.xml file. -->
+	<context:component-scan base-package="svnavigatoru">
+		<context:exclude-filter expression="org.springframework.stereotype.Controller"
+			type="annotation" />
+	</context:component-scan>
+
+	<!-- Registers the default AutowiredAnnotationBeanPostProcessor which handles @Autowired and other annotations. -->
+	<context:annotation-config />
+	<!-- /ATTENTION -->
+
+
+
+	<!-- Document Upload -->
+	<!-- maxUploadSize - The maximal size of a file which can be uploaded [in bytes]. This property is just 
+		a safety break since the current size is checked in validators (see svnavigatoru.web.Configuration). -->
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver"
+		p:maxUploadSize="100000000" />
+	<!-- /Document Upload -->
+
+</beans>

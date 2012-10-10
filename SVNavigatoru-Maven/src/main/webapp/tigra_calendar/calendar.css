@@ -1,0 +1,124 @@
+* {
+	margin: 0;
+	padding: 0;
+}
+
+/**
+ * calendar icon
+ */
+img.calendarIcon {
+	cursor: pointer;
+	vertical-align: middle;
+}
+
+/**
+ * calendar with background or shape
+ */
+div#calendar {
+	font-size: 11px;
+	line-height: 13px;
+	margin-top: 2px;
+	position: absolute;
+	visibility: hidden;
+	z-index: 100;
+}
+
+div#calendar .centerAlign {
+	text-align: center;
+}
+
+div#calendar .middleVAlign {
+	vertical-align: middle;
+}
+
+div#calendar .left {
+	display: block;
+	float: left;
+}
+
+div#calendar .right {
+	display: block;
+	float: right;
+}
+
+div#calendar .clear {
+	clear: both;
+	height: 0;
+}
+
+div#calendar .pointer {
+	cursor: pointer;
+}
+
+/**
+ * calendar without shape
+ */
+div#calendar div.calendar {
+	background-color: #FFFFFF;
+	border: 1px solid #C0C0C0;
+	color: #000000;
+	font-family: Tahoma, Arial, sans-serif;
+}
+
+div#calendar div.calendar div.navigation {
+	font-weight: bold;
+}
+
+div#calendar div.calendar div.inner {
+	
+}
+
+div#calendar div.calendar div.inner table {
+	border: 0;
+	border-collapse: collapse;
+	margin: 0;
+}
+
+div#calendar div.calendar div.inner table th,div#calendar div.calendar div.inner table td {
+	border-right: 0;
+}
+
+div#calendar div.calendar div.inner th {
+	background-color: #808080;
+	border: 1px solid #C0C0C0;
+	border-collapse: collapse;
+	color: #FFFFFF;
+	font-size: 10px;
+	padding: 3px 0;
+	text-align: center;
+}
+
+div#calendar div.calendar div.inner th.first {
+	border-left: 0;
+}
+
+div#calendar div.calendar div.inner th.last {
+	border-right: 0;
+}
+
+div#calendar div.calendar div.inner th.sunday {
+	
+}
+
+div#calendar div.calendar div.inner td {
+	cursor: pointer;
+	font-size: 11px;
+	padding: 2px 5px;
+	text-align: center;
+}
+
+div#calendar div.calendar div.inner td.otherMonth {
+	color: #C0C0C0;
+}
+
+div#calendar div.calendar div.inner td.weekend {
+	background-color: #ACD6F5;
+}
+
+div#calendar div.calendar div.inner td.today {
+	border: 1px solid #FF0000;
+}
+
+div#calendar div.calendar div.inner td.selectedDate {
+	background-color: #FFB3BE;
+}

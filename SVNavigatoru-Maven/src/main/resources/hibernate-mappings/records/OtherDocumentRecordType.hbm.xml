@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+
+	<class name="svnavigatoru.domain.records.OtherDocumentRecordTypeRelation" table="OTHER_DOCUMENT_RECORD_TYPE_RELATIONS"
+		lazy="false">
+		<composite-id name="id" class="svnavigatoru.domain.records.OtherDocumentRecordTypeRelationId">
+			<key-property name="recordId" column="RECORD_ID" type="int"/>
+			<key-property name="type" type="string" length="50"/>
+		</composite-id>
+	</class>
+
+</hibernate-mapping>

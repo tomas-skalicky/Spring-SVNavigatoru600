@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+						http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+						http://www.springframework.org/schema/security
+						http://www.springframework.org/schema/security/spring-security-3.1.xsd">
+
+	<http pattern="/arclite/**" security="none" />
+	<!-- ATTENTION: necessary; otherwise MochaHost does not work. -->
+	<http pattern="/favicon.ico" security="none" />
+	<http pattern="/img/**" security="none" />
+	<http pattern="/lib/**" security="none" />
+	<http pattern="/tigra_calendar/**" security="none" />
+	<http pattern="/tinymce/**" security="none" />
+	<http pattern="/uploaded-files/**" security="none" />
+
+	<http>
+		<intercept-url pattern="/prihlaseni/**" access="IS_AUTHENTICATED_ANONYMOUSLY" />
+		<intercept-url pattern="/administrace-uzivatelu/**" access="ROLE_USER_ADMINISTRATOR" />
+		<intercept-url pattern="/uzivatelsky-ucet/**" access="ROLE_REGISTERED_USER" />
+		<intercept-url pattern="/**" access="ROLE_MEMBER_OF_SV" />
+
+		<access-denied-handler error-page="/chyby/403/" />
+
+		<form-login login-page="/prihlaseni/" authentication-failure-url="/prihlaseni/neuspech/"
+			authentication-success-handler-ref="authenticationSuccessHandler" />
+		<remember-me />
+		<logout logout-success-url="/prihlaseni/" />
+	</http>
+
+	<!-- Handles redirections. -->
+	<beans:bean id="authenticationSuccessHandler"
+		class="svnavigatoru.service.MyAuthenticationSuccessHandler" />
+
+
+
+
+	<!-- Authentication -->
+	<!-- See http://blog.solidcraft.eu/2011/03/spring-security-by-example-set-up-and.html -->
+	<authentication-manager>
+		<authentication-provider ref="daoAuthenticationProvider" />
+	</authentication-manager>
+
+	<beans:bean id="daoAuthenticationProvider"
+		class="org.springframework.security.authentication.dao.DaoAuthenticationProvider"
+		p:userDetailsService-ref="userDetailsService"
+		p:passwordEncoder-ref="passwordEncoder" />
+
+	<beans:bean id="userDetailsService"
+		name="userAuthenticationProvider"
+		class="svnavigatoru.repository.users.impl.AuthenticationUserDetailsGetter"
+		p:dataSource-ref="dataSource"
+		p:userDao-ref="userDao" />
+
+	<beans:bean id="passwordEncoder"
+		class="org.springframework.security.authentication.encoding.ShaPasswordEncoder" />
+	<!-- /Authentication -->
+
+
+
+	<global-method-security pre-post-annotations="enabled">
+		<expression-handler ref="expressionHandler" />
+	</global-method-security>
+
+	<beans:bean id="expressionHandler"
+		class="org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler"
+		p:permissionEvaluator-ref="forumPermissionEvaluator" />
+
+	<beans:bean id="forumPermissionEvaluator"
+		class="svnavigatoru.service.forum.ForumPermissionEvaluator" />
+
+</beans:beans>

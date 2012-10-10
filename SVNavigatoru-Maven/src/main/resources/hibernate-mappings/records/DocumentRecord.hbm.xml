@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+
+	<class name="svnavigatoru.domain.records.DocumentRecord" table="DOCUMENT_RECORDS" lazy="false">
+		<id name="id" type="int">
+			<generator class="native"/>
+		</id>
+		<property name="fileName" column="FILE_NAME" type="string" length="100" not-null="true"/>
+		<property name="file" type="blob"/>
+
+		<joined-subclass name="svnavigatoru.domain.records.SessionRecord" table="SESSION_RECORDS" schema="SKALICKY_SV_NAVIGATORU"
+			lazy="false">
+			<!-- The column in the SESSION_RECORDS table which is a foreign key to the DOCUMENT_RECORDS table, i.e. associated with 
+				the column DOCUMENT_RECORDS.id. -->
+			<key column="ID"/>
+			<property name="type" type="string" length="50" not-null="true"/>
+			<property name="sessionDate" column="SESSION_DATE" not-null="true"/>
+			<property name="discussedTopics" column="DISCUSSED_TOPICS" type="text" not-null="true"/>
+		</joined-subclass>
+
+		<joined-subclass name="svnavigatoru.domain.records.OtherDocumentRecord" table="OTHER_DOCUMENT_RECORDS"
+			schema="SKALICKY_SV_NAVIGATORU" lazy="false">
+			<key column="ID"/>
+			<property name="name" type="string" length="100" not-null="true"/>
+			<property name="description" type="text"/>
+			<set name="types" inverse="true" cascade="all" lazy="false">
+				<!-- The column in the OTHER_DOCUMENT_RECORD_TYPE_RELATIONS table which is a foreign key to the OTHER_DOCUMENT_RECORDS 
+					table, i.e. associated with the column OTHER_DOCUMENT_RECORDS.ID. -->
+				<key column="RECORD_ID"/>
+				<one-to-many class="svnavigatoru.domain.records.OtherDocumentRecordTypeRelation"/>
+			</set>
+			<property name="creationTime" column="CREATION_TIME" not-null="true"/>
+			<property name="lastSaveTime" column="LAST_SAVE_TIME" not-null="true"/>
+		</joined-subclass>
+	</class>
+
+</hibernate-mapping>

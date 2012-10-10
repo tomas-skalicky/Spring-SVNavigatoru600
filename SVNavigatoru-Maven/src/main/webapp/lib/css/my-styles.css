@@ -1,0 +1,69 @@
+/**
+ * ATTENTION: There cannot be space between the name of the style and bracket "{".
+ */
+.invisible {
+	display: none;
+}
+
+.errorInput {
+	background-color: #F99999;
+}
+
+.formNote {
+	color: #756049;
+	font-size: 85%;
+}
+
+.successfulOperation {
+	color: #0071BB;
+	font-size: 130%;
+	padding: 0 0 15px;
+}
+
+td ul {
+	padding: 0;
+	margin: 0;
+	list-style-type: none;
+}
+
+input.longText,textarea {
+	width: 350px;
+}
+
+textarea {
+	height: 80px;
+}
+
+textarea.standaloneWysiwygEditor,textarea.notStandaloneWysiwygEditor {
+	width: 100%;
+}
+
+textarea.standaloneWysiwygEditor {
+	height: 500px;
+}
+
+textarea.notStandaloneWysiwygEditor {
+	height: 250px;
+}
+
+a.edit,a.save,a.delete {
+	background-color: transparent;
+	background-repeat: no-repeat;
+	border: 0;
+	color: inherit;
+	display: inline-block;
+	height: 16px;
+	width: 16px;
+}
+
+a.edit {
+	background-image: url(../../img/icons/edit.png);
+}
+
+a.save {
+	background-image: url(../../img/icons/save.png);
+}
+
+a.delete {
+	background-image: url(../../img/icons/delete.png);
+}
