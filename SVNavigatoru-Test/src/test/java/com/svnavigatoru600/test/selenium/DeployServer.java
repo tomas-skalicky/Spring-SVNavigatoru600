@@ -1,4 +1,4 @@
-package com.svnavigatoru600.selenium;
+package com.svnavigatoru600.test.selenium;
 
 /**
  * Represents a server on which the web application has been/will be deployed.

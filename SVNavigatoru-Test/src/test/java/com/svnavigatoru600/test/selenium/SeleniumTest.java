@@ -1,10 +1,12 @@
-package com.svnavigatoru600.selenium;
+package com.svnavigatoru600.test.selenium;
 
 import java.net.BindException;
 
 import org.junit.After;
 import org.junit.Before;
 import org.openqa.selenium.server.SeleniumServer;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import com.thoughtworks.selenium.SeleneseTestCase;
 

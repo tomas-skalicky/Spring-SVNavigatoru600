@@ -16,7 +16,7 @@
 	<properties>
 		<jdk.version>1.7</jdk.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		
+
 		<spring.version>3.1.2.RELEASE</spring.version>
 	</properties>
 
@@ -63,7 +63,7 @@
 						</dependency>
 					</dependencies>
 					<configuration>
-						<!-- Example of usage (on the command line): mvn -Dtests.category="svnavigatoru.test.category.FastTests" 
+						<!-- Example of usage (on the command line): mvn -Dtests.category="com.svnavigatoru600.test.category.SeleniumTests" 
 							test -->
 						<groups>${tests.category}</groups>
 					</configuration>
@@ -74,6 +74,11 @@
 
 
 	<dependencies>
+		<dependency>
+			<groupId>org.junit.extensions</groupId>
+			<artifactId>cpsuite</artifactId>
+		</dependency>
+
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
@@ -95,7 +100,6 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context</artifactId>
-			<version>${spring.version}</version>
 		</dependency>
 		<!-- /Spring -->
 
@@ -104,6 +108,15 @@
 
 	<dependencyManagement>
 		<dependencies>
+			<dependency>
+				<groupId>org.junit.extensions</groupId>
+				<artifactId>cpsuite</artifactId>
+				<version>1.2.5</version>
+				<!-- There should be the test scope. -->
+				<scope>system</scope>
+				<systemPath>${basedir}/lib/cpsuite-1.2.5.jar</systemPath>
+			</dependency>
+
 			<dependency>
 				<groupId>junit</groupId>
 				<artifactId>junit</artifactId>
@@ -130,6 +143,14 @@
 				</exclusions>
 			</dependency>
 			<!-- /Selenium -->
+
+			<!-- Spring -->
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-context</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
+			<!-- /Spring -->
 
 		</dependencies>
 	</dependencyManagement>
