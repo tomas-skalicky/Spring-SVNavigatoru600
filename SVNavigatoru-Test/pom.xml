@@ -14,7 +14,7 @@
 
 
 	<properties>
-		<jdk.version>1.7</jdk.version>
+		<jdk.version>1.6</jdk.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
 		<spring.version>3.1.2.RELEASE</spring.version>
@@ -55,8 +55,9 @@
 					<version>2.12.4</version>
 					<dependencies>
 						<dependency>
-							<!-- Necessary dependency. Otherwise, groups element does not work. The problem should be fixed 
-								in the version 2.13 of maven-surefire-plugin. See http://stackoverflow.com/questions/4970196/running-all-tests-from-a-category-using-maven -->
+							<!-- Necessary dependency. Otherwise, groups element does not work. 
+								The problem should be fixed in the version 2.13 of maven-surefire-plugin. 
+								See http://stackoverflow.com/questions/4970196/running-all-tests-from-a-category-using-maven -->
 							<groupId>org.apache.maven.surefire</groupId>
 							<artifactId>surefire-junit47</artifactId>
 							<version>2.12.4</version>
@@ -91,13 +92,8 @@
 
 		<!-- Selenium -->
 		<dependency>
-			<groupId>org.seleniumhq.selenium.client-drivers</groupId>
-			<artifactId>selenium-java-client-driver</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.seleniumhq.selenium.server</groupId>
+			<groupId>org.seleniumhq.selenium</groupId>
 			<artifactId>selenium-server</artifactId>
-			<classifier>standalone</classifier>
 		</dependency>
 		<!-- /Selenium -->
 
@@ -143,19 +139,14 @@
 
 			<!-- Selenium -->
 			<dependency>
-				<groupId>org.seleniumhq.selenium.client-drivers</groupId>
-				<artifactId>selenium-java-client-driver</artifactId>
-				<version>1.0.2</version>
-			</dependency>
-			<dependency>
-				<groupId>org.seleniumhq.selenium.server</groupId>
+				<groupId>org.seleniumhq.selenium</groupId>
 				<artifactId>selenium-server</artifactId>
-				<version>1.0.3</version>
-				<classifier>standalone</classifier>
+				<version>2.26.0</version>
+				<scope>test</scope>
 				<exclusions>
 					<exclusion>
-						<artifactId>servlet-api</artifactId>
-						<groupId>javax.servlet</groupId>
+						<groupId>org.mortbay.jetty</groupId>
+						<artifactId>servlet-api-2.5</artifactId>
 					</exclusion>
 				</exclusions>
 			</dependency>

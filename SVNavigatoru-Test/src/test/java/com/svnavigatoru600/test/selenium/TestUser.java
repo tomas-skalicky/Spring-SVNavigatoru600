@@ -4,6 +4,7 @@ package com.svnavigatoru600.test.selenium;
  * Represents the user created only for the purposes of Selenium testing.
  * 
  * @author <a href="mailto:tomas.skalicky@gfk.com">Tomas Skalicky</a>
+ * @since 12.2
  */
 public class TestUser {
 
