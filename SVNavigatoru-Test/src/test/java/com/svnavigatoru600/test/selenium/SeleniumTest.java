@@ -1,66 +1,56 @@
 package com.svnavigatoru600.test.selenium;
 
-import java.net.BindException;
+import java.net.URL;
 
-import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Before;
-import org.openqa.selenium.server.SeleniumServer;
+import org.junit.BeforeClass;
+import org.openqa.selenium.Proxy;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.remote.Augmenter;
+import org.openqa.selenium.remote.CapabilityType;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
-import com.thoughtworks.selenium.SeleneseTestCase;
-
 /**
- * Ancestor of all Selenium tests.
+ * Ancestor of all Selenium tests of the Viewer project.
  * 
  * @author <a href="mailto:tomas.skalicky@gfk.com">Tomas Skalicky</a>
  */
-abstract class SeleniumTest extends SeleneseTestCase {
+public abstract class SeleniumTest {
 
-	protected static final ApplicationContext APPLICATION_CONTEXT = new AnnotationConfigApplicationContext(
-			SeleniumAppConfig.class);
+    protected static final ApplicationContext APPLICATION_CONTEXT = new AnnotationConfigApplicationContext(SeleniumAppConfig.class);
 
-	// -------------------------------------------------------------------
-	// Firefox: it does not work with "-P Selenium" option
-	// private static final String BROWSER =
-	// "*custom c:\\Program Files (x86)\\Mozilla Firefox\\firefox.exe";
-	// -------------------------------------------------------------------
-	private static final String BROWSER = "*googlechrome";
-	protected static final String MAX_WAIT_TIME_IN_MS = "30000";
-	private SeleniumServer seleniumServer;
+    private static final String PROXY = "emea-webproxy.gfk.com:3128";
+    private static WebDriver browserDriver = null;
 
-	@Before
-	public void setUp() throws Exception {
-		// -------------------------------------------------------------------
-		// For running Firefox, start the Selenium server in the command line:
-		//
-		// java -jar selenium-server.jar -firefoxProfileTemplate
-		// "c:\Users\tom\AppData\Roaming\Mozilla\Firefox\Profiles\k2256gca.Selenium"
-		//
-		// However, it has NOT been WORKING properly till now.
-		// -------------------------------------------------------------------
-		try {
-			this.seleniumServer = new SeleniumServer();
-			this.seleniumServer.start();
-		} catch (BindException ex) {
-			// Selenium is already running.
-			this.seleniumServer = null;
-		}
+    @BeforeClass
+    public static void openBrowser() throws Exception {
+        final Server seleniumServer = (Server) APPLICATION_CONTEXT.getBean("seleniumServer");
+        Proxy proxy = new Proxy();
+        proxy.setHttpProxy(PROXY).setFtpProxy(PROXY).setSslProxy(PROXY);
+        // The proxy credentials have to be introduced if you want to log in. So, it is not running full-automatic.
 
-		// Firefox profile has to be created
-		// (see
-		// http://girliemangalo.wordpress.com/2009/02/05/creating-firefox-profile-for-your-selenium-rc-tests/)
-		final DeployServer server = (DeployServer) APPLICATION_CONTEXT.getBean("deployServer");
-		super.setUp(server.getUrl(), BROWSER);
-	}
+        DesiredCapabilities desiredCapabilities = new DesiredCapabilities(DesiredCapabilities.firefox());
+        desiredCapabilities.setCapability(CapabilityType.PROXY, proxy);
 
-	@After
-	public void tearDown() throws Exception {
-		this.selenium.stop();
-		if (this.seleniumServer != null) {
-			this.seleniumServer.stop();
-		}
+        browserDriver = (new Augmenter()).augment(new RemoteWebDriver(new URL(seleniumServer.getUrl()), desiredCapabilities));
+    }
 
-		super.tearDown();
-	}
+    @Before
+    public void setUp() {
+        final Server deployServer = (Server) APPLICATION_CONTEXT.getBean("deployServer");
+        browserDriver.get(deployServer.getUrl());
+    }
+
+    @AfterClass
+    public static void closeBrowser() {
+        browserDriver.quit();
+    }
+
+    protected WebDriver getBrowserDriver() {
+        return browserDriver;
+    }
 }
