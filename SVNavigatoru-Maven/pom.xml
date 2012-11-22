@@ -15,14 +15,73 @@
 
 	<properties>
 		<jdk.version>1.6</jdk.version>
-		<!-- Unless we set up an enconding, we would receive a warning during the compilation of this project 
-			via a "mvn" command. This warning is noticeable in Jenkins. -->
+		<!-- Unless we set up an enconding, we would receive a warning during the 
+			compilation of this project via a "mvn" command. This warning is noticeable 
+			in Jenkins. -->
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
 		<spring.version>3.1.2.RELEASE</spring.version>
 		<spring-security.version>3.1.2.RELEASE</spring-security.version>
 		<tomcat.version>6.0.35</tomcat.version>
 	</properties>
+
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.5.1</version>
+				<configuration>
+					<source>${jdk.version}</source>
+					<target>${jdk.version}</target>
+					<encoding>${project.build.sourceEncoding}</encoding>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<!-- See http://mojo.codehaus.org/tomcat-maven-plugin/usage.html -->
+				<groupId>org.apache.tomcat.maven</groupId>
+				<artifactId>tomcat7-maven-plugin</artifactId>
+				<version>2.0-beta-1</version>
+				<configuration>
+					<!-- See http://tomcat.apache.org/tomcat-7.0-doc/manager-howto.html#Supported_Manager_Commands -->
+					<url>http://localhost:8081/manager/text</url>
+					<path>/${project.artifactId}</path>
+					<charset>${project.build.sourceEncoding}</charset>
+					<server>local_tomcat</server>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>2.2</version>
+			</plugin>
+
+			<plugin>
+				<!-- http://maven.apache.org/plugins/maven-surefire-plugin/examples/junit.html -->
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.12.4</version>
+				<dependencies>
+					<dependency>
+						<!-- Necessary dependency. Otherwise, groups element does not work. 
+							The problem should be fixed in the version 2.13 of maven-surefire-plugin. 
+							See http://stackoverflow.com/questions/4970196/running-all-tests-from-a-category-using-maven -->
+						<groupId>org.apache.maven.surefire</groupId>
+						<artifactId>surefire-junit47</artifactId>
+						<version>2.12.4</version>
+					</dependency>
+				</dependencies>
+				<configuration>
+					<!-- Example of usage (on the command line): mvn -Dtests.category="svnavigatoru.test.category.FastTests" 
+						test -->
+					<groups>${tests.category}</groups>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 
 
 	<dependencies>
@@ -209,66 +268,4 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
-
-
-	<build>
-		<finalName>SVNavigatoru</finalName>
-
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>2.5.1</version>
-				<configuration>
-					<source>${jdk.version}</source>
-					<target>${jdk.version}</target>
-					<encoding>${project.build.sourceEncoding}</encoding>
-				</configuration>
-			</plugin>
-
-			<plugin>
-				<!-- See http://mojo.codehaus.org/tomcat-maven-plugin/usage.html -->
-				<groupId>org.apache.tomcat.maven</groupId>
-				<artifactId>tomcat7-maven-plugin</artifactId>
-				<version>2.0-beta-1</version>
-				<configuration>
-					<!-- See http://tomcat.apache.org/tomcat-7.0-doc/manager-howto.html#Supported_Manager_Commands -->
-					<url>http://localhost:8081/manager/text</url>
-					<path>/${project.build.finalName}</path>
-					<charset>${project.build.sourceEncoding}</charset>
-					<server>local_tomcat</server>
-				</configuration>
-			</plugin>
-
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-war-plugin</artifactId>
-				<version>2.2</version>
-				<configuration>
-					<webXml>src/main/webapp/WEB-INF/web.xml</webXml>
-				</configuration>
-			</plugin>
-
-			<plugin>
-				<!-- http://maven.apache.org/plugins/maven-surefire-plugin/examples/junit.html -->
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-surefire-plugin</artifactId>
-				<version>2.12.4</version>
-				<dependencies>
-					<dependency>
-						<!-- Necessary dependency. Otherwise, groups element does not work. The problem should be fixed 
-							in the version 2.13 of maven-surefire-plugin. See http://stackoverflow.com/questions/4970196/running-all-tests-from-a-category-using-maven -->
-						<groupId>org.apache.maven.surefire</groupId>
-						<artifactId>surefire-junit47</artifactId>
-						<version>2.12.4</version>
-					</dependency>
-				</dependencies>
-				<configuration>
-					<!-- Example of usage (on the command line): mvn -Dtests.category="svnavigatoru.test.category.FastTests" 
-						test -->
-					<groups>${tests.category}</groups>
-				</configuration>
-			</plugin>
-		</plugins>
-	</build>
 </project>
