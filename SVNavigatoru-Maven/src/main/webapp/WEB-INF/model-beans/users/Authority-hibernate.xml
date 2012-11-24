@@ -8,7 +8,7 @@
 	<import resource="Authority.xml"/>
 
 	<!-- DAO -->
-	<bean id="authorityDao" class="svnavigatoru.repository.users.impl.hibernate.AuthorityDaoImpl">
+	<bean id="authorityDao" class="com.svnavigatoru600.repository.users.impl.hibernate.AuthorityDaoImpl">
 		<property name="sessionFactory" ref="sessionFactory"/>
 	</bean>
 

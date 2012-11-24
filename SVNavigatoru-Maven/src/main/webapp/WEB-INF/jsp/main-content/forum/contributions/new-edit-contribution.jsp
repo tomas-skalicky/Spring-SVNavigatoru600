@@ -3,7 +3,7 @@
 <%@ page pageEncoding="UTF-8"%>
 <%@ include file="../../../include-preceding-html.jsp"%>
 
-<%@ page import="svnavigatoru.web.forum.contributions.NewEditContributionController"%>
+<%@ page import="com.svnavigatoru600.web.forum.contributions.NewEditContributionController"%>
 
 <c:set var="baseUrl" value="/forum/temata/existujici/${newEditContributionCommand.threadId}/prispevky/" />
 <a href="<c:url value="${baseUrl}" />">&laquo; <spring:message

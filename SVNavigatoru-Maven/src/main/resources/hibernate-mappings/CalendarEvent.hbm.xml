@@ -5,7 +5,7 @@
 
 <hibernate-mapping>
 
-	<class name="svnavigatoru.domain.eventcalendar.CalendarEvent" table="CALENDAR_EVENTS" lazy="false">
+	<class name="com.svnavigatoru600.domain.eventcalendar.CalendarEvent" table="CALENDAR_EVENTS" lazy="false">
 		<id name="id" type="int">
 			<generator class="native"/>
 		</id>

@@ -3,7 +3,7 @@
 <%@ page pageEncoding="UTF-8"%>
 <%@ include file="../../include-preceding-html.jsp"%>
 
-<%@ page import="svnavigatoru.domain.WysiwygSection"%>
+<%@ page import="com.svnavigatoru600.domain.WysiwygSection"%>
 
 <spring:eval expression="section.sourceCode" />
 

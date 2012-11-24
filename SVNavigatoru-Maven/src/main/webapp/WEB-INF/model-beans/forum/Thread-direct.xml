@@ -6,7 +6,7 @@
 
 	<import resource="Thread.xml"/>
 
-	<bean id="threadDao" class="svnavigatoru.repository.forum.impl.direct.ThreadDaoImpl">
+	<bean id="threadDao" class="com.svnavigatoru600.repository.forum.impl.direct.ThreadDaoImpl">
 		<property name="dataSource" ref="dataSource"/>
 	</bean>
 

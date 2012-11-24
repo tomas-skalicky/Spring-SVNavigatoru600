@@ -3,8 +3,8 @@
 <%@ page pageEncoding="UTF-8"%>
 <%@ include file="../../../include-preceding-html.jsp"%>
 
-<%@ page import="svnavigatoru.service.forum.contributions.ShowAllContributions"%>
-<%@ page import="svnavigatoru.web.forum.contributions.ListContributionsController"%>
+<%@ page import="com.svnavigatoru600.service.forum.contributions.ShowAllContributions"%>
+<%@ page import="com.svnavigatoru600.web.forum.contributions.ListContributionsController"%>
 
 <c:if test="${showAllContributionsCommand.contributionCreated}">
 	<p class="successfulOperation">

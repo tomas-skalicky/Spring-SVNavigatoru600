@@ -5,7 +5,7 @@
 <%@ page pageEncoding="UTF-8"%>
 <%@ include file="../../include-preceding-html.jsp"%>
 
-<%@ page import="svnavigatoru.web.eventcalendar.NewEditEventController"%>
+<%@ page import="com.svnavigatoru600.web.eventcalendar.NewEditEventController"%>
 
 <form:form action="IS_FILLED_BY_JAVASCRIPT" commandName="newEditEventCommand" method="POST">
 	<form:errors path="*" cssClass="error" element="p" />

@@ -5,9 +5,9 @@
 
 <hibernate-mapping>
 
-	<class name="svnavigatoru.domain.records.OtherDocumentRecordTypeRelation" table="OTHER_DOCUMENT_RECORD_TYPE_RELATIONS"
+	<class name="com.svnavigatoru600.domain.records.OtherDocumentRecordTypeRelation" table="OTHER_DOCUMENT_RECORD_TYPE_RELATIONS"
 		lazy="false">
-		<composite-id name="id" class="svnavigatoru.domain.records.OtherDocumentRecordTypeRelationId">
+		<composite-id name="id" class="com.svnavigatoru600.domain.records.OtherDocumentRecordTypeRelationId">
 			<key-property name="recordId" column="RECORD_ID" type="int"/>
 			<key-property name="type" type="string" length="50"/>
 		</composite-id>

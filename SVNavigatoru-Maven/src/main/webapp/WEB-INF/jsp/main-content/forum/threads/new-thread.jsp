@@ -3,7 +3,7 @@
 <%@ page pageEncoding="UTF-8"%>
 <%@ include file="../../../include-preceding-html.jsp"%>
 
-<%@ page import="svnavigatoru.web.forum.threads.NewEditThreadController"%>
+<%@ page import="com.svnavigatoru600.web.forum.threads.NewEditThreadController"%>
 
 <form:form action="IS_FILLED_BY_JAVASCRIPT" commandName="newEditThreadCommand" method="POST">
 	<form:errors path="*" cssClass="error" element="p" />

@@ -3,7 +3,7 @@
 <%@ page pageEncoding="UTF-8"%>
 <%@ include file="../../../include-preceding-html.jsp"%>
 
-<%@ page import="svnavigatoru.web.forum.threads.NewEditThreadController"%>
+<%@ page import="com.svnavigatoru600.web.forum.threads.NewEditThreadController"%>
 
 <c:if test="${newEditThreadCommand.dataSaved}">
 	<p class="successfulOperation">

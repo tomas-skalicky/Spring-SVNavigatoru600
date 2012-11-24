@@ -6,7 +6,7 @@
 
 	<import resource="News.xml"/>
 
-	<bean id="newsDao" class="svnavigatoru.repository.news.impl.direct.NewsDaoImpl">
+	<bean id="newsDao" class="com.svnavigatoru600.repository.news.impl.direct.NewsDaoImpl">
 		<property name="dataSource" ref="dataSource"/>
 	</bean>
 

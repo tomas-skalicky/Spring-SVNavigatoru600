@@ -5,7 +5,7 @@
 
 <hibernate-mapping>
 
-	<class name="svnavigatoru.domain.forum.Thread" table="THREADS" lazy="false">
+	<class name="com.svnavigatoru600.domain.forum.Thread" table="THREADS" lazy="false">
 		<id name="id" type="int">
 			<generator class="native"/>
 		</id>
@@ -14,11 +14,11 @@
 
 		<bag name="contributions" inverse="true" cascade="all" lazy="false">
 			<key column="THREAD_ID"/>
-			<one-to-many class="svnavigatoru.domain.forum.Contribution"/>
+			<one-to-many class="com.svnavigatoru600.domain.forum.Contribution"/>
 		</bag>
 
 		<!-- Thread can exist even without its author. This is in case the author's user is deleted from the repository. -->
-		<many-to-one name="author" class="svnavigatoru.domain.users.User" column="AUTHOR_USERNAME" cascade="none"/>
+		<many-to-one name="author" class="com.svnavigatoru600.domain.users.User" column="AUTHOR_USERNAME" cascade="none"/>
 	</class>
 
 </hibernate-mapping>

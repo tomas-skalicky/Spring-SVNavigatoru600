@@ -4,7 +4,7 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans
 						http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
 
-	<bean id="sessionRecord" class="svnavigatoru.domain.records.SessionRecord">
+	<bean id="sessionRecord" class="com.svnavigatoru600.domain.records.SessionRecord">
 		<property name="sessionRecordDao" ref="sessionRecordDao"/>
 	</bean>
 

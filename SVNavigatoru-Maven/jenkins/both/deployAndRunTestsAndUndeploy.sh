@@ -9,7 +9,7 @@ if [ $# != 1 ]; then
 
   ./deployAndRunTestsAndUndeploy.sh <test_category>
 
-  <test_category> ... Name of the class in the package svnavigatoru.test.category
+  <test_category> ... Name of the class in the package com.svnavigatoru600.test.category
                       which represents a category of tests which you want to evaluate.
                       The name is without a prefix of package.
                       Example: FastTests
@@ -36,7 +36,7 @@ mvn tomcat:deploy -DskipTests
 
 
 # Runs tests which belong to a category specified in the first argument.
-mvn test -DargLine="-Dtests.selenium.port=8081" -Dtests.category="svnavigatoru.test.category.$1"
+mvn test -DargLine="-Dtests.selenium.port=8081" -Dtests.category="com.svnavigatoru600.test.category.$1"
 
 
 # Cleans up at the end.

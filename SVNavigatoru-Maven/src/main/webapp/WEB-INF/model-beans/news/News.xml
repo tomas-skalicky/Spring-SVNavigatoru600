@@ -4,7 +4,7 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans
 						http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
 
-	<bean id="news" class="svnavigatoru.domain.News">
+	<bean id="news" class="com.svnavigatoru600.domain.News">
 		<property name="newsDao" ref="newsDao"/>
 	</bean>
 

@@ -6,7 +6,7 @@
 
 	<import resource="CalendarEvent.xml"/>
 
-	<bean id="calendarEventDao" class="svnavigatoru.repository.eventcalendar.impl.direct.CalendarEventDaoImpl">
+	<bean id="calendarEventDao" class="com.svnavigatoru600.repository.eventcalendar.impl.direct.CalendarEventDaoImpl">
 		<property name="dataSource" ref="dataSource"/>
 	</bean>
 
