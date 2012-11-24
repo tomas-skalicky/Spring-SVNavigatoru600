@@ -43,7 +43,7 @@ public abstract class SeleniumTest {
 	}
 
 	/**
-	 * Returns the browser drive. When it is used the first time, the default page has been already loaded.
+	 * Returns the browser drive. When it is used the first time, the current page is the homepage.
 	 */
 	protected WebDriver getBrowserDriver() {
 		return browserDriver;
