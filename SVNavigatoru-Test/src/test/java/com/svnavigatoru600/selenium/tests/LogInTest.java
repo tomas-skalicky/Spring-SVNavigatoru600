@@ -24,10 +24,10 @@ public class LogInTest extends SeleniumTest {
 		final TestUser user = (TestUser) APPLICATION_CONTEXT.getBean("testUser");
 		this.logIn(user.getUsername(), user.getPassword());
 		Assert.assertTrue(AssertUtils.getActualUrlReport(browserDriver),
-				this.waitTillPageLoadAndTestIt(browserDriver, ".*/uzivatelsky-ucet/"));
+				this.waitForPageUrl(browserDriver, ".*/uzivatelsky-ucet/"));
 
 		browserDriver.findElement(By.xpath("//a[@href='/j_spring_security_logout']")).click();
 		Assert.assertTrue(AssertUtils.getActualUrlReport(browserDriver),
-				this.waitTillPageLoadAndTestIt(browserDriver, ".*/prihlaseni/"));
+				this.waitForPageUrl(browserDriver, ".*/prihlaseni/"));
 	}
 }

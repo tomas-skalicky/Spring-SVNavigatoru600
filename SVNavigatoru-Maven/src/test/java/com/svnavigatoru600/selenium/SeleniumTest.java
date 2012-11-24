@@ -60,7 +60,7 @@ public abstract class SeleniumTest {
 	 * @return <code>true</code> if the URL of the loaded page matches the given regular expression; otherwise
 	 *         <code>false</code>.
 	 */
-	protected boolean waitTillPageLoadAndTestIt(WebDriver browserDriver, final String urlRegExp) {
+	protected boolean waitForPageUrl(WebDriver browserDriver, final String urlRegExp) {
 		return (new WebDriverWait(browserDriver, WebDriverWait.DEFAULT_SLEEP_TIMEOUT,
 				WebDriverWait.FIVE_HUNDRED_MILLIS.in(TimeUnit.MILLISECONDS))).until(new ExpectedCondition<Boolean>() {
 			public Boolean apply(WebDriver driver) {
