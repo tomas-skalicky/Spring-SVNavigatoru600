@@ -5,7 +5,7 @@
 
 <hibernate-mapping>
 
-	<class name="svnavigatoru.domain.WysiwygSection" table="WYSIWYG_SECTIONS" lazy="false">
+	<class name="com.svnavigatoru600.domain.WysiwygSection" table="WYSIWYG_SECTIONS" lazy="false">
 		<id name="name" type="string" length="50"/>
 		<property name="lastSaveTime" column="LAST_SAVE_TIME" not-null="true"/>
 		<property name="sourceCode" column="SOURCE_CODE" type="text"/>

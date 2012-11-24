@@ -6,7 +6,7 @@
 
 	<import resource="News.xml"/>
 
-	<bean id="newsDao" class="svnavigatoru.repository.news.impl.hibernate.NewsDaoImpl">
+	<bean id="newsDao" class="com.svnavigatoru600.repository.news.impl.hibernate.NewsDaoImpl">
 		<property name="sessionFactory" ref="sessionFactory"/>
 	</bean>
 

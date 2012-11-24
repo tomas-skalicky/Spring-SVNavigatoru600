@@ -3,8 +3,8 @@
 <%@ page pageEncoding="UTF-8"%>
 <%@ include file="../../include-preceding-html.jsp"%>
 
-<%@ page import="svnavigatoru.service.eventcalendar.ShowAllEvents"%>
-<%@ page import="svnavigatoru.web.eventcalendar.ListEventsController"%>
+<%@ page import="com.svnavigatoru600.service.eventcalendar.ShowAllEvents"%>
+<%@ page import="com.svnavigatoru600.web.eventcalendar.ListEventsController"%>
 
 <c:if test="${showAllEventsCommand.eventCreated}">
 	<p class="successfulOperation">

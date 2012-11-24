@@ -6,7 +6,7 @@
 
 	<import resource="Contribution.xml"/>
 
-	<bean id="contributionDao" class="svnavigatoru.repository.forum.impl.hibernate.ContributionDaoImpl">
+	<bean id="contributionDao" class="com.svnavigatoru600.repository.forum.impl.hibernate.ContributionDaoImpl">
 		<property name="sessionFactory" ref="sessionFactory"/>
 	</bean>
 

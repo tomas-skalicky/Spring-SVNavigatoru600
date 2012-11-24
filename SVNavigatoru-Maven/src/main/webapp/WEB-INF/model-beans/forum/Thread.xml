@@ -4,7 +4,7 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans
 						http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
 
-	<bean id="thread" class="svnavigatoru.domain.forum.Thread">
+	<bean id="thread" class="com.svnavigatoru600.domain.forum.Thread">
 		<property name="threadDao" ref="threadDao"/>
 	</bean>
 

@@ -6,7 +6,7 @@
 
 	<import resource="OtherDocumentRecord.xml"/>
 
-	<bean id="otherDocumentRecordDao" class="svnavigatoru.repository.records.impl.direct.OtherDocumentRecordDaoImpl">
+	<bean id="otherDocumentRecordDao" class="com.svnavigatoru600.repository.records.impl.direct.OtherDocumentRecordDaoImpl">
 		<property name="dataSource" ref="dataSource"/>
 	</bean>
 

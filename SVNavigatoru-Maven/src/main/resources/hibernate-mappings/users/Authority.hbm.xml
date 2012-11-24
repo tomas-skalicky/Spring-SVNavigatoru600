@@ -5,8 +5,8 @@
 
 <hibernate-mapping>
 
-	<class name="svnavigatoru.domain.users.Authority" table="AUTHORITIES" lazy="false">
-		<composite-id name="id" class="svnavigatoru.domain.users.AuthorityId">
+	<class name="com.svnavigatoru600.domain.users.Authority" table="AUTHORITIES" lazy="false">
+		<composite-id name="id" class="com.svnavigatoru600.domain.users.AuthorityId">
 			<key-property name="username" type="string" length="50"/>
 			<key-property name="authority" type="string" length="50"/>
 		</composite-id>

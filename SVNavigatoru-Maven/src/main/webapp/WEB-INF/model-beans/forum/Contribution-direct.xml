@@ -6,7 +6,7 @@
 
 	<import resource="Contribution.xml"/>
 
-	<bean id="contributionDao" class="svnavigatoru.repository.forum.impl.direct.ContributionDaoImpl">
+	<bean id="contributionDao" class="com.svnavigatoru600.repository.forum.impl.direct.ContributionDaoImpl">
 		<property name="dataSource" ref="dataSource"/>
 	</bean>
 

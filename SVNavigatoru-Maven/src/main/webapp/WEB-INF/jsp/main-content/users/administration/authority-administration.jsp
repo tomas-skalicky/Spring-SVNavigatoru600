@@ -3,8 +3,8 @@
 <%@ page pageEncoding="UTF-8"%>
 <%@ include file="../../../include-preceding-html.jsp"%>
 
-<%@ page import="svnavigatoru.service.users.AdministrateUserData"%>
-<%@ page import="svnavigatoru.web.users.administration.NewEditUserController"%>
+<%@ page import="com.svnavigatoru600.service.users.AdministrateUserData"%>
+<%@ page import="com.svnavigatoru600.web.users.administration.NewEditUserController"%>
 
 <%
 // Gets the command from the ModelMap.

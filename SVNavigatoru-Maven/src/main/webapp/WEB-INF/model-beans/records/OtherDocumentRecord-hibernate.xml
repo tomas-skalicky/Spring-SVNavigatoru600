@@ -6,7 +6,7 @@
 
 	<import resource="OtherDocumentRecord.xml"/>
 
-	<bean id="otherDocumentRecordDao" class="svnavigatoru.repository.records.impl.hibernate.OtherDocumentRecordDaoImpl">
+	<bean id="otherDocumentRecordDao" class="com.svnavigatoru600.repository.records.impl.hibernate.OtherDocumentRecordDaoImpl">
 		<property name="sessionFactory" ref="sessionFactory"/>
 	</bean>
 

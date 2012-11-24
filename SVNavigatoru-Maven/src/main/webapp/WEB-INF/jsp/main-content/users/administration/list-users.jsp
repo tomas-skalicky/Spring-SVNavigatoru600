@@ -1,8 +1,8 @@
 <%@ page pageEncoding="UTF-8"%>
 <%@ include file="../../../include-preceding-html.jsp"%>
 
-<%@ page import="svnavigatoru.service.users.ShowAllUsers"%>
-<%@ page import="svnavigatoru.service.util.FullNameFormat"%>
+<%@ page import="com.svnavigatoru600.service.users.ShowAllUsers"%>
+<%@ page import="com.svnavigatoru600.service.util.FullNameFormat"%>
 
 <%-- For more details about the concepts used here, see the forgotten-password.jsp file. --%>
 

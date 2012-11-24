@@ -7,7 +7,7 @@
 	<import resource="WysiwygSection.xml"/>
 
 	<!-- DAO -->
-	<bean id="wysiwygSectionDao" class="svnavigatoru.repository.wysiwyg.impl.hibernate.WysiwygSectionDaoImpl">
+	<bean id="wysiwygSectionDao" class="com.svnavigatoru600.repository.wysiwyg.impl.hibernate.WysiwygSectionDaoImpl">
 		<property name="sessionFactory" ref="sessionFactory"/>
 	</bean>
 

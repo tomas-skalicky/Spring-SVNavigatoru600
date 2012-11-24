@@ -34,7 +34,7 @@
 
 	<!-- Handles redirections. -->
 	<beans:bean id="authenticationSuccessHandler"
-		class="svnavigatoru.service.MyAuthenticationSuccessHandler" />
+		class="com.svnavigatoru600.service.MyAuthenticationSuccessHandler" />
 
 
 
@@ -52,7 +52,7 @@
 
 	<beans:bean id="userDetailsService"
 		name="userAuthenticationProvider"
-		class="svnavigatoru.repository.users.impl.AuthenticationUserDetailsGetter"
+		class="com.svnavigatoru600.repository.users.impl.AuthenticationUserDetailsGetter"
 		p:dataSource-ref="dataSource"
 		p:userDao-ref="userDao" />
 
@@ -71,6 +71,6 @@
 		p:permissionEvaluator-ref="forumPermissionEvaluator" />
 
 	<beans:bean id="forumPermissionEvaluator"
-		class="svnavigatoru.service.forum.ForumPermissionEvaluator" />
+		class="com.svnavigatoru600.service.forum.ForumPermissionEvaluator" />
 
 </beans:beans>

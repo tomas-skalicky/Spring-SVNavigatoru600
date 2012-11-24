@@ -6,7 +6,7 @@
 <hibernate-mapping>
 
 	<!-- Do not use the attribute 'catalog'. The catalog is a database which contains system tables, not yours. -->
-	<class name="svnavigatoru.domain.users.User" table="USERS" lazy="false">
+	<class name="com.svnavigatoru600.domain.users.User" table="USERS" lazy="false">
 		<id name="username" type="string" length="50"/>
 		<property name="password" type="string" length="50" not-null="true"/>
 		<property name="enabled" type="boolean" not-null="true"/>
@@ -16,7 +16,7 @@
 		<property name="phone" type="string" length="20"/>
 		<set name="authorities" inverse="true" cascade="all" lazy="false">
 			<key column="USERNAME"/>
-			<one-to-many class="svnavigatoru.domain.users.Authority"/>
+			<one-to-many class="com.svnavigatoru600.domain.users.Authority"/>
 		</set>
 	</class>
 

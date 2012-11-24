@@ -5,9 +5,9 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
-import svnavigatoru.service.util.Hash;
 
 import com.svnavigatoru600.selenium.tests.EmailTest;
+import com.svnavigatoru600.service.util.Hash;
 import com.svnavigatoru600.test.category.FastTests;
 
 /**

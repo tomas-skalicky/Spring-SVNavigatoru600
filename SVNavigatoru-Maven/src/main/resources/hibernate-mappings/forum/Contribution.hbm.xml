@@ -5,17 +5,17 @@
 
 <hibernate-mapping>
 
-	<class name="svnavigatoru.domain.forum.Contribution" table="CONTRIBUTIONS" lazy="false">
+	<class name="com.svnavigatoru600.domain.forum.Contribution" table="CONTRIBUTIONS" lazy="false">
 		<id name="id" type="int">
 			<generator class="native"/>
 		</id>
-		<many-to-one name="thread" class="svnavigatoru.domain.forum.Thread" column="THREAD_ID" not-null="true"/>
+		<many-to-one name="thread" class="com.svnavigatoru600.domain.forum.Thread" column="THREAD_ID" not-null="true"/>
 		<property name="text" type="text"/>
 		<property name="creationTime" column="CREATION_TIME" not-null="true"/>
 		<property name="lastSaveTime" column="LAST_SAVE_TIME" not-null="true"/>
 
 		<!-- Contribution can exist even without its author. This is in case the author's user is deleted from the repository. -->
-		<many-to-one name="author" class="svnavigatoru.domain.users.User" column="AUTHOR_USERNAME" cascade="none"/>
+		<many-to-one name="author" class="com.svnavigatoru600.domain.users.User" column="AUTHOR_USERNAME" cascade="none"/>
 	</class>
 
 </hibernate-mapping>

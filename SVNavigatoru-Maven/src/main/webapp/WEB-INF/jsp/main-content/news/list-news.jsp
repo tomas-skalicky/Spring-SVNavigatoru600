@@ -3,8 +3,8 @@
 <%@ page pageEncoding="UTF-8"%>
 <%@ include file="../../include-preceding-html.jsp"%>
 
-<%@ page import="svnavigatoru.service.news.ShowAllNews"%>
-<%@ page import="svnavigatoru.web.news.ListNewsController"%>
+<%@ page import="com.svnavigatoru600.service.news.ShowAllNews"%>
+<%@ page import="com.svnavigatoru600.web.news.ListNewsController"%>
 
 
 

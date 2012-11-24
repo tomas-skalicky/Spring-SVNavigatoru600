@@ -6,7 +6,7 @@
 
 	<import resource="CalendarEvent.xml"/>
 
-	<bean id="calendarEventDao" class="svnavigatoru.repository.eventcalendar.impl.hibernate.CalendarEventDaoImpl">
+	<bean id="calendarEventDao" class="com.svnavigatoru600.repository.eventcalendar.impl.hibernate.CalendarEventDaoImpl">
 		<property name="sessionFactory" ref="sessionFactory"/>
 	</bean>
 
