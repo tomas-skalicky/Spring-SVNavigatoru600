@@ -26,6 +26,10 @@ public abstract class SeleniumTest {
 	protected static final ApplicationContext APPLICATION_CONTEXT = new AnnotationConfigApplicationContext(
 			SeleniumAppConfig.class);
 
+	protected static final long DEFAULT_TIMEOUT_IN_SECONDS = WebDriverWait.DEFAULT_SLEEP_TIMEOUT;
+	protected static final long DEFAULT_SLEEP_BETWEEN_POLLS_IN_MILLISECONDS = WebDriverWait.FIVE_HUNDRED_MILLIS
+			.in(TimeUnit.MILLISECONDS);
+
 	// private static final String PROXY = "emea-webproxy.gfk.com:3128";
 	private static WebDriver browserDriver = null;
 
@@ -71,8 +75,8 @@ public abstract class SeleniumTest {
 	 *         <code>false</code>.
 	 */
 	protected boolean waitForPageUrl(WebDriver browserDriver, final String urlRegExp) {
-		return (new WebDriverWait(browserDriver, WebDriverWait.DEFAULT_SLEEP_TIMEOUT,
-				WebDriverWait.FIVE_HUNDRED_MILLIS.in(TimeUnit.MILLISECONDS))).until(new ExpectedCondition<Boolean>() {
+		return (new WebDriverWait(browserDriver, DEFAULT_TIMEOUT_IN_SECONDS,
+				DEFAULT_SLEEP_BETWEEN_POLLS_IN_MILLISECONDS)).until(new ExpectedCondition<Boolean>() {
 			public Boolean apply(WebDriver driver) {
 				return driver.getCurrentUrl().matches(urlRegExp);
 			}
