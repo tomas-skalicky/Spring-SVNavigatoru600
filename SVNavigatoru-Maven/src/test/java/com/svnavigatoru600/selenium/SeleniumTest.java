@@ -69,8 +69,8 @@ public abstract class SeleniumTest {
 
 	/**
 	 * <p>
-	 * Signs in to the application with the given credentials. Do not test, whether the login ended up with a success,
-	 * or not.
+	 * Signs in to the application with the given credentials. It does not check the "remember me" checkbox. It does not
+	 * test, whether the login ended up with a success, or not.
 	 * </p>
 	 * <b>PRECONDITION:</b> The current location is the login page of the application.
 	 * 
