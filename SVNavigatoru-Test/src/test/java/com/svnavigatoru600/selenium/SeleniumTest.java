@@ -1,6 +1,7 @@
 package com.svnavigatoru600.selenium;
 
 import java.net.URL;
+import java.util.concurrent.TimeUnit;
 
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -70,12 +71,12 @@ public abstract class SeleniumTest {
 	 *         <code>false</code>.
 	 */
 	protected boolean waitTillPageLoadAndTestIt(WebDriver browserDriver, final String urlRegExp) {
-		return (new WebDriverWait(browserDriver, WebDriverWait.DEFAULT_SLEEP_TIMEOUT))
-				.until(new ExpectedCondition<Boolean>() {
-					public Boolean apply(WebDriver driver) {
-						return driver.getCurrentUrl().matches(urlRegExp);
-					}
-				});
+		return (new WebDriverWait(browserDriver, WebDriverWait.DEFAULT_SLEEP_TIMEOUT,
+				WebDriverWait.FIVE_HUNDRED_MILLIS.in(TimeUnit.MILLISECONDS))).until(new ExpectedCondition<Boolean>() {
+			public Boolean apply(WebDriver driver) {
+				return driver.getCurrentUrl().matches(urlRegExp);
+			}
+		});
 	}
 
 	/**
