@@ -1,4 +1,4 @@
-package com.svnavigatoru600.test.selenium;
+package com.svnavigatoru600.selenium;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
