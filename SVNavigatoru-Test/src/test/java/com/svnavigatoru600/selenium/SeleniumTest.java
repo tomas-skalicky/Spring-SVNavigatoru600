@@ -5,6 +5,7 @@ import java.net.URL;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.Augmenter;
 import org.openqa.selenium.remote.DesiredCapabilities;
@@ -75,5 +76,18 @@ public abstract class SeleniumTest {
 						return driver.getCurrentUrl().matches(urlRegExp);
 					}
 				});
+	}
+
+	/**
+	 * Signs in the application with the given credentials. Do not test, whether the login in ended up with a success,
+	 * or not.
+	 * 
+	 * @param login
+	 * @param password
+	 */
+	protected void logIn(final String login, final String password) {
+		browserDriver.findElement(By.id("login")).sendKeys(login);
+		browserDriver.findElement(By.id("password")).sendKeys(password);
+		browserDriver.findElement(By.cssSelector("input[type='submit']")).click();
 	}
 }

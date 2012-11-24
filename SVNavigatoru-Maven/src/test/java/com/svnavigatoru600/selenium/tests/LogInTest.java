@@ -23,10 +23,7 @@ public class LogInTest extends SeleniumTest {
 		final WebDriver browserDriver = this.getBrowserDriver();
 
 		final TestUser user = (TestUser) APPLICATION_CONTEXT.getBean("testUser");
-		browserDriver.findElement(By.id("login")).sendKeys(user.getUsername());
-		browserDriver.findElement(By.id("password")).sendKeys(user.getPassword());
-
-		browserDriver.findElement(By.cssSelector("input[type='submit']")).click();
+		this.logIn(user.getUsername(), user.getPassword());
 		Assert.assertTrue(AssertUtils.getActualUrlReport(browserDriver),
 				this.waitTillPageLoadAndTestIt(browserDriver, ".*/uzivatelsky-ucet/"));
 
