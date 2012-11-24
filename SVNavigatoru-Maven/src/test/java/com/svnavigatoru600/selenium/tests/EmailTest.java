@@ -1,12 +1,9 @@
 package com.svnavigatoru600.selenium.tests;
 
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.ui.ExpectedCondition;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.svnavigatoru600.selenium.SeleniumTest;
 import com.svnavigatoru600.test.category.SeleniumTests;
@@ -26,53 +23,32 @@ public class EmailTest extends SeleniumTest {
 	public void testEditEmail() throws Exception {
 		final WebDriver browserDriver = this.getBrowserDriver();
 
-		// Logs in.
-		browserDriver.findElement(By.id("login")).sendKeys("vaclavas@ramacz.aa");
-		browserDriver.findElement(By.id("password")).sendKeys("password");
-		browserDriver.findElement(By.cssSelector("input[type='submit']")).click();
-
-        // Waits for the page to load. Timeout is WAIT_LIMIT seconds.
-        (new WebDriverWait(browserDriver, WAIT_LIMIT)).until(new ExpectedCondition<Boolean>() {
-            public Boolean apply(WebDriver driver) {
-                String expectedUrlRegexp = ".*/uzivatelsky-ucet/";
-                return driver.getCurrentUrl().matches(expectedUrlRegexp);
-            }
-        });
+		this.logIn("vaclavas@ramacz.aa", "password");
+		this.waitForPageUrl(browserDriver, ".*/uzivatelsky-ucet/");
 
 		// Edits the email address of the logged-in user.
-		browserDriver.findElement(By.link("Uživatelský účet")).click();
-		selenium.waitForPageToLoad(MAX_WAIT_TIME_IN_MS);
-		// Adds a dash (i.e. "-") in the address.
+		browserDriver.findElement(By.linkText("Uživatelský účet")).click();
+		this.waitForPageUrl(browserDriver, ".*/uzivatelsky-ucet/");
+		// Adds a dash (i.e. "-") into the email.
 		browserDriver.findElement(By.id("user.email")).sendKeys("vaclavas@rama-cz.aa");
 		browserDriver.findElement(By.cssSelector("input[type='submit']")).click();
-		selenium.waitForPageToLoad(MAX_WAIT_TIME_IN_MS);
+		this.waitForPageUrl(browserDriver, ".*/uzivatelsky-ucet/");
 
-		// Logs out.
-		browserDriver.findElement(By.link("Odhlásit se")).click();;
-		selenium.waitForPageToLoad(MAX_WAIT_TIME_IN_MS);
+		browserDriver.findElement(By.linkText("Odhlásit se")).click();
+		this.waitForPageUrl(browserDriver, ".*/prihlaseni/");
 
-		// Logs in.
-		browserDriver.findElement(By.id("login", "vaclavas@rama-cz.aa");
-		browserDriver.findElement(By.id("password")).sendKeys("password");
-		browserDriver.findElement(By.cssSelector("input[type='submit']")).click();
-		selenium.waitForPageToLoad(MAX_WAIT_TIME_IN_MS);
+		this.logIn("vaclavas@rama-cz.aa", "password");
+		this.waitForPageUrl(browserDriver, ".*/uzivatelsky-ucet/");
 
 		// Sets up the original email address.
-		selenium.click("link=Uživatelský účet");
-		selenium.waitForPageToLoad(MAX_WAIT_TIME_IN_MS);
+		browserDriver.findElement(By.linkText("Uživatelský účet")).click();
+		this.waitForPageUrl(browserDriver, ".*/uzivatelsky-ucet/");
+		// Removes a dash from the email.
 		browserDriver.findElement(By.id("user.email")).sendKeys("vaclavas@ramacz.aa");
 		browserDriver.findElement(By.cssSelector("input[type='submit']")).click();
-		selenium.waitForPageToLoad(MAX_WAIT_TIME_IN_MS);
+		this.waitForPageUrl(browserDriver, ".*/uzivatelsky-ucet/");
 
-		// Logs out.
-		browserDriver.findElement(By.link("Odhlásit se")).click();
-
-        // Waits for the page to load. Timeout is WAIT_LIMIT seconds.
-        (new WebDriverWait(browserDriver, WAIT_LIMIT)).until(new ExpectedCondition<Boolean>() {
-            public Boolean apply(WebDriver driver) {
-                String expectedUrlRegexp = ".*/prihlaseni/";
-                return driver.getCurrentUrl().matches(expectedUrlRegexp);
-            }
-        });
+		browserDriver.findElement(By.linkText("Odhlásit se")).click();
+		this.waitForPageUrl(browserDriver, ".*/prihlaseni/");
 	}
 }
