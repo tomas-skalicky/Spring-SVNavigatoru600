@@ -7,7 +7,7 @@ import org.junit.experimental.categories.Category;
 
 import svnavigatoru.service.util.Hash;
 
-import com.svnavigatoru600.selenium.EmailTest;
+import com.svnavigatoru600.selenium.tests.EmailTest;
 import com.svnavigatoru600.test.category.FastTests;
 
 /**
