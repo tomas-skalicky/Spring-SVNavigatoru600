@@ -88,4 +88,26 @@ public abstract class SeleniumTest {
 		browserDriver.findElement(By.id("password")).sendKeys(password);
 		browserDriver.findElement(By.cssSelector("input[type='submit']")).click();
 	}
+
+	/**
+	 * Returns the text encapsulated by the given element.
+	 * 
+	 * @param elementXpath
+	 *            XPath expression of the desired element
+	 * @return Text in the element
+	 */
+	protected String getElementText(final String elementXpath) {
+		return browserDriver.findElement(By.xpath(elementXpath)).getText();
+	}
+
+	/**
+	 * Returns the value of the <code>value</code> attribute of the given element.
+	 * 
+	 * @param elementXpath
+	 *            XPath expression of the desired element
+	 * @return Value of the <code>value</code> attribute of the element
+	 */
+	protected String getAttributeValue(final String elementXpath) {
+		return browserDriver.findElement(By.xpath(elementXpath)).getAttribute("value");
+	}
 }
