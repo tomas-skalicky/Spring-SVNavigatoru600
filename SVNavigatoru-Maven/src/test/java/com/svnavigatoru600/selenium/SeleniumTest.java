@@ -103,11 +103,11 @@ public abstract class SeleniumTest {
 	/**
 	 * Returns the value of the <code>value</code> attribute of the given element.
 	 * 
-	 * @param elementXpath
-	 *            XPath expression of the desired element
+	 * @param elementId
+	 *            ID of the desired element
 	 * @return Value of the <code>value</code> attribute of the element
 	 */
-	protected String getAttributeValue(final String elementXpath) {
-		return browserDriver.findElement(By.xpath(elementXpath)).getAttribute("value");
+	protected String getAttributeValue(final String elementId) {
+		return browserDriver.findElement(By.id(elementId)).getAttribute("value");
 	}
 }
