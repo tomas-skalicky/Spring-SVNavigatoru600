@@ -32,6 +32,9 @@
 
 
 	<build>
+		<finalName>${project.artifactId}</finalName>
+
+
 		<extensions>
 			<extension>
 				<!-- Necessary for a deployment to Nexus -->
@@ -200,7 +203,7 @@
 					<configuration>
 						<!-- (see http://tomcat.apache.org/tomcat-7.0-doc/manager-howto.html#Supported_Manager_Commands) -->
 						<url>http://localhost:9080/manager/text</url>
-						<path>${project.artifactId}</path>
+						<path>/${project.build.finalName}</path>
 						<charset>${project.build.sourceEncoding}</charset>
 						<server>local_tomcat</server>
 						<update>true</update>
