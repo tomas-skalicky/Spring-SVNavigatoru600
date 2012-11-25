@@ -15,7 +15,7 @@ public class Configuration {
 	/**
 	 * The web page domain.
 	 */
-	public static final String DOMAIN = "www.SVNavigatoru600.com";
+	public static final String DOMAIN = "www.svnavigatoru600.com";
 	/**
 	 * The JSP page which helps to clear the {@link ModelMap}.
 	 */
