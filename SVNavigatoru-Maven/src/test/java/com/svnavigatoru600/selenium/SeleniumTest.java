@@ -1,5 +1,6 @@
 package com.svnavigatoru600.selenium;
 
+import java.net.URL;
 import java.util.concurrent.TimeUnit;
 
 import org.junit.AfterClass;
@@ -7,7 +8,9 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.remote.Augmenter;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.context.ApplicationContext;
@@ -32,9 +35,9 @@ public abstract class SeleniumTest {
 	@BeforeClass
 	public static void openBrowser() throws Exception {
 		final Server seleniumServer = (Server) APPLICATION_CONTEXT.getBean("seleniumServer");
-		// browserDriver = (new Augmenter()).augment(new RemoteWebDriver(new URL(seleniumServer.getUrl()),
-		// DesiredCapabilities.firefox()));
-		browserDriver = new FirefoxDriver();
+		browserDriver = (new Augmenter()).augment(new RemoteWebDriver(new URL(seleniumServer.getUrl()),
+				DesiredCapabilities.firefox()));
+		// browserDriver = new FirefoxDriver();
 	}
 
 	@Before
