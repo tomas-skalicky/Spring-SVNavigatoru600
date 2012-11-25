@@ -23,7 +23,7 @@ fi
 
 # Goes to the home of the project.
 cd d:
-cd Development/Java/SourceFiles/Spring/SVNavigatoru-Maven/
+cd Development/Java/SourceFiles/Spring/SVNavigatoru/SVNavigatoru-Maven/
 
 
 # Cleans up before a compilation.
