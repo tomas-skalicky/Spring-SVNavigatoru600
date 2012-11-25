@@ -4,6 +4,7 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 
 import com.svnavigatoru600.selenium.SeleniumTest;
 import com.svnavigatoru600.test.category.SeleniumTests;
@@ -24,29 +25,33 @@ public class EmailTest extends SeleniumTest {
 		final WebDriver browserDriver = this.getBrowserDriver();
 
 		this.logIn("vaclavas@ramacz.aa", "password");
-		this.waitForPageUrl(browserDriver, ".*/uzivatelsky-ucet/");
+		this.waitForPageUrl(browserDriver, ".*/novinky/");
 
 		// Edits the email address of the logged-in user.
 		browserDriver.findElement(By.linkText("Uživatelský účet")).click();
 		this.waitForPageUrl(browserDriver, ".*/uzivatelsky-ucet/");
 		// Adds a dash (i.e. "-") into the email.
-		browserDriver.findElement(By.id("user.email")).sendKeys("vaclavas@rama-cz.aa");
+		WebElement userEmailElement = browserDriver.findElement(By.id("user.email"));
+		userEmailElement.clear();
+		userEmailElement.sendKeys("vaclavas@rama-cz.aa");
 		browserDriver.findElement(By.cssSelector("input[type='submit']")).click();
-		this.waitForPageUrl(browserDriver, ".*/uzivatelsky-ucet/");
+		this.waitForPageUrl(browserDriver, ".*/uzivatelsky-ucet/ulozeno/");
 
 		browserDriver.findElement(By.linkText("Odhlásit se")).click();
 		this.waitForPageUrl(browserDriver, ".*/prihlaseni/");
 
 		this.logIn("vaclavas@rama-cz.aa", "password");
-		this.waitForPageUrl(browserDriver, ".*/uzivatelsky-ucet/");
+		this.waitForPageUrl(browserDriver, ".*/novinky/");
 
 		// Sets up the original email address.
 		browserDriver.findElement(By.linkText("Uživatelský účet")).click();
 		this.waitForPageUrl(browserDriver, ".*/uzivatelsky-ucet/");
 		// Removes a dash from the email.
-		browserDriver.findElement(By.id("user.email")).sendKeys("vaclavas@ramacz.aa");
+		userEmailElement = browserDriver.findElement(By.id("user.email"));
+		userEmailElement.clear();
+		userEmailElement.sendKeys("vaclavas@ramacz.aa");
 		browserDriver.findElement(By.cssSelector("input[type='submit']")).click();
-		this.waitForPageUrl(browserDriver, ".*/uzivatelsky-ucet/");
+		this.waitForPageUrl(browserDriver, ".*/uzivatelsky-ucet/ulozeno/");
 
 		browserDriver.findElement(By.linkText("Odhlásit se")).click();
 		this.waitForPageUrl(browserDriver, ".*/prihlaseni/");
