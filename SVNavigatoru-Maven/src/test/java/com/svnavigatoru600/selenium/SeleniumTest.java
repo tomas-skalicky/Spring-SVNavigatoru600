@@ -23,7 +23,7 @@ public abstract class SeleniumTest {
 	protected static final ApplicationContext APPLICATION_CONTEXT = new AnnotationConfigApplicationContext(
 			SeleniumAppConfig.class);
 
-	protected static final long DEFAULT_TIMEOUT_IN_SECONDS = WebDriverWait.DEFAULT_SLEEP_TIMEOUT;
+	protected static final long DEFAULT_TIMEOUT_IN_SECONDS = 10;
 	protected static final long DEFAULT_SLEEP_BETWEEN_POLLS_IN_MILLISECONDS = WebDriverWait.FIVE_HUNDRED_MILLIS
 			.in(TimeUnit.MILLISECONDS);
 
