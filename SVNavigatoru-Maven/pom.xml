@@ -185,24 +185,25 @@
 								<goal>read-project-properties</goal>
 							</goals>
 							<configuration>
-								<files>
-									<file>src/main/resources/deployment_server.properties</file>
-								</files>
+								<!-- There is used no property file till now. -->
+								<files />
 							</configuration>
 						</execution>
 					</executions>
 				</plugin>
 
+				<!-- (see http://tomcat.apache.org/maven-plugin-2.0/tomcat7-maven-plugin/index.html) -->
 				<plugin>
 					<groupId>org.apache.tomcat.maven</groupId>
 					<artifactId>tomcat7-maven-plugin</artifactId>
 					<version>2.0</version>
 					<configuration>
 						<!-- (see http://tomcat.apache.org/tomcat-7.0-doc/manager-howto.html#Supported_Manager_Commands) -->
-						<url>http://${deployment.host}:${deployment.port}${deployment.path}</url>
-						<path>/${project.artifactId}.${project.groupId}</path>
+						<url>http://localhost:9080/manager/text</url>
+						<path>${project.artifactId}</path>
 						<charset>${project.build.sourceEncoding}</charset>
-						<server>${deployment.maven.serverId}</server>
+						<server>local_tomcat</server>
+						<update>true</update>
 					</configuration>
 				</plugin>
 			</plugins>
