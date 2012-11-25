@@ -5,7 +5,6 @@ import org.springframework.validation.Errors;
 
 import com.svnavigatoru600.domain.eventcalendar.CalendarEvent;
 
-
 @Service
 public class EditEventValidator extends EventValidator {
 

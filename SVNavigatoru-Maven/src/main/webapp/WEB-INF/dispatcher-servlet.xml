@@ -36,7 +36,7 @@
 
 
 	<!-- Loads @Controllers only. The rest is loaded in the applicationContext-business.xml file. -->
-	<context:component-scan base-package="svnavigatoru" use-default-filters="false">
+	<context:component-scan base-package="com.svnavigatoru600" use-default-filters="false">
 		<context:include-filter expression="org.springframework.stereotype.Controller"
 			type="annotation" />
 	</context:component-scan>
