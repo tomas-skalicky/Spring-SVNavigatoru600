@@ -18,7 +18,7 @@ cd $BUILD_HOME
 
 
 # Renames the package to the target name.
-MAVEN_PACKAGE_NAME=SVNavigatoru*.war
+MAVEN_PACKAGE_NAME=svnavigatoru600*.war
 TARGET_PACKAGE_NAME="ROOT.war"
 mv $MAVEN_PACKAGE_NAME $TARGET_PACKAGE_NAME
 
