@@ -27,7 +27,7 @@ public class LogInTest extends SeleniumTest {
 		Assert.assertTrue(AssertUtils.getActualUrlReport(browserDriver),
 				this.waitForPageUrl(browserDriver, ".*/uzivatelsky-ucet/"));
 
-		browserDriver.findElement(By.xpath("//a[@href='/j_spring_security_logout']")).click();
+		browserDriver.findElement(By.linkText("Odhlásit se")).click();
 		Assert.assertTrue(AssertUtils.getActualUrlReport(browserDriver),
 				this.waitForPageUrl(browserDriver, ".*/prihlaseni/"));
 	}
