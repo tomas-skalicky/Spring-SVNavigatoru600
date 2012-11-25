@@ -32,7 +32,7 @@
 	<servers>
 		<server>
 			<id>local_tomcat</id>
-			<username>tomcat</username>
+			<username>tomcat-script</username>
 			<password>s3cret</password>
 		</server>
 	</servers>
