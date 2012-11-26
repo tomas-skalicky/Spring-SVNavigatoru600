@@ -17,6 +17,7 @@
 		<groupId>my</groupId>
 		<artifactId>distribution-management</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
+		<relativePath>../distribution-management</relativePath>
 	</parent>
 
 
