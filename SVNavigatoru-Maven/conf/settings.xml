@@ -27,15 +27,68 @@
 <settings xmlns="http://maven.apache.org/SETTINGS/1.0.0" 
           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
           xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd">
+		  
 	<pluginGroups />
 	<proxies />
+	
 	<servers>
 		<server>
 			<id>local_tomcat</id>
 			<username>tomcat-script</username>
 			<password>s3cret</password>
 		</server>
+		<server>
+			<id>nexus-deployment</id>
+			<username>deployment</username>
+			<password>deployment123</password>
+		</server>
 	</servers>
-	<mirrors />
-	<profiles />
+
+	<mirrors>
+		<mirror>
+			<!-- This sends everything else to /public -->
+			<id>nexus</id>
+			<mirrorOf>*</mirrorOf>
+			<url>http://localhost:9080/nexus/content/groups/public/</url>
+		</mirror>
+	</mirrors>
+	<profiles>
+
+		<profile>
+			<id>nexus</id>
+			<!-- Enables snapshots for the built in the central repository -->
+			<!-- to send all requests to nexus via the mirror. -->
+			<repositories>
+				<repository>
+					<id>central</id>
+					<url>http://central</url>
+					<releases>
+						<enabled>true</enabled>
+					</releases>
+					<snapshots>
+						<enabled>true</enabled>
+						<updatePolicy>always</updatePolicy>
+					</snapshots>
+				</repository>
+			</repositories>
+			<pluginRepositories>
+				<pluginRepository>
+					<id>central</id>
+					<url>http://central</url>
+					<releases>
+						<enabled>true</enabled>
+					</releases>
+					<snapshots>
+						<enabled>true</enabled>
+					</snapshots>
+				</pluginRepository>
+			</pluginRepositories>
+		</profile>
+
+	</profiles>
+
+	<!-- List of profiles that are active for all builds. -->
+	<activeProfiles>
+		<activeProfile>nexus</activeProfile>
+	</activeProfiles>
 </settings>
