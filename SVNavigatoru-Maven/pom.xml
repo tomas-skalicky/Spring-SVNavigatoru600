@@ -40,6 +40,18 @@
 
 	<build>
 		<finalName>${project.artifactId}</finalName>
+		
+		
+		<extensions>
+			<extension>
+				<!-- Necessary for a deployment to Nexus -->
+				<!-- Added since (unlike the Maven 2.x,) the Maven 3 does not support 
+					the dav protocol by default. -->
+				<groupId>org.apache.maven.wagon</groupId>
+				<artifactId>wagon-webdav-jackrabbit</artifactId>
+				<version>1.0-beta-7</version>
+			</extension>
+		</extensions>
 
 
 		<plugins>
