@@ -17,6 +17,7 @@
 		<groupId>my</groupId>
 		<artifactId>distribution-management</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
+		<relativePath>../distribution-management/pom.xml</relativePath>
 	</parent>
 
 
@@ -29,18 +30,6 @@
 
 
 	<build>
-		<extensions>
-			<extension>
-				<!-- Necessary for a deployment to Nexus -->
-				<!-- Added since (unlike the Maven 2.x,) the Maven 3 does not support 
-					the dav protocol by default. -->
-				<groupId>org.apache.maven.wagon</groupId>
-				<artifactId>wagon-webdav-jackrabbit</artifactId>
-				<version>1.0-beta-7</version>
-			</extension>
-		</extensions>
-		
-		
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
