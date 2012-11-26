@@ -13,6 +13,13 @@
 	<url>http://svnavigatoru600.com</url>
 
 
+	<parent>
+		<groupId>my</groupId>
+		<artifactId>distribution-management</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+
+
 	<properties>
 		<jdk.version>1.7</jdk.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
