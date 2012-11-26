@@ -125,9 +125,6 @@
 				<groupId>org.junit.extensions</groupId>
 				<artifactId>cpsuite</artifactId>
 				<version>1.2.5</version>
-				<!-- There should be the test scope. -->
-				<scope>system</scope>
-				<systemPath>${basedir}/lib/cpsuite-1.2.5.jar</systemPath>
 			</dependency>
 
 			<dependency>
