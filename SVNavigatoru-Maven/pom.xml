@@ -13,6 +13,13 @@
 	<url>http://svnavigatoru600.com</url>
 
 
+	<parent>
+		<groupId>my</groupId>
+		<artifactId>distribution-management</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+
+
 	<properties>
 		<!-- Bound with the maven.build.timestamp variable -->
 		<!-- (see http://maven.apache.org/guides/introduction/introduction-to-the-pom.html#Available_Variables) -->
@@ -33,17 +40,6 @@
 
 	<build>
 		<finalName>${project.artifactId}</finalName>
-
-
-		<extensions>
-			<extension>
-				<!-- Necessary for a deployment to Nexus -->
-				<!-- Added since (unlike the Maven 2.x,) the Maven 3 does not support the dav on the url by default. -->
-				<groupId>org.apache.maven.wagon</groupId>
-				<artifactId>wagon-webdav-jackrabbit</artifactId>
-				<version>1.0-beta-7</version>
-			</extension>
-		</extensions>
 
 
 		<plugins>
