@@ -13,12 +13,27 @@
 	<url>http://svnavigatoru600.com</url>
 
 
-	<parent>
-		<groupId>my</groupId>
-		<artifactId>distribution-management</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
-		<relativePath>../distribution-management/pom.xml</relativePath>
-	</parent>
+<!-- Jenkins's plugin called Multi SCMs contains a bug. As a result, the plugin cannot be used with multiple Git repositories, -->
+<!-- hence the configuration of the my.distribution-management project is copied here. -->
+<!-- (see https://issues.jenkins-ci.org/browse/JENKINS-13634?page=com.atlassian.jira.plugin.system.issuetabpanels:all-tabpanel -->
+<!-- 	<parent> -->
+<!-- 		<groupId>my</groupId> -->
+<!-- 		<artifactId>distribution-management</artifactId> -->
+<!-- 		<version>0.0.1-SNAPSHOT</version> -->
+<!-- 		<relativePath>../../distribution-management/distribution-management/pom.xml</relativePath> -->
+<!-- 	</parent> -->
+	<distributionManagement>
+		<repository>
+			<id>nexus-deployment</id>
+			<name>Nexus Releases</name>
+			<url>dav:http://localhost:9080/nexus/content/repositories/releases</url>
+		</repository>
+		<snapshotRepository>
+			<id>nexus-deployment</id>
+			<name>Nexus Snapshots</name>
+			<url>dav:http://localhost:9080/nexus/content/repositories/snapshots</url>
+		</snapshotRepository>
+	</distributionManagement>
 
 
 	<properties>
