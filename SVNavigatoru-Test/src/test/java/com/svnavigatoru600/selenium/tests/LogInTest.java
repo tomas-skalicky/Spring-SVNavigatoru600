@@ -17,17 +17,17 @@ import com.svnavigatoru600.test.category.SeleniumTests;
 @Category(SeleniumTests.class)
 public class LogInTest extends SeleniumTest {
 
-	@Test
-	public void testLogInLogOut() throws Exception {
-		final WebDriver browserDriver = this.getBrowserDriver();
+    @Test
+    public void testLogInLogOut() throws Exception {
+        final WebDriver browserDriver = this.getBrowserDriver();
 
-		final TestUser user = (TestUser) APPLICATION_CONTEXT.getBean("testUser");
-		this.logIn(user.getUsername(), user.getPassword());
-		Assert.assertTrue(AssertUtils.getActualUrlReport(browserDriver),
-				this.waitForPageUrl(browserDriver, ".*/uzivatelsky-ucet/"));
+        final TestUser user = (TestUser) APPLICATION_CONTEXT.getBean("testUser");
+        this.logIn(user.getUsername(), user.getPassword());
+        Assert.assertTrue(AssertUtils.getActualUrlReport(browserDriver),
+                this.waitForPageUrl(browserDriver, ".*/uzivatelsky-ucet/"));
 
-		browserDriver.findElement(By.xpath("//a[@href='/j_spring_security_logout']")).click();
-		Assert.assertTrue(AssertUtils.getActualUrlReport(browserDriver),
-				this.waitForPageUrl(browserDriver, ".*/prihlaseni/"));
-	}
+        browserDriver.findElement(By.xpath("//a[@href='/j_spring_security_logout']")).click();
+        Assert.assertTrue(AssertUtils.getActualUrlReport(browserDriver),
+                this.waitForPageUrl(browserDriver, ".*/prihlaseni/"));
+    }
 }
