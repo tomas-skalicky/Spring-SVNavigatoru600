@@ -7,7 +7,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
 import com.svnavigatoru600.selenium.AssertUtils;
-import com.svnavigatoru600.selenium.SeleniumTest;
+import com.svnavigatoru600.selenium.AbstractSeleniumTest;
 import com.svnavigatoru600.selenium.TestUser;
 import com.svnavigatoru600.test.category.SeleniumTests;
 
@@ -15,10 +15,14 @@ import com.svnavigatoru600.test.category.SeleniumTests;
  * @author <a href="mailto:tomas.skalicky@gfk.com">Tomas Skalicky</a>
  */
 @Category(SeleniumTests.class)
-public class LogInTest extends SeleniumTest {
+public class LogInTest extends AbstractSeleniumTest {
 
+    /**
+     * @throws Exception
+     *             If something bad happens.
+     */
     @Test
-    public void testLogInLogOut() throws Exception {
+    public final void testLogInLogOut() throws Exception {
         final WebDriver browserDriver = this.getBrowserDriver();
 
         final TestUser user = (TestUser) APPLICATION_CONTEXT.getBean("testUser");
