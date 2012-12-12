@@ -21,7 +21,7 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
  * 
  * @author <a href="mailto:tomas.skalicky@gfk.com">Tomas Skalicky</a>
  */
-public abstract class SeleniumTest {
+public abstract class AbstractSeleniumTest {
 
     protected static final ApplicationContext APPLICATION_CONTEXT = new AnnotationConfigApplicationContext(
             SeleniumAppConfig.class);

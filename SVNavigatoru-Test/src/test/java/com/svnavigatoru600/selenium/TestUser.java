@@ -4,7 +4,6 @@ package com.svnavigatoru600.selenium;
  * Represents the user created only for the purposes of Selenium testing.
  * 
  * @author <a href="mailto:tomas.skalicky@gfk.com">Tomas Skalicky</a>
- * @since 12.2
  */
 public class TestUser {
 
@@ -17,19 +16,33 @@ public class TestUser {
      */
     private String password;
 
-    public String getUsername() {
+    /**
+     * @return The username of this {@link TestUser}.
+     */
+    public final String getUsername() {
         return this.username;
     }
 
-    public void setUsername(String username) {
+    /**
+     * @param username
+     *            The new username of this {@link TestUser}.
+     */
+    public final void setUsername(final String username) {
         this.username = username;
     }
 
-    public String getPassword() {
+    /**
+     * @return The password of this {@link TestUser}.
+     */
+    public final String getPassword() {
         return this.password;
     }
 
-    public void setPassword(String password) {
+    /**
+     * @param password
+     *            The new password of this {@link TestUser}.
+     */
+    public final void setPassword(final String password) {
         this.password = password;
     }
 }
