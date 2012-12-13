@@ -19,7 +19,7 @@ public class TestUser {
     /**
      * @return The username of this {@link TestUser}.
      */
-    public final String getUsername() {
+    public String getUsername() {
         return this.username;
     }
 
@@ -27,14 +27,14 @@ public class TestUser {
      * @param username
      *            The new username of this {@link TestUser}.
      */
-    public final void setUsername(final String username) {
+    public void setUsername(final String username) {
         this.username = username;
     }
 
     /**
      * @return The password of this {@link TestUser}.
      */
-    public final String getPassword() {
+    public String getPassword() {
         return this.password;
     }
 
@@ -42,7 +42,7 @@ public class TestUser {
      * @param password
      *            The new password of this {@link TestUser}.
      */
-    public final void setPassword(final String password) {
+    public void setPassword(final String password) {
         this.password = password;
     }
 }

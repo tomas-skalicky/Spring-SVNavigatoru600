@@ -22,7 +22,7 @@ public class LogInTest extends AbstractSeleniumTest {
      *             If something bad happens.
      */
     @Test
-    public final void testLogInLogOut() throws Exception {
+    public void testLogInLogOut() throws Exception {
         final WebDriver browserDriver = this.getBrowserDriver();
 
         final TestUser user = (TestUser) APPLICATION_CONTEXT.getBean("testUser");
