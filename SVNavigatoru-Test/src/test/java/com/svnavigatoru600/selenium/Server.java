@@ -34,7 +34,7 @@ public class Server {
     }
 
     /**
-     * Gets the path which follows after http://{@link Server#getHost host}: {@link Server#getPort port}
+     * Gets the path which follows after http://{@link Server#getHost host}: {@link Server#getPort port}.
      */
     public int getPath() {
         return this.port;
