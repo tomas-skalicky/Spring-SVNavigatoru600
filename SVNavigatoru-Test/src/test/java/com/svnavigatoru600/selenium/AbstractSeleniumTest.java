@@ -113,22 +113,4 @@ public abstract class AbstractSeleniumTest {
             }
         });
     }
-
-    /**
-     * <p>
-     * Signs in to the application with the given credentials. It does not check the "remember me" checkbox.
-     * It does not test, whether the login ended up with a success, or not.
-     * </p>
-     * <b>PRECONDITION:</b> The current location is the login page of the application.
-     * 
-     * @param login
-     *            The username which is going to be used for sign-in
-     * @param password
-     *            The password which is going to be used for sign-in
-     */
-    protected void logIn(final String login, final String password) {
-        browserDriver.findElement(By.id("login")).sendKeys(login);
-        browserDriver.findElement(By.id("password")).sendKeys(password);
-        browserDriver.findElement(By.cssSelector("input[type='submit']")).click();
-    }
 }

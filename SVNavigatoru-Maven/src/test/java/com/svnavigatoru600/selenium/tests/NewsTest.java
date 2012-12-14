@@ -8,7 +8,7 @@ import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.util.Assert;
 
-import com.svnavigatoru600.selenium.AbstractSeleniumTest;
+import com.svnavigatoru600.selenium.AbstractTailoredSeleniumTest;
 
 /**
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
@@ -16,12 +16,7 @@ import com.svnavigatoru600.selenium.AbstractSeleniumTest;
  */
 // @Category(SeleniumTests.class)
 // There are bugs.
-public class NewsTest extends AbstractSeleniumTest {
-    
-    /**
-     * The regular expression of URL of the homepage.
-     */
-    private static final String HOMEPAGE_URL_REG_EXP = ".*/novinky/";
+public class NewsTest extends AbstractTailoredSeleniumTest {
 
     private static final String XPATH_NEWS_SECTION = "//*[@id='nav']/li[1]/a[1]";
 
@@ -54,13 +49,16 @@ public class NewsTest extends AbstractSeleniumTest {
         this.logOut();
     }
 
+    /**
+     * Signs in the application. It checks the remember-me checkbox.
+     */
     private void logIn() {
         final WebDriver browserDriver = this.getBrowserDriver();
 
-        browserDriver.findElement(By.id("login")).sendKeys("skalicky.tomas@gmail.com");
-        browserDriver.findElement(By.id("password")).sendKeys("t");
+        browserDriver.findElement(By.id(LOGIN_ELEMENT_ID)).sendKeys("skalicky.tomas@gmail.com");
+        browserDriver.findElement(By.id(PASSWORD_ELEMENT_ID)).sendKeys("t");
         browserDriver.findElement(By.id("rememberMe")).click();
-        browserDriver.findElement(By.cssSelector("input[type='submit']")).click();
+        browserDriver.findElement(By.cssSelector(SUBMIT_SELECTOR)).click();
         this.waitForPageUrl(browserDriver, HOMEPAGE_URL_REG_EXP);
     }
 
@@ -87,7 +85,7 @@ public class NewsTest extends AbstractSeleniumTest {
         newsTextBox.sendKeys("<p>" + newTitle + "</p>");
         browserDriver.switchTo().defaultContent();
 
-        browserDriver.findElement(By.cssSelector("input[type='submit']")).click();
+        browserDriver.findElement(By.cssSelector(SUBMIT_SELECTOR)).click();
         Assert.isTrue((new WebDriverWait(browserDriver, DEFAULT_TIMEOUT_IN_SECONDS,
                 DEFAULT_SLEEP_BETWEEN_POLLS_IN_MILLISECONDS)).until(new ExpectedCondition<Boolean>() {
             @Override
@@ -120,7 +118,7 @@ public class NewsTest extends AbstractSeleniumTest {
         newsTextBox.sendKeys(newTextWithFormating);
         browserDriver.switchTo().defaultContent();
 
-        browserDriver.findElement(By.cssSelector("input[type='submit']")).click();
+        browserDriver.findElement(By.cssSelector(SUBMIT_SELECTOR)).click();
         Assert.isTrue((new WebDriverWait(browserDriver, DEFAULT_TIMEOUT_IN_SECONDS,
                 DEFAULT_SLEEP_BETWEEN_POLLS_IN_MILLISECONDS)).until(new ExpectedCondition<Boolean>() {
             @Override
@@ -133,6 +131,10 @@ public class NewsTest extends AbstractSeleniumTest {
         this.waitForPageUrl(browserDriver, HOMEPAGE_URL_REG_EXP);
     }
 
+    /**
+     * Deletes the last inserted news records, i.e. the news which has been created by the
+     * {@link #createNewNews() createNewNews} method.
+     */
     private void deleteNewNews() {
         final WebDriver browserDriver = this.getBrowserDriver();
 
@@ -143,10 +145,13 @@ public class NewsTest extends AbstractSeleniumTest {
         // confirmation.matches("^Opravdu chcete smazat novinku `Edited News`\\?$"));
     }
 
+    /**
+     * Logs out from the application.
+     */
     private void logOut() {
         final WebDriver browserDriver = this.getBrowserDriver();
 
-        browserDriver.findElement(By.linkText("Odhlásit se")).click();
-        this.waitForPageUrl(browserDriver, ".*/prihlaseni/");
+        browserDriver.findElement(By.linkText(LOGOUT_LINK_TEXT)).click();
+        this.waitForPageUrl(browserDriver, LOGIN_PAGE_URL_REG_EXP);
     }
 }
