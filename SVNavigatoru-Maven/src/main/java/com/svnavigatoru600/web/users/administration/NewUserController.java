@@ -43,7 +43,8 @@ public class NewUserController extends NewEditUserController {
      * Constructor.
      */
     @Autowired
-    public NewUserController(final UserDao userDao, final NewUserValidator validator, final MessageSource messageSource) {
+    public NewUserController(final UserDao userDao, final NewUserValidator validator,
+            final MessageSource messageSource) {
         super(userDao, validator, messageSource);
     }
 
@@ -77,8 +78,9 @@ public class NewUserController extends NewEditUserController {
      */
     @RequestMapping(value = NewUserController.BASE_URL + "novy/", method = RequestMethod.POST)
     public String processSubmittedForm(
-            @ModelAttribute(NewUserController.COMMAND) AdministrateUserData command, final BindingResult result,
-            final SessionStatus status, final HttpServletRequest request, final ModelMap model) {
+            @ModelAttribute(NewUserController.COMMAND) AdministrateUserData command,
+            final BindingResult result, final SessionStatus status, final HttpServletRequest request,
+            final ModelMap model) {
 
         // Sets up all (but necessary) maps.
         command.setRoleCheckboxId(this.getRoleCheckboxId());

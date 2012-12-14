@@ -64,7 +64,8 @@ public class DeleteUserController extends UserController {
 
         final String subject = Localization.findLocaleMessage(this.messageSource, request,
                 "email.subject.user-deleted");
-        final Object[] messageParams = new Object[] { user.getLastName(), user.getUsername(), Configuration.DOMAIN };
+        final Object[] messageParams = new Object[] { user.getLastName(), user.getUsername(),
+                Configuration.DOMAIN };
         final String messageText = Localization.findLocaleMessage(this.messageSource, request,
                 "email.text.user-deleted", messageParams);
 

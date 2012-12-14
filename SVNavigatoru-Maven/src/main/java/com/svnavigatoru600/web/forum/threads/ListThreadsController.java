@@ -98,7 +98,8 @@ public class ListThreadsController extends ThreadController {
      * Gets a {@link Map} which for each input {@link Thread} contains an appropriate localized delete
      * questions.
      */
-    private Map<Thread, String> getLocalizedDeleteQuestions(final List<Thread> threads, final HttpServletRequest request) {
+    private Map<Thread, String> getLocalizedDeleteQuestions(final List<Thread> threads,
+            final HttpServletRequest request) {
         final String messageCode = "forum.threads.do-you-really-want-to-delete-thread";
         final Map<Thread, String> questions = new HashMap<Thread, String>();
 
