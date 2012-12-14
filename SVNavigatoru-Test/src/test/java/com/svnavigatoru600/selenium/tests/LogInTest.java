@@ -6,8 +6,8 @@ import org.junit.experimental.categories.Category;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
-import com.svnavigatoru600.selenium.AssertUtils;
 import com.svnavigatoru600.selenium.AbstractSeleniumTest;
+import com.svnavigatoru600.selenium.AssertUtils;
 import com.svnavigatoru600.selenium.TestUser;
 import com.svnavigatoru600.test.category.SeleniumTests;
 

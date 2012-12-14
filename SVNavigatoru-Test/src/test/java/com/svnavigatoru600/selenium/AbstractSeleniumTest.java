@@ -121,8 +121,10 @@ public abstract class AbstractSeleniumTest {
      * </p>
      * <b>PRECONDITION:</b> The current location is the login page of the application.
      * 
-     * @param login The username which is going to be used for sign-in
-     * @param password The password which is going to be used for sign-in
+     * @param login
+     *            The username which is going to be used for sign-in
+     * @param password
+     *            The password which is going to be used for sign-in
      */
     protected void logIn(final String login, final String password) {
         browserDriver.findElement(By.id("login")).sendKeys(login);
