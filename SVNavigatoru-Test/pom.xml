@@ -86,6 +86,7 @@
 					<version>2.9.1</version>
 					<configuration>
 						<configLocation>${checkstyle.configLocation}</configLocation>
+						<includeTestSourceDirectory>true</includeTestSourceDirectory>
 					</configuration>
 				</plugin>
 			

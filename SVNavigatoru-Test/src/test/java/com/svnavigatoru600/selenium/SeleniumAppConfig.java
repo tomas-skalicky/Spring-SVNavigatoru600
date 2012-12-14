@@ -22,6 +22,12 @@ public class SeleniumAppConfig {
     @Autowired
     private Environment environment;
 
+    /**
+     * Gets the test user which used in Selenium tests to sign-in. It means that his credentials are stored in
+     * the DB.
+     * 
+     * @return The test user
+     */
     @Bean(name = "testUser")
     public TestUser getTestUser() {
         final TestUser user = new TestUser();
@@ -30,6 +36,11 @@ public class SeleniumAppConfig {
         return user;
     }
 
+    /**
+     * Gets information about server where the application is deployed to.
+     * 
+     * @return The deployment {@link Server}
+     */
     @Bean(name = "deployServer")
     public Server getDeployServer() {
         final Server server = new Server();
@@ -39,6 +50,11 @@ public class SeleniumAppConfig {
         return server;
     }
 
+    /**
+     * Gets information about server where the Selenium server (Selenium hub respectively) is running.
+     * 
+     * @return The Selenium {@link Server hub}
+     */
     @Bean(name = "seleniumServer")
     public Server getSeleniumServer() {
         final Server server = new Server();
