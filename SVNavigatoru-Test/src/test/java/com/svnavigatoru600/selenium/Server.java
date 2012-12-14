@@ -3,7 +3,7 @@ package com.svnavigatoru600.selenium;
 /**
  * A deploy or selenium server used in Selenium tests.
  * 
- * @author <a href="mailto:tomas.skalicky@gfk.com">Tomas Skalicky</a>
+ * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
 public class Server {
 

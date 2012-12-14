@@ -10,7 +10,7 @@ import com.svnavigatoru600.test.category.SlowTests;
 /**
  * Contains all tests which belong to the {@link SlowTests} category.
  * 
- * @author <a href="mailto:tomas.skalicky@gfk.com">Tomas Skalicky</a>
+ * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  * @see <a
  *      href="http://stackoverflow.com/questions/6226026/how-to-run-all-junit-tests-in-a-category-suite-with-ant">How-to-run-all-JUnit-tests-in-a-category</a>
  */

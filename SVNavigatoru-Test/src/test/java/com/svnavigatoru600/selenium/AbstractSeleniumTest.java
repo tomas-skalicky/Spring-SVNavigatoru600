@@ -19,7 +19,7 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 /**
  * Ancestor of all Selenium tests of the Viewer project.
  * 
- * @author <a href="mailto:tomas.skalicky@gfk.com">Tomas Skalicky</a>
+ * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
 public abstract class AbstractSeleniumTest {
 

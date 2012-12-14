@@ -10,7 +10,7 @@ import org.springframework.core.env.Environment;
  * {@link org.springframework.context.ApplicationContext Application context} for Selenium tests. It creates
  * necessary {@link Bean beans}.
  * 
- * @author <a href="mailto:tomas.skalicky@gfk.com">Tomas Skalicky</a>
+ * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
 @Configuration
 @PropertySource("classpath:selenium_environment.properties")
