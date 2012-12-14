@@ -26,15 +26,18 @@ public class OtherDocumentRecordDaoImpl extends HibernateDaoSupport implements O
         this.typeDao = typeDao;
     }
 
+    @Override
     public OtherDocumentRecord findById(int recordId) {
         return this.getHibernateTemplate().load(OtherDocumentRecord.class, recordId);
     }
 
+    @Override
     public OtherDocumentRecord findById(int recordId, boolean loadFile) {
         // TBD
         return null;
     }
 
+    @Override
     public OtherDocumentRecord findByFileName(String fileName) {
         // Stands for 'where' clause.
         DetachedCriteria criteria = DetachedCriteria.forClass(OtherDocumentRecord.class);
@@ -51,6 +54,7 @@ public class OtherDocumentRecordDaoImpl extends HibernateDaoSupport implements O
         return records.get(0);
     }
 
+    @Override
     @SuppressWarnings("unchecked")
     public List<OtherDocumentRecord> findOrdered(OrderType order) {
         String query = String.format("FROM OtherDocumentRecord r ORDER BY r.creationTime %s",
@@ -58,6 +62,7 @@ public class OtherDocumentRecordDaoImpl extends HibernateDaoSupport implements O
         return (List<OtherDocumentRecord>) this.getHibernateTemplate().find(query);
     }
 
+    @Override
     @SuppressWarnings("unchecked")
     public List<OtherDocumentRecord> findOrdered(OtherDocumentRecordType type, OrderType order) {
         String query = String.format("SELECT r FROM OtherDocumentRecord r INNER JOIN r.types t"
@@ -65,6 +70,7 @@ public class OtherDocumentRecordDaoImpl extends HibernateDaoSupport implements O
         return (List<OtherDocumentRecord>) this.getHibernateTemplate().find(query, type.name());
     }
 
+    @Override
     public void update(OtherDocumentRecord record) {
         record.setLastSaveTime(new Date());
         this.getHibernateTemplate().update(record);
@@ -74,6 +80,7 @@ public class OtherDocumentRecordDaoImpl extends HibernateDaoSupport implements O
         this.typeDao.save(record.getTypes());
     }
 
+    @Override
     public int save(OtherDocumentRecord record) {
         Date now = new Date();
         record.setCreationTime(now);
@@ -84,6 +91,7 @@ public class OtherDocumentRecordDaoImpl extends HibernateDaoSupport implements O
         // done it.
     }
 
+    @Override
     public void delete(DocumentRecord record) {
         this.getHibernateTemplate().delete(record);
     }

@@ -16,15 +16,18 @@ import com.svnavigatoru600.service.util.OrderType;
 
 public class SessionRecordDaoImpl extends HibernateDaoSupport implements SessionRecordDao {
 
+    @Override
     public SessionRecord findById(int recordId) {
         return this.getHibernateTemplate().load(SessionRecord.class, recordId);
     }
 
+    @Override
     public SessionRecord findById(int recordId, boolean loadFile) {
         // TBD
         return null;
     }
 
+    @Override
     public SessionRecord findByFileName(String fileName) {
         // Stands for 'where' clause.
         DetachedCriteria criteria = DetachedCriteria.forClass(SessionRecord.class);
@@ -41,6 +44,7 @@ public class SessionRecordDaoImpl extends HibernateDaoSupport implements Session
         return records.get(0);
     }
 
+    @Override
     @SuppressWarnings("unchecked")
     public List<SessionRecord> findOrdered(OrderType order) {
         String query = String.format("FROM SessionRecord r ORDER BY r.sessionDate %s",
@@ -48,6 +52,7 @@ public class SessionRecordDaoImpl extends HibernateDaoSupport implements Session
         return (List<SessionRecord>) this.getHibernateTemplate().find(query);
     }
 
+    @Override
     @SuppressWarnings("unchecked")
     public List<SessionRecord> findOrdered(SessionRecordType type, OrderType order) {
         String query = String.format("FROM SessionRecord r WHERE r.type = ? ORDER BY r.sessionDate %s",
@@ -55,14 +60,17 @@ public class SessionRecordDaoImpl extends HibernateDaoSupport implements Session
         return (List<SessionRecord>) this.getHibernateTemplate().find(query, type.name());
     }
 
+    @Override
     public void update(SessionRecord record) {
         this.getHibernateTemplate().update(record);
     }
 
+    @Override
     public int save(SessionRecord record) {
         return (Integer) this.getHibernateTemplate().save(record);
     }
 
+    @Override
     public void delete(DocumentRecord record) {
         this.getHibernateTemplate().delete(record);
     }

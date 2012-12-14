@@ -13,6 +13,7 @@ import com.svnavigatoru600.repository.records.OtherDocumentRecordTypeRelationDao
 public class OtherDocumentRecordTypeRelationDaoImpl extends HibernateDaoSupport implements
         OtherDocumentRecordTypeRelationDao {
 
+    @Override
     @SuppressWarnings("unchecked")
     public List<OtherDocumentRecordTypeRelation> find(int recordId) {
         DetachedCriteria criteria = DetachedCriteria.forClass(OtherDocumentRecordTypeRelation.class);
@@ -21,12 +22,14 @@ public class OtherDocumentRecordTypeRelationDaoImpl extends HibernateDaoSupport 
         return (List<OtherDocumentRecordTypeRelation>) this.getHibernateTemplate().findByCriteria(criteria);
     }
 
+    @Override
     public void save(Collection<OtherDocumentRecordTypeRelation> types) {
         for (OtherDocumentRecordTypeRelation type : types) {
             this.getHibernateTemplate().save(type);
         }
     }
 
+    @Override
     @SuppressWarnings("unchecked")
     public void delete(int recordId) {
         DetachedCriteria criteria = DetachedCriteria.forClass(OtherDocumentRecordTypeRelation.class);

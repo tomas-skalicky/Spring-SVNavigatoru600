@@ -13,6 +13,7 @@ import com.svnavigatoru600.repository.users.AuthorityDao;
 
 public class AuthorityDaoImpl extends HibernateDaoSupport implements AuthorityDao {
 
+    @Override
     @SuppressWarnings("unchecked")
     public List<Authority> find(String username) {
         DetachedCriteria criteria = DetachedCriteria.forClass(Authority.class);
@@ -21,12 +22,14 @@ public class AuthorityDaoImpl extends HibernateDaoSupport implements AuthorityDa
         return (List<Authority>) this.getHibernateTemplate().findByCriteria(criteria);
     }
 
+    @Override
     public void save(Collection<GrantedAuthority> authorities) {
         for (GrantedAuthority authority : authorities) {
             this.getHibernateTemplate().save(authority);
         }
     }
 
+    @Override
     @SuppressWarnings("unchecked")
     public void delete(String username) {
         DetachedCriteria criteria = DetachedCriteria.forClass(Authority.class);
