@@ -17,25 +17,34 @@ import com.svnavigatoru600.selenium.AbstractSeleniumTest;
 // @Category(SeleniumTests.class)
 // There are bugs.
 public class NewsTest extends AbstractSeleniumTest {
+    
+    /**
+     * The regular expression of URL of the homepage.
+     */
+    private static final String HOMEPAGE_URL_REG_EXP = ".*/novinky/";
 
-    private final String XPATH_NEWS_SECTION = "//*[@id='nav']/li[1]/a[1]";
+    private static final String XPATH_NEWS_SECTION = "//*[@id='nav']/li[1]/a[1]";
 
-    private final String XPATH_FIRST_NEWS_TITLE = "//*[@id='newsList']/*[@class='post'][1]//h3";
-    private final String XPATH_FIRST_NEWS_TEXT = "//*[@id='newsList']/*[@class='post'][1]/*[@class='post-content clearfix'][1]/p[1]";
+    private static final String XPATH_FIRST_NEWS_TITLE = "//*[@id='newsList']/*[@class='post'][1]//h3";
+    private static final String XPATH_FIRST_NEWS_TEXT = "//*[@id='newsList']/*[@class='post'][1]/*[@class='post-content clearfix'][1]/p[1]";
 
-    private final String XPATH_NEW_NEWS_LINK = "//*[@id='newNewsLink']/a[1]";
-    private final String NEW_NEWS_TITLE_ID = "news.title";
-    private final String NEW_NEWS_TEXT_ID = "tinymce";
-    private final String NEW_NEWS_SUBMIT_ID = "newsForm.submitButton";
+    private static final String XPATH_NEW_NEWS_LINK = "//*[@id='newNewsLink']/a[1]";
+    private static final String NEW_NEWS_TITLE_ID = "news.title";
+    private static final String NEW_NEWS_TEXT_ID = "tinymce";
+    private static final String NEW_NEWS_SUBMIT_ID = "newsForm.submitButton";
 
-    private final String XPATH_FIRST_NEWS_EDIT = "//*[@id='newsList']/*[@class='post'][1]//*[@class='controls'][1]/a[1]";
-    private final String EDIT_NEWS_TITLE_ID = "news.title";
-    private final String EDIT_NEWS_TEXT_ID = NEW_NEWS_TEXT_ID;
-    private final String EDIT_NEWS_SUBMIT_ID = NEW_NEWS_SUBMIT_ID;
-    private final String SUCCESS_EDIT_MESSAGE_ID = "successEditMessage";
+    private static final String XPATH_FIRST_NEWS_EDIT = "//*[@id='newsList']/*[@class='post'][1]//*[@class='controls'][1]/a[1]";
+    private static final String EDIT_NEWS_TITLE_ID = "news.title";
+    private static final String EDIT_NEWS_TEXT_ID = NEW_NEWS_TEXT_ID;
+    private static final String EDIT_NEWS_SUBMIT_ID = NEW_NEWS_SUBMIT_ID;
+    private static final String SUCCESS_EDIT_MESSAGE_ID = "successEditMessage";
 
-    private final String XPATH_FIRST_NEWS_DELETE = "//*[@id='newsList']/*[@class='post'][1]//*[@class='controls'][1]/a[2]";
+    private static final String XPATH_FIRST_NEWS_DELETE = "//*[@id='newsList']/*[@class='post'][1]//*[@class='controls'][1]/a[2]";
 
+    /**
+     * @throws Exception
+     *             If anything goes wrong.
+     */
     @Test
     public void testAddEditDelete() throws Exception {
         this.logIn();
@@ -52,7 +61,7 @@ public class NewsTest extends AbstractSeleniumTest {
         browserDriver.findElement(By.id("password")).sendKeys("t");
         browserDriver.findElement(By.id("rememberMe")).click();
         browserDriver.findElement(By.cssSelector("input[type='submit']")).click();
-        this.waitForPageUrl(browserDriver, ".*/novinky/");
+        this.waitForPageUrl(browserDriver, HOMEPAGE_URL_REG_EXP);
     }
 
     private void createNewNews() {
@@ -63,7 +72,7 @@ public class NewsTest extends AbstractSeleniumTest {
         Assert.isTrue((new WebDriverWait(browserDriver, DEFAULT_TIMEOUT_IN_SECONDS,
                 DEFAULT_SLEEP_BETWEEN_POLLS_IN_MILLISECONDS)).until(new ExpectedCondition<Boolean>() {
             @Override
-            public Boolean apply(WebDriver driver) {
+            public Boolean apply(final WebDriver driver) {
                 return "Přidat novinku".equals(NewsTest.this.getAttributeValue(NEW_NEWS_SUBMIT_ID));
             }
         }));
@@ -72,9 +81,9 @@ public class NewsTest extends AbstractSeleniumTest {
         browserDriver.findElement(By.id(NEW_NEWS_TITLE_ID)).sendKeys(newTitle);
 
         final String newText = "New Text";
-        WebElement tinymceIframe = browserDriver.findElement(By.id("news.text_ifr"));
+        final WebElement tinymceIframe = browserDriver.findElement(By.id("news.text_ifr"));
         browserDriver.switchTo().frame(tinymceIframe);
-        WebElement newsTextBox = browserDriver.findElement(By.id(NEW_NEWS_TEXT_ID));
+        final WebElement newsTextBox = browserDriver.findElement(By.id(NEW_NEWS_TEXT_ID));
         newsTextBox.sendKeys("<p>" + newTitle + "</p>");
         browserDriver.switchTo().defaultContent();
 
@@ -82,7 +91,7 @@ public class NewsTest extends AbstractSeleniumTest {
         Assert.isTrue((new WebDriverWait(browserDriver, DEFAULT_TIMEOUT_IN_SECONDS,
                 DEFAULT_SLEEP_BETWEEN_POLLS_IN_MILLISECONDS)).until(new ExpectedCondition<Boolean>() {
             @Override
-            public Boolean apply(WebDriver driver) {
+            public Boolean apply(final WebDriver driver) {
                 return newTitle.equals(NewsTest.this.getElementText(XPATH_FIRST_NEWS_TITLE))
                         && newText.equals(NewsTest.this.getElementText(XPATH_FIRST_NEWS_TEXT));
             }
@@ -96,7 +105,7 @@ public class NewsTest extends AbstractSeleniumTest {
         Assert.isTrue((new WebDriverWait(browserDriver, DEFAULT_TIMEOUT_IN_SECONDS,
                 DEFAULT_SLEEP_BETWEEN_POLLS_IN_MILLISECONDS)).until(new ExpectedCondition<Boolean>() {
             @Override
-            public Boolean apply(WebDriver driver) {
+            public Boolean apply(final WebDriver driver) {
                 return "Uložit změny".equals(NewsTest.this.getAttributeValue(EDIT_NEWS_SUBMIT_ID));
             }
         }));
@@ -105,9 +114,9 @@ public class NewsTest extends AbstractSeleniumTest {
         browserDriver.findElement(By.id(EDIT_NEWS_TITLE_ID)).sendKeys(newTitle);
 
         final String newTextWithFormating = "<p>Edited Text</p>";
-        WebElement tinymceIframe = browserDriver.findElement(By.id("news.text_ifr"));
+        final WebElement tinymceIframe = browserDriver.findElement(By.id("news.text_ifr"));
         browserDriver.switchTo().frame(tinymceIframe);
-        WebElement newsTextBox = browserDriver.findElement(By.id(EDIT_NEWS_TEXT_ID));
+        final WebElement newsTextBox = browserDriver.findElement(By.id(EDIT_NEWS_TEXT_ID));
         newsTextBox.sendKeys(newTextWithFormating);
         browserDriver.switchTo().defaultContent();
 
@@ -115,13 +124,13 @@ public class NewsTest extends AbstractSeleniumTest {
         Assert.isTrue((new WebDriverWait(browserDriver, DEFAULT_TIMEOUT_IN_SECONDS,
                 DEFAULT_SLEEP_BETWEEN_POLLS_IN_MILLISECONDS)).until(new ExpectedCondition<Boolean>() {
             @Override
-            public Boolean apply(WebDriver driver) {
+            public Boolean apply(final WebDriver driver) {
                 return driver.findElement(By.id(SUCCESS_EDIT_MESSAGE_ID)).isDisplayed();
             }
         }));
 
         browserDriver.findElement(By.xpath(XPATH_NEWS_SECTION)).click();
-        this.waitForPageUrl(browserDriver, ".*/novinky/");
+        this.waitForPageUrl(browserDriver, HOMEPAGE_URL_REG_EXP);
     }
 
     private void deleteNewNews() {
