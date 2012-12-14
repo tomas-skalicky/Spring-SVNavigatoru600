@@ -51,6 +51,8 @@
 		<plugin.properties-maven-plugin.version>1.0-alpha-2</plugin.properties-maven-plugin.version>
 		<dependency.spring.version>3.1.2.RELEASE</dependency.spring.version>
 		<dependency.spring-security.version>3.1.2.RELEASE</dependency.spring-security.version>
+		
+		<checkstyle.configLocation>D:/Documents/Private/SW/Eclipse/checkstyle.xml</checkstyle.configLocation>
 	</properties>
 
 
@@ -72,6 +74,11 @@
 
 
 		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-checkstyle-plugin</artifactId>
+			</plugin>
+			
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -135,6 +142,16 @@
 								</pluginExecution>
 							</pluginExecutions>
 						</lifecycleMappingMetadata>
+					</configuration>
+				</plugin>
+				
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-checkstyle-plugin</artifactId>
+					<version>2.9.1</version>
+					<configuration>
+						<configLocation>${checkstyle.configLocation}</configLocation>
+						<includeTestSourceDirectory>true</includeTestSourceDirectory>
 					</configuration>
 				</plugin>
 
