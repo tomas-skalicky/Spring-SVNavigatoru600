@@ -7,12 +7,12 @@ package com.svnavigatoru600.service.util;
  */
 public class Username {
 
-	private static final String VALID_USERNAME_REGEXP = "^[\\w\\-]{3,}$";
+    private static final String VALID_USERNAME_REGEXP = "^[\\w\\-]{3,}$";
 
-	/**
-	 * Indicates whether the given <code>username</code> is valid.
-	 */
-	public static boolean isValid(String username) {
-		return username.matches(Username.VALID_USERNAME_REGEXP);
-	}
+    /**
+     * Indicates whether the given <code>username</code> is valid.
+     */
+    public static boolean isValid(String username) {
+        return username.matches(Username.VALID_USERNAME_REGEXP);
+    }
 }

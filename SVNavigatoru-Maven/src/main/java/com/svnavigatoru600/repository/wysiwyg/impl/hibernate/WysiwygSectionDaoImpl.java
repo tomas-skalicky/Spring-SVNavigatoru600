@@ -10,22 +10,21 @@ import com.svnavigatoru600.domain.WysiwygSection;
 import com.svnavigatoru600.domain.WysiwygSectionName;
 import com.svnavigatoru600.repository.WysiwygSectionDao;
 
-
 public class WysiwygSectionDaoImpl extends HibernateDaoSupport implements WysiwygSectionDao {
 
-	/** Logger for this class and subclasses */
-	protected final Log logger = LogFactory.getLog(this.getClass());
+    /** Logger for this class and subclasses */
+    protected final Log logger = LogFactory.getLog(this.getClass());
 
-	public WysiwygSection findByName(WysiwygSectionName name) {
-		this.logger.info(String.format("Load a section (name '%s')", name.name()));
-		return this.getHibernateTemplate().load(WysiwygSection.class, name.name());
-	}
+    public WysiwygSection findByName(WysiwygSectionName name) {
+        this.logger.info(String.format("Load a section (name '%s')", name.name()));
+        return this.getHibernateTemplate().load(WysiwygSection.class, name.name());
+    }
 
-	public void update(WysiwygSection section) {
-		Date now = new Date();
-		section.setLastSaveTime(now);
-		this.logger.info(String.format("Update a section (name '%s', lastSaveTime '%s')", section.getName(), section
-				.getLastSaveTime().toString()));
-		this.getHibernateTemplate().update(section);
-	}
+    public void update(WysiwygSection section) {
+        Date now = new Date();
+        section.setLastSaveTime(now);
+        this.logger.info(String.format("Update a section (name '%s', lastSaveTime '%s')", section.getName(),
+                section.getLastSaveTime().toString()));
+        this.getHibernateTemplate().update(section);
+    }
 }

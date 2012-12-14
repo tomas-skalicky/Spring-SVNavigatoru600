@@ -25,7 +25,6 @@ import com.svnavigatoru600.service.util.Localization;
 import com.svnavigatoru600.web.Configuration;
 import com.svnavigatoru600.web.records.PageViews;
 
-
 /**
  * Parent of all controllers which edit the {@link SessionRecord}s.
  * 
@@ -34,156 +33,154 @@ import com.svnavigatoru600.web.records.PageViews;
 @Controller
 public abstract class EditRecordController extends NewEditRecordController {
 
-	/**
-	 * Code of the error message used when the {@link DataAccessException} is
-	 * thrown.
-	 */
-	public static final String DATABASE_ERROR_MESSAGE_CODE = "edit.changes-not-saved-due-to-database-error";
+    /**
+     * Code of the error message used when the {@link DataAccessException} is thrown.
+     */
+    public static final String DATABASE_ERROR_MESSAGE_CODE = "edit.changes-not-saved-due-to-database-error";
 
-	/**
-	 * Constructs a controller which considers all {@link SessionRecord}s of all
-	 * {@link SessionRecordType}s.
-	 */
-	public EditRecordController(String baseUrl, PageViews views, SessionRecordDao recordDao,
-			EditSessionRecordValidator validator, MessageSource messageSource) {
-		super(baseUrl, views, recordDao, validator, messageSource);
-	}
+    /**
+     * Constructs a controller which considers all {@link SessionRecord}s of all {@link SessionRecordType}s.
+     */
+    public EditRecordController(String baseUrl, PageViews views, SessionRecordDao recordDao,
+            EditSessionRecordValidator validator, MessageSource messageSource) {
+        super(baseUrl, views, recordDao, validator, messageSource);
+    }
 
-	/**
-	 * Constructs a controller which considers all {@link SessionRecord}s of the
-	 * given <code>recordType</code>.
-	 */
-	public EditRecordController(String baseUrl, PageViews views, SessionRecordType recordType,
-			SessionRecordDao recordDao, EditSessionRecordValidator validator, MessageSource messageSource) {
-		super(baseUrl, views, recordType, recordDao, validator, messageSource);
-	}
+    /**
+     * Constructs a controller which considers all {@link SessionRecord}s of the given <code>recordType</code>
+     * .
+     */
+    public EditRecordController(String baseUrl, PageViews views, SessionRecordType recordType,
+            SessionRecordDao recordDao, EditSessionRecordValidator validator, MessageSource messageSource) {
+        super(baseUrl, views, recordType, recordDao, validator, messageSource);
+    }
 
-	/**
-	 * Initializes the form.
-	 * 
-	 * @param recordId
-	 *            ID of the modified {@link SessionRecord}
-	 */
-	public String initForm(int recordId, HttpServletRequest request, ModelMap model) {
+    /**
+     * Initializes the form.
+     * 
+     * @param recordId
+     *            ID of the modified {@link SessionRecord}
+     */
+    public String initForm(int recordId, HttpServletRequest request, ModelMap model) {
 
-		EditSessionRecord command = new EditSessionRecord();
+        EditSessionRecord command = new EditSessionRecord();
 
-		SessionRecord record = this.recordDao.findById(recordId, false);
-		command.setRecord(record);
+        SessionRecord record = this.recordDao.findById(recordId, false);
+        command.setRecord(record);
 
-		command.setNewType(Localization.findLocaleMessage(this.messageSource, request, record.getTypedType()
-				.getLocalizationCode()));
+        command.setNewType(Localization.findLocaleMessage(this.messageSource, request, record.getTypedType()
+                .getLocalizationCode()));
 
-		model.addAttribute(EditRecordController.COMMAND, command);
-		return VIEWS.EDIT;
-	}
+        model.addAttribute(EditRecordController.COMMAND, command);
+        return VIEWS.EDIT;
+    }
 
-	/**
-	 * Initializes the form after the modified data were successfully saved to
-	 * the repository and the new file (if it exists) was uploaded.
-	 */
-	public String initFormAfterSave(int recordId, HttpServletRequest request, ModelMap model) {
-		String view = this.initForm(recordId, request, model);
-		((EditSessionRecord) model.get(EditRecordController.COMMAND)).setDataSaved(true);
-		return view;
-	}
+    /**
+     * Initializes the form after the modified data were successfully saved to the repository and the new file
+     * (if it exists) was uploaded.
+     */
+    public String initFormAfterSave(int recordId, HttpServletRequest request, ModelMap model) {
+        String view = this.initForm(recordId, request, model);
+        ((EditSessionRecord) model.get(EditRecordController.COMMAND)).setDataSaved(true);
+        return view;
+    }
 
-	/**
-	 * If values in the form are OK, updates data of the record with the given
-	 * <code>recordId</code>. Otherwise, returns back to the form.
-	 * 
-	 * @return The name of the view which is to be shown.
-	 */
-	public String processSubmittedForm(EditSessionRecord command, BindingResult result, SessionStatus status,
-			int recordId, HttpServletRequest request, ModelMap model) {
+    /**
+     * If values in the form are OK, updates data of the record with the given <code>recordId</code>.
+     * Otherwise, returns back to the form.
+     * 
+     * @return The name of the view which is to be shown.
+     */
+    public String processSubmittedForm(EditSessionRecord command, BindingResult result, SessionStatus status,
+            int recordId, HttpServletRequest request, ModelMap model) {
 
-		this.validator.validate(command, result);
-		if (result.hasErrors()) {
-			command.setFileChanged(false);
-			return VIEWS.EDIT;
-		}
+        this.validator.validate(command, result);
+        if (result.hasErrors()) {
+            command.setFileChanged(false);
+            return VIEWS.EDIT;
+        }
 
-		// Updates the original data. Modifies the filename to make it unique.
-		SessionRecord oldRecord = this.recordDao.findById(recordId, false);
-		SessionRecord newRecord = command.getRecord();
-		oldRecord.setSessionDate(newRecord.getSessionDate());
-		oldRecord.setDiscussedTopics(newRecord.getDiscussedTopics());
-		oldRecord.setType(SessionRecordType.valueOfAccordingLocalization(command.getNewType(), this.messageSource,
-				request));
-		boolean isFileChanged = command.isFileChanged();
-		MultipartFile newAttachedFile = null;
-		String newFileName = null;
+        // Updates the original data. Modifies the filename to make it unique.
+        SessionRecord oldRecord = this.recordDao.findById(recordId, false);
+        SessionRecord newRecord = command.getRecord();
+        oldRecord.setSessionDate(newRecord.getSessionDate());
+        oldRecord.setDiscussedTopics(newRecord.getDiscussedTopics());
+        oldRecord.setType(SessionRecordType.valueOfAccordingLocalization(command.getNewType(),
+                this.messageSource, request));
+        boolean isFileChanged = command.isFileChanged();
+        MultipartFile newAttachedFile = null;
+        String newFileName = null;
 
-		try {
-			// /////////////////////////////////////////////////////////////////
-			// Store in the FILESYSTEM
-			// --------------------------------------------------------------
-			// String oldFileName = oldRecord.getFileName();
-			// \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-			if (isFileChanged) {
-				newAttachedFile = command.getNewFile();
-				newFileName = newAttachedFile.getOriginalFilename();
-				// /////////////////////////////////////////////////////////////////
-				// Store in the FILESYSTEM
-				// --------------------------------------------------------------
-				// newFileName = File.getUniqueFileName(newFileName);
-				// \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+        try {
+            // /////////////////////////////////////////////////////////////////
+            // Store in the FILESYSTEM
+            // --------------------------------------------------------------
+            // String oldFileName = oldRecord.getFileName();
+            // \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+            if (isFileChanged) {
+                newAttachedFile = command.getNewFile();
+                newFileName = newAttachedFile.getOriginalFilename();
+                // /////////////////////////////////////////////////////////////////
+                // Store in the FILESYSTEM
+                // --------------------------------------------------------------
+                // newFileName = File.getUniqueFileName(newFileName);
+                // \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
-				// /////////////////////////////////////////////////////////////////
-				// Store in the DB
-				// --------------------------------------------------------------
-				Blob blobFile = File.convertToBlob(newAttachedFile.getBytes());
-				oldRecord.setFile(blobFile);
-				// \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-				oldRecord.setFileName(newFileName);
-			}
+                // /////////////////////////////////////////////////////////////////
+                // Store in the DB
+                // --------------------------------------------------------------
+                Blob blobFile = File.convertToBlob(newAttachedFile.getBytes());
+                oldRecord.setFile(blobFile);
+                // \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+                oldRecord.setFileName(newFileName);
+            }
 
-			// If the file has changed, deletes the old one and copies the new
-			// file to the target folder. Afterwards, updates the record in the
-			// repository.
-			// /////////////////////////////////////////////////////////////////
-			// Store in the FILESYSTEM
-			// --------------------------------------------------------------
-			// if (isFileChanged) {
-			// java.io.File destinationFile = File.getUploadedFile(newFileName);
-			// newAttachedFile.transferTo(destinationFile);
-			// }
-			// \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-			this.recordDao.update(oldRecord);
-			// /////////////////////////////////////////////////////////////////
-			// Store in the FILESYSTEM
-			// --------------------------------------------------------------
-			// if (isFileChanged) {
-			// java.io.File oldFile = File.getUploadedFile(oldFileName);
-			// oldFile.delete();
-			// }
-			// \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+            // If the file has changed, deletes the old one and copies the new
+            // file to the target folder. Afterwards, updates the record in the
+            // repository.
+            // /////////////////////////////////////////////////////////////////
+            // Store in the FILESYSTEM
+            // --------------------------------------------------------------
+            // if (isFileChanged) {
+            // java.io.File destinationFile = File.getUploadedFile(newFileName);
+            // newAttachedFile.transferTo(destinationFile);
+            // }
+            // \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+            this.recordDao.update(oldRecord);
+            // /////////////////////////////////////////////////////////////////
+            // Store in the FILESYSTEM
+            // --------------------------------------------------------------
+            // if (isFileChanged) {
+            // java.io.File oldFile = File.getUploadedFile(oldFileName);
+            // oldFile.delete();
+            // }
+            // \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
-			// Clears the command object from the session.
-			status.setComplete();
+            // Clears the command object from the session.
+            status.setComplete();
 
-			// Returns the form success view.
-			model.addAttribute(Configuration.REDIRECTION_ATTRIBUTE,
-					String.format("%s%d/ulozeno/", this.BASE_URL, recordId));
-			return Configuration.REDIRECTION_PAGE;
+            // Returns the form success view.
+            model.addAttribute(Configuration.REDIRECTION_ATTRIBUTE,
+                    String.format("%s%d/ulozeno/", this.BASE_URL, recordId));
+            return Configuration.REDIRECTION_PAGE;
 
-		} catch (IllegalStateException e) {
-			this.logger.error(command, e);
-			result.reject(EditRecordController.UPLOAD_FILE_ERROR_MESSAGE_CODE);
-		} catch (IOException e) {
-			this.logger.error(command, e);
-			result.reject(EditRecordController.UPLOAD_FILE_ERROR_MESSAGE_CODE);
-		} catch (SerialException e) {
-			this.logger.error(command, e);
-			result.reject(EditRecordController.UPLOAD_FILE_ERROR_MESSAGE_CODE);
-		} catch (SQLException e) {
-			this.logger.error(command, e);
-			result.reject(EditRecordController.UPLOAD_FILE_ERROR_MESSAGE_CODE);
-		} catch (DataAccessException e) {
-			// We encountered a database problem.
-			this.logger.error(command, e);
-			result.reject(EditRecordController.DATABASE_ERROR_MESSAGE_CODE);
-		}
-		return VIEWS.EDIT;
-	}
+        } catch (IllegalStateException e) {
+            this.logger.error(command, e);
+            result.reject(EditRecordController.UPLOAD_FILE_ERROR_MESSAGE_CODE);
+        } catch (IOException e) {
+            this.logger.error(command, e);
+            result.reject(EditRecordController.UPLOAD_FILE_ERROR_MESSAGE_CODE);
+        } catch (SerialException e) {
+            this.logger.error(command, e);
+            result.reject(EditRecordController.UPLOAD_FILE_ERROR_MESSAGE_CODE);
+        } catch (SQLException e) {
+            this.logger.error(command, e);
+            result.reject(EditRecordController.UPLOAD_FILE_ERROR_MESSAGE_CODE);
+        } catch (DataAccessException e) {
+            // We encountered a database problem.
+            this.logger.error(command, e);
+            result.reject(EditRecordController.DATABASE_ERROR_MESSAGE_CODE);
+        }
+        return VIEWS.EDIT;
+    }
 }

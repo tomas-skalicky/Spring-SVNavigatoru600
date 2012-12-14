@@ -10,7 +10,6 @@ import org.springframework.jdbc.core.RowMapper;
 import com.svnavigatoru600.domain.users.Authority;
 import com.svnavigatoru600.domain.users.AuthorityId;
 
-
 /**
  * For more information, see {@link UserRowMapper}.
  * 
@@ -18,25 +17,25 @@ import com.svnavigatoru600.domain.users.AuthorityId;
  */
 public class AuthorityRowMapper implements RowMapper<Authority> {
 
-	private static final Map<String, String> PROPERTY_COLUMN_MAP;
+    private static final Map<String, String> PROPERTY_COLUMN_MAP;
 
-	static {
-		PROPERTY_COLUMN_MAP = new HashMap<String, String>();
-		PROPERTY_COLUMN_MAP.put("username", "username");
-		PROPERTY_COLUMN_MAP.put("authority", "authority");
-	}
+    static {
+        PROPERTY_COLUMN_MAP = new HashMap<String, String>();
+        PROPERTY_COLUMN_MAP.put("username", "username");
+        PROPERTY_COLUMN_MAP.put("authority", "authority");
+    }
 
-	public static String getColumn(String propertyName) {
-		return AuthorityRowMapper.PROPERTY_COLUMN_MAP.get(propertyName);
-	}
+    public static String getColumn(String propertyName) {
+        return AuthorityRowMapper.PROPERTY_COLUMN_MAP.get(propertyName);
+    }
 
-	public Authority mapRow(ResultSet rs, int rowNum) throws SQLException {
-		AuthorityId id = new AuthorityId();
-		id.setUsername(rs.getString(AuthorityRowMapper.getColumn("username")));
-		id.setAuthority(rs.getString(AuthorityRowMapper.getColumn("authority")));
+    public Authority mapRow(ResultSet rs, int rowNum) throws SQLException {
+        AuthorityId id = new AuthorityId();
+        id.setUsername(rs.getString(AuthorityRowMapper.getColumn("username")));
+        id.setAuthority(rs.getString(AuthorityRowMapper.getColumn("authority")));
 
-		Authority authority = new Authority();
-		authority.setId(id);
-		return authority;
-	}
+        Authority authority = new Authority();
+        authority.setId(id);
+        return authority;
+    }
 }

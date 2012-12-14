@@ -12,10 +12,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.svnavigatoru600.repository.users.UserDao;
 
-
 /**
- * Provides an authentication via {@link com.svnavigatoru600.domain.users.User}'s
- * username, or email. From
+ * Provides an authentication via {@link com.svnavigatoru600.domain.users.User}'s username, or email. From
  * http://blog.solidcraft.eu/2011/03/spring-security-by-example-set-up-and.html.
  * 
  * @author Tomas Skalicky
@@ -23,32 +21,33 @@ import com.svnavigatoru600.repository.users.UserDao;
 @Service("userDetailsService")
 public class AuthenticationUserDetailsGetter extends JdbcDaoImpl {
 
-	/** Logger for this class and subclasses */
-	protected final Log logger = LogFactory.getLog(this.getClass());
+    /** Logger for this class and subclasses */
+    protected final Log logger = LogFactory.getLog(this.getClass());
 
-	private UserDao userDao;
+    private UserDao userDao;
 
-	public void setUserDao(UserDao userDao) {
-		this.userDao = userDao;
-	}
+    public void setUserDao(UserDao userDao) {
+        this.userDao = userDao;
+    }
 
-	@Override
-	@Transactional
-	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException, DataAccessException {
-		try {
-			return this.userDao.findByUsername(username);
-		} catch (DataAccessException e) {
-			// User with the given username not found.
-			this.logger.info(String.format("User with the given username '%s' not found", username));
-		}
+    @Override
+    @Transactional
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException,
+            DataAccessException {
+        try {
+            return this.userDao.findByUsername(username);
+        } catch (DataAccessException e) {
+            // User with the given username not found.
+            this.logger.info(String.format("User with the given username '%s' not found", username));
+        }
 
-		try {
-			// Since the user has not been found till now and the username
-			// variable can also contain an email, it is now time to check
-			// stored emails.
-			return this.userDao.findByEmail(username);
-		} catch (NonTransientDataAccessException e) {
-			throw new UsernameNotFoundException(e.getMessage());
-		}
-	}
+        try {
+            // Since the user has not been found till now and the username
+            // variable can also contain an email, it is now time to check
+            // stored emails.
+            return this.userDao.findByEmail(username);
+        } catch (NonTransientDataAccessException e) {
+            throw new UsernameNotFoundException(e.getMessage());
+        }
+    }
 }

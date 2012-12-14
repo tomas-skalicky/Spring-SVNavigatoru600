@@ -7,12 +7,12 @@ package com.svnavigatoru600.service.util;
  */
 public class LastName {
 
-	static final String VALID_LAST_NAME_REGEXP = FirstName.VALID_FIRST_NAME_REGEXP;
+    static final String VALID_LAST_NAME_REGEXP = FirstName.VALID_FIRST_NAME_REGEXP;
 
-	/**
-	 * Indicates whether the given <code>lastName</code> is valid.
-	 */
-	public static boolean isValid(String lastName) {
-		return lastName.matches(LastName.VALID_LAST_NAME_REGEXP);
-	}
+    /**
+     * Indicates whether the given <code>lastName</code> is valid.
+     */
+    public static boolean isValid(String lastName) {
+        return lastName.matches(LastName.VALID_LAST_NAME_REGEXP);
+    }
 }

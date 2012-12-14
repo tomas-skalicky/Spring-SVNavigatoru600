@@ -17,6 +17,11 @@ public abstract class AbstractTailoredSeleniumTest extends AbstractSeleniumTest 
     protected static final String SUBMIT_SELECTOR = "input[type='submit']";
 
     /**
+     * The ID of the tinymce iframe which is used for modifications of texts.
+     */
+    protected static final String TINYMCE_IFRAME_ID = "news.text_ifr";
+
+    /**
      * The regular expression of URL of the login page.
      */
     protected static final String LOGIN_PAGE_URL_REG_EXP = ".*/prihlaseni/";

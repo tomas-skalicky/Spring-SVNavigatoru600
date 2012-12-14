@@ -29,7 +29,6 @@ import com.svnavigatoru600.service.util.Hash;
 import com.svnavigatoru600.service.util.Localization;
 import com.svnavigatoru600.web.Configuration;
 
-
 /**
  * The controller bound to the <i>new-user.jsp</i> page.
  * 
@@ -38,115 +37,115 @@ import com.svnavigatoru600.web.Configuration;
 @Controller
 public class NewUserController extends NewEditUserController {
 
-	private static final String BASE_URL = "/administrace-uzivatelu/";
+    private static final String BASE_URL = "/administrace-uzivatelu/";
 
-	/**
-	 * Constructor.
-	 */
-	@Autowired
-	public NewUserController(UserDao userDao, NewUserValidator validator, MessageSource messageSource) {
-		super(userDao, validator, messageSource);
-	}
+    /**
+     * Constructor.
+     */
+    @Autowired
+    public NewUserController(UserDao userDao, NewUserValidator validator, MessageSource messageSource) {
+        super(userDao, validator, messageSource);
+    }
 
-	/**
-	 * Initializes the form.
-	 */
-	@RequestMapping(value = NewUserController.BASE_URL + "novy/", method = RequestMethod.GET)
-	public String initForm(HttpServletRequest request, ModelMap model) {
+    /**
+     * Initializes the form.
+     */
+    @RequestMapping(value = NewUserController.BASE_URL + "novy/", method = RequestMethod.GET)
+    public String initForm(HttpServletRequest request, ModelMap model) {
 
-		AdministrateUserData command = new AdministrateUserData();
+        AdministrateUserData command = new AdministrateUserData();
 
-		User user = new User();
-		user.setEnabled(true);
-		command.setUser(user);
+        User user = new User();
+        user.setEnabled(true);
+        command.setUser(user);
 
-		// Collection of authorities is converted to a map.
-		command.setNewAuthorities(AuthorityUtils.getDefaultArrayOfCheckIndicators());
+        // Collection of authorities is converted to a map.
+        command.setNewAuthorities(AuthorityUtils.getDefaultArrayOfCheckIndicators());
 
-		// Sets up all (but necessary) maps.
-		command.setRoleCheckboxId(this.getRoleCheckboxId());
-		command.setLocalizedRoleCheckboxTitles(this.getLocalizedRoleCheckboxTitles(request));
+        // Sets up all (but necessary) maps.
+        command.setRoleCheckboxId(this.getRoleCheckboxId());
+        command.setLocalizedRoleCheckboxTitles(this.getLocalizedRoleCheckboxTitles(request));
 
-		model.addAttribute(NewUserController.COMMAND, command);
-		return PageViews.NEW.getViewName();
-	}
+        model.addAttribute(NewUserController.COMMAND, command);
+        return PageViews.NEW.getViewName();
+    }
 
-	/**
-	 * If values in the form are OK, new user is stored to a repository.
-	 * Otherwise, returns back to the form.
-	 * 
-	 * @return The name of the view which is to be shown.
-	 */
-	@RequestMapping(value = NewUserController.BASE_URL + "novy/", method = RequestMethod.POST)
-	public String processSubmittedForm(@ModelAttribute(NewUserController.COMMAND) AdministrateUserData command,
-			BindingResult result, SessionStatus status, HttpServletRequest request, ModelMap model) {
+    /**
+     * If values in the form are OK, new user is stored to a repository. Otherwise, returns back to the form.
+     * 
+     * @return The name of the view which is to be shown.
+     */
+    @RequestMapping(value = NewUserController.BASE_URL + "novy/", method = RequestMethod.POST)
+    public String processSubmittedForm(
+            @ModelAttribute(NewUserController.COMMAND) AdministrateUserData command, BindingResult result,
+            SessionStatus status, HttpServletRequest request, ModelMap model) {
 
-		// Sets up all (but necessary) maps.
-		command.setRoleCheckboxId(this.getRoleCheckboxId());
-		command.setLocalizedRoleCheckboxTitles(this.getLocalizedRoleCheckboxTitles(request));
+        // Sets up all (but necessary) maps.
+        command.setRoleCheckboxId(this.getRoleCheckboxId());
+        command.setLocalizedRoleCheckboxTitles(this.getLocalizedRoleCheckboxTitles(request));
 
-		this.validator.validate(command, result);
-		if (result.hasErrors()) {
-			return PageViews.NEW.getViewName();
-		}
+        this.validator.validate(command, result);
+        if (result.hasErrors()) {
+            return PageViews.NEW.getViewName();
+        }
 
-		// Updates the data of the new user.
-		User newUser = command.getUser();
-		String newPassword = command.getNewPassword();
-		newUser.setPassword(Hash.doSha1Hashing(newPassword));
+        // Updates the data of the new user.
+        User newUser = command.getUser();
+        String newPassword = command.getNewPassword();
+        newUser.setPassword(Hash.doSha1Hashing(newPassword));
 
-		String username = newUser.getUsername();
-		Set<GrantedAuthority> checkedAuthorities = AuthorityUtils.convertIndicatorsToAuthorities(
-				command.getNewAuthorities(), username);
-		// The role ROLE_REGISTERED_USER is automatically added.
-		checkedAuthorities.add(new Authority(username, AuthorityType.ROLE_REGISTERED_USER.name()));
-		newUser.setAuthorities(checkedAuthorities);
+        String username = newUser.getUsername();
+        Set<GrantedAuthority> checkedAuthorities = AuthorityUtils.convertIndicatorsToAuthorities(
+                command.getNewAuthorities(), username);
+        // The role ROLE_REGISTERED_USER is automatically added.
+        checkedAuthorities.add(new Authority(username, AuthorityType.ROLE_REGISTERED_USER.name()));
+        newUser.setAuthorities(checkedAuthorities);
 
-		// Sets user's email to null if the email is blank. The reason is the
-		// UNIQUE DB constraint.
-		newUser.setEmailToNullIfBlank();
+        // Sets user's email to null if the email is blank. The reason is the
+        // UNIQUE DB constraint.
+        newUser.setEmailToNullIfBlank();
 
-		try {
-			// Stores the data.
-			this.userDao.save(newUser);
+        try {
+            // Stores the data.
+            this.userDao.save(newUser);
 
-			// Notifies the user about its new account.
-			if (!StringUtils.isBlank(newUser.getEmail())) {
-				this.sendEmailOnUserCreation(newUser, newPassword, request);
-			}
+            // Notifies the user about its new account.
+            if (!StringUtils.isBlank(newUser.getEmail())) {
+                this.sendEmailOnUserCreation(newUser, newPassword, request);
+            }
 
-			// Clears the command object from the session.
-			status.setComplete();
+            // Clears the command object from the session.
+            status.setComplete();
 
-			// Returns the form success view.
-			model.addAttribute(Configuration.REDIRECTION_ATTRIBUTE, NewUserController.BASE_URL + "vytvoreno/");
-			return Configuration.REDIRECTION_PAGE;
+            // Returns the form success view.
+            model.addAttribute(Configuration.REDIRECTION_ATTRIBUTE, NewUserController.BASE_URL + "vytvoreno/");
+            return Configuration.REDIRECTION_PAGE;
 
-		} catch (DataAccessException e) {
-			// We encountered a database problem.
-			this.logger.error(newUser, e);
-			result.reject("user-administration.creation-failed-due-to-database-error");
-			return PageViews.NEW.getViewName();
-		}
-	}
+        } catch (DataAccessException e) {
+            // We encountered a database problem.
+            this.logger.error(newUser, e);
+            result.reject("user-administration.creation-failed-due-to-database-error");
+            return PageViews.NEW.getViewName();
+        }
+    }
 
-	/**
-	 * Sends an email with the credentials of the <code>newUser</code>. The
-	 * function is invoked when the {@link User} has been successfully added to
-	 * the repository by the administrator.
-	 */
-	private void sendEmailOnUserCreation(User newUser, String newPassword, HttpServletRequest request) {
-		String emailAddress = newUser.getEmail();
-		if (!Email.isSpecified(emailAddress)) {
-			return;
-		}
+    /**
+     * Sends an email with the credentials of the <code>newUser</code>. The function is invoked when the
+     * {@link User} has been successfully added to the repository by the administrator.
+     */
+    private void sendEmailOnUserCreation(User newUser, String newPassword, HttpServletRequest request) {
+        String emailAddress = newUser.getEmail();
+        if (!Email.isSpecified(emailAddress)) {
+            return;
+        }
 
-		String subject = Localization.findLocaleMessage(this.messageSource, request, "email.subject.new-user");
-		Object[] messageParams = new Object[] { newUser.getLastName(), Configuration.DOMAIN, newUser.getUsername(),
-				emailAddress, newPassword };
-		String messageText = Localization.findLocaleMessage(this.messageSource, request, "email.text.new-user",
-				messageParams);
+        String subject = Localization
+                .findLocaleMessage(this.messageSource, request, "email.subject.new-user");
+        Object[] messageParams = new Object[] { newUser.getLastName(), Configuration.DOMAIN,
+                newUser.getUsername(), emailAddress, newPassword };
+        String messageText = Localization.findLocaleMessage(this.messageSource, request,
+                "email.text.new-user", messageParams);
 
-		Email.sendMail(emailAddress, subject, messageText);
-	}
+        Email.sendMail(emailAddress, subject, messageText);
+    }
 }

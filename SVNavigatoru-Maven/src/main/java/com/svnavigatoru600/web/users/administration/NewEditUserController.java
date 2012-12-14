@@ -8,7 +8,6 @@ import com.svnavigatoru600.domain.users.User;
 import com.svnavigatoru600.repository.users.UserDao;
 import com.svnavigatoru600.service.users.UserDataValidator;
 
-
 /**
  * Parent of all controllers which create and edit {@link User}s.
  * 
@@ -17,15 +16,15 @@ import com.svnavigatoru600.service.users.UserDataValidator;
 @Controller
 public abstract class NewEditUserController extends UserController {
 
-	public static final String COMMAND = "userCommand";
+    public static final String COMMAND = "userCommand";
 
-	protected Validator validator;
+    protected Validator validator;
 
-	/**
-	 * Constructor.
-	 */
-	public NewEditUserController(UserDao userDao, UserDataValidator validator, MessageSource messageSource) {
-		super(userDao, messageSource);
-		this.validator = validator;
-	}
+    /**
+     * Constructor.
+     */
+    public NewEditUserController(UserDao userDao, UserDataValidator validator, MessageSource messageSource) {
+        super(userDao, messageSource);
+        this.validator = validator;
+    }
 }

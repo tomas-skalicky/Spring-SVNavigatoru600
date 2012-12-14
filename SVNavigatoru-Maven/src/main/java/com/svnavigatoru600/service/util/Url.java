@@ -9,11 +9,10 @@ import javax.servlet.ServletRequest;
  */
 public class Url {
 
-	/**
-	 * Gets the path of the current servlet associated with the given
-	 * <code>request</code>.
-	 */
-	public static String getServletPath(ServletRequest request) {
-		return (String) request.getAttribute("javax.servlet.forward.servlet_path");
-	}
+    /**
+     * Gets the path of the current servlet associated with the given <code>request</code>.
+     */
+    public static String getServletPath(ServletRequest request) {
+        return (String) request.getAttribute("javax.servlet.forward.servlet_path");
+    }
 }

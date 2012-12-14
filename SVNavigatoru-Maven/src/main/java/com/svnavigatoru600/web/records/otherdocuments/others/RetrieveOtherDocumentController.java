@@ -14,25 +14,23 @@ import com.svnavigatoru600.domain.records.OtherDocumentRecordType;
 import com.svnavigatoru600.repository.records.OtherDocumentRecordDao;
 import com.svnavigatoru600.web.records.otherdocuments.RetrieveDocumentController;
 
-
 @Controller
 public class RetrieveOtherDocumentController extends RetrieveDocumentController {
 
-	private static final String BASE_URL = "/dalsi-dokumenty/ostatni/";
+    private static final String BASE_URL = "/dalsi-dokumenty/ostatni/";
 
-	/**
-	 * Constructor.
-	 */
-	@Autowired
-	public RetrieveOtherDocumentController(OtherDocumentRecordDao recordDao, MessageSource messageSource) {
-		super(RetrieveOtherDocumentController.BASE_URL, new PageViews(), OtherDocumentRecordType.OTHER, recordDao,
-				messageSource);
-	}
+    /**
+     * Constructor.
+     */
+    @Autowired
+    public RetrieveOtherDocumentController(OtherDocumentRecordDao recordDao, MessageSource messageSource) {
+        super(RetrieveOtherDocumentController.BASE_URL, new PageViews(), OtherDocumentRecordType.OTHER,
+                recordDao, messageSource);
+    }
 
-	@Override
-	@RequestMapping(value = RetrieveOtherDocumentController.BASE_URL + "existujici/{recordId}/stahnout/",
-			method = RequestMethod.GET)
-	public void retrieve(@PathVariable int recordId, HttpServletResponse response, ModelMap model) {
-		super.retrieve(recordId, response, model);
-	}
+    @Override
+    @RequestMapping(value = RetrieveOtherDocumentController.BASE_URL + "existujici/{recordId}/stahnout/", method = RequestMethod.GET)
+    public void retrieve(@PathVariable int recordId, HttpServletResponse response, ModelMap model) {
+        super.retrieve(recordId, response, model);
+    }
 }

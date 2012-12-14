@@ -7,5 +7,5 @@ package com.svnavigatoru600.domain.records;
  */
 public enum OtherDocumentRecordType {
 
-	ACCOUNTING, CONTRACT, REGULAR_REVISION, REMOSTAV, OTHER
+    ACCOUNTING, CONTRACT, REGULAR_REVISION, REMOSTAV, OTHER
 }

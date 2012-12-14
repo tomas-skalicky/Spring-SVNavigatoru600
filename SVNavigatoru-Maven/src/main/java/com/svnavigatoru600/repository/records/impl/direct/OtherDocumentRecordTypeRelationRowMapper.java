@@ -11,7 +11,6 @@ import com.svnavigatoru600.domain.records.OtherDocumentRecordTypeRelation;
 import com.svnavigatoru600.domain.records.OtherDocumentRecordTypeRelationId;
 import com.svnavigatoru600.repository.users.impl.direct.UserRowMapper;
 
-
 /**
  * For more information, see {@link UserRowMapper}.
  * 
@@ -19,25 +18,25 @@ import com.svnavigatoru600.repository.users.impl.direct.UserRowMapper;
  */
 public class OtherDocumentRecordTypeRelationRowMapper implements RowMapper<OtherDocumentRecordTypeRelation> {
 
-	private static final Map<String, String> PROPERTY_COLUMN_MAP;
+    private static final Map<String, String> PROPERTY_COLUMN_MAP;
 
-	static {
-		PROPERTY_COLUMN_MAP = new HashMap<String, String>();
-		PROPERTY_COLUMN_MAP.put("recordId", "record_id");
-		PROPERTY_COLUMN_MAP.put("type", "type");
-	}
+    static {
+        PROPERTY_COLUMN_MAP = new HashMap<String, String>();
+        PROPERTY_COLUMN_MAP.put("recordId", "record_id");
+        PROPERTY_COLUMN_MAP.put("type", "type");
+    }
 
-	public static String getColumn(String propertyName) {
-		return OtherDocumentRecordTypeRelationRowMapper.PROPERTY_COLUMN_MAP.get(propertyName);
-	}
+    public static String getColumn(String propertyName) {
+        return OtherDocumentRecordTypeRelationRowMapper.PROPERTY_COLUMN_MAP.get(propertyName);
+    }
 
-	public OtherDocumentRecordTypeRelation mapRow(ResultSet rs, int rowNum) throws SQLException {
-		OtherDocumentRecordTypeRelationId id = new OtherDocumentRecordTypeRelationId();
-		id.setRecordId(rs.getInt(OtherDocumentRecordTypeRelationRowMapper.getColumn("recordId")));
-		id.setType(rs.getString(OtherDocumentRecordTypeRelationRowMapper.getColumn("type")));
+    public OtherDocumentRecordTypeRelation mapRow(ResultSet rs, int rowNum) throws SQLException {
+        OtherDocumentRecordTypeRelationId id = new OtherDocumentRecordTypeRelationId();
+        id.setRecordId(rs.getInt(OtherDocumentRecordTypeRelationRowMapper.getColumn("recordId")));
+        id.setType(rs.getString(OtherDocumentRecordTypeRelationRowMapper.getColumn("type")));
 
-		OtherDocumentRecordTypeRelation relation = new OtherDocumentRecordTypeRelation();
-		relation.setId(id);
-		return relation;
-	}
+        OtherDocumentRecordTypeRelation relation = new OtherDocumentRecordTypeRelation();
+        relation.setId(id);
+        return relation;
+    }
 }

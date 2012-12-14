@@ -8,10 +8,8 @@ import com.svnavigatoru600.domain.forum.Contribution;
 import com.svnavigatoru600.repository.forum.ContributionDao;
 import com.svnavigatoru600.web.PrivateSectionMetaController;
 
-
 /**
- * Parent of all controllers which handle all operations upon the
- * {@link Contribution}s.
+ * Parent of all controllers which handle all operations upon the {@link Contribution}s.
  * 
  * @author Tomas Skalicky
  */
@@ -19,12 +17,12 @@ import com.svnavigatoru600.web.PrivateSectionMetaController;
 @PreAuthorize("hasRole('ROLE_MEMBER_OF_SV')")
 public abstract class ContributionController extends PrivateSectionMetaController {
 
-	protected static final String BASE_URL = "/forum/temata/existujici/";
-	protected ContributionDao contributionDao;
-	protected MessageSource messageSource;
+    protected static final String BASE_URL = "/forum/temata/existujici/";
+    protected ContributionDao contributionDao;
+    protected MessageSource messageSource;
 
-	public ContributionController(ContributionDao contributionDao, MessageSource messageSource) {
-		this.contributionDao = contributionDao;
-		this.messageSource = messageSource;
-	}
+    public ContributionController(ContributionDao contributionDao, MessageSource messageSource) {
+        this.contributionDao = contributionDao;
+        this.messageSource = messageSource;
+    }
 }

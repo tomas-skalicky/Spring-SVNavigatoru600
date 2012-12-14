@@ -7,26 +7,25 @@ import org.springframework.stereotype.Service;
 
 import com.svnavigatoru600.domain.News;
 
-
 @Service
 public class ShowAllNews {
 
-	private List<News> news;
-	private Map<News, String> localizedDeleteQuestions = null;
+    private List<News> news;
+    private Map<News, String> localizedDeleteQuestions = null;
 
-	public List<News> getNews() {
-		return this.news;
-	}
+    public List<News> getNews() {
+        return this.news;
+    }
 
-	public void setNews(List<News> news) {
-		this.news = news;
-	}
+    public void setNews(List<News> news) {
+        this.news = news;
+    }
 
-	public Map<News, String> getLocalizedDeleteQuestions() {
-		return this.localizedDeleteQuestions;
-	}
+    public Map<News, String> getLocalizedDeleteQuestions() {
+        return this.localizedDeleteQuestions;
+    }
 
-	public void setLocalizedDeleteQuestions(Map<News, String> localizedDeleteQuestions) {
-		this.localizedDeleteQuestions = localizedDeleteQuestions;
-	}
+    public void setLocalizedDeleteQuestions(Map<News, String> localizedDeleteQuestions) {
+        this.localizedDeleteQuestions = localizedDeleteQuestions;
+    }
 }

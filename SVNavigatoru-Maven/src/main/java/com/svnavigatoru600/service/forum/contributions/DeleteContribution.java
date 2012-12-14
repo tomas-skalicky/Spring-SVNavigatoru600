@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class DeleteContribution {
 
-	@PreAuthorize("hasPermission(#contributionId, 'com.svnavigatoru600.domain.forum.Contribution', 'delete')")
-	public void canDelete(int contributionId) {
-	}
+    @PreAuthorize("hasPermission(#contributionId, 'com.svnavigatoru600.domain.forum.Contribution', 'delete')")
+    public void canDelete(int contributionId) {
+    }
 }

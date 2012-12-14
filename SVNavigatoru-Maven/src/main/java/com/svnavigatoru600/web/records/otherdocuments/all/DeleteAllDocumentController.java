@@ -13,24 +13,22 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.svnavigatoru600.repository.records.OtherDocumentRecordDao;
 import com.svnavigatoru600.web.records.otherdocuments.DeleteDocumentController;
 
-
 @Controller
 public class DeleteAllDocumentController extends DeleteDocumentController {
 
-	private static final String BASE_URL = "/dalsi-dokumenty/";
+    private static final String BASE_URL = "/dalsi-dokumenty/";
 
-	/**
-	 * Constructor.
-	 */
-	@Autowired
-	public DeleteAllDocumentController(OtherDocumentRecordDao recordDao, MessageSource messageSource) {
-		super(DeleteAllDocumentController.BASE_URL, new PageViews(), recordDao, messageSource);
-	}
+    /**
+     * Constructor.
+     */
+    @Autowired
+    public DeleteAllDocumentController(OtherDocumentRecordDao recordDao, MessageSource messageSource) {
+        super(DeleteAllDocumentController.BASE_URL, new PageViews(), recordDao, messageSource);
+    }
 
-	@Override
-	@RequestMapping(value = DeleteAllDocumentController.BASE_URL + "existujici/{recordId}/smazat/",
-			method = RequestMethod.GET)
-	public String delete(@PathVariable int recordId, HttpServletRequest request, ModelMap model) {
-		return super.delete(recordId, request, model);
-	}
+    @Override
+    @RequestMapping(value = DeleteAllDocumentController.BASE_URL + "existujici/{recordId}/smazat/", method = RequestMethod.GET)
+    public String delete(@PathVariable int recordId, HttpServletRequest request, ModelMap model) {
+        return super.delete(recordId, request, model);
+    }
 }

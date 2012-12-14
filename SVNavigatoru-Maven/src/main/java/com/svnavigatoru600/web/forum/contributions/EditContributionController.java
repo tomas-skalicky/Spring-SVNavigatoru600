@@ -20,93 +20,91 @@ import com.svnavigatoru600.service.forum.contributions.EditContribution;
 import com.svnavigatoru600.service.forum.contributions.EditContributionValidator;
 import com.svnavigatoru600.web.Configuration;
 
-
 @Controller
 public class EditContributionController extends NewEditContributionController {
 
-	private static final String REQUEST_MAPPING_BASE_URL = EditContributionController.BASE_URL
-			+ "{threadId}/prispevky/existujici/{contributionId}/";
-	/**
-	 * Code of the error message used when the {@link DataAccessException} is
-	 * thrown.
-	 */
-	public static final String DATABASE_ERROR_MESSAGE_CODE = "edit.changes-not-saved-due-to-database-error";
-	private EditContribution editContribution;
+    private static final String REQUEST_MAPPING_BASE_URL = EditContributionController.BASE_URL
+            + "{threadId}/prispevky/existujici/{contributionId}/";
+    /**
+     * Code of the error message used when the {@link DataAccessException} is thrown.
+     */
+    public static final String DATABASE_ERROR_MESSAGE_CODE = "edit.changes-not-saved-due-to-database-error";
+    private EditContribution editContribution;
 
-	@Autowired
-	public void setEditContribution(EditContribution editContribution) {
-		this.editContribution = editContribution;
-	}
+    @Autowired
+    public void setEditContribution(EditContribution editContribution) {
+        this.editContribution = editContribution;
+    }
 
-	/**
-	 * Constructor.
-	 */
-	@Autowired
-	public EditContributionController(ContributionDao contributionDao, EditContributionValidator validator,
-			MessageSource messageSource) {
-		super(contributionDao, validator, messageSource);
-	}
+    /**
+     * Constructor.
+     */
+    @Autowired
+    public EditContributionController(ContributionDao contributionDao, EditContributionValidator validator,
+            MessageSource messageSource) {
+        super(contributionDao, validator, messageSource);
+    }
 
-	@RequestMapping(value = EditContributionController.REQUEST_MAPPING_BASE_URL, method = RequestMethod.GET)
-	public String initForm(@PathVariable int threadId, @PathVariable int contributionId, HttpServletRequest request,
-			ModelMap model) {
+    @RequestMapping(value = EditContributionController.REQUEST_MAPPING_BASE_URL, method = RequestMethod.GET)
+    public String initForm(@PathVariable int threadId, @PathVariable int contributionId,
+            HttpServletRequest request, ModelMap model) {
 
-		this.editContribution.canEdit(contributionId);
+        this.editContribution.canEdit(contributionId);
 
-		EditContribution command = new EditContribution();
+        EditContribution command = new EditContribution();
 
-		Contribution contribution = this.contributionDao.findById(contributionId);
-		command.setContribution(contribution);
-		command.setThreadId(threadId);
+        Contribution contribution = this.contributionDao.findById(contributionId);
+        command.setContribution(contribution);
+        command.setThreadId(threadId);
 
-		model.addAttribute(EditContributionController.COMMAND, command);
-		return PageViews.EDIT.getViewName();
-	}
+        model.addAttribute(EditContributionController.COMMAND, command);
+        return PageViews.EDIT.getViewName();
+    }
 
-	@RequestMapping(value = EditContributionController.REQUEST_MAPPING_BASE_URL + "ulozeno/",
-			method = RequestMethod.GET)
-	public String initFormAfterSave(@PathVariable int threadId, @PathVariable int contributionId,
-			HttpServletRequest request, ModelMap model) {
-		String view = this.initForm(threadId, contributionId, request, model);
-		((EditContribution) model.get(EditContributionController.COMMAND)).setDataSaved(true);
-		return view;
-	}
+    @RequestMapping(value = EditContributionController.REQUEST_MAPPING_BASE_URL + "ulozeno/", method = RequestMethod.GET)
+    public String initFormAfterSave(@PathVariable int threadId, @PathVariable int contributionId,
+            HttpServletRequest request, ModelMap model) {
+        String view = this.initForm(threadId, contributionId, request, model);
+        ((EditContribution) model.get(EditContributionController.COMMAND)).setDataSaved(true);
+        return view;
+    }
 
-	@RequestMapping(value = EditContributionController.REQUEST_MAPPING_BASE_URL, method = RequestMethod.POST)
-	public String processSubmittedForm(@ModelAttribute(EditContributionController.COMMAND) EditContribution command,
-			BindingResult result, SessionStatus status, @PathVariable int threadId, @PathVariable int contributionId,
-			HttpServletRequest request, ModelMap model) {
+    @RequestMapping(value = EditContributionController.REQUEST_MAPPING_BASE_URL, method = RequestMethod.POST)
+    public String processSubmittedForm(
+            @ModelAttribute(EditContributionController.COMMAND) EditContribution command,
+            BindingResult result, SessionStatus status, @PathVariable int threadId,
+            @PathVariable int contributionId, HttpServletRequest request, ModelMap model) {
 
-		this.editContribution.canEdit(contributionId);
+        this.editContribution.canEdit(contributionId);
 
-		this.validator.validate(command, result);
-		if (result.hasErrors()) {
-			return PageViews.EDIT.getViewName();
-		}
+        this.validator.validate(command, result);
+        if (result.hasErrors()) {
+            return PageViews.EDIT.getViewName();
+        }
 
-		// Updates the original data.
-		Contribution originalContribution = this.contributionDao.findById(contributionId);
-		Contribution newContribution = command.getContribution();
-		originalContribution.setText(newContribution.getText());
+        // Updates the original data.
+        Contribution originalContribution = this.contributionDao.findById(contributionId);
+        Contribution newContribution = command.getContribution();
+        originalContribution.setText(newContribution.getText());
 
-		try {
-			// Updates the contribution in the repository.
-			this.contributionDao.update(originalContribution);
+        try {
+            // Updates the contribution in the repository.
+            this.contributionDao.update(originalContribution);
 
-			// Clears the command object from the session.
-			status.setComplete();
+            // Clears the command object from the session.
+            status.setComplete();
 
-			// Returns the form success view.
-			model.addAttribute(Configuration.REDIRECTION_ATTRIBUTE, String.format(
-					"%s%d/prispevky/existujici/%d/ulozeno/", EditContributionController.BASE_URL, threadId,
-					contributionId));
-			return Configuration.REDIRECTION_PAGE;
+            // Returns the form success view.
+            model.addAttribute(Configuration.REDIRECTION_ATTRIBUTE, String.format(
+                    "%s%d/prispevky/existujici/%d/ulozeno/", EditContributionController.BASE_URL, threadId,
+                    contributionId));
+            return Configuration.REDIRECTION_PAGE;
 
-		} catch (DataAccessException e) {
-			// We encountered a database problem.
-			this.logger.error(originalContribution, e);
-			result.reject(EditContributionController.DATABASE_ERROR_MESSAGE_CODE);
-		}
-		return PageViews.EDIT.getViewName();
-	}
+        } catch (DataAccessException e) {
+            // We encountered a database problem.
+            this.logger.error(originalContribution, e);
+            result.reject(EditContributionController.DATABASE_ERROR_MESSAGE_CODE);
+        }
+        return PageViews.EDIT.getViewName();
+    }
 }

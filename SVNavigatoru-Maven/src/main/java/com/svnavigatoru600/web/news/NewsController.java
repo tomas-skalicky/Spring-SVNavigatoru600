@@ -7,7 +7,6 @@ import com.svnavigatoru600.domain.News;
 import com.svnavigatoru600.repository.NewsDao;
 import com.svnavigatoru600.web.PrivateSectionMetaController;
 
-
 /**
  * Parent of all controllers which handle all operations upon the {@link News}.
  * 
@@ -16,12 +15,12 @@ import com.svnavigatoru600.web.PrivateSectionMetaController;
 @Controller
 public abstract class NewsController extends PrivateSectionMetaController {
 
-	protected static final String BASE_URL = "/novinky/";
-	protected NewsDao newsDao;
-	protected MessageSource messageSource;
+    protected static final String BASE_URL = "/novinky/";
+    protected NewsDao newsDao;
+    protected MessageSource messageSource;
 
-	public NewsController(NewsDao newsDao, MessageSource messageSource) {
-		this.newsDao = newsDao;
-		this.messageSource = messageSource;
-	}
+    public NewsController(NewsDao newsDao, MessageSource messageSource) {
+        this.newsDao = newsDao;
+        this.messageSource = messageSource;
+    }
 }

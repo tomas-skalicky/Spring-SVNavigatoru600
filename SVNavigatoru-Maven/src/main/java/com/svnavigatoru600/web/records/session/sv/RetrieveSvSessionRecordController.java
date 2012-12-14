@@ -14,25 +14,23 @@ import com.svnavigatoru600.domain.records.SessionRecordType;
 import com.svnavigatoru600.repository.records.SessionRecordDao;
 import com.svnavigatoru600.web.records.session.RetrieveRecordController;
 
-
 @Controller
 public class RetrieveSvSessionRecordController extends RetrieveRecordController {
 
-	private static final String BASE_URL = "/zapisy-z-jednani/sv/";
+    private static final String BASE_URL = "/zapisy-z-jednani/sv/";
 
-	/**
-	 * Constructor.
-	 */
-	@Autowired
-	public RetrieveSvSessionRecordController(SessionRecordDao recordDao, MessageSource messageSource) {
-		super(RetrieveSvSessionRecordController.BASE_URL, new PageViews(), SessionRecordType.SESSION_RECORD_OF_SV,
-				recordDao, messageSource);
-	}
+    /**
+     * Constructor.
+     */
+    @Autowired
+    public RetrieveSvSessionRecordController(SessionRecordDao recordDao, MessageSource messageSource) {
+        super(RetrieveSvSessionRecordController.BASE_URL, new PageViews(),
+                SessionRecordType.SESSION_RECORD_OF_SV, recordDao, messageSource);
+    }
 
-	@Override
-	@RequestMapping(value = RetrieveSvSessionRecordController.BASE_URL + "existujici/{recordId}/stahnout/",
-			method = RequestMethod.GET)
-	public void retrieve(@PathVariable int recordId, HttpServletResponse response, ModelMap model) {
-		super.retrieve(recordId, response, model);
-	}
+    @Override
+    @RequestMapping(value = RetrieveSvSessionRecordController.BASE_URL + "existujici/{recordId}/stahnout/", method = RequestMethod.GET)
+    public void retrieve(@PathVariable int recordId, HttpServletResponse response, ModelMap model) {
+        super.retrieve(recordId, response, model);
+    }
 }

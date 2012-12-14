@@ -8,7 +8,6 @@ import com.svnavigatoru600.domain.News;
 import com.svnavigatoru600.repository.NewsDao;
 import com.svnavigatoru600.service.news.NewsValidator;
 
-
 /**
  * Parent of controllers which create and edit the {@link News}.
  * 
@@ -17,14 +16,14 @@ import com.svnavigatoru600.service.news.NewsValidator;
 @Controller
 public abstract class NewEditNewsController extends NewsController {
 
-	/**
-	 * Command used in /main-content/news/new-edit-news.jsp.
-	 */
-	public static final String COMMAND = "newEditNewsCommand";
-	protected Validator validator;
+    /**
+     * Command used in /main-content/news/new-edit-news.jsp.
+     */
+    public static final String COMMAND = "newEditNewsCommand";
+    protected Validator validator;
 
-	public NewEditNewsController(NewsDao newsDao, NewsValidator validator, MessageSource messageSource) {
-		super(newsDao, messageSource);
-		this.validator = validator;
-	}
+    public NewEditNewsController(NewsDao newsDao, NewsValidator validator, MessageSource messageSource) {
+        super(newsDao, messageSource);
+        this.validator = validator;
+    }
 }

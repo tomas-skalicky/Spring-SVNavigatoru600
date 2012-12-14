@@ -13,33 +13,32 @@ import com.svnavigatoru600.domain.records.OtherDocumentRecordType;
 import com.svnavigatoru600.repository.records.OtherDocumentRecordDao;
 import com.svnavigatoru600.web.records.otherdocuments.ListDocumentsController;
 
-
 @Controller
 public class ListRemostavDocumentsController extends ListDocumentsController {
 
-	private static final String BASE_URL = "/remostav/dokumentace/";
+    private static final String BASE_URL = "/remostav/dokumentace/";
 
-	/**
-	 * Constructor.
-	 */
-	@Autowired
-	public ListRemostavDocumentsController(OtherDocumentRecordDao recordDao, MessageSource messageSource) {
-		super(ListRemostavDocumentsController.BASE_URL, new PageViews(), OtherDocumentRecordType.REMOSTAV, recordDao,
-				messageSource);
-	}
+    /**
+     * Constructor.
+     */
+    @Autowired
+    public ListRemostavDocumentsController(OtherDocumentRecordDao recordDao, MessageSource messageSource) {
+        super(ListRemostavDocumentsController.BASE_URL, new PageViews(), OtherDocumentRecordType.REMOSTAV,
+                recordDao, messageSource);
+    }
 
-	@RequestMapping(value = ListRemostavDocumentsController.BASE_URL, method = RequestMethod.GET)
-	public String initPage(HttpServletRequest request, ModelMap model) {
-		return super.initPage(request, model);
-	}
+    @RequestMapping(value = ListRemostavDocumentsController.BASE_URL, method = RequestMethod.GET)
+    public String initPage(HttpServletRequest request, ModelMap model) {
+        return super.initPage(request, model);
+    }
 
-	@RequestMapping(value = ListRemostavDocumentsController.BASE_URL + "vytvoreno/", method = RequestMethod.GET)
-	public String initPageAfterCreate(HttpServletRequest request, ModelMap model) {
-		return super.initPageAfterCreate(request, model);
-	}
+    @RequestMapping(value = ListRemostavDocumentsController.BASE_URL + "vytvoreno/", method = RequestMethod.GET)
+    public String initPageAfterCreate(HttpServletRequest request, ModelMap model) {
+        return super.initPageAfterCreate(request, model);
+    }
 
-	@RequestMapping(value = ListRemostavDocumentsController.BASE_URL + "smazano/", method = RequestMethod.GET)
-	public String initPageAfterDelete(HttpServletRequest request, ModelMap model) {
-		return super.initPageAfterDelete(request, model);
-	}
+    @RequestMapping(value = ListRemostavDocumentsController.BASE_URL + "smazano/", method = RequestMethod.GET)
+    public String initPageAfterDelete(HttpServletRequest request, ModelMap model) {
+        return super.initPageAfterDelete(request, model);
+    }
 }
