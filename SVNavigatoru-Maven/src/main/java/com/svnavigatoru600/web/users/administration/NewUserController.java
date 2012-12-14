@@ -43,7 +43,7 @@ public class NewUserController extends NewEditUserController {
      * Constructor.
      */
     @Autowired
-    public NewUserController(UserDao userDao, NewUserValidator validator, MessageSource messageSource) {
+    public NewUserController(final UserDao userDao, final NewUserValidator validator, final MessageSource messageSource) {
         super(userDao, validator, messageSource);
     }
 
@@ -51,11 +51,11 @@ public class NewUserController extends NewEditUserController {
      * Initializes the form.
      */
     @RequestMapping(value = NewUserController.BASE_URL + "novy/", method = RequestMethod.GET)
-    public String initForm(HttpServletRequest request, ModelMap model) {
+    public String initForm(final HttpServletRequest request, final ModelMap model) {
 
-        AdministrateUserData command = new AdministrateUserData();
+        final AdministrateUserData command = new AdministrateUserData();
 
-        User user = new User();
+        final User user = new User();
         user.setEnabled(true);
         command.setUser(user);
 
@@ -77,8 +77,8 @@ public class NewUserController extends NewEditUserController {
      */
     @RequestMapping(value = NewUserController.BASE_URL + "novy/", method = RequestMethod.POST)
     public String processSubmittedForm(
-            @ModelAttribute(NewUserController.COMMAND) AdministrateUserData command, BindingResult result,
-            SessionStatus status, HttpServletRequest request, ModelMap model) {
+            @ModelAttribute(NewUserController.COMMAND) AdministrateUserData command, final BindingResult result,
+            final SessionStatus status, final HttpServletRequest request, final ModelMap model) {
 
         // Sets up all (but necessary) maps.
         command.setRoleCheckboxId(this.getRoleCheckboxId());
@@ -90,12 +90,12 @@ public class NewUserController extends NewEditUserController {
         }
 
         // Updates the data of the new user.
-        User newUser = command.getUser();
-        String newPassword = command.getNewPassword();
+        final User newUser = command.getUser();
+        final String newPassword = command.getNewPassword();
         newUser.setPassword(Hash.doSha1Hashing(newPassword));
 
-        String username = newUser.getUsername();
-        Set<GrantedAuthority> checkedAuthorities = AuthorityUtils.convertIndicatorsToAuthorities(
+        final String username = newUser.getUsername();
+        final Set<GrantedAuthority> checkedAuthorities = AuthorityUtils.convertIndicatorsToAuthorities(
                 command.getNewAuthorities(), username);
         // The role ROLE_REGISTERED_USER is automatically added.
         checkedAuthorities.add(new Authority(username, AuthorityType.ROLE_REGISTERED_USER.name()));
@@ -133,17 +133,18 @@ public class NewUserController extends NewEditUserController {
      * Sends an email with the credentials of the <code>newUser</code>. The function is invoked when the
      * {@link User} has been successfully added to the repository by the administrator.
      */
-    private void sendEmailOnUserCreation(User newUser, String newPassword, HttpServletRequest request) {
-        String emailAddress = newUser.getEmail();
+    private void sendEmailOnUserCreation(final User newUser, final String newPassword,
+            final HttpServletRequest request) {
+        final String emailAddress = newUser.getEmail();
         if (!Email.isSpecified(emailAddress)) {
             return;
         }
 
-        String subject = Localization
-                .findLocaleMessage(this.messageSource, request, "email.subject.new-user");
-        Object[] messageParams = new Object[] { newUser.getLastName(), Configuration.DOMAIN,
+        final String subject = Localization.findLocaleMessage(this.messageSource, request,
+                "email.subject.new-user");
+        final Object[] messageParams = new Object[] { newUser.getLastName(), Configuration.DOMAIN,
                 newUser.getUsername(), emailAddress, newPassword };
-        String messageText = Localization.findLocaleMessage(this.messageSource, request,
+        final String messageText = Localization.findLocaleMessage(this.messageSource, request,
                 "email.text.new-user", messageParams);
 
         Email.sendMail(emailAddress, subject, messageText);

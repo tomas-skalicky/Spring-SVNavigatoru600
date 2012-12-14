@@ -34,7 +34,7 @@ public class DeleteUserController extends UserController {
     public String delete(@PathVariable String username, HttpServletRequest request, ModelMap model) {
         try {
             // Deletes the user.
-            User user = this.userDao.findByUsername(username);
+            final User user = this.userDao.findByUsername(username);
             this.userDao.delete(user);
 
             // Notifies the user about the deletion of his account.
@@ -56,16 +56,16 @@ public class DeleteUserController extends UserController {
     /**
      * Sends an email to the given <code>user</code> that his account has been deleted by the administrator.
      */
-    private void sendEmailOnUserDeletion(User user, HttpServletRequest request) {
-        String emailAddress = user.getEmail();
+    private void sendEmailOnUserDeletion(final User user, final HttpServletRequest request) {
+        final String emailAddress = user.getEmail();
         if (!Email.isSpecified(emailAddress)) {
             return;
         }
 
-        String subject = Localization.findLocaleMessage(this.messageSource, request,
+        final String subject = Localization.findLocaleMessage(this.messageSource, request,
                 "email.subject.user-deleted");
-        Object[] messageParams = new Object[] { user.getLastName(), user.getUsername(), Configuration.DOMAIN };
-        String messageText = Localization.findLocaleMessage(this.messageSource, request,
+        final Object[] messageParams = new Object[] { user.getLastName(), user.getUsername(), Configuration.DOMAIN };
+        final String messageText = Localization.findLocaleMessage(this.messageSource, request,
                 "email.text.user-deleted", messageParams);
 
         Email.sendMail(emailAddress, subject, messageText);

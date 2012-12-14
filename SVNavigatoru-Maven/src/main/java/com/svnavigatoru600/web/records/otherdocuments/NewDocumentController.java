@@ -88,7 +88,7 @@ public abstract class NewDocumentController extends NewEditDocumentController {
         System.out.println(node.getAbsoluteFile());
 
         if (node.isDirectory()) {
-            String[] subNote = node.list();
+            final String[] subNote = node.list();
             for (String filename : subNote) {
                 displayIt(new java.io.File(node, filename));
             }

@@ -54,15 +54,15 @@ public class ListEventsController extends EventController {
     }
 
     @RequestMapping(value = ListEventsController.REQUEST_MAPPING_BASE_URL + "vytvoreno/", method = RequestMethod.GET)
-    public String initPageAfterCreate(HttpServletRequest request, ModelMap model) {
-        String view = this.initPage(request, model);
+    public String initPageAfterCreate(final HttpServletRequest request, final ModelMap model) {
+        final String view = this.initPage(request, model);
         ((ShowAllEvents) model.get(ListEventsController.COMMAND)).setEventCreated(true);
         return view;
     }
 
     @RequestMapping(value = ListEventsController.REQUEST_MAPPING_BASE_URL + "smazano/", method = RequestMethod.GET)
-    public String initPageAfterDelete(HttpServletRequest request, ModelMap model) {
-        String view = this.initPage(request, model);
+    public String initPageAfterDelete(final HttpServletRequest request, final ModelMap model) {
+        final String view = this.initPage(request, model);
         ((ShowAllEvents) model.get(ListEventsController.COMMAND)).setEventDeleted(true);
         return view;
     }

@@ -28,7 +28,7 @@ public class DeleteEventController extends EventController {
     private ListEventsController listController;
 
     @Autowired
-    public void setListController(ListEventsController listController) {
+    public void setListController(final ListEventsController listController) {
         this.listController = listController;
     }
 
@@ -36,15 +36,15 @@ public class DeleteEventController extends EventController {
      * Constructor.
      */
     @Autowired
-    public DeleteEventController(CalendarEventDao eventDao, MessageSource messageSource) {
+    public DeleteEventController(final CalendarEventDao eventDao, final MessageSource messageSource) {
         super(eventDao, messageSource);
     }
 
     @RequestMapping(value = DeleteEventController.REQUEST_MAPPING_BASE_URL, method = RequestMethod.GET)
-    public String delete(@PathVariable int eventId, HttpServletRequest request, ModelMap model) {
+    public String delete(@PathVariable int eventId, final HttpServletRequest request, final ModelMap model) {
         try {
             // Deletes the event from the repository.
-            CalendarEvent event = this.eventDao.findById(eventId);
+            final CalendarEvent event = this.eventDao.findById(eventId);
             this.eventDao.delete(event);
 
             // Returns the form success view.
@@ -55,7 +55,7 @@ public class DeleteEventController extends EventController {
         } catch (DataAccessException e) {
             // We encountered a database problem.
             this.logger.error(e);
-            String view = this.listController.initPage(request, model);
+            final String view = this.listController.initPage(request, model);
             model.addAttribute("error", DeleteEventController.DATABASE_ERROR_MESSAGE_CODE);
             return view;
         }

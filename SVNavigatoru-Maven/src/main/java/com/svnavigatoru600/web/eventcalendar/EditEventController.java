@@ -58,7 +58,7 @@ public class EditEventController extends NewEditEventController {
 
     @RequestMapping(value = EditEventController.REQUEST_MAPPING_BASE_URL + "ulozeno/", method = RequestMethod.GET)
     public String initFormAfterSave(@PathVariable int eventId, HttpServletRequest request, ModelMap model) {
-        String view = this.initForm(eventId, request, model);
+        final String view = this.initForm(eventId, request, model);
         ((EditEvent) model.get(EditEventController.COMMAND)).setDataSaved(true);
         return view;
     }
@@ -74,8 +74,8 @@ public class EditEventController extends NewEditEventController {
         }
 
         // Updates the original data.
-        CalendarEvent originalEvent = this.eventDao.findById(eventId);
-        CalendarEvent newEvent = command.getEvent();
+        final CalendarEvent originalEvent = this.eventDao.findById(eventId);
+        final CalendarEvent newEvent = command.getEvent();
         originalEvent.setName(newEvent.getName());
         originalEvent.setDate(newEvent.getDate());
         originalEvent.setDescription(newEvent.getDescription());

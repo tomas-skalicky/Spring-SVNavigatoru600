@@ -61,14 +61,14 @@ public class ListContributionsController extends ContributionController {
 
     @RequestMapping(value = ListContributionsController.REQUEST_MAPPING_BASE_URL + "vytvoreno/", method = RequestMethod.GET)
     public String initPageAfterCreate(@PathVariable int threadId, HttpServletRequest request, ModelMap model) {
-        String view = this.initPage(threadId, request, model);
+        final String view = this.initPage(threadId, request, model);
         ((ShowAllContributions) model.get(ListContributionsController.COMMAND)).setContributionCreated(true);
         return view;
     }
 
     @RequestMapping(value = ListContributionsController.REQUEST_MAPPING_BASE_URL + "smazano/", method = RequestMethod.GET)
     public String initPageAfterDelete(@PathVariable int threadId, HttpServletRequest request, ModelMap model) {
-        String view = this.initPage(threadId, request, model);
+        final String view = this.initPage(threadId, request, model);
         ((ShowAllContributions) model.get(ListContributionsController.COMMAND)).setContributionDeleted(true);
         return view;
     }
@@ -80,8 +80,8 @@ public class ListContributionsController extends ContributionController {
     private Map<Contribution, String> getLocalizedDeleteQuestions(List<Contribution> contributions,
             HttpServletRequest request) {
         final String messageCode = "forum.contributions.do-you-really-want-to-delete-contribution";
-        String question = Localization.findLocaleMessage(this.messageSource, request, messageCode);
-        Map<Contribution, String> questions = new HashMap<Contribution, String>();
+        final String question = Localization.findLocaleMessage(this.messageSource, request, messageCode);
+        final Map<Contribution, String> questions = new HashMap<Contribution, String>();
 
         for (Contribution contribution : contributions) {
             questions.put(contribution, question);

@@ -92,11 +92,11 @@ public class Thread implements Serializable, Comparable<Thread> {
      */
     @Override
     public int compareTo(Thread t) {
-        Contribution thisContribution = this.getLastSavedContribution();
+        final Contribution thisContribution = this.getLastSavedContribution();
         if (thisContribution == null) {
             return 1;
         }
-        Contribution tContribution = t.getLastSavedContribution();
+        final Contribution tContribution = t.getLastSavedContribution();
         if (tContribution == null) {
             return -1;
         }

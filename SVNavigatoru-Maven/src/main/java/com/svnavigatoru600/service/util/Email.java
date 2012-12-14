@@ -23,8 +23,10 @@ import org.apache.commons.logging.LogFactory;
  */
 public class Email {
 
-    /** Logger for this class and subclasses */
-    protected static final Log logger = LogFactory.getLog(Email.class);
+    /**
+     * Logger for this class and subclasses
+     */
+    protected static final Log LOGGER = LogFactory.getLog(Email.class);
 
     // DO NOT FORGET to change the implementation of the sendMail function if
     // you change these constants.
@@ -71,13 +73,14 @@ public class Email {
      * Sends an email with the given arguments without SSL protocol. <b>Precondition:</b> The function assumes
      * that the given <code>recipient</code> represents a correct email address.
      */
-    public static void sendMailWithoutSSL(String recipient, String subject, String messageText) {
+    public static void sendMailWithoutSSL(final String recipient, final String subject,
+            final String messageText) {
         Properties props = new Properties();
         props.put("mail.smtp.host", Email.HOST);
         props.put("mail.smtp.port", Email.STANDARD_PORT);
         props.put("mail.smtp.auth", "true");
 
-        Session session = Session.getDefaultInstance(props, new javax.mail.Authenticator() {
+        final Session session = Session.getDefaultInstance(props, new javax.mail.Authenticator() {
             @Override
             protected PasswordAuthentication getPasswordAuthentication() {
                 return new PasswordAuthentication(Email.USERNAME, Email.PASSWORD);
@@ -96,7 +99,7 @@ public class Email {
      * Sends an email with the given arguments via SSL protocol. <b>Precondition:</b> The function assumes
      * that the given <code>recipient</code> represents a correct email address.
      */
-    public static void sendMailViaSSL(String recipient, String subject, String messageText) {
+    public static void sendMailViaSSL(final String recipient, final String subject, final String messageText) {
         Properties props = new Properties();
         props.put("mail.smtp.host", Email.HOST);
         props.put("mail.smtp.socketFactory.port", Email.SSL_PORT);
@@ -123,15 +126,15 @@ public class Email {
      * Sends an email with the given arguments via TLS/STARTTLS protocol. <b>Precondition:</b> The function
      * assumes that the given <code>recipient</code> represents a correct email address.
      */
-    public static void sendMailViaTLS(String recipient, String subject, String messageText) {
-        Properties props = new Properties();
+    public static void sendMailViaTLS(final String recipient, final String subject, final String messageText) {
+        final Properties props = new Properties();
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.starttls.enable", "true");
 
-        Session session = Session.getInstance(props);
+        final Session session = Session.getInstance(props);
 
         try {
-            Transport transport = session.getTransport(Email.PROTOCOL);
+            final Transport transport = session.getTransport(Email.PROTOCOL);
             transport.connect(Email.HOST, Email.TLS_PORT, Email.USERNAME, Email.PASSWORD);
 
             Email.sendMail(session, recipient, subject, messageText);
@@ -148,9 +151,9 @@ public class Email {
      * @throws MessagingException
      * @throws AddressException
      */
-    private static void sendMail(Session session, String recipient, String subject, String messageText)
-            throws MessagingException {
-        Message message = new MimeMessage(session);
+    private static void sendMail(final Session session, final String recipient, final String subject,
+            final String messageText) throws MessagingException {
+        final Message message = new MimeMessage(session);
         message.setFrom(new InternetAddress(Email.SENDER));
         message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(recipient));
         message.setSubject(subject);
@@ -160,6 +163,6 @@ public class Email {
 
         Transport.send(message);
 
-        Email.logger.info(String.format("Email '%s' has been sent to '%s'.", subject, recipient));
+        Email.LOGGER.info(String.format("Email '%s' has been sent to '%s'.", subject, recipient));
     }
 }

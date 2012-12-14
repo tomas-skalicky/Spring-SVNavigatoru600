@@ -35,22 +35,22 @@ public class UserDaoImpl extends SimpleJdbcDaoSupport implements UserDao {
     /**
      * Populates the <code>authorities</code> property of the given <code>user</code>.
      */
-    private void populateAuthorities(User user) {
-        List<Authority> authorities = this.authorityDao.find(user.getUsername());
+    private void populateAuthorities(final User user) {
+        final List<Authority> authorities = this.authorityDao.find(user.getUsername());
         user.setAuthorities(new HashSet<GrantedAuthority>(authorities));
     }
 
     /**
      * Populates the <code>authorities</code> property of all the given <code>users</code>.
      */
-    private void populateAuthorities(List<User> users) {
+    private void populateAuthorities(final List<User> users) {
         for (User user : users) {
             this.populateAuthorities(user);
         }
     }
 
     @Override
-    public User findByUsername(String username) {
+    public User findByUsername(final String username) {
         return this.findByUsername(username, false);
     }
 
@@ -58,12 +58,12 @@ public class UserDaoImpl extends SimpleJdbcDaoSupport implements UserDao {
      * @param lazy
      *            {@link Authority}s of the desired {@link User} will not be loaded.
      */
-    public User findByUsername(String username, boolean lazy) {
+    public User findByUsername(final String username, final boolean lazy) {
         this.logger.info(String.format("Load an user with the username '%s'", username));
 
-        String query = String.format("SELECT * FROM %s u WHERE u.%s = ?", UserDaoImpl.TABLE_NAME,
+        final String query = String.format("SELECT * FROM %s u WHERE u.%s = ?", UserDaoImpl.TABLE_NAME,
                 UserRowMapper.getColumn("username"));
-        User user = this.getSimpleJdbcTemplate().queryForObject(query, new UserRowMapper(), username);
+        final User user = this.getSimpleJdbcTemplate().queryForObject(query, new UserRowMapper(), username);
         if (user == null) {
             throw new DataRetrievalFailureException(String.format("No user with the username '%s' exists.",
                     username));
@@ -76,7 +76,7 @@ public class UserDaoImpl extends SimpleJdbcDaoSupport implements UserDao {
     }
 
     @Override
-    public User findByEmail(String email) {
+    public User findByEmail(final String email) {
         String lowerCasedEmail = null;
         if (email != null) {
             lowerCasedEmail = email.toLowerCase();
@@ -84,9 +84,9 @@ public class UserDaoImpl extends SimpleJdbcDaoSupport implements UserDao {
 
         this.logger.info(String.format("Load an user with the email '%s'", lowerCasedEmail));
 
-        String query = String.format("SELECT * FROM %s u WHERE u.%s = ?", UserDaoImpl.TABLE_NAME,
+        final String query = String.format("SELECT * FROM %s u WHERE u.%s = ?", UserDaoImpl.TABLE_NAME,
                 UserRowMapper.getColumn("email"));
-        User user = this.getSimpleJdbcTemplate().queryForObject(query, new UserRowMapper(), lowerCasedEmail);
+        final User user = this.getSimpleJdbcTemplate().queryForObject(query, new UserRowMapper(), lowerCasedEmail);
         if (user == null) {
             throw new DataRetrievalFailureException(String.format("No user with the email '%s' exists.",
                     lowerCasedEmail));
@@ -97,34 +97,34 @@ public class UserDaoImpl extends SimpleJdbcDaoSupport implements UserDao {
     }
 
     @Override
-    public List<User> findByAuthority(String authority) {
+    public List<User> findByAuthority(final String authority) {
         this.logger.info(String.format("Load all users with the authority '%s')", authority));
 
-        String query = String.format("SELECT u.* FROM %s u INNER JOIN %s a ON a.%s = u.%s WHERE a.%s = ?",
+        final String query = String.format("SELECT u.* FROM %s u INNER JOIN %s a ON a.%s = u.%s WHERE a.%s = ?",
                 UserDaoImpl.TABLE_NAME, AuthorityDaoImpl.TABLE_NAME,
                 AuthorityRowMapper.getColumn("username"), UserRowMapper.getColumn("username"),
                 AuthorityRowMapper.getColumn("authority"));
-        List<User> users = this.getSimpleJdbcTemplate().query(query, new UserRowMapper(), authority);
+        final List<User> users = this.getSimpleJdbcTemplate().query(query, new UserRowMapper(), authority);
 
         this.populateAuthorities(users);
         return users;
     }
 
     @Override
-    public List<User> loadAllOrdered(OrderType order, boolean testUsers) {
+    public List<User> loadAllOrdered(final OrderType order, final boolean testUsers) {
         this.logger.info(String.format("Load all users ordered %s.", order.name()));
 
-        String query = String.format("SELECT * FROM %s u WHERE u.is_test_user = %s ORDER BY u.%s, u.%s %s",
+        final String query = String.format("SELECT * FROM %s u WHERE u.is_test_user = %s ORDER BY u.%s, u.%s %s",
                 UserDaoImpl.TABLE_NAME, testUsers, UserRowMapper.getColumn("lastName"),
                 UserRowMapper.getColumn("firstName"), order.getDatabaseCode());
-        List<User> users = this.getSimpleJdbcTemplate().query(query, new UserRowMapper());
+        final List<User> users = this.getSimpleJdbcTemplate().query(query, new UserRowMapper());
 
         this.populateAuthorities(users);
         return users;
     }
 
     @Override
-    public void update(User user) {
+    public void update(final User user) {
         String lowerCasedEmail = null;
         if ((user != null) && (user.getEmail() != null)) {
             lowerCasedEmail = user.getEmail().toLowerCase();
@@ -138,7 +138,7 @@ public class UserDaoImpl extends SimpleJdbcDaoSupport implements UserDao {
 
         // Parameters are those words which begin with ':' in the following
         // query.
-        String query = String.format(
+        final String query = String.format(
                 "UPDATE %s SET %s = ?, %s = ?, %s = ?, %s = ?, %s = ?, %s = ? WHERE %s = ?",
                 UserDaoImpl.TABLE_NAME, UserRowMapper.getColumn("password"),
                 UserRowMapper.getColumn("enabled"), UserRowMapper.getColumn("firstName"),
@@ -155,8 +155,8 @@ public class UserDaoImpl extends SimpleJdbcDaoSupport implements UserDao {
     /**
      * Used during the save of the given <code>user</code>.
      */
-    private Map<String, Object> getNamedParameters(User user) {
-        Map<String, Object> parameters = new HashMap<String, Object>();
+    private Map<String, Object> getNamedParameters(final User user) {
+        final Map<String, Object> parameters = new HashMap<String, Object>();
         parameters.put(UserRowMapper.getColumn("username"), user.getUsername());
         parameters.put(UserRowMapper.getColumn("password"), user.getPassword());
         parameters.put(UserRowMapper.getColumn("enabled"), user.isEnabled());
@@ -174,7 +174,7 @@ public class UserDaoImpl extends SimpleJdbcDaoSupport implements UserDao {
     }
 
     @Override
-    public void save(User user) {
+    public void save(final User user) {
         String lowerCasedEmail = null;
         if ((user != null) && (user.getEmail() != null)) {
             lowerCasedEmail = user.getEmail().toLowerCase();
@@ -186,7 +186,7 @@ public class UserDaoImpl extends SimpleJdbcDaoSupport implements UserDao {
                                 user.getUsername(), user.getPassword(), user.isEnabled(),
                                 user.getFirstName(), user.getLastName(), lowerCasedEmail, user.getPhone()));
 
-        SimpleJdbcInsert insert = new SimpleJdbcInsert(this.getDataSource()).withTableName(
+        final SimpleJdbcInsert insert = new SimpleJdbcInsert(this.getDataSource()).withTableName(
                 UserDaoImpl.TABLE_NAME).usingColumns(UserRowMapper.getColumn("username"),
                 UserRowMapper.getColumn("password"), UserRowMapper.getColumn("enabled"),
                 UserRowMapper.getColumn("firstName"), UserRowMapper.getColumn("lastName"),
@@ -198,8 +198,8 @@ public class UserDaoImpl extends SimpleJdbcDaoSupport implements UserDao {
     }
 
     @Override
-    public void delete(User user) {
-        String query = String.format("DELETE FROM %s WHERE %s = ?", UserDaoImpl.TABLE_NAME,
+    public void delete(final User user) {
+        final String query = String.format("DELETE FROM %s WHERE %s = ?", UserDaoImpl.TABLE_NAME,
                 UserRowMapper.getColumn("username"));
         this.getSimpleJdbcTemplate().update(query, user.getUsername());
     }

@@ -32,7 +32,7 @@ public class EditThreadController extends NewEditThreadController {
     private EditThread editThread;
 
     @Autowired
-    public void setEditThread(EditThread editThread) {
+    public void setEditThread(final EditThread editThread) {
         this.editThread = editThread;
     }
 
@@ -40,19 +40,19 @@ public class EditThreadController extends NewEditThreadController {
      * Constructor.
      */
     @Autowired
-    public EditThreadController(ThreadDao threadDao, EditThreadValidator validator,
-            MessageSource messageSource) {
+    public EditThreadController(final ThreadDao threadDao, final EditThreadValidator validator,
+            final MessageSource messageSource) {
         super(threadDao, validator, messageSource);
     }
 
     @RequestMapping(value = EditThreadController.REQUEST_MAPPING_BASE_URL, method = RequestMethod.GET)
-    public String initForm(@PathVariable int threadId, HttpServletRequest request, ModelMap model) {
+    public String initForm(@PathVariable int threadId, final HttpServletRequest request, final ModelMap model) {
 
         this.editThread.canEdit(threadId);
 
-        EditThread command = new EditThread();
+        final EditThread command = new EditThread();
 
-        Thread thread = this.threadDao.findById(threadId);
+        final Thread thread = this.threadDao.findById(threadId);
         command.setThread(thread);
 
         model.addAttribute(EditThreadController.COMMAND, command);
@@ -60,16 +60,17 @@ public class EditThreadController extends NewEditThreadController {
     }
 
     @RequestMapping(value = EditThreadController.REQUEST_MAPPING_BASE_URL + "ulozeno/", method = RequestMethod.GET)
-    public String initFormAfterSave(@PathVariable int threadId, HttpServletRequest request, ModelMap model) {
-        String view = this.initForm(threadId, request, model);
+    public String initFormAfterSave(@PathVariable int threadId, final HttpServletRequest request,
+            final ModelMap model) {
+        final String view = this.initForm(threadId, request, model);
         ((EditThread) model.get(EditThreadController.COMMAND)).setDataSaved(true);
         return view;
     }
 
     @RequestMapping(value = EditThreadController.REQUEST_MAPPING_BASE_URL, method = RequestMethod.POST)
     public String processSubmittedForm(@ModelAttribute(EditThreadController.COMMAND) EditThread command,
-            BindingResult result, SessionStatus status, @PathVariable int threadId,
-            HttpServletRequest request, ModelMap model) {
+            final BindingResult result, final SessionStatus status, @PathVariable int threadId,
+            final HttpServletRequest request, final ModelMap model) {
 
         this.editThread.canEdit(threadId);
 
@@ -79,8 +80,8 @@ public class EditThreadController extends NewEditThreadController {
         }
 
         // Updates the original data.
-        Thread originalThread = this.threadDao.findById(threadId);
-        Thread newThread = command.getThread();
+        final Thread originalThread = this.threadDao.findById(threadId);
+        final Thread newThread = command.getThread();
         originalThread.setName(newThread.getName());
 
         try {

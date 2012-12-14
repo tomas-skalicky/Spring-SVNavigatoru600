@@ -30,8 +30,8 @@ public abstract class NewEditEventController extends EventController {
     public static final String COMMAND = "newEditEventCommand";
     protected Validator validator;
 
-    public NewEditEventController(CalendarEventDao eventDao, EventValidator validator,
-            MessageSource messageSource) {
+    public NewEditEventController(final CalendarEventDao eventDao, final EventValidator validator,
+            final MessageSource messageSource) {
         super(eventDao, messageSource);
         this.validator = validator;
     }
@@ -47,11 +47,11 @@ public abstract class NewEditEventController extends EventController {
      * </p>
      */
     @ModelAttribute("priorityTypeList")
-    public List<String> populatePriorityTypeList(HttpServletRequest request) {
-        List<String> priorityTypeList = new ArrayList<String>();
+    public List<String> populatePriorityTypeList(final HttpServletRequest request) {
+        final List<String> priorityTypeList = new ArrayList<String>();
 
         for (PriorityType type : PriorityType.values()) {
-            String localizationCode = type.getLocalizationCode();
+            final String localizationCode = type.getLocalizationCode();
             priorityTypeList.add(Localization
                     .findLocaleMessage(this.messageSource, request, localizationCode));
         }

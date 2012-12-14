@@ -42,8 +42,9 @@ public abstract class EditDocumentController extends NewEditDocumentController {
      * Constructs a controller which considers all {@link OtherDocumentRecord}s of all
      * {@link OtherDocumentRecordType}s.
      */
-    public EditDocumentController(String baseUrl, PageViews views, OtherDocumentRecordDao recordDao,
-            EditRecordValidator validator, MessageSource messageSource) {
+    public EditDocumentController(final String baseUrl, final PageViews views,
+            final OtherDocumentRecordDao recordDao, final EditRecordValidator validator,
+            final MessageSource messageSource) {
         super(baseUrl, views, recordDao, validator, messageSource);
     }
 
@@ -51,8 +52,9 @@ public abstract class EditDocumentController extends NewEditDocumentController {
      * Constructs a controller which considers all {@link OtherDocumentRecord}s of the given
      * <code>recordType</code>.
      */
-    public EditDocumentController(String baseUrl, PageViews views, OtherDocumentRecordType recordType,
-            OtherDocumentRecordDao recordDao, EditRecordValidator validator, MessageSource messageSource) {
+    public EditDocumentController(final String baseUrl, final PageViews views,
+            final OtherDocumentRecordType recordType, final OtherDocumentRecordDao recordDao,
+            final EditRecordValidator validator, final MessageSource messageSource) {
         super(baseUrl, views, recordType, recordDao, validator, messageSource);
     }
 
@@ -62,11 +64,11 @@ public abstract class EditDocumentController extends NewEditDocumentController {
      * @param recordId
      *            ID of the modified {@link OtherDocumentRecord}
      */
-    public String initForm(int recordId, HttpServletRequest request, ModelMap model) {
+    public String initForm(final int recordId, final HttpServletRequest request, final ModelMap model) {
 
-        EditRecord command = new EditRecord();
+        final EditRecord command = new EditRecord();
 
-        OtherDocumentRecord record = this.recordDao.findById(recordId, false);
+        final OtherDocumentRecord record = this.recordDao.findById(recordId, false);
         command.setRecord(record);
 
         // Collection of types is converted to a map.
@@ -84,8 +86,8 @@ public abstract class EditDocumentController extends NewEditDocumentController {
      * Initializes the form after the modified data were successfully saved to the repository and the new file
      * (if it exists) was uploaded.
      */
-    public String initFormAfterSave(int recordId, HttpServletRequest request, ModelMap model) {
-        String view = this.initForm(recordId, request, model);
+    public String initFormAfterSave(final int recordId, final HttpServletRequest request, final ModelMap model) {
+        final String view = this.initForm(recordId, request, model);
         ((EditRecord) model.get(EditDocumentController.COMMAND)).setDataSaved(true);
         return view;
     }
@@ -96,8 +98,9 @@ public abstract class EditDocumentController extends NewEditDocumentController {
      * 
      * @return The name of the view which is to be shown.
      */
-    public String processSubmittedForm(EditRecord command, BindingResult result, SessionStatus status,
-            int recordId, HttpServletRequest request, ModelMap model) {
+    public String processSubmittedForm(final EditRecord command, final BindingResult result,
+            final SessionStatus status, final int recordId, final HttpServletRequest request,
+            final ModelMap model) {
 
         // Sets up all auxiliary (but necessary) maps.
         command.setTypeCheckboxId(this.getTypeCheckboxId());
@@ -110,13 +113,13 @@ public abstract class EditDocumentController extends NewEditDocumentController {
         }
 
         // Updates the original data. Modifies the filename to make it unique.
-        OtherDocumentRecord oldRecord = this.recordDao.findById(recordId, false);
-        OtherDocumentRecord newRecord = command.getRecord();
+        final OtherDocumentRecord oldRecord = this.recordDao.findById(recordId, false);
+        final OtherDocumentRecord newRecord = command.getRecord();
         oldRecord.setName(newRecord.getName());
         oldRecord.setDescription(newRecord.getDescription());
         oldRecord.setTypes(OtherDocumentRecordUtils.convertIndicatorsToRelations(command.getNewTypes(),
                 recordId));
-        boolean isFileChanged = command.isFileChanged();
+        final boolean isFileChanged = command.isFileChanged();
         MultipartFile newAttachedFile = null;
         String newFileName = null;
 
@@ -138,7 +141,7 @@ public abstract class EditDocumentController extends NewEditDocumentController {
                 // /////////////////////////////////////////////////////////////////
                 // Store in the DB
                 // --------------------------------------------------------------
-                Blob blobFile = File.convertToBlob(newAttachedFile.getBytes());
+                final Blob blobFile = File.convertToBlob(newAttachedFile.getBytes());
                 oldRecord.setFile(blobFile);
                 // \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
                 oldRecord.setFileName(newFileName);
