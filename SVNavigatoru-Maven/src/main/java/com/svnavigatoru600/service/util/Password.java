@@ -9,20 +9,19 @@ import org.apache.commons.lang3.RandomStringUtils;
  */
 public class Password {
 
-	private static final String VALID_PASSWORD_REGEXP = "^[^ ]{6,}$";
+    private static final String VALID_PASSWORD_REGEXP = "^[^ ]{6,}$";
 
-	/**
-	 * Indicates whether the given <code>password</code> is valid in terms of
-	 * its format.
-	 */
-	public static boolean isValid(String password) {
-		return password.matches(Password.VALID_PASSWORD_REGEXP);
-	}
+    /**
+     * Indicates whether the given <code>password</code> is valid in terms of its format.
+     */
+    public static boolean isValid(String password) {
+        return password.matches(Password.VALID_PASSWORD_REGEXP);
+    }
 
-	/**
-	 * Gets a new generated password.
-	 */
-	public static String generateNew() {
-		return RandomStringUtils.randomAlphanumeric(8);
-	}
+    /**
+     * Gets a new generated password.
+     */
+    public static String generateNew() {
+        return RandomStringUtils.randomAlphanumeric(8);
+    }
 }

@@ -7,7 +7,5 @@ package com.svnavigatoru600.domain;
  */
 public enum WysiwygSectionName {
 
-	BOARD,
-	USEFUL_LINKS,
-	REMOSTAV_CONTACT
+    BOARD, USEFUL_LINKS, REMOSTAV_CONTACT
 }

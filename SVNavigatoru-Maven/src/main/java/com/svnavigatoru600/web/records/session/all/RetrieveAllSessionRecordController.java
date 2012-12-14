@@ -13,24 +13,22 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.svnavigatoru600.repository.records.SessionRecordDao;
 import com.svnavigatoru600.web.records.session.RetrieveRecordController;
 
-
 @Controller
 public class RetrieveAllSessionRecordController extends RetrieveRecordController {
 
-	private static final String BASE_URL = "/zapisy-z-jednani/";
+    private static final String BASE_URL = "/zapisy-z-jednani/";
 
-	/**
-	 * Constructor.
-	 */
-	@Autowired
-	public RetrieveAllSessionRecordController(SessionRecordDao recordDao, MessageSource messageSource) {
-		super(RetrieveAllSessionRecordController.BASE_URL, new PageViews(), recordDao, messageSource);
-	}
+    /**
+     * Constructor.
+     */
+    @Autowired
+    public RetrieveAllSessionRecordController(SessionRecordDao recordDao, MessageSource messageSource) {
+        super(RetrieveAllSessionRecordController.BASE_URL, new PageViews(), recordDao, messageSource);
+    }
 
-	@Override
-	@RequestMapping(value = RetrieveAllSessionRecordController.BASE_URL + "existujici/{recordId}/stahnout/",
-			method = RequestMethod.GET)
-	public void retrieve(@PathVariable int recordId, HttpServletResponse response, ModelMap model) {
-		super.retrieve(recordId, response, model);
-	}
+    @Override
+    @RequestMapping(value = RetrieveAllSessionRecordController.BASE_URL + "existujici/{recordId}/stahnout/", method = RequestMethod.GET)
+    public void retrieve(@PathVariable int recordId, HttpServletResponse response, ModelMap model) {
+        super.retrieve(recordId, response, model);
+    }
 }

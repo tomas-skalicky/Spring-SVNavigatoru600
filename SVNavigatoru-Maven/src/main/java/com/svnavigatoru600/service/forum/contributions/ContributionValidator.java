@@ -8,10 +8,10 @@ import org.springframework.validation.Validator;
 @Service
 public abstract class ContributionValidator implements Validator {
 
-	public void checkNewText(String text, Errors errors) {
-		String field = "contribution.text";
-		if (StringUtils.isBlank(text)) {
-			errors.rejectValue(field, "forum.contributions.text.not-filled-in");
-		}
-	}
+    public void checkNewText(String text, Errors errors) {
+        String field = "contribution.text";
+        if (StringUtils.isBlank(text)) {
+            errors.rejectValue(field, "forum.contributions.text.not-filled-in");
+        }
+    }
 }

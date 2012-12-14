@@ -6,24 +6,23 @@ import org.springframework.validation.Errors;
 
 import com.svnavigatoru600.service.forum.contributions.NewContributionValidator;
 
-
 @Service
 public class NewThreadValidator extends ThreadValidator {
 
-	private NewContributionValidator validator;
+    private NewContributionValidator validator;
 
-	@Autowired
-	public NewThreadValidator(NewContributionValidator validator) {
-		this.validator = validator;
-	}
+    @Autowired
+    public NewThreadValidator(NewContributionValidator validator) {
+        this.validator = validator;
+    }
 
-	public boolean supports(Class<?> clazz) {
-		return NewThread.class.isAssignableFrom(clazz);
-	}
+    public boolean supports(Class<?> clazz) {
+        return NewThread.class.isAssignableFrom(clazz);
+    }
 
-	public void validate(Object target, Errors errors) {
-		NewThread command = (NewThread) target;
-		this.checkNewName(command.getThread().getName(), errors);
-		this.validator.checkNewText(command.getContribution().getText(), errors);
-	}
+    public void validate(Object target, Errors errors) {
+        NewThread command = (NewThread) target;
+        this.checkNewName(command.getThread().getName(), errors);
+        this.validator.checkNewText(command.getContribution().getText(), errors);
+    }
 }

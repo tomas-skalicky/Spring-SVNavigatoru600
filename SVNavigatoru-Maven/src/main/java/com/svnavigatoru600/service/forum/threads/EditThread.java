@@ -6,17 +6,17 @@ import org.springframework.stereotype.Service;
 @Service
 public class EditThread extends NewEditThread {
 
-	private boolean dataSaved = false;
+    private boolean dataSaved = false;
 
-	public boolean isDataSaved() {
-		return this.dataSaved;
-	}
+    public boolean isDataSaved() {
+        return this.dataSaved;
+    }
 
-	public void setDataSaved(boolean dataSaved) {
-		this.dataSaved = dataSaved;
-	}
+    public void setDataSaved(boolean dataSaved) {
+        this.dataSaved = dataSaved;
+    }
 
-	@PreAuthorize("hasPermission(#threadId, 'com.svnavigatoru600.domain.forum.Thread', 'edit')")
-	public void canEdit(int threadId) {
-	}
+    @PreAuthorize("hasPermission(#threadId, 'com.svnavigatoru600.domain.forum.Thread', 'edit')")
+    public void canEdit(int threadId) {
+    }
 }

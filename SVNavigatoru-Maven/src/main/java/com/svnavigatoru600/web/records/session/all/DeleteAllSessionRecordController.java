@@ -13,24 +13,22 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.svnavigatoru600.repository.records.SessionRecordDao;
 import com.svnavigatoru600.web.records.session.DeleteRecordController;
 
-
 @Controller
 public class DeleteAllSessionRecordController extends DeleteRecordController {
 
-	private static final String BASE_URL = "/zapisy-z-jednani/";
+    private static final String BASE_URL = "/zapisy-z-jednani/";
 
-	/**
-	 * Constructor.
-	 */
-	@Autowired
-	public DeleteAllSessionRecordController(SessionRecordDao recordDao, MessageSource messageSource) {
-		super(DeleteAllSessionRecordController.BASE_URL, new PageViews(), recordDao, messageSource);
-	}
+    /**
+     * Constructor.
+     */
+    @Autowired
+    public DeleteAllSessionRecordController(SessionRecordDao recordDao, MessageSource messageSource) {
+        super(DeleteAllSessionRecordController.BASE_URL, new PageViews(), recordDao, messageSource);
+    }
 
-	@Override
-	@RequestMapping(value = DeleteAllSessionRecordController.BASE_URL + "existujici/{recordId}/smazat/",
-			method = RequestMethod.GET)
-	public String delete(@PathVariable int recordId, HttpServletRequest request, ModelMap model) {
-		return super.delete(recordId, request, model);
-	}
+    @Override
+    @RequestMapping(value = DeleteAllSessionRecordController.BASE_URL + "existujici/{recordId}/smazat/", method = RequestMethod.GET)
+    public String delete(@PathVariable int recordId, HttpServletRequest request, ModelMap model) {
+        return super.delete(recordId, request, model);
+    }
 }

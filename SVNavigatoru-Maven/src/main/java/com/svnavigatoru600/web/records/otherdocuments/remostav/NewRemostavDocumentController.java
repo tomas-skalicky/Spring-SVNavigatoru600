@@ -18,32 +18,31 @@ import com.svnavigatoru600.service.records.otherdocuments.NewRecord;
 import com.svnavigatoru600.service.records.otherdocuments.NewRecordValidator;
 import com.svnavigatoru600.web.records.otherdocuments.NewDocumentController;
 
-
 @Controller
 public class NewRemostavDocumentController extends NewDocumentController {
 
-	private static final String BASE_URL = "/remostav/dokumentace/";
+    private static final String BASE_URL = "/remostav/dokumentace/";
 
-	/**
-	 * Constructor.
-	 */
-	@Autowired
-	public NewRemostavDocumentController(OtherDocumentRecordDao recordDao, NewRecordValidator validator,
-			MessageSource messageSource) {
-		super(NewRemostavDocumentController.BASE_URL, new PageViews(), OtherDocumentRecordType.REMOSTAV, recordDao,
-				validator, messageSource);
-	}
+    /**
+     * Constructor.
+     */
+    @Autowired
+    public NewRemostavDocumentController(OtherDocumentRecordDao recordDao, NewRecordValidator validator,
+            MessageSource messageSource) {
+        super(NewRemostavDocumentController.BASE_URL, new PageViews(), OtherDocumentRecordType.REMOSTAV,
+                recordDao, validator, messageSource);
+    }
 
-	@Override
-	@RequestMapping(value = NewRemostavDocumentController.BASE_URL + "novy/", method = RequestMethod.GET)
-	public String initForm(HttpServletRequest request, ModelMap model) {
-		return super.initForm(request, model);
-	}
+    @Override
+    @RequestMapping(value = NewRemostavDocumentController.BASE_URL + "novy/", method = RequestMethod.GET)
+    public String initForm(HttpServletRequest request, ModelMap model) {
+        return super.initForm(request, model);
+    }
 
-	@Override
-	@RequestMapping(value = NewRemostavDocumentController.BASE_URL + "novy/", method = RequestMethod.POST)
-	public String processSubmittedForm(@ModelAttribute(NewDocumentController.COMMAND) NewRecord command,
-			BindingResult result, SessionStatus status, HttpServletRequest request, ModelMap model) {
-		return super.processSubmittedForm(command, result, status, request, model);
-	}
+    @Override
+    @RequestMapping(value = NewRemostavDocumentController.BASE_URL + "novy/", method = RequestMethod.POST)
+    public String processSubmittedForm(@ModelAttribute(NewDocumentController.COMMAND) NewRecord command,
+            BindingResult result, SessionStatus status, HttpServletRequest request, ModelMap model) {
+        return super.processSubmittedForm(command, result, status, request, model);
+    }
 }

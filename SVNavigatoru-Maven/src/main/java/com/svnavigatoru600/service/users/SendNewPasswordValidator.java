@@ -7,31 +7,29 @@ import org.springframework.validation.Validator;
 
 import com.svnavigatoru600.service.util.Email;
 
-
 /**
- * Validates the data provided by the user in <i>forgotten-password.jsp</i>
- * form.
+ * Validates the data provided by the user in <i>forgotten-password.jsp</i> form.
  * 
  * @author Tomas Skalicky
  */
 @Service
 public class SendNewPasswordValidator implements Validator {
 
-	public boolean supports(Class<?> clazz) {
-		return SendNewPassword.class.isAssignableFrom(clazz);
-	}
+    public boolean supports(Class<?> clazz) {
+        return SendNewPassword.class.isAssignableFrom(clazz);
+    }
 
-	public void validate(Object target, Errors errors) {
-		String field = "user.email";
+    public void validate(Object target, Errors errors) {
+        String field = "user.email";
 
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, field, "email.not-filled-in");
-		if (errors.hasErrors()) {
-			// The email address is blank.
-		} else {
-			SendNewPassword command = (SendNewPassword) target;
-			if (!Email.isValid(command.getUser().getEmail())) {
-				errors.rejectValue(field, "email.bad-format");
-			}
-		}
-	}
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, field, "email.not-filled-in");
+        if (errors.hasErrors()) {
+            // The email address is blank.
+        } else {
+            SendNewPassword command = (SendNewPassword) target;
+            if (!Email.isValid(command.getUser().getEmail())) {
+                errors.rejectValue(field, "email.bad-format");
+            }
+        }
+    }
 }

@@ -22,88 +22,86 @@ import com.svnavigatoru600.service.forum.contributions.NewContributionValidator;
 import com.svnavigatoru600.service.util.UserUtils;
 import com.svnavigatoru600.web.Configuration;
 
-
 @Controller
 public class NewContributionController extends NewEditContributionController {
 
-	private static final String REQUEST_MAPPING_BASE_URL = NewContributionController.BASE_URL
-			+ "{threadId}/prispevky/novy/";
-	/**
-	 * Code of the error message used when the {@link DataAccessException} is
-	 * thrown.
-	 */
-	public static final String DATABASE_ERROR_MESSAGE_CODE = "forum.contributions.adding-failed-due-to-database-error";
-	private ThreadDao threadDao;
+    private static final String REQUEST_MAPPING_BASE_URL = NewContributionController.BASE_URL
+            + "{threadId}/prispevky/novy/";
+    /**
+     * Code of the error message used when the {@link DataAccessException} is thrown.
+     */
+    public static final String DATABASE_ERROR_MESSAGE_CODE = "forum.contributions.adding-failed-due-to-database-error";
+    private ThreadDao threadDao;
 
-	@Autowired
-	public void setThreadDao(ThreadDao threadDao) {
-		this.threadDao = threadDao;
-	}
+    @Autowired
+    public void setThreadDao(ThreadDao threadDao) {
+        this.threadDao = threadDao;
+    }
 
-	/**
-	 * Constructor.
-	 */
-	@Autowired
-	public NewContributionController(ContributionDao contributionDao, NewContributionValidator validator,
-			MessageSource messageSource) {
-		super(contributionDao, validator, messageSource);
-	}
+    /**
+     * Constructor.
+     */
+    @Autowired
+    public NewContributionController(ContributionDao contributionDao, NewContributionValidator validator,
+            MessageSource messageSource) {
+        super(contributionDao, validator, messageSource);
+    }
 
-	/**
-	 * Initializes the form.
-	 */
-	@RequestMapping(value = NewContributionController.REQUEST_MAPPING_BASE_URL, method = RequestMethod.GET)
-	public String initForm(@PathVariable int threadId, HttpServletRequest request, ModelMap model) {
+    /**
+     * Initializes the form.
+     */
+    @RequestMapping(value = NewContributionController.REQUEST_MAPPING_BASE_URL, method = RequestMethod.GET)
+    public String initForm(@PathVariable int threadId, HttpServletRequest request, ModelMap model) {
 
-		NewContribution command = new NewContribution();
+        NewContribution command = new NewContribution();
 
-		Contribution contribution = new Contribution();
-		command.setContribution(contribution);
-		command.setThreadId(threadId);
+        Contribution contribution = new Contribution();
+        command.setContribution(contribution);
+        command.setThreadId(threadId);
 
-		model.addAttribute(NewContributionController.COMMAND, command);
-		return PageViews.NEW.getViewName();
-	}
+        model.addAttribute(NewContributionController.COMMAND, command);
+        return PageViews.NEW.getViewName();
+    }
 
-	/**
-	 * If values in the form are OK, the new contribution is stored to the
-	 * repository. Otherwise, returns back to the form.
-	 * 
-	 * @return The name of the view which is to be shown.
-	 */
-	@RequestMapping(value = NewContributionController.REQUEST_MAPPING_BASE_URL, method = RequestMethod.POST)
-	public String processSubmittedForm(@ModelAttribute(NewContributionController.COMMAND) NewContribution command,
-			BindingResult result, SessionStatus status, @PathVariable int threadId, HttpServletRequest request,
-			ModelMap model) {
+    /**
+     * If values in the form are OK, the new contribution is stored to the repository. Otherwise, returns back
+     * to the form.
+     * 
+     * @return The name of the view which is to be shown.
+     */
+    @RequestMapping(value = NewContributionController.REQUEST_MAPPING_BASE_URL, method = RequestMethod.POST)
+    public String processSubmittedForm(
+            @ModelAttribute(NewContributionController.COMMAND) NewContribution command, BindingResult result,
+            SessionStatus status, @PathVariable int threadId, HttpServletRequest request, ModelMap model) {
 
-		this.validator.validate(command, result);
-		if (result.hasErrors()) {
-			return PageViews.NEW.getViewName();
-		}
+        this.validator.validate(command, result);
+        if (result.hasErrors()) {
+            return PageViews.NEW.getViewName();
+        }
 
-		// Updates the data of the new contribution.
-		Contribution newContribution = command.getContribution();
-		newContribution.setAuthor(UserUtils.getLoggedUser());
+        // Updates the data of the new contribution.
+        Contribution newContribution = command.getContribution();
+        newContribution.setAuthor(UserUtils.getLoggedUser());
 
-		try {
-			newContribution.setThread(this.threadDao.findById(threadId));
+        try {
+            newContribution.setThread(this.threadDao.findById(threadId));
 
-			// Saves the contribution to the repository.
-			this.contributionDao.save(newContribution);
+            // Saves the contribution to the repository.
+            this.contributionDao.save(newContribution);
 
-			// Clears the command object from the session.
-			status.setComplete();
+            // Clears the command object from the session.
+            status.setComplete();
 
-			// Returns the form success view.
-			model.addAttribute(Configuration.REDIRECTION_ATTRIBUTE,
-					String.format("%s%d/prispevky/vytvoreno/", NewContributionController.BASE_URL, threadId));
-			return Configuration.REDIRECTION_PAGE;
+            // Returns the form success view.
+            model.addAttribute(Configuration.REDIRECTION_ATTRIBUTE,
+                    String.format("%s%d/prispevky/vytvoreno/", NewContributionController.BASE_URL, threadId));
+            return Configuration.REDIRECTION_PAGE;
 
-		} catch (DataAccessException e) {
-			// We encountered a database problem.
-			this.logger.error(newContribution, e);
-			result.reject(NewContributionController.DATABASE_ERROR_MESSAGE_CODE);
-		}
-		return PageViews.NEW.getViewName();
-	}
+        } catch (DataAccessException e) {
+            // We encountered a database problem.
+            this.logger.error(newContribution, e);
+            result.reject(NewContributionController.DATABASE_ERROR_MESSAGE_CODE);
+        }
+        return PageViews.NEW.getViewName();
+    }
 }

@@ -4,26 +4,25 @@ import org.springframework.stereotype.Service;
 
 import com.svnavigatoru600.domain.forum.Contribution;
 
-
 @Service
 public abstract class NewEditContribution {
 
-	private Contribution contribution = null;
-	private int threadId = -1;
+    private Contribution contribution = null;
+    private int threadId = -1;
 
-	public Contribution getContribution() {
-		return this.contribution;
-	}
+    public Contribution getContribution() {
+        return this.contribution;
+    }
 
-	public void setContribution(Contribution contribution) {
-		this.contribution = contribution;
-	}
+    public void setContribution(Contribution contribution) {
+        this.contribution = contribution;
+    }
 
-	public int getThreadId() {
-		return this.threadId;
-	}
+    public int getThreadId() {
+        return this.threadId;
+    }
 
-	public void setThreadId(int threadId) {
-		this.threadId = threadId;
-	}
+    public void setThreadId(int threadId) {
+        this.threadId = threadId;
+    }
 }

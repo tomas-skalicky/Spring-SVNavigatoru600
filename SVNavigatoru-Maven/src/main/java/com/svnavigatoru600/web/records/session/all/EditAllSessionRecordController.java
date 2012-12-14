@@ -18,38 +18,37 @@ import com.svnavigatoru600.service.records.session.EditSessionRecord;
 import com.svnavigatoru600.service.records.session.EditSessionRecordValidator;
 import com.svnavigatoru600.web.records.session.EditRecordController;
 
-
 @Controller
 public class EditAllSessionRecordController extends EditRecordController {
 
-	private static final String BASE_URL = "/zapisy-z-jednani/existujici/";
+    private static final String BASE_URL = "/zapisy-z-jednani/existujici/";
 
-	/**
-	 * Constructor.
-	 */
-	@Autowired
-	public EditAllSessionRecordController(SessionRecordDao recordDao, EditSessionRecordValidator validator,
-			MessageSource messageSource) {
-		super(EditAllSessionRecordController.BASE_URL, new PageViews(), recordDao, validator, messageSource);
-	}
+    /**
+     * Constructor.
+     */
+    @Autowired
+    public EditAllSessionRecordController(SessionRecordDao recordDao, EditSessionRecordValidator validator,
+            MessageSource messageSource) {
+        super(EditAllSessionRecordController.BASE_URL, new PageViews(), recordDao, validator, messageSource);
+    }
 
-	@Override
-	@RequestMapping(value = EditAllSessionRecordController.BASE_URL + "{recordId}/", method = RequestMethod.GET)
-	public String initForm(@PathVariable int recordId, HttpServletRequest request, ModelMap model) {
-		return super.initForm(recordId, request, model);
-	}
+    @Override
+    @RequestMapping(value = EditAllSessionRecordController.BASE_URL + "{recordId}/", method = RequestMethod.GET)
+    public String initForm(@PathVariable int recordId, HttpServletRequest request, ModelMap model) {
+        return super.initForm(recordId, request, model);
+    }
 
-	@Override
-	@RequestMapping(value = EditAllSessionRecordController.BASE_URL + "{recordId}/ulozeno/", method = RequestMethod.GET)
-	public String initFormAfterSave(@PathVariable int recordId, HttpServletRequest request, ModelMap model) {
-		return super.initFormAfterSave(recordId, request, model);
-	}
+    @Override
+    @RequestMapping(value = EditAllSessionRecordController.BASE_URL + "{recordId}/ulozeno/", method = RequestMethod.GET)
+    public String initFormAfterSave(@PathVariable int recordId, HttpServletRequest request, ModelMap model) {
+        return super.initFormAfterSave(recordId, request, model);
+    }
 
-	@Override
-	@RequestMapping(value = EditAllSessionRecordController.BASE_URL + "{recordId}/", method = RequestMethod.POST)
-	public String processSubmittedForm(@ModelAttribute(EditRecordController.COMMAND) EditSessionRecord command,
-			BindingResult result, SessionStatus status, @PathVariable int recordId, HttpServletRequest request,
-			ModelMap model) {
-		return super.processSubmittedForm(command, result, status, recordId, request, model);
-	}
+    @Override
+    @RequestMapping(value = EditAllSessionRecordController.BASE_URL + "{recordId}/", method = RequestMethod.POST)
+    public String processSubmittedForm(
+            @ModelAttribute(EditRecordController.COMMAND) EditSessionRecord command, BindingResult result,
+            SessionStatus status, @PathVariable int recordId, HttpServletRequest request, ModelMap model) {
+        return super.processSubmittedForm(command, result, status, recordId, request, model);
+    }
 }

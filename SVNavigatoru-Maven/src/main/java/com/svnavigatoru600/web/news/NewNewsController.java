@@ -19,77 +19,77 @@ import com.svnavigatoru600.repository.NewsDao;
 import com.svnavigatoru600.service.news.NewNews;
 import com.svnavigatoru600.service.news.NewNewsValidator;
 
-
 @Controller
 public class NewNewsController extends NewEditNewsController {
 
-	private static final String REQUEST_MAPPING_BASE_URL = NewNewsController.BASE_URL + "novy/";
-	/**
-	 * Code of the error message used when the {@link DataAccessException} is thrown.
-	 */
-	public static final String DATABASE_ERROR_MESSAGE_CODE = "news.adding-failed-due-to-database-error";
+    private static final String REQUEST_MAPPING_BASE_URL = NewNewsController.BASE_URL + "novy/";
+    /**
+     * Code of the error message used when the {@link DataAccessException} is thrown.
+     */
+    public static final String DATABASE_ERROR_MESSAGE_CODE = "news.adding-failed-due-to-database-error";
 
-	/**
-	 * Constructor.
-	 */
-	@Autowired
-	public NewNewsController(NewsDao newsDao, NewNewsValidator validator, MessageSource messageSource) {
-		super(newsDao, validator, messageSource);
-	}
+    /**
+     * Constructor.
+     */
+    @Autowired
+    public NewNewsController(NewsDao newsDao, NewNewsValidator validator, MessageSource messageSource) {
+        super(newsDao, validator, messageSource);
+    }
 
-	/**
-	 * Initialises the form.
-	 */
-	@RequestMapping(value = NewNewsController.REQUEST_MAPPING_BASE_URL, method = RequestMethod.GET)
-	public @ResponseBody
-	NewsResponse initForm(HttpServletRequest request, ModelMap model) {
+    /**
+     * Initialises the form.
+     */
+    @RequestMapping(value = NewNewsController.REQUEST_MAPPING_BASE_URL, method = RequestMethod.GET)
+    public @ResponseBody
+    NewsResponse initForm(HttpServletRequest request, ModelMap model) {
 
-		NewNews command = new NewNews();
+        NewNews command = new NewNews();
 
-		News news = new News();
-		command.setNews(news);
+        News news = new News();
+        command.setNews(news);
 
-		model.addAttribute(NewNewsController.COMMAND, command);
-		return new GoToNewFormResponse(news, this.messageSource, request);
-	}
+        model.addAttribute(NewNewsController.COMMAND, command);
+        return new GoToNewFormResponse(news, this.messageSource, request);
+    }
 
-	/**
-	 * If values in the form are OK, the new news is stored to the repository. Otherwise, returns back to the form.
-	 * 
-	 * @return Response in the JSON format
-	 */
-	@RequestMapping(value = NewNewsController.REQUEST_MAPPING_BASE_URL, method = RequestMethod.POST)
-	public @ResponseBody
-	NewsResponse processSubmittedForm(@ModelAttribute(NewNewsController.COMMAND) NewNews command, BindingResult result,
-			SessionStatus status, HttpServletRequest request) {
+    /**
+     * If values in the form are OK, the new news is stored to the repository. Otherwise, returns back to the
+     * form.
+     * 
+     * @return Response in the JSON format
+     */
+    @RequestMapping(value = NewNewsController.REQUEST_MAPPING_BASE_URL, method = RequestMethod.POST)
+    public @ResponseBody
+    NewsResponse processSubmittedForm(@ModelAttribute(NewNewsController.COMMAND) NewNews command,
+            BindingResult result, SessionStatus status, HttpServletRequest request) {
 
-		NewNewsResponse response = new NewNewsResponse(command);
+        NewNewsResponse response = new NewNewsResponse(command);
 
-		this.validator.validate(command, result);
-		if (result.hasErrors()) {
-			response.setFail(result, this.messageSource, request);
-			return response;
-		}
+        this.validator.validate(command, result);
+        if (result.hasErrors()) {
+            response.setFail(result, this.messageSource, request);
+            return response;
+        }
 
-		// Updates the data of the new news.
-		News newNews = command.getNews();
+        // Updates the data of the new news.
+        News newNews = command.getNews();
 
-		try {
-			// Saves the news to the repository.
-			this.newsDao.save(newNews);
+        try {
+            // Saves the news to the repository.
+            this.newsDao.save(newNews);
 
-			// Clears the command object from the session.
-			status.setComplete();
+            // Clears the command object from the session.
+            status.setComplete();
 
-			response.setSuccess(this.messageSource, request);
-			return response;
+            response.setSuccess(this.messageSource, request);
+            return response;
 
-		} catch (DataAccessException e) {
-			// We encountered a database problem.
-			this.logger.error(newNews, e);
-			result.reject(NewNewsController.DATABASE_ERROR_MESSAGE_CODE);
-			response.setFail(result, this.messageSource, request);
-			return response;
-		}
-	}
+        } catch (DataAccessException e) {
+            // We encountered a database problem.
+            this.logger.error(newNews, e);
+            result.reject(NewNewsController.DATABASE_ERROR_MESSAGE_CODE);
+            response.setFail(result, this.messageSource, request);
+            return response;
+        }
+    }
 }

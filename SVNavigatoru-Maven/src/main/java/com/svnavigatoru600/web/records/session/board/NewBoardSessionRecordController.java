@@ -18,35 +18,33 @@ import com.svnavigatoru600.service.records.session.NewSessionRecord;
 import com.svnavigatoru600.service.records.session.NewSessionRecordValidator;
 import com.svnavigatoru600.web.records.session.NewRecordController;
 
-
 @Controller
 public class NewBoardSessionRecordController extends NewRecordController {
 
-	private static final String BASE_URL = "/zapisy-z-jednani/vybor/";
+    private static final String BASE_URL = "/zapisy-z-jednani/vybor/";
 
-	/**
-	 * Constructor.
-	 */
-	@Autowired
-	public NewBoardSessionRecordController(SessionRecordDao recordDao, NewSessionRecordValidator validator,
-			MessageSource messageSource) {
-		super(NewBoardSessionRecordController.BASE_URL, new PageViews(), SessionRecordType.SESSION_RECORD_OF_BOARD,
-				recordDao, validator, messageSource);
-	}
+    /**
+     * Constructor.
+     */
+    @Autowired
+    public NewBoardSessionRecordController(SessionRecordDao recordDao, NewSessionRecordValidator validator,
+            MessageSource messageSource) {
+        super(NewBoardSessionRecordController.BASE_URL, new PageViews(),
+                SessionRecordType.SESSION_RECORD_OF_BOARD, recordDao, validator, messageSource);
+    }
 
-	/**
-	 * This method cannot be annotated with {@link Override} since it has one
-	 * less parameter.
-	 */
-	@RequestMapping(value = NewBoardSessionRecordController.BASE_URL + "novy/", method = RequestMethod.GET)
-	public String initForm(HttpServletRequest request, ModelMap model) {
-		return super.initForm(SessionRecordType.SESSION_RECORD_OF_BOARD, request, model);
-	}
+    /**
+     * This method cannot be annotated with {@link Override} since it has one less parameter.
+     */
+    @RequestMapping(value = NewBoardSessionRecordController.BASE_URL + "novy/", method = RequestMethod.GET)
+    public String initForm(HttpServletRequest request, ModelMap model) {
+        return super.initForm(SessionRecordType.SESSION_RECORD_OF_BOARD, request, model);
+    }
 
-	@Override
-	@RequestMapping(value = NewBoardSessionRecordController.BASE_URL + "novy/", method = RequestMethod.POST)
-	public String processSubmittedForm(@ModelAttribute(NewRecordController.COMMAND) NewSessionRecord command,
-			BindingResult result, SessionStatus status, HttpServletRequest request, ModelMap model) {
-		return super.processSubmittedForm(command, result, status, request, model);
-	}
+    @Override
+    @RequestMapping(value = NewBoardSessionRecordController.BASE_URL + "novy/", method = RequestMethod.POST)
+    public String processSubmittedForm(@ModelAttribute(NewRecordController.COMMAND) NewSessionRecord command,
+            BindingResult result, SessionStatus status, HttpServletRequest request, ModelMap model) {
+        return super.processSubmittedForm(command, result, status, request, model);
+    }
 }

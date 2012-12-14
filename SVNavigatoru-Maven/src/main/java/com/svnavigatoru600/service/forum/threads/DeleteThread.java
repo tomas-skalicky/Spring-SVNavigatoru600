@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class DeleteThread {
 
-	@PreAuthorize("hasPermission(#threadId, 'com.svnavigatoru600.domain.forum.Thread', 'delete')")
-	public void canDelete(int threadId) {
-	}
+    @PreAuthorize("hasPermission(#threadId, 'com.svnavigatoru600.domain.forum.Thread', 'delete')")
+    public void canDelete(int threadId) {
+    }
 }

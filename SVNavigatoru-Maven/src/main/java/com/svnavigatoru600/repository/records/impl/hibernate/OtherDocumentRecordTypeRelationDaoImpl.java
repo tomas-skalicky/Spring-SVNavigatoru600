@@ -10,30 +10,29 @@ import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import com.svnavigatoru600.domain.records.OtherDocumentRecordTypeRelation;
 import com.svnavigatoru600.repository.records.OtherDocumentRecordTypeRelationDao;
 
-
 public class OtherDocumentRecordTypeRelationDaoImpl extends HibernateDaoSupport implements
-		OtherDocumentRecordTypeRelationDao {
+        OtherDocumentRecordTypeRelationDao {
 
-	@SuppressWarnings("unchecked")
-	public List<OtherDocumentRecordTypeRelation> find(int recordId) {
-		DetachedCriteria criteria = DetachedCriteria.forClass(OtherDocumentRecordTypeRelation.class);
-		criteria.add(Restrictions.eq("id.recordId", recordId));
+    @SuppressWarnings("unchecked")
+    public List<OtherDocumentRecordTypeRelation> find(int recordId) {
+        DetachedCriteria criteria = DetachedCriteria.forClass(OtherDocumentRecordTypeRelation.class);
+        criteria.add(Restrictions.eq("id.recordId", recordId));
 
-		return (List<OtherDocumentRecordTypeRelation>) this.getHibernateTemplate().findByCriteria(criteria);
-	}
+        return (List<OtherDocumentRecordTypeRelation>) this.getHibernateTemplate().findByCriteria(criteria);
+    }
 
-	public void save(Collection<OtherDocumentRecordTypeRelation> types) {
-		for (OtherDocumentRecordTypeRelation type : types) {
-			this.getHibernateTemplate().save(type);
-		}
-	}
+    public void save(Collection<OtherDocumentRecordTypeRelation> types) {
+        for (OtherDocumentRecordTypeRelation type : types) {
+            this.getHibernateTemplate().save(type);
+        }
+    }
 
-	@SuppressWarnings("unchecked")
-	public void delete(int recordId) {
-		DetachedCriteria criteria = DetachedCriteria.forClass(OtherDocumentRecordTypeRelation.class);
-		criteria.add(Restrictions.eq("id.recordId", recordId));
+    @SuppressWarnings("unchecked")
+    public void delete(int recordId) {
+        DetachedCriteria criteria = DetachedCriteria.forClass(OtherDocumentRecordTypeRelation.class);
+        criteria.add(Restrictions.eq("id.recordId", recordId));
 
-		this.getHibernateTemplate().deleteAll(
-				(List<OtherDocumentRecordTypeRelation>) this.getHibernateTemplate().findByCriteria(criteria));
-	}
+        this.getHibernateTemplate().deleteAll(
+                (List<OtherDocumentRecordTypeRelation>) this.getHibernateTemplate().findByCriteria(criteria));
+    }
 }

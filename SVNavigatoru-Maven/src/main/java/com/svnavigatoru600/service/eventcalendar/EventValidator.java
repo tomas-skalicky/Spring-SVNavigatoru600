@@ -11,38 +11,36 @@ import com.svnavigatoru600.domain.eventcalendar.CalendarEvent;
 import com.svnavigatoru600.domain.records.SessionRecordType;
 import com.svnavigatoru600.service.util.DateUtils;
 
-
 @Service
 public abstract class EventValidator implements Validator {
 
-	protected void checkNewName(String name, Errors errors) {
-		String field = "event.name";
-		if (StringUtils.isBlank(name)) {
-			errors.rejectValue(field, "event-calendar.name.not-filled-in");
-		}
-	}
+    protected void checkNewName(String name, Errors errors) {
+        String field = "event.name";
+        if (StringUtils.isBlank(name)) {
+            errors.rejectValue(field, "event-calendar.name.not-filled-in");
+        }
+    }
 
-	/**
-	 * Checks whether the given {@link CalendarEvent}'s <code>date</code> is
-	 * valid.
-	 */
-	protected void checkNewDate(Date newDate, Errors errors) {
-		String field = "event.date";
-		if (newDate == null) {
-			errors.rejectValue(field, "event-calendar.date.not-filled-in");
-		} else if (newDate.before(DateUtils.getToday())) {
-			errors.rejectValue(field, "event-calendar.date.cannot-take-place-in-past");
-		}
-	}
+    /**
+     * Checks whether the given {@link CalendarEvent}'s <code>date</code> is valid.
+     */
+    protected void checkNewDate(Date newDate, Errors errors) {
+        String field = "event.date";
+        if (newDate == null) {
+            errors.rejectValue(field, "event-calendar.date.not-filled-in");
+        } else if (newDate.before(DateUtils.getToday())) {
+            errors.rejectValue(field, "event-calendar.date.cannot-take-place-in-past");
+        }
+    }
 
-	protected void checkNewPriority(String newPriority, Errors errors) {
-		try {
-			SessionRecordType.valueOf(newPriority);
-		} catch (IllegalArgumentException e) {
-			// Cannot be correctly checked since the newPriority parameter
-			// contains a localized string.
-		} catch (NullPointerException e) {
-			throw new RuntimeException("Priority is null.", e);
-		}
-	}
+    protected void checkNewPriority(String newPriority, Errors errors) {
+        try {
+            SessionRecordType.valueOf(newPriority);
+        } catch (IllegalArgumentException e) {
+            // Cannot be correctly checked since the newPriority parameter
+            // contains a localized string.
+        } catch (NullPointerException e) {
+            throw new RuntimeException("Priority is null.", e);
+        }
+    }
 }

@@ -7,12 +7,12 @@ package com.svnavigatoru600.service.util;
  */
 public class PhoneNumber {
 
-	private static final String VALID_PHONE_NUMBER_REGEXP = "^[+]?(\\d[ ]*){9,}$";
+    private static final String VALID_PHONE_NUMBER_REGEXP = "^[+]?(\\d[ ]*){9,}$";
 
-	/**
-	 * Indicates whether the given <code>phoneNumber</code> is valid.
-	 */
-	public static boolean isValid(String phoneNumber) {
-		return phoneNumber.matches(PhoneNumber.VALID_PHONE_NUMBER_REGEXP);
-	}
+    /**
+     * Indicates whether the given <code>phoneNumber</code> is valid.
+     */
+    public static boolean isValid(String phoneNumber) {
+        return phoneNumber.matches(PhoneNumber.VALID_PHONE_NUMBER_REGEXP);
+    }
 }

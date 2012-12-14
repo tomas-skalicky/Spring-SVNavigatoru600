@@ -12,11 +12,11 @@ import org.springframework.web.servlet.support.RequestContextUtils;
  */
 public class MyRequestContext {
 
-	/**
-	 * Gets the bean with the given <code>beanName</code> accessible through the given <code>request</code>.
-	 */
-	public static Object getBean(String beanName, HttpServletRequest request) {
-		ApplicationContext appContext = RequestContextUtils.getWebApplicationContext(request);
-		return appContext.getBean(beanName);
-	}
+    /**
+     * Gets the bean with the given <code>beanName</code> accessible through the given <code>request</code>.
+     */
+    public static Object getBean(String beanName, HttpServletRequest request) {
+        ApplicationContext appContext = RequestContextUtils.getWebApplicationContext(request);
+        return appContext.getBean(beanName);
+    }
 }

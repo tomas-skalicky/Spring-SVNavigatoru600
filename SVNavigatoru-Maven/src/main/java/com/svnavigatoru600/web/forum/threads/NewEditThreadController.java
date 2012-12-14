@@ -8,7 +8,6 @@ import com.svnavigatoru600.domain.forum.Thread;
 import com.svnavigatoru600.repository.forum.ThreadDao;
 import com.svnavigatoru600.service.forum.threads.ThreadValidator;
 
-
 /**
  * Parent of controllers which create and edit the {@link Thread}s.
  * 
@@ -17,14 +16,14 @@ import com.svnavigatoru600.service.forum.threads.ThreadValidator;
 @Controller
 public abstract class NewEditThreadController extends ThreadController {
 
-	/**
-	 * Command used in /main-content/forum/threads/new-edit-thread.jsp.
-	 */
-	public static final String COMMAND = "newEditThreadCommand";
-	protected Validator validator;
+    /**
+     * Command used in /main-content/forum/threads/new-edit-thread.jsp.
+     */
+    public static final String COMMAND = "newEditThreadCommand";
+    protected Validator validator;
 
-	public NewEditThreadController(ThreadDao threadDao, ThreadValidator validator, MessageSource messageSource) {
-		super(threadDao, messageSource);
-		this.validator = validator;
-	}
+    public NewEditThreadController(ThreadDao threadDao, ThreadValidator validator, MessageSource messageSource) {
+        super(threadDao, messageSource);
+        this.validator = validator;
+    }
 }

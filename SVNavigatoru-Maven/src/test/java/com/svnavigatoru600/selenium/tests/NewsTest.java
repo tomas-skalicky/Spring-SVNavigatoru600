@@ -62,6 +62,9 @@ public class NewsTest extends AbstractTailoredSeleniumTest {
         this.waitForPageUrl(browserDriver, HOMEPAGE_URL_REG_EXP);
     }
 
+    /**
+     * Creates an entirely new news.
+     */
     private void createNewNews() {
         final WebDriver browserDriver = this.getBrowserDriver();
 
@@ -79,7 +82,7 @@ public class NewsTest extends AbstractTailoredSeleniumTest {
         browserDriver.findElement(By.id(NEW_NEWS_TITLE_ID)).sendKeys(newTitle);
 
         final String newText = "New Text";
-        final WebElement tinymceIframe = browserDriver.findElement(By.id("news.text_ifr"));
+        final WebElement tinymceIframe = browserDriver.findElement(By.id(TINYMCE_IFRAME_ID));
         browserDriver.switchTo().frame(tinymceIframe);
         final WebElement newsTextBox = browserDriver.findElement(By.id(NEW_NEWS_TEXT_ID));
         newsTextBox.sendKeys("<p>" + newTitle + "</p>");
@@ -96,6 +99,10 @@ public class NewsTest extends AbstractTailoredSeleniumTest {
         }));
     }
 
+    /**
+     * Makes a slight modification of the last inserted news record, i.e. the news which has been created by
+     * the {@link #createNewNews() createNewNews} method.
+     */
     private void editNewNews() {
         final WebDriver browserDriver = this.getBrowserDriver();
 
@@ -112,7 +119,7 @@ public class NewsTest extends AbstractTailoredSeleniumTest {
         browserDriver.findElement(By.id(EDIT_NEWS_TITLE_ID)).sendKeys(newTitle);
 
         final String newTextWithFormating = "<p>Edited Text</p>";
-        final WebElement tinymceIframe = browserDriver.findElement(By.id("news.text_ifr"));
+        final WebElement tinymceIframe = browserDriver.findElement(By.id(TINYMCE_IFRAME_ID));
         browserDriver.switchTo().frame(tinymceIframe);
         final WebElement newsTextBox = browserDriver.findElement(By.id(EDIT_NEWS_TEXT_ID));
         newsTextBox.sendKeys(newTextWithFormating);
@@ -132,7 +139,7 @@ public class NewsTest extends AbstractTailoredSeleniumTest {
     }
 
     /**
-     * Deletes the last inserted news records, i.e. the news which has been created by the
+     * Deletes the last inserted news record, i.e. the news which has been created by the
      * {@link #createNewNews() createNewNews} method.
      */
     private void deleteNewNews() {

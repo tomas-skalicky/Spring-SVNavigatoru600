@@ -8,10 +8,10 @@ import org.springframework.validation.Validator;
 @Service
 public abstract class ThreadValidator implements Validator {
 
-	protected void checkNewName(String name, Errors errors) {
-		String field = "thread.name";
-		if (StringUtils.isBlank(name)) {
-			errors.rejectValue(field, "forum.threads.name.not-filled-in");
-		}
-	}
+    protected void checkNewName(String name, Errors errors) {
+        String field = "thread.name";
+        if (StringUtils.isBlank(name)) {
+            errors.rejectValue(field, "forum.threads.name.not-filled-in");
+        }
+    }
 }

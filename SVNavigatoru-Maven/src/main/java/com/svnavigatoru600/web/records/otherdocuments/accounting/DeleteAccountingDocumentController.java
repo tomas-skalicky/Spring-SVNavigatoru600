@@ -14,25 +14,23 @@ import com.svnavigatoru600.domain.records.OtherDocumentRecordType;
 import com.svnavigatoru600.repository.records.OtherDocumentRecordDao;
 import com.svnavigatoru600.web.records.otherdocuments.DeleteDocumentController;
 
-
 @Controller
 public class DeleteAccountingDocumentController extends DeleteDocumentController {
 
-	private static final String BASE_URL = "/dalsi-dokumenty/ucetnictvi/";
+    private static final String BASE_URL = "/dalsi-dokumenty/ucetnictvi/";
 
-	/**
-	 * Constructor.
-	 */
-	@Autowired
-	public DeleteAccountingDocumentController(OtherDocumentRecordDao recordDao, MessageSource messageSource) {
-		super(DeleteAccountingDocumentController.BASE_URL, new PageViews(), OtherDocumentRecordType.ACCOUNTING,
-				recordDao, messageSource);
-	}
+    /**
+     * Constructor.
+     */
+    @Autowired
+    public DeleteAccountingDocumentController(OtherDocumentRecordDao recordDao, MessageSource messageSource) {
+        super(DeleteAccountingDocumentController.BASE_URL, new PageViews(),
+                OtherDocumentRecordType.ACCOUNTING, recordDao, messageSource);
+    }
 
-	@Override
-	@RequestMapping(value = DeleteAccountingDocumentController.BASE_URL + "existujici/{recordId}/smazat/",
-			method = RequestMethod.GET)
-	public String delete(@PathVariable int recordId, HttpServletRequest request, ModelMap model) {
-		return super.delete(recordId, request, model);
-	}
+    @Override
+    @RequestMapping(value = DeleteAccountingDocumentController.BASE_URL + "existujici/{recordId}/smazat/", method = RequestMethod.GET)
+    public String delete(@PathVariable int recordId, HttpServletRequest request, ModelMap model) {
+        return super.delete(recordId, request, model);
+    }
 }

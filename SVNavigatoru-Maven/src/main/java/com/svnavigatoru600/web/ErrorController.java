@@ -6,13 +6,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class ErrorController {
 
-	@RequestMapping(value = "/chyby/403/")
-	public String show403() {
-		return "error403";
-	}
+    @RequestMapping(value = "/chyby/403/")
+    public String show403() {
+        return "error403";
+    }
 
-	@RequestMapping(value = "/chyby/404/")
-	public String show404() {
-		return "error404";
-	}
+    @RequestMapping(value = "/chyby/404/")
+    public String show404() {
+        return "error404";
+    }
 }

@@ -19,7 +19,6 @@ import com.svnavigatoru600.service.util.Localization;
 import com.svnavigatoru600.service.util.OrderType;
 import com.svnavigatoru600.web.records.PageViews;
 
-
 /**
  * Parent of all controllers which list the {@link OtherDocumentRecord}s.
  * 
@@ -28,76 +27,76 @@ import com.svnavigatoru600.web.records.PageViews;
 @Controller
 public abstract class ListDocumentsController extends OtherDocumentRecordController {
 
-	/**
-	 * Command used in /main-content/records/other-documents/templates/list-records.jsp.
-	 */
-	public static final String COMMAND = "showAllRecordsCommand";
+    /**
+     * Command used in /main-content/records/other-documents/templates/list-records.jsp.
+     */
+    public static final String COMMAND = "showAllRecordsCommand";
 
-	/**
-	 * Constructs a controller which considers all {@link OtherDocumentRecord}s
-	 * of all {@link OtherDocumentRecordType}s.
-	 */
-	public ListDocumentsController(String baseUrl, PageViews views, OtherDocumentRecordDao recordDao,
-			MessageSource messageSource) {
-		super(baseUrl, views, recordDao, messageSource);
-	}
+    /**
+     * Constructs a controller which considers all {@link OtherDocumentRecord}s of all
+     * {@link OtherDocumentRecordType}s.
+     */
+    public ListDocumentsController(String baseUrl, PageViews views, OtherDocumentRecordDao recordDao,
+            MessageSource messageSource) {
+        super(baseUrl, views, recordDao, messageSource);
+    }
 
-	/**
-	 * Constructs a controller which considers all {@link OtherDocumentRecord}s
-	 * of the given <code>recordType</code>.
-	 */
-	public ListDocumentsController(String baseUrl, PageViews views, OtherDocumentRecordType recordType,
-			OtherDocumentRecordDao recordDao, MessageSource messageSource) {
-		super(baseUrl, views, recordType, recordDao, messageSource);
-	}
+    /**
+     * Constructs a controller which considers all {@link OtherDocumentRecord}s of the given
+     * <code>recordType</code>.
+     */
+    public ListDocumentsController(String baseUrl, PageViews views, OtherDocumentRecordType recordType,
+            OtherDocumentRecordDao recordDao, MessageSource messageSource) {
+        super(baseUrl, views, recordType, recordDao, messageSource);
+    }
 
-	public String initPage(HttpServletRequest request, ModelMap model) {
+    public String initPage(HttpServletRequest request, ModelMap model) {
 
-		ShowAllRecords command = new ShowAllRecords();
+        ShowAllRecords command = new ShowAllRecords();
 
-		List<OtherDocumentRecord> records = null;
-		if (this.allRecordTypes) {
-			records = this.recordDao.findOrdered(OrderType.DESCENDING);
-		} else {
-			records = this.recordDao.findOrdered(this.RECORD_TYPE, OrderType.DESCENDING);
-		}
-		command.setRecords(records);
+        List<OtherDocumentRecord> records = null;
+        if (this.allRecordTypes) {
+            records = this.recordDao.findOrdered(OrderType.DESCENDING);
+        } else {
+            records = this.recordDao.findOrdered(this.RECORD_TYPE, OrderType.DESCENDING);
+        }
+        command.setRecords(records);
 
-		// Sets up all auxiliary (but necessary) maps.
-		command.setLocalizedDeleteQuestions(this.getLocalizedDeleteQuestions(records, request));
+        // Sets up all auxiliary (but necessary) maps.
+        command.setLocalizedDeleteQuestions(this.getLocalizedDeleteQuestions(records, request));
 
-		model.addAttribute(ListDocumentsController.COMMAND, command);
-		return VIEWS.LIST;
-	}
+        model.addAttribute(ListDocumentsController.COMMAND, command);
+        return VIEWS.LIST;
+    }
 
-	@PreAuthorize("hasRole('ROLE_MEMBER_OF_BOARD')")
-	public String initPageAfterCreate(HttpServletRequest request, ModelMap model) {
-		String view = this.initPage(request, model);
-		((ShowAllRecords) model.get(ListDocumentsController.COMMAND)).setRecordCreated(true);
-		return view;
-	}
+    @PreAuthorize("hasRole('ROLE_MEMBER_OF_BOARD')")
+    public String initPageAfterCreate(HttpServletRequest request, ModelMap model) {
+        String view = this.initPage(request, model);
+        ((ShowAllRecords) model.get(ListDocumentsController.COMMAND)).setRecordCreated(true);
+        return view;
+    }
 
-	@PreAuthorize("hasRole('ROLE_MEMBER_OF_BOARD')")
-	public String initPageAfterDelete(HttpServletRequest request, ModelMap model) {
-		String view = this.initPage(request, model);
-		((ShowAllRecords) model.get(ListDocumentsController.COMMAND)).setRecordDeleted(true);
-		return view;
-	}
+    @PreAuthorize("hasRole('ROLE_MEMBER_OF_BOARD')")
+    public String initPageAfterDelete(HttpServletRequest request, ModelMap model) {
+        String view = this.initPage(request, model);
+        ((ShowAllRecords) model.get(ListDocumentsController.COMMAND)).setRecordDeleted(true);
+        return view;
+    }
 
-	/**
-	 * Gets a {@link Map} which for each input {@link OtherDocumentRecord}
-	 * contains an appropriate localized delete questions.
-	 */
-	private Map<OtherDocumentRecord, String> getLocalizedDeleteQuestions(List<OtherDocumentRecord> records,
-			HttpServletRequest request) {
-		final String messageCode = "other-documents.do-you-really-want-to-delete-document";
-		Map<OtherDocumentRecord, String> questions = new HashMap<OtherDocumentRecord, String>();
+    /**
+     * Gets a {@link Map} which for each input {@link OtherDocumentRecord} contains an appropriate localized
+     * delete questions.
+     */
+    private Map<OtherDocumentRecord, String> getLocalizedDeleteQuestions(List<OtherDocumentRecord> records,
+            HttpServletRequest request) {
+        final String messageCode = "other-documents.do-you-really-want-to-delete-document";
+        Map<OtherDocumentRecord, String> questions = new HashMap<OtherDocumentRecord, String>();
 
-		for (OtherDocumentRecord record : records) {
-			Object[] messageParams = new Object[] { record.getName() };
-			questions.put(record,
-					Localization.findLocaleMessage(this.messageSource, request, messageCode, messageParams));
-		}
-		return questions;
-	}
+        for (OtherDocumentRecord record : records) {
+            Object[] messageParams = new Object[] { record.getName() };
+            questions.put(record,
+                    Localization.findLocaleMessage(this.messageSource, request, messageCode, messageParams));
+        }
+        return questions;
+    }
 }

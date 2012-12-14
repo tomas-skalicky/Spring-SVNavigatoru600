@@ -13,36 +13,35 @@ import com.svnavigatoru600.domain.records.OtherDocumentRecordType;
 import com.svnavigatoru600.repository.records.OtherDocumentRecordDao;
 import com.svnavigatoru600.web.records.otherdocuments.ListDocumentsController;
 
-
 @Controller
 public class ListRevisionDocumentsController extends ListDocumentsController {
 
-	private static final String BASE_URL = "/dalsi-dokumenty/pravidelne-revize/";
+    private static final String BASE_URL = "/dalsi-dokumenty/pravidelne-revize/";
 
-	/**
-	 * Constructor.
-	 */
-	@Autowired
-	public ListRevisionDocumentsController(OtherDocumentRecordDao recordDao, MessageSource messageSource) {
-		super(ListRevisionDocumentsController.BASE_URL, new PageViews(), OtherDocumentRecordType.REGULAR_REVISION,
-				recordDao, messageSource);
-	}
+    /**
+     * Constructor.
+     */
+    @Autowired
+    public ListRevisionDocumentsController(OtherDocumentRecordDao recordDao, MessageSource messageSource) {
+        super(ListRevisionDocumentsController.BASE_URL, new PageViews(),
+                OtherDocumentRecordType.REGULAR_REVISION, recordDao, messageSource);
+    }
 
-	@Override
-	@RequestMapping(value = ListRevisionDocumentsController.BASE_URL, method = RequestMethod.GET)
-	public String initPage(HttpServletRequest request, ModelMap model) {
-		return super.initPage(request, model);
-	}
+    @Override
+    @RequestMapping(value = ListRevisionDocumentsController.BASE_URL, method = RequestMethod.GET)
+    public String initPage(HttpServletRequest request, ModelMap model) {
+        return super.initPage(request, model);
+    }
 
-	@Override
-	@RequestMapping(value = ListRevisionDocumentsController.BASE_URL + "vytvoreno/", method = RequestMethod.GET)
-	public String initPageAfterCreate(HttpServletRequest request, ModelMap model) {
-		return super.initPageAfterCreate(request, model);
-	}
+    @Override
+    @RequestMapping(value = ListRevisionDocumentsController.BASE_URL + "vytvoreno/", method = RequestMethod.GET)
+    public String initPageAfterCreate(HttpServletRequest request, ModelMap model) {
+        return super.initPageAfterCreate(request, model);
+    }
 
-	@Override
-	@RequestMapping(value = ListRevisionDocumentsController.BASE_URL + "smazano/", method = RequestMethod.GET)
-	public String initPageAfterDelete(HttpServletRequest request, ModelMap model) {
-		return super.initPageAfterDelete(request, model);
-	}
+    @Override
+    @RequestMapping(value = ListRevisionDocumentsController.BASE_URL + "smazano/", method = RequestMethod.GET)
+    public String initPageAfterDelete(HttpServletRequest request, ModelMap model) {
+        return super.initPageAfterDelete(request, model);
+    }
 }
