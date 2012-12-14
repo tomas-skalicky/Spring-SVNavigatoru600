@@ -13,10 +13,12 @@ import com.svnavigatoru600.service.util.OrderType;
 
 public class ContributionDaoImpl extends HibernateDaoSupport implements ContributionDao {
 
+    @Override
     public Contribution findById(int contributionId) {
         return this.getHibernateTemplate().load(Contribution.class, contributionId);
     }
 
+    @Override
     @SuppressWarnings("unchecked")
     public List<Contribution> find(int threadId) {
         DetachedCriteria criteria = DetachedCriteria.forClass(Contribution.class);
@@ -29,6 +31,7 @@ public class ContributionDaoImpl extends HibernateDaoSupport implements Contribu
      * @param count
      *            Not used yet.
      */
+    @Override
     @SuppressWarnings("unchecked")
     public List<Contribution> findOrdered(String attribute, OrderType order, int count) {
         String query = String.format("FROM Contribution c ORDER BY c.%s %s", attribute,
@@ -36,6 +39,7 @@ public class ContributionDaoImpl extends HibernateDaoSupport implements Contribu
         return (List<Contribution>) this.getHibernateTemplate().find(query);
     }
 
+    @Override
     @SuppressWarnings("unchecked")
     public List<Contribution> findOrdered(int threadId, String attribute, OrderType order) {
         String query = String.format("FROM Contribution c WHERE c.thread.id = ? ORDER BY c.%s %s", attribute,
@@ -43,12 +47,14 @@ public class ContributionDaoImpl extends HibernateDaoSupport implements Contribu
         return (List<Contribution>) this.getHibernateTemplate().find(query, threadId);
     }
 
+    @Override
     public void update(Contribution contribution) {
         Date now = new Date();
         contribution.setLastSaveTime(now);
         this.getHibernateTemplate().update(contribution);
     }
 
+    @Override
     public int save(Contribution contribution) {
         Date now = new Date();
         contribution.setCreationTime(now);
@@ -56,6 +62,7 @@ public class ContributionDaoImpl extends HibernateDaoSupport implements Contribu
         return (Integer) this.getHibernateTemplate().save(contribution);
     }
 
+    @Override
     public void delete(Contribution contribution) {
         this.getHibernateTemplate().delete(contribution);
     }
