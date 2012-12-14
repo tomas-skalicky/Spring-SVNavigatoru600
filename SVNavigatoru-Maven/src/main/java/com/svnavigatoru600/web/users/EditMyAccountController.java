@@ -57,7 +57,7 @@ public class EditMyAccountController extends PrivateSectionMetaController {
 
         UpdateUserData command = new UpdateUserData();
 
-        User user = UserUtils.getLoggedUser();
+        final User user = UserUtils.getLoggedUser();
         command.setUser(user);
 
         model.addAttribute(EditMyAccountController.COMMAND, command);
@@ -69,8 +69,8 @@ public class EditMyAccountController extends PrivateSectionMetaController {
      */
     @RequestMapping(value = EditMyAccountController.BASE_URL + "ulozeno/", method = RequestMethod.GET)
     @PreAuthorize("hasRole('ROLE_REGISTERED_USER')")
-    public String initFormAfterSave(ModelMap model) {
-        String view = this.initForm(model);
+    public String initFormAfterSave(final ModelMap model) {
+        final String view = this.initForm(model);
         ((UpdateUserData) model.get(EditMyAccountController.COMMAND)).setDataSaved(true);
         return view;
     }

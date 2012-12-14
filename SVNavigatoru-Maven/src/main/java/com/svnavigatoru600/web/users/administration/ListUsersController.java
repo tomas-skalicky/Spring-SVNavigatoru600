@@ -35,7 +35,7 @@ public class ListUsersController extends UserController {
      * Constructor.
      */
     @Autowired
-    public ListUsersController(UserDao userDao, MessageSource messageSource) {
+    public ListUsersController(final UserDao userDao, final MessageSource messageSource) {
         super(userDao, messageSource);
     }
 
@@ -43,12 +43,12 @@ public class ListUsersController extends UserController {
      * Initializes the page with all users.
      */
     @RequestMapping(value = ListUsersController.BASE_URL, method = RequestMethod.GET)
-    public String initPage(HttpServletRequest request, ModelMap model) {
+    public String initPage(final HttpServletRequest request, final ModelMap model) {
 
-        ShowAllUsers command = new ShowAllUsers();
+        final ShowAllUsers command = new ShowAllUsers();
 
         final boolean testUsers = false;
-        List<User> users = this.userDao.loadAllOrdered(OrderType.ASCENDING, testUsers);
+        final List<User> users = this.userDao.loadAllOrdered(OrderType.ASCENDING, testUsers);
         command.setUsers(users);
 
         // Sets up all (but necessary) maps.
@@ -63,8 +63,8 @@ public class ListUsersController extends UserController {
      * the repository recently.
      */
     @RequestMapping(value = ListUsersController.BASE_URL + "vytvoreno/", method = RequestMethod.GET)
-    public String initPageAfterCreate(HttpServletRequest request, ModelMap model) {
-        String view = this.initPage(request, model);
+    public String initPageAfterCreate(final HttpServletRequest request, final ModelMap model) {
+        final String view = this.initPage(request, model);
         ((ShowAllUsers) model.get(ListUsersController.COMMAND)).setUserCreated(true);
         return view;
     }
@@ -74,8 +74,8 @@ public class ListUsersController extends UserController {
      * deleted from the repository.
      */
     @RequestMapping(value = ListUsersController.BASE_URL + "smazano/", method = RequestMethod.GET)
-    public String initPageAfterDelete(HttpServletRequest request, ModelMap model) {
-        String view = this.initPage(request, model);
+    public String initPageAfterDelete(final HttpServletRequest request, final ModelMap model) {
+        final String view = this.initPage(request, model);
         ((ShowAllUsers) model.get(ListUsersController.COMMAND)).setUserDeleted(true);
         return view;
     }
@@ -84,12 +84,12 @@ public class ListUsersController extends UserController {
      * Gets a {@link Map} which for each input {@link User} contains an appropriate localized delete
      * questions.
      */
-    private Map<User, String> getLocalizedDeleteQuestions(List<User> users, HttpServletRequest request) {
+    private Map<User, String> getLocalizedDeleteQuestions(final List<User> users, final HttpServletRequest request) {
         final String messageCode = "user-administration.do-you-really-want-to-delete-user";
-        Map<User, String> questions = new HashMap<User, String>();
+        final Map<User, String> questions = new HashMap<User, String>();
 
         for (User user : users) {
-            Object[] messageParams = new Object[] { user.getUsername(), user.getFullName() };
+            final Object[] messageParams = new Object[] { user.getUsername(), user.getFullName() };
             questions.put(user,
                     Localization.findLocaleMessage(this.messageSource, request, messageCode, messageParams));
         }

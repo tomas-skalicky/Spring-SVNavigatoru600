@@ -146,16 +146,16 @@ public class ForgottenPasswordController extends MetaController {
      * Sends an email with the <code>newPassword</code> to the given <code>emailAddress</code>. The function
      * is invoked when user's password has been successfully reset.
      */
-    private void sendEmailOnPasswordReset(String emailAddress, String lastName, String newPassword,
-            HttpServletRequest request) {
+    private void sendEmailOnPasswordReset(final String emailAddress, final String lastName,
+            final String newPassword, final HttpServletRequest request) {
         if (!Email.isSpecified(emailAddress)) {
             return;
         }
 
-        String subject = Localization.findLocaleMessage(this.messageSource, request,
+        final String subject = Localization.findLocaleMessage(this.messageSource, request,
                 "email.subject.password-reset");
-        Object[] messageParams = new Object[] { lastName, Configuration.DOMAIN, newPassword };
-        String messageText = Localization.findLocaleMessage(this.messageSource, request,
+        final Object[] messageParams = new Object[] { lastName, Configuration.DOMAIN, newPassword };
+        final String messageText = Localization.findLocaleMessage(this.messageSource, request,
                 "email.text.password-reset", messageParams);
 
         Email.sendMail(emailAddress, subject, messageText);

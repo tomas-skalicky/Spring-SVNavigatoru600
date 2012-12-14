@@ -70,15 +70,15 @@ public abstract class ListDocumentsController extends OtherDocumentRecordControl
     }
 
     @PreAuthorize("hasRole('ROLE_MEMBER_OF_BOARD')")
-    public String initPageAfterCreate(HttpServletRequest request, ModelMap model) {
-        String view = this.initPage(request, model);
+    public String initPageAfterCreate(final HttpServletRequest request, final ModelMap model) {
+        final String view = this.initPage(request, model);
         ((ShowAllRecords) model.get(ListDocumentsController.COMMAND)).setRecordCreated(true);
         return view;
     }
 
     @PreAuthorize("hasRole('ROLE_MEMBER_OF_BOARD')")
-    public String initPageAfterDelete(HttpServletRequest request, ModelMap model) {
-        String view = this.initPage(request, model);
+    public String initPageAfterDelete(final HttpServletRequest request, final ModelMap model) {
+        final String view = this.initPage(request, model);
         ((ShowAllRecords) model.get(ListDocumentsController.COMMAND)).setRecordDeleted(true);
         return view;
     }

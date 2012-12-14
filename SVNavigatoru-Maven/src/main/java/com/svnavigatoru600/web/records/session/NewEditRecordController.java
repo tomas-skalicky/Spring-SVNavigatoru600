@@ -68,11 +68,11 @@ public abstract class NewEditRecordController extends SessionRecordController {
      * </p>
      */
     @ModelAttribute("sessionRecordTypeList")
-    public List<String> populateSessionRecordTypeList(HttpServletRequest request) {
-        List<String> sessionRecordTypeList = new ArrayList<String>();
+    public List<String> populateSessionRecordTypeList(final HttpServletRequest request) {
+        final List<String> sessionRecordTypeList = new ArrayList<String>();
 
         for (SessionRecordType type : SessionRecordType.values()) {
-            String localizationCode = type.getLocalizationCode();
+            final String localizationCode = type.getLocalizationCode();
             sessionRecordTypeList.add(Localization.findLocaleMessage(this.messageSource, request,
                     localizationCode));
         }

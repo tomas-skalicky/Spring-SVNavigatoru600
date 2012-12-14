@@ -32,13 +32,13 @@ public class ContributionRowMapper implements RowMapper<Contribution> {
         PROPERTY_COLUMN_MAP.put("authorUsername", "author_username");
     }
 
-    public static String getColumn(String propertyName) {
+    public static String getColumn(final String propertyName) {
         return ContributionRowMapper.PROPERTY_COLUMN_MAP.get(propertyName);
     }
 
     @Override
-    public Contribution mapRow(ResultSet rs, int rowNum) throws SQLException {
-        Contribution contribution = new Contribution();
+    public Contribution mapRow(final ResultSet rs, final int rowNum) throws SQLException {
+        final Contribution contribution = new Contribution();
         contribution.setId(rs.getInt(ContributionRowMapper.getColumn("id")));
         contribution.setText(rs.getString(ContributionRowMapper.getColumn("text")));
         // NOTE: getTimestamp is used since getDate does not return hours,
@@ -48,11 +48,11 @@ public class ContributionRowMapper implements RowMapper<Contribution> {
         contribution.setLastSaveTime(new Date(rs
                 .getTimestamp(ContributionRowMapper.getColumn("lastSaveTime")).getTime()));
 
-        Thread thread = new Thread();
+        final Thread thread = new Thread();
         thread.setId(rs.getInt(ContributionRowMapper.getColumn("threadId")));
         contribution.setThread(thread);
 
-        User author = new User();
+        final User author = new User();
         author.setUsername(rs.getString(ContributionRowMapper.getColumn("authorUsername")));
         contribution.setAuthor(author);
         return contribution;

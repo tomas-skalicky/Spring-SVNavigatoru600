@@ -32,7 +32,7 @@ public class EditContributionController extends NewEditContributionController {
     private EditContribution editContribution;
 
     @Autowired
-    public void setEditContribution(EditContribution editContribution) {
+    public void setEditContribution(final EditContribution editContribution) {
         this.editContribution = editContribution;
     }
 
@@ -40,20 +40,20 @@ public class EditContributionController extends NewEditContributionController {
      * Constructor.
      */
     @Autowired
-    public EditContributionController(ContributionDao contributionDao, EditContributionValidator validator,
-            MessageSource messageSource) {
+    public EditContributionController(final ContributionDao contributionDao,
+            final EditContributionValidator validator, final MessageSource messageSource) {
         super(contributionDao, validator, messageSource);
     }
 
     @RequestMapping(value = EditContributionController.REQUEST_MAPPING_BASE_URL, method = RequestMethod.GET)
     public String initForm(@PathVariable int threadId, @PathVariable int contributionId,
-            HttpServletRequest request, ModelMap model) {
+            final HttpServletRequest request, final ModelMap model) {
 
         this.editContribution.canEdit(contributionId);
 
-        EditContribution command = new EditContribution();
+        final EditContribution command = new EditContribution();
 
-        Contribution contribution = this.contributionDao.findById(contributionId);
+        final Contribution contribution = this.contributionDao.findById(contributionId);
         command.setContribution(contribution);
         command.setThreadId(threadId);
 
@@ -63,8 +63,8 @@ public class EditContributionController extends NewEditContributionController {
 
     @RequestMapping(value = EditContributionController.REQUEST_MAPPING_BASE_URL + "ulozeno/", method = RequestMethod.GET)
     public String initFormAfterSave(@PathVariable int threadId, @PathVariable int contributionId,
-            HttpServletRequest request, ModelMap model) {
-        String view = this.initForm(threadId, contributionId, request, model);
+            final HttpServletRequest request, final ModelMap model) {
+        final String view = this.initForm(threadId, contributionId, request, model);
         ((EditContribution) model.get(EditContributionController.COMMAND)).setDataSaved(true);
         return view;
     }
@@ -73,7 +73,7 @@ public class EditContributionController extends NewEditContributionController {
     public String processSubmittedForm(
             @ModelAttribute(EditContributionController.COMMAND) EditContribution command,
             BindingResult result, SessionStatus status, @PathVariable int threadId,
-            @PathVariable int contributionId, HttpServletRequest request, ModelMap model) {
+            @PathVariable int contributionId, final HttpServletRequest request, final ModelMap model) {
 
         this.editContribution.canEdit(contributionId);
 
@@ -83,8 +83,8 @@ public class EditContributionController extends NewEditContributionController {
         }
 
         // Updates the original data.
-        Contribution originalContribution = this.contributionDao.findById(contributionId);
-        Contribution newContribution = command.getContribution();
+        final Contribution originalContribution = this.contributionDao.findById(contributionId);
+        final Contribution newContribution = command.getContribution();
         originalContribution.setText(newContribution.getText());
 
         try {

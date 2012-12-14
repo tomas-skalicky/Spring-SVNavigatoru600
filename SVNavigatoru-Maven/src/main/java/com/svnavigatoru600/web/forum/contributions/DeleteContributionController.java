@@ -29,12 +29,12 @@ public class DeleteContributionController extends ContributionController {
     private ListContributionsController listController;
 
     @Autowired
-    public void setDeleteContribution(DeleteContribution deleteContribution) {
+    public void setDeleteContribution(final DeleteContribution deleteContribution) {
         this.deleteContribution = deleteContribution;
     }
 
     @Autowired
-    public void setListController(ListContributionsController listController) {
+    public void setListController(final ListContributionsController listController) {
         this.listController = listController;
     }
 
@@ -42,20 +42,20 @@ public class DeleteContributionController extends ContributionController {
      * Constructor.
      */
     @Autowired
-    public DeleteContributionController(ContributionDao contributionDao, MessageSource messageSource) {
+    public DeleteContributionController(final ContributionDao contributionDao, final MessageSource messageSource) {
         super(contributionDao, messageSource);
     }
 
     @RequestMapping(value = DeleteContributionController.REQUEST_MAPPING_BASE_URL, method = RequestMethod.GET)
     public String delete(@PathVariable int threadId, @PathVariable int contributionId,
-            HttpServletRequest request, ModelMap model) {
+            final HttpServletRequest request, final ModelMap model) {
 
         // Checks permission.
         this.deleteContribution.canDelete(contributionId);
 
         try {
             // Deletes the contribution from the repository.
-            Contribution contribution = this.contributionDao.findById(contributionId);
+            final Contribution contribution = this.contributionDao.findById(contributionId);
             this.contributionDao.delete(contribution);
 
             // Returns the form success view.
@@ -66,7 +66,7 @@ public class DeleteContributionController extends ContributionController {
         } catch (DataAccessException e) {
             // We encountered a database problem.
             this.logger.error(e);
-            String view = this.listController.initPage(threadId, request, model);
+            final String view = this.listController.initPage(threadId, request, model);
             model.addAttribute("error", DeleteContributionController.DATABASE_ERROR_MESSAGE_CODE);
             return view;
         }

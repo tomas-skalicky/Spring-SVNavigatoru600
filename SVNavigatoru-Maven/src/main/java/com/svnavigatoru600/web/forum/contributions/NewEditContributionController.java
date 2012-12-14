@@ -22,8 +22,8 @@ public abstract class NewEditContributionController extends ContributionControll
     public static final String COMMAND = "newEditContributionCommand";
     protected Validator validator;
 
-    public NewEditContributionController(ContributionDao contributionDao, ContributionValidator validator,
-            MessageSource messageSource) {
+    public NewEditContributionController(final ContributionDao contributionDao,
+            final ContributionValidator validator, final MessageSource messageSource) {
         super(contributionDao, messageSource);
         this.validator = validator;
     }

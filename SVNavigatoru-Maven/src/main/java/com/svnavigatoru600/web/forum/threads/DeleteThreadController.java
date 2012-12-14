@@ -31,12 +31,12 @@ public class DeleteThreadController extends ThreadController {
     private ListThreadsController listController;
 
     @Autowired
-    public void setDeleteThread(DeleteThread deleteThread) {
+    public void setDeleteThread(final DeleteThread deleteThread) {
         this.deleteThread = deleteThread;
     }
 
     @Autowired
-    public void setListController(ListThreadsController listController) {
+    public void setListController(final ListThreadsController listController) {
         this.listController = listController;
     }
 
@@ -44,20 +44,20 @@ public class DeleteThreadController extends ThreadController {
      * Constructor.
      */
     @Autowired
-    public DeleteThreadController(ThreadDao threadDao, MessageSource messageSource) {
+    public DeleteThreadController(final ThreadDao threadDao, final MessageSource messageSource) {
         super(threadDao, messageSource);
     }
 
     @RequestMapping(value = DeleteThreadController.REQUEST_MAPPING_BASE_URL, method = RequestMethod.GET)
-    public String delete(@PathVariable int threadId, HttpServletRequest request, ModelMap model) {
+    public String delete(@PathVariable int threadId, final HttpServletRequest request, final ModelMap model) {
 
         this.deleteThread.canDelete(threadId);
 
         try {
             // Deletes the thread from the repository.
-            Thread thread = this.threadDao.findById(threadId);
+            final Thread thread = this.threadDao.findById(threadId);
             if (thread.getContributions().size() > 0) {
-                String view = this.listController.initPage(request, model);
+                final String view = this.listController.initPage(request, model);
                 model.addAttribute("error",
                         DeleteThreadController.CANNOT_DELETE_DUE_CONTRIBUTION_MESSAGE_CODE);
                 return view;
@@ -72,7 +72,7 @@ public class DeleteThreadController extends ThreadController {
         } catch (DataAccessException e) {
             // We encountered a database problem.
             this.logger.error(e);
-            String view = this.listController.initPage(request, model);
+            final String view = this.listController.initPage(request, model);
             model.addAttribute("error", DeleteThreadController.DATABASE_ERROR_MESSAGE_CODE);
             return view;
         }

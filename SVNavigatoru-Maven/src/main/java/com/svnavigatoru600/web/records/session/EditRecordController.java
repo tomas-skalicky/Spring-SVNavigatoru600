@@ -79,8 +79,8 @@ public abstract class EditRecordController extends NewEditRecordController {
      * Initializes the form after the modified data were successfully saved to the repository and the new file
      * (if it exists) was uploaded.
      */
-    public String initFormAfterSave(int recordId, HttpServletRequest request, ModelMap model) {
-        String view = this.initForm(recordId, request, model);
+    public String initFormAfterSave(final int recordId, final HttpServletRequest request, final ModelMap model) {
+        final String view = this.initForm(recordId, request, model);
         ((EditSessionRecord) model.get(EditRecordController.COMMAND)).setDataSaved(true);
         return view;
     }

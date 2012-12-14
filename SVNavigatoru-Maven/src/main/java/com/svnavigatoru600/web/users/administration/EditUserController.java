@@ -80,7 +80,7 @@ public class EditUserController extends NewEditUserController {
      */
     @RequestMapping(value = EditUserController.BASE_URL + "{username}/ulozeno/", method = RequestMethod.GET)
     public String initFormAfterSave(@PathVariable String username, HttpServletRequest request, ModelMap model) {
-        String view = this.initForm(username, request, model);
+        final String view = this.initForm(username, request, model);
         ((AdministrateUserData) model.get(EditUserController.COMMAND)).setDataSaved(true);
         return view;
     }
@@ -94,7 +94,7 @@ public class EditUserController extends NewEditUserController {
     @RequestMapping(value = EditUserController.BASE_URL + "{username}/", method = RequestMethod.POST)
     public String processSubmittedForm(
             @ModelAttribute(EditUserController.COMMAND) AdministrateUserData command, BindingResult result,
-            SessionStatus status, @PathVariable String username, HttpServletRequest request, ModelMap model) {
+            final SessionStatus status, @PathVariable String username, HttpServletRequest request, ModelMap model) {
 
         // Sets up all auxiliary (but necessary) maps.
         command.setRoleCheckboxId(this.getRoleCheckboxId());
@@ -106,26 +106,26 @@ public class EditUserController extends NewEditUserController {
         }
 
         // Updates the original data.
-        User newUser = command.getUser();
-        User originalUser = this.userDao.findByUsername(username);
+        final User newUser = command.getUser();
+        final User originalUser = this.userDao.findByUsername(username);
         // The default value of the following indicator has to be true.
         // Otherwise, the notification email would be sent to the user.
         boolean arePasswordSame = true;
-        String newPassword = command.getNewPassword();
-        boolean isPasswordUpdated = StringUtils.isNotBlank(newPassword);
+        final String newPassword = command.getNewPassword();
+        final boolean isPasswordUpdated = StringUtils.isNotBlank(newPassword);
         if (isPasswordUpdated) {
-            String newPasswordHash = Hash.doSha1Hashing(newPassword);
+            final String newPasswordHash = Hash.doSha1Hashing(newPassword);
             arePasswordSame = newPasswordHash.equals(originalUser.getPassword());
             originalUser.setPassword(newPasswordHash);
         }
         originalUser.setFirstName(newUser.getFirstName());
         originalUser.setLastName(newUser.getLastName());
 
-        Set<GrantedAuthority> checkedAuthorities = AuthorityUtils.convertIndicatorsToAuthorities(
+        final Set<GrantedAuthority> checkedAuthorities = AuthorityUtils.convertIndicatorsToAuthorities(
                 command.getNewAuthorities(), username);
         // The role ROLE_REGISTERED_USER is automatically added.
         checkedAuthorities.add(new Authority(username, AuthorityType.ROLE_REGISTERED_USER.name()));
-        boolean areAuthoritiesSame = CheckboxUtils.areSame(
+        final boolean areAuthoritiesSame = CheckboxUtils.areSame(
                 AuthorityUtils.getArrayOfCheckIndicators(checkedAuthorities),
                 AuthorityUtils.getArrayOfCheckIndicators(originalUser.getAuthorities()));
         originalUser.setAuthorities(checkedAuthorities);
@@ -172,10 +172,10 @@ public class EditUserController extends NewEditUserController {
             return;
         }
 
-        String subject = Localization.findLocaleMessage(this.messageSource, request,
+        final String subject = Localization.findLocaleMessage(this.messageSource, request,
                 "email.subject.password-changed");
-        Object[] messageParams = new Object[] { user.getLastName(), Configuration.DOMAIN, newPassword };
-        String messageText = Localization.findLocaleMessage(this.messageSource, request,
+        final Object[] messageParams = new Object[] { user.getLastName(), Configuration.DOMAIN, newPassword };
+        final String messageText = Localization.findLocaleMessage(this.messageSource, request,
                 "email.text.password-changed", messageParams);
 
         Email.sendMail(emailAddress, subject, messageText);
@@ -186,16 +186,16 @@ public class EditUserController extends NewEditUserController {
      * when user's authorities have been successfully changed by the administrator.
      */
     private void sendEmailOnAuthoritiesChange(User user, HttpServletRequest request) {
-        String emailAddress = user.getEmail();
+        final String emailAddress = user.getEmail();
         if (!Email.isSpecified(emailAddress)) {
             return;
         }
 
-        String subject = Localization.findLocaleMessage(this.messageSource, request,
+        final String subject = Localization.findLocaleMessage(this.messageSource, request,
                 "email.subject.authorities-changed");
 
         // Converts the new authorities to the String representation.
-        StringBuilder newAuthorities = new StringBuilder();
+        final StringBuilder newAuthorities = new StringBuilder();
         if (user.canSeeNews()) {
             if (user.canEditNews()) {
                 newAuthorities.append(Localization.findLocaleMessage(this.messageSource, request,
@@ -219,8 +219,8 @@ public class EditUserController extends NewEditUserController {
         }
         // End of the conversion.
 
-        Object[] messageParams = new Object[] { user.getLastName(), Configuration.DOMAIN, newAuthorities };
-        String messageText = Localization.findLocaleMessage(this.messageSource, request,
+        final Object[] messageParams = new Object[] { user.getLastName(), Configuration.DOMAIN, newAuthorities };
+        final String messageText = Localization.findLocaleMessage(this.messageSource, request,
                 "email.text.authorities-changed", messageParams);
 
         Email.sendMail(emailAddress, subject, messageText);
