@@ -7,45 +7,80 @@ package com.svnavigatoru600.selenium;
  */
 public class Server {
 
+    /**
+     * Host of this {@link Server}, e.g. localhost.
+     */
     private String host;
+    /**
+     * Port of this {@link Server}, e.g. 9080.
+     */
     private int port;
+    /**
+     * Path which follows directly the {@link #port}.
+     */
     private String path;
 
     /**
      * Gets the host of this {@link Server}.
+     * 
+     * @return The host of this {@link Server}
      */
     public String getHost() {
         return this.host;
     }
 
-    public void setHost(String host) {
+    /**
+     * Sets the host of this {@link Server}.
+     * 
+     * @param host
+     *            The new host
+     */
+    public void setHost(final String host) {
         this.host = host;
     }
 
     /**
      * Gets the port of this {@link Server}.
+     * 
+     * @return The port of this {@link Server}
      */
     public int getPort() {
         return this.port;
     }
 
-    public void setPort(int port) {
+    /**
+     * Sets the port of this {@link Server}.
+     * 
+     * @param port
+     *            The new port
+     */
+    public void setPort(final int port) {
         this.port = port;
     }
 
     /**
-     * Gets the path which follows after http://{@link Server#getHost host}: {@link Server#getPort port}.
+     * Gets the path which follows directly http://{@link Server#getHost host}: {@link Server#getPort port}.
+     * 
+     * @return The path on this {@link Server}
      */
     public int getPath() {
         return this.port;
     }
 
-    public void setPath(String path) {
+    /**
+     * Sets the path on this {@link Server}.
+     * 
+     * @param path
+     *            The new path
+     */
+    public void setPath(final String path) {
         this.path = path;
     }
 
     /**
      * Gets the URL of this {@link Server}.
+     * 
+     * @return The URL of this {@link Server}
      */
     public String getUrl() {
         return String.format("http://%s:%d%s", this.host, Integer.valueOf(this.port), this.path);
