@@ -72,10 +72,12 @@ public class OtherDocumentRecordDaoImpl extends SimpleJdbcDaoSupport implements 
         }
     }
 
+    @Override
     public OtherDocumentRecord findById(int recordId) {
         return this.findById(recordId, true);
     }
 
+    @Override
     public OtherDocumentRecord findById(int recordId, boolean loadFile) {
         String selectClause;
         OtherDocumentRecordRowMapper rowMapper;
@@ -99,6 +101,7 @@ public class OtherDocumentRecordDaoImpl extends SimpleJdbcDaoSupport implements 
         return record;
     }
 
+    @Override
     public OtherDocumentRecord findByFileName(String fileName) {
         String query = String.format("%s WHERE r.%s = ?",
                 OtherDocumentRecordDaoImpl.SELECT_FROM_CLAUSE_WITH_FILE,
@@ -114,6 +117,7 @@ public class OtherDocumentRecordDaoImpl extends SimpleJdbcDaoSupport implements 
         return record;
     }
 
+    @Override
     public List<OtherDocumentRecord> findOrdered(OrderType order) {
         String query = String.format("%s ORDER BY r.%s %s",
                 OtherDocumentRecordDaoImpl.SELECT_FROM_CLAUSE_WITHOUT_FILE,
@@ -125,6 +129,7 @@ public class OtherDocumentRecordDaoImpl extends SimpleJdbcDaoSupport implements 
         return records;
     }
 
+    @Override
     public List<OtherDocumentRecord> findOrdered(OtherDocumentRecordType type, OrderType order) {
         String query = String.format("%s INNER JOIN %s t ON t.%s = r.%s WHERE t.%s = ? ORDER BY r.%s %s",
                 OtherDocumentRecordDaoImpl.SELECT_FROM_CLAUSE_WITHOUT_FILE,
@@ -140,6 +145,7 @@ public class OtherDocumentRecordDaoImpl extends SimpleJdbcDaoSupport implements 
         return records;
     }
 
+    @Override
     public void update(OtherDocumentRecord record) {
         Date now = new Date();
         record.setLastSaveTime(now);
@@ -175,6 +181,7 @@ public class OtherDocumentRecordDaoImpl extends SimpleJdbcDaoSupport implements 
         return parameters;
     }
 
+    @Override
     public int save(OtherDocumentRecord record) {
         Date now = new Date();
         record.setCreationTime(now);
@@ -208,6 +215,7 @@ public class OtherDocumentRecordDaoImpl extends SimpleJdbcDaoSupport implements 
         return recordId;
     }
 
+    @Override
     public void delete(DocumentRecord record) {
         // The 'ON DELETE CASCADE' clause is used.
         this.documentRecordDao.delete(record, this.getDataSource());

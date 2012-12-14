@@ -33,6 +33,7 @@ public class ThreadRowMapper implements RowMapper<Thread> {
         return ThreadRowMapper.PROPERTY_COLUMN_MAP.get(propertyName);
     }
 
+    @Override
     public Thread mapRow(ResultSet rs, int rowNum) throws SQLException {
         Thread thread = new Thread();
         thread.setId(rs.getInt(ThreadRowMapper.getColumn("id")));

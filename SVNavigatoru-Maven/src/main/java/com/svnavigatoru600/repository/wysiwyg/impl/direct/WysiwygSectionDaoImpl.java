@@ -12,12 +12,14 @@ public class WysiwygSectionDaoImpl extends SimpleJdbcDaoSupport implements Wysiw
 
     private static final String TABLE_NAME = "wysiwyg_sections";
 
+    @Override
     public WysiwygSection findByName(WysiwygSectionName name) {
         String query = String.format("SELECT * FROM %s s WHERE s.%s = ?", WysiwygSectionDaoImpl.TABLE_NAME,
                 WysiwygSectionRowMapper.getColumn("name"));
         return this.getSimpleJdbcTemplate().queryForObject(query, new WysiwygSectionRowMapper(), name.name());
     }
 
+    @Override
     public void update(WysiwygSection section) {
         Date now = new Date();
         section.setLastSaveTime(now);

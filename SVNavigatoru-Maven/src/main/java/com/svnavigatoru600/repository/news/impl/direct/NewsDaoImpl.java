@@ -16,18 +16,21 @@ public class NewsDaoImpl extends SimpleJdbcDaoSupport implements NewsDao {
 
     private static final String TABLE_NAME = "news";
 
+    @Override
     public News findById(int newsId) {
         String query = String.format("SELECT * FROM %s n WHERE n.%s = ?", NewsDaoImpl.TABLE_NAME,
                 NewsRowMapper.getColumn("id"));
         return this.getSimpleJdbcTemplate().queryForObject(query, new NewsRowMapper(), newsId);
     }
 
+    @Override
     public List<News> findOrdered(String attribute, OrderType order) {
         String query = String.format("SELECT * FROM %s n ORDER BY %s %s", NewsDaoImpl.TABLE_NAME,
                 NewsRowMapper.getColumn(attribute), order.getDatabaseCode());
         return this.getSimpleJdbcTemplate().query(query, new NewsRowMapper());
     }
 
+    @Override
     public void update(News news) {
         Date now = new Date();
         news.setLastSaveTime(now);
@@ -53,6 +56,7 @@ public class NewsDaoImpl extends SimpleJdbcDaoSupport implements NewsDao {
         return parameters;
     }
 
+    @Override
     public int save(News news) {
         Date now = new Date();
         news.setCreationTime(now);
@@ -76,6 +80,7 @@ public class NewsDaoImpl extends SimpleJdbcDaoSupport implements NewsDao {
         return news.getId();
     }
 
+    @Override
     public void delete(News news) {
         String idProperty = NewsRowMapper.getColumn("id");
         String query = String.format("DELETE FROM %s WHERE %s = ?", NewsDaoImpl.TABLE_NAME, idProperty);

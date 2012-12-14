@@ -49,6 +49,7 @@ public class SessionRecordRowMapper extends DocumentRecordRowMapper implements R
         return SessionRecordRowMapper.PROPERTY_COLUMN_MAP.get(propertyName);
     }
 
+    @Override
     public SessionRecord mapRow(ResultSet rs, int rowNum) throws SQLException {
         SessionRecord record = new SessionRecord();
         record.setId(rs.getInt(SessionRecordRowMapper.getColumn("id")));

@@ -29,6 +29,7 @@ public class ForumPermissionEvaluator implements PermissionEvaluator {
         this.threadDao = threadDao;
     }
 
+    @Override
     public boolean hasPermission(Authentication authentication, Object targetDomainObject, Object permission) {
         if (targetDomainObject instanceof Contribution) {
             Contribution contribution = (Contribution) targetDomainObject;
@@ -41,6 +42,7 @@ public class ForumPermissionEvaluator implements PermissionEvaluator {
         }
     }
 
+    @Override
     public boolean hasPermission(Authentication authentication, Serializable targetId, String targetType,
             Object permission) {
         if (Contribution.class.getName().equals(targetType)) {

@@ -30,17 +30,20 @@ public class ContactController extends WysiwygSectionController {
         super.viewPageAddress = "/remostav/kontakt/";
     }
 
+    @Override
     @RequestMapping(value = "/remostav/kontakt/", method = RequestMethod.GET)
     public String showViewPage(ModelMap model) {
         return super.showViewPage(model);
     }
 
+    @Override
     @RequestMapping(value = "/remostav/kontakt/editace/", method = RequestMethod.GET)
     @PreAuthorize("hasRole('ROLE_MEMBER_OF_BOARD')")
     public String showEditPage(ModelMap model) {
         return super.showEditPage(model);
     }
 
+    @Override
     @RequestMapping(value = "/remostav/kontakt/editace/ulozit/", method = RequestMethod.POST)
     @PreAuthorize("hasRole('ROLE_MEMBER_OF_BOARD')")
     public String saveChanges(@ModelAttribute("wysiwygSectionEditCommand") WysiwygSection command,
@@ -48,6 +51,7 @@ public class ContactController extends WysiwygSectionController {
         return super.saveChanges(command, result, status, model);
     }
 
+    @Override
     @RequestMapping(value = "/remostav/kontakt/editace/ulozit-a-skoncit/", method = RequestMethod.POST)
     @PreAuthorize("hasRole('ROLE_MEMBER_OF_BOARD')")
     public String saveChangesAndFinishEditing(
@@ -56,6 +60,7 @@ public class ContactController extends WysiwygSectionController {
         return super.saveChangesAndFinishEditing(command, result, status, model);
     }
 
+    @Override
     @RequestMapping(value = "/remostav/kontakt/editace/neukladat-a-skoncit/", method = RequestMethod.POST)
     @PreAuthorize("hasRole('ROLE_MEMBER_OF_BOARD')")
     public String cancelChangesAndFinishEditing(ModelMap model) {

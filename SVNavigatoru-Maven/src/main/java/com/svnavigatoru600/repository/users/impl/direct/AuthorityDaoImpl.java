@@ -17,6 +17,7 @@ public class AuthorityDaoImpl extends SimpleJdbcDaoSupport implements AuthorityD
 
     static final String TABLE_NAME = "authorities";
 
+    @Override
     public List<Authority> find(String username) {
         String query = String.format("SELECT * FROM %s a WHERE a.%s = ?", AuthorityDaoImpl.TABLE_NAME,
                 AuthorityRowMapper.getColumn("username"));
@@ -44,12 +45,14 @@ public class AuthorityDaoImpl extends SimpleJdbcDaoSupport implements AuthorityD
         insert.execute(this.getNamedParameters(authority));
     }
 
+    @Override
     public void save(Collection<GrantedAuthority> authorities) {
         for (GrantedAuthority authority : authorities) {
             this.save((Authority) authority);
         }
     }
 
+    @Override
     public void delete(String username) {
         String query = String.format("DELETE FROM %s WHERE %s = ?", AuthorityDaoImpl.TABLE_NAME,
                 AuthorityRowMapper.getColumn("username"));

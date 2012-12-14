@@ -90,6 +90,7 @@ public class Thread implements Serializable, Comparable<Thread> {
      * Sorts according to the last saved {@link Contribution}s returned by the method
      * <code>getLastSavedContribution</code>.
      */
+    @Override
     public int compareTo(Thread t) {
         Contribution thisContribution = this.getLastSavedContribution();
         if (thisContribution == null) {

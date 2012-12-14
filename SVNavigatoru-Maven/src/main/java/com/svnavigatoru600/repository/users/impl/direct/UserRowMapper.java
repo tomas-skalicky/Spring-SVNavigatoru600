@@ -35,6 +35,7 @@ public class UserRowMapper implements RowMapper<User> {
         return UserRowMapper.PROPERTY_COLUMN_MAP.get(propertyName);
     }
 
+    @Override
     public User mapRow(ResultSet rs, int rowNum) throws SQLException {
         User user = new User();
         user.setUsername(rs.getString(UserRowMapper.getColumn("username")));

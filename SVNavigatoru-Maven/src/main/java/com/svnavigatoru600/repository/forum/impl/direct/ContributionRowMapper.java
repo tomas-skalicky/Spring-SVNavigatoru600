@@ -36,6 +36,7 @@ public class ContributionRowMapper implements RowMapper<Contribution> {
         return ContributionRowMapper.PROPERTY_COLUMN_MAP.get(propertyName);
     }
 
+    @Override
     public Contribution mapRow(ResultSet rs, int rowNum) throws SQLException {
         Contribution contribution = new Contribution();
         contribution.setId(rs.getInt(ContributionRowMapper.getColumn("id")));

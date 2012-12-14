@@ -16,10 +16,12 @@ public class NewThreadValidator extends ThreadValidator {
         this.validator = validator;
     }
 
+    @Override
     public boolean supports(Class<?> clazz) {
         return NewThread.class.isAssignableFrom(clazz);
     }
 
+    @Override
     public void validate(Object target, Errors errors) {
         NewThread command = (NewThread) target;
         this.checkNewName(command.getThread().getName(), errors);

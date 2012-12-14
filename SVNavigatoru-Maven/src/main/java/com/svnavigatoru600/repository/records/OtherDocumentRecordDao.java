@@ -13,6 +13,7 @@ public interface OtherDocumentRecordDao extends DocumentRecordDao {
      * 
      * @see com.svnavigatoru600.repository.DocumentRecordDao#findById(int)
      */
+    @Override
     public OtherDocumentRecord findById(int documentId);
 
     /*
@@ -20,6 +21,7 @@ public interface OtherDocumentRecordDao extends DocumentRecordDao {
      * 
      * @see com.svnavigatoru600.repository.records.DocumentRecordDao#findById(int, boolean)
      */
+    @Override
     public OtherDocumentRecord findById(int documentId, boolean loadFile);
 
     /*
@@ -27,6 +29,7 @@ public interface OtherDocumentRecordDao extends DocumentRecordDao {
      * 
      * @see com.svnavigatoru600.repository.DocumentRecordDao#findByFileName(java.lang.String )
      */
+    @Override
     public OtherDocumentRecord findByFileName(String fileName);
 
     /**

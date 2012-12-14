@@ -29,6 +29,7 @@ public class AuthorityRowMapper implements RowMapper<Authority> {
         return AuthorityRowMapper.PROPERTY_COLUMN_MAP.get(propertyName);
     }
 
+    @Override
     public Authority mapRow(ResultSet rs, int rowNum) throws SQLException {
         AuthorityId id = new AuthorityId();
         id.setUsername(rs.getString(AuthorityRowMapper.getColumn("username")));

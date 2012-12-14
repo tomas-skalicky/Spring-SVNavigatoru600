@@ -33,6 +33,7 @@ public class NewsRowMapper implements RowMapper<News> {
         return NewsRowMapper.PROPERTY_COLUMN_MAP.get(propertyName);
     }
 
+    @Override
     public News mapRow(ResultSet rs, int rowNum) throws SQLException {
         News news = new News();
         news.setId(rs.getInt(NewsRowMapper.getColumn("id")));

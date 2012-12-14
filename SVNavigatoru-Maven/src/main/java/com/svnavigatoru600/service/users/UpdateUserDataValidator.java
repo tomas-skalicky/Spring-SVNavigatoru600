@@ -18,10 +18,12 @@ import com.svnavigatoru600.service.util.PhoneNumber;
 @Service
 public class UpdateUserDataValidator implements Validator {
 
+    @Override
     public boolean supports(Class<?> clazz) {
         return UpdateUserData.class.isAssignableFrom(clazz);
     }
 
+    @Override
     public void validate(Object target, Errors errors) {
         UpdateUserData command = (UpdateUserData) target;
         this.checkNewPassword(command.getNewPassword(), command.getNewPasswordConfirmation(), errors);

@@ -110,6 +110,7 @@ public class UserDaoImpl extends SimpleJdbcDaoSupport implements UserDao {
         return users;
     }
 
+    @Override
     public List<User> loadAllOrdered(OrderType order, boolean testUsers) {
         this.logger.info(String.format("Load all users ordered %s.", order.name()));
 

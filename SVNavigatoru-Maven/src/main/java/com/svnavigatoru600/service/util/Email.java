@@ -78,6 +78,7 @@ public class Email {
         props.put("mail.smtp.auth", "true");
 
         Session session = Session.getDefaultInstance(props, new javax.mail.Authenticator() {
+            @Override
             protected PasswordAuthentication getPasswordAuthentication() {
                 return new PasswordAuthentication(Email.USERNAME, Email.PASSWORD);
             }
@@ -104,6 +105,7 @@ public class Email {
         props.put("mail.smtp.port", Email.SSL_PORT);
 
         Session session = Session.getDefaultInstance(props, new javax.mail.Authenticator() {
+            @Override
             protected PasswordAuthentication getPasswordAuthentication() {
                 return new PasswordAuthentication(Email.USERNAME, Email.PASSWORD);
             }

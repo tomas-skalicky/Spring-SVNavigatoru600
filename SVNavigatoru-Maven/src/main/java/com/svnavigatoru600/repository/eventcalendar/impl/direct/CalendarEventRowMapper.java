@@ -33,6 +33,7 @@ public class CalendarEventRowMapper implements RowMapper<CalendarEvent> {
         return CalendarEventRowMapper.PROPERTY_COLUMN_MAP.get(propertyName);
     }
 
+    @Override
     public CalendarEvent mapRow(ResultSet rs, int rowNum) throws SQLException {
         CalendarEvent event = new CalendarEvent();
         event.setId(rs.getInt(CalendarEventRowMapper.getColumn("id")));

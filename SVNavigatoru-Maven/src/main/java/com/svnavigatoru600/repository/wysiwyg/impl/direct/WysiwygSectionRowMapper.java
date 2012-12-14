@@ -31,6 +31,7 @@ public class WysiwygSectionRowMapper implements RowMapper<WysiwygSection> {
         return WysiwygSectionRowMapper.PROPERTY_COLUMN_MAP.get(propertyName);
     }
 
+    @Override
     public WysiwygSection mapRow(ResultSet rs, int rowNum) throws SQLException {
         WysiwygSection section = new WysiwygSection();
         section.setName(rs.getString(WysiwygSectionRowMapper.getColumn("name")));

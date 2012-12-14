@@ -24,6 +24,7 @@ public class CalendarEventDaoImpl extends NamedParameterJdbcDaoSupport implement
 
     private static final String TABLE_NAME = "calendar_events";
 
+    @Override
     public CalendarEvent findById(int eventId) {
         String idProperty = CalendarEventRowMapper.getColumn("id");
         String query = String.format("SELECT * FROM %s e WHERE e.%s = :%s", CalendarEventDaoImpl.TABLE_NAME,
@@ -34,6 +35,7 @@ public class CalendarEventDaoImpl extends NamedParameterJdbcDaoSupport implement
         return this.getNamedParameterJdbcTemplate().queryForObject(query, args, new CalendarEventRowMapper());
     }
 
+    @Override
     public List<CalendarEvent> findFutureEventsOrdered(Date today, OrderType order) {
         String dateProperty = CalendarEventRowMapper.getColumn("date");
         String query = String.format("SELECT * FROM %s e WHERE e.%s >= :%s ORDER BY e.%s %s",
@@ -45,6 +47,7 @@ public class CalendarEventDaoImpl extends NamedParameterJdbcDaoSupport implement
         return this.getNamedParameterJdbcTemplate().query(query, args, new CalendarEventRowMapper());
     }
 
+    @Override
     public void update(CalendarEvent event) {
         String nameProperty = CalendarEventRowMapper.getColumn("name");
         String dateProperty = CalendarEventRowMapper.getColumn("date");
@@ -73,6 +76,7 @@ public class CalendarEventDaoImpl extends NamedParameterJdbcDaoSupport implement
         return parameters;
     }
 
+    @Override
     public int save(CalendarEvent event) {
         String idColumn = CalendarEventRowMapper.getColumn("id");
 
@@ -89,6 +93,7 @@ public class CalendarEventDaoImpl extends NamedParameterJdbcDaoSupport implement
         return ((Long) keys.get("GENERATED_KEY")).intValue();
     }
 
+    @Override
     public void delete(CalendarEvent event) {
         String idProperty = CalendarEventRowMapper.getColumn("id");
         String query = String.format("DELETE FROM %s WHERE %s = :%s", CalendarEventDaoImpl.TABLE_NAME,

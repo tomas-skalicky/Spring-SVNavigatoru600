@@ -6,10 +6,12 @@ import org.springframework.validation.Errors;
 @Service
 public class NewRecordValidator extends OtherDocumentRecordValidator {
 
+    @Override
     public boolean supports(Class<?> clazz) {
         return NewRecord.class.isAssignableFrom(clazz);
     }
 
+    @Override
     public void validate(Object target, Errors errors) {
         NewRecord command = (NewRecord) target;
         this.checkNewName(command.getRecord().getName(), errors);
