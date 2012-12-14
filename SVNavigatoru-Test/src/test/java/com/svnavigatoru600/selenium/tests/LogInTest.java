@@ -19,7 +19,7 @@ public class LogInTest extends AbstractSeleniumTest {
 
     /**
      * @throws Exception
-     *             If something bad happens.
+     *             If anything goes wrong.
      */
     @Test
     public void testLogInLogOut() throws Exception {
