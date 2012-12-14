@@ -17,6 +17,7 @@ public class OtherDocumentRecordTypeRelationDaoImpl extends SimpleJdbcDaoSupport
 
     static final String TABLE_NAME = "other_document_record_type_relations";
 
+    @Override
     public List<OtherDocumentRecordTypeRelation> find(int recordId) {
         String query = String.format("SELECT * FROM %s r WHERE r.%s = ?",
                 OtherDocumentRecordTypeRelationDaoImpl.TABLE_NAME,
@@ -47,12 +48,14 @@ public class OtherDocumentRecordTypeRelationDaoImpl extends SimpleJdbcDaoSupport
         insert.execute(this.getNamedParameters(relation));
     }
 
+    @Override
     public void save(Collection<OtherDocumentRecordTypeRelation> types) {
         for (OtherDocumentRecordTypeRelation type : types) {
             this.save(type);
         }
     }
 
+    @Override
     public void delete(int recordId) {
         String query = String.format("DELETE FROM %s WHERE %s = ?",
                 OtherDocumentRecordTypeRelationDaoImpl.TABLE_NAME,

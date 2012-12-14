@@ -42,6 +42,7 @@ public class Authority implements GrantedAuthority, Serializable {
         this.id = id;
     }
 
+    @Override
     public String getAuthority() {
         return this.id.getAuthority();
     }

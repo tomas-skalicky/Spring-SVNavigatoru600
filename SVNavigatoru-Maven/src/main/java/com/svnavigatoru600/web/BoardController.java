@@ -29,17 +29,20 @@ public class BoardController extends WysiwygSectionController {
         super.viewPageAddress = "/vybor/";
     }
 
+    @Override
     @RequestMapping(value = "/vybor/", method = RequestMethod.GET)
     public String showViewPage(ModelMap model) {
         return super.showViewPage(model);
     }
 
+    @Override
     @RequestMapping(value = "/vybor/editace/", method = RequestMethod.GET)
     @PreAuthorize("hasRole('ROLE_MEMBER_OF_BOARD')")
     public String showEditPage(ModelMap model) {
         return super.showEditPage(model);
     }
 
+    @Override
     @RequestMapping(value = "/vybor/editace/ulozit/", method = RequestMethod.POST)
     @PreAuthorize("hasRole('ROLE_MEMBER_OF_BOARD')")
     public String saveChanges(@ModelAttribute("wysiwygSectionEditCommand") WysiwygSection command,
@@ -47,6 +50,7 @@ public class BoardController extends WysiwygSectionController {
         return super.saveChanges(command, result, status, model);
     }
 
+    @Override
     @RequestMapping(value = "/vybor/editace/ulozit-a-skoncit/", method = RequestMethod.POST)
     @PreAuthorize("hasRole('ROLE_MEMBER_OF_BOARD')")
     public String saveChangesAndFinishEditing(
@@ -55,6 +59,7 @@ public class BoardController extends WysiwygSectionController {
         return super.saveChangesAndFinishEditing(command, result, status, model);
     }
 
+    @Override
     @RequestMapping(value = "/vybor/editace/neukladat-a-skoncit/", method = RequestMethod.POST)
     @PreAuthorize("hasRole('ROLE_MEMBER_OF_BOARD')")
     public String cancelChangesAndFinishEditing(ModelMap model) {

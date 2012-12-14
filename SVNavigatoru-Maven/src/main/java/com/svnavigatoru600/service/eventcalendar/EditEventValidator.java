@@ -8,10 +8,12 @@ import com.svnavigatoru600.domain.eventcalendar.CalendarEvent;
 @Service
 public class EditEventValidator extends EventValidator {
 
+    @Override
     public boolean supports(Class<?> clazz) {
         return EditEvent.class.isAssignableFrom(clazz);
     }
 
+    @Override
     public void validate(Object target, Errors errors) {
         EditEvent command = (EditEvent) target;
         CalendarEvent event = command.getEvent();

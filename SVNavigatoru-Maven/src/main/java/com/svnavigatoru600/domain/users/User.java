@@ -45,6 +45,7 @@ public class User implements UserDetails, Serializable {
     private String phone;
     private Set<GrantedAuthority> authorities;
 
+    @Override
     public String getUsername() {
         return this.username;
     }
@@ -53,6 +54,7 @@ public class User implements UserDetails, Serializable {
         this.username = username;
     }
 
+    @Override
     public String getPassword() {
         return this.password;
     }
@@ -61,6 +63,7 @@ public class User implements UserDetails, Serializable {
         this.password = password;
     }
 
+    @Override
     public boolean isEnabled() {
         return this.enabled;
     }
@@ -124,6 +127,7 @@ public class User implements UserDetails, Serializable {
         this.phone = phone;
     }
 
+    @Override
     public Collection<GrantedAuthority> getAuthorities() {
         return this.authorities;
     }
@@ -183,14 +187,17 @@ public class User implements UserDetails, Serializable {
         return this.hasAuthority(AuthorityType.ROLE_REGISTERED_USER);
     }
 
+    @Override
     public boolean isAccountNonExpired() {
         return true;
     }
 
+    @Override
     public boolean isAccountNonLocked() {
         return true;
     }
 
+    @Override
     public boolean isCredentialsNonExpired() {
         return true;
     }

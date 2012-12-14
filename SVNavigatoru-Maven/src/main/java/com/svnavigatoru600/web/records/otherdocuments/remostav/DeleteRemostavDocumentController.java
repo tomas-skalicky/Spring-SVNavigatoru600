@@ -28,6 +28,7 @@ public class DeleteRemostavDocumentController extends DeleteDocumentController {
                 recordDao, messageSource);
     }
 
+    @Override
     @RequestMapping(value = DeleteRemostavDocumentController.BASE_URL + "existujici/{recordId}/smazat/", method = RequestMethod.GET)
     public String delete(@PathVariable int recordId, HttpServletRequest request, ModelMap model) {
         return super.delete(recordId, request, model);

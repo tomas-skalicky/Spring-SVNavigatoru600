@@ -28,6 +28,7 @@ public class RetrieveRemostavDocumentController extends RetrieveDocumentControll
                 recordDao, messageSource);
     }
 
+    @Override
     @RequestMapping(value = RetrieveRemostavDocumentController.BASE_URL + "existujici/{recordId}/stahnout/", method = RequestMethod.GET)
     public void retrieve(@PathVariable int recordId, HttpServletResponse response, ModelMap model) {
         super.retrieve(recordId, response, model);

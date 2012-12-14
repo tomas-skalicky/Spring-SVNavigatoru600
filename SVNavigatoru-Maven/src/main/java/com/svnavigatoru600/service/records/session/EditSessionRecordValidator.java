@@ -6,10 +6,12 @@ import org.springframework.validation.Errors;
 @Service
 public class EditSessionRecordValidator extends SessionRecordValidator {
 
+    @Override
     public boolean supports(Class<?> clazz) {
         return EditSessionRecord.class.isAssignableFrom(clazz);
     }
 
+    @Override
     public void validate(Object target, Errors errors) {
         EditSessionRecord command = (EditSessionRecord) target;
         this.checkNewType(command.getNewType(), errors);

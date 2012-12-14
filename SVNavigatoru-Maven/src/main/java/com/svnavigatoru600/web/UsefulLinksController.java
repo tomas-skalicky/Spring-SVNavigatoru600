@@ -29,17 +29,20 @@ public class UsefulLinksController extends WysiwygSectionController {
         super.viewPageAddress = "/uzitecne-odkazy/";
     }
 
+    @Override
     @RequestMapping(value = "/uzitecne-odkazy/", method = RequestMethod.GET)
     public String showViewPage(ModelMap model) {
         return super.showViewPage(model);
     }
 
+    @Override
     @RequestMapping(value = "/uzitecne-odkazy/editace/", method = RequestMethod.GET)
     @PreAuthorize("hasRole('ROLE_MEMBER_OF_BOARD')")
     public String showEditPage(ModelMap model) {
         return super.showEditPage(model);
     }
 
+    @Override
     @RequestMapping(value = "/uzitecne-odkazy/editace/ulozit/", method = RequestMethod.POST)
     @PreAuthorize("hasRole('ROLE_MEMBER_OF_BOARD')")
     public String saveChanges(@ModelAttribute("wysiwygSectionEditCommand") WysiwygSection command,
@@ -47,6 +50,7 @@ public class UsefulLinksController extends WysiwygSectionController {
         return super.saveChanges(command, result, status, model);
     }
 
+    @Override
     @RequestMapping(value = "/uzitecne-odkazy/editace/ulozit-a-skoncit/", method = RequestMethod.POST)
     @PreAuthorize("hasRole('ROLE_MEMBER_OF_BOARD')")
     public String saveChangesAndFinishEditing(
@@ -55,6 +59,7 @@ public class UsefulLinksController extends WysiwygSectionController {
         return super.saveChangesAndFinishEditing(command, result, status, model);
     }
 
+    @Override
     @RequestMapping(value = "/uzitecne-odkazy/editace/neukladat-a-skoncit/", method = RequestMethod.POST)
     @PreAuthorize("hasRole('ROLE_MEMBER_OF_BOARD')")
     public String cancelChangesAndFinishEditing(ModelMap model) {

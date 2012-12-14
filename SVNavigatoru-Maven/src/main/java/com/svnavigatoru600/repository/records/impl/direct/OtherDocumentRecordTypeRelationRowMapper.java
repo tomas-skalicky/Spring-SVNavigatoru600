@@ -30,6 +30,7 @@ public class OtherDocumentRecordTypeRelationRowMapper implements RowMapper<Other
         return OtherDocumentRecordTypeRelationRowMapper.PROPERTY_COLUMN_MAP.get(propertyName);
     }
 
+    @Override
     public OtherDocumentRecordTypeRelation mapRow(ResultSet rs, int rowNum) throws SQLException {
         OtherDocumentRecordTypeRelationId id = new OtherDocumentRecordTypeRelationId();
         id.setRecordId(rs.getInt(OtherDocumentRecordTypeRelationRowMapper.getColumn("recordId")));

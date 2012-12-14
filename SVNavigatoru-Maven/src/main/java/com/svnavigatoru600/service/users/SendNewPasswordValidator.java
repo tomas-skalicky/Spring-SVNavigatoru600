@@ -15,10 +15,12 @@ import com.svnavigatoru600.service.util.Email;
 @Service
 public class SendNewPasswordValidator implements Validator {
 
+    @Override
     public boolean supports(Class<?> clazz) {
         return SendNewPassword.class.isAssignableFrom(clazz);
     }
 
+    @Override
     public void validate(Object target, Errors errors) {
         String field = "user.email";
 

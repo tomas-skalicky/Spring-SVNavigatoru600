@@ -58,6 +58,7 @@ public class ContributionDaoImpl extends SimpleJdbcDaoSupport implements Contrib
         }
     }
 
+    @Override
     public Contribution findById(int contributionId) {
         String query = String.format("SELECT * FROM %s c WHERE c.%s = ?", ContributionDaoImpl.TABLE_NAME,
                 ContributionRowMapper.getColumn("id"));
@@ -68,6 +69,7 @@ public class ContributionDaoImpl extends SimpleJdbcDaoSupport implements Contrib
         return contribution;
     }
 
+    @Override
     public List<Contribution> find(int threadId) {
         String query = String.format("SELECT * FROM %s c WHERE c.%s = ?", ContributionDaoImpl.TABLE_NAME,
                 ContributionRowMapper.getColumn("threadId"));
@@ -78,6 +80,7 @@ public class ContributionDaoImpl extends SimpleJdbcDaoSupport implements Contrib
      * @param count
      *            Not used yet.
      */
+    @Override
     public List<Contribution> findOrdered(String attribute, OrderType order, int count) {
         String query = String.format("SELECT * FROM %s c ORDER BY c.%s %s", ContributionDaoImpl.TABLE_NAME,
                 ContributionRowMapper.getColumn(attribute), order.getDatabaseCode());
@@ -88,6 +91,7 @@ public class ContributionDaoImpl extends SimpleJdbcDaoSupport implements Contrib
         return contributions;
     }
 
+    @Override
     public List<Contribution> findOrdered(int threadId, String attribute, OrderType order) {
         String query = String.format("SELECT * FROM %s c WHERE c.%s = ? ORDER BY c.%s %s",
                 ContributionDaoImpl.TABLE_NAME, ContributionRowMapper.getColumn("threadId"),
@@ -99,6 +103,7 @@ public class ContributionDaoImpl extends SimpleJdbcDaoSupport implements Contrib
         return contributions;
     }
 
+    @Override
     public void update(Contribution contribution) {
         Date now = new Date();
         contribution.setLastSaveTime(now);
@@ -128,6 +133,7 @@ public class ContributionDaoImpl extends SimpleJdbcDaoSupport implements Contrib
         return parameters;
     }
 
+    @Override
     public int save(Contribution contribution) {
         Date now = new Date();
         contribution.setCreationTime(now);
@@ -150,6 +156,7 @@ public class ContributionDaoImpl extends SimpleJdbcDaoSupport implements Contrib
         return ((Long) keys.get("GENERATED_KEY")).intValue();
     }
 
+    @Override
     public void delete(Contribution contribution) {
         String query = String.format("DELETE FROM %s WHERE %s = ?", ContributionDaoImpl.TABLE_NAME,
                 ContributionRowMapper.getColumn("id"));

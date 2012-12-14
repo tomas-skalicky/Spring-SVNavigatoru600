@@ -43,10 +43,12 @@ public class SessionRecordDaoImpl extends SimpleJdbcDaoSupport implements Sessio
 
     private DocumentRecordDaoImpl documentRecordDao = new DocumentRecordDaoImpl();
 
+    @Override
     public SessionRecord findById(int recordId) {
         return this.findById(recordId, true);
     }
 
+    @Override
     public SessionRecord findById(int recordId, boolean loadFile) {
         String selectClause;
         SessionRecordRowMapper rowMapper;
@@ -63,12 +65,14 @@ public class SessionRecordDaoImpl extends SimpleJdbcDaoSupport implements Sessio
         return this.getSimpleJdbcTemplate().queryForObject(query, rowMapper, recordId);
     }
 
+    @Override
     public SessionRecord findByFileName(String fileName) {
         String query = String.format("%s WHERE r.%s = ?", SessionRecordDaoImpl.SELECT_FROM_CLAUSE_WITH_FILE,
                 SessionRecordRowMapper.getColumn("fileName"));
         return this.getSimpleJdbcTemplate().queryForObject(query, new SessionRecordRowMapper(), fileName);
     }
 
+    @Override
     public List<SessionRecord> findOrdered(OrderType order) {
         String query = String.format("%s ORDER BY r.%s %s",
                 SessionRecordDaoImpl.SELECT_FROM_CLAUSE_WITHOUT_FILE,
@@ -76,6 +80,7 @@ public class SessionRecordDaoImpl extends SimpleJdbcDaoSupport implements Sessio
         return this.getSimpleJdbcTemplate().query(query, new SessionRecordRowMapper(false));
     }
 
+    @Override
     public List<SessionRecord> findOrdered(SessionRecordType type, OrderType order) {
         String query = String.format("%s WHERE r.%s = ? ORDER BY r.%s %s",
                 SessionRecordDaoImpl.SELECT_FROM_CLAUSE_WITHOUT_FILE,
@@ -84,6 +89,7 @@ public class SessionRecordDaoImpl extends SimpleJdbcDaoSupport implements Sessio
         return this.getSimpleJdbcTemplate().query(query, new SessionRecordRowMapper(false), type.name());
     }
 
+    @Override
     public void update(SessionRecord record) {
         // NOTE: updates the record in both tables 'document_records' and
         // 'session_records'.
@@ -109,6 +115,7 @@ public class SessionRecordDaoImpl extends SimpleJdbcDaoSupport implements Sessio
         return parameters;
     }
 
+    @Override
     public int save(SessionRecord record) {
         // NOTE: inserts the new record into two tables: 'document_records' and
         // 'session_records'.
@@ -126,6 +133,7 @@ public class SessionRecordDaoImpl extends SimpleJdbcDaoSupport implements Sessio
         return recordId;
     }
 
+    @Override
     public void delete(DocumentRecord record) {
         // The 'ON DELETE CASCADE' clause is used.
         this.documentRecordDao.delete(record, this.getDataSource());

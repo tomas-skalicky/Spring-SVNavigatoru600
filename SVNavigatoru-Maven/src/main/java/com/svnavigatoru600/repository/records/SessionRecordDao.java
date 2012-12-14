@@ -13,6 +13,7 @@ public interface SessionRecordDao extends DocumentRecordDao {
      * 
      * @see com.svnavigatoru600.repository.DocumentRecordDao#findById(int)
      */
+    @Override
     public SessionRecord findById(int recordId);
 
     /*
@@ -20,6 +21,7 @@ public interface SessionRecordDao extends DocumentRecordDao {
      * 
      * @see com.svnavigatoru600.repository.records.DocumentRecordDao#findById(int, boolean)
      */
+    @Override
     public SessionRecord findById(int recordId, boolean loadFile);
 
     /*
@@ -27,6 +29,7 @@ public interface SessionRecordDao extends DocumentRecordDao {
      * 
      * @see com.svnavigatoru600.repository.DocumentRecordDao#findByFileName(java.lang.String )
      */
+    @Override
     public SessionRecord findByFileName(String fileName);
 
     /**

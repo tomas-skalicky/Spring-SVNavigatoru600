@@ -18,10 +18,12 @@ import com.svnavigatoru600.service.util.LastName;
 @Service
 public abstract class UserDataValidator implements Validator {
 
+    @Override
     public boolean supports(Class<?> clazz) {
         return AdministrateUserData.class.isAssignableFrom(clazz);
     }
 
+    @Override
     public void validate(Object target, Errors errors) {
         AdministrateUserData command = (AdministrateUserData) target;
         this.checkNewPassword(command.getNewPassword(), errors);

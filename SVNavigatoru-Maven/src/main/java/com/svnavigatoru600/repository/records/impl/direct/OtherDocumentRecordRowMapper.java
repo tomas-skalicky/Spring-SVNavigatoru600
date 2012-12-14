@@ -54,6 +54,7 @@ public class OtherDocumentRecordRowMapper extends DocumentRecordRowMapper implem
         return OtherDocumentRecordRowMapper.PROPERTY_COLUMN_MAP.get(propertyName);
     }
 
+    @Override
     public OtherDocumentRecord mapRow(ResultSet rs, int rowNum) throws SQLException {
         OtherDocumentRecord record = new OtherDocumentRecord();
         record.setId(rs.getInt(OtherDocumentRecordRowMapper.getColumn("id")));

@@ -32,6 +32,7 @@ public class ThreadDaoImpl extends SimpleJdbcDaoSupport implements ThreadDao {
         this.userDao = userDao;
     }
 
+    @Override
     public Thread findById(int threadId) {
         return this.findById(threadId, false);
     }
@@ -89,6 +90,7 @@ public class ThreadDaoImpl extends SimpleJdbcDaoSupport implements ThreadDao {
         return thread;
     }
 
+    @Override
     public List<Thread> loadAll() {
         String query = String.format("SELECT * FROM %s t", ThreadDaoImpl.TABLE_NAME);
         List<Thread> threads = this.getSimpleJdbcTemplate().query(query, new ThreadRowMapper());
@@ -98,6 +100,7 @@ public class ThreadDaoImpl extends SimpleJdbcDaoSupport implements ThreadDao {
         return threads;
     }
 
+    @Override
     public void update(Thread thread) {
         String query = String.format("UPDATE %s SET %s = ?, %s = ?, %s = ? WHERE %s = ?",
                 ThreadDaoImpl.TABLE_NAME, ThreadRowMapper.getColumn("name"),
@@ -119,6 +122,7 @@ public class ThreadDaoImpl extends SimpleJdbcDaoSupport implements ThreadDao {
         return parameters;
     }
 
+    @Override
     public int save(Thread thread) {
         Date now = new Date();
         thread.setCreationTime(now);
@@ -147,6 +151,7 @@ public class ThreadDaoImpl extends SimpleJdbcDaoSupport implements ThreadDao {
         return threadId;
     }
 
+    @Override
     public void delete(Thread thread) {
         String query = String.format("DELETE FROM %s WHERE %s = ?", ThreadDaoImpl.TABLE_NAME,
                 ThreadRowMapper.getColumn("id"));

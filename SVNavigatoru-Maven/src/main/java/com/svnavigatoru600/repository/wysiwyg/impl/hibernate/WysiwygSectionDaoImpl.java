@@ -15,11 +15,13 @@ public class WysiwygSectionDaoImpl extends HibernateDaoSupport implements Wysiwy
     /** Logger for this class and subclasses */
     protected final Log logger = LogFactory.getLog(this.getClass());
 
+    @Override
     public WysiwygSection findByName(WysiwygSectionName name) {
         this.logger.info(String.format("Load a section (name '%s')", name.name()));
         return this.getHibernateTemplate().load(WysiwygSection.class, name.name());
     }
 
+    @Override
     public void update(WysiwygSection section) {
         Date now = new Date();
         section.setLastSaveTime(now);

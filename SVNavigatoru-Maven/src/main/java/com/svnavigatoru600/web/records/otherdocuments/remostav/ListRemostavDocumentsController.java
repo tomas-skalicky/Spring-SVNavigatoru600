@@ -27,16 +27,19 @@ public class ListRemostavDocumentsController extends ListDocumentsController {
                 recordDao, messageSource);
     }
 
+    @Override
     @RequestMapping(value = ListRemostavDocumentsController.BASE_URL, method = RequestMethod.GET)
     public String initPage(HttpServletRequest request, ModelMap model) {
         return super.initPage(request, model);
     }
 
+    @Override
     @RequestMapping(value = ListRemostavDocumentsController.BASE_URL + "vytvoreno/", method = RequestMethod.GET)
     public String initPageAfterCreate(HttpServletRequest request, ModelMap model) {
         return super.initPageAfterCreate(request, model);
     }
 
+    @Override
     @RequestMapping(value = ListRemostavDocumentsController.BASE_URL + "smazano/", method = RequestMethod.GET)
     public String initPageAfterDelete(HttpServletRequest request, ModelMap model) {
         return super.initPageAfterDelete(request, model);
