@@ -84,7 +84,8 @@ public class ListUsersController extends UserController {
      * Gets a {@link Map} which for each input {@link User} contains an appropriate localized delete
      * questions.
      */
-    private Map<User, String> getLocalizedDeleteQuestions(final List<User> users, final HttpServletRequest request) {
+    private Map<User, String> getLocalizedDeleteQuestions(final List<User> users,
+            final HttpServletRequest request) {
         final String messageCode = "user-administration.do-you-really-want-to-delete-user";
         final Map<User, String> questions = new HashMap<User, String>();
 

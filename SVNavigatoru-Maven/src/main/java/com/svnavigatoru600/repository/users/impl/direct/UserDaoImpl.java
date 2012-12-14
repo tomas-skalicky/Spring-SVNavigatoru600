@@ -86,7 +86,8 @@ public class UserDaoImpl extends SimpleJdbcDaoSupport implements UserDao {
 
         final String query = String.format("SELECT * FROM %s u WHERE u.%s = ?", UserDaoImpl.TABLE_NAME,
                 UserRowMapper.getColumn("email"));
-        final User user = this.getSimpleJdbcTemplate().queryForObject(query, new UserRowMapper(), lowerCasedEmail);
+        final User user = this.getSimpleJdbcTemplate().queryForObject(query, new UserRowMapper(),
+                lowerCasedEmail);
         if (user == null) {
             throw new DataRetrievalFailureException(String.format("No user with the email '%s' exists.",
                     lowerCasedEmail));
@@ -100,10 +101,10 @@ public class UserDaoImpl extends SimpleJdbcDaoSupport implements UserDao {
     public List<User> findByAuthority(final String authority) {
         this.logger.info(String.format("Load all users with the authority '%s')", authority));
 
-        final String query = String.format("SELECT u.* FROM %s u INNER JOIN %s a ON a.%s = u.%s WHERE a.%s = ?",
-                UserDaoImpl.TABLE_NAME, AuthorityDaoImpl.TABLE_NAME,
-                AuthorityRowMapper.getColumn("username"), UserRowMapper.getColumn("username"),
-                AuthorityRowMapper.getColumn("authority"));
+        final String query = String.format(
+                "SELECT u.* FROM %s u INNER JOIN %s a ON a.%s = u.%s WHERE a.%s = ?", UserDaoImpl.TABLE_NAME,
+                AuthorityDaoImpl.TABLE_NAME, AuthorityRowMapper.getColumn("username"),
+                UserRowMapper.getColumn("username"), AuthorityRowMapper.getColumn("authority"));
         final List<User> users = this.getSimpleJdbcTemplate().query(query, new UserRowMapper(), authority);
 
         this.populateAuthorities(users);
@@ -114,7 +115,8 @@ public class UserDaoImpl extends SimpleJdbcDaoSupport implements UserDao {
     public List<User> loadAllOrdered(final OrderType order, final boolean testUsers) {
         this.logger.info(String.format("Load all users ordered %s.", order.name()));
 
-        final String query = String.format("SELECT * FROM %s u WHERE u.is_test_user = %s ORDER BY u.%s, u.%s %s",
+        final String query = String.format(
+                "SELECT * FROM %s u WHERE u.is_test_user = %s ORDER BY u.%s, u.%s %s",
                 UserDaoImpl.TABLE_NAME, testUsers, UserRowMapper.getColumn("lastName"),
                 UserRowMapper.getColumn("firstName"), order.getDatabaseCode());
         final List<User> users = this.getSimpleJdbcTemplate().query(query, new UserRowMapper());

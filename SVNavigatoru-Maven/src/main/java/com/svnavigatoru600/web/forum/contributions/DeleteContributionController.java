@@ -42,7 +42,8 @@ public class DeleteContributionController extends ContributionController {
      * Constructor.
      */
     @Autowired
-    public DeleteContributionController(final ContributionDao contributionDao, final MessageSource messageSource) {
+    public DeleteContributionController(final ContributionDao contributionDao,
+            final MessageSource messageSource) {
         super(contributionDao, messageSource);
     }
 

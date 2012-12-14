@@ -94,7 +94,8 @@ public class EditUserController extends NewEditUserController {
     @RequestMapping(value = EditUserController.BASE_URL + "{username}/", method = RequestMethod.POST)
     public String processSubmittedForm(
             @ModelAttribute(EditUserController.COMMAND) AdministrateUserData command, BindingResult result,
-            final SessionStatus status, @PathVariable String username, HttpServletRequest request, ModelMap model) {
+            final SessionStatus status, @PathVariable String username, HttpServletRequest request,
+            ModelMap model) {
 
         // Sets up all auxiliary (but necessary) maps.
         command.setRoleCheckboxId(this.getRoleCheckboxId());
@@ -219,7 +220,8 @@ public class EditUserController extends NewEditUserController {
         }
         // End of the conversion.
 
-        final Object[] messageParams = new Object[] { user.getLastName(), Configuration.DOMAIN, newAuthorities };
+        final Object[] messageParams = new Object[] { user.getLastName(), Configuration.DOMAIN,
+                newAuthorities };
         final String messageText = Localization.findLocaleMessage(this.messageSource, request,
                 "email.text.authorities-changed", messageParams);
 
