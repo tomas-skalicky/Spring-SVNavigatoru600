@@ -16,7 +16,7 @@ public class News implements Serializable {
 
     private NewsDao newsDao;
 
-    public void setNewsDao(NewsDao newsDao) {
+    public void setNewsDao(final NewsDao newsDao) {
         this.newsDao = newsDao;
     }
 
@@ -35,7 +35,7 @@ public class News implements Serializable {
         return this.id;
     }
 
-    public void setId(int id) {
+    public void setId(final int id) {
         this.id = id;
     }
 
@@ -43,7 +43,7 @@ public class News implements Serializable {
         return this.title;
     }
 
-    public void setTitle(String title) {
+    public void setTitle(final String title) {
         this.title = title;
     }
 
@@ -51,7 +51,7 @@ public class News implements Serializable {
         return this.text;
     }
 
-    public void setText(String text) {
+    public void setText(final String text) {
         this.text = text;
     }
 
@@ -59,7 +59,7 @@ public class News implements Serializable {
         return this.creationTime;
     }
 
-    public void setCreationTime(Date creationTime) {
+    public void setCreationTime(final Date creationTime) {
         this.creationTime = creationTime;
     }
 
@@ -67,7 +67,7 @@ public class News implements Serializable {
         return this.lastSaveTime;
     }
 
-    public void setLastSaveTime(Date lastSaveTime) {
+    public void setLastSaveTime(final Date lastSaveTime) {
         this.lastSaveTime = lastSaveTime;
     }
 }
