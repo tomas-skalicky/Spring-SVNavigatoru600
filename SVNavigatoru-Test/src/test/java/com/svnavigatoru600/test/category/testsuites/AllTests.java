@@ -8,8 +8,7 @@ import org.junit.runner.RunWith;
  * "http://stackoverflow.com/questions/2176570/how-to-run-all-tests-belonging-to-a-certain-category-in-junit-4/2176791#2176791"
  * >here</a>).
  * 
- * @author <a href="mailto:tomas.skalicky@gfk.com">Tomas Skalicky</a>
- * @version $Id: $
+ * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
 @RunWith(ClasspathSuite.class)
 public final class AllTests {

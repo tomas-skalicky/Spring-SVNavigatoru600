@@ -3,7 +3,7 @@ package com.svnavigatoru600.selenium;
 /**
  * Represents the user created only for the purposes of Selenium testing.
  * 
- * @author <a href="mailto:tomas.skalicky@gfk.com">Tomas Skalicky</a>
+ * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
 public class TestUser {
 

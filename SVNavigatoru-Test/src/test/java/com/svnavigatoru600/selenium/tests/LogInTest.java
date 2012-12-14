@@ -12,7 +12,7 @@ import com.svnavigatoru600.selenium.TestUser;
 import com.svnavigatoru600.test.category.SeleniumTests;
 
 /**
- * @author <a href="mailto:tomas.skalicky@gfk.com">Tomas Skalicky</a>
+ * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
 @Category(SeleniumTests.class)
 public class LogInTest extends AbstractSeleniumTest {
