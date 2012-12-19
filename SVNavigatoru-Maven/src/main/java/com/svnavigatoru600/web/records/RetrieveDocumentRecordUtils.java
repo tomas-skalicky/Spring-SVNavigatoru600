@@ -15,7 +15,10 @@ import com.svnavigatoru600.repository.records.DocumentRecordDao;
  * 
  * @author Tomas Skalicky
  */
-public class RetrieveDocumentRecordUtils {
+public final class RetrieveDocumentRecordUtils {
+    
+    private RetrieveDocumentRecordUtils() {
+    }
 
     public static void retrieve(int recordId, DocumentRecordDao recordDao, HttpServletResponse response)
             throws SQLException, IOException {
