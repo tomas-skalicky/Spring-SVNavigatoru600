@@ -8,7 +8,10 @@ import java.security.NoSuchAlgorithmException;
  * 
  * @author Tomas Skalicky
  */
-public class Hash {
+public final class Hash {
+    
+    private Hash() {
+    }
 
     /**
      * Hashes the given <code>string</code> via the SHA-1 algorithm. The implementation is borrowed from <a

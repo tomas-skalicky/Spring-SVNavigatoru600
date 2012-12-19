@@ -13,7 +13,7 @@ import java.util.TimeZone;
  * 
  * @author Tomas Skalicky
  */
-public class DateUtils {
+public final class DateUtils {
 
     public static final Map<Locale, String> SHORT_DATE_FORMATS;
     public static final Map<Locale, String> MIDDLE_DATE_FORMATS;
@@ -47,6 +47,9 @@ public class DateUtils {
         SHORT_DAY_FORMATS.put(csCZLocale, "d");
         LONG_MONTH_FORMATS.put(csCZLocale, "MMMM");
         DEFAULT_DATE_TIME_FORMATS.put(csCZLocale, "d. MMMM yyyy H:mm");
+    }
+    
+    private DateUtils() {
     }
 
     /**

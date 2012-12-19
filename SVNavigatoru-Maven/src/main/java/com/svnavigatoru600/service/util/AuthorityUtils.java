@@ -15,7 +15,10 @@ import com.svnavigatoru600.domain.users.User;
  * 
  * @author Tomas Skalicky
  */
-public class AuthorityUtils {
+public final class AuthorityUtils {
+    
+    private AuthorityUtils() {
+    }
 
     /**
      * Gets an array of indicators which say which authorities (= roles) are checked (selected), and which
@@ -60,7 +63,8 @@ public class AuthorityUtils {
         Set<GrantedAuthority> checkedAuthorities = new HashSet<GrantedAuthority>();
 
         for (int i = 0; i < indicators.length; ++i) {
-            if (indicators[i] == true) {
+            boolean isAuthorityChecked = indicators[i];
+            if (isAuthorityChecked) {
                 AuthorityType authorityType = AuthorityType.values()[i];
                 checkedAuthorities.add(new Authority(username, authorityType.name()));
             }

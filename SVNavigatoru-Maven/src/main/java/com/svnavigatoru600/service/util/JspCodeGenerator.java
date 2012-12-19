@@ -9,7 +9,10 @@ import org.springframework.context.MessageSource;
  * 
  * @author Tomas Skalicky
  */
-public class JspCodeGenerator {
+public final class JspCodeGenerator {
+    
+    private JspCodeGenerator() {
+    }
 
     /**
      * Gets the JSP code of a root item of the main navigation.

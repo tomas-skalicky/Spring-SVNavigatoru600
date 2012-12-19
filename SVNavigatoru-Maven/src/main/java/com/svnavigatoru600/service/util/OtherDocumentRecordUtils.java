@@ -13,7 +13,10 @@ import com.svnavigatoru600.domain.records.OtherDocumentRecordTypeRelation;
  * 
  * @author Tomas Skalicky
  */
-public class OtherDocumentRecordUtils {
+public final class OtherDocumentRecordUtils {
+    
+    private OtherDocumentRecordUtils() {
+    }
 
     /**
      * Indicates whether the given <code>recordName</code> is valid.
@@ -65,7 +68,8 @@ public class OtherDocumentRecordUtils {
         Set<OtherDocumentRecordTypeRelation> checkedTypes = new HashSet<OtherDocumentRecordTypeRelation>();
 
         for (int i = 0; i < indicators.length; ++i) {
-            if (indicators[i] == true) {
+            boolean isRelationChecked = indicators[i];
+            if (isRelationChecked) {
                 OtherDocumentRecordType recordType = OtherDocumentRecordType.values()[i];
                 checkedTypes.add(new OtherDocumentRecordTypeRelation(recordId, recordType));
             }

@@ -5,7 +5,10 @@ package com.svnavigatoru600.service.util;
  * 
  * @author Tomas Skalicky
  */
-public class CheckboxUtils {
+public final class CheckboxUtils {
+    
+    private CheckboxUtils() {
+    }
 
     /**
      * <p>

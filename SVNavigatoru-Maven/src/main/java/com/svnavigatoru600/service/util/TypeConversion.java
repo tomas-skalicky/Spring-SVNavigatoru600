@@ -5,7 +5,10 @@ package com.svnavigatoru600.service.util;
  * 
  * @author Tomas Skalicky
  */
-public class TypeConversion {
+public final class TypeConversion {
+    
+    private TypeConversion() {
+    }
 
     /**
      * Converts the given array of <code>bytes</code> to {@link String}.
