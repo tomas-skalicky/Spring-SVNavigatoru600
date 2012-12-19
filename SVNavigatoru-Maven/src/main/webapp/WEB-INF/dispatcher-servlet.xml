@@ -43,8 +43,8 @@
 
 
 
-	<!-- Addressed of files - which match the following mappings and which are in the specified locations 
-		- will not be processed by this dispatcher, but these addresses will be considered as STATICAL ones. -->
+	<!-- Addresses of files - which match the following mappings and which are in the specified locations 
+		- will NOT be processed by this dispatcher, but these addresses will be considered as STATICAL ones. -->
 	<mvc:resources mapping="/arclite/**" location="/arclite/" />
 	<mvc:resources mapping="/favicon.ico" location="/favicon.ico" />
 	<mvc:resources mapping="/img/**" location="/img/" />
