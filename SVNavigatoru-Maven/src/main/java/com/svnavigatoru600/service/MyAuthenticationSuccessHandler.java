@@ -22,10 +22,10 @@ public class MyAuthenticationSuccessHandler extends SavedRequestAwareAuthenticat
      * Redirects according to the authorizations of the user who has logged in right now.
      */
     @Override
-    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
-            Authentication authentication) throws ServletException, IOException {
+    public void onAuthenticationSuccess(final HttpServletRequest request, final HttpServletResponse response,
+            final Authentication authentication) throws ServletException, IOException {
 
-        User user = (User) authentication.getPrincipal();
+        final User user = (User) authentication.getPrincipal();
         if (user.canSeeNews()) {
             super.onAuthenticationSuccess(request, response, authentication);
             return;
