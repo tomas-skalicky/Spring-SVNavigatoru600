@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -49,6 +50,7 @@ public class EditNewsController extends NewEditNewsController {
     }
 
     @RequestMapping(value = EditNewsController.REQUEST_MAPPING_BASE_URL, method = RequestMethod.POST)
+    @Transactional
     public @ResponseBody
     NewsResponse processSubmittedForm(@ModelAttribute(EditNewsController.COMMAND) EditNews command,
             BindingResult result, SessionStatus status, @PathVariable int newsId, HttpServletRequest request) {

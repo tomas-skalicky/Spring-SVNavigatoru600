@@ -10,6 +10,7 @@ import javax.sql.rowset.serial.SerialException;
 import org.springframework.context.MessageSource;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.support.SessionStatus;
@@ -91,6 +92,7 @@ public abstract class EditRecordController extends NewEditRecordController {
      * 
      * @return The name of the view which is to be shown.
      */
+    @Transactional
     public String processSubmittedForm(EditSessionRecord command, BindingResult result, SessionStatus status,
             int recordId, HttpServletRequest request, ModelMap model) {
 
