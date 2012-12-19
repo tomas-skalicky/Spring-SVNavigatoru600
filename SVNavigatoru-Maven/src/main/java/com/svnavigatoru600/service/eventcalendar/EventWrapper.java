@@ -19,7 +19,7 @@ public class EventWrapper {
     private CalendarEvent event = null;
     private String middleDateFormattedDate = null;
 
-    public EventWrapper(CalendarEvent event, HttpServletRequest request) {
+    public EventWrapper(final CalendarEvent event, final HttpServletRequest request) {
         this.event = event;
         Locale locale = Localization.getLocale(request);
         this.middleDateFormattedDate = DateUtils.format(event.getDate(),
@@ -30,7 +30,7 @@ public class EventWrapper {
         return this.event;
     }
 
-    public void setEvent(CalendarEvent event) {
+    public void setEvent(final CalendarEvent event) {
         this.event = event;
     }
 
@@ -38,7 +38,7 @@ public class EventWrapper {
         return this.middleDateFormattedDate;
     }
 
-    public void setmiddleDateFormattedDate(String middleDateFormattedDate) {
+    public void setmiddleDateFormattedDate(final String middleDateFormattedDate) {
         this.middleDateFormattedDate = middleDateFormattedDate;
     }
 }
