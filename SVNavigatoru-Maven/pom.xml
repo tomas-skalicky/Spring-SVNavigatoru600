@@ -303,6 +303,11 @@
 		</dependency>
 
 		<dependency>
+			<groupId>org.hsqldb</groupId>
+			<artifactId>hsqldb</artifactId>
+		</dependency>
+
+		<dependency>
 			<groupId>org.codehaus.jackson</groupId>
 			<artifactId>jackson-jaxrs</artifactId>
 		</dependency>
@@ -452,6 +457,13 @@
 						<groupId>org.slf4j</groupId>
 					</exclusion>
 				</exclusions>
+			</dependency>
+
+			<dependency>
+				<groupId>org.hsqldb</groupId>
+				<artifactId>hsqldb</artifactId>
+				<version>2.2.8</version>
+				<scope>test</scope>
 			</dependency>
 
 			<dependency>
