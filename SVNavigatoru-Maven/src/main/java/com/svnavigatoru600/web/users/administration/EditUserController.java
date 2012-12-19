@@ -10,6 +10,7 @@ import org.springframework.context.MessageSource;
 import org.springframework.dao.DataAccessException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -92,6 +93,7 @@ public class EditUserController extends NewEditUserController {
      * @return The name of the view which is to be shown.
      */
     @RequestMapping(value = EditUserController.BASE_URL + "{username}/", method = RequestMethod.POST)
+    @Transactional
     public String processSubmittedForm(
             @ModelAttribute(EditUserController.COMMAND) AdministrateUserData command, BindingResult result,
             final SessionStatus status, @PathVariable String username, HttpServletRequest request,
