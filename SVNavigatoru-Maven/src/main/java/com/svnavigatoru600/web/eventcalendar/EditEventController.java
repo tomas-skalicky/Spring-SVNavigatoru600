@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -64,6 +65,7 @@ public class EditEventController extends NewEditEventController {
     }
 
     @RequestMapping(value = EditEventController.REQUEST_MAPPING_BASE_URL, method = RequestMethod.POST)
+    @Transactional
     public String processSubmittedForm(@ModelAttribute(EditEventController.COMMAND) EditEvent command,
             BindingResult result, SessionStatus status, @PathVariable int eventId,
             HttpServletRequest request, ModelMap model) {

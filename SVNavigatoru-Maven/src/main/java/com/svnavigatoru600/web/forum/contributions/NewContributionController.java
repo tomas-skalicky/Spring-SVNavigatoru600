@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -70,6 +71,7 @@ public class NewContributionController extends NewEditContributionController {
      * @return The name of the view which is to be shown.
      */
     @RequestMapping(value = NewContributionController.REQUEST_MAPPING_BASE_URL, method = RequestMethod.POST)
+    @Transactional
     public String processSubmittedForm(
             @ModelAttribute(NewContributionController.COMMAND) NewContribution command, BindingResult result,
             SessionStatus status, @PathVariable int threadId, HttpServletRequest request, ModelMap model) {

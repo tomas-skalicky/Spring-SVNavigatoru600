@@ -6,6 +6,7 @@ import org.springframework.context.MessageSource;
 import org.springframework.dao.DataAccessException;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 
 import com.svnavigatoru600.domain.records.DocumentRecord;
@@ -52,6 +53,7 @@ public abstract class DeleteDocumentController extends OtherDocumentRecordContro
         this.SUCCESSFUL_DELETE_URL = this.BASE_URL + DeleteDocumentController.SUCCESSFUL_DELETE_URL_END;
     }
 
+    @Transactional
     public String delete(int recordId, HttpServletRequest request, ModelMap model) {
         try {
             // Deletes the record from the repository and deletes the associated

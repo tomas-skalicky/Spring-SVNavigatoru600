@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -68,6 +69,7 @@ public class EditThreadController extends NewEditThreadController {
     }
 
     @RequestMapping(value = EditThreadController.REQUEST_MAPPING_BASE_URL, method = RequestMethod.POST)
+    @Transactional
     public String processSubmittedForm(@ModelAttribute(EditThreadController.COMMAND) EditThread command,
             final BindingResult result, final SessionStatus status, @PathVariable int threadId,
             final HttpServletRequest request, final ModelMap model) {

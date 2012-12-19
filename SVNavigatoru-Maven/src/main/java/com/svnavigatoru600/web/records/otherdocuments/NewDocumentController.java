@@ -10,6 +10,7 @@ import javax.sql.rowset.serial.SerialException;
 import org.springframework.context.MessageSource;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.support.SessionStatus;
@@ -102,6 +103,7 @@ public abstract class NewDocumentController extends NewEditDocumentController {
      * 
      * @return The name of the view which is to be shown.
      */
+    @Transactional
     public String processSubmittedForm(NewRecord command, BindingResult result, SessionStatus status,
             HttpServletRequest request, ModelMap model) {
 

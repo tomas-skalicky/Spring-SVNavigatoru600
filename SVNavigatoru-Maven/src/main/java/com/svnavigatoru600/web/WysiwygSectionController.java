@@ -3,6 +3,7 @@ package com.svnavigatoru600.web;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -44,6 +45,7 @@ public abstract class WysiwygSectionController extends PrivateSectionMetaControl
         return this.editPageView;
     }
 
+    @Transactional
     public String saveChanges(@ModelAttribute("wysiwygSectionEditCommand") WysiwygSection command,
             BindingResult result, SessionStatus status, ModelMap model) {
         // No validation necessary.
@@ -63,6 +65,7 @@ public abstract class WysiwygSectionController extends PrivateSectionMetaControl
         return this.editPageView;
     }
 
+    @Transactional
     public String saveChangesAndFinishEditing(
             @ModelAttribute("wysiwygSectionEditCommand") WysiwygSection command, BindingResult result,
             SessionStatus status, ModelMap model) {
