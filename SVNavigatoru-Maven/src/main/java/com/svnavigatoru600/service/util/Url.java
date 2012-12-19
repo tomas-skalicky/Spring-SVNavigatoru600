@@ -7,7 +7,10 @@ import javax.servlet.ServletRequest;
  * 
  * @author Tomas Skalicky
  */
-public class Url {
+public final class Url {
+    
+    private Url() {
+    }
 
     /**
      * Gets the path of the current servlet associated with the given <code>request</code>.

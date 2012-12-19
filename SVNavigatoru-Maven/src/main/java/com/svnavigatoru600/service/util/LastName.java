@@ -5,9 +5,12 @@ package com.svnavigatoru600.service.util;
  * 
  * @author Tomas Skalicky
  */
-public class LastName {
+public final class LastName {
 
     static final String VALID_LAST_NAME_REGEXP = FirstName.VALID_FIRST_NAME_REGEXP;
+    
+    private LastName() {
+    }
 
     /**
      * Indicates whether the given <code>lastName</code> is valid.

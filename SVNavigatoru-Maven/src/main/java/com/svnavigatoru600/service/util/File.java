@@ -4,7 +4,6 @@ import java.sql.Blob;
 import java.sql.SQLException;
 
 import javax.sql.rowset.serial.SerialBlob;
-import javax.sql.rowset.serial.SerialException;
 
 import com.svnavigatoru600.web.Configuration;
 
@@ -13,9 +12,12 @@ import com.svnavigatoru600.web.Configuration;
  * 
  * @author Tomas Skalicky
  */
-public class File {
+public final class File {
 
     private static final String[] SUPPORTED_EXTENSIONS = new String[] { "pdf", "doc", "docx", "txt" };
+    
+    private File() {
+    }
 
     /**
      * Indicates whether the given <code>fileName</code> is valid in terms of its format.
@@ -62,7 +64,7 @@ public class File {
     /**
      * Creates a new {@link Blob} with the given <code>bytes</code>.
      */
-    public static Blob convertToBlob(byte[] bytes) throws SerialException, SQLException {
+    public static Blob convertToBlob(byte[] bytes) throws SQLException {
         return new SerialBlob(bytes);
     }
 }

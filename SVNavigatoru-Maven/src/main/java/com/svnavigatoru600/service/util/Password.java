@@ -7,9 +7,16 @@ import org.apache.commons.lang3.RandomStringUtils;
  * 
  * @author Tomas Skalicky
  */
-public class Password {
+public final class Password {
 
     private static final String VALID_PASSWORD_REGEXP = "^[^ ]{6,}$";
+    /**
+     * The length of the generated password {@link String}.
+     */
+    private static final int PASSWORD_LENGTH = 8;
+    
+    private Password() {
+    }
 
     /**
      * Indicates whether the given <code>password</code> is valid in terms of its format.
@@ -22,6 +29,6 @@ public class Password {
      * Gets a new generated password.
      */
     public static String generateNew() {
-        return RandomStringUtils.randomAlphanumeric(8);
+        return RandomStringUtils.randomAlphanumeric(PASSWORD_LENGTH);
     }
 }

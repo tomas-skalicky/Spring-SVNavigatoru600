@@ -5,12 +5,15 @@ package com.svnavigatoru600.service.util;
  * 
  * @author Tomas Skalicky
  */
-public class FirstName {
+public final class FirstName {
 
     /**
      * No digits + no special characters. The minimal length of the first name is 2.
      */
     static final String VALID_FIRST_NAME_REGEXP = "^[^\\d\\~\\`\\!\\@\\#\\$\\%\\^\\&\\*\\(\\)\\_\\+\\=\\[\\]\\{\\}\\:\\;\"\\|\\\\<\\>\\,\\.\\?\\/\\§\\¨]{2,}$";
+    
+    private FirstName() {
+    }
 
     /**
      * Indicates whether the given <code>firstName</code> is valid.

@@ -18,7 +18,10 @@ import org.springframework.web.servlet.support.RequestContext;
  * 
  * @author Tomas Skalicky
  */
-public class Localization {
+public final class Localization {
+    
+    private Localization() {
+    }
 
     /**
      * Gets a message which corresponds to the given <code>code</code>. The current localization is to be

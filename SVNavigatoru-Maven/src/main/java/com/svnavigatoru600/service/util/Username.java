@@ -5,9 +5,12 @@ package com.svnavigatoru600.service.util;
  * 
  * @author Tomas Skalicky
  */
-public class Username {
+public final class Username {
 
     private static final String VALID_USERNAME_REGEXP = "^[\\w\\-]{3,}$";
+
+    private Username() {
+    }
 
     /**
      * Indicates whether the given <code>username</code> is valid.

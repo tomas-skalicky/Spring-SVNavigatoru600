@@ -10,7 +10,10 @@ import org.springframework.web.servlet.support.RequestContextUtils;
  * 
  * @author Tomas Skalicky
  */
-public class MyRequestContext {
+public final class MyRequestContext {
+    
+    private MyRequestContext() {
+    }
 
     /**
      * Gets the bean with the given <code>beanName</code> accessible through the given <code>request</code>.

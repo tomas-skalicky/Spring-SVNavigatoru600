@@ -12,7 +12,10 @@ import com.svnavigatoru600.repository.users.UserDao;
  * 
  * @author Tomas Skalicky
  */
-public class UserUtils {
+public final class UserUtils {
+    
+    private UserUtils() {
+    }
 
     /**
      * Indicates whether the current user in the application is logged.
