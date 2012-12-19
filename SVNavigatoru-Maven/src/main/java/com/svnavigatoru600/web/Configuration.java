@@ -9,7 +9,7 @@ import com.svnavigatoru600.domain.records.DocumentRecord;
  * 
  * @author Tomas Skalicky
  */
-public class Configuration {
+public final class Configuration {
 
     /**
      * The web page domain.
@@ -32,4 +32,7 @@ public class Configuration {
      * MB.</small>
      */
     public static final long MAX_UPLOAD_SIZE = 2097152;
+    
+    private Configuration() {
+    }
 }
