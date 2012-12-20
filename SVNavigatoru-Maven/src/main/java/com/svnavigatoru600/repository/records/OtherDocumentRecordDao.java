@@ -14,7 +14,7 @@ public interface OtherDocumentRecordDao extends DocumentRecordDao {
      * @see com.svnavigatoru600.repository.DocumentRecordDao#findById(int)
      */
     @Override
-    public OtherDocumentRecord findById(int documentId);
+    OtherDocumentRecord findById(int documentId);
 
     /*
      * (non-Javadoc)
@@ -22,7 +22,7 @@ public interface OtherDocumentRecordDao extends DocumentRecordDao {
      * @see com.svnavigatoru600.repository.records.DocumentRecordDao#findById(int, boolean)
      */
     @Override
-    public OtherDocumentRecord findById(int documentId, boolean loadFile);
+    OtherDocumentRecord findById(int documentId, boolean loadFile);
 
     /*
      * (non-Javadoc)
@@ -30,26 +30,26 @@ public interface OtherDocumentRecordDao extends DocumentRecordDao {
      * @see com.svnavigatoru600.repository.DocumentRecordDao#findByFileName(java.lang.String )
      */
     @Override
-    public OtherDocumentRecord findByFileName(String fileName);
+    OtherDocumentRecord findByFileName(String fileName);
 
     /**
      * Returns all {@link OtherDocumentRecord}s stored in the repository arranged according to their
      * <code>creationTime</code>s in the given <code>order</code>.
      */
-    public List<OtherDocumentRecord> findOrdered(OrderType order);
+    List<OtherDocumentRecord> findOrdered(OrderType order);
 
     /**
      * Returns all {@link OtherDocumentRecord}s stored in the repository which are of the given
      * <code>type</code>. The {@link OtherDocumentRecord} are arranged according to their
      * <code>creationTime</code>s in the given <code>order</code>.
      */
-    public List<OtherDocumentRecord> findOrdered(OtherDocumentRecordType type, OrderType order);
+    List<OtherDocumentRecord> findOrdered(OtherDocumentRecordType type, OrderType order);
 
     /**
      * Updates the given <code>document</code> in the repository. The old version of the <code>document</code>
      * should be already stored there.
      */
-    public void update(OtherDocumentRecord document);
+    void update(OtherDocumentRecord document);
 
     /**
      * Stores the given <code>document</code> to the repository. If there is already a
@@ -57,5 +57,5 @@ public interface OtherDocumentRecordDao extends DocumentRecordDao {
      * 
      * @return the generated identifier
      */
-    public int save(OtherDocumentRecord document);
+    int save(OtherDocumentRecord document);
 }

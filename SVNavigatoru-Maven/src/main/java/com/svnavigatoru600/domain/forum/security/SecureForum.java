@@ -2,11 +2,11 @@ package com.svnavigatoru600.domain.forum.security;
 
 public interface SecureForum {
 
-    public boolean isEditable();
+    boolean isEditable();
 
-    public void setEditable(boolean editable);
+    void setEditable(boolean editable);
 
-    public boolean isDeletable();
+    boolean isDeletable();
 
-    public void setDeletable(boolean deletable);
+    void setDeletable(boolean deletable);
 }
