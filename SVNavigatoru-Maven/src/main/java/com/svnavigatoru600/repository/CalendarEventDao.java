@@ -11,30 +11,30 @@ public interface CalendarEventDao {
     /**
      * Returns a {@link CalendarEvent} stored in the repository which has the given <code>ID</code>.
      */
-    public CalendarEvent findById(int eventId);
+    CalendarEvent findById(int eventId);
 
     /**
      * Returns all {@link CalendarEvent}s stored in the repository arranged according to their
      * <code>date</code> attributes in the given <code>order</code>. Moreover, only {@link CalendarEvent}s
      * which will take place are returned, the passed ones are not.
      */
-    public List<CalendarEvent> findFutureEventsOrdered(Date today, OrderType order);
+    List<CalendarEvent> findFutureEventsOrdered(Date today, OrderType order);
 
     /**
      * Updates the given <code>event</code> in the repository. The old version of the <code>event</code>
      * should be already stored there.
      */
-    public void update(CalendarEvent event);
+    void update(CalendarEvent event);
 
     /**
      * Stores the given <code>event</code> to the repository.
      * 
      * @return the generated identifier
      */
-    public int save(CalendarEvent event);
+    int save(CalendarEvent event);
 
     /**
      * Deletes the given <code>event</code> from the repository.
      */
-    public void delete(CalendarEvent event);
+    void delete(CalendarEvent event);
 }

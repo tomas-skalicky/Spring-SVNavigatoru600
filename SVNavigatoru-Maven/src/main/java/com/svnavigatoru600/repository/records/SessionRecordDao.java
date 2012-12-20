@@ -14,7 +14,7 @@ public interface SessionRecordDao extends DocumentRecordDao {
      * @see com.svnavigatoru600.repository.DocumentRecordDao#findById(int)
      */
     @Override
-    public SessionRecord findById(int recordId);
+    SessionRecord findById(int recordId);
 
     /*
      * (non-Javadoc)
@@ -22,7 +22,7 @@ public interface SessionRecordDao extends DocumentRecordDao {
      * @see com.svnavigatoru600.repository.records.DocumentRecordDao#findById(int, boolean)
      */
     @Override
-    public SessionRecord findById(int recordId, boolean loadFile);
+    SessionRecord findById(int recordId, boolean loadFile);
 
     /*
      * (non-Javadoc)
@@ -30,26 +30,26 @@ public interface SessionRecordDao extends DocumentRecordDao {
      * @see com.svnavigatoru600.repository.DocumentRecordDao#findByFileName(java.lang.String )
      */
     @Override
-    public SessionRecord findByFileName(String fileName);
+    SessionRecord findByFileName(String fileName);
 
     /**
      * Returns all {@link SessionRecord}s stored in the repository arranged according to their
      * <code>sessionDate</code>s in the given <code>order</code>.
      */
-    public List<SessionRecord> findOrdered(OrderType order);
+    List<SessionRecord> findOrdered(OrderType order);
 
     /**
      * Returns all {@link SessionRecord}s stored in the repository which are of the given <code>type</code>.
      * The {@link SessionRecord} are arranged according to their <code>sessionDate</code>s in the given
      * <code>order</code>.
      */
-    public List<SessionRecord> findOrdered(SessionRecordType type, OrderType order);
+    List<SessionRecord> findOrdered(SessionRecordType type, OrderType order);
 
     /**
      * Updates the given <code>record</code> in the repository. The old version of the <code>record</code>
      * should be already stored there.
      */
-    public void update(SessionRecord record);
+    void update(SessionRecord record);
 
     /**
      * Stores the given <code>record</code> to the repository. If there is already a {@link SessionRecord}
@@ -57,5 +57,5 @@ public interface SessionRecordDao extends DocumentRecordDao {
      * 
      * @return the generated identifier
      */
-    public int save(SessionRecord record);
+    int save(SessionRecord record);
 }
