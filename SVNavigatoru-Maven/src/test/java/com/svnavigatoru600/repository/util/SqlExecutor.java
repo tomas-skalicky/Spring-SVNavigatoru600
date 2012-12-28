@@ -19,10 +19,19 @@ import org.apache.commons.io.IOUtils;
 public final class SqlExecutor {
 
     /**
-     * The {@link String} which determines that the text behind should not be considered as an executable SQL
-     * code, but as a comment.
+     * The {@link String} which determines that the text behind (on that line) should not be considered as an
+     * executable SQL code, but as an inline comment.
      */
-    static final String SQL_COMMENT_BEGINNING = "--";
+    static final String SQL_INLINE_COMMENT_BEGINNING = "--";
+    /**
+     * The {@link String} which determines that the text behind should not be considered as an executable SQL
+     * code, but as a block comment. The comment ends up with the {@link #SQL_BLOCK_COMMENT_ENDING} sign.
+     */
+    static final String SQL_BLOCK_COMMENT_BEGINNING = "/*";
+    /**
+     * The end of the block SQL comment.
+     */
+    static final String SQL_BLOCK_COMMENT_ENDING = "*/";
     /**
      * The character that SQL statements end up with.
      */
@@ -56,9 +65,30 @@ public final class SqlExecutor {
             reader = new BufferedReader(new FileReader(fileName));
 
             StringBuilder sqlBuilder = new StringBuilder();
+            boolean isInBlockComment = false;
             for (String nextLine = reader.readLine(); nextLine != null; nextLine = reader.readLine()) {
-                // Ignores comments.
-                if (nextLine.indexOf(SQL_COMMENT_BEGINNING) == 0) {
+                // Ignores an inline comment which starts at the beginning of the current line.
+                if (nextLine.indexOf(SQL_INLINE_COMMENT_BEGINNING) == 0) {
+                    continue;
+                }
+                
+                // Ignores a block comment which starts at the beginning of the current line.
+                int blockCommentStart = nextLine.indexOf(SQL_BLOCK_COMMENT_BEGINNING);
+                if (blockCommentStart == 0) {
+                    isInBlockComment = true;
+                }
+                
+                // Ignores a block comment which ends up at the end of the current line.
+                int blockCommentEnd = nextLine.lastIndexOf(SQL_BLOCK_COMMENT_ENDING);
+                int commentEndIndexIfExists = nextLine.length() - SQL_BLOCK_COMMENT_ENDING.length();
+                boolean isLineEndBlockCommentEnd = (blockCommentEnd == commentEndIndexIfExists) && (blockCommentEnd >= 0);
+                if (isLineEndBlockCommentEnd) {
+                    isInBlockComment = false;
+                    continue;
+                }
+                
+                // Ignores the current block comment.
+                if (isInBlockComment) {
                     continue;
                 }
 
