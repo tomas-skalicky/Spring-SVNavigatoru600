@@ -21,7 +21,7 @@ public abstract class AbstractMapperTest {
      * Application context which contains necessary beans.
      */
     protected static final ApplicationContext APPLICATION_CONTEXT = new FileSystemXmlApplicationContext(
-            "classpath:config/applicationContext.xml");
+            "classpath:applicationContext-business.xml");
 
     @Before
     public void setUpDatabase() throws Exception {
