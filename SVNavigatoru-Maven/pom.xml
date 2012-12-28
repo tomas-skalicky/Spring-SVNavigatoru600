@@ -59,6 +59,17 @@
 
 	<build>
 		<finalName>${project.artifactId}</finalName>
+		<testResources>
+			<testResource>
+				<directory>src/test/resources</directory>
+			</testResource>
+			<testResource>
+				<directory>src/main/webapp/WEB-INF</directory>
+				<includes>
+					<include>**/*.xml</include>
+				</includes>
+			</testResource>
+		</testResources>
 
 
 		<!-- Copies from the repository-management project. -->
@@ -321,7 +332,7 @@
 			<groupId>joda-time</groupId>
 			<artifactId>joda-time</artifactId>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.jpatterns</groupId>
 			<artifactId>jpatterns</artifactId>
