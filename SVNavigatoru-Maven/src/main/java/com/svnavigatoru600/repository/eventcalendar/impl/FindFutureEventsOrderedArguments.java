@@ -2,6 +2,7 @@ package com.svnavigatoru600.repository.eventcalendar.impl;
 
 import java.util.Date;
 
+import com.svnavigatoru600.domain.eventcalendar.CalendarEvent;
 import com.svnavigatoru600.service.util.OrderType;
 
 /**
@@ -14,9 +15,9 @@ import com.svnavigatoru600.service.util.OrderType;
 public class FindFutureEventsOrderedArguments {
 
     /**
-     * The table column according which the result records will be sorted.
+     * Field of {@link CalendarEvent} according which the result records will be sorted.
      */
-    private static final String SORT_COLUMN = "date";
+    private static final CalendarEventField SORT_FIELD = CalendarEventField.date;
     /**
      * The earliest {@link Date} which is considered in the result. The latest {@link Date} is not determined
      * here.
@@ -32,8 +33,8 @@ public class FindFutureEventsOrderedArguments {
         this.sortDirection = sortDirection;
     }
 
-    public String getSortColumn() {
-        return SORT_COLUMN;
+    public CalendarEventField getSortField() {
+        return SORT_FIELD;
     }
 
     public Date getEarliestDate() {

@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.svnavigatoru600.domain.forum.Contribution;
 import com.svnavigatoru600.repository.MapperInterface;
+import com.svnavigatoru600.repository.forum.impl.ContributionField;
 import com.svnavigatoru600.service.util.OrderType;
 
 @MapperInterface
@@ -25,7 +26,7 @@ public interface ContributionDao {
      * <code>attribute</code> in the given <code>order</code>. Moreover, returns only the first <code>x</code>
      * {@link Contribution}s. The <code>x</code> is the given <code>count</code> .
      */
-    List<Contribution> findOrdered(String attribute, OrderType order, int count);
+    List<Contribution> findOrdered(ContributionField attribute, OrderType order, int count);
 
     /**
      * Returns all {@link Contribution}s stored in the repository arranged according to their values of the
@@ -33,7 +34,7 @@ public interface ContributionDao {
      * are only those which are parts of the {@link com.svnavigatoru600.domain.forum.Thread thread} with the
      * given <code>threadId</code>.
      */
-    List<Contribution> findOrdered(int threadId, String attribute, OrderType order);
+    List<Contribution> findOrdered(int threadId, ContributionField attribute, OrderType order);
 
     /**
      * Updates the given <code>contribution</code> in the repository. The old version of the
