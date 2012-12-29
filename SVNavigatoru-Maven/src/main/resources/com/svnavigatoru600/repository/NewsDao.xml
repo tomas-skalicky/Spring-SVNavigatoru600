@@ -36,7 +36,7 @@
 		SELECT *
 		FROM <include refid="newsTable" />
 		ORDER BY creation_time ASC;
-		<!-- ORDER BY #{sortField.columnName} #{sortDirection.databaseCode}; -->
+		<!-- this does not work: ORDER BY #{sortField.columnName} #{sortDirection.databaseCode}; -->
 	</select>
 	
 	<insert id="save" parameterType="News" keyProperty="id">
