@@ -18,7 +18,7 @@ public class NewsDaoImpl extends HibernateDaoSupport implements NewsDao {
     @Override
     @SuppressWarnings("unchecked")
     public List<News> findOrdered(FindOrderedArguments arguments) {
-        String query = String.format("FROM News n ORDER BY %s %s", arguments.getSortField(), arguments
+        String query = String.format("FROM News n ORDER BY %s %s", arguments.getSortField().name(), arguments
                 .getSortDirection().getDatabaseCode());
         return (List<News>) this.getHibernateTemplate().find(query);
     }
