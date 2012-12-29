@@ -29,6 +29,15 @@ import com.svnavigatoru600.viewmodel.forum.contributions.ContributionWrapper;
 @Controller
 public abstract class PrivateSectionMetaController extends MetaController {
 
+    /**
+     * The number of future {@link CalendarEvent calendar event} shown in the sidebar of the web page.
+     */
+    private static final int FUTURE_EVENT_COUNT = 2;
+    /**
+     * The number of last saved {@link Contribution contributions} shown in the sidebar of the web page.
+     */
+    private static final int LAST_SAVED_CONTRIBUTION_COUNT = 2;
+
     private CalendarEventDao eventDao;
     private ContributionDao contributionDao;
 
@@ -50,12 +59,11 @@ public abstract class PrivateSectionMetaController extends MetaController {
     @ModelAttribute("futureEvents")
     public List<EventWrapper> populateFutureEvents(HttpServletRequest request) {
 
-        final int eventCount = 2;
         List<CalendarEvent> events = this.eventDao.findFutureEventsOrdered(DateUtils.getToday(),
                 OrderType.ASCENDING);
 
-        List<EventWrapper> futureEvents = new ArrayList<EventWrapper>(eventCount);
-        for (int eventNum = 0; (eventNum < eventCount) && (eventNum < events.size()); ++eventNum) {
+        List<EventWrapper> futureEvents = new ArrayList<EventWrapper>(FUTURE_EVENT_COUNT);
+        for (int eventNum = 0, eventCount = events.size(); (eventNum < FUTURE_EVENT_COUNT) && (eventNum < eventCount); ++eventNum) {
             CalendarEvent event = events.get(eventNum);
             futureEvents.add(new EventWrapper(event, request));
         }
@@ -65,14 +73,13 @@ public abstract class PrivateSectionMetaController extends MetaController {
     @ModelAttribute("lastSavedContributions")
     public List<ContributionWrapper> populateLastSavedContributions(HttpServletRequest request) {
 
-        final int contributionCount = 2;
         List<Contribution> contributions = this.contributionDao.findOrdered("lastSaveTime",
-                OrderType.DESCENDING, contributionCount);
+                OrderType.DESCENDING, LAST_SAVED_CONTRIBUTION_COUNT);
 
         List<ContributionWrapper> lastSavedContributions = new ArrayList<ContributionWrapper>(
-                contributionCount);
-        for (int contributionNum = 0; (contributionNum < contributionCount)
-                && (contributionNum < contributions.size()); ++contributionNum) {
+                LAST_SAVED_CONTRIBUTION_COUNT);
+        for (int contributionNum = 0, contributionCount = contributions.size(); (contributionNum < LAST_SAVED_CONTRIBUTION_COUNT)
+                && (contributionNum < contributionCount); ++contributionNum) {
             Contribution contribution = contributions.get(contributionNum);
             lastSavedContributions.add(new ContributionWrapper(contribution, request));
         }
