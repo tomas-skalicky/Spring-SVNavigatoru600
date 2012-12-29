@@ -6,8 +6,9 @@ import java.util.List;
 import org.springframework.security.core.GrantedAuthority;
 
 import com.svnavigatoru600.domain.users.Authority;
-import com.svnavigatoru600.domain.users.User;
+import com.svnavigatoru600.repository.MapperInterface;
 
+@MapperInterface
 public interface AuthorityDao {
 
     /**
@@ -23,8 +24,8 @@ public interface AuthorityDao {
     void save(Collection<GrantedAuthority> authorities);
 
     /**
-     * Deletes all {@link Authority}s of {@link User} with the given <code>username</code> from the
-     * repository.
+     * Deletes all {@link Authority}s of {@link com.svnavigatoru600.domain.users.User user} with the given
+     * <code>username</code> from the repository.
      */
     void delete(String username);
 }

@@ -4,31 +4,18 @@ import java.util.List;
 
 import com.svnavigatoru600.domain.records.OtherDocumentRecord;
 import com.svnavigatoru600.domain.records.OtherDocumentRecordType;
+import com.svnavigatoru600.repository.MapperInterface;
 import com.svnavigatoru600.service.util.OrderType;
 
+@MapperInterface
 public interface OtherDocumentRecordDao extends DocumentRecordDao {
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see com.svnavigatoru600.repository.DocumentRecordDao#findById(int)
-     */
     @Override
     OtherDocumentRecord findById(int documentId);
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see com.svnavigatoru600.repository.records.DocumentRecordDao#findById(int, boolean)
-     */
     @Override
     OtherDocumentRecord findById(int documentId, boolean loadFile);
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see com.svnavigatoru600.repository.DocumentRecordDao#findByFileName(java.lang.String )
-     */
     @Override
     OtherDocumentRecord findByFileName(String fileName);
 

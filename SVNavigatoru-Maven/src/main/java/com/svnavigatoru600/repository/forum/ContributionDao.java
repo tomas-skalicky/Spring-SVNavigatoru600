@@ -3,9 +3,10 @@ package com.svnavigatoru600.repository.forum;
 import java.util.List;
 
 import com.svnavigatoru600.domain.forum.Contribution;
-import com.svnavigatoru600.domain.forum.Thread;
+import com.svnavigatoru600.repository.MapperInterface;
 import com.svnavigatoru600.service.util.OrderType;
 
+@MapperInterface
 public interface ContributionDao {
 
     /**
@@ -14,8 +15,8 @@ public interface ContributionDao {
     Contribution findById(int contributionId);
 
     /**
-     * Returns all {@link Contribution}s stored in the repository which belong to the {@link Thread} with the
-     * given <code>threadId</code>.
+     * Returns all {@link Contribution}s stored in the repository which belong to the
+     * {@link com.svnavigatoru600.domain.forum.Thread thread} with the given <code>threadId</code>.
      */
     List<Contribution> find(int threadId);
 
@@ -29,7 +30,8 @@ public interface ContributionDao {
     /**
      * Returns all {@link Contribution}s stored in the repository arranged according to their values of the
      * <code>attribute</code> in the given <code>order</code>. Moreover, the resulting {@link Contribution}s
-     * are only those which are parts of the {@link Thread} with the given <code>threadId</code>.
+     * are only those which are parts of the {@link com.svnavigatoru600.domain.forum.Thread thread} with the
+     * given <code>threadId</code>.
      */
     List<Contribution> findOrdered(int threadId, String attribute, OrderType order);
 

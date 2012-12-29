@@ -5,6 +5,7 @@ import java.util.List;
 import com.svnavigatoru600.domain.News;
 import com.svnavigatoru600.service.util.OrderType;
 
+@MapperInterface
 public interface NewsDao {
 
     /**

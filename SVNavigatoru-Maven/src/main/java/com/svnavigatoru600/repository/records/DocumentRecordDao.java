@@ -1,7 +1,9 @@
 package com.svnavigatoru600.repository.records;
 
 import com.svnavigatoru600.domain.records.DocumentRecord;
+import com.svnavigatoru600.repository.MapperInterface;
 
+@MapperInterface
 public interface DocumentRecordDao {
 
     /**

@@ -3,7 +3,9 @@ package com.svnavigatoru600.repository.forum;
 import java.util.List;
 
 import com.svnavigatoru600.domain.forum.Thread;
+import com.svnavigatoru600.repository.MapperInterface;
 
+@MapperInterface
 public interface ThreadDao {
 
     /**
