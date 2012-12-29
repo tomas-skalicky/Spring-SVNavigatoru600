@@ -2,7 +2,6 @@ package com.svnavigatoru600.viewmodel.forum.threads;
 
 import org.springframework.stereotype.Service;
 
-
 @Service
 public class EditThread extends NewEditThread {
 

@@ -14,7 +14,7 @@ public final class Password {
      * The length of the generated password {@link String}.
      */
     private static final int PASSWORD_LENGTH = 8;
-    
+
     private Password() {
     }
 

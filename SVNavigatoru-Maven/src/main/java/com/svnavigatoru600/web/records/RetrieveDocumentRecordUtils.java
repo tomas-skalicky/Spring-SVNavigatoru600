@@ -16,7 +16,7 @@ import com.svnavigatoru600.repository.records.DocumentRecordDao;
  * @author Tomas Skalicky
  */
 public final class RetrieveDocumentRecordUtils {
-    
+
     private RetrieveDocumentRecordUtils() {
     }
 

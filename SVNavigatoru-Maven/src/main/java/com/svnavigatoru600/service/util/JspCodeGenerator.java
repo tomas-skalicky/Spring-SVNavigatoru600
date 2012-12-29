@@ -10,7 +10,7 @@ import org.springframework.context.MessageSource;
  * @author Tomas Skalicky
  */
 public final class JspCodeGenerator {
-    
+
     private JspCodeGenerator() {
     }
 

@@ -19,7 +19,7 @@ import org.springframework.web.servlet.support.RequestContext;
  * @author Tomas Skalicky
  */
 public final class Localization {
-    
+
     private Localization() {
     }
 

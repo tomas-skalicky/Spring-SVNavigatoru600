@@ -11,7 +11,7 @@ public final class FirstName {
      * No digits + no special characters. The minimal length of the first name is 2.
      */
     static final String VALID_FIRST_NAME_REGEXP = "^[^\\d\\~\\`\\!\\@\\#\\$\\%\\^\\&\\*\\(\\)\\_\\+\\=\\[\\]\\{\\}\\:\\;\"\\|\\\\<\\>\\,\\.\\?\\/\\§\\¨]{2,}$";
-    
+
     private FirstName() {
     }
 

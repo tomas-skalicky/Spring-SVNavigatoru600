@@ -15,7 +15,7 @@ import com.svnavigatoru600.web.Configuration;
 public final class File {
 
     private static final String[] SUPPORTED_EXTENSIONS = new String[] { "pdf", "doc", "docx", "txt" };
-    
+
     private File() {
     }
 

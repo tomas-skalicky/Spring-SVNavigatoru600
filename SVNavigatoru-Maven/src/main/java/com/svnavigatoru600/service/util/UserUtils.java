@@ -13,7 +13,7 @@ import com.svnavigatoru600.repository.users.UserDao;
  * @author Tomas Skalicky
  */
 public final class UserUtils {
-    
+
     private UserUtils() {
     }
 

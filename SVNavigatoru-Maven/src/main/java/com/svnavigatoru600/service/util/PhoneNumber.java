@@ -8,7 +8,7 @@ package com.svnavigatoru600.service.util;
 public final class PhoneNumber {
 
     private static final String VALID_PHONE_NUMBER_REGEXP = "^[+]?(\\d[ ]*){9,}$";
-    
+
     private PhoneNumber() {
     }
 
