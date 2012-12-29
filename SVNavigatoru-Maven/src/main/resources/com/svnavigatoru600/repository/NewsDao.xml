@@ -17,20 +17,48 @@
 		<result property="lastSaveTime" column="last_save_time" />
 	</resultMap>
 
-	<sql id="newsTableName">news</sql>
+	<sql id="newsTable">news</sql>
+	<sql id="idColumn">id</sql>
+	<sql id="titleColumn">title</sql>
+	<sql id="textColumn">text</sql>
+	<sql id="creationTimeColumn">creation_time</sql>
+	<sql id="lastSaveTimeColumn">last_save_time</sql>
 
 	<select id="findById" parameterType="int" resultMap="newsResultMap">
 		SELECT *
-		FROM
-		<include refid="newsTableName" />
-		WHERE id = #{id};
+		FROM <include refid="newsTable" />
+		WHERE
+		<include refid="idColumn" /> = #{id};
 	</select>
 
 	<select id="findOrdered" parameterType="com.svnavigatoru600.repository.news.impl.FindOrderedArguments"
 		resultMap="newsResultMap">
 		SELECT *
-		FROM
-		<include refid="newsTableName" />
-		ORDER BY #{sortColumn} #{sortDirection.databaseCode};
+		FROM <include refid="newsTable" />
+		ORDER BY creation_time ASC;
+		<!-- ORDER BY #{sortField.columnName} #{sortDirection.databaseCode}; -->
 	</select>
+	
+	<insert id="save" parameterType="News" keyProperty="id">
+	    INSERT INTO <include refid="newsTable" />
+	    (<include refid="titleColumn" />, <include refid="textColumn" />, <include refid="creationTimeColumn" />, <include refid="lastSaveTimeColumn" />)
+	    VALUES (#{title}, #{text}, #{creationTime}, #{lastSaveTime});
+	</insert>
+
+	<update id="update" parameterType="News">
+		UPDATE <include refid="newsTable" />
+		SET
+		<include refid="titleColumn" /> = #{title},
+		<include refid="textColumn" /> = #{text},
+		<include refid="creationTimeColumn" /> = #{creationTime},
+		<include refid="lastSaveTimeColumn" /> = #{lastSaveTime}
+		WHERE
+		<include refid="idColumn" /> = #{id};
+	</update>
+
+	<delete id="delete" parameterType="News">
+		DELETE FROM <include refid="newsTable" />
+		WHERE
+		<include refid="idColumn" /> = #{id};
+	</delete>
 </mapper>
