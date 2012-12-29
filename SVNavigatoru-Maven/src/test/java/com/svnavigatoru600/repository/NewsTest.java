@@ -1,21 +1,27 @@
 package com.svnavigatoru600.repository;
 
+import java.sql.Connection;
 import java.util.Date;
 import java.util.List;
 
+import javax.sql.DataSource;
+
 import org.apache.ibatis.session.SqlSession;
-import org.apache.ibatis.session.SqlSessionFactory;
 import org.junit.Assert;
+import org.junit.Test;
+import org.junit.experimental.categories.Category;
+import org.springframework.dao.EmptyResultDataAccessException;
 
 import com.svnavigatoru600.domain.News;
 import com.svnavigatoru600.repository.news.impl.FindOrderedArguments;
 import com.svnavigatoru600.repository.news.impl.NewsField;
 import com.svnavigatoru600.service.util.OrderType;
+import com.svnavigatoru600.test.category.PersistenceTests;
 
 /**
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
-// @Category(PersistenceTests.class)
+@Category(PersistenceTests.class)
 public class NewsTest extends AbstractMapperTest {
 
     /**
@@ -30,6 +36,16 @@ public class NewsTest extends AbstractMapperTest {
      * The text of the edited test news.
      */
     private static final String EDITED_NEWS_TEXT = "Test text 2";
+
+    /**
+     * If the given {@link SqlSession} is determined, the changes - carried out in the database - are
+     * committed.
+     */
+    private void commitChanges(SqlSession sqlSession) {
+        if (sqlSession != null) {
+            sqlSession.commit();
+        }
+    }
 
     /**
      * Creates and saves a test instance of {@link News}.
@@ -51,7 +67,7 @@ public class NewsTest extends AbstractMapperTest {
         news.setCreationTime(now);
         news.setLastSaveTime(now);
         int newId = newsDao.save(news);
-        sqlSession.commit();
+        this.commitChanges(sqlSession);
         return newId;
     }
 
@@ -69,15 +85,19 @@ public class NewsTest extends AbstractMapperTest {
      */
     private void deleteNews(News news, NewsDao newsDao, SqlSession sqlSession) {
         newsDao.delete(news);
-        sqlSession.commit();
+        this.commitChanges(sqlSession);
     }
 
     /**
      * Tests methods of the {@link NewsDao} interface.
      */
-    // @Test
-    public void testWholeNewsDaoInterface() {
-        SqlSession sqlSession = APPLICATION_CONTEXT.getBean(SqlSessionFactory.class).openSession();
+    @Test
+    public void testWholeNewsDaoInterface() throws Exception {
+        // SqlSession sqlSession = APPLICATION_CONTEXT.getBean(SqlSessionFactory.class).openSession();
+        SqlSession sqlSession = null;
+        Connection sqlConnection = APPLICATION_CONTEXT.getBean(DataSource.class).getConnection();
+        sqlConnection.setAutoCommit(true);
+
         NewsDao newsDao = APPLICATION_CONTEXT.getBean(NewsDao.class);
 
         try {
@@ -96,7 +116,7 @@ public class NewsTest extends AbstractMapperTest {
             news.setText(EDITED_NEWS_TEXT);
             news.setLastSaveTime(new Date());
             newsDao.update(news);
-            sqlSession.commit();
+            this.commitChanges(sqlSession);
 
             // SELECT ONE
             news = newsDao.findById(news.getId());
@@ -119,13 +139,20 @@ public class NewsTest extends AbstractMapperTest {
             this.deleteNews(news, newsDao, sqlSession);
 
             // SELECT ONE
-            news = newsDao.findById(news.getId());
-            Assert.assertNull(news);
+            try {
+                news = newsDao.findById(news.getId());
+                Assert.fail("The news has been found");
+            } catch (EmptyResultDataAccessException ex) {
+                // OK since the news cannot have been found.
+                ;
+            }
 
             // DELETE
             this.deleteNews(secondNews, newsDao, sqlSession);
+
         } finally {
-            sqlSession.close();
+            // sqlSession.close();
+            sqlConnection.close();
         }
     }
 }
