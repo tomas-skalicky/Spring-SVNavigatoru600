@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.svnavigatoru600.domain.eventcalendar.CalendarEvent;
 import com.svnavigatoru600.repository.CalendarEventDao;
+import com.svnavigatoru600.repository.eventcalendar.impl.FindFutureEventsOrderedArguments;
 import com.svnavigatoru600.service.util.DateUtils;
 import com.svnavigatoru600.service.util.Localization;
 import com.svnavigatoru600.service.util.OrderType;
@@ -42,8 +43,9 @@ public class ListEventsController extends EventController {
 
         ShowAllEvents command = new ShowAllEvents();
 
-        List<CalendarEvent> events = this.eventDao.findFutureEventsOrdered(DateUtils.getToday(),
-                OrderType.ASCENDING);
+        List<CalendarEvent> events = this.eventDao
+                .findFutureEventsOrdered(new FindFutureEventsOrderedArguments(DateUtils.getToday(),
+                        OrderType.ASCENDING));
         command.setEvents(events);
 
         // Sets up all auxiliary (but necessary) maps.
