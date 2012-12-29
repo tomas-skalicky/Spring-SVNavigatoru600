@@ -51,10 +51,7 @@ public class DocumentRecordDaoImpl extends SimpleJdbcDaoSupport {
                 .usingColumns(DocumentRecordRowMapper.getColumn("fileName"),
                         DocumentRecordRowMapper.getColumn("file"));
 
-        // For more info, see repository.news.impl.direct.NewsDaoImpl.java
-        Map<String, Object> keys = insert.executeAndReturnKeyHolder(this.getNamedParameters(record))
-                .getKeys();
-        return ((Long) keys.get("GENERATED_KEY")).intValue();
+        return insert.executeAndReturnKey(this.getNamedParameters(record)).intValue();
     }
 
     public void delete(DocumentRecord record, DataSource dataSource) {
