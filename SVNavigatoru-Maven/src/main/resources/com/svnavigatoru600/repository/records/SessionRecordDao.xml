@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <!-- "namespace" specifies the interface for which this mapping file is determined -->
-<mapper namespace="com.svnavigatoru600.repository.SessionRecordDao">
+<mapper namespace="com.svnavigatoru600.repository.records.SessionRecordDao">
 
 	<cache />
 
