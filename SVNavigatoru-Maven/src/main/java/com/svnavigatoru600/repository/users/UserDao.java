@@ -3,8 +3,10 @@ package com.svnavigatoru600.repository.users;
 import java.util.List;
 
 import com.svnavigatoru600.domain.users.User;
+import com.svnavigatoru600.repository.MapperInterface;
 import com.svnavigatoru600.service.util.OrderType;
 
+@MapperInterface
 public interface UserDao {
 
     /**

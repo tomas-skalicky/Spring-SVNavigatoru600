@@ -4,31 +4,18 @@ import java.util.List;
 
 import com.svnavigatoru600.domain.records.SessionRecord;
 import com.svnavigatoru600.domain.records.SessionRecordType;
+import com.svnavigatoru600.repository.MapperInterface;
 import com.svnavigatoru600.service.util.OrderType;
 
+@MapperInterface
 public interface SessionRecordDao extends DocumentRecordDao {
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see com.svnavigatoru600.repository.DocumentRecordDao#findById(int)
-     */
     @Override
     SessionRecord findById(int recordId);
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see com.svnavigatoru600.repository.records.DocumentRecordDao#findById(int, boolean)
-     */
     @Override
     SessionRecord findById(int recordId, boolean loadFile);
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see com.svnavigatoru600.repository.DocumentRecordDao#findByFileName(java.lang.String )
-     */
     @Override
     SessionRecord findByFileName(String fileName);
 

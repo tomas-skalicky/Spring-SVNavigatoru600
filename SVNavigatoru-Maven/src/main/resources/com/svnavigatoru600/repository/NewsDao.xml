@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- "namespace" specifies the interface for which this mapping file is determined -->
+<mapper namespace="com.svnavigatoru600.repository.NewsDao">
+
+	<cache />
+
+	<!-- "resultMap" specifies the mapping between a domain class and an user table. -->
+	<!-- In the "type" attribute, we are using an automatically generated (thanks to "typeAliasesPackage" 
+		in mybatis.xml) alias of the domain class. -->
+	<resultMap id="newsResultMap" type="News">
+		<result property="id" column="id" />
+		<result property="title" column="title" />
+		<result property="text" column="text" />
+		<result property="creationTime" column="creation_time" />
+		<result property="lastSaveTime" column="last_save_time" />
+	</resultMap>
+
+	<sql id="newsTableName">news</sql>
+
+	<select id="findById" parameterType="int" resultMap="newsResultMap">
+		SELECT *
+		FROM
+		<include refid="newsTableName" />
+		WHERE id = #{id};
+	</select>
+
+	<select id="findOrdered" parameterType="com.svnavigatoru600.repository.news.impl.FindOrderedArguments"
+		resultMap="newsResultMap">
+		SELECT *
+		FROM
+		<include refid="newsTableName" />
+		ORDER BY #{sortColumn} #{sortDirection.databaseCode};
+	</select>
+</mapper>

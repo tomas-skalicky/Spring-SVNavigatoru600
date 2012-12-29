@@ -15,7 +15,7 @@
 
 	<!-- Beans Declaration -->
 	<import resource="mybatis.xml" />
-<!-- 	<import resource="model-beans/model-beans-direct.xml" /> -->
+	<!-- <import resource="model-beans/model-beans-direct.xml" /> -->
 	<!-- <import resource="model-beans/model-beans-hibernate.xml"/> -->
 
 

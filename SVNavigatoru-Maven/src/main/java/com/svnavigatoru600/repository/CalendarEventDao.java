@@ -6,6 +6,7 @@ import java.util.List;
 import com.svnavigatoru600.domain.eventcalendar.CalendarEvent;
 import com.svnavigatoru600.service.util.OrderType;
 
+@MapperInterface
 public interface CalendarEventDao {
 
     /**
