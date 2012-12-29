@@ -14,11 +14,11 @@ import com.svnavigatoru600.domain.forum.Contribution;
 import com.svnavigatoru600.domain.users.User;
 import com.svnavigatoru600.repository.CalendarEventDao;
 import com.svnavigatoru600.repository.forum.ContributionDao;
-import com.svnavigatoru600.service.eventcalendar.EventWrapper;
-import com.svnavigatoru600.service.forum.contributions.ContributionWrapper;
 import com.svnavigatoru600.service.util.DateUtils;
 import com.svnavigatoru600.service.util.OrderType;
 import com.svnavigatoru600.service.util.UserUtils;
+import com.svnavigatoru600.viewmodel.eventcalendar.EventWrapper;
+import com.svnavigatoru600.viewmodel.forum.contributions.ContributionWrapper;
 
 /**
  * Parent of all controllers (except {@link ErrorController}) of the private section in the application. The

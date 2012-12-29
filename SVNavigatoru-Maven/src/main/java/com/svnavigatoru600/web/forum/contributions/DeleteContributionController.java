@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.svnavigatoru600.domain.forum.Contribution;
 import com.svnavigatoru600.repository.forum.ContributionDao;
-import com.svnavigatoru600.service.forum.contributions.DeleteContribution;
+import com.svnavigatoru600.service.forum.contributions.ContributionService;
 import com.svnavigatoru600.web.Configuration;
 
 @Controller
@@ -26,12 +26,12 @@ public class DeleteContributionController extends ContributionController {
      * Code of the database error message used when the {@link DataAccessException} is thrown.
      */
     public static final String DATABASE_ERROR_MESSAGE_CODE = "forum.contributions.deletion-failed-due-to-database-error";
-    private DeleteContribution deleteContribution;
+    private ContributionService contributionService;
     private ListContributionsController listController;
 
     @Autowired
-    public void setDeleteContribution(final DeleteContribution deleteContribution) {
-        this.deleteContribution = deleteContribution;
+    public void setContributionService(final ContributionService contributionService) {
+        this.contributionService = contributionService;
     }
 
     @Autowired
@@ -54,7 +54,7 @@ public class DeleteContributionController extends ContributionController {
             final HttpServletRequest request, final ModelMap model) {
 
         // Checks permission.
-        this.deleteContribution.canDelete(contributionId);
+        this.contributionService.canDelete(contributionId);
 
         try {
             // Deletes the contribution from the repository.

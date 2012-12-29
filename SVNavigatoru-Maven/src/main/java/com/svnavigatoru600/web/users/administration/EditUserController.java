@@ -23,13 +23,13 @@ import com.svnavigatoru600.domain.users.Authority;
 import com.svnavigatoru600.domain.users.AuthorityType;
 import com.svnavigatoru600.domain.users.User;
 import com.svnavigatoru600.repository.users.UserDao;
-import com.svnavigatoru600.service.users.AdministrateUserData;
 import com.svnavigatoru600.service.users.validator.AdministrateUserDataValidator;
 import com.svnavigatoru600.service.util.AuthorityUtils;
 import com.svnavigatoru600.service.util.CheckboxUtils;
 import com.svnavigatoru600.service.util.Email;
 import com.svnavigatoru600.service.util.Hash;
 import com.svnavigatoru600.service.util.Localization;
+import com.svnavigatoru600.viewmodel.users.AdministrateUserData;
 import com.svnavigatoru600.web.Configuration;
 
 /**

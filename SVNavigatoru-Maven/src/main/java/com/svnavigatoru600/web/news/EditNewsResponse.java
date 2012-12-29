@@ -1,6 +1,6 @@
 package com.svnavigatoru600.web.news;
 
-import com.svnavigatoru600.service.news.NewEditNews;
+import com.svnavigatoru600.viewmodel.news.NewEditNews;
 
 public class EditNewsResponse extends NewEditNewsResponse {
 

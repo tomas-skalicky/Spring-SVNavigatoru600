@@ -18,9 +18,9 @@ import org.springframework.web.bind.support.SessionStatus;
 import com.svnavigatoru600.domain.eventcalendar.CalendarEvent;
 import com.svnavigatoru600.domain.eventcalendar.PriorityType;
 import com.svnavigatoru600.repository.CalendarEventDao;
-import com.svnavigatoru600.service.eventcalendar.EditEvent;
 import com.svnavigatoru600.service.eventcalendar.validator.EditEventValidator;
 import com.svnavigatoru600.service.util.Localization;
+import com.svnavigatoru600.viewmodel.eventcalendar.EditEvent;
 import com.svnavigatoru600.web.Configuration;
 
 @Controller

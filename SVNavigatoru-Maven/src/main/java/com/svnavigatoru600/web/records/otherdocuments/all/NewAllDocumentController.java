@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.support.SessionStatus;
 
 import com.svnavigatoru600.repository.records.OtherDocumentRecordDao;
-import com.svnavigatoru600.service.records.otherdocuments.NewRecord;
 import com.svnavigatoru600.service.records.otherdocuments.validator.NewRecordValidator;
+import com.svnavigatoru600.viewmodel.records.otherdocuments.NewRecord;
 import com.svnavigatoru600.web.records.otherdocuments.NewDocumentController;
 
 @Controller

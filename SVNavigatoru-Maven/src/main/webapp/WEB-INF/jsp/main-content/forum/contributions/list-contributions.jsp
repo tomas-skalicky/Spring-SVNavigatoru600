@@ -3,7 +3,7 @@
 <%@ page pageEncoding="UTF-8"%>
 <%@ include file="../../../include-preceding-html.jsp"%>
 
-<%@ page import="com.svnavigatoru600.service.forum.contributions.ShowAllContributions"%>
+<%@ page import="com.svnavigatoru600.viewmodel.forum.contributions.ShowAllContributions"%>
 <%@ page import="com.svnavigatoru600.web.forum.contributions.ListContributionsController"%>
 
 <c:if test="${showAllContributionsCommand.contributionCreated}">

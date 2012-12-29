@@ -17,8 +17,8 @@ import org.springframework.web.bind.support.SessionStatus;
 
 import com.svnavigatoru600.domain.News;
 import com.svnavigatoru600.repository.NewsDao;
-import com.svnavigatoru600.service.news.EditNews;
 import com.svnavigatoru600.service.news.validator.EditNewsValidator;
+import com.svnavigatoru600.viewmodel.news.EditNews;
 
 @Controller
 public class EditNewsController extends NewEditNewsController {

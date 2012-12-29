@@ -8,10 +8,10 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.context.MessageSource;
 
 import com.svnavigatoru600.domain.News;
-import com.svnavigatoru600.service.news.NewEditNews;
 import com.svnavigatoru600.service.util.DateUtils;
 import com.svnavigatoru600.service.util.Localization;
 import com.svnavigatoru600.service.util.UserUtils;
+import com.svnavigatoru600.viewmodel.news.NewEditNews;
 
 public class NewNewsResponse extends NewEditNewsResponse {
 

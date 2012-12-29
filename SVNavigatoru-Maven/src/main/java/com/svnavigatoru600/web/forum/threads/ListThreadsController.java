@@ -18,8 +18,8 @@ import com.svnavigatoru600.domain.forum.Contribution;
 import com.svnavigatoru600.domain.forum.Thread;
 import com.svnavigatoru600.repository.forum.ThreadDao;
 import com.svnavigatoru600.repository.users.UserDao;
-import com.svnavigatoru600.service.forum.threads.ShowAllThreads;
 import com.svnavigatoru600.service.util.Localization;
+import com.svnavigatoru600.viewmodel.forum.threads.ShowAllThreads;
 
 @Controller
 public class ListThreadsController extends ThreadController {

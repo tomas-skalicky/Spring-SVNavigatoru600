@@ -17,8 +17,9 @@ import org.springframework.web.bind.support.SessionStatus;
 
 import com.svnavigatoru600.domain.forum.Thread;
 import com.svnavigatoru600.repository.forum.ThreadDao;
-import com.svnavigatoru600.service.forum.threads.EditThread;
+import com.svnavigatoru600.service.forum.threads.ThreadService;
 import com.svnavigatoru600.service.forum.threads.validator.EditThreadValidator;
+import com.svnavigatoru600.viewmodel.forum.threads.EditThread;
 import com.svnavigatoru600.web.Configuration;
 
 @Controller
@@ -30,11 +31,14 @@ public class EditThreadController extends NewEditThreadController {
      * Code of the error message used when the {@link DataAccessException} is thrown.
      */
     public static final String DATABASE_ERROR_MESSAGE_CODE = "edit.changes-not-saved-due-to-database-error";
-    private EditThread editThread;
+    /**
+     * The business-layer service for {@link Thread threads}.
+     */
+    private ThreadService threadService;
 
     @Autowired
-    public void setEditThread(final EditThread editThread) {
-        this.editThread = editThread;
+    public void setThreadService(final ThreadService threadService) {
+        this.threadService = threadService;
     }
 
     /**
@@ -49,7 +53,7 @@ public class EditThreadController extends NewEditThreadController {
     @RequestMapping(value = EditThreadController.REQUEST_MAPPING_BASE_URL, method = RequestMethod.GET)
     public String initForm(@PathVariable int threadId, final HttpServletRequest request, final ModelMap model) {
 
-        this.editThread.canEdit(threadId);
+        this.threadService.canEdit(threadId);
 
         final EditThread command = new EditThread();
 
@@ -74,7 +78,7 @@ public class EditThreadController extends NewEditThreadController {
             final BindingResult result, final SessionStatus status, @PathVariable int threadId,
             final HttpServletRequest request, final ModelMap model) {
 
-        this.editThread.canEdit(threadId);
+        this.threadService.canEdit(threadId);
 
         this.validator.validate(command, result);
         if (result.hasErrors()) {

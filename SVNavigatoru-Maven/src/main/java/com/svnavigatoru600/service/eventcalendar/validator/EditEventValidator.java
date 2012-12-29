@@ -4,7 +4,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.validation.Errors;
 
 import com.svnavigatoru600.domain.eventcalendar.CalendarEvent;
-import com.svnavigatoru600.service.eventcalendar.EditEvent;
+import com.svnavigatoru600.viewmodel.eventcalendar.EditEvent;
 
 @Service
 public class EditEventValidator extends EventValidator {

@@ -17,8 +17,9 @@ import org.springframework.web.bind.support.SessionStatus;
 
 import com.svnavigatoru600.domain.forum.Contribution;
 import com.svnavigatoru600.repository.forum.ContributionDao;
-import com.svnavigatoru600.service.forum.contributions.EditContribution;
+import com.svnavigatoru600.service.forum.contributions.ContributionService;
 import com.svnavigatoru600.service.forum.contributions.validator.EditContributionValidator;
+import com.svnavigatoru600.viewmodel.forum.contributions.EditContribution;
 import com.svnavigatoru600.web.Configuration;
 
 @Controller
@@ -30,11 +31,11 @@ public class EditContributionController extends NewEditContributionController {
      * Code of the error message used when the {@link DataAccessException} is thrown.
      */
     public static final String DATABASE_ERROR_MESSAGE_CODE = "edit.changes-not-saved-due-to-database-error";
-    private EditContribution editContribution;
+    private ContributionService contributionService;
 
     @Autowired
-    public void setEditContribution(final EditContribution editContribution) {
-        this.editContribution = editContribution;
+    public void setContributionService(final ContributionService contributionService) {
+        this.contributionService = contributionService;
     }
 
     /**
@@ -50,7 +51,7 @@ public class EditContributionController extends NewEditContributionController {
     public String initForm(@PathVariable int threadId, @PathVariable int contributionId,
             final HttpServletRequest request, final ModelMap model) {
 
-        this.editContribution.canEdit(contributionId);
+        this.contributionService.canEdit(contributionId);
 
         final EditContribution command = new EditContribution();
 
@@ -77,7 +78,7 @@ public class EditContributionController extends NewEditContributionController {
             BindingResult result, SessionStatus status, @PathVariable int threadId,
             @PathVariable int contributionId, final HttpServletRequest request, final ModelMap model) {
 
-        this.editContribution.canEdit(contributionId);
+        this.contributionService.canEdit(contributionId);
 
         this.validator.validate(command, result);
         if (result.hasErrors()) {

@@ -3,7 +3,7 @@
 <%@ page pageEncoding="UTF-8"%>
 <%@ include file="../../../include-preceding-html.jsp"%>
 
-<%@ page import="com.svnavigatoru600.service.forum.threads.ShowAllThreads"%>
+<%@ page import="com.svnavigatoru600.viewmodel.forum.threads.ShowAllThreads"%>
 <%@ page import="com.svnavigatoru600.web.forum.threads.ListThreadsController"%>
 
 <c:if test="${showAllThreadsCommand.threadCreated}">
