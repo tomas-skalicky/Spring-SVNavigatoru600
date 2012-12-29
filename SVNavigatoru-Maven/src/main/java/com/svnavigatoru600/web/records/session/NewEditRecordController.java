@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import com.svnavigatoru600.domain.records.SessionRecord;
 import com.svnavigatoru600.domain.records.SessionRecordType;
 import com.svnavigatoru600.repository.records.SessionRecordDao;
-import com.svnavigatoru600.service.records.session.SessionRecordValidator;
+import com.svnavigatoru600.service.records.session.validator.SessionRecordValidator;
 import com.svnavigatoru600.service.util.Localization;
 import com.svnavigatoru600.web.records.PageViews;
 

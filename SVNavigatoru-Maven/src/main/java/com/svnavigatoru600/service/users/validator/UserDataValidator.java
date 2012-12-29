@@ -1,4 +1,4 @@
-package com.svnavigatoru600.service.users;
+package com.svnavigatoru600.service.users.validator;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
@@ -9,6 +9,7 @@ import com.svnavigatoru600.domain.users.AuthorityType;
 import com.svnavigatoru600.domain.users.User;
 import com.svnavigatoru600.service.util.FirstName;
 import com.svnavigatoru600.service.util.LastName;
+import com.svnavigatoru600.viewmodel.users.AdministrateUserData;
 
 /**
  * Validates the data of a new or an existing {@link User} determined by an administrator.

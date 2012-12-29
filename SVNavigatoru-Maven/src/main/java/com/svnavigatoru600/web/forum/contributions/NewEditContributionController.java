@@ -6,7 +6,7 @@ import org.springframework.validation.Validator;
 
 import com.svnavigatoru600.domain.forum.Contribution;
 import com.svnavigatoru600.repository.forum.ContributionDao;
-import com.svnavigatoru600.service.forum.contributions.ContributionValidator;
+import com.svnavigatoru600.service.forum.contributions.validator.ContributionValidator;
 
 /**
  * Parent of controllers which create and edit the {@link Contribution}s.

@@ -1,11 +1,11 @@
-package com.svnavigatoru600.service.records.otherdocuments;
+package com.svnavigatoru600.service.records.otherdocuments.validator;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.Errors;
 
 import com.svnavigatoru600.domain.records.OtherDocumentRecord;
-import com.svnavigatoru600.service.records.DocumentRecordValidator;
+import com.svnavigatoru600.service.records.validator.DocumentRecordValidator;
 import com.svnavigatoru600.service.util.OtherDocumentRecordUtils;
 
 @Service
@@ -26,8 +26,8 @@ public abstract class OtherDocumentRecordValidator extends DocumentRecordValidat
     }
 
     protected void checkNewTypes(boolean[] typeIndicators, Errors errors) {
-        for (boolean indicator : typeIndicators) {
-            if (indicator == true) {
+        for (boolean isTypeChecked : typeIndicators) {
+            if (isTypeChecked) {
                 // Everything OK since at least one type is checked.
                 return;
             }

@@ -1,4 +1,4 @@
-package com.svnavigatoru600.service.forum.contributions;
+package com.svnavigatoru600.service.forum.contributions.validator;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;

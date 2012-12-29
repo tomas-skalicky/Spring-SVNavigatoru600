@@ -22,7 +22,7 @@ import com.svnavigatoru600.domain.users.AuthorityType;
 import com.svnavigatoru600.domain.users.User;
 import com.svnavigatoru600.repository.users.UserDao;
 import com.svnavigatoru600.service.users.SendNewPassword;
-import com.svnavigatoru600.service.users.SendNewPasswordValidator;
+import com.svnavigatoru600.service.users.validator.SendNewPasswordValidator;
 import com.svnavigatoru600.service.util.Email;
 import com.svnavigatoru600.service.util.Hash;
 import com.svnavigatoru600.service.util.Localization;

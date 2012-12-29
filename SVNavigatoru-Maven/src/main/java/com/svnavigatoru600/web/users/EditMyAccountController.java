@@ -17,7 +17,7 @@ import org.springframework.web.bind.support.SessionStatus;
 import com.svnavigatoru600.domain.users.User;
 import com.svnavigatoru600.repository.users.UserDao;
 import com.svnavigatoru600.service.users.UpdateUserData;
-import com.svnavigatoru600.service.users.UpdateUserDataValidator;
+import com.svnavigatoru600.service.users.validator.UpdateUserDataValidator;
 import com.svnavigatoru600.service.util.Hash;
 import com.svnavigatoru600.service.util.UserUtils;
 import com.svnavigatoru600.web.Configuration;

@@ -6,7 +6,7 @@ import org.springframework.validation.Validator;
 
 import com.svnavigatoru600.domain.News;
 import com.svnavigatoru600.repository.NewsDao;
-import com.svnavigatoru600.service.news.NewsValidator;
+import com.svnavigatoru600.service.news.validator.NewsValidator;
 
 /**
  * Parent of controllers which create and edit the {@link News}.

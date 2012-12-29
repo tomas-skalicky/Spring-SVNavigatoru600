@@ -1,4 +1,4 @@
-package com.svnavigatoru600.service.users;
+package com.svnavigatoru600.service.users.validator;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
@@ -13,6 +13,7 @@ import com.svnavigatoru600.service.util.Email;
 import com.svnavigatoru600.service.util.Password;
 import com.svnavigatoru600.service.util.UserUtils;
 import com.svnavigatoru600.service.util.Username;
+import com.svnavigatoru600.viewmodel.users.AdministrateUserData;
 
 /**
  * Validates the data of a new {@link User} filled in in the <i>new-user.jsp</i> form.

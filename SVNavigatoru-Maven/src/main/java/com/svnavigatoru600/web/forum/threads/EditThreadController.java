@@ -18,7 +18,7 @@ import org.springframework.web.bind.support.SessionStatus;
 import com.svnavigatoru600.domain.forum.Thread;
 import com.svnavigatoru600.repository.forum.ThreadDao;
 import com.svnavigatoru600.service.forum.threads.EditThread;
-import com.svnavigatoru600.service.forum.threads.EditThreadValidator;
+import com.svnavigatoru600.service.forum.threads.validator.EditThreadValidator;
 import com.svnavigatoru600.web.Configuration;
 
 @Controller

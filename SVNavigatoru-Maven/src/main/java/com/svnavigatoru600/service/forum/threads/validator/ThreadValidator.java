@@ -1,4 +1,4 @@
-package com.svnavigatoru600.service.forum.threads;
+package com.svnavigatoru600.service.forum.threads.validator;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
