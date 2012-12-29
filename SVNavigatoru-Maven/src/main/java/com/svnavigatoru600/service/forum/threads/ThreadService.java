@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
 @Service
-public final class ThreadService {
+public class ThreadService {
 
     @PreAuthorize("hasPermission(#threadId, 'com.svnavigatoru600.domain.forum.Thread', 'edit')")
     public void canEdit(int threadId) {

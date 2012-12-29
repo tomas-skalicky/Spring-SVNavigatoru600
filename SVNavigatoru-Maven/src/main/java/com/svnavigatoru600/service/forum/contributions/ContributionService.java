@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
 @Service
-public final class ContributionService {
+public class ContributionService {
 
     @PreAuthorize("hasPermission(#contributionId, 'com.svnavigatoru600.domain.forum.Contribution', 'edit')")
     public void canEdit(int contributionId) {
