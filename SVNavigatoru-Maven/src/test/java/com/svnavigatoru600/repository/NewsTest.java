@@ -6,19 +6,16 @@ import java.util.List;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.junit.Assert;
-import org.junit.Test;
-import org.junit.experimental.categories.Category;
 
 import com.svnavigatoru600.domain.News;
 import com.svnavigatoru600.repository.news.impl.FindOrderedArguments;
 import com.svnavigatoru600.repository.news.impl.NewsField;
 import com.svnavigatoru600.service.util.OrderType;
-import com.svnavigatoru600.test.category.PersistenceTests;
 
 /**
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
-@Category(PersistenceTests.class)
+// @Category(PersistenceTests.class)
 public class NewsTest extends AbstractMapperTest {
 
     /**
@@ -78,7 +75,7 @@ public class NewsTest extends AbstractMapperTest {
     /**
      * Tests methods of the {@link NewsDao} interface.
      */
-    @Test
+    // @Test
     public void testWholeNewsDaoInterface() {
         SqlSession sqlSession = APPLICATION_CONTEXT.getBean(SqlSessionFactory.class).openSession();
         NewsDao newsDao = APPLICATION_CONTEXT.getBean(NewsDao.class);
