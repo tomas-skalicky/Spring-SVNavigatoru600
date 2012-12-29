@@ -19,7 +19,7 @@ public class CalendarEventDaoImpl extends HibernateDaoSupport implements Calenda
     @SuppressWarnings("unchecked")
     public List<CalendarEvent> findFutureEventsOrdered(FindFutureEventsOrderedArguments arguments) {
         String query = String.format("FROM CalendarEvent e WHERE e.date >= ? ORDER BY e.%s %s",
-                arguments.getSortColumn(), arguments.getSortDirection().getDatabaseCode());
+                arguments.getSortField().name(), arguments.getSortDirection().getDatabaseCode());
         return (List<CalendarEvent>) this.getHibernateTemplate().find(query, arguments.getEarliestDate());
     }
 

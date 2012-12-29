@@ -12,6 +12,7 @@ import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import com.svnavigatoru600.domain.forum.Contribution;
 import com.svnavigatoru600.repository.forum.ContributionDao;
 import com.svnavigatoru600.repository.forum.ThreadDao;
+import com.svnavigatoru600.repository.forum.impl.ContributionField;
 import com.svnavigatoru600.repository.users.UserDao;
 import com.svnavigatoru600.repository.users.impl.direct.UserDaoImpl;
 import com.svnavigatoru600.service.util.OrderType;
@@ -61,7 +62,7 @@ public class ContributionDaoImpl extends SimpleJdbcDaoSupport implements Contrib
     @Override
     public Contribution findById(int contributionId) {
         String query = String.format("SELECT * FROM %s c WHERE c.%s = ?", ContributionDaoImpl.TABLE_NAME,
-                ContributionRowMapper.getColumn("id"));
+                ContributionField.id.getColumnName());
         Contribution contribution = this.getSimpleJdbcTemplate().queryForObject(query,
                 new ContributionRowMapper(), contributionId);
 
@@ -72,7 +73,7 @@ public class ContributionDaoImpl extends SimpleJdbcDaoSupport implements Contrib
     @Override
     public List<Contribution> find(int threadId) {
         String query = String.format("SELECT * FROM %s c WHERE c.%s = ?", ContributionDaoImpl.TABLE_NAME,
-                ContributionRowMapper.getColumn("threadId"));
+                ContributionField.threadId.getColumnName());
         return this.getSimpleJdbcTemplate().query(query, new ContributionRowMapper(), threadId);
     }
 
@@ -81,9 +82,9 @@ public class ContributionDaoImpl extends SimpleJdbcDaoSupport implements Contrib
      *            Not used yet.
      */
     @Override
-    public List<Contribution> findOrdered(String attribute, OrderType order, int count) {
+    public List<Contribution> findOrdered(ContributionField attribute, OrderType order, int count) {
         String query = String.format("SELECT * FROM %s c ORDER BY c.%s %s", ContributionDaoImpl.TABLE_NAME,
-                ContributionRowMapper.getColumn(attribute), order.getDatabaseCode());
+                attribute.getColumnName(), order.getDatabaseCode());
         List<Contribution> contributions = this.getSimpleJdbcTemplate().query(query,
                 new ContributionRowMapper());
 
@@ -92,10 +93,10 @@ public class ContributionDaoImpl extends SimpleJdbcDaoSupport implements Contrib
     }
 
     @Override
-    public List<Contribution> findOrdered(int threadId, String attribute, OrderType order) {
+    public List<Contribution> findOrdered(int threadId, ContributionField attribute, OrderType order) {
         String query = String.format("SELECT * FROM %s c WHERE c.%s = ? ORDER BY c.%s %s",
-                ContributionDaoImpl.TABLE_NAME, ContributionRowMapper.getColumn("threadId"),
-                ContributionRowMapper.getColumn(attribute), order.getDatabaseCode());
+                ContributionDaoImpl.TABLE_NAME, ContributionField.threadId.getColumnName(),
+                attribute.getColumnName(), order.getDatabaseCode());
         List<Contribution> contributions = this.getSimpleJdbcTemplate().query(query,
                 new ContributionRowMapper(), threadId);
 
@@ -109,10 +110,10 @@ public class ContributionDaoImpl extends SimpleJdbcDaoSupport implements Contrib
         contribution.setLastSaveTime(now);
 
         String query = String.format("UPDATE %s SET %s = ?, %s = ?, %s = ?, %s = ?, %s = ? WHERE %s = ?",
-                ContributionDaoImpl.TABLE_NAME, ContributionRowMapper.getColumn("threadId"),
-                ContributionRowMapper.getColumn("text"), ContributionRowMapper.getColumn("creationTime"),
-                ContributionRowMapper.getColumn("lastSaveTime"),
-                ContributionRowMapper.getColumn("authorUsername"), ContributionRowMapper.getColumn("id"));
+                ContributionDaoImpl.TABLE_NAME, ContributionField.threadId.getColumnName(),
+                ContributionField.text.getColumnName(), ContributionField.creationTime.getColumnName(),
+                ContributionField.lastSaveTime.getColumnName(),
+                ContributionField.authorUsername.getColumnName(), ContributionField.id.getColumnName());
         this.getSimpleJdbcTemplate().update(query, contribution.getThread().getId(), contribution.getText(),
                 contribution.getCreationTime(), contribution.getLastSaveTime(),
                 contribution.getAuthor().getUsername(), contribution.getId());
@@ -123,12 +124,12 @@ public class ContributionDaoImpl extends SimpleJdbcDaoSupport implements Contrib
      */
     private Map<String, Object> getNamedParameters(Contribution contribution) {
         Map<String, Object> parameters = new HashMap<String, Object>();
-        parameters.put(ContributionRowMapper.getColumn("id"), contribution.getId());
-        parameters.put(ContributionRowMapper.getColumn("threadId"), contribution.getThread().getId());
-        parameters.put(ContributionRowMapper.getColumn("text"), contribution.getText());
-        parameters.put(ContributionRowMapper.getColumn("creationTime"), contribution.getCreationTime());
-        parameters.put(ContributionRowMapper.getColumn("lastSaveTime"), contribution.getLastSaveTime());
-        parameters.put(ContributionRowMapper.getColumn("authorUsername"), contribution.getAuthor()
+        parameters.put(ContributionField.id.getColumnName(), contribution.getId());
+        parameters.put(ContributionField.threadId.getColumnName(), contribution.getThread().getId());
+        parameters.put(ContributionField.text.getColumnName(), contribution.getText());
+        parameters.put(ContributionField.creationTime.getColumnName(), contribution.getCreationTime());
+        parameters.put(ContributionField.lastSaveTime.getColumnName(), contribution.getLastSaveTime());
+        parameters.put(ContributionField.authorUsername.getColumnName(), contribution.getAuthor()
                 .getUsername());
         return parameters;
     }
@@ -139,16 +140,14 @@ public class ContributionDaoImpl extends SimpleJdbcDaoSupport implements Contrib
         contribution.setCreationTime(now);
         contribution.setLastSaveTime(now);
 
-        String idColumn = ContributionRowMapper.getColumn("id");
-
         SimpleJdbcInsert insert = new SimpleJdbcInsert(this.getDataSource())
                 .withTableName(ContributionDaoImpl.TABLE_NAME)
-                .usingGeneratedKeyColumns(idColumn)
-                .usingColumns(ContributionRowMapper.getColumn("threadId"),
-                        ContributionRowMapper.getColumn("text"),
-                        ContributionRowMapper.getColumn("creationTime"),
-                        ContributionRowMapper.getColumn("lastSaveTime"),
-                        ContributionRowMapper.getColumn("authorUsername"));
+                .usingGeneratedKeyColumns(ContributionField.id.getColumnName())
+                .usingColumns(ContributionField.threadId.getColumnName(),
+                        ContributionField.text.getColumnName(),
+                        ContributionField.creationTime.getColumnName(),
+                        ContributionField.lastSaveTime.getColumnName(),
+                        ContributionField.authorUsername.getColumnName());
 
         return insert.executeAndReturnKey(this.getNamedParameters(contribution)).intValue();
     }
@@ -156,7 +155,7 @@ public class ContributionDaoImpl extends SimpleJdbcDaoSupport implements Contrib
     @Override
     public void delete(Contribution contribution) {
         String query = String.format("DELETE FROM %s WHERE %s = ?", ContributionDaoImpl.TABLE_NAME,
-                ContributionRowMapper.getColumn("id"));
+                ContributionField.id.getColumnName());
         this.getSimpleJdbcTemplate().update(query, contribution.getId());
     }
 }

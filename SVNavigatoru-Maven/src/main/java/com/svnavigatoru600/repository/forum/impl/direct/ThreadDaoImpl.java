@@ -13,6 +13,7 @@ import com.svnavigatoru600.domain.forum.Contribution;
 import com.svnavigatoru600.domain.forum.Thread;
 import com.svnavigatoru600.repository.forum.ContributionDao;
 import com.svnavigatoru600.repository.forum.ThreadDao;
+import com.svnavigatoru600.repository.forum.impl.ThreadField;
 import com.svnavigatoru600.repository.users.UserDao;
 import com.svnavigatoru600.repository.users.impl.direct.UserDaoImpl;
 
@@ -80,7 +81,7 @@ public class ThreadDaoImpl extends SimpleJdbcDaoSupport implements ThreadDao {
      */
     public Thread findById(final int threadId, final boolean lazy) {
         final String query = String.format("SELECT * FROM %s t WHERE t.%s = ?", ThreadDaoImpl.TABLE_NAME,
-                ThreadRowMapper.getColumn("id"));
+                ThreadField.id.getColumnName());
         final Thread thread = this.getSimpleJdbcTemplate().queryForObject(query, new ThreadRowMapper(),
                 threadId);
 
@@ -104,9 +105,9 @@ public class ThreadDaoImpl extends SimpleJdbcDaoSupport implements ThreadDao {
     @Override
     public void update(final Thread thread) {
         final String query = String.format("UPDATE %s SET %s = ?, %s = ?, %s = ? WHERE %s = ?",
-                ThreadDaoImpl.TABLE_NAME, ThreadRowMapper.getColumn("name"),
-                ThreadRowMapper.getColumn("creationTime"), ThreadRowMapper.getColumn("authorUsername"),
-                ThreadRowMapper.getColumn("id"));
+                ThreadDaoImpl.TABLE_NAME, ThreadField.name.getColumnName(),
+                ThreadField.creationTime.getColumnName(), ThreadField.authorUsername.getColumnName(),
+                ThreadField.id.getColumnName());
         this.getSimpleJdbcTemplate().update(query, thread.getName(), thread.getCreationTime(),
                 thread.getAuthor().getUsername(), thread.getId());
     }
@@ -116,10 +117,10 @@ public class ThreadDaoImpl extends SimpleJdbcDaoSupport implements ThreadDao {
      */
     private Map<String, Object> getNamedParameters(final Thread thread) {
         final Map<String, Object> parameters = new HashMap<String, Object>();
-        parameters.put(ThreadRowMapper.getColumn("id"), thread.getId());
-        parameters.put(ThreadRowMapper.getColumn("name"), thread.getName());
-        parameters.put(ThreadRowMapper.getColumn("creationTime"), thread.getCreationTime());
-        parameters.put(ThreadRowMapper.getColumn("authorUsername"), thread.getAuthor().getUsername());
+        parameters.put(ThreadField.id.getColumnName(), thread.getId());
+        parameters.put(ThreadField.name.getColumnName(), thread.getName());
+        parameters.put(ThreadField.creationTime.getColumnName(), thread.getCreationTime());
+        parameters.put(ThreadField.authorUsername.getColumnName(), thread.getAuthor().getUsername());
         return parameters;
     }
 
@@ -128,13 +129,11 @@ public class ThreadDaoImpl extends SimpleJdbcDaoSupport implements ThreadDao {
         final Date now = new Date();
         thread.setCreationTime(now);
 
-        final String idColumn = ThreadRowMapper.getColumn("id");
-
         final SimpleJdbcInsert insert = new SimpleJdbcInsert(this.getDataSource())
                 .withTableName(ThreadDaoImpl.TABLE_NAME)
-                .usingGeneratedKeyColumns(idColumn)
-                .usingColumns(ThreadRowMapper.getColumn("name"), ThreadRowMapper.getColumn("creationTime"),
-                        ThreadRowMapper.getColumn("authorUsername"));
+                .usingGeneratedKeyColumns(ThreadField.id.getColumnName())
+                .usingColumns(ThreadField.name.getColumnName(), ThreadField.creationTime.getColumnName(),
+                        ThreadField.authorUsername.getColumnName());
 
         final int threadId = insert.executeAndReturnKey(this.getNamedParameters(thread)).intValue();
         thread.setId(threadId);
@@ -152,7 +151,7 @@ public class ThreadDaoImpl extends SimpleJdbcDaoSupport implements ThreadDao {
     @Override
     public void delete(final Thread thread) {
         final String query = String.format("DELETE FROM %s WHERE %s = ?", ThreadDaoImpl.TABLE_NAME,
-                ThreadRowMapper.getColumn("id"));
+                ThreadField.id.getColumnName());
         this.getSimpleJdbcTemplate().update(query, thread.getId());
     }
 }

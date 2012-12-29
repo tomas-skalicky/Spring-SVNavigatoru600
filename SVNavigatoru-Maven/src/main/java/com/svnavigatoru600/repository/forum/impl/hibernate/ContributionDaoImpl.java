@@ -9,6 +9,7 @@ import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 import com.svnavigatoru600.domain.forum.Contribution;
 import com.svnavigatoru600.repository.forum.ContributionDao;
+import com.svnavigatoru600.repository.forum.impl.ContributionField;
 import com.svnavigatoru600.service.util.OrderType;
 
 public class ContributionDaoImpl extends HibernateDaoSupport implements ContributionDao {
@@ -33,17 +34,17 @@ public class ContributionDaoImpl extends HibernateDaoSupport implements Contribu
      */
     @Override
     @SuppressWarnings("unchecked")
-    public List<Contribution> findOrdered(String attribute, OrderType order, int count) {
-        String query = String.format("FROM Contribution c ORDER BY c.%s %s", attribute,
+    public List<Contribution> findOrdered(ContributionField attribute, OrderType order, int count) {
+        String query = String.format("FROM Contribution c ORDER BY c.%s %s", attribute.name(),
                 order.getDatabaseCode());
         return (List<Contribution>) this.getHibernateTemplate().find(query);
     }
 
     @Override
     @SuppressWarnings("unchecked")
-    public List<Contribution> findOrdered(int threadId, String attribute, OrderType order) {
-        String query = String.format("FROM Contribution c WHERE c.thread.id = ? ORDER BY c.%s %s", attribute,
-                order.getDatabaseCode());
+    public List<Contribution> findOrdered(int threadId, ContributionField attribute, OrderType order) {
+        String query = String.format("FROM Contribution c WHERE c.thread.id = ? ORDER BY c.%s %s",
+                attribute.name(), order.getDatabaseCode());
         return (List<Contribution>) this.getHibernateTemplate().find(query, threadId);
     }
 
