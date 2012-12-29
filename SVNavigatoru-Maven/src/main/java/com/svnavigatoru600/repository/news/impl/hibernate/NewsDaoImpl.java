@@ -25,16 +25,11 @@ public class NewsDaoImpl extends HibernateDaoSupport implements NewsDao {
 
     @Override
     public void update(News news) {
-        Date now = new Date();
-        news.setLastSaveTime(now);
         this.getHibernateTemplate().update(news);
     }
 
     @Override
     public int save(News news) {
-        Date now = new Date();
-        news.setCreationTime(now);
-        news.setLastSaveTime(now);
         return (Integer) this.getHibernateTemplate().save(news);
     }
 

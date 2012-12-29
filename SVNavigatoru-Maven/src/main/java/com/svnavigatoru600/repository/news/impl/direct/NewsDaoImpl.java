@@ -32,9 +32,6 @@ public class NewsDaoImpl extends SimpleJdbcDaoSupport implements NewsDao {
 
     @Override
     public void update(News news) {
-        Date now = new Date();
-        news.setLastSaveTime(now);
-
         String query = String.format("UPDATE %s SET %s = ?, %s = ?, %s = ?, %s = ? WHERE %s = ?",
                 NewsDaoImpl.TABLE_NAME, NewsRowMapper.getColumn("title"), NewsRowMapper.getColumn("text"),
                 NewsRowMapper.getColumn("creationTime"), NewsRowMapper.getColumn("lastSaveTime"),
@@ -58,10 +55,6 @@ public class NewsDaoImpl extends SimpleJdbcDaoSupport implements NewsDao {
 
     @Override
     public int save(News news) {
-        Date now = new Date();
-        news.setCreationTime(now);
-        news.setLastSaveTime(now);
-
         String idColumn = NewsRowMapper.getColumn("id");
 
         SimpleJdbcInsert insert = new SimpleJdbcInsert(this.getDataSource())

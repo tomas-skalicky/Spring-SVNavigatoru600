@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.support.SessionStatus;
 
 import com.svnavigatoru600.domain.News;
-import com.svnavigatoru600.repository.NewsDao;
+import com.svnavigatoru600.service.news.NewsService;
 import com.svnavigatoru600.service.news.validator.EditNewsValidator;
 import com.svnavigatoru600.viewmodel.news.EditNews;
 
@@ -34,8 +34,9 @@ public class EditNewsController extends NewEditNewsController {
      * Constructor.
      */
     @Autowired
-    public EditNewsController(NewsDao newsDao, EditNewsValidator validator, MessageSource messageSource) {
-        super(newsDao, validator, messageSource);
+    public EditNewsController(NewsService newsService, EditNewsValidator validator,
+            MessageSource messageSource) {
+        super(newsService, validator, messageSource);
     }
 
     /**
@@ -45,7 +46,7 @@ public class EditNewsController extends NewEditNewsController {
     public @ResponseBody
     NewsResponse initForm(@PathVariable int newsId, HttpServletRequest request) {
 
-        News news = this.newsDao.findById(newsId);
+        News news = this.newsService.findById(newsId);
         return new GoToEditFormResponse(news, this.messageSource, request);
     }
 
@@ -64,7 +65,7 @@ public class EditNewsController extends NewEditNewsController {
         }
 
         // Updates the original data.
-        News originalNews = this.newsDao.findById(newsId);
+        News originalNews = this.newsService.findById(newsId);
         News newNews = command.getNews();
         originalNews.setTitle(newNews.getTitle());
         originalNews.setText(newNews.getText());
@@ -73,7 +74,7 @@ public class EditNewsController extends NewEditNewsController {
 
         try {
             // Updates the news in the repository.
-            this.newsDao.update(originalNews);
+            this.newsService.update(originalNews);
 
             // Clears the command object from the session.
             status.setComplete();
