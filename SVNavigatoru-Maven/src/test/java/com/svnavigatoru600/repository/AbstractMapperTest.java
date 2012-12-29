@@ -2,7 +2,7 @@ package com.svnavigatoru600.repository;
 
 import javax.sql.DataSource;
 
-import org.junit.Before;
+import org.junit.BeforeClass;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
 
@@ -23,8 +23,8 @@ public abstract class AbstractMapperTest {
     protected static final ApplicationContext APPLICATION_CONTEXT = new FileSystemXmlApplicationContext(
             "classpath:applicationContext-business.xml");
 
-    @Before
-    public void setUpDatabase() throws Exception {
+    @BeforeClass
+    public static void setUpDatabase() throws Exception {
         prepareDatabase();
     }
 
