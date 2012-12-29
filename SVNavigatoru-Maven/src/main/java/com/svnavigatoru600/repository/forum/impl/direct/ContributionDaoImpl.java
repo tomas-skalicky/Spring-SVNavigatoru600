@@ -150,10 +150,7 @@ public class ContributionDaoImpl extends SimpleJdbcDaoSupport implements Contrib
                         ContributionRowMapper.getColumn("lastSaveTime"),
                         ContributionRowMapper.getColumn("authorUsername"));
 
-        // For more info, see repository.news.impl.direct.NewsDaoImpl.java
-        Map<String, Object> keys = insert.executeAndReturnKeyHolder(this.getNamedParameters(contribution))
-                .getKeys();
-        return ((Long) keys.get("GENERATED_KEY")).intValue();
+        return insert.executeAndReturnKey(this.getNamedParameters(contribution)).intValue();
     }
 
     @Override

@@ -61,13 +61,7 @@ public class NewsDaoImpl extends SimpleJdbcDaoSupport implements NewsDao {
                 .usingColumns(NewsField.title.getColumnName(), NewsField.text.getColumnName(),
                         NewsField.creationTime.getColumnName(), NewsField.lastSaveTime.getColumnName());
 
-        Map<String, Object> keys = insert.executeAndReturnKeyHolder(this.getNamedParameters(news)).getKeys();
-        // The generated identified is not under the given idColumn, though the
-        // ID should be there. Instead, the ID is mapped under "GENERATED_KEY".
-        // For more info, see
-        // http://forum.springsource.org/showthread.php?91014-Fetching-auto-generated-primary-key-value-after-insert
-        // return (Integer) keys.get(idColumn);
-        return ((Long) keys.get("GENERATED_KEY")).intValue();
+        return insert.executeAndReturnKey(this.getNamedParameters(news)).intValue();
     }
 
     @Override

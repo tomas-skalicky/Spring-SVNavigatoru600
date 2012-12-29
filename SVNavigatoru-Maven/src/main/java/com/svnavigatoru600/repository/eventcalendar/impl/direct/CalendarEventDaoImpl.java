@@ -88,9 +88,7 @@ public class CalendarEventDaoImpl extends NamedParameterJdbcDaoSupport implement
                         CalendarEventRowMapper.getColumn("description"),
                         CalendarEventRowMapper.getColumn("priority"));
 
-        // For more info, see repository.news.impl.direct.NewsDaoImpl.java
-        Map<String, Object> keys = insert.executeAndReturnKeyHolder(this.getNamedParameters(event)).getKeys();
-        return ((Long) keys.get("GENERATED_KEY")).intValue();
+        return insert.executeAndReturnKey(this.getNamedParameters(event)).intValue();
     }
 
     @Override

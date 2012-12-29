@@ -136,10 +136,7 @@ public class ThreadDaoImpl extends SimpleJdbcDaoSupport implements ThreadDao {
                 .usingColumns(ThreadRowMapper.getColumn("name"), ThreadRowMapper.getColumn("creationTime"),
                         ThreadRowMapper.getColumn("authorUsername"));
 
-        // For more info, see repository.news.impl.direct.NewsDaoImpl.java
-        final Map<String, Object> keys = insert.executeAndReturnKeyHolder(this.getNamedParameters(thread))
-                .getKeys();
-        final int threadId = ((Long) keys.get("GENERATED_KEY")).intValue();
+        final int threadId = insert.executeAndReturnKey(this.getNamedParameters(thread)).intValue();
         thread.setId(threadId);
 
         // NOTE: explicit save of the thread's contributions.
