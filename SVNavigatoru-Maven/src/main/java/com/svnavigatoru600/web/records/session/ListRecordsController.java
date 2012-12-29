@@ -15,10 +15,10 @@ import org.springframework.ui.ModelMap;
 import com.svnavigatoru600.domain.records.SessionRecord;
 import com.svnavigatoru600.domain.records.SessionRecordType;
 import com.svnavigatoru600.repository.records.SessionRecordDao;
-import com.svnavigatoru600.service.records.session.ShowAllSessionRecords;
 import com.svnavigatoru600.service.util.DateUtils;
 import com.svnavigatoru600.service.util.Localization;
 import com.svnavigatoru600.service.util.OrderType;
+import com.svnavigatoru600.viewmodel.records.session.ShowAllSessionRecords;
 import com.svnavigatoru600.web.records.PageViews;
 
 /**

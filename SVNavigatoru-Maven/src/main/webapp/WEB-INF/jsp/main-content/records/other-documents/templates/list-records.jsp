@@ -5,7 +5,7 @@
 <%@ page pageEncoding="UTF-8"%>
 <%@ include file="../../../../include-preceding-html.jsp"%>
 
-<%@ page import="com.svnavigatoru600.service.records.otherdocuments.ShowAllRecords"%>
+<%@ page import="com.svnavigatoru600.viewmodel.records.otherdocuments.ShowAllRecords"%>
 <%@ page import="com.svnavigatoru600.web.records.otherdocuments.ListDocumentsController"%>
 
 <c:if test="${showAllRecordsCommand.recordCreated}">

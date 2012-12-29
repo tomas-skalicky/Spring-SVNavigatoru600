@@ -3,7 +3,7 @@ package com.svnavigatoru600.service.forum.contributions.validator;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.Errors;
 
-import com.svnavigatoru600.service.forum.contributions.NewContribution;
+import com.svnavigatoru600.viewmodel.forum.contributions.NewContribution;
 
 @Service
 public class NewContributionValidator extends ContributionValidator {

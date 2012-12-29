@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.svnavigatoru600.domain.forum.Thread;
 import com.svnavigatoru600.repository.forum.ThreadDao;
-import com.svnavigatoru600.service.forum.threads.DeleteThread;
+import com.svnavigatoru600.service.forum.threads.ThreadService;
 import com.svnavigatoru600.web.Configuration;
 
 @Controller
@@ -28,12 +28,12 @@ public class DeleteThreadController extends ThreadController {
      */
     public static final String DATABASE_ERROR_MESSAGE_CODE = "forum.threads.deletion-failed-due-to-database-error";
     public static final String CANNOT_DELETE_DUE_CONTRIBUTION_MESSAGE_CODE = "forum.threads.deletion-failed-due-to-contribution-count";
-    private DeleteThread deleteThread;
+    private ThreadService threadService;
     private ListThreadsController listController;
 
     @Autowired
-    public void setDeleteThread(final DeleteThread deleteThread) {
-        this.deleteThread = deleteThread;
+    public void setThreadService(final ThreadService threadService) {
+        this.threadService = threadService;
     }
 
     @Autowired
@@ -53,7 +53,7 @@ public class DeleteThreadController extends ThreadController {
     @Transactional
     public String delete(@PathVariable int threadId, final HttpServletRequest request, final ModelMap model) {
 
-        this.deleteThread.canDelete(threadId);
+        this.threadService.canDelete(threadId);
 
         try {
             // Deletes the thread from the repository.

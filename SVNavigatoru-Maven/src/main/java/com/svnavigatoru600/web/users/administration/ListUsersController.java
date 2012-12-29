@@ -15,9 +15,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.svnavigatoru600.domain.users.User;
 import com.svnavigatoru600.repository.users.UserDao;
-import com.svnavigatoru600.service.users.ShowAllUsers;
 import com.svnavigatoru600.service.util.Localization;
 import com.svnavigatoru600.service.util.OrderType;
+import com.svnavigatoru600.viewmodel.users.ShowAllUsers;
 
 /**
  * The controller bound mainly to the <i>users/administration/list.jsp</i> page. For more details about the

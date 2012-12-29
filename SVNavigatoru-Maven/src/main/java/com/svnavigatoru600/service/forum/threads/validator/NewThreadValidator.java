@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.validation.Errors;
 
 import com.svnavigatoru600.service.forum.contributions.validator.NewContributionValidator;
-import com.svnavigatoru600.service.forum.threads.NewThread;
+import com.svnavigatoru600.viewmodel.forum.threads.NewThread;
 
 @Service
 public class NewThreadValidator extends ThreadValidator {

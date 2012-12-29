@@ -17,9 +17,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.svnavigatoru600.domain.forum.Contribution;
 import com.svnavigatoru600.repository.forum.ContributionDao;
 import com.svnavigatoru600.repository.forum.ThreadDao;
-import com.svnavigatoru600.service.forum.contributions.ShowAllContributions;
 import com.svnavigatoru600.service.util.Localization;
 import com.svnavigatoru600.service.util.OrderType;
+import com.svnavigatoru600.viewmodel.forum.contributions.ShowAllContributions;
 
 @Controller
 public class ListContributionsController extends ContributionController {

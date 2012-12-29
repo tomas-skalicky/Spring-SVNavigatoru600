@@ -15,10 +15,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.svnavigatoru600.domain.eventcalendar.CalendarEvent;
 import com.svnavigatoru600.repository.CalendarEventDao;
-import com.svnavigatoru600.service.eventcalendar.ShowAllEvents;
 import com.svnavigatoru600.service.util.DateUtils;
 import com.svnavigatoru600.service.util.Localization;
 import com.svnavigatoru600.service.util.OrderType;
+import com.svnavigatoru600.viewmodel.eventcalendar.ShowAllEvents;
 
 @Controller
 public class ListEventsController extends EventController {

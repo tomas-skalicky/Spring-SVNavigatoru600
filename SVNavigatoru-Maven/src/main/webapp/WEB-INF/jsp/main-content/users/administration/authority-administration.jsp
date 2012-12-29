@@ -3,7 +3,7 @@
 <%@ page pageEncoding="UTF-8"%>
 <%@ include file="../../../include-preceding-html.jsp"%>
 
-<%@ page import="com.svnavigatoru600.service.users.AdministrateUserData"%>
+<%@ page import="com.svnavigatoru600.viewmodel.users.AdministrateUserData"%>
 <%@ page import="com.svnavigatoru600.web.users.administration.NewEditUserController"%>
 
 <%

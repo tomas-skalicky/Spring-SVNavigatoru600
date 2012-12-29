@@ -10,8 +10,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 
-import com.svnavigatoru600.service.news.NewEditNews;
 import com.svnavigatoru600.service.util.Localization;
+import com.svnavigatoru600.viewmodel.news.NewEditNews;
 
 public abstract class NewEditNewsResponse extends NewsResponse {
 

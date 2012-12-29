@@ -1,6 +1,6 @@
 package com.svnavigatoru600.web.news;
 
-import com.svnavigatoru600.service.news.ShowAllNews;
+import com.svnavigatoru600.viewmodel.news.ShowAllNews;
 
 public class ListNewsResponse extends NewsResponse {
 

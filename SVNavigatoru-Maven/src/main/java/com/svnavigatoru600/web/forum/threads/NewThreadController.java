@@ -21,9 +21,9 @@ import com.svnavigatoru600.domain.forum.Contribution;
 import com.svnavigatoru600.domain.forum.Thread;
 import com.svnavigatoru600.domain.users.User;
 import com.svnavigatoru600.repository.forum.ThreadDao;
-import com.svnavigatoru600.service.forum.threads.NewThread;
 import com.svnavigatoru600.service.forum.threads.validator.NewThreadValidator;
 import com.svnavigatoru600.service.util.UserUtils;
+import com.svnavigatoru600.viewmodel.forum.threads.NewThread;
 import com.svnavigatoru600.web.Configuration;
 
 @Controller

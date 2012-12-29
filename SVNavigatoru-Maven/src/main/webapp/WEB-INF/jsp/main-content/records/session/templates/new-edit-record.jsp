@@ -6,7 +6,7 @@
 <%@ page pageEncoding="UTF-8"%>
 <%@ include file="../../../../include-preceding-html.jsp"%>
 
-<%@ page import="com.svnavigatoru600.service.records.session.NewEditSessionRecord"%>
+<%@ page import="com.svnavigatoru600.viewmodel.records.session.NewEditSessionRecord"%>
 <%@ page import="com.svnavigatoru600.web.records.session.NewEditRecordController"%>
 
 <form:form action="IS_FILLED_BY_JAVASCRIPT" commandName="newEditRecordCommand" method="POST"

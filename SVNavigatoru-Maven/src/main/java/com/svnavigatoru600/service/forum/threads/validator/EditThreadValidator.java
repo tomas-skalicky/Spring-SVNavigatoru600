@@ -3,7 +3,7 @@ package com.svnavigatoru600.service.forum.threads.validator;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.Errors;
 
-import com.svnavigatoru600.service.forum.threads.EditThread;
+import com.svnavigatoru600.viewmodel.forum.threads.EditThread;
 
 @Service
 public class EditThreadValidator extends ThreadValidator {

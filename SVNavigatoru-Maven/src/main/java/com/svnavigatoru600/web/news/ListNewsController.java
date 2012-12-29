@@ -15,9 +15,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.svnavigatoru600.domain.News;
 import com.svnavigatoru600.repository.NewsDao;
-import com.svnavigatoru600.service.news.ShowAllNews;
 import com.svnavigatoru600.service.util.Localization;
 import com.svnavigatoru600.service.util.OrderType;
+import com.svnavigatoru600.viewmodel.news.ShowAllNews;
 
 @Controller
 public class ListNewsController extends NewsController {

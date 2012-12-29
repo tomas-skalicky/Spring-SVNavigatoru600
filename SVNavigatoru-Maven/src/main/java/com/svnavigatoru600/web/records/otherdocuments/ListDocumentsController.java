@@ -14,9 +14,9 @@ import org.springframework.ui.ModelMap;
 import com.svnavigatoru600.domain.records.OtherDocumentRecord;
 import com.svnavigatoru600.domain.records.OtherDocumentRecordType;
 import com.svnavigatoru600.repository.records.OtherDocumentRecordDao;
-import com.svnavigatoru600.service.records.otherdocuments.ShowAllRecords;
 import com.svnavigatoru600.service.util.Localization;
 import com.svnavigatoru600.service.util.OrderType;
+import com.svnavigatoru600.viewmodel.records.otherdocuments.ShowAllRecords;
 import com.svnavigatoru600.web.records.PageViews;
 
 /**
