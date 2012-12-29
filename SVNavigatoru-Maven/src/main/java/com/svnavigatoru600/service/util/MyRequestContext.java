@@ -11,7 +11,7 @@ import org.springframework.web.servlet.support.RequestContextUtils;
  * @author Tomas Skalicky
  */
 public final class MyRequestContext {
-    
+
     private MyRequestContext() {
     }
 

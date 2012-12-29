@@ -71,22 +71,23 @@ public final class SqlExecutor {
                 if (nextLine.indexOf(SQL_INLINE_COMMENT_BEGINNING) == 0) {
                     continue;
                 }
-                
+
                 // Ignores a block comment which starts at the beginning of the current line.
                 int blockCommentStart = nextLine.indexOf(SQL_BLOCK_COMMENT_BEGINNING);
                 if (blockCommentStart == 0) {
                     isInBlockComment = true;
                 }
-                
+
                 // Ignores a block comment which ends up at the end of the current line.
                 int blockCommentEnd = nextLine.lastIndexOf(SQL_BLOCK_COMMENT_ENDING);
                 int commentEndIndexIfExists = nextLine.length() - SQL_BLOCK_COMMENT_ENDING.length();
-                boolean isLineEndBlockCommentEnd = (blockCommentEnd == commentEndIndexIfExists) && (blockCommentEnd >= 0);
+                boolean isLineEndBlockCommentEnd = (blockCommentEnd == commentEndIndexIfExists)
+                        && (blockCommentEnd >= 0);
                 if (isLineEndBlockCommentEnd) {
                     isInBlockComment = false;
                     continue;
                 }
-                
+
                 // Ignores the current block comment.
                 if (isInBlockComment) {
                     continue;

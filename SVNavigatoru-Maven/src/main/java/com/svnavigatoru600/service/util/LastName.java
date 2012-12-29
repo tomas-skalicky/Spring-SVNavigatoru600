@@ -8,7 +8,7 @@ package com.svnavigatoru600.service.util;
 public final class LastName {
 
     static final String VALID_LAST_NAME_REGEXP = FirstName.VALID_FIRST_NAME_REGEXP;
-    
+
     private LastName() {
     }
 

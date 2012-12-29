@@ -8,7 +8,7 @@ import javax.servlet.ServletRequest;
  * @author Tomas Skalicky
  */
 public final class Url {
-    
+
     private Url() {
     }
 

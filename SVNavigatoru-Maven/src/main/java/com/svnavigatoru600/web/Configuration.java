@@ -32,7 +32,7 @@ public final class Configuration {
      * MB.</small>
      */
     public static final long MAX_UPLOAD_SIZE = 2097152;
-    
+
     private Configuration() {
     }
 }

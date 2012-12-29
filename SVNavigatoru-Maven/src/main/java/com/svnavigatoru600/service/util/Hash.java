@@ -9,7 +9,7 @@ import java.security.NoSuchAlgorithmException;
  * @author Tomas Skalicky
  */
 public final class Hash {
-    
+
     private Hash() {
     }
 

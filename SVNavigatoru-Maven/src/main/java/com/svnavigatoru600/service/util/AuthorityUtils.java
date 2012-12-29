@@ -16,7 +16,7 @@ import com.svnavigatoru600.domain.users.User;
  * @author Tomas Skalicky
  */
 public final class AuthorityUtils {
-    
+
     private AuthorityUtils() {
     }
 

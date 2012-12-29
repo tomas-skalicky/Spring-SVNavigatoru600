@@ -48,7 +48,7 @@ public final class DateUtils {
         LONG_MONTH_FORMATS.put(csCZLocale, "MMMM");
         DEFAULT_DATE_TIME_FORMATS.put(csCZLocale, "d. MMMM yyyy H:mm");
     }
-    
+
     private DateUtils() {
     }
 

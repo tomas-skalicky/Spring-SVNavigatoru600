@@ -14,7 +14,7 @@ import com.svnavigatoru600.domain.records.OtherDocumentRecordTypeRelation;
  * @author Tomas Skalicky
  */
 public final class OtherDocumentRecordUtils {
-    
+
     private OtherDocumentRecordUtils() {
     }
 

@@ -43,7 +43,7 @@ public final class Email {
     private static final String SENDER = "admin@svnavigatoru600.com";
 
     private static final String VALID_EMAIL_REGEXP = "^[\\w\\-]+(\\.[\\w\\-]+)*@([\\w\\-]+\\.)+[a-zA-Z]{2,}$";
-    
+
     private Email() {
     }
 
