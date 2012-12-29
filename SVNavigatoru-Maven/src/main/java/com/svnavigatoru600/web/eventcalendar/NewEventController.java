@@ -18,7 +18,7 @@ import com.svnavigatoru600.domain.eventcalendar.CalendarEvent;
 import com.svnavigatoru600.domain.eventcalendar.PriorityType;
 import com.svnavigatoru600.repository.CalendarEventDao;
 import com.svnavigatoru600.service.eventcalendar.NewEvent;
-import com.svnavigatoru600.service.eventcalendar.NewEventValidator;
+import com.svnavigatoru600.service.eventcalendar.validator.NewEventValidator;
 import com.svnavigatoru600.service.util.Localization;
 import com.svnavigatoru600.web.Configuration;
 

@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import com.svnavigatoru600.domain.eventcalendar.CalendarEvent;
 import com.svnavigatoru600.domain.eventcalendar.PriorityType;
 import com.svnavigatoru600.repository.CalendarEventDao;
-import com.svnavigatoru600.service.eventcalendar.EventValidator;
+import com.svnavigatoru600.service.eventcalendar.validator.EventValidator;
 import com.svnavigatoru600.service.util.Localization;
 
 /**

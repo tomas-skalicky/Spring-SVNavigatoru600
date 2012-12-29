@@ -1,4 +1,4 @@
-package com.svnavigatoru600.service.records;
+package com.svnavigatoru600.service.records.validator;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;

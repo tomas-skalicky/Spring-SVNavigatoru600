@@ -20,7 +20,7 @@ import com.svnavigatoru600.domain.records.OtherDocumentRecord;
 import com.svnavigatoru600.domain.records.OtherDocumentRecordType;
 import com.svnavigatoru600.repository.records.OtherDocumentRecordDao;
 import com.svnavigatoru600.service.records.otherdocuments.NewRecord;
-import com.svnavigatoru600.service.records.otherdocuments.NewRecordValidator;
+import com.svnavigatoru600.service.records.otherdocuments.validator.NewRecordValidator;
 import com.svnavigatoru600.service.util.File;
 import com.svnavigatoru600.service.util.OtherDocumentRecordUtils;
 import com.svnavigatoru600.web.Configuration;

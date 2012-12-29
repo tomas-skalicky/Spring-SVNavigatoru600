@@ -6,7 +6,7 @@ import org.springframework.validation.Validator;
 
 import com.svnavigatoru600.domain.users.User;
 import com.svnavigatoru600.repository.users.UserDao;
-import com.svnavigatoru600.service.users.UserDataValidator;
+import com.svnavigatoru600.service.users.validator.UserDataValidator;
 
 /**
  * Parent of all controllers which create and edit {@link User}s.

@@ -1,4 +1,4 @@
-package com.svnavigatoru600.service.records.session;
+package com.svnavigatoru600.service.records.session.validator;
 
 import java.util.Date;
 
@@ -8,7 +8,7 @@ import org.springframework.validation.Errors;
 
 import com.svnavigatoru600.domain.records.SessionRecord;
 import com.svnavigatoru600.domain.records.SessionRecordType;
-import com.svnavigatoru600.service.records.DocumentRecordValidator;
+import com.svnavigatoru600.service.records.validator.DocumentRecordValidator;
 
 @Service
 public abstract class SessionRecordValidator extends DocumentRecordValidator {

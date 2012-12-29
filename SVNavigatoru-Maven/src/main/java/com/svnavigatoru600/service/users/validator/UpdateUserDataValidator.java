@@ -1,4 +1,4 @@
-package com.svnavigatoru600.service.users;
+package com.svnavigatoru600.service.users.validator;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
@@ -9,6 +9,7 @@ import com.svnavigatoru600.domain.users.User;
 import com.svnavigatoru600.service.util.Email;
 import com.svnavigatoru600.service.util.Password;
 import com.svnavigatoru600.service.util.PhoneNumber;
+import com.svnavigatoru600.viewmodel.users.UpdateUserData;
 
 /**
  * Validates the data of the current {@link User} filled in in the <i>user-account.jsp</i> form.

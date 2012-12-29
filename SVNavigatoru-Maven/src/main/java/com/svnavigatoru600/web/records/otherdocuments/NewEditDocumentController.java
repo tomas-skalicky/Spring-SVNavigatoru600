@@ -10,7 +10,7 @@ import org.springframework.validation.Validator;
 import com.svnavigatoru600.domain.records.OtherDocumentRecord;
 import com.svnavigatoru600.domain.records.OtherDocumentRecordType;
 import com.svnavigatoru600.repository.records.OtherDocumentRecordDao;
-import com.svnavigatoru600.service.records.otherdocuments.OtherDocumentRecordValidator;
+import com.svnavigatoru600.service.records.otherdocuments.validator.OtherDocumentRecordValidator;
 import com.svnavigatoru600.web.records.PageViews;
 
 /**

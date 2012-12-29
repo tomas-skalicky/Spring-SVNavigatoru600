@@ -1,21 +1,22 @@
-package com.svnavigatoru600.service.eventcalendar;
+package com.svnavigatoru600.service.eventcalendar.validator;
 
 import org.springframework.stereotype.Service;
 import org.springframework.validation.Errors;
 
 import com.svnavigatoru600.domain.eventcalendar.CalendarEvent;
+import com.svnavigatoru600.service.eventcalendar.EditEvent;
 
 @Service
-public class NewEventValidator extends EventValidator {
+public class EditEventValidator extends EventValidator {
 
     @Override
     public boolean supports(Class<?> clazz) {
-        return NewEvent.class.isAssignableFrom(clazz);
+        return EditEvent.class.isAssignableFrom(clazz);
     }
 
     @Override
     public void validate(Object target, Errors errors) {
-        NewEvent command = (NewEvent) target;
+        EditEvent command = (EditEvent) target;
         CalendarEvent event = command.getEvent();
         this.checkNewName(event.getName(), errors);
         this.checkNewDate(event.getDate(), errors);

@@ -1,4 +1,4 @@
-package com.svnavigatoru600.service.users;
+package com.svnavigatoru600.service.users.validator;
 
 import org.springframework.stereotype.Service;
 import org.springframework.validation.Errors;
@@ -6,6 +6,7 @@ import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
 import com.svnavigatoru600.service.util.Email;
+import com.svnavigatoru600.viewmodel.users.SendNewPassword;
 
 /**
  * Validates the data provided by the user in <i>forgotten-password.jsp</i> form.

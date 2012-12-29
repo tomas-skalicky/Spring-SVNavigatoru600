@@ -1,19 +1,21 @@
-package com.svnavigatoru600.service.forum.contributions;
+package com.svnavigatoru600.service.forum.contributions.validator;
 
 import org.springframework.stereotype.Service;
 import org.springframework.validation.Errors;
 
+import com.svnavigatoru600.service.forum.contributions.NewContribution;
+
 @Service
-public class EditContributionValidator extends ContributionValidator {
+public class NewContributionValidator extends ContributionValidator {
 
     @Override
     public boolean supports(Class<?> clazz) {
-        return EditContribution.class.isAssignableFrom(clazz);
+        return NewContribution.class.isAssignableFrom(clazz);
     }
 
     @Override
     public void validate(Object target, Errors errors) {
-        EditContribution command = (EditContribution) target;
+        NewContribution command = (NewContribution) target;
         this.checkNewText(command.getContribution().getText(), errors);
     }
 }

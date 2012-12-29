@@ -15,7 +15,7 @@ import org.springframework.web.bind.support.SessionStatus;
 import com.svnavigatoru600.domain.records.SessionRecordType;
 import com.svnavigatoru600.repository.records.SessionRecordDao;
 import com.svnavigatoru600.service.records.session.NewSessionRecord;
-import com.svnavigatoru600.service.records.session.NewSessionRecordValidator;
+import com.svnavigatoru600.service.records.session.validator.NewSessionRecordValidator;
 import com.svnavigatoru600.web.records.session.NewRecordController;
 
 @Controller

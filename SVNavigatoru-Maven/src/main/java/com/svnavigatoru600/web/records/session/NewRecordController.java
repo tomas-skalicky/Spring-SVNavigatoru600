@@ -20,7 +20,7 @@ import com.svnavigatoru600.domain.records.SessionRecord;
 import com.svnavigatoru600.domain.records.SessionRecordType;
 import com.svnavigatoru600.repository.records.SessionRecordDao;
 import com.svnavigatoru600.service.records.session.NewSessionRecord;
-import com.svnavigatoru600.service.records.session.NewSessionRecordValidator;
+import com.svnavigatoru600.service.records.session.validator.NewSessionRecordValidator;
 import com.svnavigatoru600.service.util.File;
 import com.svnavigatoru600.service.util.Localization;
 import com.svnavigatoru600.web.Configuration;

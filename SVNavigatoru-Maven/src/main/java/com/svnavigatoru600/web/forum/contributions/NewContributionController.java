@@ -19,7 +19,7 @@ import com.svnavigatoru600.domain.forum.Contribution;
 import com.svnavigatoru600.repository.forum.ContributionDao;
 import com.svnavigatoru600.repository.forum.ThreadDao;
 import com.svnavigatoru600.service.forum.contributions.NewContribution;
-import com.svnavigatoru600.service.forum.contributions.NewContributionValidator;
+import com.svnavigatoru600.service.forum.contributions.validator.NewContributionValidator;
 import com.svnavigatoru600.service.util.UserUtils;
 import com.svnavigatoru600.web.Configuration;
 

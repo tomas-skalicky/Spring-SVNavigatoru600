@@ -1,4 +1,4 @@
-package com.svnavigatoru600.service.eventcalendar;
+package com.svnavigatoru600.service.eventcalendar.validator;
 
 import java.util.Date;
 
