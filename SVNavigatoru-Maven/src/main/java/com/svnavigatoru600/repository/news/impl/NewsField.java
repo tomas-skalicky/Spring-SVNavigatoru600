@@ -25,8 +25,6 @@ public enum NewsField {
 
     /**
      * Names of the columns of the database table which contains {@link com.svnavigatoru600.domain.News news}.
-     * 
-     * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
      */
     private enum NewsColumn {
 
