@@ -13,7 +13,7 @@ import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 
 import com.svnavigatoru600.domain.eventcalendar.CalendarEvent;
 import com.svnavigatoru600.repository.CalendarEventDao;
-import com.svnavigatoru600.service.util.OrderType;
+import com.svnavigatoru600.repository.eventcalendar.impl.FindFutureEventsOrderedArguments;
 
 /**
  * The "@Repository" annotation cannot be used. Otherwise, the XML descriptor
@@ -36,13 +36,13 @@ public class CalendarEventDaoImpl extends NamedParameterJdbcDaoSupport implement
     }
 
     @Override
-    public List<CalendarEvent> findFutureEventsOrdered(Date today, OrderType order) {
-        String dateProperty = CalendarEventRowMapper.getColumn("date");
+    public List<CalendarEvent> findFutureEventsOrdered(FindFutureEventsOrderedArguments arguments) {
+        String dateProperty = CalendarEventRowMapper.getColumn(arguments.getSortColumn());
         String query = String.format("SELECT * FROM %s e WHERE e.%s >= :%s ORDER BY e.%s %s",
-                CalendarEventDaoImpl.TABLE_NAME, dateProperty, dateProperty, dateProperty,
-                order.getDatabaseCode());
+                CalendarEventDaoImpl.TABLE_NAME, dateProperty, dateProperty, dateProperty, arguments
+                        .getSortDirection().getDatabaseCode());
 
-        Map<String, Date> args = Collections.singletonMap(dateProperty, today);
+        Map<String, Date> args = Collections.singletonMap(dateProperty, arguments.getEarliestDate());
 
         return this.getNamedParameterJdbcTemplate().query(query, args, new CalendarEventRowMapper());
     }

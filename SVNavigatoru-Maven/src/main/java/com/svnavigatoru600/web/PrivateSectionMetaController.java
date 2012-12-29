@@ -13,6 +13,7 @@ import com.svnavigatoru600.domain.eventcalendar.CalendarEvent;
 import com.svnavigatoru600.domain.forum.Contribution;
 import com.svnavigatoru600.domain.users.User;
 import com.svnavigatoru600.repository.CalendarEventDao;
+import com.svnavigatoru600.repository.eventcalendar.impl.FindFutureEventsOrderedArguments;
 import com.svnavigatoru600.repository.forum.ContributionDao;
 import com.svnavigatoru600.service.util.DateUtils;
 import com.svnavigatoru600.service.util.OrderType;
@@ -59,8 +60,9 @@ public abstract class PrivateSectionMetaController extends MetaController {
     @ModelAttribute("futureEvents")
     public List<EventWrapper> populateFutureEvents(HttpServletRequest request) {
 
-        List<CalendarEvent> events = this.eventDao.findFutureEventsOrdered(DateUtils.getToday(),
-                OrderType.ASCENDING);
+        List<CalendarEvent> events = this.eventDao
+                .findFutureEventsOrdered(new FindFutureEventsOrderedArguments(DateUtils.getToday(),
+                        OrderType.ASCENDING));
 
         List<EventWrapper> futureEvents = new ArrayList<EventWrapper>(FUTURE_EVENT_COUNT);
         for (int eventNum = 0, eventCount = events.size(); (eventNum < FUTURE_EVENT_COUNT)
