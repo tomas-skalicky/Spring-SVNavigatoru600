@@ -1,6 +1,5 @@
 package com.svnavigatoru600.repository.news.impl.direct;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,7 +9,7 @@ import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 
 import com.svnavigatoru600.domain.News;
 import com.svnavigatoru600.repository.NewsDao;
-import com.svnavigatoru600.service.util.OrderType;
+import com.svnavigatoru600.repository.news.impl.FindOrderedArguments;
 import com.svnavigatoru600.repository.news.impl.NewsField;
 
 public class NewsDaoImpl extends SimpleJdbcDaoSupport implements NewsDao {
@@ -25,9 +24,9 @@ public class NewsDaoImpl extends SimpleJdbcDaoSupport implements NewsDao {
     }
 
     @Override
-    public List<News> findOrdered(String attribute, OrderType order) {
-        String query = String.format("SELECT * FROM %s n ORDER BY %s %s", NewsDaoImpl.TABLE_NAME,
-                NewsRowMapper.getColumn(attribute), order.getDatabaseCode());
+    public List<News> findOrdered(FindOrderedArguments arguments) {
+        String query = String.format("SELECT * FROM %s n ORDER BY %s %s", NewsDaoImpl.TABLE_NAME, arguments
+                .getSortField().getColumnName(), arguments.getSortDirection().getDatabaseCode());
         return this.getSimpleJdbcTemplate().query(query, new NewsRowMapper());
     }
 

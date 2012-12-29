@@ -3,7 +3,7 @@ package com.svnavigatoru600.repository;
 import java.util.List;
 
 import com.svnavigatoru600.domain.News;
-import com.svnavigatoru600.service.util.OrderType;
+import com.svnavigatoru600.repository.news.impl.FindOrderedArguments;
 
 @MapperInterface
 public interface NewsDao {
@@ -14,10 +14,10 @@ public interface NewsDao {
     News findById(int newsId);
 
     /**
-     * Returns all {@link News} stored in the repository arranged according to their values of the
-     * <code>attribute</code> in the given <code>order</code>.
+     * Returns all {@link News} stored in the repository arranged according to their values of the given
+     * <code>arguments</code>.
      */
-    List<News> findOrdered(String attribute, OrderType order);
+    List<News> findOrdered(FindOrderedArguments arguments);
 
     /**
      * Updates the given <code>news</code> in the repository. The old version of the <code>news</code> should

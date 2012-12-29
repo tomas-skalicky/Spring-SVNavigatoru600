@@ -1,13 +1,12 @@
 package com.svnavigatoru600.repository.news.impl.hibernate;
 
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 import com.svnavigatoru600.domain.News;
 import com.svnavigatoru600.repository.NewsDao;
-import com.svnavigatoru600.service.util.OrderType;
+import com.svnavigatoru600.repository.news.impl.FindOrderedArguments;
 
 public class NewsDaoImpl extends HibernateDaoSupport implements NewsDao {
 
@@ -18,8 +17,9 @@ public class NewsDaoImpl extends HibernateDaoSupport implements NewsDao {
 
     @Override
     @SuppressWarnings("unchecked")
-    public List<News> findOrdered(String attribute, OrderType order) {
-        String query = String.format("FROM News n ORDER BY %s %s", attribute, order.getDatabaseCode());
+    public List<News> findOrdered(FindOrderedArguments arguments) {
+        String query = String.format("FROM News n ORDER BY %s %s", arguments.getSortField(), arguments
+                .getSortDirection().getDatabaseCode());
         return (List<News>) this.getHibernateTemplate().find(query);
     }
 
