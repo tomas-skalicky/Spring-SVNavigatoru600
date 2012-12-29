@@ -11,6 +11,7 @@ import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import com.svnavigatoru600.domain.News;
 import com.svnavigatoru600.repository.NewsDao;
 import com.svnavigatoru600.service.util.OrderType;
+import com.svnavigatoru600.repository.news.impl.NewsField;
 
 public class NewsDaoImpl extends SimpleJdbcDaoSupport implements NewsDao {
 
@@ -19,7 +20,7 @@ public class NewsDaoImpl extends SimpleJdbcDaoSupport implements NewsDao {
     @Override
     public News findById(int newsId) {
         String query = String.format("SELECT * FROM %s n WHERE n.%s = ?", NewsDaoImpl.TABLE_NAME,
-                NewsRowMapper.getColumn("id"));
+                NewsField.id.getColumnName());
         return this.getSimpleJdbcTemplate().queryForObject(query, new NewsRowMapper(), newsId);
     }
 
@@ -33,9 +34,9 @@ public class NewsDaoImpl extends SimpleJdbcDaoSupport implements NewsDao {
     @Override
     public void update(News news) {
         String query = String.format("UPDATE %s SET %s = ?, %s = ?, %s = ?, %s = ? WHERE %s = ?",
-                NewsDaoImpl.TABLE_NAME, NewsRowMapper.getColumn("title"), NewsRowMapper.getColumn("text"),
-                NewsRowMapper.getColumn("creationTime"), NewsRowMapper.getColumn("lastSaveTime"),
-                NewsRowMapper.getColumn("id"));
+                NewsDaoImpl.TABLE_NAME, NewsField.title.getColumnName(), NewsField.text.getColumnName(),
+                NewsField.creationTime.getColumnName(), NewsField.lastSaveTime.getColumnName(),
+                NewsField.id.getColumnName());
         this.getSimpleJdbcTemplate().update(query, news.getTitle(), news.getText(), news.getCreationTime(),
                 news.getLastSaveTime(), news.getId());
     }
@@ -45,23 +46,21 @@ public class NewsDaoImpl extends SimpleJdbcDaoSupport implements NewsDao {
      */
     private Map<String, Object> getNamedParameters(News news) {
         Map<String, Object> parameters = new HashMap<String, Object>();
-        parameters.put(NewsRowMapper.getColumn("id"), news.getId());
-        parameters.put(NewsRowMapper.getColumn("title"), news.getTitle());
-        parameters.put(NewsRowMapper.getColumn("text"), news.getText());
-        parameters.put(NewsRowMapper.getColumn("creationTime"), news.getCreationTime());
-        parameters.put(NewsRowMapper.getColumn("lastSaveTime"), news.getLastSaveTime());
+        parameters.put(NewsField.id.getColumnName(), news.getId());
+        parameters.put(NewsField.title.getColumnName(), news.getTitle());
+        parameters.put(NewsField.text.getColumnName(), news.getText());
+        parameters.put(NewsField.creationTime.getColumnName(), news.getCreationTime());
+        parameters.put(NewsField.lastSaveTime.getColumnName(), news.getLastSaveTime());
         return parameters;
     }
 
     @Override
     public int save(News news) {
-        String idColumn = NewsRowMapper.getColumn("id");
-
         SimpleJdbcInsert insert = new SimpleJdbcInsert(this.getDataSource())
                 .withTableName(NewsDaoImpl.TABLE_NAME)
-                .usingGeneratedKeyColumns(idColumn)
-                .usingColumns(NewsRowMapper.getColumn("title"), NewsRowMapper.getColumn("text"),
-                        NewsRowMapper.getColumn("creationTime"), NewsRowMapper.getColumn("lastSaveTime"));
+                .usingGeneratedKeyColumns(NewsField.id.getColumnName())
+                .usingColumns(NewsField.title.getColumnName(), NewsField.text.getColumnName(),
+                        NewsField.creationTime.getColumnName(), NewsField.lastSaveTime.getColumnName());
 
         Map<String, Object> keys = insert.executeAndReturnKeyHolder(this.getNamedParameters(news)).getKeys();
         // The generated identified is not under the given idColumn, though the
@@ -69,14 +68,13 @@ public class NewsDaoImpl extends SimpleJdbcDaoSupport implements NewsDao {
         // For more info, see
         // http://forum.springsource.org/showthread.php?91014-Fetching-auto-generated-primary-key-value-after-insert
         // return (Integer) keys.get(idColumn);
-        news.setId(((Long) keys.get("GENERATED_KEY")).intValue());
-        return news.getId();
+        return ((Long) keys.get("GENERATED_KEY")).intValue();
     }
 
     @Override
     public void delete(News news) {
-        String idProperty = NewsRowMapper.getColumn("id");
-        String query = String.format("DELETE FROM %s WHERE %s = ?", NewsDaoImpl.TABLE_NAME, idProperty);
+        String query = String.format("DELETE FROM %s WHERE %s = ?", NewsDaoImpl.TABLE_NAME,
+                NewsField.id.getColumnName());
         this.getSimpleJdbcTemplate().update(query, news.getId());
     }
 }
