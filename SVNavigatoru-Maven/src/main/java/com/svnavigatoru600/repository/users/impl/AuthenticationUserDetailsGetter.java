@@ -18,7 +18,6 @@ import com.svnavigatoru600.repository.users.UserDao;
  * 
  * @author Tomas Skalicky
  */
-@Service("userDetailsService")
 public class AuthenticationUserDetailsGetter extends JdbcDaoImpl {
 
     /** Logger for this class and subclasses */
