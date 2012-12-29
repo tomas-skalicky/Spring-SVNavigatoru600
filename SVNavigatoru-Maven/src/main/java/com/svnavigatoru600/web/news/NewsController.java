@@ -3,12 +3,12 @@ package com.svnavigatoru600.web.news;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 
-import com.svnavigatoru600.domain.News;
-import com.svnavigatoru600.repository.NewsDao;
+import com.svnavigatoru600.service.news.NewsService;
 import com.svnavigatoru600.web.PrivateSectionMetaController;
 
 /**
- * Parent of all controllers which handle all operations upon the {@link News}.
+ * Parent of all controllers which handle all operations upon the {@link com.svnavigatoru600.domain.News News}
+ * .
  * 
  * @author Tomas Skalicky
  */
@@ -16,11 +16,11 @@ import com.svnavigatoru600.web.PrivateSectionMetaController;
 public abstract class NewsController extends PrivateSectionMetaController {
 
     protected static final String BASE_URL = "/novinky/";
-    protected NewsDao newsDao;
+    protected NewsService newsService;
     protected MessageSource messageSource;
 
-    public NewsController(NewsDao newsDao, MessageSource messageSource) {
-        this.newsDao = newsDao;
+    public NewsController(NewsService newsService, MessageSource messageSource) {
+        this.newsService = newsService;
         this.messageSource = messageSource;
     }
 }

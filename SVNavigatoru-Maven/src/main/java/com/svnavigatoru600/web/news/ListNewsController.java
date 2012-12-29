@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.svnavigatoru600.domain.News;
 import com.svnavigatoru600.repository.NewsDao;
+import com.svnavigatoru600.service.news.NewsService;
 import com.svnavigatoru600.service.util.Localization;
 import com.svnavigatoru600.service.util.OrderType;
 import com.svnavigatoru600.viewmodel.news.ShowAllNews;
@@ -39,8 +40,8 @@ public class ListNewsController extends NewsController {
      * Constructor.
      */
     @Autowired
-    public ListNewsController(NewsDao newsDao, MessageSource messageSource) {
-        super(newsDao, messageSource);
+    public ListNewsController(NewsService newsService, MessageSource messageSource) {
+        super(newsService, messageSource);
     }
 
     @RequestMapping(value = ListNewsController.REQUEST_MAPPING_BASE_URL, method = RequestMethod.GET)

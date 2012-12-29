@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.svnavigatoru600.domain.News;
-import com.svnavigatoru600.repository.NewsDao;
+import com.svnavigatoru600.service.news.NewsService;
 
 @Controller
 public class DeleteNewsController extends NewsController {
@@ -30,8 +30,8 @@ public class DeleteNewsController extends NewsController {
      * Constructor.
      */
     @Autowired
-    public DeleteNewsController(NewsDao newsDao, MessageSource messageSource) {
-        super(newsDao, messageSource);
+    public DeleteNewsController(NewsService newsService, MessageSource messageSource) {
+        super(newsService, messageSource);
     }
 
     @RequestMapping(value = DeleteNewsController.REQUEST_MAPPING_BASE_URL, method = RequestMethod.GET)
@@ -43,8 +43,8 @@ public class DeleteNewsController extends NewsController {
 
         try {
             // Deletes the news from the repository.
-            News news = this.newsDao.findById(newsId);
-            this.newsDao.delete(news);
+            News news = this.newsService.findById(newsId);
+            this.newsService.delete(news);
 
             response.setSuccess();
 

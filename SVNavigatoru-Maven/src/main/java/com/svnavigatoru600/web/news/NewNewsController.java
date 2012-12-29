@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.support.SessionStatus;
 
 import com.svnavigatoru600.domain.News;
-import com.svnavigatoru600.repository.NewsDao;
+import com.svnavigatoru600.service.news.NewsService;
 import com.svnavigatoru600.service.news.validator.NewNewsValidator;
 import com.svnavigatoru600.viewmodel.news.NewNews;
 
@@ -33,8 +33,8 @@ public class NewNewsController extends NewEditNewsController {
      * Constructor.
      */
     @Autowired
-    public NewNewsController(NewsDao newsDao, NewNewsValidator validator, MessageSource messageSource) {
-        super(newsDao, validator, messageSource);
+    public NewNewsController(NewsService newsService, NewNewsValidator validator, MessageSource messageSource) {
+        super(newsService, validator, messageSource);
     }
 
     /**
@@ -78,7 +78,7 @@ public class NewNewsController extends NewEditNewsController {
 
         try {
             // Saves the news to the repository.
-            this.newsDao.save(newNews);
+            this.newsService.save(newNews);
 
             // Clears the command object from the session.
             status.setComplete();

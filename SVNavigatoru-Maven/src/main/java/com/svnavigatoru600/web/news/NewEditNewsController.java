@@ -4,12 +4,11 @@ import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.Validator;
 
-import com.svnavigatoru600.domain.News;
-import com.svnavigatoru600.repository.NewsDao;
+import com.svnavigatoru600.service.news.NewsService;
 import com.svnavigatoru600.service.news.validator.NewsValidator;
 
 /**
- * Parent of controllers which create and edit the {@link News}.
+ * Parent of controllers which create and edit the {@link com.svnavigatoru600.domain.News News}.
  * 
  * @author Tomas Skalicky
  */
@@ -22,8 +21,8 @@ public abstract class NewEditNewsController extends NewsController {
     public static final String COMMAND = "newEditNewsCommand";
     protected Validator validator;
 
-    public NewEditNewsController(NewsDao newsDao, NewsValidator validator, MessageSource messageSource) {
-        super(newsDao, messageSource);
+    public NewEditNewsController(NewsService newsService, NewsValidator validator, MessageSource messageSource) {
+        super(newsService, messageSource);
         this.validator = validator;
     }
 }

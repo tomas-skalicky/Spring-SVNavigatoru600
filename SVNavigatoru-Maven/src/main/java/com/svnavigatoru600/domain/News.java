@@ -5,7 +5,7 @@ import java.util.Date;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
-import com.svnavigatoru600.repository.NewsDao;
+import com.svnavigatoru600.service.news.NewsService;
 
 public class News implements Serializable {
 
@@ -14,14 +14,14 @@ public class News implements Serializable {
 	 */
     private static final long serialVersionUID = 6948132683901305572L;
 
-    private NewsDao newsDao;
+    private NewsService newsService;
 
-    public void setNewsDao(final NewsDao newsDao) {
-        this.newsDao = newsDao;
+    public void setNewsService(final NewsService newsService) {
+        this.newsService = newsService;
     }
 
     public void update() {
-        this.newsDao.update(this);
+        this.newsService.update(this);
     }
 
     private int id;

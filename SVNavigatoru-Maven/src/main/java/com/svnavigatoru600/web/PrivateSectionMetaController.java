@@ -63,7 +63,8 @@ public abstract class PrivateSectionMetaController extends MetaController {
                 OrderType.ASCENDING);
 
         List<EventWrapper> futureEvents = new ArrayList<EventWrapper>(FUTURE_EVENT_COUNT);
-        for (int eventNum = 0, eventCount = events.size(); (eventNum < FUTURE_EVENT_COUNT) && (eventNum < eventCount); ++eventNum) {
+        for (int eventNum = 0, eventCount = events.size(); (eventNum < FUTURE_EVENT_COUNT)
+                && (eventNum < eventCount); ++eventNum) {
             CalendarEvent event = events.get(eventNum);
             futureEvents.add(new EventWrapper(event, request));
         }
