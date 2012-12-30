@@ -11,6 +11,9 @@ import org.springframework.security.core.GrantedAuthority;
 import com.svnavigatoru600.domain.users.Authority;
 import com.svnavigatoru600.repository.users.AuthorityDao;
 
+/**
+ * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
+ */
 public class AuthorityDaoImpl extends HibernateDaoSupport implements AuthorityDao {
 
     @Override

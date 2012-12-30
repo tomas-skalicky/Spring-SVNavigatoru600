@@ -14,7 +14,7 @@ import com.svnavigatoru600.domain.users.User;
  * Hibernate mapping. For more information, see
  * http://www.mkyong.com/spring/spring-simplejdbctemplate-querying-examples/.
  * 
- * @author Tomas Skalicky
+ * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
 public class UserRowMapper implements RowMapper<User> {
 
