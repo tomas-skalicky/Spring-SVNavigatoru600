@@ -11,7 +11,10 @@ import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import com.svnavigatoru600.domain.records.DocumentRecord;
 import com.svnavigatoru600.domain.records.SessionRecord;
 import com.svnavigatoru600.domain.records.SessionRecordType;
+import com.svnavigatoru600.repository.impl.PersistedClass;
 import com.svnavigatoru600.repository.records.SessionRecordDao;
+import com.svnavigatoru600.repository.records.impl.DocumentRecordField;
+import com.svnavigatoru600.repository.records.impl.SessionRecordField;
 import com.svnavigatoru600.service.util.OrderType;
 
 /**
@@ -34,14 +37,14 @@ public class SessionRecordDaoImpl extends HibernateDaoSupport implements Session
     public SessionRecord findByFileName(String fileName) {
         // Stands for 'where' clause.
         DetachedCriteria criteria = DetachedCriteria.forClass(SessionRecord.class);
-        criteria.add(Restrictions.eq("fileName", fileName));
+        criteria.add(Restrictions.eq(DocumentRecordField.fileName.name(), fileName));
 
         @SuppressWarnings("unchecked")
         List<SessionRecord> records = (List<SessionRecord>) this.getHibernateTemplate().findByCriteria(
                 criteria);
         if (records.size() > 1) {
             throw new DataIntegrityViolationException("Filename should be unique.");
-        } else if (records.size() == 0) {
+        } else if (records.isEmpty()) {
             throw new DataRetrievalFailureException("No record associated with the given filename exists.");
         }
         return records.get(0);
@@ -50,15 +53,16 @@ public class SessionRecordDaoImpl extends HibernateDaoSupport implements Session
     @Override
     @SuppressWarnings("unchecked")
     public List<SessionRecord> findOrdered(OrderType order) {
-        String query = String.format("FROM SessionRecord r ORDER BY r.sessionDate %s",
-                order.getDatabaseCode());
+        String query = String.format("FROM %s r ORDER BY r.%s %s", PersistedClass.SessionRecord.name(),
+                SessionRecordField.sessionDate.name(), order.getDatabaseCode());
         return (List<SessionRecord>) this.getHibernateTemplate().find(query);
     }
 
     @Override
     @SuppressWarnings("unchecked")
     public List<SessionRecord> findOrdered(SessionRecordType type, OrderType order) {
-        String query = String.format("FROM SessionRecord r WHERE r.type = ? ORDER BY r.sessionDate %s",
+        String query = String.format("FROM %s r WHERE r.type = ? ORDER BY r.%s %s",
+                PersistedClass.SessionRecord.name(), SessionRecordField.sessionDate.name(),
                 order.getDatabaseCode());
         return (List<SessionRecord>) this.getHibernateTemplate().find(query, type.name());
     }

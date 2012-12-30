@@ -16,8 +16,11 @@ import com.svnavigatoru600.domain.records.DocumentRecord;
 import com.svnavigatoru600.domain.records.OtherDocumentRecord;
 import com.svnavigatoru600.domain.records.OtherDocumentRecordType;
 import com.svnavigatoru600.domain.records.OtherDocumentRecordTypeRelation;
+import com.svnavigatoru600.repository.impl.PersistedClass;
 import com.svnavigatoru600.repository.records.OtherDocumentRecordDao;
 import com.svnavigatoru600.repository.records.OtherDocumentRecordTypeRelationDao;
+import com.svnavigatoru600.repository.records.impl.DocumentRecordField;
+import com.svnavigatoru600.repository.records.impl.OtherDocumentRecordField;
 import com.svnavigatoru600.repository.records.impl.OtherDocumentRecordTypeRelationField;
 import com.svnavigatoru600.service.util.OrderType;
 
@@ -26,7 +29,7 @@ import com.svnavigatoru600.service.util.OrderType;
  */
 public class OtherDocumentRecordDaoImpl extends SimpleJdbcDaoSupport implements OtherDocumentRecordDao {
 
-    private static final String TABLE_NAME = "other_document_records";
+    private static final String TABLE_NAME = PersistedClass.OtherDocumentRecord.getTableName();
 
     /**
      * The SELECT command for the return of a single document together with its BLOB file.
@@ -36,9 +39,9 @@ public class OtherDocumentRecordDaoImpl extends SimpleJdbcDaoSupport implements 
      */
     private static final String SELECT_FROM_CLAUSE_WITH_FILE = String.format(
             "SELECT r.*, d.%s, d.%s FROM %s r INNER JOIN %s d ON d.%s = r.%s",
-            DocumentRecordRowMapper.getColumn("fileName"), DocumentRecordRowMapper.getColumn("file"),
-            OtherDocumentRecordDaoImpl.TABLE_NAME, DocumentRecordDaoImpl.TABLE_NAME,
-            DocumentRecordRowMapper.getColumn("id"), OtherDocumentRecordRowMapper.getColumn("id"));
+            DocumentRecordField.fileName.getColumnName(), DocumentRecordField.file.getColumnName(),
+            OtherDocumentRecordDaoImpl.TABLE_NAME, PersistedClass.DocumentRecord.getTableName(),
+            DocumentRecordField.id.getColumnName(), OtherDocumentRecordField.id.getColumnName());
     /**
      * The SELECT command for the return of a single or multiple documents without their BLOB files.
      * 
@@ -47,9 +50,9 @@ public class OtherDocumentRecordDaoImpl extends SimpleJdbcDaoSupport implements 
      */
     private static final String SELECT_FROM_CLAUSE_WITHOUT_FILE = String.format(
             "SELECT r.*, d.%s FROM %s r INNER JOIN %s d ON d.%s = r.%s",
-            DocumentRecordRowMapper.getColumn("fileName"), OtherDocumentRecordDaoImpl.TABLE_NAME,
-            DocumentRecordDaoImpl.TABLE_NAME, DocumentRecordRowMapper.getColumn("id"),
-            OtherDocumentRecordRowMapper.getColumn("id"));
+            DocumentRecordField.fileName.getColumnName(), OtherDocumentRecordDaoImpl.TABLE_NAME,
+            PersistedClass.DocumentRecord.getTableName(), DocumentRecordField.id.getColumnName(),
+            OtherDocumentRecordField.id.getColumnName());
 
     private DocumentRecordDaoImpl documentRecordDao = new DocumentRecordDaoImpl();
     private OtherDocumentRecordTypeRelationDao typeDao;
@@ -94,7 +97,7 @@ public class OtherDocumentRecordDaoImpl extends SimpleJdbcDaoSupport implements 
         }
 
         String query = String.format("%s WHERE r.%s = ?", selectClause,
-                OtherDocumentRecordRowMapper.getColumn("id"));
+                OtherDocumentRecordField.id.getColumnName());
         OtherDocumentRecord record = this.getSimpleJdbcTemplate().queryForObject(query, rowMapper, recordId);
         if (record == null) {
             throw new DataRetrievalFailureException(String.format("No record with the ID '%s' exists.",
@@ -109,7 +112,7 @@ public class OtherDocumentRecordDaoImpl extends SimpleJdbcDaoSupport implements 
     public OtherDocumentRecord findByFileName(String fileName) {
         String query = String.format("%s WHERE r.%s = ?",
                 OtherDocumentRecordDaoImpl.SELECT_FROM_CLAUSE_WITH_FILE,
-                OtherDocumentRecordRowMapper.getColumn("fileName"));
+                DocumentRecordField.fileName.getColumnName());
         OtherDocumentRecord record = this.getSimpleJdbcTemplate().queryForObject(query,
                 new OtherDocumentRecordRowMapper(), fileName);
         if (record == null) {
@@ -125,7 +128,7 @@ public class OtherDocumentRecordDaoImpl extends SimpleJdbcDaoSupport implements 
     public List<OtherDocumentRecord> findOrdered(OrderType order) {
         String query = String.format("%s ORDER BY r.%s %s",
                 OtherDocumentRecordDaoImpl.SELECT_FROM_CLAUSE_WITHOUT_FILE,
-                OtherDocumentRecordRowMapper.getColumn("creationTime"), order.getDatabaseCode());
+                OtherDocumentRecordField.creationTime.getColumnName(), order.getDatabaseCode());
         List<OtherDocumentRecord> records = this.getSimpleJdbcTemplate().query(query,
                 new OtherDocumentRecordRowMapper(false));
 
@@ -137,11 +140,11 @@ public class OtherDocumentRecordDaoImpl extends SimpleJdbcDaoSupport implements 
     public List<OtherDocumentRecord> findOrdered(OtherDocumentRecordType type, OrderType order) {
         String query = String.format("%s INNER JOIN %s t ON t.%s = r.%s WHERE t.%s = ? ORDER BY r.%s %s",
                 OtherDocumentRecordDaoImpl.SELECT_FROM_CLAUSE_WITHOUT_FILE,
-                OtherDocumentRecordTypeRelationDaoImpl.TABLE_NAME,
+                PersistedClass.OtherDocumentRecordTypeRelation.getTableName(),
                 OtherDocumentRecordTypeRelationField.recordId.getColumnName(),
-                OtherDocumentRecordRowMapper.getColumn("id"),
+                OtherDocumentRecordField.id.getColumnName(),
                 OtherDocumentRecordTypeRelationField.type.getColumnName(),
-                OtherDocumentRecordRowMapper.getColumn("creationTime"), order.getDatabaseCode());
+                OtherDocumentRecordField.creationTime.getColumnName(), order.getDatabaseCode());
         List<OtherDocumentRecord> records = this.getSimpleJdbcTemplate().query(query,
                 new OtherDocumentRecordRowMapper(false), type.name());
 
@@ -159,11 +162,11 @@ public class OtherDocumentRecordDaoImpl extends SimpleJdbcDaoSupport implements 
         this.documentRecordDao.update(record, this.getDataSource());
 
         String query = String.format("UPDATE %s SET %s = ?, %s = ?, %s = ?, %s = ? WHERE %s = ?",
-                OtherDocumentRecordDaoImpl.TABLE_NAME, OtherDocumentRecordRowMapper.getColumn("name"),
-                OtherDocumentRecordRowMapper.getColumn("description"),
-                OtherDocumentRecordRowMapper.getColumn("creationTime"),
-                OtherDocumentRecordRowMapper.getColumn("lastSaveTime"),
-                OtherDocumentRecordRowMapper.getColumn("id"));
+                OtherDocumentRecordDaoImpl.TABLE_NAME, OtherDocumentRecordField.name.getColumnName(),
+                OtherDocumentRecordField.description.getColumnName(),
+                OtherDocumentRecordField.creationTime.getColumnName(),
+                OtherDocumentRecordField.lastSaveTime.getColumnName(),
+                OtherDocumentRecordField.id.getColumnName());
         this.getSimpleJdbcTemplate().update(query, record.getName(), record.getDescription(),
                 record.getCreationTime(), record.getLastSaveTime(), record.getId());
 
@@ -177,11 +180,11 @@ public class OtherDocumentRecordDaoImpl extends SimpleJdbcDaoSupport implements 
      */
     private Map<String, Object> getNamedParameters(OtherDocumentRecord record) {
         Map<String, Object> parameters = new HashMap<String, Object>();
-        parameters.put(OtherDocumentRecordRowMapper.getColumn("id"), record.getId());
-        parameters.put(OtherDocumentRecordRowMapper.getColumn("name"), record.getName());
-        parameters.put(OtherDocumentRecordRowMapper.getColumn("description"), record.getDescription());
-        parameters.put(OtherDocumentRecordRowMapper.getColumn("creationTime"), record.getCreationTime());
-        parameters.put(OtherDocumentRecordRowMapper.getColumn("lastSaveTime"), record.getLastSaveTime());
+        parameters.put(OtherDocumentRecordField.id.getColumnName(), record.getId());
+        parameters.put(OtherDocumentRecordField.name.getColumnName(), record.getName());
+        parameters.put(OtherDocumentRecordField.description.getColumnName(), record.getDescription());
+        parameters.put(OtherDocumentRecordField.creationTime.getColumnName(), record.getCreationTime());
+        parameters.put(OtherDocumentRecordField.lastSaveTime.getColumnName(), record.getLastSaveTime());
         return parameters;
     }
 
@@ -197,13 +200,13 @@ public class OtherDocumentRecordDaoImpl extends SimpleJdbcDaoSupport implements 
 
         SimpleJdbcInsert insert = new SimpleJdbcInsert(this.getDataSource()).withTableName(
                 OtherDocumentRecordDaoImpl.TABLE_NAME).usingColumns(
-                OtherDocumentRecordRowMapper.getColumn("id"), OtherDocumentRecordRowMapper.getColumn("name"),
-                OtherDocumentRecordRowMapper.getColumn("description"),
-                OtherDocumentRecordRowMapper.getColumn("creationTime"),
-                OtherDocumentRecordRowMapper.getColumn("lastSaveTime"));
+                OtherDocumentRecordField.id.getColumnName(), OtherDocumentRecordField.name.getColumnName(),
+                OtherDocumentRecordField.description.getColumnName(),
+                OtherDocumentRecordField.creationTime.getColumnName(),
+                OtherDocumentRecordField.lastSaveTime.getColumnName());
 
         Map<String, Object> parameters = this.getNamedParameters(record);
-        parameters.put(OtherDocumentRecordRowMapper.getColumn("id"), recordId);
+        parameters.put(OtherDocumentRecordField.id.getColumnName(), recordId);
         insert.execute(parameters);
 
         Set<OtherDocumentRecordTypeRelation> types = record.getTypes();

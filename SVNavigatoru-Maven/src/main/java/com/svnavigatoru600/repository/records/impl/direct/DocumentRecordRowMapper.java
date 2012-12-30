@@ -1,43 +1,30 @@
 package com.svnavigatoru600.repository.records.impl.direct;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import org.springframework.jdbc.core.RowMapper;
-
-import com.svnavigatoru600.domain.records.DocumentRecord;
-import com.svnavigatoru600.repository.users.impl.direct.UserRowMapper;
-
 /**
- * For more information, see {@link UserRowMapper}. This class cannot implement the interface
- * {@link RowMapper} since the class {@link DocumentRecord} is not instantiable - it is abstract.
+ * For more information, see {@link com.svnavigatoru600.repository.users.impl.direct.UserRowMapper
+ * UserRowMapper}. This class cannot implement the interface {@link org.springframework.jdbc.core.RowMapper
+ * RowMapper} since the class {@link com.svnavigatoru600.domain.records.DocumentRecord DocumentRecord} is not
+ * instantiable - it is abstract.
  * 
  * @author Tomas Skalicky
  */
 public abstract class DocumentRecordRowMapper {
 
     /**
-     * Determines whether this mapper will consider the <b>Blob</b> file.
+     * The default value of the indication whether to load <b>Blob</b> file, or not.
      */
-    protected boolean loadFile;
-
-    private static final Map<String, String> PROPERTY_COLUMN_MAP;
+    private static final boolean DEFAULT_LOAD_FILE = true;
 
     /**
-     * Static constructor.
+     * Determines whether this mapper will consider the <b>Blob</b> file.
      */
-    static {
-        PROPERTY_COLUMN_MAP = new HashMap<String, String>();
-        PROPERTY_COLUMN_MAP.put("id", "id");
-        PROPERTY_COLUMN_MAP.put("fileName", "file_name");
-        PROPERTY_COLUMN_MAP.put("file", "file");
-    }
+    private boolean loadFile;
 
     /**
      * Constructor.
      */
     public DocumentRecordRowMapper() {
-        this(true);
+        this(DEFAULT_LOAD_FILE);
     }
 
     /**
@@ -47,7 +34,7 @@ public abstract class DocumentRecordRowMapper {
         this.loadFile = loadFile;
     }
 
-    public static String getColumn(String propertyName) {
-        return DocumentRecordRowMapper.PROPERTY_COLUMN_MAP.get(propertyName);
+    public boolean isLoadFile() {
+        return this.loadFile;
     }
 }

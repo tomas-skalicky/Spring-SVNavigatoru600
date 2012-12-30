@@ -8,10 +8,12 @@ import org.springframework.jdbc.core.simple.SimpleJdbcDaoSupport;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 
 import com.svnavigatoru600.domain.records.DocumentRecord;
-import com.svnavigatoru600.domain.records.OtherDocumentRecord;
 import com.svnavigatoru600.domain.records.SessionRecord;
 import com.svnavigatoru600.domain.records.SessionRecordType;
+import com.svnavigatoru600.repository.impl.PersistedClass;
 import com.svnavigatoru600.repository.records.SessionRecordDao;
+import com.svnavigatoru600.repository.records.impl.DocumentRecordField;
+import com.svnavigatoru600.repository.records.impl.SessionRecordField;
 import com.svnavigatoru600.service.util.OrderType;
 
 /**
@@ -19,7 +21,7 @@ import com.svnavigatoru600.service.util.OrderType;
  */
 public class SessionRecordDaoImpl extends SimpleJdbcDaoSupport implements SessionRecordDao {
 
-    private static final String TABLE_NAME = "session_records";
+    private static final String TABLE_NAME = PersistedClass.SessionRecord.getTableName();
 
     /**
      * The SELECT command for the return of a single document together with its BLOB file.
@@ -29,20 +31,21 @@ public class SessionRecordDaoImpl extends SimpleJdbcDaoSupport implements Sessio
      */
     private static final String SELECT_FROM_CLAUSE_WITH_FILE = String.format(
             "SELECT r.*, d.%s, d.%s FROM %s r INNER JOIN %s d ON d.%s = r.%s",
-            DocumentRecordRowMapper.getColumn("fileName"), DocumentRecordRowMapper.getColumn("file"),
-            SessionRecordDaoImpl.TABLE_NAME, DocumentRecordDaoImpl.TABLE_NAME,
-            DocumentRecordRowMapper.getColumn("id"), SessionRecordRowMapper.getColumn("id"));
+            DocumentRecordField.fileName.getColumnName(), DocumentRecordField.file.getColumnName(),
+            SessionRecordDaoImpl.TABLE_NAME, PersistedClass.DocumentRecord.getTableName(),
+            DocumentRecordField.id.getColumnName(), SessionRecordField.id.getColumnName());
     /**
      * The SELECT command for the return of a single or multiple documents without their BLOB files.
      * 
-     * Join is necessary in all SELECT queries since {@link OtherDocumentRecord} inherits from
+     * Join is necessary in all SELECT queries since
+     * {@link com.svnavigatoru600.domain.records.OtherDocumentRecord OtherDocumentRecord} inherits from
      * {@link DocumentRecord}.
      */
     private static final String SELECT_FROM_CLAUSE_WITHOUT_FILE = String.format(
             "SELECT r.*, d.%s FROM %s r INNER JOIN %s d ON d.%s = r.%s",
-            DocumentRecordRowMapper.getColumn("fileName"), SessionRecordDaoImpl.TABLE_NAME,
-            DocumentRecordDaoImpl.TABLE_NAME, DocumentRecordRowMapper.getColumn("id"),
-            SessionRecordRowMapper.getColumn("id"));
+            DocumentRecordField.fileName.getColumnName(), SessionRecordDaoImpl.TABLE_NAME,
+            PersistedClass.DocumentRecord.getTableName(), DocumentRecordField.id.getColumnName(),
+            SessionRecordField.id.getColumnName());
 
     private DocumentRecordDaoImpl documentRecordDao = new DocumentRecordDaoImpl();
 
@@ -63,15 +66,15 @@ public class SessionRecordDaoImpl extends SimpleJdbcDaoSupport implements Sessio
             rowMapper = new SessionRecordRowMapper(false);
         }
 
-        String query = String.format("%s WHERE r.%s = ?", selectClause,
-                SessionRecordRowMapper.getColumn("id"));
+        String query = String
+                .format("%s WHERE r.%s = ?", selectClause, SessionRecordField.id.getColumnName());
         return this.getSimpleJdbcTemplate().queryForObject(query, rowMapper, recordId);
     }
 
     @Override
     public SessionRecord findByFileName(String fileName) {
         String query = String.format("%s WHERE r.%s = ?", SessionRecordDaoImpl.SELECT_FROM_CLAUSE_WITH_FILE,
-                SessionRecordRowMapper.getColumn("fileName"));
+                DocumentRecordField.fileName.getColumnName());
         return this.getSimpleJdbcTemplate().queryForObject(query, new SessionRecordRowMapper(), fileName);
     }
 
@@ -79,7 +82,7 @@ public class SessionRecordDaoImpl extends SimpleJdbcDaoSupport implements Sessio
     public List<SessionRecord> findOrdered(OrderType order) {
         String query = String.format("%s ORDER BY r.%s %s",
                 SessionRecordDaoImpl.SELECT_FROM_CLAUSE_WITHOUT_FILE,
-                SessionRecordRowMapper.getColumn("sessionDate"), order.getDatabaseCode());
+                SessionRecordField.sessionDate.getColumnName(), order.getDatabaseCode());
         return this.getSimpleJdbcTemplate().query(query, new SessionRecordRowMapper(false));
     }
 
@@ -87,7 +90,7 @@ public class SessionRecordDaoImpl extends SimpleJdbcDaoSupport implements Sessio
     public List<SessionRecord> findOrdered(SessionRecordType type, OrderType order) {
         String query = String.format("%s WHERE r.%s = ? ORDER BY r.%s %s",
                 SessionRecordDaoImpl.SELECT_FROM_CLAUSE_WITHOUT_FILE,
-                SessionRecordRowMapper.getColumn("type"), SessionRecordRowMapper.getColumn("sessionDate"),
+                SessionRecordField.type.getColumnName(), SessionRecordField.sessionDate.getColumnName(),
                 order.getDatabaseCode());
         return this.getSimpleJdbcTemplate().query(query, new SessionRecordRowMapper(false), type.name());
     }
@@ -99,9 +102,9 @@ public class SessionRecordDaoImpl extends SimpleJdbcDaoSupport implements Sessio
         this.documentRecordDao.update(record, this.getDataSource());
 
         String query = String.format("UPDATE %s SET %s = ?, %s = ?, %s = ? WHERE %s = ?",
-                SessionRecordDaoImpl.TABLE_NAME, SessionRecordRowMapper.getColumn("type"),
-                SessionRecordRowMapper.getColumn("sessionDate"),
-                SessionRecordRowMapper.getColumn("discussedTopics"), SessionRecordRowMapper.getColumn("id"));
+                SessionRecordDaoImpl.TABLE_NAME, SessionRecordField.type.getColumnName(),
+                SessionRecordField.sessionDate.getColumnName(),
+                SessionRecordField.discussedTopics.getColumnName(), SessionRecordField.id.getColumnName());
         this.getSimpleJdbcTemplate().update(query, record.getType(), record.getSessionDate(),
                 record.getDiscussedTopics(), record.getId());
     }
@@ -111,10 +114,10 @@ public class SessionRecordDaoImpl extends SimpleJdbcDaoSupport implements Sessio
      */
     private Map<String, Object> getNamedParameters(SessionRecord record) {
         Map<String, Object> parameters = new HashMap<String, Object>();
-        parameters.put(SessionRecordRowMapper.getColumn("id"), record.getId());
-        parameters.put(SessionRecordRowMapper.getColumn("type"), record.getType());
-        parameters.put(SessionRecordRowMapper.getColumn("sessionDate"), record.getSessionDate());
-        parameters.put(SessionRecordRowMapper.getColumn("discussedTopics"), record.getDiscussedTopics());
+        parameters.put(SessionRecordField.id.getColumnName(), record.getId());
+        parameters.put(SessionRecordField.type.getColumnName(), record.getType());
+        parameters.put(SessionRecordField.sessionDate.getColumnName(), record.getSessionDate());
+        parameters.put(SessionRecordField.discussedTopics.getColumnName(), record.getDiscussedTopics());
         return parameters;
     }
 
@@ -125,12 +128,12 @@ public class SessionRecordDaoImpl extends SimpleJdbcDaoSupport implements Sessio
         int recordId = this.documentRecordDao.save(record, this.getDataSource());
 
         SimpleJdbcInsert insert = new SimpleJdbcInsert(this.getDataSource()).withTableName(
-                SessionRecordDaoImpl.TABLE_NAME).usingColumns(SessionRecordRowMapper.getColumn("id"),
-                SessionRecordRowMapper.getColumn("type"), SessionRecordRowMapper.getColumn("sessionDate"),
-                SessionRecordRowMapper.getColumn("discussedTopics"));
+                SessionRecordDaoImpl.TABLE_NAME).usingColumns(SessionRecordField.id.getColumnName(),
+                SessionRecordField.type.getColumnName(), SessionRecordField.sessionDate.getColumnName(),
+                SessionRecordField.discussedTopics.getColumnName());
 
         Map<String, Object> parameters = this.getNamedParameters(record);
-        parameters.put(SessionRecordRowMapper.getColumn("id"), recordId);
+        parameters.put(SessionRecordField.id.getColumnName(), recordId);
         insert.execute(parameters);
 
         return recordId;

@@ -20,7 +20,7 @@ import com.svnavigatoru600.repository.records.impl.OtherDocumentRecordTypeRelati
 public class OtherDocumentRecordTypeRelationDaoImpl extends SimpleJdbcDaoSupport implements
         OtherDocumentRecordTypeRelationDao {
 
-    static final String TABLE_NAME = PersistedClass.OtherDocumentRecordTypeRelation.getTableName();
+    private static final String TABLE_NAME = PersistedClass.OtherDocumentRecordTypeRelation.getTableName();
 
     @Override
     public List<OtherDocumentRecordTypeRelation> find(int recordId) {

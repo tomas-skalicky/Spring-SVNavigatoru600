@@ -3,35 +3,21 @@ package com.svnavigatoru600.repository.records.impl.direct;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 import org.springframework.jdbc.core.RowMapper;
 
 import com.svnavigatoru600.domain.records.OtherDocumentRecord;
-import com.svnavigatoru600.repository.users.impl.direct.UserRowMapper;
+import com.svnavigatoru600.repository.records.impl.DocumentRecordField;
+import com.svnavigatoru600.repository.records.impl.OtherDocumentRecordField;
 
 /**
- * For more information, see {@link UserRowMapper}.
+ * For more information, see {@link com.svnavigatoru600.repository.users.impl.direct.UserRowMapper
+ * UserRowMapper}.
  * 
  * @author Tomas Skalicky
  */
 public class OtherDocumentRecordRowMapper extends DocumentRecordRowMapper implements
         RowMapper<OtherDocumentRecord> {
-
-    private static final Map<String, String> PROPERTY_COLUMN_MAP;
-
-    /**
-     * Static constructor.
-     */
-    static {
-        PROPERTY_COLUMN_MAP = new HashMap<String, String>();
-        PROPERTY_COLUMN_MAP.put("id", "id");
-        PROPERTY_COLUMN_MAP.put("name", "name");
-        PROPERTY_COLUMN_MAP.put("description", "description");
-        PROPERTY_COLUMN_MAP.put("creationTime", "creation_time");
-        PROPERTY_COLUMN_MAP.put("lastSaveTime", "last_save_time");
-    }
 
     /**
      * Constructor.
@@ -50,28 +36,24 @@ public class OtherDocumentRecordRowMapper extends DocumentRecordRowMapper implem
         super(loadFile);
     }
 
-    public static String getColumn(String propertyName) {
-        return OtherDocumentRecordRowMapper.PROPERTY_COLUMN_MAP.get(propertyName);
-    }
-
     @Override
     public OtherDocumentRecord mapRow(ResultSet rs, int rowNum) throws SQLException {
         OtherDocumentRecord record = new OtherDocumentRecord();
-        record.setId(rs.getInt(OtherDocumentRecordRowMapper.getColumn("id")));
-        record.setFileName(rs.getString(DocumentRecordRowMapper.getColumn("fileName")));
+        record.setId(rs.getInt(OtherDocumentRecordField.id.getColumnName()));
+        record.setFileName(rs.getString(DocumentRecordField.fileName.getColumnName()));
 
-        if (this.loadFile) {
-            record.setFile(rs.getBlob(DocumentRecordRowMapper.getColumn("file")));
+        if (this.isLoadFile()) {
+            record.setFile(rs.getBlob(DocumentRecordField.file.getColumnName()));
         } else {
             record.setFile(null);
         }
 
-        record.setName(rs.getString(OtherDocumentRecordRowMapper.getColumn("name")));
-        record.setDescription(rs.getString(OtherDocumentRecordRowMapper.getColumn("description")));
-        record.setCreationTime(new Date(rs.getTimestamp(
-                OtherDocumentRecordRowMapper.getColumn("creationTime")).getTime()));
-        record.setLastSaveTime(new Date(rs.getTimestamp(
-                OtherDocumentRecordRowMapper.getColumn("lastSaveTime")).getTime()));
+        record.setName(rs.getString(OtherDocumentRecordField.name.getColumnName()));
+        record.setDescription(rs.getString(OtherDocumentRecordField.description.getColumnName()));
+        record.setCreationTime(new Date(rs
+                .getTimestamp(OtherDocumentRecordField.creationTime.getColumnName()).getTime()));
+        record.setLastSaveTime(new Date(rs
+                .getTimestamp(OtherDocumentRecordField.lastSaveTime.getColumnName()).getTime()));
         return record;
     }
 }
