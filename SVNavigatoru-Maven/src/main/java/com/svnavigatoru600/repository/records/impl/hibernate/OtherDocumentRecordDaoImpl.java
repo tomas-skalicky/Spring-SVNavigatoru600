@@ -13,8 +13,12 @@ import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import com.svnavigatoru600.domain.records.DocumentRecord;
 import com.svnavigatoru600.domain.records.OtherDocumentRecord;
 import com.svnavigatoru600.domain.records.OtherDocumentRecordType;
+import com.svnavigatoru600.repository.impl.PersistedClass;
 import com.svnavigatoru600.repository.records.OtherDocumentRecordDao;
 import com.svnavigatoru600.repository.records.OtherDocumentRecordTypeRelationDao;
+import com.svnavigatoru600.repository.records.impl.DocumentRecordField;
+import com.svnavigatoru600.repository.records.impl.OtherDocumentRecordField;
+import com.svnavigatoru600.repository.records.impl.OtherDocumentRecordTypeRelationField;
 import com.svnavigatoru600.service.util.OrderType;
 
 /**
@@ -44,14 +48,14 @@ public class OtherDocumentRecordDaoImpl extends HibernateDaoSupport implements O
     public OtherDocumentRecord findByFileName(String fileName) {
         // Stands for 'where' clause.
         DetachedCriteria criteria = DetachedCriteria.forClass(OtherDocumentRecord.class);
-        criteria.add(Restrictions.eq("fileName", fileName));
+        criteria.add(Restrictions.eq(DocumentRecordField.fileName.name(), fileName));
 
         @SuppressWarnings("unchecked")
         List<OtherDocumentRecord> records = (List<OtherDocumentRecord>) this.getHibernateTemplate()
                 .findByCriteria(criteria);
         if (records.size() > 1) {
             throw new DataIntegrityViolationException("Filename should be unique.");
-        } else if (records.size() == 0) {
+        } else if (records.isEmpty()) {
             throw new DataRetrievalFailureException("No record associated with the given filename exists.");
         }
         return records.get(0);
@@ -60,16 +64,19 @@ public class OtherDocumentRecordDaoImpl extends HibernateDaoSupport implements O
     @Override
     @SuppressWarnings("unchecked")
     public List<OtherDocumentRecord> findOrdered(OrderType order) {
-        String query = String.format("FROM OtherDocumentRecord r ORDER BY r.creationTime %s",
-                order.getDatabaseCode());
+        String query = String.format("FROM %s r ORDER BY r.%s %s", PersistedClass.OtherDocumentRecord.name(),
+                OtherDocumentRecordField.creationTime.name(), order.getDatabaseCode());
         return (List<OtherDocumentRecord>) this.getHibernateTemplate().find(query);
     }
 
     @Override
     @SuppressWarnings("unchecked")
     public List<OtherDocumentRecord> findOrdered(OtherDocumentRecordType type, OrderType order) {
-        String query = String.format("SELECT r FROM OtherDocumentRecord r INNER JOIN r.types t"
-                + " WHERE t.id.type = ? ORDER BY r.creationTime %s", order.getDatabaseCode());
+        String query = String.format(
+                "SELECT r FROM %s r INNER JOIN r.types t WHERE t.%s = ? ORDER BY r.%s %s",
+                PersistedClass.OtherDocumentRecord.name(),
+                OtherDocumentRecordTypeRelationField.type.getFieldChain(),
+                OtherDocumentRecordField.creationTime.name(), order.getDatabaseCode());
         return (List<OtherDocumentRecord>) this.getHibernateTemplate().find(query, type.name());
     }
 

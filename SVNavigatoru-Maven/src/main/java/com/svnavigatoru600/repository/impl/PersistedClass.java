@@ -9,8 +9,9 @@ public enum PersistedClass {
 
     News(DatabaseTable.news), WysiwygSection(DatabaseTable.wysiwyg_sections), CalendarEvent(
             DatabaseTable.calendar_events), Thread(DatabaseTable.threads), Contribution(
-            DatabaseTable.contributions), OtherDocumentRecordTypeRelation(
-            DatabaseTable.other_document_record_type_relations);
+            DatabaseTable.contributions), DocumentRecord(DatabaseTable.document_records), OtherDocumentRecord(
+            DatabaseTable.other_document_records), OtherDocumentRecordTypeRelation(
+            DatabaseTable.other_document_record_type_relations), SessionRecord(DatabaseTable.session_records);
 
     /**
      * The name of a corresponding database table.
@@ -30,6 +31,6 @@ public enum PersistedClass {
      */
     private enum DatabaseTable {
 
-        news, wysiwyg_sections, calendar_events, threads, contributions, other_document_record_type_relations
+        news, wysiwyg_sections, calendar_events, threads, contributions, document_records, other_document_records, other_document_record_type_relations, session_records
     }
 }

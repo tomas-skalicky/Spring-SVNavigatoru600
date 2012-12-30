@@ -11,13 +11,15 @@ import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
 
 import com.svnavigatoru600.domain.records.DocumentRecord;
+import com.svnavigatoru600.repository.impl.PersistedClass;
+import com.svnavigatoru600.repository.records.impl.DocumentRecordField;
 
 /**
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
 public class DocumentRecordDaoImpl extends SimpleJdbcDaoSupport {
 
-    static final String TABLE_NAME = "document_records";
+    private static final String TABLE_NAME = PersistedClass.DocumentRecord.getTableName();
 
     public void update(DocumentRecord record, DataSource dataSource) {
         Blob file = record.getFile();
@@ -26,8 +28,8 @@ public class DocumentRecordDaoImpl extends SimpleJdbcDaoSupport {
         }
 
         String query = String.format("UPDATE %s SET %s = ?, %s = ? WHERE %s = ?",
-                DocumentRecordDaoImpl.TABLE_NAME, DocumentRecordRowMapper.getColumn("fileName"),
-                DocumentRecordRowMapper.getColumn("file"), DocumentRecordRowMapper.getColumn("id"));
+                DocumentRecordDaoImpl.TABLE_NAME, DocumentRecordField.fileName.getColumnName(),
+                DocumentRecordField.file.getColumnName(), DocumentRecordField.id.getColumnName());
 
         // this.getSimpleJdbcTemplate() cannot be used here since the dataSource
         // is not set (i.e. equals null).
@@ -39,27 +41,25 @@ public class DocumentRecordDaoImpl extends SimpleJdbcDaoSupport {
      */
     private Map<String, Object> getNamedParameters(DocumentRecord record) {
         Map<String, Object> parameters = new HashMap<String, Object>();
-        parameters.put(DocumentRecordRowMapper.getColumn("id"), record.getId());
-        parameters.put(DocumentRecordRowMapper.getColumn("fileName"), record.getFileName());
-        parameters.put(DocumentRecordRowMapper.getColumn("file"), record.getFile());
+        parameters.put(DocumentRecordField.id.getColumnName(), record.getId());
+        parameters.put(DocumentRecordField.fileName.getColumnName(), record.getFileName());
+        parameters.put(DocumentRecordField.file.getColumnName(), record.getFile());
         return parameters;
     }
 
     public int save(DocumentRecord record, DataSource dataSource) {
-        String idColumn = DocumentRecordRowMapper.getColumn("id");
-
         SimpleJdbcInsert insert = new SimpleJdbcInsert(dataSource)
                 .withTableName(DocumentRecordDaoImpl.TABLE_NAME)
-                .usingGeneratedKeyColumns(idColumn)
-                .usingColumns(DocumentRecordRowMapper.getColumn("fileName"),
-                        DocumentRecordRowMapper.getColumn("file"));
+                .usingGeneratedKeyColumns(DocumentRecordField.id.getColumnName())
+                .usingColumns(DocumentRecordField.fileName.getColumnName(),
+                        DocumentRecordField.file.getColumnName());
 
         return insert.executeAndReturnKey(this.getNamedParameters(record)).intValue();
     }
 
     public void delete(DocumentRecord record, DataSource dataSource) {
         String query = String.format("DELETE FROM %s WHERE %s = ?", DocumentRecordDaoImpl.TABLE_NAME,
-                DocumentRecordRowMapper.getColumn("id"));
+                DocumentRecordField.id.getColumnName());
 
         // See the update function.
         (new SimpleJdbcTemplate(dataSource)).update(query, record.getId());

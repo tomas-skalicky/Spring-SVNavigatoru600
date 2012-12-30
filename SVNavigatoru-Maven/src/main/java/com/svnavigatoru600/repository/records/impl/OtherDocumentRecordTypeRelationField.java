@@ -9,7 +9,7 @@ package com.svnavigatoru600.repository.records.impl;
 public enum OtherDocumentRecordTypeRelationField {
 
     recordId(OtherDocumentRecordTypeRelationColumn.record_id, "id.recordId"), type(
-            OtherDocumentRecordTypeRelationColumn.type);
+            OtherDocumentRecordTypeRelationColumn.type, "id.type");
 
     /**
      * The name of a corresponding database column.
