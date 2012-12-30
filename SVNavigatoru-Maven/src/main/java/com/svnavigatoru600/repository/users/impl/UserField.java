@@ -9,7 +9,7 @@ public enum UserField {
 
     username(UserColumn.username), password(UserColumn.password), enabled(UserColumn.enabled), firstName(
             UserColumn.first_name), lastName(UserColumn.last_name), email(UserColumn.email), phone(
-            UserColumn.phone), isTestUser(UserColumn.is_test_user);
+            UserColumn.phone), isTestUser(UserColumn.is_test_user), authorities(null);
 
     /**
      * The name of a corresponding database column.
