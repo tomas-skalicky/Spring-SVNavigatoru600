@@ -9,6 +9,9 @@ import com.svnavigatoru600.domain.forum.Contribution;
 import com.svnavigatoru600.domain.forum.Thread;
 import com.svnavigatoru600.repository.forum.ThreadDao;
 
+/**
+ * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
+ */
 public class ThreadDaoImpl extends HibernateDaoSupport implements ThreadDao {
 
     @Override

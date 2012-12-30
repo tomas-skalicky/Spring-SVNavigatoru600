@@ -9,6 +9,9 @@ import com.svnavigatoru600.repository.CalendarEventDao;
 import com.svnavigatoru600.repository.eventcalendar.impl.CalendarEventField;
 import com.svnavigatoru600.repository.eventcalendar.impl.FindFutureEventsOrderedArguments;
 
+/**
+ * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
+ */
 public class CalendarEventDaoImpl extends HibernateDaoSupport implements CalendarEventDao {
 
     @Override

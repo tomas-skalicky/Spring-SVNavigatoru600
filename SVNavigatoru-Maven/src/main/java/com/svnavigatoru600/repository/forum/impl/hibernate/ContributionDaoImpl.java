@@ -13,6 +13,9 @@ import com.svnavigatoru600.repository.forum.impl.ContributionField;
 import com.svnavigatoru600.repository.impl.PersistedClass;
 import com.svnavigatoru600.service.util.OrderType;
 
+/**
+ * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
+ */
 public class ContributionDaoImpl extends HibernateDaoSupport implements ContributionDao {
 
     @Override
