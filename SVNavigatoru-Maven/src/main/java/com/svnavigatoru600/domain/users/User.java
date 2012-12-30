@@ -43,6 +43,7 @@ public class User implements UserDetails, Serializable {
     private String lastName;
     private String email;
     private String phone;
+    private boolean isTestUser;
     private Set<GrantedAuthority> authorities;
 
     @Override
@@ -125,6 +126,14 @@ public class User implements UserDetails, Serializable {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public boolean isTestUser() {
+        return this.isTestUser;
+    }
+
+    public void setTestUser(boolean isTestUser) {
+        this.isTestUser = isTestUser;
     }
 
     @Override
