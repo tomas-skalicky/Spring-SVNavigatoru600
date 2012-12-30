@@ -15,6 +15,7 @@ import com.svnavigatoru600.domain.eventcalendar.CalendarEvent;
 import com.svnavigatoru600.repository.CalendarEventDao;
 import com.svnavigatoru600.repository.eventcalendar.impl.CalendarEventField;
 import com.svnavigatoru600.repository.eventcalendar.impl.FindFutureEventsOrderedArguments;
+import com.svnavigatoru600.repository.impl.PersistedClass;
 
 /**
  * The "@Repository" annotation cannot be used. Otherwise, the XML descriptor
@@ -23,15 +24,15 @@ import com.svnavigatoru600.repository.eventcalendar.impl.FindFutureEventsOrdered
  */
 public class CalendarEventDaoImpl extends NamedParameterJdbcDaoSupport implements CalendarEventDao {
 
-    private static final String TABLE_NAME = "calendar_events";
+    private static final String TABLE_NAME = PersistedClass.CalendarEvent.getTableName();
 
     @Override
     public CalendarEvent findById(int eventId) {
-        String idProperty = CalendarEventField.id.getColumnName();
+        String idColumn = CalendarEventField.id.getColumnName();
         String query = String.format("SELECT * FROM %s e WHERE e.%s = :%s", CalendarEventDaoImpl.TABLE_NAME,
-                idProperty, idProperty);
+                idColumn, idColumn);
 
-        Map<String, Integer> args = Collections.singletonMap(idProperty, eventId);
+        Map<String, Integer> args = Collections.singletonMap(idColumn, eventId);
 
         return this.getNamedParameterJdbcTemplate().queryForObject(query, args, new CalendarEventRowMapper());
     }
@@ -50,15 +51,13 @@ public class CalendarEventDaoImpl extends NamedParameterJdbcDaoSupport implement
 
     @Override
     public void update(CalendarEvent event) {
-        String nameProperty = CalendarEventField.name.getColumnName();
-        String dateProperty = CalendarEventField.date.getColumnName();
-        String descriptionProperty = CalendarEventField.description.getColumnName();
-        String priorityProperty = CalendarEventField.priority.getColumnName();
-        String idProperty = CalendarEventField.id.getColumnName();
-        String query = String.format(
-                "UPDATE %s SET %s = :name, %s = :date, %s = :description, %s = :priority WHERE %s = :id",
-                CalendarEventDaoImpl.TABLE_NAME, nameProperty, dateProperty, descriptionProperty,
-                priorityProperty, idProperty);
+        String query = String.format("UPDATE %s SET %s = :%s, %s = :%s, %s = :%s, %s = :%s WHERE %s = :%s",
+                CalendarEventDaoImpl.TABLE_NAME, CalendarEventField.name.getColumnName(),
+                CalendarEventField.name.name(), CalendarEventField.date.getColumnName(),
+                CalendarEventField.date.name(), CalendarEventField.description.getColumnName(),
+                CalendarEventField.description.name(), CalendarEventField.priority.getColumnName(),
+                CalendarEventField.priority.name(), CalendarEventField.id.getColumnName(),
+                CalendarEventField.id.name());
 
         SqlParameterSource namedParameters = new BeanPropertySqlParameterSource(event);
         this.getNamedParameterJdbcTemplate().update(query, namedParameters);
@@ -79,11 +78,9 @@ public class CalendarEventDaoImpl extends NamedParameterJdbcDaoSupport implement
 
     @Override
     public int save(CalendarEvent event) {
-        String idColumn = CalendarEventField.id.getColumnName();
-
         SimpleJdbcInsert insert = new SimpleJdbcInsert(this.getDataSource())
                 .withTableName(CalendarEventDaoImpl.TABLE_NAME)
-                .usingGeneratedKeyColumns(idColumn)
+                .usingGeneratedKeyColumns(CalendarEventField.id.getColumnName())
                 .usingColumns(CalendarEventField.name.getColumnName(),
                         CalendarEventField.date.getColumnName(),
                         CalendarEventField.description.getColumnName(),
@@ -94,11 +91,11 @@ public class CalendarEventDaoImpl extends NamedParameterJdbcDaoSupport implement
 
     @Override
     public void delete(CalendarEvent event) {
-        String idProperty = CalendarEventField.id.getColumnName();
+        String idColumn = CalendarEventField.id.getColumnName();
         String query = String.format("DELETE FROM %s WHERE %s = :%s", CalendarEventDaoImpl.TABLE_NAME,
-                idProperty, idProperty);
+                idColumn, idColumn);
 
-        Map<String, Integer> args = Collections.singletonMap(idProperty, event.getId());
+        Map<String, Integer> args = Collections.singletonMap(idColumn, event.getId());
 
         this.getNamedParameterJdbcTemplate().update(query, args);
     }

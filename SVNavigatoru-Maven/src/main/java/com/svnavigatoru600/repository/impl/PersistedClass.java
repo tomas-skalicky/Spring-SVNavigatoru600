@@ -7,7 +7,8 @@ package com.svnavigatoru600.repository.impl;
  */
 public enum PersistedClass {
 
-    News(DatabaseTable.news), WysiwygSection(DatabaseTable.wysiwyg_sections), Thread(DatabaseTable.threads), Contribution(
+    News(DatabaseTable.news), WysiwygSection(DatabaseTable.wysiwyg_sections), CalendarEvent(
+            DatabaseTable.calendar_events), Thread(DatabaseTable.threads), Contribution(
             DatabaseTable.contributions);
 
     /**
@@ -28,6 +29,6 @@ public enum PersistedClass {
      */
     private enum DatabaseTable {
 
-        news, wysiwyg_sections, threads, contributions
+        news, wysiwyg_sections, calendar_events, threads, contributions
     }
 }
