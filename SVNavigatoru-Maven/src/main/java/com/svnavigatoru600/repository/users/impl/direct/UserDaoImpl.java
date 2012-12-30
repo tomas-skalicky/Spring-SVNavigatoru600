@@ -18,6 +18,7 @@ import com.svnavigatoru600.domain.users.User;
 import com.svnavigatoru600.repository.impl.PersistedClass;
 import com.svnavigatoru600.repository.users.AuthorityDao;
 import com.svnavigatoru600.repository.users.UserDao;
+import com.svnavigatoru600.repository.users.impl.AuthorityField;
 import com.svnavigatoru600.repository.users.impl.UserField;
 import com.svnavigatoru600.service.util.OrderType;
 
@@ -108,8 +109,8 @@ public class UserDaoImpl extends SimpleJdbcDaoSupport implements UserDao {
 
         final String query = String.format(
                 "SELECT u.* FROM %s u INNER JOIN %s a ON a.%s = u.%s WHERE a.%s = ?", UserDaoImpl.TABLE_NAME,
-                PersistedClass.Authority.getTableName(), AuthorityRowMapper.getColumn("username"),
-                UserField.username.getColumnName(), AuthorityRowMapper.getColumn("authority"));
+                PersistedClass.Authority.getTableName(), AuthorityField.username.getColumnName(),
+                UserField.username.getColumnName(), AuthorityField.authority.getColumnName());
         final List<User> users = this.getSimpleJdbcTemplate().query(query, new UserRowMapper(), authority);
 
         this.populateAuthorities(users);
