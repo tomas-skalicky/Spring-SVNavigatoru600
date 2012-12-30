@@ -2,39 +2,26 @@ package com.svnavigatoru600.repository.records.impl.direct;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.Map;
 
 import org.springframework.jdbc.core.RowMapper;
 
 import com.svnavigatoru600.domain.records.OtherDocumentRecordTypeRelation;
 import com.svnavigatoru600.domain.records.OtherDocumentRecordTypeRelationId;
-import com.svnavigatoru600.repository.users.impl.direct.UserRowMapper;
+import com.svnavigatoru600.repository.records.impl.OtherDocumentRecordTypeRelationField;
 
 /**
- * For more information, see {@link UserRowMapper}.
+ * For more information, see {@link com.svnavigatoru600.repository.users.impl.direct.UserRowMapper
+ * UserRowMapper}.
  * 
  * @author Tomas Skalicky
  */
 public class OtherDocumentRecordTypeRelationRowMapper implements RowMapper<OtherDocumentRecordTypeRelation> {
 
-    private static final Map<String, String> PROPERTY_COLUMN_MAP;
-
-    static {
-        PROPERTY_COLUMN_MAP = new HashMap<String, String>();
-        PROPERTY_COLUMN_MAP.put("recordId", "record_id");
-        PROPERTY_COLUMN_MAP.put("type", "type");
-    }
-
-    public static String getColumn(String propertyName) {
-        return OtherDocumentRecordTypeRelationRowMapper.PROPERTY_COLUMN_MAP.get(propertyName);
-    }
-
     @Override
     public OtherDocumentRecordTypeRelation mapRow(ResultSet rs, int rowNum) throws SQLException {
         OtherDocumentRecordTypeRelationId id = new OtherDocumentRecordTypeRelationId();
-        id.setRecordId(rs.getInt(OtherDocumentRecordTypeRelationRowMapper.getColumn("recordId")));
-        id.setType(rs.getString(OtherDocumentRecordTypeRelationRowMapper.getColumn("type")));
+        id.setRecordId(rs.getInt(OtherDocumentRecordTypeRelationField.recordId.getColumnName()));
+        id.setType(rs.getString(OtherDocumentRecordTypeRelationField.type.getColumnName()));
 
         OtherDocumentRecordTypeRelation relation = new OtherDocumentRecordTypeRelation();
         relation.setId(id);

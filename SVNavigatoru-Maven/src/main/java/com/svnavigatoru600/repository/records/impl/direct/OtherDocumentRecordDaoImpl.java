@@ -18,6 +18,7 @@ import com.svnavigatoru600.domain.records.OtherDocumentRecordType;
 import com.svnavigatoru600.domain.records.OtherDocumentRecordTypeRelation;
 import com.svnavigatoru600.repository.records.OtherDocumentRecordDao;
 import com.svnavigatoru600.repository.records.OtherDocumentRecordTypeRelationDao;
+import com.svnavigatoru600.repository.records.impl.OtherDocumentRecordTypeRelationField;
 import com.svnavigatoru600.service.util.OrderType;
 
 /**
@@ -137,9 +138,9 @@ public class OtherDocumentRecordDaoImpl extends SimpleJdbcDaoSupport implements 
         String query = String.format("%s INNER JOIN %s t ON t.%s = r.%s WHERE t.%s = ? ORDER BY r.%s %s",
                 OtherDocumentRecordDaoImpl.SELECT_FROM_CLAUSE_WITHOUT_FILE,
                 OtherDocumentRecordTypeRelationDaoImpl.TABLE_NAME,
-                OtherDocumentRecordTypeRelationRowMapper.getColumn("recordId"),
+                OtherDocumentRecordTypeRelationField.recordId.getColumnName(),
                 OtherDocumentRecordRowMapper.getColumn("id"),
-                OtherDocumentRecordTypeRelationRowMapper.getColumn("type"),
+                OtherDocumentRecordTypeRelationField.type.getColumnName(),
                 OtherDocumentRecordRowMapper.getColumn("creationTime"), order.getDatabaseCode());
         List<OtherDocumentRecord> records = this.getSimpleJdbcTemplate().query(query,
                 new OtherDocumentRecordRowMapper(false), type.name());

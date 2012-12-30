@@ -10,7 +10,9 @@ import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 
 import com.svnavigatoru600.domain.records.OtherDocumentRecordTypeRelation;
 import com.svnavigatoru600.domain.records.OtherDocumentRecordTypeRelationId;
+import com.svnavigatoru600.repository.impl.PersistedClass;
 import com.svnavigatoru600.repository.records.OtherDocumentRecordTypeRelationDao;
+import com.svnavigatoru600.repository.records.impl.OtherDocumentRecordTypeRelationField;
 
 /**
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
@@ -18,13 +20,13 @@ import com.svnavigatoru600.repository.records.OtherDocumentRecordTypeRelationDao
 public class OtherDocumentRecordTypeRelationDaoImpl extends SimpleJdbcDaoSupport implements
         OtherDocumentRecordTypeRelationDao {
 
-    static final String TABLE_NAME = "other_document_record_type_relations";
+    static final String TABLE_NAME = PersistedClass.OtherDocumentRecordTypeRelation.getTableName();
 
     @Override
     public List<OtherDocumentRecordTypeRelation> find(int recordId) {
         String query = String.format("SELECT * FROM %s r WHERE r.%s = ?",
                 OtherDocumentRecordTypeRelationDaoImpl.TABLE_NAME,
-                OtherDocumentRecordTypeRelationRowMapper.getColumn("recordId"));
+                OtherDocumentRecordTypeRelationField.recordId.getColumnName());
         return this.getSimpleJdbcTemplate().query(query, new OtherDocumentRecordTypeRelationRowMapper(),
                 recordId);
     }
@@ -35,8 +37,8 @@ public class OtherDocumentRecordTypeRelationDaoImpl extends SimpleJdbcDaoSupport
     private Map<String, Object> getNamedParameters(OtherDocumentRecordTypeRelation relation) {
         Map<String, Object> parameters = new HashMap<String, Object>();
         OtherDocumentRecordTypeRelationId id = relation.getId();
-        parameters.put(OtherDocumentRecordTypeRelationRowMapper.getColumn("recordId"), id.getRecordId());
-        parameters.put(OtherDocumentRecordTypeRelationRowMapper.getColumn("type"), id.getType());
+        parameters.put(OtherDocumentRecordTypeRelationField.recordId.getColumnName(), id.getRecordId());
+        parameters.put(OtherDocumentRecordTypeRelationField.type.getColumnName(), id.getType());
         return parameters;
     }
 
@@ -46,8 +48,8 @@ public class OtherDocumentRecordTypeRelationDaoImpl extends SimpleJdbcDaoSupport
     public void save(OtherDocumentRecordTypeRelation relation) {
         SimpleJdbcInsert insert = new SimpleJdbcInsert(this.getDataSource()).withTableName(
                 OtherDocumentRecordTypeRelationDaoImpl.TABLE_NAME).usingColumns(
-                OtherDocumentRecordTypeRelationRowMapper.getColumn("recordId"),
-                OtherDocumentRecordTypeRelationRowMapper.getColumn("type"));
+                OtherDocumentRecordTypeRelationField.recordId.getColumnName(),
+                OtherDocumentRecordTypeRelationField.type.getColumnName());
         insert.execute(this.getNamedParameters(relation));
     }
 
@@ -62,7 +64,7 @@ public class OtherDocumentRecordTypeRelationDaoImpl extends SimpleJdbcDaoSupport
     public void delete(int recordId) {
         String query = String.format("DELETE FROM %s WHERE %s = ?",
                 OtherDocumentRecordTypeRelationDaoImpl.TABLE_NAME,
-                OtherDocumentRecordTypeRelationRowMapper.getColumn("recordId"));
+                OtherDocumentRecordTypeRelationField.recordId.getColumnName());
         this.getSimpleJdbcTemplate().update(query, recordId);
     }
 }
