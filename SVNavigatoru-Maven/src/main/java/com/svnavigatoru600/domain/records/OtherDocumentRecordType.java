@@ -3,7 +3,7 @@ package com.svnavigatoru600.domain.records;
 /**
  * All types of {@link OtherDocumentRecord}s in the application.
  * 
- * @author Tomas Skalicky
+ * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
 public enum OtherDocumentRecordType {
 

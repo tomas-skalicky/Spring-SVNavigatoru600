@@ -5,7 +5,7 @@ import org.apache.commons.lang3.RandomStringUtils;
 /**
  * Provides a set of static functions related to passwords.
  * 
- * @author Tomas Skalicky
+ * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
 public final class Password {
 

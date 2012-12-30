@@ -10,7 +10,7 @@ import com.svnavigatoru600.web.PrivateSectionMetaController;
  * Parent of all controllers which handle all operations upon the {@link com.svnavigatoru600.domain.News News}
  * .
  * 
- * @author Tomas Skalicky
+ * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
 @Controller
 public abstract class NewsController extends PrivateSectionMetaController {

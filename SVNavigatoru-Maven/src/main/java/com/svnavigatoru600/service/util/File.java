@@ -10,7 +10,7 @@ import com.svnavigatoru600.web.Configuration;
 /**
  * Provides a set of static functions related to files.
  * 
- * @author Tomas Skalicky
+ * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
 public final class File {
 

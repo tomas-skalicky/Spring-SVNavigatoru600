@@ -11,7 +11,7 @@ import com.svnavigatoru600.domain.users.User;
  * Holder of the full names of all {@link User} in the application. The class is used in the
  * <i>user-administration.jsp</i> form.
  * 
- * @author Tomas Skalicky
+ * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
 @Service
 public class ShowAllUsers {

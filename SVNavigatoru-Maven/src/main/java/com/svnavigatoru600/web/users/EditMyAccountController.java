@@ -27,7 +27,7 @@ import com.svnavigatoru600.web.PrivateSectionMetaController;
  * The controller bound to the <i>user-account.jsp</i> and <i>user-administration.jsp</i> form. For more
  * details about the concepts used here, see the <i>ForgottenPasswordController</i> controller.
  * 
- * @author Tomas Skalicky
+ * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
 @Controller
 public class EditMyAccountController extends PrivateSectionMetaController {

@@ -8,7 +8,7 @@ import org.springframework.web.servlet.support.RequestContextUtils;
 /**
  * Provides a set of static functions related to the context of the HTTP request.
  * 
- * @author Tomas Skalicky
+ * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
 public final class MyRequestContext {
 

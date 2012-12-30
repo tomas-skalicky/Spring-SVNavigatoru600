@@ -12,7 +12,7 @@ import com.svnavigatoru600.web.PrivateSectionMetaController;
 /**
  * Used in the {@link PrivateSectionMetaController}.
  * 
- * @author Tomas Skalicky
+ * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
 public class EventWrapper {
 

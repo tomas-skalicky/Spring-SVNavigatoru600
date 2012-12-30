@@ -33,7 +33,7 @@ import com.svnavigatoru600.web.Configuration;
 /**
  * The controller bound to the <i>new-user.jsp</i> page.
  * 
- * @author Tomas Skalicky
+ * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
 @Controller
 public class NewUserController extends NewEditUserController {

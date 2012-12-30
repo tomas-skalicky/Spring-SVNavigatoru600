@@ -19,7 +19,7 @@ import org.apache.commons.logging.LogFactory;
  * Provides a set of static functions related to emails. The implementation borrowed from <a href=
  * "http://www.mkyong.com/java/javamail-api-sending-email-via-gmail-smtp-example/" >Mkyong</a>.
  * 
- * @author Tomas Skalicky
+ * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
 public final class Email {
 

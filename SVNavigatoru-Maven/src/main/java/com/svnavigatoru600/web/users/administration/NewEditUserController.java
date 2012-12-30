@@ -11,7 +11,7 @@ import com.svnavigatoru600.service.users.validator.UserDataValidator;
 /**
  * Parent of all controllers which create and edit {@link User}s.
  * 
- * @author Tomas Skalicky
+ * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
 @Controller
 public abstract class NewEditUserController extends UserController {

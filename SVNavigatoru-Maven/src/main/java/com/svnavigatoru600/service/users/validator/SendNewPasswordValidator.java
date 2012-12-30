@@ -11,7 +11,7 @@ import com.svnavigatoru600.viewmodel.users.SendNewPassword;
 /**
  * Validates the data provided by the user in <i>forgotten-password.jsp</i> form.
  * 
- * @author Tomas Skalicky
+ * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
 @Service
 public class SendNewPasswordValidator implements Validator {

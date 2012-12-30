@@ -13,7 +13,7 @@ import com.svnavigatoru600.repository.records.DocumentRecordDao;
 /**
  * Provides a set of static functions for retrieving {@link DocumentRecord}s.
  * 
- * @author Tomas Skalicky
+ * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
 public final class RetrieveDocumentRecordUtils {
 

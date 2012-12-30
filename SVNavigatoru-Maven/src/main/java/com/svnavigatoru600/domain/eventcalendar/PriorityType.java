@@ -9,7 +9,7 @@ import com.svnavigatoru600.service.util.Localization;
 /**
  * All allowed priorities which {@link CalendarEvent}s can have.
  * 
- * @author Tomas Skalicky
+ * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
 public enum PriorityType {
 

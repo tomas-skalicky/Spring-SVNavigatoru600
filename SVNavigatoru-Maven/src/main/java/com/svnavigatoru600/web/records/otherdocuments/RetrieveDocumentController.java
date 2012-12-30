@@ -19,7 +19,7 @@ import com.svnavigatoru600.web.records.RetrieveDocumentRecordUtils;
 /**
  * Parent of all controllers which provide retrieving of stored {@link OtherDocumentRecord}s.
  * 
- * @author Tomas Skalicky
+ * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
 @Controller
 public abstract class RetrieveDocumentController extends OtherDocumentRecordController {

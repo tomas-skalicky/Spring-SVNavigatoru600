@@ -7,7 +7,7 @@ import com.svnavigatoru600.domain.records.DocumentRecord;
 /**
  * This class is a set of constants which configure the whole application.
  * 
- * @author Tomas Skalicky
+ * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
 public final class Configuration {
 

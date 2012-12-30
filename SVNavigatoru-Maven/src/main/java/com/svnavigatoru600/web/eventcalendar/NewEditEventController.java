@@ -19,7 +19,7 @@ import com.svnavigatoru600.service.util.Localization;
 /**
  * Parent of controllers which create and edit the {@link CalendarEvent}s.
  * 
- * @author Tomas Skalicky
+ * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
 @Controller
 public abstract class NewEditEventController extends EventController {

@@ -11,7 +11,7 @@ import com.svnavigatoru600.web.PrivateSectionMetaController;
 /**
  * Parent of all controllers which handle all operations upon the {@link Thread} s.
  * 
- * @author Tomas Skalicky
+ * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
 @Controller
 @PreAuthorize("hasRole('ROLE_MEMBER_OF_SV')")

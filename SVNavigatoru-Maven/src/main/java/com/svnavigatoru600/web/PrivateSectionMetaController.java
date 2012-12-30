@@ -26,7 +26,7 @@ import com.svnavigatoru600.viewmodel.forum.contributions.ContributionWrapper;
  * Parent of all controllers (except {@link ErrorController}) of the private section in the application. The
  * private section is the one which is accessible only to the registered users.
  * 
- * @author Tomas Skalicky
+ * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
 @Controller
 public abstract class PrivateSectionMetaController extends MetaController {

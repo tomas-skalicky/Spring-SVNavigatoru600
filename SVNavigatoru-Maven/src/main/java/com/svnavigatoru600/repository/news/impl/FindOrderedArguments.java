@@ -6,7 +6,7 @@ import com.svnavigatoru600.service.util.OrderType;
  * Encapsulates arguments of the {@link com.svnavigatoru600.repository.NewsDao#findOrdered findOrdered} method
  * in order to pass just one argument to the method. It is the requirement of MyBatis.
  * 
- * @author Tomas Skalicky
+ * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
 public class FindOrderedArguments {
 

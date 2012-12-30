@@ -14,7 +14,7 @@ import com.svnavigatoru600.viewmodel.users.UpdateUserData;
 /**
  * Validates the data of the current {@link User} filled in in the <i>user-account.jsp</i> form.
  * 
- * @author Tomas Skalicky
+ * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
 @Service
 public class UpdateUserDataValidator implements Validator {

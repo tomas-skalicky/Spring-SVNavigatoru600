@@ -16,7 +16,7 @@ import com.svnavigatoru600.service.util.Localization;
 /**
  * Parent of all controllers (except {@link ErrorController}) in the application.
  * 
- * @author Tomas Skalicky
+ * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
 @Controller
 public abstract class MetaController {

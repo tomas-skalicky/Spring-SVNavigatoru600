@@ -3,7 +3,7 @@ package com.svnavigatoru600.service.util;
 /**
  * Enumeration of common orders.
  * 
- * @author Tomas Skalicky
+ * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
 public enum OrderType {
 

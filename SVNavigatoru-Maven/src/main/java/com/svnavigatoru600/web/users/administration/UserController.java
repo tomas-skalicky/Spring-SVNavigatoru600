@@ -18,7 +18,7 @@ import com.svnavigatoru600.web.PrivateSectionMetaController;
 /**
  * Parent of all controllers which handle all operations concerning administration of {@link User}s.
  * 
- * @author Tomas Skalicky
+ * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
 @Controller
 public abstract class UserController extends PrivateSectionMetaController {

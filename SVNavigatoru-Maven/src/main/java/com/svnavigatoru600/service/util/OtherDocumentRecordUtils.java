@@ -11,7 +11,7 @@ import com.svnavigatoru600.domain.records.OtherDocumentRecordTypeRelation;
 /**
  * This utility class is based on the {@link AuthorityUtils} one.
  * 
- * @author Tomas Skalicky
+ * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
 public final class OtherDocumentRecordUtils {
 

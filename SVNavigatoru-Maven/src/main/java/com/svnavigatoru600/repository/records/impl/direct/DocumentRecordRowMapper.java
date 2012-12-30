@@ -6,7 +6,7 @@ package com.svnavigatoru600.repository.records.impl.direct;
  * RowMapper} since the class {@link com.svnavigatoru600.domain.records.DocumentRecord DocumentRecord} is not
  * instantiable - it is abstract.
  * 
- * @author Tomas Skalicky
+ * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
 public abstract class DocumentRecordRowMapper {
 
