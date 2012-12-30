@@ -11,6 +11,7 @@ import org.springframework.security.core.GrantedAuthority;
 
 import com.svnavigatoru600.domain.users.Authority;
 import com.svnavigatoru600.domain.users.AuthorityId;
+import com.svnavigatoru600.repository.impl.PersistedClass;
 import com.svnavigatoru600.repository.users.AuthorityDao;
 
 /**
@@ -18,7 +19,7 @@ import com.svnavigatoru600.repository.users.AuthorityDao;
  */
 public class AuthorityDaoImpl extends SimpleJdbcDaoSupport implements AuthorityDao {
 
-    static final String TABLE_NAME = "authorities";
+    static final String TABLE_NAME = PersistedClass.Authority.getTableName();
 
     @Override
     public List<Authority> find(String username) {
