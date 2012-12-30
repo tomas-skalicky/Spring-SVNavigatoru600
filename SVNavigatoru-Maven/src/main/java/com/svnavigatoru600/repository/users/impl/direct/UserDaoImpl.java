@@ -15,8 +15,10 @@ import org.springframework.security.core.GrantedAuthority;
 
 import com.svnavigatoru600.domain.users.Authority;
 import com.svnavigatoru600.domain.users.User;
+import com.svnavigatoru600.repository.impl.PersistedClass;
 import com.svnavigatoru600.repository.users.AuthorityDao;
 import com.svnavigatoru600.repository.users.UserDao;
+import com.svnavigatoru600.repository.users.impl.UserField;
 import com.svnavigatoru600.service.util.OrderType;
 
 /**
@@ -65,7 +67,7 @@ public class UserDaoImpl extends SimpleJdbcDaoSupport implements UserDao {
         this.logger.info(String.format("Load an user with the username '%s'", username));
 
         final String query = String.format("SELECT * FROM %s u WHERE u.%s = ?", UserDaoImpl.TABLE_NAME,
-                UserRowMapper.getColumn("username"));
+                UserField.username.getColumnName());
         final User user = this.getSimpleJdbcTemplate().queryForObject(query, new UserRowMapper(), username);
         if (user == null) {
             throw new DataRetrievalFailureException(String.format("No user with the username '%s' exists.",
@@ -88,7 +90,7 @@ public class UserDaoImpl extends SimpleJdbcDaoSupport implements UserDao {
         this.logger.info(String.format("Load an user with the email '%s'", lowerCasedEmail));
 
         final String query = String.format("SELECT * FROM %s u WHERE u.%s = ?", UserDaoImpl.TABLE_NAME,
-                UserRowMapper.getColumn("email"));
+                UserField.email.getColumnName());
         final User user = this.getSimpleJdbcTemplate().queryForObject(query, new UserRowMapper(),
                 lowerCasedEmail);
         if (user == null) {
@@ -106,8 +108,8 @@ public class UserDaoImpl extends SimpleJdbcDaoSupport implements UserDao {
 
         final String query = String.format(
                 "SELECT u.* FROM %s u INNER JOIN %s a ON a.%s = u.%s WHERE a.%s = ?", UserDaoImpl.TABLE_NAME,
-                AuthorityDaoImpl.TABLE_NAME, AuthorityRowMapper.getColumn("username"),
-                UserRowMapper.getColumn("username"), AuthorityRowMapper.getColumn("authority"));
+                PersistedClass.Authority.getTableName(), AuthorityRowMapper.getColumn("username"),
+                UserField.username.getColumnName(), AuthorityRowMapper.getColumn("authority"));
         final List<User> users = this.getSimpleJdbcTemplate().query(query, new UserRowMapper(), authority);
 
         this.populateAuthorities(users);
@@ -118,10 +120,10 @@ public class UserDaoImpl extends SimpleJdbcDaoSupport implements UserDao {
     public List<User> loadAllOrdered(final OrderType order, final boolean testUsers) {
         this.logger.info(String.format("Load all users ordered %s.", order.name()));
 
-        final String query = String.format(
-                "SELECT * FROM %s u WHERE u.is_test_user = %s ORDER BY u.%s, u.%s %s",
-                UserDaoImpl.TABLE_NAME, testUsers, UserRowMapper.getColumn("lastName"),
-                UserRowMapper.getColumn("firstName"), order.getDatabaseCode());
+        final String query = String.format("SELECT * FROM %s u WHERE u.%s = %s ORDER BY u.%s, u.%s %s",
+                UserDaoImpl.TABLE_NAME, UserField.isTestUser.getColumnName(), testUsers,
+                UserField.lastName.getColumnName(), UserField.firstName.getColumnName(),
+                order.getDatabaseCode());
         final List<User> users = this.getSimpleJdbcTemplate().query(query, new UserRowMapper());
 
         this.populateAuthorities(users);
@@ -145,10 +147,10 @@ public class UserDaoImpl extends SimpleJdbcDaoSupport implements UserDao {
         // query.
         final String query = String.format(
                 "UPDATE %s SET %s = ?, %s = ?, %s = ?, %s = ?, %s = ?, %s = ? WHERE %s = ?",
-                UserDaoImpl.TABLE_NAME, UserRowMapper.getColumn("password"),
-                UserRowMapper.getColumn("enabled"), UserRowMapper.getColumn("firstName"),
-                UserRowMapper.getColumn("lastName"), UserRowMapper.getColumn("email"),
-                UserRowMapper.getColumn("phone"), UserRowMapper.getColumn("username"));
+                UserDaoImpl.TABLE_NAME, UserField.password.getColumnName(),
+                UserField.enabled.getColumnName(), UserField.firstName.getColumnName(),
+                UserField.lastName.getColumnName(), UserField.email.getColumnName(),
+                UserField.phone.getColumnName(), UserField.username.getColumnName());
         this.getSimpleJdbcTemplate().update(query, user.getPassword(), user.isEnabled(), user.getFirstName(),
                 user.getLastName(), lowerCasedEmail, user.getPhone(), user.getUsername());
 
@@ -162,19 +164,19 @@ public class UserDaoImpl extends SimpleJdbcDaoSupport implements UserDao {
      */
     private Map<String, Object> getNamedParameters(final User user) {
         final Map<String, Object> parameters = new HashMap<String, Object>();
-        parameters.put(UserRowMapper.getColumn("username"), user.getUsername());
-        parameters.put(UserRowMapper.getColumn("password"), user.getPassword());
-        parameters.put(UserRowMapper.getColumn("enabled"), user.isEnabled());
-        parameters.put(UserRowMapper.getColumn("firstName"), user.getFirstName());
-        parameters.put(UserRowMapper.getColumn("lastName"), user.getLastName());
+        parameters.put(UserField.username.getColumnName(), user.getUsername());
+        parameters.put(UserField.password.getColumnName(), user.getPassword());
+        parameters.put(UserField.enabled.getColumnName(), user.isEnabled());
+        parameters.put(UserField.firstName.getColumnName(), user.getFirstName());
+        parameters.put(UserField.lastName.getColumnName(), user.getLastName());
 
         String lowerCasedEmail = null;
         if ((user != null) && (user.getEmail() != null)) {
             lowerCasedEmail = user.getEmail().toLowerCase();
         }
-        parameters.put(UserRowMapper.getColumn("email"), lowerCasedEmail);
+        parameters.put(UserField.email.getColumnName(), lowerCasedEmail);
 
-        parameters.put(UserRowMapper.getColumn("phone"), user.getPhone());
+        parameters.put(UserField.phone.getColumnName(), user.getPhone());
         return parameters;
     }
 
@@ -192,10 +194,10 @@ public class UserDaoImpl extends SimpleJdbcDaoSupport implements UserDao {
                                 user.getFirstName(), user.getLastName(), lowerCasedEmail, user.getPhone()));
 
         final SimpleJdbcInsert insert = new SimpleJdbcInsert(this.getDataSource()).withTableName(
-                UserDaoImpl.TABLE_NAME).usingColumns(UserRowMapper.getColumn("username"),
-                UserRowMapper.getColumn("password"), UserRowMapper.getColumn("enabled"),
-                UserRowMapper.getColumn("firstName"), UserRowMapper.getColumn("lastName"),
-                UserRowMapper.getColumn("email"), UserRowMapper.getColumn("phone"));
+                UserDaoImpl.TABLE_NAME).usingColumns(UserField.username.getColumnName(),
+                UserField.password.getColumnName(), UserField.enabled.getColumnName(),
+                UserField.firstName.getColumnName(), UserField.lastName.getColumnName(),
+                UserField.email.getColumnName(), UserField.phone.getColumnName());
         insert.execute(this.getNamedParameters(user));
 
         // NOTE: explicit save of the user's authorities.
@@ -205,7 +207,7 @@ public class UserDaoImpl extends SimpleJdbcDaoSupport implements UserDao {
     @Override
     public void delete(final User user) {
         final String query = String.format("DELETE FROM %s WHERE %s = ?", UserDaoImpl.TABLE_NAME,
-                UserRowMapper.getColumn("username"));
+                UserField.username.getColumnName());
         this.getSimpleJdbcTemplate().update(query, user.getUsername());
     }
 }
