@@ -16,7 +16,7 @@ import com.svnavigatoru600.web.PrivateSectionMetaController;
 /**
  * Parent of all controllers which handle all operations upon the {@link DocumentRecord}s.
  * 
- * @author Tomas Skalicky
+ * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
 @Controller
 public abstract class DocumentRecordController extends PrivateSectionMetaController {

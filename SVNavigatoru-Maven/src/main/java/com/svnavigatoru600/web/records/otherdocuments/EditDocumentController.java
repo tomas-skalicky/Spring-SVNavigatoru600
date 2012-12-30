@@ -29,7 +29,7 @@ import com.svnavigatoru600.web.records.PageViews;
 /**
  * Parent of all controllers which edit the {@link OtherDocumentRecord}s.
  * 
- * @author Tomas Skalicky
+ * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
 @Controller
 public abstract class EditDocumentController extends NewEditDocumentController {

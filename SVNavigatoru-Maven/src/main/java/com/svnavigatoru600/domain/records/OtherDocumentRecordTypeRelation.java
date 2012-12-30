@@ -7,7 +7,7 @@ import com.svnavigatoru600.repository.records.OtherDocumentRecordTypeRelationDao
 /**
  * Helps to map the <code>types</code> array in the {@link OtherDocumentRecordType} class to Hibernate.
  * 
- * @author Tomas Skalicky
+ * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
 public class OtherDocumentRecordTypeRelation implements Serializable {
 

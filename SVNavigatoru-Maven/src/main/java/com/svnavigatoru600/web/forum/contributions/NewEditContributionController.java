@@ -11,7 +11,7 @@ import com.svnavigatoru600.service.forum.contributions.validator.ContributionVal
 /**
  * Parent of controllers which create and edit the {@link Contribution}s.
  * 
- * @author Tomas Skalicky
+ * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
 @Controller
 public abstract class NewEditContributionController extends ContributionController {

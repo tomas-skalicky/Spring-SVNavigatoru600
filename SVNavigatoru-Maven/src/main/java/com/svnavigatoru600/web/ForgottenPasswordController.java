@@ -31,7 +31,7 @@ import com.svnavigatoru600.viewmodel.users.SendNewPassword;
 /**
  * The controller bound to the <i>forgotten-password.jsp</i> form.
  * 
- * @author Tomas Skalicky
+ * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
 @Controller
 public class ForgottenPasswordController extends MetaController {

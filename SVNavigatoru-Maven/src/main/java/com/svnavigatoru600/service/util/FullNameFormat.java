@@ -3,7 +3,7 @@ package com.svnavigatoru600.service.util;
 /**
  * Enumeration of all possible formats of the full name of the {@link com.svnavigatoru600.domain.users.User}.
  * 
- * @author Tomas Skalicky
+ * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
 public enum FullNameFormat {
 

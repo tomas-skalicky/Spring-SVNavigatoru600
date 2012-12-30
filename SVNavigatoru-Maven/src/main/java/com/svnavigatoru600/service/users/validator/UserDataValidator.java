@@ -14,7 +14,7 @@ import com.svnavigatoru600.viewmodel.users.AdministrateUserData;
 /**
  * Validates the data of a new or an existing {@link User} determined by an administrator.
  * 
- * @author Tomas Skalicky
+ * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
 @Service
 public abstract class UserDataValidator implements Validator {

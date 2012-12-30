@@ -11,7 +11,7 @@ import com.svnavigatoru600.domain.users.User;
  * Holder of user's data when the administrator views and modifies them in the <i>user-administration.jsp</i>
  * form.
  * 
- * @author Tomas Skalicky
+ * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
 @Service
 public class AdministrateUserData {

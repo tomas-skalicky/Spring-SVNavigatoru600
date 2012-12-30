@@ -14,7 +14,7 @@ import com.svnavigatoru600.repository.records.impl.SessionRecordField;
  * For more information, see {@link com.svnavigatoru600.repository.users.impl.direct.UserRowMapper
  * UserRowMapper}.
  * 
- * @author Tomas Skalicky
+ * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
 public class SessionRecordRowMapper extends DocumentRecordRowMapper implements RowMapper<SessionRecord> {
 

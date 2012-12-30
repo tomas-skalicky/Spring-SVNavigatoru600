@@ -3,7 +3,7 @@ package com.svnavigatoru600.service.util;
 /**
  * The utility class which provides a functionality mutual for all sets of checkboxes.
  * 
- * @author Tomas Skalicky
+ * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
 public final class CheckboxUtils {
 

@@ -16,7 +16,7 @@ import com.svnavigatoru600.web.records.PageViews;
 /**
  * Parent of all controllers which create and edit the {@link OtherDocumentRecord}s.
  * 
- * @author Tomas Skalicky
+ * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
 @Controller
 @PreAuthorize("hasRole('ROLE_MEMBER_OF_BOARD')")

@@ -5,7 +5,7 @@ import java.io.Serializable;
 /**
  * Helper with the representation of the composite key of the {@link Authority} class.
  * 
- * @author Tomas Skalicky
+ * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
 public class AuthorityId implements Serializable {
 

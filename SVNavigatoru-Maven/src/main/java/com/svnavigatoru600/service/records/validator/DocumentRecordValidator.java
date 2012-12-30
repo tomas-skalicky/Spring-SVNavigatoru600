@@ -13,7 +13,7 @@ import com.svnavigatoru600.web.Configuration;
 /**
  * {@link Validator} common for all types of {@link DocumentRecord}s.
  * 
- * @author Tomas Skalicky
+ * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
 @Service
 public abstract class DocumentRecordValidator implements Validator {

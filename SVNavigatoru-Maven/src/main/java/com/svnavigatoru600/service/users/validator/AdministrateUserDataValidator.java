@@ -10,7 +10,7 @@ import com.svnavigatoru600.service.util.Password;
 /**
  * Validates the data of an existing {@link User} filled in in the <i>user-administration.jsp</i> form.
  * 
- * @author Tomas Skalicky
+ * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
 @Service
 public class AdministrateUserDataValidator extends UserDataValidator {

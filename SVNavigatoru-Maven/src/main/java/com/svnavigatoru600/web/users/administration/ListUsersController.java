@@ -23,7 +23,7 @@ import com.svnavigatoru600.viewmodel.users.ShowAllUsers;
  * The controller bound mainly to the <i>users/administration/list.jsp</i> page. For more details about the
  * concepts used here, see the <i>ForgottenPasswordController</i> controller.
  * 
- * @author Tomas Skalicky
+ * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
 @Controller
 public class ListUsersController extends UserController {

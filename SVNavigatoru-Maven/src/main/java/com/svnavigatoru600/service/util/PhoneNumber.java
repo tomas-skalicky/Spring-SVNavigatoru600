@@ -3,7 +3,7 @@ package com.svnavigatoru600.service.util;
 /**
  * Provides a set of static functions related to phone numbers.
  * 
- * @author Tomas Skalicky
+ * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
 public final class PhoneNumber {
 

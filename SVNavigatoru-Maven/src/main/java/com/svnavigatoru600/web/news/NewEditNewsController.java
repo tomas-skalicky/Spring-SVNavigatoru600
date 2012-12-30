@@ -10,7 +10,7 @@ import com.svnavigatoru600.service.news.validator.NewsValidator;
 /**
  * Parent of controllers which create and edit the {@link com.svnavigatoru600.domain.News News}.
  * 
- * @author Tomas Skalicky
+ * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
 @Controller
 public abstract class NewEditNewsController extends NewsController {

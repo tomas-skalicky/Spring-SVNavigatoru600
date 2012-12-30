@@ -11,7 +11,7 @@ import com.svnavigatoru600.service.forum.threads.validator.ThreadValidator;
 /**
  * Parent of controllers which create and edit the {@link Thread}s.
  * 
- * @author Tomas Skalicky
+ * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
 @Controller
 public abstract class NewEditThreadController extends ThreadController {
