@@ -54,7 +54,7 @@ public class UserDaoImpl extends HibernateDaoSupport implements UserDao {
         List<User> users = (List<User>) this.getHibernateTemplate().findByCriteria(criteria);
         if (users.size() > 1) {
             throw new DataIntegrityViolationException("Email should be unique.");
-        } else if (users.size() == 0) {
+        } else if (users.isEmpty()) {
             throw new DataRetrievalFailureException(String.format("No user with the email '%s' exists.",
                     lowerCasedEmail));
         }

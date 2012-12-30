@@ -19,7 +19,7 @@ import com.svnavigatoru600.repository.users.AuthorityDao;
  */
 public class AuthorityDaoImpl extends SimpleJdbcDaoSupport implements AuthorityDao {
 
-    static final String TABLE_NAME = PersistedClass.Authority.getTableName();
+    private static final String TABLE_NAME = PersistedClass.Authority.getTableName();
 
     @Override
     public List<Authority> find(String username) {
