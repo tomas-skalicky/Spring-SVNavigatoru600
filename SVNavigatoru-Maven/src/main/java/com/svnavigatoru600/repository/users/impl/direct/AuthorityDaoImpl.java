@@ -13,6 +13,9 @@ import com.svnavigatoru600.domain.users.Authority;
 import com.svnavigatoru600.domain.users.AuthorityId;
 import com.svnavigatoru600.repository.users.AuthorityDao;
 
+/**
+ * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
+ */
 public class AuthorityDaoImpl extends SimpleJdbcDaoSupport implements AuthorityDao {
 
     static final String TABLE_NAME = "authorities";
