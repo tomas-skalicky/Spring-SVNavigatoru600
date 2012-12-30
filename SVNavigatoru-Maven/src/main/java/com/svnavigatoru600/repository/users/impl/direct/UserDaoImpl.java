@@ -19,6 +19,9 @@ import com.svnavigatoru600.repository.users.AuthorityDao;
 import com.svnavigatoru600.repository.users.UserDao;
 import com.svnavigatoru600.service.util.OrderType;
 
+/**
+ * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
+ */
 public class UserDaoImpl extends SimpleJdbcDaoSupport implements UserDao {
 
     /** Logger for this class and subclasses */
