@@ -12,6 +12,9 @@ import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
 
 import com.svnavigatoru600.domain.records.DocumentRecord;
 
+/**
+ * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
+ */
 public class DocumentRecordDaoImpl extends SimpleJdbcDaoSupport {
 
     static final String TABLE_NAME = "document_records";

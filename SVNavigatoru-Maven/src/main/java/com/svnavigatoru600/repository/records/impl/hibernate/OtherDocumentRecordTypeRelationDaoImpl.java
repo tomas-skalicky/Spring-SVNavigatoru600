@@ -10,6 +10,9 @@ import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import com.svnavigatoru600.domain.records.OtherDocumentRecordTypeRelation;
 import com.svnavigatoru600.repository.records.OtherDocumentRecordTypeRelationDao;
 
+/**
+ * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
+ */
 public class OtherDocumentRecordTypeRelationDaoImpl extends HibernateDaoSupport implements
         OtherDocumentRecordTypeRelationDao {
 
