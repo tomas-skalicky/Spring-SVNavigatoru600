@@ -27,7 +27,7 @@ public class UserDaoImpl extends SimpleJdbcDaoSupport implements UserDao {
     /** Logger for this class and subclasses */
     protected final Log logger = LogFactory.getLog(this.getClass());
 
-    private static final String TABLE_NAME = "users";
+    private static final String TABLE_NAME = PersistedClass.User.getTableName();
     protected AuthorityDao authorityDao;
 
     @Autowired
