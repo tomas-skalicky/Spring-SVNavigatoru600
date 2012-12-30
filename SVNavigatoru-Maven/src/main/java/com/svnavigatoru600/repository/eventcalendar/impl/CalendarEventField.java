@@ -1,6 +1,5 @@
 package com.svnavigatoru600.repository.eventcalendar.impl;
 
-
 /**
  * Names of the fields of the {@link com.svnavigatoru600.domain.eventcalendar.CalendarEvent CalendarEvent}
  * class.
