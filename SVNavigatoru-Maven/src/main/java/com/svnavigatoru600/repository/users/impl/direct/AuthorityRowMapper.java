@@ -13,7 +13,7 @@ import com.svnavigatoru600.domain.users.AuthorityId;
 /**
  * For more information, see {@link UserRowMapper}.
  * 
- * @author Tomas Skalicky
+ * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
 public class AuthorityRowMapper implements RowMapper<Authority> {
 
