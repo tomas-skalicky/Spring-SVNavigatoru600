@@ -70,9 +70,8 @@ public class UserDaoImpl extends HibernateDaoSupport implements UserDao {
 
         // If we did not explicitly select the user u, Hibernate would return
         // tuples User-(the given)Authority.
-        String query = String.format(
-                "SELECT u FROM %s u INNER JOIN u.authorities a WHERE a.id.authority = ?",
-                PersistedClass.User.name());
+        String query = String.format("SELECT u FROM %s u INNER JOIN u.%s a WHERE a.id.authority = ?",
+                PersistedClass.User.name(), UserField.authorities.name());
         return (List<User>) this.getHibernateTemplate().find(query, authority);
     }
 
@@ -80,9 +79,9 @@ public class UserDaoImpl extends HibernateDaoSupport implements UserDao {
     @SuppressWarnings("unchecked")
     public List<User> loadAllOrdered(OrderType order, boolean testUsers) {
         this.logger.info(String.format("Load all users ordered %s.", order.name()));
-        String query = String.format("FROM %s u WHERE u.%s = %s ORDER BY u.lastName, u.firstName %s",
+        String query = String.format("FROM %s u WHERE u.%s = %s ORDER BY u.%s, u.%s %s",
                 PersistedClass.User.name(), UserField.isTestUser.getColumnName(), testUsers,
-                order.getDatabaseCode());
+                UserField.lastName.name(), UserField.firstName.name(), order.getDatabaseCode());
         return (List<User>) this.getHibernateTemplate().find(query);
     }
 
