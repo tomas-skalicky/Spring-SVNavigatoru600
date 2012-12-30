@@ -2,7 +2,6 @@ package com.svnavigatoru600.repository.eventcalendar.impl;
 
 import java.util.Date;
 
-import com.svnavigatoru600.domain.eventcalendar.CalendarEvent;
 import com.svnavigatoru600.service.util.OrderType;
 
 /**
@@ -10,12 +9,13 @@ import com.svnavigatoru600.service.util.OrderType;
  * {@link com.svnavigatoru600.repository.CalendarEventDao#findFutureEventsOrdered findFutureEventsOrdered}
  * method in order to pass just one argument to the method. It is the requirement of MyBatis.
  * 
- * @author Tomas Skalicky
+ * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
 public class FindFutureEventsOrderedArguments {
 
     /**
-     * Field of {@link CalendarEvent} according which the result records will be sorted.
+     * Field of {@link com.svnavigatoru600.domain.eventcalendar.CalendarEvent CalendarEvent} according which
+     * the result records will be sorted.
      */
     private static final CalendarEventField SORT_FIELD = CalendarEventField.date;
     /**
