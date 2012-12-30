@@ -12,8 +12,10 @@ import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 import com.svnavigatoru600.domain.users.User;
+import com.svnavigatoru600.repository.impl.PersistedClass;
 import com.svnavigatoru600.repository.users.AuthorityDao;
 import com.svnavigatoru600.repository.users.UserDao;
+import com.svnavigatoru600.repository.users.impl.UserField;
 import com.svnavigatoru600.service.util.OrderType;
 
 /**
@@ -48,7 +50,7 @@ public class UserDaoImpl extends HibernateDaoSupport implements UserDao {
 
         // Stands for 'where' clause.
         DetachedCriteria criteria = DetachedCriteria.forClass(User.class);
-        criteria.add(Restrictions.eq("email", lowerCasedEmail));
+        criteria.add(Restrictions.eq(UserField.email.name(), lowerCasedEmail));
 
         @SuppressWarnings("unchecked")
         List<User> users = (List<User>) this.getHibernateTemplate().findByCriteria(criteria);
@@ -68,16 +70,18 @@ public class UserDaoImpl extends HibernateDaoSupport implements UserDao {
 
         // If we did not explicitly select the user u, Hibernate would return
         // tuples User-(the given)Authority.
-        return (List<User>) this.getHibernateTemplate().find(
-                "SELECT u FROM User u INNER JOIN u.authorities a WHERE a.id.authority = ?", authority);
+        String query = String.format(
+                "SELECT u FROM %s u INNER JOIN u.authorities a WHERE a.id.authority = ?",
+                PersistedClass.User.name());
+        return (List<User>) this.getHibernateTemplate().find(query, authority);
     }
 
     @Override
     @SuppressWarnings("unchecked")
     public List<User> loadAllOrdered(OrderType order, boolean testUsers) {
         this.logger.info(String.format("Load all users ordered %s.", order.name()));
-        String query = String.format(
-                "FROM User u WHERE u.is_test_user = %s ORDER BY u.lastName, u.firstName %s", testUsers,
+        String query = String.format("FROM %s u WHERE u.%s = %s ORDER BY u.lastName, u.firstName %s",
+                PersistedClass.User.name(), UserField.isTestUser.getColumnName(), testUsers,
                 order.getDatabaseCode());
         return (List<User>) this.getHibernateTemplate().find(query);
     }
