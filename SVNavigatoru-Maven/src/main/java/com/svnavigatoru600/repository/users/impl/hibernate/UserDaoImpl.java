@@ -15,6 +15,7 @@ import com.svnavigatoru600.domain.users.User;
 import com.svnavigatoru600.repository.impl.PersistedClass;
 import com.svnavigatoru600.repository.users.AuthorityDao;
 import com.svnavigatoru600.repository.users.UserDao;
+import com.svnavigatoru600.repository.users.impl.AuthorityField;
 import com.svnavigatoru600.repository.users.impl.UserField;
 import com.svnavigatoru600.service.util.OrderType;
 
@@ -70,8 +71,9 @@ public class UserDaoImpl extends HibernateDaoSupport implements UserDao {
 
         // If we did not explicitly select the user u, Hibernate would return
         // tuples User-(the given)Authority.
-        String query = String.format("SELECT u FROM %s u INNER JOIN u.%s a WHERE a.id.authority = ?",
-                PersistedClass.User.name(), UserField.authorities.name());
+        String query = String.format("SELECT u FROM %s u INNER JOIN u.%s a WHERE a.%s = ?",
+                PersistedClass.User.name(), UserField.authorities.name(),
+                AuthorityField.authority.getFieldChain());
         return (List<User>) this.getHibernateTemplate().find(query, authority);
     }
 

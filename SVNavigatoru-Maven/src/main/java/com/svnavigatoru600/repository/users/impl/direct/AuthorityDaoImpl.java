@@ -13,6 +13,7 @@ import com.svnavigatoru600.domain.users.Authority;
 import com.svnavigatoru600.domain.users.AuthorityId;
 import com.svnavigatoru600.repository.impl.PersistedClass;
 import com.svnavigatoru600.repository.users.AuthorityDao;
+import com.svnavigatoru600.repository.users.impl.AuthorityField;
 
 /**
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
@@ -24,7 +25,7 @@ public class AuthorityDaoImpl extends SimpleJdbcDaoSupport implements AuthorityD
     @Override
     public List<Authority> find(String username) {
         String query = String.format("SELECT * FROM %s a WHERE a.%s = ?", AuthorityDaoImpl.TABLE_NAME,
-                AuthorityRowMapper.getColumn("username"));
+                AuthorityField.username.getColumnName());
         return this.getSimpleJdbcTemplate().query(query, new AuthorityRowMapper(), username);
     }
 
@@ -34,8 +35,8 @@ public class AuthorityDaoImpl extends SimpleJdbcDaoSupport implements AuthorityD
     private Map<String, Object> getNamedParameters(Authority authority) {
         Map<String, Object> parameters = new HashMap<String, Object>();
         AuthorityId id = authority.getId();
-        parameters.put(AuthorityRowMapper.getColumn("username"), id.getUsername());
-        parameters.put(AuthorityRowMapper.getColumn("authority"), id.getAuthority());
+        parameters.put(AuthorityField.username.getColumnName(), id.getUsername());
+        parameters.put(AuthorityField.authority.getColumnName(), id.getAuthority());
         return parameters;
     }
 
@@ -44,8 +45,8 @@ public class AuthorityDaoImpl extends SimpleJdbcDaoSupport implements AuthorityD
      */
     public void save(Authority authority) {
         SimpleJdbcInsert insert = new SimpleJdbcInsert(this.getDataSource()).withTableName(
-                AuthorityDaoImpl.TABLE_NAME).usingColumns(AuthorityRowMapper.getColumn("username"),
-                AuthorityRowMapper.getColumn("authority"));
+                AuthorityDaoImpl.TABLE_NAME).usingColumns(AuthorityField.username.getColumnName(),
+                AuthorityField.authority.getColumnName());
         insert.execute(this.getNamedParameters(authority));
     }
 
@@ -59,7 +60,7 @@ public class AuthorityDaoImpl extends SimpleJdbcDaoSupport implements AuthorityD
     @Override
     public void delete(String username) {
         String query = String.format("DELETE FROM %s WHERE %s = ?", AuthorityDaoImpl.TABLE_NAME,
-                AuthorityRowMapper.getColumn("username"));
+                AuthorityField.username.getColumnName());
         this.getSimpleJdbcTemplate().update(query, username);
     }
 }

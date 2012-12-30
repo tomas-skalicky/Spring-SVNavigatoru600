@@ -2,13 +2,12 @@ package com.svnavigatoru600.repository.users.impl.direct;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.Map;
 
 import org.springframework.jdbc.core.RowMapper;
 
 import com.svnavigatoru600.domain.users.Authority;
 import com.svnavigatoru600.domain.users.AuthorityId;
+import com.svnavigatoru600.repository.users.impl.AuthorityField;
 
 /**
  * For more information, see {@link UserRowMapper}.
@@ -17,23 +16,11 @@ import com.svnavigatoru600.domain.users.AuthorityId;
  */
 public class AuthorityRowMapper implements RowMapper<Authority> {
 
-    private static final Map<String, String> PROPERTY_COLUMN_MAP;
-
-    static {
-        PROPERTY_COLUMN_MAP = new HashMap<String, String>();
-        PROPERTY_COLUMN_MAP.put("username", "username");
-        PROPERTY_COLUMN_MAP.put("authority", "authority");
-    }
-
-    public static String getColumn(String propertyName) {
-        return AuthorityRowMapper.PROPERTY_COLUMN_MAP.get(propertyName);
-    }
-
     @Override
     public Authority mapRow(ResultSet rs, int rowNum) throws SQLException {
         AuthorityId id = new AuthorityId();
-        id.setUsername(rs.getString(AuthorityRowMapper.getColumn("username")));
-        id.setAuthority(rs.getString(AuthorityRowMapper.getColumn("authority")));
+        id.setUsername(rs.getString(AuthorityField.username.getColumnName()));
+        id.setAuthority(rs.getString(AuthorityField.authority.getColumnName()));
 
         Authority authority = new Authority();
         authority.setId(id);
