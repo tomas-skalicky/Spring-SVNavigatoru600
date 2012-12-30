@@ -14,6 +14,9 @@ import com.svnavigatoru600.domain.records.SessionRecordType;
 import com.svnavigatoru600.repository.records.SessionRecordDao;
 import com.svnavigatoru600.service.util.OrderType;
 
+/**
+ * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
+ */
 public class SessionRecordDaoImpl extends SimpleJdbcDaoSupport implements SessionRecordDao {
 
     private static final String TABLE_NAME = "session_records";
