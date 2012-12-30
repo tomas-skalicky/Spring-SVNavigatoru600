@@ -5,6 +5,8 @@ import java.sql.SQLException;
 
 import javax.sql.rowset.serial.SerialBlob;
 
+import org.apache.commons.lang3.ArrayUtils;
+
 import com.svnavigatoru600.web.Configuration;
 
 /**
@@ -24,7 +26,7 @@ public final class File {
      */
     public static boolean isValid(String fileName) {
         String[] fileNameParts = fileName.split("\\.");
-        if (fileNameParts.length == 0) {
+        if (ArrayUtils.isEmpty(fileNameParts)) {
             // The filename is likely blank.
             return false;
         }
