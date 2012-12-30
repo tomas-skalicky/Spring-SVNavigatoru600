@@ -13,13 +13,14 @@ import com.svnavigatoru600.domain.forum.Contribution;
 import com.svnavigatoru600.repository.forum.ContributionDao;
 import com.svnavigatoru600.repository.forum.ThreadDao;
 import com.svnavigatoru600.repository.forum.impl.ContributionField;
+import com.svnavigatoru600.repository.impl.PersistedClass;
 import com.svnavigatoru600.repository.users.UserDao;
 import com.svnavigatoru600.repository.users.impl.direct.UserDaoImpl;
 import com.svnavigatoru600.service.util.OrderType;
 
 public class ContributionDaoImpl extends SimpleJdbcDaoSupport implements ContributionDao {
 
-    private static final String TABLE_NAME = "contributions";
+    private static final String TABLE_NAME = PersistedClass.Contribution.getTableName();
     protected ThreadDao threadDao;
     protected UserDao userDao;
 

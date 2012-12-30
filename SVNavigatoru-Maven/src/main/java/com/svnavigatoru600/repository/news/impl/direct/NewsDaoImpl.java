@@ -9,12 +9,13 @@ import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 
 import com.svnavigatoru600.domain.News;
 import com.svnavigatoru600.repository.NewsDao;
+import com.svnavigatoru600.repository.impl.PersistedClass;
 import com.svnavigatoru600.repository.news.impl.FindOrderedArguments;
 import com.svnavigatoru600.repository.news.impl.NewsField;
 
 public class NewsDaoImpl extends SimpleJdbcDaoSupport implements NewsDao {
 
-    private static final String TABLE_NAME = "news";
+    private static final String TABLE_NAME = PersistedClass.News.getTableName();
 
     @Override
     public News findById(int newsId) {

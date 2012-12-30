@@ -14,12 +14,13 @@ import com.svnavigatoru600.domain.forum.Thread;
 import com.svnavigatoru600.repository.forum.ContributionDao;
 import com.svnavigatoru600.repository.forum.ThreadDao;
 import com.svnavigatoru600.repository.forum.impl.ThreadField;
+import com.svnavigatoru600.repository.impl.PersistedClass;
 import com.svnavigatoru600.repository.users.UserDao;
 import com.svnavigatoru600.repository.users.impl.direct.UserDaoImpl;
 
 public class ThreadDaoImpl extends SimpleJdbcDaoSupport implements ThreadDao {
 
-    private static final String TABLE_NAME = "threads";
+    private static final String TABLE_NAME = PersistedClass.Thread.getTableName();
     protected ContributionDao contributionDao;
     protected UserDao userDao;
 
