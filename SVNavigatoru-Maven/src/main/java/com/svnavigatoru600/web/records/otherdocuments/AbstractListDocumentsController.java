@@ -36,8 +36,8 @@ public abstract class AbstractListDocumentsController extends AbstractOtherDocum
      * Constructs a controller which considers all {@link OtherDocumentRecord}s of all
      * {@link OtherDocumentRecordType}s.
      */
-    public AbstractListDocumentsController(String baseUrl, AbstractPageViews views, OtherDocumentRecordDao recordDao,
-            MessageSource messageSource) {
+    public AbstractListDocumentsController(String baseUrl, AbstractPageViews views,
+            OtherDocumentRecordDao recordDao, MessageSource messageSource) {
         super(baseUrl, views, recordDao, messageSource);
     }
 

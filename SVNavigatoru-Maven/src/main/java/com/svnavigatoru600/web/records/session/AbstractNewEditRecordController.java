@@ -41,8 +41,8 @@ public abstract class AbstractNewEditRecordController extends AbstractSessionRec
     /**
      * Constructs a controller which considers all {@link SessionRecord}s of all {@link SessionRecordType}s.
      */
-    public AbstractNewEditRecordController(String baseUrl, AbstractPageViews views, SessionRecordDao recordDao,
-            AbstractSessionRecordValidator validator, MessageSource messageSource) {
+    public AbstractNewEditRecordController(String baseUrl, AbstractPageViews views,
+            SessionRecordDao recordDao, AbstractSessionRecordValidator validator, MessageSource messageSource) {
         super(baseUrl, views, recordDao, messageSource);
         this.validator = validator;
     }
@@ -51,8 +51,9 @@ public abstract class AbstractNewEditRecordController extends AbstractSessionRec
      * Constructs a controller which considers all {@link SessionRecord}s of the given <code>recordType</code>
      * .
      */
-    public AbstractNewEditRecordController(String baseUrl, AbstractPageViews views, SessionRecordType recordType,
-            SessionRecordDao recordDao, AbstractSessionRecordValidator validator, MessageSource messageSource) {
+    public AbstractNewEditRecordController(String baseUrl, AbstractPageViews views,
+            SessionRecordType recordType, SessionRecordDao recordDao,
+            AbstractSessionRecordValidator validator, MessageSource messageSource) {
         super(baseUrl, views, recordType, recordDao, messageSource);
         this.validator = validator;
     }

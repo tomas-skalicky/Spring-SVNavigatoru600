@@ -21,8 +21,8 @@ import com.svnavigatoru600.service.users.validator.UpdateUserDataValidator;
 import com.svnavigatoru600.service.util.Hash;
 import com.svnavigatoru600.service.util.UserUtils;
 import com.svnavigatoru600.viewmodel.users.UpdateUserData;
-import com.svnavigatoru600.web.Configuration;
 import com.svnavigatoru600.web.AbstractPrivateSectionMetaController;
+import com.svnavigatoru600.web.Configuration;
 
 /**
  * The controller bound to the <i>user-account.jsp</i> and <i>user-administration.jsp</i> form. For more

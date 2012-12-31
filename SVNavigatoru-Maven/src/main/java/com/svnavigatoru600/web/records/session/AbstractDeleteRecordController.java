@@ -36,8 +36,8 @@ public abstract class AbstractDeleteRecordController extends AbstractSessionReco
     /**
      * Constructs a controller which considers all {@link SessionRecord}s of all {@link SessionRecordType}s.
      */
-    public AbstractDeleteRecordController(String baseUrl, AbstractPageViews views, SessionRecordDao recordDao,
-            MessageSource messageSource) {
+    public AbstractDeleteRecordController(String baseUrl, AbstractPageViews views,
+            SessionRecordDao recordDao, MessageSource messageSource) {
         // Note that allRecordTypes is set up during the creation of the parent.
         super(baseUrl, views, recordDao, messageSource);
         this.successfulDeleteUrl = this.baseUrl + AbstractDeleteRecordController.SUCCESSFUL_DELETE_URL_END;
@@ -47,8 +47,8 @@ public abstract class AbstractDeleteRecordController extends AbstractSessionReco
      * Constructs a controller which considers all {@link SessionRecord}s of the given <code>recordType</code>
      * .
      */
-    public AbstractDeleteRecordController(String baseUrl, AbstractPageViews views, SessionRecordType recordType,
-            SessionRecordDao recordDao, MessageSource messageSource) {
+    public AbstractDeleteRecordController(String baseUrl, AbstractPageViews views,
+            SessionRecordType recordType, SessionRecordDao recordDao, MessageSource messageSource) {
         super(baseUrl, views, recordType, recordDao, messageSource);
         this.successfulDeleteUrl = this.baseUrl + AbstractDeleteRecordController.SUCCESSFUL_DELETE_URL_END;
     }

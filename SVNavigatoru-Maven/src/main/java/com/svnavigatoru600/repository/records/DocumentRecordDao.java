@@ -23,8 +23,8 @@ public interface DocumentRecordDao {
     AbstractDocumentRecord findById(int documentId, boolean loadFile);
 
     /**
-     * Returns a {@link AbstractDocumentRecord} stored in the repository which is associated with a file with the
-     * given <code>fileName</code>.
+     * Returns a {@link AbstractDocumentRecord} stored in the repository which is associated with a file with
+     * the given <code>fileName</code>.
      */
     AbstractDocumentRecord findByFileName(String fileName);
 

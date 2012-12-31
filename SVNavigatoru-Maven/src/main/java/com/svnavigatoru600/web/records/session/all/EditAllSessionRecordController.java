@@ -50,8 +50,9 @@ public class EditAllSessionRecordController extends AbstractEditRecordController
     @Override
     @RequestMapping(value = EditAllSessionRecordController.BASE_URL + "{recordId}/", method = RequestMethod.POST)
     public String processSubmittedForm(
-            @ModelAttribute(AbstractEditRecordController.COMMAND) EditSessionRecord command, BindingResult result,
-            SessionStatus status, @PathVariable int recordId, HttpServletRequest request, ModelMap model) {
+            @ModelAttribute(AbstractEditRecordController.COMMAND) EditSessionRecord command,
+            BindingResult result, SessionStatus status, @PathVariable int recordId,
+            HttpServletRequest request, ModelMap model) {
         return super.processSubmittedForm(command, result, status, recordId, request, model);
     }
 }

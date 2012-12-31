@@ -51,9 +51,9 @@ public class EditRevisionDocumentController extends AbstractEditDocumentControll
 
     @Override
     @RequestMapping(value = EditRevisionDocumentController.BASE_URL + "{recordId}/", method = RequestMethod.POST)
-    public String processSubmittedForm(@ModelAttribute(AbstractEditDocumentController.COMMAND) EditRecord command,
-            BindingResult result, SessionStatus status, @PathVariable int recordId,
-            HttpServletRequest request, ModelMap model) {
+    public String processSubmittedForm(
+            @ModelAttribute(AbstractEditDocumentController.COMMAND) EditRecord command, BindingResult result,
+            SessionStatus status, @PathVariable int recordId, HttpServletRequest request, ModelMap model) {
         return super.processSubmittedForm(command, result, status, recordId, request, model);
     }
 }

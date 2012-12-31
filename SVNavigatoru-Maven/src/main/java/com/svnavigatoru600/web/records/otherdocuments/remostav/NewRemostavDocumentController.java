@@ -44,8 +44,9 @@ public class NewRemostavDocumentController extends AbstractNewDocumentController
 
     @Override
     @RequestMapping(value = NewRemostavDocumentController.BASE_URL + "novy/", method = RequestMethod.POST)
-    public String processSubmittedForm(@ModelAttribute(AbstractNewDocumentController.COMMAND) NewRecord command,
-            BindingResult result, SessionStatus status, HttpServletRequest request, ModelMap model) {
+    public String processSubmittedForm(
+            @ModelAttribute(AbstractNewDocumentController.COMMAND) NewRecord command, BindingResult result,
+            SessionStatus status, HttpServletRequest request, ModelMap model) {
         return super.processSubmittedForm(command, result, status, request, model);
     }
 }
