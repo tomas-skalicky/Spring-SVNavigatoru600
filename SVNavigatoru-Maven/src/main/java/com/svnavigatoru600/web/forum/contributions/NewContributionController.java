@@ -1,8 +1,8 @@
 package com.svnavigatoru600.web.forum.contributions;
 
+import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Controller;
@@ -23,8 +23,11 @@ import com.svnavigatoru600.service.util.UserUtils;
 import com.svnavigatoru600.viewmodel.forum.contributions.NewContribution;
 import com.svnavigatoru600.web.Configuration;
 
+/**
+ * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
+ */
 @Controller
-public class NewContributionController extends NewEditContributionController {
+public class NewContributionController extends AbstractNewEditContributionController {
 
     private static final String REQUEST_MAPPING_BASE_URL = NewContributionController.BASE_URL
             + "{threadId}/prispevky/novy/";
@@ -34,7 +37,7 @@ public class NewContributionController extends NewEditContributionController {
     public static final String DATABASE_ERROR_MESSAGE_CODE = "forum.contributions.adding-failed-due-to-database-error";
     private ThreadDao threadDao;
 
-    @Autowired
+    @Inject
     public void setThreadDao(ThreadDao threadDao) {
         this.threadDao = threadDao;
     }
@@ -42,7 +45,7 @@ public class NewContributionController extends NewEditContributionController {
     /**
      * Constructor.
      */
-    @Autowired
+    @Inject
     public NewContributionController(ContributionDao contributionDao, NewContributionValidator validator,
             MessageSource messageSource) {
         super(contributionDao, validator, messageSource);

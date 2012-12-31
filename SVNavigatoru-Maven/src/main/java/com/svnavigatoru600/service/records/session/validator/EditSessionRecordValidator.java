@@ -5,8 +5,11 @@ import org.springframework.validation.Errors;
 
 import com.svnavigatoru600.viewmodel.records.session.EditSessionRecord;
 
+/**
+ * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
+ */
 @Service
-public class EditSessionRecordValidator extends SessionRecordValidator {
+public class EditSessionRecordValidator extends AbstractSessionRecordValidator {
 
     @Override
     public boolean supports(Class<?> clazz) {

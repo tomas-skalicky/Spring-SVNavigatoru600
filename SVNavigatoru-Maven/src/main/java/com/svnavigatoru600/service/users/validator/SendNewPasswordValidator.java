@@ -28,6 +28,7 @@ public class SendNewPasswordValidator implements Validator {
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, field, "email.not-filled-in");
         if (errors.hasErrors()) {
             // The email address is blank.
+            ;
         } else {
             SendNewPassword command = (SendNewPassword) target;
             if (!Email.isValid(command.getUser().getEmail())) {

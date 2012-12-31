@@ -2,11 +2,12 @@ package com.svnavigatoru600.repository.users.impl.hibernate;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
@@ -29,7 +30,7 @@ public class UserDaoImpl extends HibernateDaoSupport implements UserDao {
 
     protected AuthorityDao authorityDao;
 
-    @Autowired
+    @Inject
     public void setAuthorityDao(AuthorityDao authorityDao) {
         this.authorityDao = authorityDao;
     }

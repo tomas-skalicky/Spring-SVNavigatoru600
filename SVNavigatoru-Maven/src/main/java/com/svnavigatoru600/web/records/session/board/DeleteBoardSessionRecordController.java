@@ -1,8 +1,8 @@
 package com.svnavigatoru600.web.records.session.board;
 
+import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -12,17 +12,20 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.svnavigatoru600.domain.records.SessionRecordType;
 import com.svnavigatoru600.repository.records.SessionRecordDao;
-import com.svnavigatoru600.web.records.session.DeleteRecordController;
+import com.svnavigatoru600.web.records.session.AbstractDeleteRecordController;
 
+/**
+ * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
+ */
 @Controller
-public class DeleteBoardSessionRecordController extends DeleteRecordController {
+public class DeleteBoardSessionRecordController extends AbstractDeleteRecordController {
 
     private static final String BASE_URL = "/zapisy-z-jednani/vybor/";
 
     /**
      * Constructor.
      */
-    @Autowired
+    @Inject
     public DeleteBoardSessionRecordController(SessionRecordDao recordDao, MessageSource messageSource) {
         super(DeleteBoardSessionRecordController.BASE_URL, new PageViews(),
                 SessionRecordType.SESSION_RECORD_OF_BOARD, recordDao, messageSource);

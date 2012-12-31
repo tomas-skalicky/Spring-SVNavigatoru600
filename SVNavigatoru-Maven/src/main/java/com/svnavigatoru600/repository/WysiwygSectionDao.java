@@ -3,6 +3,9 @@ package com.svnavigatoru600.repository;
 import com.svnavigatoru600.domain.WysiwygSection;
 import com.svnavigatoru600.domain.WysiwygSectionName;
 
+/**
+ * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
+ */
 @MapperInterface
 public interface WysiwygSectionDao {
 

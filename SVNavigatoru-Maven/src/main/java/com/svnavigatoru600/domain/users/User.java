@@ -13,11 +13,11 @@ import org.springframework.security.core.userdetails.UserDetails;
 import com.svnavigatoru600.repository.users.UserDao;
 import com.svnavigatoru600.service.util.FullNameFormat;
 
+/**
+ * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
+ */
 public class User implements UserDetails, Serializable {
 
-    /**
-	 * 
-	 */
     private static final long serialVersionUID = 4756202473560293423L;
 
     private UserDao userDao;

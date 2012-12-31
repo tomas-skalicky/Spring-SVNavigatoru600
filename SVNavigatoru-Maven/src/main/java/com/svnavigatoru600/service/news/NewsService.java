@@ -3,7 +3,8 @@ package com.svnavigatoru600.service.news;
 import java.util.Date;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.inject.Inject;
+
 import org.springframework.stereotype.Service;
 
 import com.svnavigatoru600.domain.News;
@@ -28,7 +29,7 @@ public class NewsService {
     /**
      * Constructor.
      */
-    @Autowired
+    @Inject
     public NewsService(NewsDao newsDao) {
         this.newsDao = newsDao;
     }

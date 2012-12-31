@@ -11,9 +11,6 @@ import com.svnavigatoru600.repository.records.OtherDocumentRecordTypeRelationDao
  */
 public class OtherDocumentRecordTypeRelation implements Serializable {
 
-    /**
-	 * 
-	 */
     private static final long serialVersionUID = -490430948638448565L;
 
     @SuppressWarnings("unused")

@@ -1,8 +1,8 @@
 package com.svnavigatoru600.web.users.administration;
 
+import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Controller;
@@ -18,15 +18,18 @@ import com.svnavigatoru600.service.util.Email;
 import com.svnavigatoru600.service.util.Localization;
 import com.svnavigatoru600.web.Configuration;
 
+/**
+ * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
+ */
 @Controller
-public class DeleteUserController extends UserController {
+public class DeleteUserController extends AbstractUserController {
 
     private static final String BASE_URL = "/administrace-uzivatelu/";
 
     /**
      * Constructor.
      */
-    @Autowired
+    @Inject
     public DeleteUserController(UserDao userDao, MessageSource messageSource) {
         super(userDao, messageSource);
     }

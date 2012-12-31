@@ -3,9 +3,9 @@ package com.svnavigatoru600.web;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.dao.NonTransientDataAccessException;
 import org.springframework.stereotype.Controller;
@@ -34,7 +34,7 @@ import com.svnavigatoru600.viewmodel.users.SendNewPassword;
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
 @Controller
-public class ForgottenPasswordController extends MetaController {
+public class ForgottenPasswordController extends AbstractMetaController {
 
     private static final String PAGE_VIEW = "forgottenPassword";
 
@@ -45,7 +45,7 @@ public class ForgottenPasswordController extends MetaController {
     // message which is to be sent via email.
     private MessageSource messageSource;
 
-    @Autowired
+    @Inject
     public void setMessageSource(MessageSource messageSource) {
         this.messageSource = messageSource;
     }
@@ -53,7 +53,7 @@ public class ForgottenPasswordController extends MetaController {
     /**
      * Constructor.
      */
-    @Autowired
+    @Inject
     public ForgottenPasswordController(UserDao userDao, SendNewPasswordValidator validator) {
         this.logger.debug("The ForgottenPasswordController object created.");
         this.userDao = userDao;

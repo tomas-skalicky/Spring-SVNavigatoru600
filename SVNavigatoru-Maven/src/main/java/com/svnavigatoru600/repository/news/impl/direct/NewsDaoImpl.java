@@ -13,6 +13,9 @@ import com.svnavigatoru600.repository.impl.PersistedClass;
 import com.svnavigatoru600.repository.news.impl.FindAllOrderedArguments;
 import com.svnavigatoru600.repository.news.impl.NewsField;
 
+/**
+ * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
+ */
 public class NewsDaoImpl extends SimpleJdbcDaoSupport implements NewsDao {
 
     private static final String TABLE_NAME = PersistedClass.News.getTableName();

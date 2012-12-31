@@ -1,8 +1,8 @@
 package com.svnavigatoru600.web.records.session.sv;
 
+import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -16,17 +16,20 @@ import com.svnavigatoru600.domain.records.SessionRecordType;
 import com.svnavigatoru600.repository.records.SessionRecordDao;
 import com.svnavigatoru600.service.records.session.validator.NewSessionRecordValidator;
 import com.svnavigatoru600.viewmodel.records.session.NewSessionRecord;
-import com.svnavigatoru600.web.records.session.NewRecordController;
+import com.svnavigatoru600.web.records.session.AbstractNewRecordController;
 
+/**
+ * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
+ */
 @Controller
-public class NewSvSessionRecordController extends NewRecordController {
+public class NewSvSessionRecordController extends AbstractNewRecordController {
 
     private static final String BASE_URL = "/zapisy-z-jednani/sv/";
 
     /**
      * Constructor.
      */
-    @Autowired
+    @Inject
     public NewSvSessionRecordController(SessionRecordDao recordDao, NewSessionRecordValidator validator,
             MessageSource messageSource) {
         super(NewSvSessionRecordController.BASE_URL, new PageViews(), SessionRecordType.SESSION_RECORD_OF_SV,
@@ -43,7 +46,7 @@ public class NewSvSessionRecordController extends NewRecordController {
 
     @Override
     @RequestMapping(value = NewSvSessionRecordController.BASE_URL + "novy/", method = RequestMethod.POST)
-    public String processSubmittedForm(@ModelAttribute(NewRecordController.COMMAND) NewSessionRecord command,
+    public String processSubmittedForm(@ModelAttribute(AbstractNewRecordController.COMMAND) NewSessionRecord command,
             BindingResult result, SessionStatus status, HttpServletRequest request, ModelMap model) {
         return super.processSubmittedForm(command, result, status, request, model);
     }

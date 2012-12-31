@@ -16,7 +16,7 @@ import com.svnavigatoru600.repository.records.impl.SessionRecordField;
  * 
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
-public class SessionRecordRowMapper extends DocumentRecordRowMapper implements RowMapper<SessionRecord> {
+public class SessionRecordRowMapper extends AbstractDocumentRecordRowMapper implements RowMapper<SessionRecord> {
 
     /**
      * Constructor.

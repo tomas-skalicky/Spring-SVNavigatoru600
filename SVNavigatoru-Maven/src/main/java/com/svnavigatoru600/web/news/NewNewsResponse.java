@@ -11,9 +11,12 @@ import com.svnavigatoru600.domain.News;
 import com.svnavigatoru600.service.util.DateUtils;
 import com.svnavigatoru600.service.util.Localization;
 import com.svnavigatoru600.service.util.UserUtils;
-import com.svnavigatoru600.viewmodel.news.NewEditNews;
+import com.svnavigatoru600.viewmodel.news.AbstractNewEditNews;
 
-public class NewNewsResponse extends NewEditNewsResponse {
+/**
+ * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
+ */
+public class NewNewsResponse extends AbstractNewEditNewsResponse {
 
     /**
      * All variables intended for visualisation of the new news in the list of news.
@@ -24,7 +27,7 @@ public class NewNewsResponse extends NewEditNewsResponse {
     private String localizedDeleteQuestion = null;
     private String editUrlBeginning = null;
 
-    public NewNewsResponse(NewEditNews command) {
+    public NewNewsResponse(AbstractNewEditNews command) {
         super(command);
     }
 
@@ -62,7 +65,7 @@ public class NewNewsResponse extends NewEditNewsResponse {
 
     private void initEditUrlVariables(HttpServletRequest request) {
         StringBuffer urlBuilder = new StringBuffer(request.getContextPath());
-        urlBuilder.append(NewsController.BASE_URL);
+        urlBuilder.append(AbstractNewsController.BASE_URL);
         urlBuilder.append("existujici/");
         this.editUrlBeginning = urlBuilder.toString();
     }

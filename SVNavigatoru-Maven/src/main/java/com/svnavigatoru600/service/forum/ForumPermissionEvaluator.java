@@ -2,7 +2,8 @@ package com.svnavigatoru600.service.forum;
 
 import java.io.Serializable;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.inject.Inject;
+
 import org.springframework.security.access.PermissionEvaluator;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
@@ -13,18 +14,21 @@ import com.svnavigatoru600.domain.users.User;
 import com.svnavigatoru600.repository.forum.ContributionDao;
 import com.svnavigatoru600.repository.forum.ThreadDao;
 
+/**
+ * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
+ */
 @Service
 public class ForumPermissionEvaluator implements PermissionEvaluator {
 
     private ContributionDao contributionDao;
     private ThreadDao threadDao;
 
-    @Autowired
+    @Inject
     public void setContributionDao(ContributionDao contributionDao) {
         this.contributionDao = contributionDao;
     }
 
-    @Autowired
+    @Inject
     public void setThreadDao(ThreadDao threadDao) {
         this.threadDao = threadDao;
     }

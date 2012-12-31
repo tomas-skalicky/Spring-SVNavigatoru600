@@ -16,7 +16,7 @@ import com.svnavigatoru600.repository.records.impl.OtherDocumentRecordField;
  * 
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
-public class OtherDocumentRecordRowMapper extends DocumentRecordRowMapper implements
+public class OtherDocumentRecordRowMapper extends AbstractDocumentRecordRowMapper implements
         RowMapper<OtherDocumentRecord> {
 
     /**

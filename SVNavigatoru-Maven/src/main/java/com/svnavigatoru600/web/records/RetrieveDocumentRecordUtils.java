@@ -7,11 +7,11 @@ import java.sql.SQLException;
 
 import javax.servlet.http.HttpServletResponse;
 
-import com.svnavigatoru600.domain.records.DocumentRecord;
+import com.svnavigatoru600.domain.records.AbstractDocumentRecord;
 import com.svnavigatoru600.repository.records.DocumentRecordDao;
 
 /**
- * Provides a set of static functions for retrieving {@link DocumentRecord}s.
+ * Provides a set of static functions for retrieving {@link AbstractDocumentRecord}s.
  * 
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
@@ -23,7 +23,7 @@ public final class RetrieveDocumentRecordUtils {
     public static void retrieve(int recordId, DocumentRecordDao recordDao, HttpServletResponse response)
             throws SQLException, IOException {
         // Gets the record from the DB.
-        DocumentRecord record = recordDao.findById(recordId);
+        AbstractDocumentRecord record = recordDao.findById(recordId);
         Blob file = record.getFile();
         byte[] bytes = file.getBytes(1L, (int) file.length());
 

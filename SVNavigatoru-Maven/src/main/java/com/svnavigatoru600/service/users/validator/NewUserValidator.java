@@ -1,9 +1,10 @@
 package com.svnavigatoru600.service.users.validator;
 
+import javax.inject.Inject;
+
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.Errors;
 
@@ -21,14 +22,14 @@ import com.svnavigatoru600.viewmodel.users.AdministrateUserData;
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
 @Service
-public class NewUserValidator extends UserDataValidator {
+public class NewUserValidator extends AbstractUserDataValidator {
 
     /** Logger for this class and subclasses */
     protected final Log logger = LogFactory.getLog(this.getClass());
 
     private UserDao userDao;
 
-    @Autowired
+    @Inject
     public void setUserDao(UserDao userDao) {
         this.userDao = userDao;
     }
@@ -77,6 +78,7 @@ public class NewUserValidator extends UserDataValidator {
         if (StringUtils.isBlank(email)) {
             // The email address is blank. It is not an error since this
             // information is optional.
+            ;
         } else {
             if (!Email.isValid(email)) {
                 errors.rejectValue(field, "email.bad-format");

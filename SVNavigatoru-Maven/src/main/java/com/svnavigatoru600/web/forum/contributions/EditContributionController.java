@@ -1,8 +1,8 @@
 package com.svnavigatoru600.web.forum.contributions;
 
+import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Controller;
@@ -22,8 +22,11 @@ import com.svnavigatoru600.service.forum.contributions.validator.EditContributio
 import com.svnavigatoru600.viewmodel.forum.contributions.EditContribution;
 import com.svnavigatoru600.web.Configuration;
 
+/**
+ * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
+ */
 @Controller
-public class EditContributionController extends NewEditContributionController {
+public class EditContributionController extends AbstractNewEditContributionController {
 
     private static final String REQUEST_MAPPING_BASE_URL = EditContributionController.BASE_URL
             + "{threadId}/prispevky/existujici/{contributionId}/";
@@ -33,7 +36,7 @@ public class EditContributionController extends NewEditContributionController {
     public static final String DATABASE_ERROR_MESSAGE_CODE = "edit.changes-not-saved-due-to-database-error";
     private ContributionService contributionService;
 
-    @Autowired
+    @Inject
     public void setContributionService(final ContributionService contributionService) {
         this.contributionService = contributionService;
     }
@@ -41,7 +44,7 @@ public class EditContributionController extends NewEditContributionController {
     /**
      * Constructor.
      */
-    @Autowired
+    @Inject
     public EditContributionController(final ContributionDao contributionDao,
             final EditContributionValidator validator, final MessageSource messageSource) {
         super(contributionDao, validator, messageSource);

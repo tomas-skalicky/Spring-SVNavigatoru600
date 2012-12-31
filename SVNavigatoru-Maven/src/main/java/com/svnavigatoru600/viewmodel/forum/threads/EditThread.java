@@ -2,8 +2,11 @@ package com.svnavigatoru600.viewmodel.forum.threads;
 
 import org.springframework.stereotype.Service;
 
+/**
+ * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
+ */
 @Service
-public class EditThread extends NewEditThread {
+public class EditThread extends AbstractNewEditThread {
 
     private boolean dataSaved = false;
 

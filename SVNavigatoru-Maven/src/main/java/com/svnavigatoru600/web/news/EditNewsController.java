@@ -1,8 +1,8 @@
 package com.svnavigatoru600.web.news;
 
+import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Controller;
@@ -20,8 +20,11 @@ import com.svnavigatoru600.service.news.NewsService;
 import com.svnavigatoru600.service.news.validator.EditNewsValidator;
 import com.svnavigatoru600.viewmodel.news.EditNews;
 
+/**
+ * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
+ */
 @Controller
-public class EditNewsController extends NewEditNewsController {
+public class EditNewsController extends AbstractNewEditNewsController {
 
     private static final String REQUEST_MAPPING_BASE_URL = EditNewsController.BASE_URL
             + "existujici/{newsId}/";
@@ -33,7 +36,7 @@ public class EditNewsController extends NewEditNewsController {
     /**
      * Constructor.
      */
-    @Autowired
+    @Inject
     public EditNewsController(NewsService newsService, EditNewsValidator validator,
             MessageSource messageSource) {
         super(newsService, validator, messageSource);
@@ -44,7 +47,7 @@ public class EditNewsController extends NewEditNewsController {
      */
     @RequestMapping(value = EditNewsController.REQUEST_MAPPING_BASE_URL, method = RequestMethod.GET)
     public @ResponseBody
-    NewsResponse initForm(@PathVariable int newsId, HttpServletRequest request) {
+    AbstractNewsResponse initForm(@PathVariable int newsId, HttpServletRequest request) {
 
         News news = this.newsService.findById(newsId);
         return new GoToEditFormResponse(news, this.messageSource, request);
@@ -53,7 +56,7 @@ public class EditNewsController extends NewEditNewsController {
     @RequestMapping(value = EditNewsController.REQUEST_MAPPING_BASE_URL, method = RequestMethod.POST)
     @Transactional
     public @ResponseBody
-    NewsResponse processSubmittedForm(@ModelAttribute(EditNewsController.COMMAND) EditNews command,
+    AbstractNewsResponse processSubmittedForm(@ModelAttribute(EditNewsController.COMMAND) EditNews command,
             BindingResult result, SessionStatus status, @PathVariable int newsId, HttpServletRequest request) {
 
         EditNewsResponse response = new EditNewsResponse(command);

@@ -4,9 +4,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -21,8 +21,11 @@ import com.svnavigatoru600.service.util.Localization;
 import com.svnavigatoru600.service.util.OrderType;
 import com.svnavigatoru600.viewmodel.eventcalendar.ShowAllEvents;
 
+/**
+ * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
+ */
 @Controller
-public class ListEventsController extends EventController {
+public class ListEventsController extends AbstractEventController {
 
     private static final String REQUEST_MAPPING_BASE_URL = ListEventsController.BASE_URL;
     /**
@@ -33,7 +36,7 @@ public class ListEventsController extends EventController {
     /**
      * Constructor.
      */
-    @Autowired
+    @Inject
     public ListEventsController(CalendarEventDao eventDao, MessageSource messageSource) {
         super(eventDao, messageSource);
     }

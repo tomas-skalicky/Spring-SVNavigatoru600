@@ -1,6 +1,7 @@
 package com.svnavigatoru600.web.remostav;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.inject.Inject;
+
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -13,15 +14,18 @@ import org.springframework.web.bind.support.SessionStatus;
 import com.svnavigatoru600.domain.WysiwygSection;
 import com.svnavigatoru600.domain.WysiwygSectionName;
 import com.svnavigatoru600.repository.WysiwygSectionDao;
-import com.svnavigatoru600.web.WysiwygSectionController;
+import com.svnavigatoru600.web.AbstractWysiwygSectionController;
 
+/**
+ * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
+ */
 @Controller
-public class ContactController extends WysiwygSectionController {
+public class ContactController extends AbstractWysiwygSectionController {
 
     /**
      * Constructor.
      */
-    @Autowired
+    @Inject
     public ContactController(WysiwygSectionDao sectionDao) {
         super(sectionDao);
         super.sectionName = WysiwygSectionName.REMOSTAV_CONTACT;

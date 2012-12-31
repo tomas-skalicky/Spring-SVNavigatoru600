@@ -7,6 +7,9 @@ import org.springframework.stereotype.Service;
 
 import com.svnavigatoru600.domain.records.OtherDocumentRecord;
 
+/**
+ * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
+ */
 @Service
 public class ShowAllRecords {
 

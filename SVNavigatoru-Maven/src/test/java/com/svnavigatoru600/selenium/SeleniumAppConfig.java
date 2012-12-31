@@ -1,6 +1,7 @@
 package com.svnavigatoru600.selenium;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.inject.Inject;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
@@ -19,7 +20,7 @@ public class SeleniumAppConfig {
     /**
      * Used together with the {@link PropertySource} annotation of this class.
      */
-    @Autowired
+    @Inject
     private Environment environment;
 
     /**

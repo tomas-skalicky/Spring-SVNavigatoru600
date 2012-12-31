@@ -1,8 +1,8 @@
 package com.svnavigatoru600.web.records.otherdocuments.contracts;
 
+import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -17,17 +17,20 @@ import com.svnavigatoru600.domain.records.OtherDocumentRecordType;
 import com.svnavigatoru600.repository.records.OtherDocumentRecordDao;
 import com.svnavigatoru600.service.records.otherdocuments.validator.EditRecordValidator;
 import com.svnavigatoru600.viewmodel.records.otherdocuments.EditRecord;
-import com.svnavigatoru600.web.records.otherdocuments.EditDocumentController;
+import com.svnavigatoru600.web.records.otherdocuments.AbstractEditDocumentController;
 
+/**
+ * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
+ */
 @Controller
-public class EditContractDocumentController extends EditDocumentController {
+public class EditContractDocumentController extends AbstractEditDocumentController {
 
     private static final String BASE_URL = "/dalsi-dokumenty/smlouvy/existujici/";
 
     /**
      * Constructor.
      */
-    @Autowired
+    @Inject
     public EditContractDocumentController(OtherDocumentRecordDao recordDao, EditRecordValidator validator,
             MessageSource messageSource) {
         super(EditContractDocumentController.BASE_URL, new PageViews(), OtherDocumentRecordType.CONTRACT,
@@ -48,7 +51,7 @@ public class EditContractDocumentController extends EditDocumentController {
 
     @Override
     @RequestMapping(value = EditContractDocumentController.BASE_URL + "{recordId}/", method = RequestMethod.POST)
-    public String processSubmittedForm(@ModelAttribute(EditDocumentController.COMMAND) EditRecord command,
+    public String processSubmittedForm(@ModelAttribute(AbstractEditDocumentController.COMMAND) EditRecord command,
             BindingResult result, SessionStatus status, @PathVariable int recordId,
             HttpServletRequest request, ModelMap model) {
         return super.processSubmittedForm(command, result, status, recordId, request, model);

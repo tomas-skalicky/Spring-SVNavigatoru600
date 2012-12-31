@@ -6,7 +6,10 @@ import org.springframework.context.MessageSource;
 
 import com.svnavigatoru600.service.util.Localization;
 
-public class DeleteNewsResponse extends NewsResponse {
+/**
+ * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
+ */
+public class DeleteNewsResponse extends AbstractNewsResponse {
 
     /**
      * If the command has not been successful, the error populates the error field.

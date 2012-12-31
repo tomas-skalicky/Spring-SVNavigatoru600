@@ -5,7 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.inject.Inject;
+
 import org.springframework.jdbc.core.simple.SimpleJdbcDaoSupport;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 
@@ -18,18 +19,21 @@ import com.svnavigatoru600.repository.users.UserDao;
 import com.svnavigatoru600.repository.users.impl.direct.UserDaoImpl;
 import com.svnavigatoru600.service.util.OrderType;
 
+/**
+ * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
+ */
 public class ContributionDaoImpl extends SimpleJdbcDaoSupport implements ContributionDao {
 
     private static final String TABLE_NAME = PersistedClass.Contribution.getTableName();
     protected ThreadDao threadDao;
     protected UserDao userDao;
 
-    @Autowired
+    @Inject
     public void setThreadDao(ThreadDao threadDao) {
         this.threadDao = threadDao;
     }
 
-    @Autowired
+    @Inject
     public void setUserDao(UserDao userDao) {
         this.userDao = userDao;
     }

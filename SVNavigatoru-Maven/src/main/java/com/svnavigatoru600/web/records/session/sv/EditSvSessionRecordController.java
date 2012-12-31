@@ -1,8 +1,8 @@
 package com.svnavigatoru600.web.records.session.sv;
 
+import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -17,17 +17,20 @@ import com.svnavigatoru600.domain.records.SessionRecordType;
 import com.svnavigatoru600.repository.records.SessionRecordDao;
 import com.svnavigatoru600.service.records.session.validator.EditSessionRecordValidator;
 import com.svnavigatoru600.viewmodel.records.session.EditSessionRecord;
-import com.svnavigatoru600.web.records.session.EditRecordController;
+import com.svnavigatoru600.web.records.session.AbstractEditRecordController;
 
+/**
+ * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
+ */
 @Controller
-public class EditSvSessionRecordController extends EditRecordController {
+public class EditSvSessionRecordController extends AbstractEditRecordController {
 
     private static final String BASE_URL = "/zapisy-z-jednani/sv/existujici/";
 
     /**
      * Constructor.
      */
-    @Autowired
+    @Inject
     public EditSvSessionRecordController(SessionRecordDao recordDao, EditSessionRecordValidator validator,
             MessageSource messageSource) {
         super(EditSvSessionRecordController.BASE_URL, new PageViews(),
@@ -49,7 +52,7 @@ public class EditSvSessionRecordController extends EditRecordController {
     @Override
     @RequestMapping(value = EditSvSessionRecordController.BASE_URL + "{recordId}/", method = RequestMethod.POST)
     public String processSubmittedForm(
-            @ModelAttribute(EditRecordController.COMMAND) EditSessionRecord command, BindingResult result,
+            @ModelAttribute(AbstractEditRecordController.COMMAND) EditSessionRecord command, BindingResult result,
             SessionStatus status, @PathVariable int recordId, HttpServletRequest request, ModelMap model) {
         return super.processSubmittedForm(command, result, status, recordId, request, model);
     }

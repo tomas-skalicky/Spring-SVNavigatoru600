@@ -1,7 +1,7 @@
 package com.svnavigatoru600.repository.records.impl;
 
 /**
- * Names of the fields of the {@link com.svnavigatoru600.domain.records.DocumentRecord DocumentRecord} class.
+ * Names of the fields of the {@link com.svnavigatoru600.domain.records.AbstractDocumentRecord DocumentRecord} class.
  * 
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
@@ -24,7 +24,7 @@ public enum DocumentRecordField {
 
     /**
      * Names of the columns of the database table which contains
-     * {@link com.svnavigatoru600.domain.records.DocumentRecord document records}.
+     * {@link com.svnavigatoru600.domain.records.AbstractDocumentRecord document records}.
      */
     private enum DocumentRecordColumn {
 

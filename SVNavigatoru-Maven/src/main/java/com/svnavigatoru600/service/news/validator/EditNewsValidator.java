@@ -6,8 +6,11 @@ import org.springframework.validation.Errors;
 import com.svnavigatoru600.domain.News;
 import com.svnavigatoru600.viewmodel.news.EditNews;
 
+/**
+ * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
+ */
 @Service
-public class EditNewsValidator extends NewsValidator {
+public class EditNewsValidator extends AbstractNewsValidator {
 
     @Override
     public boolean supports(Class<?> clazz) {

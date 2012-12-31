@@ -7,11 +7,11 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import com.svnavigatoru600.repository.WysiwygSectionDao;
 
+/**
+ * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
+ */
 public class WysiwygSection implements Serializable {
 
-    /**
-	 * 
-	 */
     private static final long serialVersionUID = -2762455439041490854L;
 
     private WysiwygSectionDao sectionDao;

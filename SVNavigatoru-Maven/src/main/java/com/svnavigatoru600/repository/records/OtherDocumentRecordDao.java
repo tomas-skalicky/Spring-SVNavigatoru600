@@ -7,6 +7,9 @@ import com.svnavigatoru600.domain.records.OtherDocumentRecordType;
 import com.svnavigatoru600.repository.MapperInterface;
 import com.svnavigatoru600.service.util.OrderType;
 
+/**
+ * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
+ */
 @MapperInterface
 public interface OtherDocumentRecordDao extends DocumentRecordDao {
 

@@ -7,7 +7,7 @@ import java.util.Map;
 import org.springframework.jdbc.core.simple.SimpleJdbcDaoSupport;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 
-import com.svnavigatoru600.domain.records.DocumentRecord;
+import com.svnavigatoru600.domain.records.AbstractDocumentRecord;
 import com.svnavigatoru600.domain.records.SessionRecord;
 import com.svnavigatoru600.domain.records.SessionRecordType;
 import com.svnavigatoru600.repository.impl.PersistedClass;
@@ -27,7 +27,7 @@ public class SessionRecordDaoImpl extends SimpleJdbcDaoSupport implements Sessio
      * The SELECT command for the return of a single document together with its BLOB file.
      * 
      * Join is necessary in all SELECT queries since {@link SessionRecord} inherits from
-     * {@link DocumentRecord}.
+     * {@link AbstractDocumentRecord}.
      */
     private static final String SELECT_FROM_CLAUSE_WITH_FILE = String.format(
             "SELECT r.*, d.%s, d.%s FROM %s r INNER JOIN %s d ON d.%s = r.%s",
@@ -39,7 +39,7 @@ public class SessionRecordDaoImpl extends SimpleJdbcDaoSupport implements Sessio
      * 
      * Join is necessary in all SELECT queries since
      * {@link com.svnavigatoru600.domain.records.OtherDocumentRecord OtherDocumentRecord} inherits from
-     * {@link DocumentRecord}.
+     * {@link AbstractDocumentRecord}.
      */
     private static final String SELECT_FROM_CLAUSE_WITHOUT_FILE = String.format(
             "SELECT r.*, d.%s FROM %s r INNER JOIN %s d ON d.%s = r.%s",
@@ -140,7 +140,7 @@ public class SessionRecordDaoImpl extends SimpleJdbcDaoSupport implements Sessio
     }
 
     @Override
-    public void delete(DocumentRecord record) {
+    public void delete(AbstractDocumentRecord record) {
         // The 'ON DELETE CASCADE' clause is used.
         this.documentRecordDao.delete(record, this.getDataSource());
     }

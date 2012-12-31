@@ -10,6 +10,9 @@ import com.svnavigatoru600.repository.WysiwygSectionDao;
 import com.svnavigatoru600.repository.impl.PersistedClass;
 import com.svnavigatoru600.repository.wysiwyg.impl.WysiwygSectionField;
 
+/**
+ * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
+ */
 public class WysiwygSectionDaoImpl extends SimpleJdbcDaoSupport implements WysiwygSectionDao {
 
     private static final String TABLE_NAME = PersistedClass.WysiwygSection.getTableName();

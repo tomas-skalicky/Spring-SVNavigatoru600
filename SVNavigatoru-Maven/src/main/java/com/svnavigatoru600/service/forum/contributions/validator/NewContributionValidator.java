@@ -5,8 +5,11 @@ import org.springframework.validation.Errors;
 
 import com.svnavigatoru600.viewmodel.forum.contributions.NewContribution;
 
+/**
+ * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
+ */
 @Service
-public class NewContributionValidator extends ContributionValidator {
+public class NewContributionValidator extends AbstractContributionValidator {
 
     @Override
     public boolean supports(Class<?> clazz) {

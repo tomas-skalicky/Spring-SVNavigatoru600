@@ -6,7 +6,7 @@
 <%@ include file="../../../../include-preceding-html.jsp"%>
 
 <%@ page import="com.svnavigatoru600.viewmodel.records.otherdocuments.ShowAllRecords"%>
-<%@ page import="com.svnavigatoru600.web.records.otherdocuments.ListDocumentsController"%>
+<%@ page import="com.svnavigatoru600.web.records.otherdocuments.AbstractListDocumentsController"%>
 
 <c:if test="${showAllRecordsCommand.recordCreated}">
 	<p class="successfulOperation">
@@ -25,8 +25,9 @@
 </c:if>
 
 <%
-User loggedUser = UserUtils.getLoggedUser();
-if (loggedUser.canEditNews()) {%>
+    User loggedUser = UserUtils.getLoggedUser();
+if (loggedUser.canEditNews()) {
+%>
 <p>
 	<strong><a href="<c:url value="/${sectionUrl}/novy/" />"><spring:message
 				code="other-documents.add-new-document" />
@@ -37,12 +38,13 @@ if (loggedUser.canEditNews()) {%>
 <h5>
 	<spring:message code="other-documents.existing-documents" />
 </h5>
-<%}
+<%
+    }
 
 
 
 // Gets the command from the ModelMap.
-ShowAllRecords command = (ShowAllRecords) request.getAttribute(ListDocumentsController.COMMAND);
+ShowAllRecords command = (ShowAllRecords) request.getAttribute(AbstractListDocumentsController.COMMAND);
 List<OtherDocumentRecord> records = command.getRecords();
 if (records.size() > 0) {
 %>

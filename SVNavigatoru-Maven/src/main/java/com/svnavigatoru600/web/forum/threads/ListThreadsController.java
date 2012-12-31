@@ -5,9 +5,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -21,8 +21,11 @@ import com.svnavigatoru600.repository.users.UserDao;
 import com.svnavigatoru600.service.util.Localization;
 import com.svnavigatoru600.viewmodel.forum.threads.ShowAllThreads;
 
+/**
+ * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
+ */
 @Controller
-public class ListThreadsController extends ThreadController {
+public class ListThreadsController extends AbstractThreadController {
 
     private static final String REQUEST_MAPPING_BASE_URL = ListThreadsController.BASE_URL;
     /**
@@ -31,7 +34,7 @@ public class ListThreadsController extends ThreadController {
     public static final String COMMAND = "showAllThreadsCommand";
     private UserDao userDao;
 
-    @Autowired
+    @Inject
     public void setUserDao(final UserDao userDao) {
         this.userDao = userDao;
     }
@@ -39,7 +42,7 @@ public class ListThreadsController extends ThreadController {
     /**
      * Constructor.
      */
-    @Autowired
+    @Inject
     public ListThreadsController(final ThreadDao threadDao, final MessageSource messageSource) {
         super(threadDao, messageSource);
     }

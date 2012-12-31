@@ -5,6 +5,9 @@ import java.util.List;
 import com.svnavigatoru600.domain.News;
 import com.svnavigatoru600.repository.news.impl.FindAllOrderedArguments;
 
+/**
+ * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
+ */
 @MapperInterface
 public interface NewsDao {
 

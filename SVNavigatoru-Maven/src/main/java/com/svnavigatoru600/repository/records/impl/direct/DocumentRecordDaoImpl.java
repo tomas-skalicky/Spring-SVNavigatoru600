@@ -10,7 +10,7 @@ import org.springframework.jdbc.core.simple.SimpleJdbcDaoSupport;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
 
-import com.svnavigatoru600.domain.records.DocumentRecord;
+import com.svnavigatoru600.domain.records.AbstractDocumentRecord;
 import com.svnavigatoru600.repository.impl.PersistedClass;
 import com.svnavigatoru600.repository.records.impl.DocumentRecordField;
 
@@ -21,7 +21,7 @@ public class DocumentRecordDaoImpl extends SimpleJdbcDaoSupport {
 
     private static final String TABLE_NAME = PersistedClass.DocumentRecord.getTableName();
 
-    public void update(DocumentRecord record, DataSource dataSource) {
+    public void update(AbstractDocumentRecord record, DataSource dataSource) {
         Blob file = record.getFile();
         if (file == null) {
             return;
@@ -39,7 +39,7 @@ public class DocumentRecordDaoImpl extends SimpleJdbcDaoSupport {
     /**
      * Used during the save of the given <code>record</code>.
      */
-    private Map<String, Object> getNamedParameters(DocumentRecord record) {
+    private Map<String, Object> getNamedParameters(AbstractDocumentRecord record) {
         Map<String, Object> parameters = new HashMap<String, Object>();
         parameters.put(DocumentRecordField.id.getColumnName(), record.getId());
         parameters.put(DocumentRecordField.fileName.getColumnName(), record.getFileName());
@@ -47,7 +47,7 @@ public class DocumentRecordDaoImpl extends SimpleJdbcDaoSupport {
         return parameters;
     }
 
-    public int save(DocumentRecord record, DataSource dataSource) {
+    public int save(AbstractDocumentRecord record, DataSource dataSource) {
         SimpleJdbcInsert insert = new SimpleJdbcInsert(dataSource)
                 .withTableName(DocumentRecordDaoImpl.TABLE_NAME)
                 .usingGeneratedKeyColumns(DocumentRecordField.id.getColumnName())
@@ -57,7 +57,7 @@ public class DocumentRecordDaoImpl extends SimpleJdbcDaoSupport {
         return insert.executeAndReturnKey(this.getNamedParameters(record)).intValue();
     }
 
-    public void delete(DocumentRecord record, DataSource dataSource) {
+    public void delete(AbstractDocumentRecord record, DataSource dataSource) {
         String query = String.format("DELETE FROM %s WHERE %s = ?", DocumentRecordDaoImpl.TABLE_NAME,
                 DocumentRecordField.id.getColumnName());
 

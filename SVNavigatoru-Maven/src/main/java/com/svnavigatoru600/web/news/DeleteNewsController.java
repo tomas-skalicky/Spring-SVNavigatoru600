@@ -1,8 +1,8 @@
 package com.svnavigatoru600.web.news;
 
+import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Controller;
@@ -15,8 +15,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.svnavigatoru600.service.news.NewsService;
 
+/**
+ * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
+ */
 @Controller
-public class DeleteNewsController extends NewsController {
+public class DeleteNewsController extends AbstractNewsController {
 
     private static final String REQUEST_MAPPING_BASE_URL = DeleteNewsController.BASE_URL
             + "existujici/{newsId}/smazat/";
@@ -28,7 +31,7 @@ public class DeleteNewsController extends NewsController {
     /**
      * Constructor.
      */
-    @Autowired
+    @Inject
     public DeleteNewsController(NewsService newsService, MessageSource messageSource) {
         super(newsService, messageSource);
     }
@@ -36,7 +39,7 @@ public class DeleteNewsController extends NewsController {
     @RequestMapping(value = DeleteNewsController.REQUEST_MAPPING_BASE_URL, method = RequestMethod.GET)
     @Transactional
     public @ResponseBody
-    NewsResponse delete(@PathVariable int newsId, HttpServletRequest request, ModelMap model) {
+    AbstractNewsResponse delete(@PathVariable int newsId, HttpServletRequest request, ModelMap model) {
 
         DeleteNewsResponse response = new DeleteNewsResponse();
 

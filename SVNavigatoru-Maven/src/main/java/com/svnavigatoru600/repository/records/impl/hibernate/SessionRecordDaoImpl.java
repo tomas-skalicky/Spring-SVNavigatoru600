@@ -8,7 +8,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
-import com.svnavigatoru600.domain.records.DocumentRecord;
+import com.svnavigatoru600.domain.records.AbstractDocumentRecord;
 import com.svnavigatoru600.domain.records.SessionRecord;
 import com.svnavigatoru600.domain.records.SessionRecordType;
 import com.svnavigatoru600.repository.impl.PersistedClass;
@@ -78,7 +78,7 @@ public class SessionRecordDaoImpl extends HibernateDaoSupport implements Session
     }
 
     @Override
-    public void delete(DocumentRecord record) {
+    public void delete(AbstractDocumentRecord record) {
         this.getHibernateTemplate().delete(record);
     }
 }

@@ -1,8 +1,8 @@
 package com.svnavigatoru600.web.forum.threads;
 
+import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Controller;
@@ -17,8 +17,11 @@ import com.svnavigatoru600.repository.forum.ThreadDao;
 import com.svnavigatoru600.service.forum.threads.ThreadService;
 import com.svnavigatoru600.web.Configuration;
 
+/**
+ * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
+ */
 @Controller
-public class DeleteThreadController extends ThreadController {
+public class DeleteThreadController extends AbstractThreadController {
 
     private static final String REQUEST_MAPPING_BASE_URL = DeleteThreadController.BASE_URL
             + "existujici/{threadId}/smazat/";
@@ -31,12 +34,12 @@ public class DeleteThreadController extends ThreadController {
     private ThreadService threadService;
     private ListThreadsController listController;
 
-    @Autowired
+    @Inject
     public void setThreadService(final ThreadService threadService) {
         this.threadService = threadService;
     }
 
-    @Autowired
+    @Inject
     public void setListController(final ListThreadsController listController) {
         this.listController = listController;
     }
@@ -44,7 +47,7 @@ public class DeleteThreadController extends ThreadController {
     /**
      * Constructor.
      */
-    @Autowired
+    @Inject
     public DeleteThreadController(final ThreadDao threadDao, final MessageSource messageSource) {
         super(threadDao, messageSource);
     }

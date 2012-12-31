@@ -1,6 +1,7 @@
 package com.svnavigatoru600.web;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.inject.Inject;
+
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -14,13 +15,16 @@ import com.svnavigatoru600.domain.WysiwygSection;
 import com.svnavigatoru600.domain.WysiwygSectionName;
 import com.svnavigatoru600.repository.WysiwygSectionDao;
 
+/**
+ * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
+ */
 @Controller
-public class BoardController extends WysiwygSectionController {
+public class BoardController extends AbstractWysiwygSectionController {
 
     /**
      * Constructor.
      */
-    @Autowired
+    @Inject
     public BoardController(WysiwygSectionDao sectionDao) {
         super(sectionDao);
         super.sectionName = WysiwygSectionName.BOARD;

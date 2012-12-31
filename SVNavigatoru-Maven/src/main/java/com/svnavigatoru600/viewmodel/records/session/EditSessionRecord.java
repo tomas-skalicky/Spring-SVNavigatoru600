@@ -2,8 +2,11 @@ package com.svnavigatoru600.viewmodel.records.session;
 
 import org.springframework.stereotype.Service;
 
+/**
+ * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
+ */
 @Service
-public class EditSessionRecord extends NewEditSessionRecord {
+public class EditSessionRecord extends AbstractNewEditSessionRecord {
 
     private boolean fileChanged = false;
     private boolean dataSaved = false;

@@ -5,8 +5,11 @@ import org.springframework.validation.Errors;
 
 import com.svnavigatoru600.viewmodel.forum.threads.EditThread;
 
+/**
+ * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
+ */
 @Service
-public class EditThreadValidator extends ThreadValidator {
+public class EditThreadValidator extends AbstractThreadValidator {
 
     @Override
     public boolean supports(Class<?> clazz) {

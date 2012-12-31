@@ -3,9 +3,9 @@ package com.svnavigatoru600.web.forum.threads;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Controller;
@@ -26,8 +26,11 @@ import com.svnavigatoru600.service.util.UserUtils;
 import com.svnavigatoru600.viewmodel.forum.threads.NewThread;
 import com.svnavigatoru600.web.Configuration;
 
+/**
+ * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
+ */
 @Controller
-public class NewThreadController extends NewEditThreadController {
+public class NewThreadController extends AbstractNewEditThreadController {
 
     private static final String REQUEST_MAPPING_BASE_URL = NewThreadController.BASE_URL + "novy/";
     /**
@@ -38,7 +41,7 @@ public class NewThreadController extends NewEditThreadController {
     /**
      * Constructor.
      */
-    @Autowired
+    @Inject
     public NewThreadController(ThreadDao threadDao, NewThreadValidator validator, MessageSource messageSource) {
         super(threadDao, validator, messageSource);
     }

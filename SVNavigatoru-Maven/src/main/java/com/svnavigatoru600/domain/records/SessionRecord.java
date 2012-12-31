@@ -6,11 +6,11 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import com.svnavigatoru600.repository.records.SessionRecordDao;
 
-public class SessionRecord extends DocumentRecord {
+/**
+ * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
+ */
+public class SessionRecord extends AbstractDocumentRecord {
 
-    /**
-	 * 
-	 */
     private static final long serialVersionUID = -7056147517890905426L;
 
     @SuppressWarnings("unused")

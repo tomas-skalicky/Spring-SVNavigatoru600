@@ -5,6 +5,9 @@ import java.util.List;
 import com.svnavigatoru600.domain.forum.Thread;
 import com.svnavigatoru600.repository.MapperInterface;
 
+/**
+ * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
+ */
 @MapperInterface
 public interface ThreadDao {
 
