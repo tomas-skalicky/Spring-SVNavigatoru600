@@ -19,7 +19,7 @@ import com.svnavigatoru600.repository.news.impl.FindOrderedArguments;
 public class NewsService {
 
     /**
-     * The object which provides the persistence.
+     * The object which provides a persistence.
      */
     private final NewsDao newsDao;
 
