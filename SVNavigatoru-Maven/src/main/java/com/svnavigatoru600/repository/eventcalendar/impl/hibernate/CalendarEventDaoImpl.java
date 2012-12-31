@@ -7,7 +7,7 @@ import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import com.svnavigatoru600.domain.eventcalendar.CalendarEvent;
 import com.svnavigatoru600.repository.CalendarEventDao;
 import com.svnavigatoru600.repository.eventcalendar.impl.CalendarEventField;
-import com.svnavigatoru600.repository.eventcalendar.impl.FindFutureEventsOrderedArguments;
+import com.svnavigatoru600.repository.eventcalendar.impl.FindAllFutureEventsOrderedArguments;
 import com.svnavigatoru600.repository.impl.PersistedClass;
 
 /**
@@ -22,7 +22,7 @@ public class CalendarEventDaoImpl extends HibernateDaoSupport implements Calenda
 
     @Override
     @SuppressWarnings("unchecked")
-    public List<CalendarEvent> findFutureEventsOrdered(FindFutureEventsOrderedArguments arguments) {
+    public List<CalendarEvent> findAllFutureEventsOrdered(FindAllFutureEventsOrderedArguments arguments) {
         String query = String.format("FROM %s e WHERE e.%s >= ? ORDER BY e.%s %s",
                 PersistedClass.CalendarEvent.name(), CalendarEventField.date.name(), arguments.getSortField()
                         .name(), arguments.getSortDirection().getDatabaseCode());

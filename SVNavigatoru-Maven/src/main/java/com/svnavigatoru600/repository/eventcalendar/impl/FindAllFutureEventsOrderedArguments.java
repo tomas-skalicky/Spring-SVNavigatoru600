@@ -11,7 +11,7 @@ import com.svnavigatoru600.service.util.OrderType;
  * 
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
-public class FindFutureEventsOrderedArguments {
+public class FindAllFutureEventsOrderedArguments {
 
     /**
      * Field of {@link com.svnavigatoru600.domain.eventcalendar.CalendarEvent CalendarEvent} according which
@@ -28,7 +28,7 @@ public class FindFutureEventsOrderedArguments {
      */
     private final OrderType sortDirection;
 
-    public FindFutureEventsOrderedArguments(Date earliestDate, OrderType sortDirection) {
+    public FindAllFutureEventsOrderedArguments(Date earliestDate, OrderType sortDirection) {
         this.earliestDate = earliestDate;
         this.sortDirection = sortDirection;
     }

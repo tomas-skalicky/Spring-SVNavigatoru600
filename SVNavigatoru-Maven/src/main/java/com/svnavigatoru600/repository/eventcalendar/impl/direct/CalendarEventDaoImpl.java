@@ -14,7 +14,7 @@ import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import com.svnavigatoru600.domain.eventcalendar.CalendarEvent;
 import com.svnavigatoru600.repository.CalendarEventDao;
 import com.svnavigatoru600.repository.eventcalendar.impl.CalendarEventField;
-import com.svnavigatoru600.repository.eventcalendar.impl.FindFutureEventsOrderedArguments;
+import com.svnavigatoru600.repository.eventcalendar.impl.FindAllFutureEventsOrderedArguments;
 import com.svnavigatoru600.repository.impl.PersistedClass;
 
 /**
@@ -38,7 +38,7 @@ public class CalendarEventDaoImpl extends NamedParameterJdbcDaoSupport implement
     }
 
     @Override
-    public List<CalendarEvent> findFutureEventsOrdered(FindFutureEventsOrderedArguments arguments) {
+    public List<CalendarEvent> findAllFutureEventsOrdered(FindAllFutureEventsOrderedArguments arguments) {
         final String dateColumn = arguments.getSortField().getColumnName();
         String query = String.format("SELECT * FROM %s e WHERE e.%s >= :%s ORDER BY e.%s %s",
                 CalendarEventDaoImpl.TABLE_NAME, dateColumn, dateColumn, dateColumn, arguments

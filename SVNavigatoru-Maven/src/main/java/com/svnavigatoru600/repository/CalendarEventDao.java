@@ -3,7 +3,7 @@ package com.svnavigatoru600.repository;
 import java.util.List;
 
 import com.svnavigatoru600.domain.eventcalendar.CalendarEvent;
-import com.svnavigatoru600.repository.eventcalendar.impl.FindFutureEventsOrderedArguments;
+import com.svnavigatoru600.repository.eventcalendar.impl.FindAllFutureEventsOrderedArguments;
 
 @MapperInterface
 public interface CalendarEventDao {
@@ -18,7 +18,7 @@ public interface CalendarEventDao {
      * <code>date</code> attributes in the given <code>order</code>. Moreover, only {@link CalendarEvent}s
      * which will take place are returned, the passed ones are not.
      */
-    List<CalendarEvent> findFutureEventsOrdered(FindFutureEventsOrderedArguments arguments);
+    List<CalendarEvent> findAllFutureEventsOrdered(FindAllFutureEventsOrderedArguments arguments);
 
     /**
      * Updates the given <code>event</code> in the repository. The old version of the <code>event</code>
