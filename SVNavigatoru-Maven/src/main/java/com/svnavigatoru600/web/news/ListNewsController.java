@@ -14,11 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.svnavigatoru600.domain.News;
-import com.svnavigatoru600.repository.news.impl.FindOrderedArguments;
-import com.svnavigatoru600.repository.news.impl.NewsField;
 import com.svnavigatoru600.service.news.NewsService;
 import com.svnavigatoru600.service.util.Localization;
-import com.svnavigatoru600.service.util.OrderType;
 import com.svnavigatoru600.viewmodel.news.ShowAllNews;
 
 @Controller
@@ -50,8 +47,7 @@ public class ListNewsController extends NewsController {
 
         ShowAllNews command = new ShowAllNews();
 
-        List<News> news = this.newsService.findOrdered(new FindOrderedArguments(NewsField.creationTime,
-                OrderType.DESCENDING));
+        List<News> news = this.newsService.findAllOrdered();
         command.setNews(news);
 
         // Sets up all auxiliary (but necessary) maps.

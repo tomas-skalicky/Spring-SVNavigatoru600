@@ -8,7 +8,9 @@ import org.springframework.stereotype.Service;
 
 import com.svnavigatoru600.domain.News;
 import com.svnavigatoru600.repository.NewsDao;
-import com.svnavigatoru600.repository.news.impl.FindOrderedArguments;
+import com.svnavigatoru600.repository.news.impl.FindAllOrderedArguments;
+import com.svnavigatoru600.repository.news.impl.NewsField;
+import com.svnavigatoru600.service.util.OrderType;
 
 /**
  * Helps to manipulate with {@link News} objects.
@@ -39,11 +41,11 @@ public class NewsService {
     }
 
     /**
-     * Returns all {@link News} stored in the repository arranged according to their values of the given
-     * <code>arguments</code>.
+     * Returns all {@link News} stored in the repository arranged according to their creation time descending.
      */
-    public List<News> findOrdered(FindOrderedArguments arguments) {
-        return this.newsDao.findOrdered(arguments);
+    public List<News> findAllOrdered() {
+        return this.newsDao.findAllOrdered(new FindAllOrderedArguments(NewsField.creationTime,
+                OrderType.DESCENDING));
     }
 
     /**
@@ -76,6 +78,17 @@ public class NewsService {
      * Deletes the given {@link News news} from the repository.
      */
     public void delete(News news) {
+        this.newsDao.delete(news);
+    }
+
+    /**
+     * Deletes the specified {@link News news} from the repository.
+     * 
+     * @param newsId
+     *            The ID of the news
+     */
+    public void delete(int newsId) {
+        News news = this.findById(newsId);
         this.newsDao.delete(news);
     }
 }

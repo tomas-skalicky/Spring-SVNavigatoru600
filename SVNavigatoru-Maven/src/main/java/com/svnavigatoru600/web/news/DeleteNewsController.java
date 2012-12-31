@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.svnavigatoru600.domain.News;
 import com.svnavigatoru600.service.news.NewsService;
 
 @Controller
@@ -42,9 +41,7 @@ public class DeleteNewsController extends NewsController {
         DeleteNewsResponse response = new DeleteNewsResponse();
 
         try {
-            // Deletes the news from the repository.
-            News news = this.newsService.findById(newsId);
-            this.newsService.delete(news);
+            this.newsService.delete(newsId);
 
             response.setSuccess();
 
