@@ -13,7 +13,7 @@ import com.svnavigatoru600.repository.news.impl.NewsField;
 import com.svnavigatoru600.service.util.OrderType;
 
 /**
- * Helps to manipulate with {@link News} objects.
+ * Provides convenient functions to work with {@link News} objects.
  * 
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */

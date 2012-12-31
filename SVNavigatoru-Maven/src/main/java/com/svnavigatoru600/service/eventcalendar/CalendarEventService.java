@@ -10,7 +10,7 @@ import com.svnavigatoru600.repository.CalendarEventDao;
 import com.svnavigatoru600.repository.eventcalendar.impl.FindAllFutureEventsOrderedArguments;
 
 /**
- * Helps to manipulate with {@link CalendarEvent} objects.
+ * Provides convenient functions to work with {@link CalendarEvent} objects.
  * 
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
