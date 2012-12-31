@@ -13,10 +13,8 @@ import com.svnavigatoru600.domain.eventcalendar.CalendarEvent;
 import com.svnavigatoru600.domain.forum.Contribution;
 import com.svnavigatoru600.domain.users.User;
 import com.svnavigatoru600.repository.CalendarEventDao;
-import com.svnavigatoru600.repository.eventcalendar.impl.FindAllFutureEventsOrderedArguments;
 import com.svnavigatoru600.repository.forum.ContributionDao;
 import com.svnavigatoru600.repository.forum.impl.ContributionField;
-import com.svnavigatoru600.repository.forum.impl.FindAllContributionsOrderedWithLimitArguments;
 import com.svnavigatoru600.service.util.DateUtils;
 import com.svnavigatoru600.service.util.OrderType;
 import com.svnavigatoru600.service.util.UserUtils;
@@ -62,9 +60,8 @@ public abstract class AbstractPrivateSectionMetaController extends AbstractMetaC
     @ModelAttribute("futureEvents")
     public List<EventWrapper> populateFutureEvents(HttpServletRequest request) {
 
-        List<CalendarEvent> events = this.eventDao
-                .findAllFutureEventsOrdered(new FindAllFutureEventsOrderedArguments(DateUtils.getToday(),
-                        OrderType.ASCENDING));
+        List<CalendarEvent> events = this.eventDao.findAllFutureEventsOrdered(DateUtils.getToday(),
+                OrderType.ASCENDING);
 
         List<EventWrapper> futureEvents = new ArrayList<EventWrapper>(FUTURE_EVENT_COUNT);
         for (int eventNum = 0, eventCount = events.size(); (eventNum < FUTURE_EVENT_COUNT)
@@ -78,9 +75,8 @@ public abstract class AbstractPrivateSectionMetaController extends AbstractMetaC
     @ModelAttribute("lastSavedContributions")
     public List<ContributionWrapper> populateLastSavedContributions(HttpServletRequest request) {
 
-        List<Contribution> contributions = this.contributionDao
-                .findAllOrdered(new FindAllContributionsOrderedWithLimitArguments(
-                        ContributionField.lastSaveTime, OrderType.DESCENDING, LAST_SAVED_CONTRIBUTION_COUNT));
+        List<Contribution> contributions = this.contributionDao.findAllOrdered(
+                ContributionField.lastSaveTime, OrderType.DESCENDING, LAST_SAVED_CONTRIBUTION_COUNT);
 
         List<ContributionWrapper> lastSavedContributions = new ArrayList<ContributionWrapper>(
                 LAST_SAVED_CONTRIBUTION_COUNT);

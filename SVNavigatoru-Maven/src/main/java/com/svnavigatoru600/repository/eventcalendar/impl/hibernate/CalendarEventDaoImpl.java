@@ -1,5 +1,6 @@
 package com.svnavigatoru600.repository.eventcalendar.impl.hibernate;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
@@ -7,8 +8,8 @@ import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import com.svnavigatoru600.domain.eventcalendar.CalendarEvent;
 import com.svnavigatoru600.repository.CalendarEventDao;
 import com.svnavigatoru600.repository.eventcalendar.impl.CalendarEventField;
-import com.svnavigatoru600.repository.eventcalendar.impl.FindAllFutureEventsOrderedArguments;
 import com.svnavigatoru600.repository.impl.PersistedClass;
+import com.svnavigatoru600.service.util.OrderType;
 
 /**
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
@@ -22,11 +23,11 @@ public class CalendarEventDaoImpl extends HibernateDaoSupport implements Calenda
 
     @Override
     @SuppressWarnings("unchecked")
-    public List<CalendarEvent> findAllFutureEventsOrdered(FindAllFutureEventsOrderedArguments arguments) {
+    public List<CalendarEvent> findAllFutureEventsOrdered(Date earliestDate, OrderType sortDirection) {
         String query = String.format("FROM %s e WHERE e.%s >= ? ORDER BY e.%s %s",
-                PersistedClass.CalendarEvent.name(), CalendarEventField.date.name(), arguments.getSortField()
-                        .name(), arguments.getSortDirection().getDatabaseCode());
-        return (List<CalendarEvent>) this.getHibernateTemplate().find(query, arguments.getEarliestDate());
+                PersistedClass.CalendarEvent.name(), CalendarEventField.date.name(),
+                CalendarEventField.date.name(), sortDirection.getDatabaseCode());
+        return (List<CalendarEvent>) this.getHibernateTemplate().find(query, earliestDate);
     }
 
     @Override

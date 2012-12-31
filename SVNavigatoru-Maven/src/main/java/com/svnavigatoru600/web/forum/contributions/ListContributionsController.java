@@ -18,7 +18,6 @@ import com.svnavigatoru600.domain.forum.Contribution;
 import com.svnavigatoru600.repository.forum.ContributionDao;
 import com.svnavigatoru600.repository.forum.ThreadDao;
 import com.svnavigatoru600.repository.forum.impl.ContributionField;
-import com.svnavigatoru600.repository.forum.impl.FindAllContributionsOrderedWithThreadIdArguments;
 import com.svnavigatoru600.service.util.Localization;
 import com.svnavigatoru600.service.util.OrderType;
 import com.svnavigatoru600.viewmodel.forum.contributions.ShowAllContributions;
@@ -52,9 +51,8 @@ public class ListContributionsController extends AbstractContributionController 
 
         ShowAllContributions command = new ShowAllContributions();
 
-        List<Contribution> contributions = this.contributionDao
-                .findAllOrdered(new FindAllContributionsOrderedWithThreadIdArguments(threadId,
-                        ContributionField.creationTime, OrderType.ASCENDING));
+        List<Contribution> contributions = this.contributionDao.findAllOrdered(threadId,
+                ContributionField.creationTime, OrderType.ASCENDING);
         command.setContributions(contributions);
         command.setThread(this.threadDao.findById(threadId));
 
