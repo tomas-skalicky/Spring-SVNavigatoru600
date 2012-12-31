@@ -10,8 +10,9 @@ import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import com.svnavigatoru600.domain.forum.Contribution;
 import com.svnavigatoru600.repository.forum.ContributionDao;
 import com.svnavigatoru600.repository.forum.impl.ContributionField;
+import com.svnavigatoru600.repository.forum.impl.FindAllContributionsOrderedWithLimitArguments;
+import com.svnavigatoru600.repository.forum.impl.FindAllContributionsOrderedWithThreadIdArguments;
 import com.svnavigatoru600.repository.impl.PersistedClass;
-import com.svnavigatoru600.service.util.OrderType;
 
 /**
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
@@ -32,25 +33,21 @@ public class ContributionDaoImpl extends HibernateDaoSupport implements Contribu
         return (List<Contribution>) this.getHibernateTemplate().findByCriteria(criteria);
     }
 
-    /**
-     * @param count
-     *            Not used yet.
-     */
     @Override
     @SuppressWarnings("unchecked")
-    public List<Contribution> findOrdered(ContributionField attribute, OrderType order, int count) {
+    public List<Contribution> findAllOrdered(FindAllContributionsOrderedWithLimitArguments arguments) {
         String query = String.format("FROM %s c ORDER BY c.%s %s", PersistedClass.Contribution.name(),
-                attribute.name(), order.getDatabaseCode());
+                arguments.getSortField().name(), arguments.getSortDirection().getDatabaseCode());
         return (List<Contribution>) this.getHibernateTemplate().find(query);
     }
 
     @Override
     @SuppressWarnings("unchecked")
-    public List<Contribution> findOrdered(int threadId, ContributionField attribute, OrderType order) {
-        String query = String.format("FROM %s c WHERE c.%s = ? ORDER BY c.%s %s",
-                PersistedClass.Contribution.name(), ContributionField.threadId.getFieldChain(),
-                attribute.name(), order.getDatabaseCode());
-        return (List<Contribution>) this.getHibernateTemplate().find(query, threadId);
+    public List<Contribution> findAllOrdered(FindAllContributionsOrderedWithThreadIdArguments arguments) {
+        String query = String.format("FROM %s c WHERE c.%s = ? ORDER BY c.%s %s", PersistedClass.Contribution
+                .name(), ContributionField.threadId.getFieldChain(), arguments.getSortField().name(),
+                arguments.getSortDirection().getDatabaseCode());
+        return (List<Contribution>) this.getHibernateTemplate().find(query, arguments.getThreadId());
     }
 
     @Override
