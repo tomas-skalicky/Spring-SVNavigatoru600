@@ -324,6 +324,11 @@
 		</dependency>
 
 		<dependency>
+			<groupId>javax.inject</groupId>
+			<artifactId>javax.inject</artifactId>
+		</dependency>
+
+		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>jcl-over-slf4j</artifactId>
 		</dependency>
@@ -493,6 +498,12 @@
 				<version>1.6.3</version>
 				<type>jar</type>
 				<scope>compile</scope>
+			</dependency>
+
+			<dependency>
+				<groupId>javax.inject</groupId>
+				<artifactId>javax.inject</artifactId>
+				<version>1</version>
 			</dependency>
 
 			<dependency>
