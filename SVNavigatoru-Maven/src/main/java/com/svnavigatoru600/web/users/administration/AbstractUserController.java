@@ -10,13 +10,13 @@ import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 
 import com.svnavigatoru600.domain.users.AuthorityType;
-import com.svnavigatoru600.domain.users.User;
 import com.svnavigatoru600.repository.users.UserDao;
 import com.svnavigatoru600.service.util.Localization;
 import com.svnavigatoru600.web.AbstractPrivateSectionMetaController;
 
 /**
- * Parent of all controllers which handle all operations concerning administration of {@link User}s.
+ * Parent of all controllers which handle all operations concerning administration of
+ * {@link com.svnavigatoru600.domain.users.User users}.
  * 
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
