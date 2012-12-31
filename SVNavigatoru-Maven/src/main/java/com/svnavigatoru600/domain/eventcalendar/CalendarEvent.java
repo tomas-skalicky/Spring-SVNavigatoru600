@@ -3,10 +3,15 @@ package com.svnavigatoru600.domain.eventcalendar;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.inject.Inject;
+
 import org.springframework.format.annotation.DateTimeFormat;
 
-import com.svnavigatoru600.repository.CalendarEventDao;
+import com.svnavigatoru600.service.eventcalendar.CalendarEventService;
 
+/**
+ * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
+ */
 public class CalendarEvent implements Serializable {
 
     /**
@@ -14,14 +19,15 @@ public class CalendarEvent implements Serializable {
 	 */
     private static final long serialVersionUID = 530408081345869305L;
 
-    private CalendarEventDao eventDao;
+    private CalendarEventService eventService;
 
-    public void setCalendarEventDao(CalendarEventDao eventDao) {
-        this.eventDao = eventDao;
+    @Inject
+    public void setCalendarEventService(CalendarEventService eventService) {
+        this.eventService = eventService;
     }
 
     public void update() {
-        this.eventDao.update(this);
+        this.eventService.update(this);
     }
 
     private int id;

@@ -3,6 +3,8 @@ package com.svnavigatoru600.domain;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.inject.Inject;
+
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.svnavigatoru600.service.news.NewsService;
@@ -16,6 +18,7 @@ public class News implements Serializable {
 
     private NewsService newsService;
 
+    @Inject
     public void setNewsService(final NewsService newsService) {
         this.newsService = newsService;
     }
