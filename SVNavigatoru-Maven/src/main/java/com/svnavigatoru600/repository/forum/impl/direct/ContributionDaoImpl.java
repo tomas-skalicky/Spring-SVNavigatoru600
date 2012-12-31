@@ -14,10 +14,11 @@ import com.svnavigatoru600.domain.forum.Contribution;
 import com.svnavigatoru600.repository.forum.ContributionDao;
 import com.svnavigatoru600.repository.forum.ThreadDao;
 import com.svnavigatoru600.repository.forum.impl.ContributionField;
+import com.svnavigatoru600.repository.forum.impl.FindAllContributionsOrderedWithLimitArguments;
+import com.svnavigatoru600.repository.forum.impl.FindAllContributionsOrderedWithThreadIdArguments;
 import com.svnavigatoru600.repository.impl.PersistedClass;
 import com.svnavigatoru600.repository.users.UserDao;
 import com.svnavigatoru600.repository.users.impl.direct.UserDaoImpl;
-import com.svnavigatoru600.service.util.OrderType;
 
 /**
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
@@ -82,14 +83,10 @@ public class ContributionDaoImpl extends SimpleJdbcDaoSupport implements Contrib
         return this.getSimpleJdbcTemplate().query(query, new ContributionRowMapper(), threadId);
     }
 
-    /**
-     * @param count
-     *            Not used yet.
-     */
     @Override
-    public List<Contribution> findOrdered(ContributionField attribute, OrderType order, int count) {
+    public List<Contribution> findAllOrdered(FindAllContributionsOrderedWithLimitArguments arguments) {
         String query = String.format("SELECT * FROM %s c ORDER BY c.%s %s", ContributionDaoImpl.TABLE_NAME,
-                attribute.getColumnName(), order.getDatabaseCode());
+                arguments.getSortField().getColumnName(), arguments.getSortDirection().getDatabaseCode());
         List<Contribution> contributions = this.getSimpleJdbcTemplate().query(query,
                 new ContributionRowMapper());
 
@@ -98,12 +95,12 @@ public class ContributionDaoImpl extends SimpleJdbcDaoSupport implements Contrib
     }
 
     @Override
-    public List<Contribution> findOrdered(int threadId, ContributionField attribute, OrderType order) {
+    public List<Contribution> findAllOrdered(FindAllContributionsOrderedWithThreadIdArguments arguments) {
         String query = String.format("SELECT * FROM %s c WHERE c.%s = ? ORDER BY c.%s %s",
-                ContributionDaoImpl.TABLE_NAME, ContributionField.threadId.getColumnName(),
-                attribute.getColumnName(), order.getDatabaseCode());
+                ContributionDaoImpl.TABLE_NAME, ContributionField.threadId.getColumnName(), arguments
+                        .getSortField().getColumnName(), arguments.getSortDirection().getDatabaseCode());
         List<Contribution> contributions = this.getSimpleJdbcTemplate().query(query,
-                new ContributionRowMapper(), threadId);
+                new ContributionRowMapper(), arguments.getThreadId());
 
         this.populateThreadAndAuthor(contributions);
         return contributions;

@@ -16,6 +16,7 @@ import com.svnavigatoru600.repository.CalendarEventDao;
 import com.svnavigatoru600.repository.eventcalendar.impl.FindAllFutureEventsOrderedArguments;
 import com.svnavigatoru600.repository.forum.ContributionDao;
 import com.svnavigatoru600.repository.forum.impl.ContributionField;
+import com.svnavigatoru600.repository.forum.impl.FindAllContributionsOrderedWithLimitArguments;
 import com.svnavigatoru600.service.util.DateUtils;
 import com.svnavigatoru600.service.util.OrderType;
 import com.svnavigatoru600.service.util.UserUtils;
@@ -77,8 +78,9 @@ public abstract class AbstractPrivateSectionMetaController extends AbstractMetaC
     @ModelAttribute("lastSavedContributions")
     public List<ContributionWrapper> populateLastSavedContributions(HttpServletRequest request) {
 
-        List<Contribution> contributions = this.contributionDao.findOrdered(ContributionField.lastSaveTime,
-                OrderType.DESCENDING, LAST_SAVED_CONTRIBUTION_COUNT);
+        List<Contribution> contributions = this.contributionDao
+                .findAllOrdered(new FindAllContributionsOrderedWithLimitArguments(
+                        ContributionField.lastSaveTime, OrderType.DESCENDING, LAST_SAVED_CONTRIBUTION_COUNT));
 
         List<ContributionWrapper> lastSavedContributions = new ArrayList<ContributionWrapper>(
                 LAST_SAVED_CONTRIBUTION_COUNT);
