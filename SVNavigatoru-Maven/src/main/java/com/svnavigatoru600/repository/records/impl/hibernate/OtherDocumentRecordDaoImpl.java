@@ -64,7 +64,7 @@ public class OtherDocumentRecordDaoImpl extends HibernateDaoSupport implements O
 
     @Override
     @SuppressWarnings("unchecked")
-    public List<OtherDocumentRecord> findOrdered(OrderType order) {
+    public List<OtherDocumentRecord> findAllOrdered(OrderType order) {
         String query = String.format("FROM %s r ORDER BY r.%s %s", PersistedClass.OtherDocumentRecord.name(),
                 OtherDocumentRecordField.creationTime.name(), order.getDatabaseCode());
         return (List<OtherDocumentRecord>) this.getHibernateTemplate().find(query);
@@ -72,7 +72,7 @@ public class OtherDocumentRecordDaoImpl extends HibernateDaoSupport implements O
 
     @Override
     @SuppressWarnings("unchecked")
-    public List<OtherDocumentRecord> findOrdered(OtherDocumentRecordType type, OrderType order) {
+    public List<OtherDocumentRecord> findAllOrdered(OtherDocumentRecordType type, OrderType order) {
         String query = String.format(
                 "SELECT r FROM %s r INNER JOIN r.types t WHERE t.%s = ? ORDER BY r.%s %s",
                 PersistedClass.OtherDocumentRecord.name(),

@@ -77,7 +77,7 @@ public class ContributionDaoImpl extends SimpleJdbcDaoSupport implements Contrib
     }
 
     @Override
-    public List<Contribution> find(int threadId) {
+    public List<Contribution> findAll(int threadId) {
         String query = String.format("SELECT * FROM %s c WHERE c.%s = ?", ContributionDaoImpl.TABLE_NAME,
                 ContributionField.threadId.getColumnName());
         return this.getSimpleJdbcTemplate().query(query, new ContributionRowMapper(), threadId);

@@ -26,7 +26,7 @@ public class ContributionDaoImpl extends HibernateDaoSupport implements Contribu
 
     @Override
     @SuppressWarnings("unchecked")
-    public List<Contribution> find(int threadId) {
+    public List<Contribution> findAll(int threadId) {
         DetachedCriteria criteria = DetachedCriteria.forClass(Contribution.class);
         criteria.add(Restrictions.eq(ContributionField.threadId.getFieldChain(), threadId));
 

@@ -67,7 +67,7 @@ public class OtherDocumentRecordDaoImpl extends SimpleJdbcDaoSupport implements 
      * Populates the <code>types</code> property of the given <code>record</code>.
      */
     private void populateTypes(OtherDocumentRecord record) {
-        List<OtherDocumentRecordTypeRelation> types = this.typeDao.find(record.getId());
+        List<OtherDocumentRecordTypeRelation> types = this.typeDao.findAll(record.getId());
         record.setTypes(new HashSet<OtherDocumentRecordTypeRelation>(types));
     }
 
@@ -126,7 +126,7 @@ public class OtherDocumentRecordDaoImpl extends SimpleJdbcDaoSupport implements 
     }
 
     @Override
-    public List<OtherDocumentRecord> findOrdered(OrderType order) {
+    public List<OtherDocumentRecord> findAllOrdered(OrderType order) {
         String query = String.format("%s ORDER BY r.%s %s",
                 OtherDocumentRecordDaoImpl.SELECT_FROM_CLAUSE_WITHOUT_FILE,
                 OtherDocumentRecordField.creationTime.getColumnName(), order.getDatabaseCode());
@@ -138,7 +138,7 @@ public class OtherDocumentRecordDaoImpl extends SimpleJdbcDaoSupport implements 
     }
 
     @Override
-    public List<OtherDocumentRecord> findOrdered(OtherDocumentRecordType type, OrderType order) {
+    public List<OtherDocumentRecord> findAllOrdered(OtherDocumentRecordType type, OrderType order) {
         String query = String.format("%s INNER JOIN %s t ON t.%s = r.%s WHERE t.%s = ? ORDER BY r.%s %s",
                 OtherDocumentRecordDaoImpl.SELECT_FROM_CLAUSE_WITHOUT_FILE,
                 PersistedClass.OtherDocumentRecordTypeRelation.getTableName(),

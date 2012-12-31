@@ -59,9 +59,9 @@ public abstract class AbstractListRecordsController extends AbstractSessionRecor
 
         List<SessionRecord> records = null;
         if (this.allRecordTypes) {
-            records = this.recordDao.findOrdered(OrderType.DESCENDING);
+            records = this.recordDao.findAllOrdered(OrderType.DESCENDING);
         } else {
-            records = this.recordDao.findOrdered(this.recordType, OrderType.DESCENDING);
+            records = this.recordDao.findAllOrdered(this.recordType, OrderType.DESCENDING);
         }
         command.setRecords(records);
 

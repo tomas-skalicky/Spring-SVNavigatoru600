@@ -23,7 +23,7 @@ public class OtherDocumentRecordTypeRelationDaoImpl extends SimpleJdbcDaoSupport
     private static final String TABLE_NAME = PersistedClass.OtherDocumentRecordTypeRelation.getTableName();
 
     @Override
-    public List<OtherDocumentRecordTypeRelation> find(int recordId) {
+    public List<OtherDocumentRecordTypeRelation> findAll(int recordId) {
         String query = String.format("SELECT * FROM %s r WHERE r.%s = ?",
                 OtherDocumentRecordTypeRelationDaoImpl.TABLE_NAME,
                 OtherDocumentRecordTypeRelationField.recordId.getColumnName());

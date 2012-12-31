@@ -19,7 +19,7 @@ public class AuthorityDaoImpl extends HibernateDaoSupport implements AuthorityDa
 
     @Override
     @SuppressWarnings("unchecked")
-    public List<Authority> find(String username) {
+    public List<Authority> findAll(String username) {
         DetachedCriteria criteria = DetachedCriteria.forClass(Authority.class);
         criteria.add(Restrictions.eq(AuthorityField.username.getFieldChain(), username));
 

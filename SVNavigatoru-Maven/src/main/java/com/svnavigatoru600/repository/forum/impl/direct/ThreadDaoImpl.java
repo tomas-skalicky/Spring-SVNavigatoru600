@@ -47,7 +47,7 @@ public class ThreadDaoImpl extends SimpleJdbcDaoSupport implements ThreadDao {
      * Populates the <code>contributions</code> property of the given <code>thread</code>.
      */
     private void populateContributions(final Thread thread) {
-        thread.setContributions(this.contributionDao.find(thread.getId()));
+        thread.setContributions(this.contributionDao.findAll(thread.getId()));
     }
 
     /**

@@ -17,7 +17,7 @@ public interface OtherDocumentRecordTypeRelationDao {
      * the {@link com.svnavigatoru600.domain.records.OtherDocumentRecord OtherDocumentRecord} with the given
      * <code>recordId</code>.
      */
-    List<OtherDocumentRecordTypeRelation> find(int recordId);
+    List<OtherDocumentRecordTypeRelation> findAll(int recordId);
 
     /**
      * Stores the given <code>types</code> to the repository. If there is already an

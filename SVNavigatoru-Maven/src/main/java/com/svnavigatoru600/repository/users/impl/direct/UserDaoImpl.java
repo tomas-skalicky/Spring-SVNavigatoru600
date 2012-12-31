@@ -43,7 +43,7 @@ public class UserDaoImpl extends SimpleJdbcDaoSupport implements UserDao {
      * Populates the <code>authorities</code> property of the given <code>user</code>.
      */
     private void populateAuthorities(final User user) {
-        final List<Authority> authorities = this.authorityDao.find(user.getUsername());
+        final List<Authority> authorities = this.authorityDao.findAll(user.getUsername());
         user.setAuthorities(new HashSet<GrantedAuthority>(authorities));
     }
 
@@ -105,7 +105,7 @@ public class UserDaoImpl extends SimpleJdbcDaoSupport implements UserDao {
     }
 
     @Override
-    public List<User> findByAuthority(final String authority) {
+    public List<User> findAllByAuthority(final String authority) {
         this.logger.info(String.format("Load all users with the authority '%s')", authority));
 
         final String query = String.format(

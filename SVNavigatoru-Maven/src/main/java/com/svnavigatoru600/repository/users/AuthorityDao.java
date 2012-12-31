@@ -18,7 +18,7 @@ public interface AuthorityDao {
      * Returns all {@link Authority}s stored in the repository which are associated with the given
      * <code>username</code>.
      */
-    List<Authority> find(String username);
+    List<Authority> findAll(String username);
 
     /**
      * Stores the given <code>authorities</code> to the repository. If there is already an {@link Authority}

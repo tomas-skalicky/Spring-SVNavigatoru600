@@ -19,7 +19,7 @@ public class OtherDocumentRecordTypeRelationDaoImpl extends HibernateDaoSupport 
 
     @Override
     @SuppressWarnings("unchecked")
-    public List<OtherDocumentRecordTypeRelation> find(int recordId) {
+    public List<OtherDocumentRecordTypeRelation> findAll(int recordId) {
         DetachedCriteria criteria = DetachedCriteria.forClass(OtherDocumentRecordTypeRelation.class);
         criteria.add(Restrictions.eq(OtherDocumentRecordTypeRelationField.recordId.getFieldChain(), recordId));
 

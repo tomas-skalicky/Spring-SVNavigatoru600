@@ -22,7 +22,7 @@ public interface ContributionDao {
      * Returns all {@link Contribution}s stored in the repository which belong to the
      * {@link com.svnavigatoru600.domain.forum.Thread thread} with the given <code>threadId</code>.
      */
-    List<Contribution> find(int threadId);
+    List<Contribution> findAll(int threadId);
 
     /**
      * Returns all {@link Contribution}s stored in the repository arranged according to their values of the
