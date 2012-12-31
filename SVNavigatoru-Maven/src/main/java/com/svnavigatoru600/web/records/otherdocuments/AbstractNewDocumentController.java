@@ -43,8 +43,8 @@ public abstract class AbstractNewDocumentController extends AbstractNewEditDocum
      * Constructs a controller which considers all {@link OtherDocumentRecord}s of all
      * {@link OtherDocumentRecordType}s.
      */
-    public AbstractNewDocumentController(String baseUrl, AbstractPageViews views, OtherDocumentRecordDao recordDao,
-            NewRecordValidator validator, MessageSource messageSource) {
+    public AbstractNewDocumentController(String baseUrl, AbstractPageViews views,
+            OtherDocumentRecordDao recordDao, NewRecordValidator validator, MessageSource messageSource) {
         super(baseUrl, views, recordDao, validator, messageSource);
     }
 
@@ -52,8 +52,9 @@ public abstract class AbstractNewDocumentController extends AbstractNewEditDocum
      * Constructs a controller which considers all {@link OtherDocumentRecord}s of the given
      * <code>recordType</code>.
      */
-    public AbstractNewDocumentController(String baseUrl, AbstractPageViews views, OtherDocumentRecordType recordType,
-            OtherDocumentRecordDao recordDao, NewRecordValidator validator, MessageSource messageSource) {
+    public AbstractNewDocumentController(String baseUrl, AbstractPageViews views,
+            OtherDocumentRecordType recordType, OtherDocumentRecordDao recordDao,
+            NewRecordValidator validator, MessageSource messageSource) {
         super(baseUrl, views, recordType, recordDao, validator, messageSource);
     }
 

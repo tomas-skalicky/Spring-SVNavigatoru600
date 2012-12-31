@@ -46,7 +46,8 @@ public class NewBoardSessionRecordController extends AbstractNewRecordController
 
     @Override
     @RequestMapping(value = NewBoardSessionRecordController.BASE_URL + "novy/", method = RequestMethod.POST)
-    public String processSubmittedForm(@ModelAttribute(AbstractNewRecordController.COMMAND) NewSessionRecord command,
+    public String processSubmittedForm(
+            @ModelAttribute(AbstractNewRecordController.COMMAND) NewSessionRecord command,
             BindingResult result, SessionStatus status, HttpServletRequest request, ModelMap model) {
         return super.processSubmittedForm(command, result, status, request, model);
     }

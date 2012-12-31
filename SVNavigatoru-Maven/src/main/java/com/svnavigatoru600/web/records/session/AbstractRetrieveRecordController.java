@@ -34,8 +34,8 @@ public abstract class AbstractRetrieveRecordController extends AbstractSessionRe
     /**
      * Constructs a controller which considers all {@link SessionRecord}s of all {@link SessionRecordType}s.
      */
-    public AbstractRetrieveRecordController(String baseUrl, AbstractPageViews views, SessionRecordDao recordDao,
-            MessageSource messageSource) {
+    public AbstractRetrieveRecordController(String baseUrl, AbstractPageViews views,
+            SessionRecordDao recordDao, MessageSource messageSource) {
         // Note that allRecordTypes is set up during the creation of the parent.
         super(baseUrl, views, recordDao, messageSource);
         this.retrieveUrl = this.baseUrl + AbstractRetrieveRecordController.RETRIEVE_URL_END;
@@ -45,8 +45,8 @@ public abstract class AbstractRetrieveRecordController extends AbstractSessionRe
      * Constructs a controller which considers all {@link SessionRecord}s of the given <code>recordType</code>
      * .
      */
-    public AbstractRetrieveRecordController(String baseUrl, AbstractPageViews views, SessionRecordType recordType,
-            SessionRecordDao recordDao, MessageSource messageSource) {
+    public AbstractRetrieveRecordController(String baseUrl, AbstractPageViews views,
+            SessionRecordType recordType, SessionRecordDao recordDao, MessageSource messageSource) {
         super(baseUrl, views, recordType, recordDao, messageSource);
         this.retrieveUrl = this.baseUrl + AbstractRetrieveRecordController.RETRIEVE_URL_END;
     }

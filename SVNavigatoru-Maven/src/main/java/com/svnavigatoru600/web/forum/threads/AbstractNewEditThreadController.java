@@ -22,7 +22,8 @@ public abstract class AbstractNewEditThreadController extends AbstractThreadCont
     public static final String COMMAND = "newEditThreadCommand";
     protected Validator validator;
 
-    public AbstractNewEditThreadController(ThreadDao threadDao, AbstractThreadValidator validator, MessageSource messageSource) {
+    public AbstractNewEditThreadController(ThreadDao threadDao, AbstractThreadValidator validator,
+            MessageSource messageSource) {
         super(threadDao, messageSource);
         this.validator = validator;
     }

@@ -21,7 +21,8 @@ public abstract class AbstractNewEditNewsController extends AbstractNewsControll
     public static final String COMMAND = "newEditNewsCommand";
     protected Validator validator;
 
-    public AbstractNewEditNewsController(NewsService newsService, AbstractNewsValidator validator, MessageSource messageSource) {
+    public AbstractNewEditNewsController(NewsService newsService, AbstractNewsValidator validator,
+            MessageSource messageSource) {
         super(newsService, messageSource);
         this.validator = validator;
     }

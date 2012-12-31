@@ -30,8 +30,8 @@ public abstract class AbstractNewEditEventController extends AbstractEventContro
     public static final String COMMAND = "newEditEventCommand";
     protected Validator validator;
 
-    public AbstractNewEditEventController(final CalendarEventDao eventDao, final AbstractEventValidator validator,
-            final MessageSource messageSource) {
+    public AbstractNewEditEventController(final CalendarEventDao eventDao,
+            final AbstractEventValidator validator, final MessageSource messageSource) {
         super(eventDao, messageSource);
         this.validator = validator;
     }

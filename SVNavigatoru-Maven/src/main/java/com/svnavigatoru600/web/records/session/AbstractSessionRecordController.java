@@ -29,8 +29,8 @@ public abstract class AbstractSessionRecordController extends AbstractDocumentRe
     /**
      * Constructs a controller which considers all {@link SessionRecord}s of all {@link SessionRecordType}s.
      */
-    public AbstractSessionRecordController(String baseUrl, AbstractPageViews views, SessionRecordDao recordDao,
-            MessageSource messageSource) {
+    public AbstractSessionRecordController(String baseUrl, AbstractPageViews views,
+            SessionRecordDao recordDao, MessageSource messageSource) {
         this(baseUrl, views, null, recordDao, messageSource);
         this.allRecordTypes = true;
     }
@@ -39,8 +39,8 @@ public abstract class AbstractSessionRecordController extends AbstractDocumentRe
      * Constructs a controller which considers all {@link SessionRecord}s of the given <code>recordType</code>
      * .
      */
-    public AbstractSessionRecordController(String baseUrl, AbstractPageViews views, SessionRecordType recordType,
-            SessionRecordDao recordDao, MessageSource messageSource) {
+    public AbstractSessionRecordController(String baseUrl, AbstractPageViews views,
+            SessionRecordType recordType, SessionRecordDao recordDao, MessageSource messageSource) {
         super(baseUrl, views, messageSource);
         this.recordType = recordType;
         this.recordDao = recordDao;
