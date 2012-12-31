@@ -46,7 +46,7 @@ public class NewNewsResponse extends AbstractNewEditNewsResponse {
     private void initDateVariables(HttpServletRequest request) {
         Locale locale = Localization.getLocale(request);
 
-        News news = command.getNews();
+        News news = this.command.getNews();
         Date creationTime = news.getCreationTime();
         this.localizedMonth = DateUtils
                 .format(creationTime, DateUtils.LONG_MONTH_FORMATS.get(locale), locale);
@@ -58,7 +58,7 @@ public class NewNewsResponse extends AbstractNewEditNewsResponse {
     }
 
     private void initMessageVariables(MessageSource messageSource, HttpServletRequest request) {
-        News news = command.getNews();
+        News news = this.command.getNews();
         this.localizedDeleteQuestion = ListNewsController.getLocalizedDeleteQuestion(news, messageSource,
                 request);
     }
@@ -71,22 +71,22 @@ public class NewNewsResponse extends AbstractNewEditNewsResponse {
     }
 
     public String getLocalizedMonth() {
-        return localizedMonth;
+        return this.localizedMonth;
     }
 
     public String getLocalizedDay() {
-        return localizedDay;
+        return this.localizedDay;
     }
 
     public boolean isLoggedUserCanEditNews() {
-        return loggedUserCanEditNews;
+        return this.loggedUserCanEditNews;
     }
 
     public String getLocalizedDeleteQuestion() {
-        return localizedDeleteQuestion;
+        return this.localizedDeleteQuestion;
     }
 
     public String getEditUrlBeginning() {
-        return editUrlBeginning;
+        return this.editUrlBeginning;
     }
 }

@@ -80,7 +80,7 @@ public abstract class AbstractEditDocumentController extends AbstractNewEditDocu
         command.setLocalizedTypeCheckboxTitles(this.getLocalizedTypeCheckboxTitles(request));
 
         model.addAttribute(AbstractEditDocumentController.COMMAND, command);
-        return views.edit;
+        return this.views.edit;
     }
 
     /**
@@ -111,7 +111,7 @@ public abstract class AbstractEditDocumentController extends AbstractNewEditDocu
         this.validator.validate(command, result);
         if (result.hasErrors()) {
             command.setFileChanged(false);
-            return views.edit;
+            return this.views.edit;
         }
 
         // Updates the original data. Modifies the filename to make it unique.
@@ -195,6 +195,6 @@ public abstract class AbstractEditDocumentController extends AbstractNewEditDocu
             this.logger.error(command, e);
             result.reject(AbstractEditDocumentController.DATABASE_ERROR_MESSAGE_CODE);
         }
-        return views.edit;
+        return this.views.edit;
     }
 }

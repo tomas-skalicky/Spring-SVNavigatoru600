@@ -71,7 +71,7 @@ public abstract class AbstractDeleteRecordController extends AbstractSessionReco
             // We encountered a database problem.
             this.logger.error(e);
             model.addAttribute("error", AbstractDeleteRecordController.DATABASE_ERROR_MESSAGE_CODE);
-            return views.list;
+            return this.views.list;
         }
     }
 }

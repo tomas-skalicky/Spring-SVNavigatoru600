@@ -18,6 +18,6 @@ public class ListNewsResponse extends AbstractNewsResponse {
     }
 
     public ShowAllNews getCommand() {
-        return command;
+        return this.command;
     }
 }

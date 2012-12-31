@@ -44,14 +44,14 @@ public abstract class AbstractGoToFormResponse extends AbstractNewsResponse {
     }
 
     public News getNews() {
-        return news;
+        return this.news;
     }
 
     public String getFormAction() {
-        return formAction;
+        return this.formAction;
     }
 
     public String getLocalizedTitleOfSubmit() {
-        return localizedTitleOfSubmit;
+        return this.localizedTitleOfSubmit;
     }
 }

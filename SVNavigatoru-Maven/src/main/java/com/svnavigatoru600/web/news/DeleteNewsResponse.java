@@ -25,6 +25,6 @@ public class DeleteNewsResponse extends AbstractNewsResponse {
     }
 
     public String getError() {
-        return error;
+        return this.error;
     }
 }

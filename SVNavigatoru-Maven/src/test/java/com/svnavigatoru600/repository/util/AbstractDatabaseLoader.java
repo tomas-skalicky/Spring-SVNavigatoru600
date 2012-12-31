@@ -28,10 +28,10 @@ public abstract class AbstractDatabaseLoader {
      * default data.
      */
     public void loadDatabase(final DataSource dataSource) throws SQLException, IOException {
-        final String createSchemaFile = getCreateSchemaFile(dataSource);
+        final String createSchemaFile = this.getCreateSchemaFile(dataSource);
         SqlExecutor.executeSqlFile(dataSource, createSchemaFile);
 
-        final String importDataFile = getImportDataFile(dataSource);
+        final String importDataFile = this.getImportDataFile(dataSource);
         SqlExecutor.executeSqlFile(dataSource, importDataFile);
     }
 
