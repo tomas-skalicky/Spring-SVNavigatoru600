@@ -25,7 +25,7 @@ public interface UserDao {
     /**
      * Returns all {@link User}s stored in the repository which have the given <code>authority</code>.
      */
-    List<User> findByAuthority(String authority);
+    List<User> findAllByAuthority(String authority);
 
     /**
      * Returns all {@link User}s stored in the repository. The {@link User} are arranged according to their

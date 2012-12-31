@@ -72,7 +72,7 @@ public class ForgottenPasswordController extends AbstractMetaController {
         user.setEmail("@");
         command.setUser(user);
 
-        List<User> adminsFromDb = this.userDao.findByAuthority(AuthorityType.ROLE_USER_ADMINISTRATOR.name());
+        List<User> adminsFromDb = this.userDao.findAllByAuthority(AuthorityType.ROLE_USER_ADMINISTRATOR.name());
         List<User> newAdmins = new ArrayList<User>();
         // Excludes me (Tomas Skalicky).
         for (User admin : adminsFromDb) {

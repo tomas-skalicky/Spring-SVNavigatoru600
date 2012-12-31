@@ -79,7 +79,7 @@ public class SessionRecordDaoImpl extends SimpleJdbcDaoSupport implements Sessio
     }
 
     @Override
-    public List<SessionRecord> findOrdered(OrderType order) {
+    public List<SessionRecord> findAllOrdered(OrderType order) {
         String query = String.format("%s ORDER BY r.%s %s",
                 SessionRecordDaoImpl.SELECT_FROM_CLAUSE_WITHOUT_FILE,
                 SessionRecordField.sessionDate.getColumnName(), order.getDatabaseCode());
@@ -87,7 +87,7 @@ public class SessionRecordDaoImpl extends SimpleJdbcDaoSupport implements Sessio
     }
 
     @Override
-    public List<SessionRecord> findOrdered(SessionRecordType type, OrderType order) {
+    public List<SessionRecord> findAllOrdered(SessionRecordType type, OrderType order) {
         String query = String.format("%s WHERE r.%s = ? ORDER BY r.%s %s",
                 SessionRecordDaoImpl.SELECT_FROM_CLAUSE_WITHOUT_FILE,
                 SessionRecordField.type.getColumnName(), SessionRecordField.sessionDate.getColumnName(),

@@ -26,14 +26,14 @@ public interface SessionRecordDao extends DocumentRecordDao {
      * Returns all {@link SessionRecord}s stored in the repository arranged according to their
      * <code>sessionDate</code>s in the given <code>order</code>.
      */
-    List<SessionRecord> findOrdered(OrderType order);
+    List<SessionRecord> findAllOrdered(OrderType order);
 
     /**
      * Returns all {@link SessionRecord}s stored in the repository which are of the given <code>type</code>.
      * The {@link SessionRecord} are arranged according to their <code>sessionDate</code>s in the given
      * <code>order</code>.
      */
-    List<SessionRecord> findOrdered(SessionRecordType type, OrderType order);
+    List<SessionRecord> findAllOrdered(SessionRecordType type, OrderType order);
 
     /**
      * Updates the given <code>record</code> in the repository. The old version of the <code>record</code>

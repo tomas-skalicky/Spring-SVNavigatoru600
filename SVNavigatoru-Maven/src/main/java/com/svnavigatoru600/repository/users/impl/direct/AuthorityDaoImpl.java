@@ -23,7 +23,7 @@ public class AuthorityDaoImpl extends SimpleJdbcDaoSupport implements AuthorityD
     private static final String TABLE_NAME = PersistedClass.Authority.getTableName();
 
     @Override
-    public List<Authority> find(String username) {
+    public List<Authority> findAll(String username) {
         String query = String.format("SELECT * FROM %s a WHERE a.%s = ?", AuthorityDaoImpl.TABLE_NAME,
                 AuthorityField.username.getColumnName());
         return this.getSimpleJdbcTemplate().query(query, new AuthorityRowMapper(), username);

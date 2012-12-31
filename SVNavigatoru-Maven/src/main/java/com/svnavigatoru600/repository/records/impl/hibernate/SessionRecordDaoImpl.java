@@ -52,7 +52,7 @@ public class SessionRecordDaoImpl extends HibernateDaoSupport implements Session
 
     @Override
     @SuppressWarnings("unchecked")
-    public List<SessionRecord> findOrdered(OrderType order) {
+    public List<SessionRecord> findAllOrdered(OrderType order) {
         String query = String.format("FROM %s r ORDER BY r.%s %s", PersistedClass.SessionRecord.name(),
                 SessionRecordField.sessionDate.name(), order.getDatabaseCode());
         return (List<SessionRecord>) this.getHibernateTemplate().find(query);
@@ -60,7 +60,7 @@ public class SessionRecordDaoImpl extends HibernateDaoSupport implements Session
 
     @Override
     @SuppressWarnings("unchecked")
-    public List<SessionRecord> findOrdered(SessionRecordType type, OrderType order) {
+    public List<SessionRecord> findAllOrdered(SessionRecordType type, OrderType order) {
         String query = String.format("FROM %s r WHERE r.type = ? ORDER BY r.%s %s",
                 PersistedClass.SessionRecord.name(), SessionRecordField.sessionDate.name(),
                 order.getDatabaseCode());

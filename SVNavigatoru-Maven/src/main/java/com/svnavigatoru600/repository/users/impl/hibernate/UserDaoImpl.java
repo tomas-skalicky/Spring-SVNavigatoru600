@@ -67,7 +67,7 @@ public class UserDaoImpl extends HibernateDaoSupport implements UserDao {
 
     @Override
     @SuppressWarnings("unchecked")
-    public List<User> findByAuthority(String authority) {
+    public List<User> findAllByAuthority(String authority) {
         this.logger.info(String.format("Load all users with the authority '%s')", authority));
 
         // If we did not explicitly select the user u, Hibernate would return
