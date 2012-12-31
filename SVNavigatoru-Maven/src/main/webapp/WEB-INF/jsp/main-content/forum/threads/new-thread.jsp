@@ -29,7 +29,7 @@
 			<td></td>
 			<td><c:set var="buttonTittle" value="forum.threads.add-thread" /> <c:set var="successUrl"
 					value="/forum/temata/novy/" /> <input type="submit" value="<spring:message code="${buttonTittle}" />"
-				onclick="setFormAction('<%=NewEditThreadController.COMMAND%>', '<c:url value='${successUrl}' />')" /></td>
+				onclick="setFormAction('<%=AbstractNewEditThreadController.COMMAND%>', '<c:url value='${successUrl}' />')" /></td>
 		</tr>
 	</table>
 
