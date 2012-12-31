@@ -68,14 +68,16 @@ public final class DateUtils {
      * Gets the today date. It means that hours, minutes, seconds and so on are set to zero.
      */
     public static Date getToday() {
-        Date date = new Date(); // timestamp now
-        Calendar cal = Calendar.getInstance(); // get calendar instance
-        cal.setTimeZone(DateUtils.TIME_ZONE);
-        cal.setTime(date); // set cal to date
-        cal.set(Calendar.HOUR_OF_DAY, 0); // set hours to midnight
-        cal.set(Calendar.MINUTE, 0); // set minutes in hour
-        cal.set(Calendar.SECOND, 0); // set seconds in minute
-        cal.set(Calendar.MILLISECOND, 0); // set milliseconds in second
-        return cal.getTime();
+        Date now = new Date();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeZone(DateUtils.TIME_ZONE);
+        calendar.setTime(now);
+
+        // Sets time exactly to midnight, i.e. 00:00:00.000
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+        return calendar.getTime();
     }
 }
