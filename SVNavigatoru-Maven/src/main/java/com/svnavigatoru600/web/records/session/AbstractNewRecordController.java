@@ -70,7 +70,7 @@ public abstract class AbstractNewRecordController extends AbstractNewEditRecordC
                 recordType.getLocalizationCode()));
 
         model.addAttribute(AbstractNewRecordController.COMMAND, command);
-        return views.neww;
+        return this.views.neww;
     }
 
     /**
@@ -85,7 +85,7 @@ public abstract class AbstractNewRecordController extends AbstractNewEditRecordC
 
         this.validator.validate(command, result);
         if (result.hasErrors()) {
-            return views.neww;
+            return this.views.neww;
         }
 
         // Updates the data of the new record. Modifies the filename to make
@@ -154,6 +154,6 @@ public abstract class AbstractNewRecordController extends AbstractNewEditRecordC
             this.logger.error(newRecord, e);
             result.reject(AbstractNewRecordController.DATABASE_ERROR_MESSAGE_CODE);
         }
-        return views.neww;
+        return this.views.neww;
     }
 }

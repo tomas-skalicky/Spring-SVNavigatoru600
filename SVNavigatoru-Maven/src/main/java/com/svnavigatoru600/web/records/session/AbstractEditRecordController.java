@@ -74,7 +74,7 @@ public abstract class AbstractEditRecordController extends AbstractNewEditRecord
                 .getLocalizationCode()));
 
         model.addAttribute(AbstractEditRecordController.COMMAND, command);
-        return views.edit;
+        return this.views.edit;
     }
 
     /**
@@ -100,7 +100,7 @@ public abstract class AbstractEditRecordController extends AbstractNewEditRecord
         this.validator.validate(command, result);
         if (result.hasErrors()) {
             command.setFileChanged(false);
-            return views.edit;
+            return this.views.edit;
         }
 
         // Updates the original data. Modifies the filename to make it unique.
@@ -184,6 +184,6 @@ public abstract class AbstractEditRecordController extends AbstractNewEditRecord
             this.logger.error(command, e);
             result.reject(AbstractEditRecordController.DATABASE_ERROR_MESSAGE_CODE);
         }
-        return views.edit;
+        return this.views.edit;
     }
 }

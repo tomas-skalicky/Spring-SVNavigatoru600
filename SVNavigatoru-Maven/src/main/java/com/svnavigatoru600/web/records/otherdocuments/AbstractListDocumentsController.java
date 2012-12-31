@@ -66,7 +66,7 @@ public abstract class AbstractListDocumentsController extends AbstractOtherDocum
         command.setLocalizedDeleteQuestions(this.getLocalizedDeleteQuestions(records, request));
 
         model.addAttribute(AbstractListDocumentsController.COMMAND, command);
-        return views.list;
+        return this.views.list;
     }
 
     @PreAuthorize("hasRole('ROLE_MEMBER_OF_BOARD')")

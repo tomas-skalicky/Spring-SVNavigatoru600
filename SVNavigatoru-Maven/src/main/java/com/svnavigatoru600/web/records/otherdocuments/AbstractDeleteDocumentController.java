@@ -75,7 +75,7 @@ public abstract class AbstractDeleteDocumentController extends AbstractOtherDocu
             // We encountered a database problem.
             this.logger.error(e);
             model.addAttribute("error", AbstractDeleteDocumentController.DATABASE_ERROR_MESSAGE_CODE);
-            return views.list;
+            return this.views.list;
         }
     }
 }

@@ -25,6 +25,6 @@ public abstract class AbstractNewsResponse {
     }
 
     public boolean isSuccessful() {
-        return successful;
+        return this.successful;
     }
 }

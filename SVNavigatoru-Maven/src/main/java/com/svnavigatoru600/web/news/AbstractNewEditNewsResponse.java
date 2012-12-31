@@ -47,14 +47,14 @@ public abstract class AbstractNewEditNewsResponse extends AbstractNewsResponse {
     }
 
     public AbstractNewEditNews getCommand() {
-        return command;
+        return this.command;
     }
 
     public List<ObjectError> getGlobalErrors() {
-        return globalErrors;
+        return this.globalErrors;
     }
 
     public List<FieldError> getFieldErrors() {
-        return fieldErrors;
+        return this.fieldErrors;
     }
 }

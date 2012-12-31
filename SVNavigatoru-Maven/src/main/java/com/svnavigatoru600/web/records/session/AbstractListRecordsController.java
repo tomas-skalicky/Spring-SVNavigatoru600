@@ -74,7 +74,7 @@ public abstract class AbstractListRecordsController extends AbstractSessionRecor
         command.setLocalizedDeleteQuestions(this.getLocalizedDeleteQuestions(records, request, sessionDates));
 
         model.addAttribute(AbstractListRecordsController.COMMAND, command);
-        return views.list;
+        return this.views.list;
     }
 
     @PreAuthorize("hasRole('ROLE_MEMBER_OF_BOARD')")
