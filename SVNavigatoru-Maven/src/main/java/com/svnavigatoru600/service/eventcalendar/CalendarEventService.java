@@ -1,5 +1,6 @@
 package com.svnavigatoru600.service.eventcalendar;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -8,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.svnavigatoru600.domain.eventcalendar.CalendarEvent;
 import com.svnavigatoru600.repository.CalendarEventDao;
-import com.svnavigatoru600.repository.eventcalendar.impl.FindAllFutureEventsOrderedArguments;
+import com.svnavigatoru600.service.util.OrderType;
 
 /**
  * Provides convenient functions to work with {@link CalendarEvent} objects.
@@ -39,12 +40,14 @@ public class CalendarEventService {
     }
 
     /**
-     * Returns all {@link CalendarEvent}s stored in the repository arranged according to their
-     * <code>date</code> attributes in the given <code>order</code>. Moreover, only {@link CalendarEvent}s
-     * which will take place are returned, the passed ones are not.
+     * Returns all {@link CalendarEvent CalendarEvents} stored in the repository arranged according to their
+     * <code>date</code> attributes in the given <code>order</code>.
+     * <p>
+     * Moreover, only {@link CalendarEvent events} which will take place are returned, the passed ones are
+     * not.
      */
-    public List<CalendarEvent> findAllFutureEventsOrdered(FindAllFutureEventsOrderedArguments arguments) {
-        return this.eventDao.findAllFutureEventsOrdered(arguments);
+    public List<CalendarEvent> findAllFutureEventsOrdered(Date earliestDate, OrderType sortDirection) {
+        return this.eventDao.findAllFutureEventsOrdered(earliestDate, sortDirection);
     }
 
     /**
