@@ -6,8 +6,11 @@ import org.springframework.validation.Errors;
 import com.svnavigatoru600.domain.eventcalendar.CalendarEvent;
 import com.svnavigatoru600.viewmodel.eventcalendar.EditEvent;
 
+/**
+ * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
+ */
 @Service
-public class EditEventValidator extends EventValidator {
+public class EditEventValidator extends AbstractEventValidator {
 
     @Override
     public boolean supports(Class<?> clazz) {

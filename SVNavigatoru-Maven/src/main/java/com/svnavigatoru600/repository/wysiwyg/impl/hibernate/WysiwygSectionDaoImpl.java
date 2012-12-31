@@ -10,6 +10,9 @@ import com.svnavigatoru600.domain.WysiwygSection;
 import com.svnavigatoru600.domain.WysiwygSectionName;
 import com.svnavigatoru600.repository.WysiwygSectionDao;
 
+/**
+ * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
+ */
 public class WysiwygSectionDaoImpl extends HibernateDaoSupport implements WysiwygSectionDao {
 
     /** Logger for this class and subclasses */

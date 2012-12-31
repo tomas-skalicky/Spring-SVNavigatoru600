@@ -9,11 +9,11 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import com.svnavigatoru600.service.news.NewsService;
 
+/**
+ * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
+ */
 public class News implements Serializable {
 
-    /**
-	 * 
-	 */
     private static final long serialVersionUID = 6948132683901305572L;
 
     private NewsService newsService;

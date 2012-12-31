@@ -1,18 +1,22 @@
 package com.svnavigatoru600.service.forum.threads.validator;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.inject.Inject;
+
 import org.springframework.stereotype.Service;
 import org.springframework.validation.Errors;
 
 import com.svnavigatoru600.service.forum.contributions.validator.NewContributionValidator;
 import com.svnavigatoru600.viewmodel.forum.threads.NewThread;
 
+/**
+ * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
+ */
 @Service
-public class NewThreadValidator extends ThreadValidator {
+public class NewThreadValidator extends AbstractThreadValidator {
 
     private NewContributionValidator validator;
 
-    @Autowired
+    @Inject
     public NewThreadValidator(NewContributionValidator validator) {
         this.validator = validator;
     }

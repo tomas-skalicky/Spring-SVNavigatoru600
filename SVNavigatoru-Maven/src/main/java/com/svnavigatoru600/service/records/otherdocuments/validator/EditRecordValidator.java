@@ -5,8 +5,11 @@ import org.springframework.validation.Errors;
 
 import com.svnavigatoru600.viewmodel.records.otherdocuments.EditRecord;
 
+/**
+ * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
+ */
 @Service
-public class EditRecordValidator extends OtherDocumentRecordValidator {
+public class EditRecordValidator extends AbstractOtherDocumentRecordValidator {
 
     @Override
     public boolean supports(Class<?> clazz) {

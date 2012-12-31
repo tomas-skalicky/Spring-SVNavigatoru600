@@ -6,7 +6,7 @@
 <%@ include file="../../../../include-preceding-html.jsp"%>
 
 <%@ page import="com.svnavigatoru600.viewmodel.records.session.ShowAllSessionRecords"%>
-<%@ page import="com.svnavigatoru600.web.records.session.ListRecordsController"%>
+<%@ page import="com.svnavigatoru600.web.records.session.AbstractListRecordsController"%>
 
 <c:if test="${showAllRecordsCommand.recordCreated}">
 	<p class="successfulOperation">
@@ -25,8 +25,9 @@
 </c:if>
 
 <%
-User loggedUser = UserUtils.getLoggedUser();
-if (loggedUser.canEditNews()) {%>
+    User loggedUser = UserUtils.getLoggedUser();
+if (loggedUser.canEditNews()) {
+%>
 <p>
 	<strong><a href="<c:url value="/${sectionUrl}/novy/" />"><spring:message
 				code="session-records.add-new-record" />
@@ -37,12 +38,13 @@ if (loggedUser.canEditNews()) {%>
 <h5>
 	<spring:message code="session-records.existing-records" />
 </h5>
-<%}
+<%
+    }
 
 
 
 // Gets the command from the ModelMap.
-ShowAllSessionRecords command = (ShowAllSessionRecords) request.getAttribute(ListRecordsController.COMMAND);
+ShowAllSessionRecords command = (ShowAllSessionRecords) request.getAttribute(AbstractListRecordsController.COMMAND);
 List<SessionRecord> records = command.getRecords();
 if (records.size() > 0) {
 %>

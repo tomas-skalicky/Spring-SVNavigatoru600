@@ -6,8 +6,8 @@
 <%@ page pageEncoding="UTF-8"%>
 <%@ include file="../../../../include-preceding-html.jsp"%>
 
-<%@ page import="com.svnavigatoru600.viewmodel.records.session.NewEditSessionRecord"%>
-<%@ page import="com.svnavigatoru600.web.records.session.NewEditRecordController"%>
+<%@ page import="com.svnavigatoru600.viewmodel.records.session.AbstractNewEditSessionRecord"%>
+<%@ page import="com.svnavigatoru600.web.records.session.AbstractNewEditRecordController"%>
 
 <form:form action="IS_FILLED_BY_JAVASCRIPT" commandName="newEditRecordCommand" method="POST"
 	enctype="multipart/form-data">
@@ -30,8 +30,8 @@
 			</td>
 			<td><form:input path="record.sessionDate" autocomplete="${newEditRecordCommand.record.sessionDate}" /> <script
 					type='text/javascript'>
-					<% String homeUrl = request.getContextPath(); %>
-					new Calendar({'formName': '<%=NewEditRecordController.COMMAND%>', 'controlName': 'record.sessionDate',
+					<%String homeUrl = request.getContextPath();%>
+					new Calendar({'formName': '<%=AbstractNewEditRecordController.COMMAND%>', 'controlName': 'record.sessionDate',
 						'id': 'record.sessionDate_calendar', 'imgPath': '<%=homeUrl%>/tigra_calendar/imgs/'});
 				</script></td>
 		</tr>

@@ -13,12 +13,13 @@ import com.svnavigatoru600.service.util.Password;
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
 @Service
-public class AdministrateUserDataValidator extends UserDataValidator {
+public class AdministrateUserDataValidator extends AbstractUserDataValidator {
 
     @Override
     protected void checkNewPassword(String password, Errors errors) {
         if (StringUtils.isBlank(password)) {
             // The password is not filled in -> will not be changed.
+            ;
         } else {
             if (!Password.isValid(password)) {
                 errors.rejectValue("newPassword", "password.bad-format");

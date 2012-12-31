@@ -7,10 +7,10 @@ import javax.servlet.http.HttpServletRequest;
 import com.svnavigatoru600.domain.forum.Contribution;
 import com.svnavigatoru600.service.util.DateUtils;
 import com.svnavigatoru600.service.util.Localization;
-import com.svnavigatoru600.web.PrivateSectionMetaController;
+import com.svnavigatoru600.web.AbstractPrivateSectionMetaController;
 
 /**
- * Used in the {@link PrivateSectionMetaController}.
+ * Used in the {@link AbstractPrivateSectionMetaController}.
  * 
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */

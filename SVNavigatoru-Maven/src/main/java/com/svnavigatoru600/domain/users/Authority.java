@@ -6,11 +6,11 @@ import org.springframework.security.core.GrantedAuthority;
 
 import com.svnavigatoru600.repository.users.AuthorityDao;
 
+/**
+ * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
+ */
 public class Authority implements GrantedAuthority, Serializable {
 
-    /**
-	 * 
-	 */
     private static final long serialVersionUID = -65071618776307089L;
 
     @SuppressWarnings("unused")

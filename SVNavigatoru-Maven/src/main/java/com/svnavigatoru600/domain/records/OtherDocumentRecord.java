@@ -7,11 +7,11 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import com.svnavigatoru600.repository.records.OtherDocumentRecordDao;
 
-public class OtherDocumentRecord extends DocumentRecord {
+/**
+ * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
+ */
+public class OtherDocumentRecord extends AbstractDocumentRecord {
 
-    /**
-	 * 
-	 */
     private static final long serialVersionUID = -2588978216531929106L;
 
     @SuppressWarnings("unused")

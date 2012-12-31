@@ -1,8 +1,8 @@
 package com.svnavigatoru600.web.news;
 
+import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Controller;
@@ -20,8 +20,11 @@ import com.svnavigatoru600.service.news.NewsService;
 import com.svnavigatoru600.service.news.validator.NewNewsValidator;
 import com.svnavigatoru600.viewmodel.news.NewNews;
 
+/**
+ * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
+ */
 @Controller
-public class NewNewsController extends NewEditNewsController {
+public class NewNewsController extends AbstractNewEditNewsController {
 
     private static final String REQUEST_MAPPING_BASE_URL = NewNewsController.BASE_URL + "novy/";
     /**
@@ -32,7 +35,7 @@ public class NewNewsController extends NewEditNewsController {
     /**
      * Constructor.
      */
-    @Autowired
+    @Inject
     public NewNewsController(NewsService newsService, NewNewsValidator validator, MessageSource messageSource) {
         super(newsService, validator, messageSource);
     }
@@ -42,7 +45,7 @@ public class NewNewsController extends NewEditNewsController {
      */
     @RequestMapping(value = NewNewsController.REQUEST_MAPPING_BASE_URL, method = RequestMethod.GET)
     public @ResponseBody
-    NewsResponse initForm(HttpServletRequest request, ModelMap model) {
+    AbstractNewsResponse initForm(HttpServletRequest request, ModelMap model) {
 
         NewNews command = new NewNews();
 
@@ -62,7 +65,7 @@ public class NewNewsController extends NewEditNewsController {
     @RequestMapping(value = NewNewsController.REQUEST_MAPPING_BASE_URL, method = RequestMethod.POST)
     @Transactional
     public @ResponseBody
-    NewsResponse processSubmittedForm(@ModelAttribute(NewNewsController.COMMAND) NewNews command,
+    AbstractNewsResponse processSubmittedForm(@ModelAttribute(NewNewsController.COMMAND) NewNews command,
             BindingResult result, SessionStatus status, HttpServletRequest request) {
 
         NewNewsResponse response = new NewNewsResponse(command);

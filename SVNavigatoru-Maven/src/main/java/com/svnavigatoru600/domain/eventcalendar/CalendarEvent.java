@@ -14,9 +14,6 @@ import com.svnavigatoru600.service.eventcalendar.CalendarEventService;
  */
 public class CalendarEvent implements Serializable {
 
-    /**
-	 * 
-	 */
     private static final long serialVersionUID = 530408081345869305L;
 
     private CalendarEventService eventService;

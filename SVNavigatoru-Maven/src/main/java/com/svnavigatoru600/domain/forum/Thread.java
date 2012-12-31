@@ -9,11 +9,11 @@ import org.springframework.format.annotation.DateTimeFormat;
 import com.svnavigatoru600.domain.users.User;
 import com.svnavigatoru600.repository.forum.ThreadDao;
 
+/**
+ * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
+ */
 public class Thread implements Serializable, Comparable<Thread> {
 
-    /**
-	 * 
-	 */
     private static final long serialVersionUID = -8105812445594624080L;
 
     @SuppressWarnings("unused")

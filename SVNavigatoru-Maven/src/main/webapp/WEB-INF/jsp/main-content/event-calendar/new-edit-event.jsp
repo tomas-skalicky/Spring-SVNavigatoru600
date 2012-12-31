@@ -5,7 +5,7 @@
 <%@ page pageEncoding="UTF-8"%>
 <%@ include file="../../include-preceding-html.jsp"%>
 
-<%@ page import="com.svnavigatoru600.web.eventcalendar.NewEditEventController"%>
+<%@ page import="com.svnavigatoru600.web.eventcalendar.AbstractNewEditEventController"%>
 
 <form:form action="IS_FILLED_BY_JAVASCRIPT" commandName="newEditEventCommand" method="POST">
 	<form:errors path="*" cssClass="error" element="p" />
@@ -25,8 +25,8 @@
 			</td>
 			<td><form:input path="event.date" autocomplete="${newEditEventCommand.event.date}" /> <script
 					type='text/javascript'>
-					<% String homeUrl = request.getContextPath(); %>
-					new Calendar({'formName': '<%=NewEditEventController.COMMAND%>', 'controlName': 'event.date',
+					<%String homeUrl = request.getContextPath();%>
+					new Calendar({'formName': '<%=AbstractNewEditEventController.COMMAND%>', 'controlName': 'event.date',
 						'id': 'event.date_calendar', 'imgPath': '<%=homeUrl%>/tigra_calendar/imgs/'});
 				</script></td>
 		</tr>

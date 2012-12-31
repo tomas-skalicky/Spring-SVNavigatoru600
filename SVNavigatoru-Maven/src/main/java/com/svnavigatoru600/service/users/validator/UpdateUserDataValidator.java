@@ -48,6 +48,7 @@ public class UpdateUserDataValidator implements Validator {
         if (arePasswordsEqual) {
             if (StringUtils.isBlank(password)) {
                 // The passwords are not filled in -> will not be changed.
+                ;
             } else {
                 if (!Password.isValid(password)) {
                     errors.rejectValue("newPassword", "password.bad-format");
@@ -65,6 +66,7 @@ public class UpdateUserDataValidator implements Validator {
         if (StringUtils.isBlank(email)) {
             // The email address is blank. It is not an error since this
             // information is optional.
+            ;
         } else {
             if (!Email.isValid(email)) {
                 errors.rejectValue("user.email", "email.bad-format");
@@ -79,6 +81,7 @@ public class UpdateUserDataValidator implements Validator {
         if (StringUtils.isBlank(phone)) {
             // The phone number is blank. It is not an error since this
             // information is optional.
+            ;
         } else {
             if (!PhoneNumber.isValid(phone)) {
                 errors.rejectValue("user.phone", "phone.bad-format");

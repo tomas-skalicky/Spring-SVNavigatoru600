@@ -1,8 +1,8 @@
 package com.svnavigatoru600.web.eventcalendar;
 
+import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Controller;
@@ -22,8 +22,11 @@ import com.svnavigatoru600.service.util.Localization;
 import com.svnavigatoru600.viewmodel.eventcalendar.NewEvent;
 import com.svnavigatoru600.web.Configuration;
 
+/**
+ * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
+ */
 @Controller
-public class NewEventController extends NewEditEventController {
+public class NewEventController extends AbstractNewEditEventController {
 
     private static final String REQUEST_MAPPING_BASE_URL = NewEventController.BASE_URL + "novy/";
     /**
@@ -34,7 +37,7 @@ public class NewEventController extends NewEditEventController {
     /**
      * Constructor.
      */
-    @Autowired
+    @Inject
     public NewEventController(CalendarEventDao calendarEventDao, NewEventValidator validator,
             MessageSource messageSource) {
         super(calendarEventDao, validator, messageSource);

@@ -4,9 +4,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -18,8 +18,11 @@ import com.svnavigatoru600.service.news.NewsService;
 import com.svnavigatoru600.service.util.Localization;
 import com.svnavigatoru600.viewmodel.news.ShowAllNews;
 
+/**
+ * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
+ */
 @Controller
-public class ListNewsController extends NewsController {
+public class ListNewsController extends AbstractNewsController {
 
     private static final String REQUEST_MAPPING_BASE_URL = ListNewsController.BASE_URL;
     /**
@@ -29,7 +32,7 @@ public class ListNewsController extends NewsController {
 
     private NewNewsController newNewsController;
 
-    @Autowired
+    @Inject
     public void setNewNewsController(NewNewsController controller) {
         this.newNewsController = controller;
     }
@@ -37,7 +40,7 @@ public class ListNewsController extends NewsController {
     /**
      * Constructor.
      */
-    @Autowired
+    @Inject
     public ListNewsController(NewsService newsService, MessageSource messageSource) {
         super(newsService, messageSource);
     }

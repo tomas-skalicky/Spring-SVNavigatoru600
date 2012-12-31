@@ -4,9 +4,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -26,7 +26,7 @@ import com.svnavigatoru600.viewmodel.users.ShowAllUsers;
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
 @Controller
-public class ListUsersController extends UserController {
+public class ListUsersController extends AbstractUserController {
 
     private static final String BASE_URL = "/administrace-uzivatelu/";
     private static final String COMMAND = "showAllUsersCommand";
@@ -34,7 +34,7 @@ public class ListUsersController extends UserController {
     /**
      * Constructor.
      */
-    @Autowired
+    @Inject
     public ListUsersController(final UserDao userDao, final MessageSource messageSource) {
         super(userDao, messageSource);
     }

@@ -1,8 +1,8 @@
 package com.svnavigatoru600.web.eventcalendar;
 
+import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Controller;
@@ -16,8 +16,11 @@ import com.svnavigatoru600.domain.eventcalendar.CalendarEvent;
 import com.svnavigatoru600.repository.CalendarEventDao;
 import com.svnavigatoru600.web.Configuration;
 
+/**
+ * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
+ */
 @Controller
-public class DeleteEventController extends EventController {
+public class DeleteEventController extends AbstractEventController {
 
     private static final String REQUEST_MAPPING_BASE_URL = DeleteEventController.BASE_URL
             + "existujici/{eventId}/smazat/";
@@ -28,7 +31,7 @@ public class DeleteEventController extends EventController {
     public static final String DATABASE_ERROR_MESSAGE_CODE = "event-calendar.deletion-failed-due-to-database-error";
     private ListEventsController listController;
 
-    @Autowired
+    @Inject
     public void setListController(final ListEventsController listController) {
         this.listController = listController;
     }
@@ -36,7 +39,7 @@ public class DeleteEventController extends EventController {
     /**
      * Constructor.
      */
-    @Autowired
+    @Inject
     public DeleteEventController(final CalendarEventDao eventDao, final MessageSource messageSource) {
         super(eventDao, messageSource);
     }

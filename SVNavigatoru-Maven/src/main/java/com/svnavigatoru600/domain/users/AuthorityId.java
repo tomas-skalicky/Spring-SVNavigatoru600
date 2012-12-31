@@ -9,9 +9,6 @@ import java.io.Serializable;
  */
 public class AuthorityId implements Serializable {
 
-    /**
-	 * 
-	 */
     private static final long serialVersionUID = -3842400502191977690L;
 
     private String username;

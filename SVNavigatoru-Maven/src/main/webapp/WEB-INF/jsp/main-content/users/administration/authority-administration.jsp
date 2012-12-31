@@ -4,11 +4,11 @@
 <%@ include file="../../../include-preceding-html.jsp"%>
 
 <%@ page import="com.svnavigatoru600.viewmodel.users.AdministrateUserData"%>
-<%@ page import="com.svnavigatoru600.web.users.administration.NewEditUserController"%>
+<%@ page import="com.svnavigatoru600.web.users.administration.AbstractNewEditUserController"%>
 
 <%
-// Gets the command from the ModelMap.
-AdministrateUserData command = (AdministrateUserData) request.getAttribute(NewEditUserController.COMMAND);
+    // Gets the command from the ModelMap.
+AdministrateUserData command = (AdministrateUserData) request.getAttribute(AbstractNewEditUserController.COMMAND);
 int roleCounter = 0;
 %>
 <c:forEach items="${newAuthorities}" var="roleCheck">

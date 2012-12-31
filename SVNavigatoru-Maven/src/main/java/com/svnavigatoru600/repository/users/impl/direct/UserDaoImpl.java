@@ -5,9 +5,10 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
+import javax.inject.Inject;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.jdbc.core.simple.SimpleJdbcDaoSupport;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
@@ -33,7 +34,7 @@ public class UserDaoImpl extends SimpleJdbcDaoSupport implements UserDao {
     private static final String TABLE_NAME = PersistedClass.User.getTableName();
     protected AuthorityDao authorityDao;
 
-    @Autowired
+    @Inject
     public void setAuthorityDao(AuthorityDao authorityDao) {
         this.authorityDao = authorityDao;
     }

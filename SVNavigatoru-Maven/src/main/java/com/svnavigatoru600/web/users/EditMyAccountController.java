@@ -1,7 +1,8 @@
 package com.svnavigatoru600.web.users;
 
+import javax.inject.Inject;
+
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -21,7 +22,7 @@ import com.svnavigatoru600.service.util.Hash;
 import com.svnavigatoru600.service.util.UserUtils;
 import com.svnavigatoru600.viewmodel.users.UpdateUserData;
 import com.svnavigatoru600.web.Configuration;
-import com.svnavigatoru600.web.PrivateSectionMetaController;
+import com.svnavigatoru600.web.AbstractPrivateSectionMetaController;
 
 /**
  * The controller bound to the <i>user-account.jsp</i> and <i>user-administration.jsp</i> form. For more
@@ -30,7 +31,7 @@ import com.svnavigatoru600.web.PrivateSectionMetaController;
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
 @Controller
-public class EditMyAccountController extends PrivateSectionMetaController {
+public class EditMyAccountController extends AbstractPrivateSectionMetaController {
 
     private static final String BASE_URL = "/uzivatelsky-ucet/";
     private static final String COMMAND = "updateUserDataCommand";
@@ -42,7 +43,7 @@ public class EditMyAccountController extends PrivateSectionMetaController {
     /**
      * Constructor.
      */
-    @Autowired
+    @Inject
     public EditMyAccountController(UserDao userDao, UpdateUserDataValidator validator) {
         this.logger.debug("The UserAccountController object created.");
         this.userDao = userDao;

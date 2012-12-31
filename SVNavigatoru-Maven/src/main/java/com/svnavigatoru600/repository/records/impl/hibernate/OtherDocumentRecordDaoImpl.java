@@ -3,14 +3,15 @@ package com.svnavigatoru600.repository.records.impl.hibernate;
 import java.util.Date;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
-import com.svnavigatoru600.domain.records.DocumentRecord;
+import com.svnavigatoru600.domain.records.AbstractDocumentRecord;
 import com.svnavigatoru600.domain.records.OtherDocumentRecord;
 import com.svnavigatoru600.domain.records.OtherDocumentRecordType;
 import com.svnavigatoru600.repository.impl.PersistedClass;
@@ -28,7 +29,7 @@ public class OtherDocumentRecordDaoImpl extends HibernateDaoSupport implements O
 
     private OtherDocumentRecordTypeRelationDao typeDao;
 
-    @Autowired
+    @Inject
     public void setOtherDocumentRecordTypeRelationDao(OtherDocumentRecordTypeRelationDao typeDao) {
         this.typeDao = typeDao;
     }
@@ -102,7 +103,7 @@ public class OtherDocumentRecordDaoImpl extends HibernateDaoSupport implements O
     }
 
     @Override
-    public void delete(DocumentRecord record) {
+    public void delete(AbstractDocumentRecord record) {
         this.getHibernateTemplate().delete(record);
     }
 }

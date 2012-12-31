@@ -2,11 +2,11 @@ package com.svnavigatoru600.domain.records;
 
 import java.io.Serializable;
 
+/**
+ * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
+ */
 public class OtherDocumentRecordTypeRelationId implements Serializable {
 
-    /**
-	 * 
-	 */
     private static final long serialVersionUID = -1879445826891635320L;
 
     private int recordId;

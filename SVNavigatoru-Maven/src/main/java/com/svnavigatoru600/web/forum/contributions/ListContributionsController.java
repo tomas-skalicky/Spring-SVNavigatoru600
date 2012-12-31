@@ -4,9 +4,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -22,8 +22,11 @@ import com.svnavigatoru600.service.util.Localization;
 import com.svnavigatoru600.service.util.OrderType;
 import com.svnavigatoru600.viewmodel.forum.contributions.ShowAllContributions;
 
+/**
+ * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
+ */
 @Controller
-public class ListContributionsController extends ContributionController {
+public class ListContributionsController extends AbstractContributionController {
 
     private static final String REQUEST_MAPPING_BASE_URL = ListContributionsController.BASE_URL
             + "{threadId}/prispevky/";
@@ -36,7 +39,7 @@ public class ListContributionsController extends ContributionController {
     /**
      * Constructor.
      */
-    @Autowired
+    @Inject
     public ListContributionsController(ContributionDao contributionDao, ThreadDao threadDao,
             MessageSource messageSource) {
         super(contributionDao, messageSource);

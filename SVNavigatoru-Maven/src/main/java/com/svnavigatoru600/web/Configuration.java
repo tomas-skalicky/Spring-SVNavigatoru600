@@ -2,7 +2,7 @@ package com.svnavigatoru600.web;
 
 import org.springframework.ui.ModelMap;
 
-import com.svnavigatoru600.domain.records.DocumentRecord;
+import com.svnavigatoru600.domain.records.AbstractDocumentRecord;
 
 /**
  * This class is a set of constants which configure the whole application.
@@ -24,7 +24,7 @@ public final class Configuration {
      */
     public static final String REDIRECTION_ATTRIBUTE = "redirectTo";
     /**
-     * The directory where all files of all {@link DocumentRecord} are stored.
+     * The directory where all files of all {@link AbstractDocumentRecord} are stored.
      */
     public static final String FILE_STORAGE = "uploaded-files/";
     /**

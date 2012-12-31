@@ -6,7 +6,10 @@ import org.springframework.context.MessageSource;
 
 import com.svnavigatoru600.domain.News;
 
-public class GoToEditFormResponse extends GoToFormResponse {
+/**
+ * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
+ */
+public class GoToEditFormResponse extends AbstractGoToFormResponse {
 
     private static final String FORM_ACTION_MIDDLE = "existujici/";
     private static final String SUBMIT_BUTTON_TITLE_CODE = "edit.save-changes";

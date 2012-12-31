@@ -1,10 +1,13 @@
 package com.svnavigatoru600.web.news;
 
-import com.svnavigatoru600.viewmodel.news.NewEditNews;
+import com.svnavigatoru600.viewmodel.news.AbstractNewEditNews;
 
-public class EditNewsResponse extends NewEditNewsResponse {
+/**
+ * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
+ */
+public class EditNewsResponse extends AbstractNewEditNewsResponse {
 
-    public EditNewsResponse(NewEditNews command) {
+    public EditNewsResponse(AbstractNewEditNews command) {
         super(command);
     }
 }

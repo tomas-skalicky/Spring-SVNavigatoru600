@@ -1,8 +1,8 @@
 package com.svnavigatoru600.web.forum.threads;
 
+import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Controller;
@@ -22,8 +22,11 @@ import com.svnavigatoru600.service.forum.threads.validator.EditThreadValidator;
 import com.svnavigatoru600.viewmodel.forum.threads.EditThread;
 import com.svnavigatoru600.web.Configuration;
 
+/**
+ * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
+ */
 @Controller
-public class EditThreadController extends NewEditThreadController {
+public class EditThreadController extends AbstractNewEditThreadController {
 
     private static final String REQUEST_MAPPING_BASE_URL = EditThreadController.BASE_URL
             + "existujici/{threadId}/";
@@ -36,7 +39,7 @@ public class EditThreadController extends NewEditThreadController {
      */
     private ThreadService threadService;
 
-    @Autowired
+    @Inject
     public void setThreadService(final ThreadService threadService) {
         this.threadService = threadService;
     }
@@ -44,7 +47,7 @@ public class EditThreadController extends NewEditThreadController {
     /**
      * Constructor.
      */
-    @Autowired
+    @Inject
     public EditThreadController(final ThreadDao threadDao, final EditThreadValidator validator,
             final MessageSource messageSource) {
         super(threadDao, validator, messageSource);

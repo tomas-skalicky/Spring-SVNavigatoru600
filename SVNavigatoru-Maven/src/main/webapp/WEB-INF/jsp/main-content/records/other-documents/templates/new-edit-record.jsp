@@ -7,7 +7,7 @@
 <%@ include file="../../../../include-preceding-html.jsp"%>
 
 <%@ page import="com.svnavigatoru600.viewmodel.records.otherdocuments.NewEditRecord"%>
-<%@ page import="com.svnavigatoru600.web.records.otherdocuments.NewEditDocumentController"%>
+<%@ page import="com.svnavigatoru600.web.records.otherdocuments.AbstractNewEditDocumentController"%>
 
 <form:form action="IS_FILLED_BY_JAVASCRIPT" commandName="newEditRecordCommand" method="POST"
 	enctype="multipart/form-data">
@@ -43,19 +43,21 @@
 			<td>
 				<ul>
 					<%
-					// Gets the command from the ModelMap.
-					NewEditRecord command = (NewEditRecord) request.getAttribute(NewEditDocumentController.COMMAND);
-					int typeCounter = 0;
+					    // Gets the command from the ModelMap.
+										NewEditRecord command = (NewEditRecord) request.getAttribute(AbstractNewEditDocumentController.COMMAND);
+										int typeCounter = 0;
 					%>
 					<c:forEach items="${newEditRecordCommand.newTypes}" var="typeCheck">
 						<%
-						String checkboxId = command.getTypeCheckboxId().get(typeCounter);
-						String checkboxTitle = command.getLocalizedTypeCheckboxTitles().get(typeCounter);
+						    String checkboxId = command.getTypeCheckboxId().get(typeCounter);
+												String checkboxTitle = command.getLocalizedTypeCheckboxTitles().get(typeCounter);
 						%>
 						<li><input type="checkbox" id="<%=checkboxId%>" name="<%=checkboxId%>" class="checkbox"
 							<c:if test="${typeCheck == true}">checked="checked"</c:if> /> <label for="<%=checkboxId%>"><%=checkboxTitle%></label>
 						</li>
-						<% ++typeCounter; %>
+						<%
+						    ++typeCounter;
+						%>
 					</c:forEach>
 				</ul></td>
 		</tr>

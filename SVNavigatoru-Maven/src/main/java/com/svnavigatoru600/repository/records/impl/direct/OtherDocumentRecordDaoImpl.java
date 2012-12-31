@@ -7,12 +7,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.inject.Inject;
+
 import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.jdbc.core.simple.SimpleJdbcDaoSupport;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 
-import com.svnavigatoru600.domain.records.DocumentRecord;
+import com.svnavigatoru600.domain.records.AbstractDocumentRecord;
 import com.svnavigatoru600.domain.records.OtherDocumentRecord;
 import com.svnavigatoru600.domain.records.OtherDocumentRecordType;
 import com.svnavigatoru600.domain.records.OtherDocumentRecordTypeRelation;
@@ -35,7 +36,7 @@ public class OtherDocumentRecordDaoImpl extends SimpleJdbcDaoSupport implements 
      * The SELECT command for the return of a single document together with its BLOB file.
      * 
      * Join is necessary in all SELECT queries since {@link OtherDocumentRecord} inherits from
-     * {@link DocumentRecord}.
+     * {@link AbstractDocumentRecord}.
      */
     private static final String SELECT_FROM_CLAUSE_WITH_FILE = String.format(
             "SELECT r.*, d.%s, d.%s FROM %s r INNER JOIN %s d ON d.%s = r.%s",
@@ -46,7 +47,7 @@ public class OtherDocumentRecordDaoImpl extends SimpleJdbcDaoSupport implements 
      * The SELECT command for the return of a single or multiple documents without their BLOB files.
      * 
      * Join is necessary in all SELECT queries since {@link OtherDocumentRecord} inherits from
-     * {@link DocumentRecord}.
+     * {@link AbstractDocumentRecord}.
      */
     private static final String SELECT_FROM_CLAUSE_WITHOUT_FILE = String.format(
             "SELECT r.*, d.%s FROM %s r INNER JOIN %s d ON d.%s = r.%s",
@@ -57,7 +58,7 @@ public class OtherDocumentRecordDaoImpl extends SimpleJdbcDaoSupport implements 
     private DocumentRecordDaoImpl documentRecordDao = new DocumentRecordDaoImpl();
     private OtherDocumentRecordTypeRelationDao typeDao;
 
-    @Autowired
+    @Inject
     public void setOtherDocumentRecordTypeRelationDao(OtherDocumentRecordTypeRelationDao typeDao) {
         this.typeDao = typeDao;
     }
@@ -223,7 +224,7 @@ public class OtherDocumentRecordDaoImpl extends SimpleJdbcDaoSupport implements 
     }
 
     @Override
-    public void delete(DocumentRecord record) {
+    public void delete(AbstractDocumentRecord record) {
         // The 'ON DELETE CASCADE' clause is used.
         this.documentRecordDao.delete(record, this.getDataSource());
     }

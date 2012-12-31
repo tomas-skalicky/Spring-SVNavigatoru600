@@ -2,7 +2,8 @@ package com.svnavigatoru600.service.eventcalendar;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.inject.Inject;
+
 import org.springframework.stereotype.Service;
 
 import com.svnavigatoru600.domain.eventcalendar.CalendarEvent;
@@ -25,7 +26,7 @@ public class CalendarEventService {
     /**
      * Constructor.
      */
-    @Autowired
+    @Inject
     public CalendarEventService(CalendarEventDao calendarEventDao) {
         this.eventDao = calendarEventDao;
     }

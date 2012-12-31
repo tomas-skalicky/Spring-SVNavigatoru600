@@ -8,11 +8,11 @@ import org.springframework.format.annotation.DateTimeFormat;
 import com.svnavigatoru600.domain.users.User;
 import com.svnavigatoru600.repository.forum.ContributionDao;
 
+/**
+ * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
+ */
 public class Contribution implements Serializable {
 
-    /**
-	 * 
-	 */
     private static final long serialVersionUID = 6558138282365185827L;
 
     @SuppressWarnings("unused")

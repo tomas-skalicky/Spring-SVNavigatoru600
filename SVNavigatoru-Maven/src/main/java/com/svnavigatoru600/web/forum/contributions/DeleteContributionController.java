@@ -1,8 +1,8 @@
 package com.svnavigatoru600.web.forum.contributions;
 
+import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Controller;
@@ -17,8 +17,11 @@ import com.svnavigatoru600.repository.forum.ContributionDao;
 import com.svnavigatoru600.service.forum.contributions.ContributionService;
 import com.svnavigatoru600.web.Configuration;
 
+/**
+ * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
+ */
 @Controller
-public class DeleteContributionController extends ContributionController {
+public class DeleteContributionController extends AbstractContributionController {
 
     private static final String REQUEST_MAPPING_BASE_URL = DeleteContributionController.BASE_URL
             + "{threadId}/prispevky/existujici/{contributionId}/smazat/";
@@ -29,12 +32,12 @@ public class DeleteContributionController extends ContributionController {
     private ContributionService contributionService;
     private ListContributionsController listController;
 
-    @Autowired
+    @Inject
     public void setContributionService(final ContributionService contributionService) {
         this.contributionService = contributionService;
     }
 
-    @Autowired
+    @Inject
     public void setListController(final ListContributionsController listController) {
         this.listController = listController;
     }
@@ -42,7 +45,7 @@ public class DeleteContributionController extends ContributionController {
     /**
      * Constructor.
      */
-    @Autowired
+    @Inject
     public DeleteContributionController(final ContributionDao contributionDao,
             final MessageSource messageSource) {
         super(contributionDao, messageSource);

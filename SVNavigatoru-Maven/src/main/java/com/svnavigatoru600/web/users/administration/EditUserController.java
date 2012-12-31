@@ -2,10 +2,10 @@ package com.svnavigatoru600.web.users.administration;
 
 import java.util.Set;
 
+import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.dao.DataAccessException;
 import org.springframework.security.core.GrantedAuthority;
@@ -38,14 +38,14 @@ import com.svnavigatoru600.web.Configuration;
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
 @Controller
-public class EditUserController extends NewEditUserController {
+public class EditUserController extends AbstractNewEditUserController {
 
     private static final String BASE_URL = "/administrace-uzivatelu/existujici/";
 
     /**
      * Constructor.
      */
-    @Autowired
+    @Inject
     public EditUserController(UserDao userDao, AdministrateUserDataValidator validator,
             MessageSource messageSource) {
         super(userDao, validator, messageSource);
