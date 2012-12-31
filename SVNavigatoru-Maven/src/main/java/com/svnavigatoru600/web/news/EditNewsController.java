@@ -64,17 +64,13 @@ public class EditNewsController extends NewEditNewsController {
             return response;
         }
 
-        // Updates the original data.
         News originalNews = this.newsService.findById(newsId);
         News newNews = command.getNews();
-        originalNews.setTitle(newNews.getTitle());
-        originalNews.setText(newNews.getText());
         // Sets up because of the comparison of the creationTime and lastSaveTime in AJAX.
         command.setNews(originalNews);
 
         try {
-            // Updates the news in the repository.
-            this.newsService.update(originalNews);
+            this.newsService.update(originalNews, newNews);
 
             // Clears the command object from the session.
             status.setComplete();

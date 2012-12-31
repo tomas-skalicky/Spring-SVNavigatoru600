@@ -49,13 +49,22 @@ public class NewsService {
     }
 
     /**
-     * Updates the given {@link News news} in the repository. The old version of the news should be already
-     * stored there.
+     * Updates properties of the given <code>newsToUpdate</code> and persists this {@link News} into the
+     * repository. The old version of this news should already be stored there.
+     * 
+     * @param newsToUpdate
+     *            The persisted {@link News}
+     * @param newNews
+     *            The {@link News} which contains new values of properties of <code>newsToUpdate</code>. These
+     *            values are copied to the persisted news.
      */
-    public void update(News news) {
+    public void update(News newsToUpdate, News newNews) {
+        newsToUpdate.setTitle(newNews.getTitle());
+        newsToUpdate.setText(newNews.getText());
+
         Date now = new Date();
-        news.setLastSaveTime(now);
-        this.newsDao.update(news);
+        newsToUpdate.setLastSaveTime(now);
+        this.newsDao.update(newsToUpdate);
     }
 
     /**
