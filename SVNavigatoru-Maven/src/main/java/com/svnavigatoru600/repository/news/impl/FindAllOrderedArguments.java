@@ -8,7 +8,7 @@ import com.svnavigatoru600.service.util.OrderType;
  * 
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
-public class FindOrderedArguments {
+public class FindAllOrderedArguments {
 
     /**
      * The field of the {@link com.svnavigatoru600.domain.News News} class according which the result records
@@ -20,7 +20,7 @@ public class FindOrderedArguments {
      */
     private final OrderType sortDirection;
 
-    public FindOrderedArguments(NewsField sortField, OrderType sortDirection) {
+    public FindAllOrderedArguments(NewsField sortField, OrderType sortDirection) {
         this.sortField = sortField;
         this.sortDirection = sortDirection;
     }

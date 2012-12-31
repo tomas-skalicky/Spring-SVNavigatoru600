@@ -13,7 +13,7 @@ import org.junit.experimental.categories.Category;
 import org.springframework.dao.EmptyResultDataAccessException;
 
 import com.svnavigatoru600.domain.News;
-import com.svnavigatoru600.repository.news.impl.FindOrderedArguments;
+import com.svnavigatoru600.repository.news.impl.FindAllOrderedArguments;
 import com.svnavigatoru600.repository.news.impl.NewsField;
 import com.svnavigatoru600.service.util.OrderType;
 import com.svnavigatoru600.test.category.PersistenceTests;
@@ -128,7 +128,7 @@ public class NewsTest extends AbstractMapperTest {
 
             // SELECT ALL
             final int secondNewsId = this.createTestNews(NEWS_TITLE, NEWS_TEXT, newsDao, sqlSession);
-            List<News> foundNews = newsDao.findOrdered(new FindOrderedArguments(NewsField.creationTime,
+            List<News> foundNews = newsDao.findAllOrdered(new FindAllOrderedArguments(NewsField.creationTime,
                     OrderType.ASCENDING));
             news = foundNews.get(foundNews.size() - 2);
             Assert.assertEquals(newsId, news.getId());

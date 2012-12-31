@@ -7,7 +7,7 @@ import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import com.svnavigatoru600.domain.News;
 import com.svnavigatoru600.repository.NewsDao;
 import com.svnavigatoru600.repository.impl.PersistedClass;
-import com.svnavigatoru600.repository.news.impl.FindOrderedArguments;
+import com.svnavigatoru600.repository.news.impl.FindAllOrderedArguments;
 
 /**
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
@@ -21,7 +21,7 @@ public class NewsDaoImpl extends HibernateDaoSupport implements NewsDao {
 
     @Override
     @SuppressWarnings("unchecked")
-    public List<News> findOrdered(FindOrderedArguments arguments) {
+    public List<News> findAllOrdered(FindAllOrderedArguments arguments) {
         String query = String.format("FROM %s n ORDER BY %s %s", PersistedClass.News.name(), arguments
                 .getSortField().name(), arguments.getSortDirection().getDatabaseCode());
         return (List<News>) this.getHibernateTemplate().find(query);
