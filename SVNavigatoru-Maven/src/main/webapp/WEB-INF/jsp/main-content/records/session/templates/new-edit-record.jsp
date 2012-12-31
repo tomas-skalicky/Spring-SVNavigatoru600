@@ -56,7 +56,7 @@
 		<tr>
 			<td></td>
 			<td><input type="submit" value="<spring:message code="${buttonTittle}" />"
-				onclick="setFormAction('<%=NewEditRecordController.COMMAND%>', '<c:url value='${successUrl}' />')" /></td>
+				onclick="setFormAction('<%=AbstractNewEditRecordController.COMMAND%>', '<c:url value='${successUrl}' />')" /></td>
 		</tr>
 	</table>
 

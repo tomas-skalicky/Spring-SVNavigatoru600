@@ -53,7 +53,7 @@
 			</td>
 			<c:set var="successUrl" value="/kalendar-akci/${successUrlEnd}" />
 			<td><input type="submit" value="<spring:message code="${buttonTittle}" />"
-				onclick="setFormAction('<%=NewEditEventController.COMMAND%>', '<c:url value='${successUrl}' />')" /></td>
+				onclick="setFormAction('<%=AbstractNewEditEventController.COMMAND%>', '<c:url value='${successUrl}' />')" /></td>
 		</tr>
 	</table>
 

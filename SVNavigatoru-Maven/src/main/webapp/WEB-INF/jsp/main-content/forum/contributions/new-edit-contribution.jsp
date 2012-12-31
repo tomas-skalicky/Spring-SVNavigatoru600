@@ -30,7 +30,7 @@
 			<td></td>
 			<td><c:set var="successUrl" value="${baseUrl}${successUrlEnd}" /> <input type="submit"
 				value="<spring:message code="${buttonTittle}" />"
-				onclick="setFormAction('<%=NewEditContributionController.COMMAND%>', '<c:url value='${successUrl}' />')" /></td>
+				onclick="setFormAction('<%=AbstractNewEditContributionController.COMMAND%>', '<c:url value='${successUrl}' />')" /></td>
 		</tr>
 	</table>
 
