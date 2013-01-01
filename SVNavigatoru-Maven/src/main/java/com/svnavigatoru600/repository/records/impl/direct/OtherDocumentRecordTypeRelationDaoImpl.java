@@ -20,6 +20,10 @@ import com.svnavigatoru600.repository.records.impl.OtherDocumentRecordTypeRelati
 public class OtherDocumentRecordTypeRelationDaoImpl extends SimpleJdbcDaoSupport implements
         OtherDocumentRecordTypeRelationDao {
 
+    /**
+     * Database table which provides a persistence of {@link OtherDocumentRecordTypeRelation
+     * OtherDocumentRecordTypeRelations}.
+     */
     private static final String TABLE_NAME = PersistedClass.OtherDocumentRecordTypeRelation.getTableName();
 
     @Override

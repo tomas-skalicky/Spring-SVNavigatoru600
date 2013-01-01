@@ -15,6 +15,9 @@ import com.svnavigatoru600.repository.wysiwyg.impl.WysiwygSectionField;
  */
 public class WysiwygSectionDaoImpl extends SimpleJdbcDaoSupport implements WysiwygSectionDao {
 
+    /**
+     * Database table which provides a persistence of {@link WysiwygSection WysiwygSections}.
+     */
     private static final String TABLE_NAME = PersistedClass.WysiwygSection.getTableName();
 
     @Override

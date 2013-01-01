@@ -24,6 +24,9 @@ import com.svnavigatoru600.service.util.OrderType;
  */
 public class ContributionDaoImpl extends SimpleJdbcDaoSupport implements ContributionDao {
 
+    /**
+     * Database table which provides a persistence of {@link Contribution Contributions}.
+     */
     private static final String TABLE_NAME = PersistedClass.Contribution.getTableName();
     protected ThreadDao threadDao;
     protected UserDao userDao;

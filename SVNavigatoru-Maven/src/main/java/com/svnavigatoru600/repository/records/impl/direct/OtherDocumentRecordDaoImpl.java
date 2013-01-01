@@ -30,6 +30,9 @@ import com.svnavigatoru600.service.util.OrderType;
  */
 public class OtherDocumentRecordDaoImpl extends SimpleJdbcDaoSupport implements OtherDocumentRecordDao {
 
+    /**
+     * Database table which provides a persistence of {@link OtherDocumentRecord OtherDocumentRecords}.
+     */
     private static final String TABLE_NAME = PersistedClass.OtherDocumentRecord.getTableName();
 
     /**
