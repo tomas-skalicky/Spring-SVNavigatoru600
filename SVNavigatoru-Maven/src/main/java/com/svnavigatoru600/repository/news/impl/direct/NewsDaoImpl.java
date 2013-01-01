@@ -18,6 +18,9 @@ import com.svnavigatoru600.repository.news.impl.NewsField;
  */
 public class NewsDaoImpl extends SimpleJdbcDaoSupport implements NewsDao {
 
+    /**
+     * Database table which provides a persistence of {@link News}.
+     */
     private static final String TABLE_NAME = PersistedClass.News.getTableName();
 
     @Override
