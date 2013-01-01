@@ -12,10 +12,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import com.svnavigatoru600.domain.eventcalendar.CalendarEvent;
 import com.svnavigatoru600.domain.forum.Contribution;
 import com.svnavigatoru600.domain.users.User;
-import com.svnavigatoru600.repository.CalendarEventDao;
 import com.svnavigatoru600.repository.forum.ContributionDao;
 import com.svnavigatoru600.repository.forum.impl.ContributionField;
-import com.svnavigatoru600.service.util.DateUtils;
+import com.svnavigatoru600.service.eventcalendar.CalendarEventService;
 import com.svnavigatoru600.service.util.OrderType;
 import com.svnavigatoru600.service.util.UserUtils;
 import com.svnavigatoru600.viewmodel.eventcalendar.EventWrapper;
@@ -39,12 +38,12 @@ public abstract class AbstractPrivateSectionMetaController extends AbstractMetaC
      */
     private static final int LAST_SAVED_CONTRIBUTION_COUNT = 2;
 
-    private CalendarEventDao eventDao;
+    private CalendarEventService eventService;
     private ContributionDao contributionDao;
 
     @Inject
-    public void setCalendarEventDao(CalendarEventDao eventDao) {
-        this.eventDao = eventDao;
+    public void setCalendarEventService(CalendarEventService eventService) {
+        this.eventService = eventService;
     }
 
     @Inject
@@ -60,8 +59,7 @@ public abstract class AbstractPrivateSectionMetaController extends AbstractMetaC
     @ModelAttribute("futureEvents")
     public List<EventWrapper> populateFutureEvents(HttpServletRequest request) {
 
-        List<CalendarEvent> events = this.eventDao.findAllFutureEventsOrdered(DateUtils.getToday(),
-                OrderType.ASCENDING);
+        List<CalendarEvent> events = this.eventService.findAllFutureEventsOrdered();
 
         List<EventWrapper> futureEvents = new ArrayList<EventWrapper>(FUTURE_EVENT_COUNT);
         for (int eventNum = 0, eventCount = events.size(); (eventNum < FUTURE_EVENT_COUNT)

@@ -14,10 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.svnavigatoru600.domain.eventcalendar.CalendarEvent;
-import com.svnavigatoru600.repository.CalendarEventDao;
-import com.svnavigatoru600.service.util.DateUtils;
+import com.svnavigatoru600.service.eventcalendar.CalendarEventService;
 import com.svnavigatoru600.service.util.Localization;
-import com.svnavigatoru600.service.util.OrderType;
 import com.svnavigatoru600.viewmodel.eventcalendar.ShowAllEvents;
 
 /**
@@ -36,8 +34,8 @@ public class ListEventsController extends AbstractEventController {
      * Constructor.
      */
     @Inject
-    public ListEventsController(CalendarEventDao eventDao, MessageSource messageSource) {
-        super(eventDao, messageSource);
+    public ListEventsController(CalendarEventService eventService, MessageSource messageSource) {
+        super(eventService, messageSource);
     }
 
     @RequestMapping(value = ListEventsController.REQUEST_MAPPING_BASE_URL, method = RequestMethod.GET)
@@ -45,8 +43,7 @@ public class ListEventsController extends AbstractEventController {
 
         ShowAllEvents command = new ShowAllEvents();
 
-        List<CalendarEvent> events = this.eventDao.findAllFutureEventsOrdered(DateUtils.getToday(),
-                OrderType.ASCENDING);
+        List<CalendarEvent> events = this.eventService.findAllFutureEventsOrdered();
         command.setEvents(events);
 
         // Sets up all auxiliary (but necessary) maps.
