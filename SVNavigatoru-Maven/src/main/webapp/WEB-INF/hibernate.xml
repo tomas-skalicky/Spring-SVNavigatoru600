@@ -27,7 +27,7 @@
 				<value>hibernate-mappings/WysiwygSection.hbm.xml</value>
 				<value>hibernate-mappings/forum/Contribution.hbm.xml</value>
 				<value>hibernate-mappings/forum/Thread.hbm.xml</value>
-				<value>hibernate-mappings/records/DocumentRecord.hbm.xml</value>
+				<value>hibernate-mappings/records/AbstractDocumentRecord.hbm.xml</value>
 				<value>hibernate-mappings/records/OtherDocumentRecordType.hbm.xml</value>
 				<value>hibernate-mappings/users/Authority.hbm.xml</value>
 				<value>hibernate-mappings/users/User.hbm.xml</value>

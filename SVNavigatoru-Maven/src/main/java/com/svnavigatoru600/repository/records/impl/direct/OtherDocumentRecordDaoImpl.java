@@ -44,7 +44,7 @@ public class OtherDocumentRecordDaoImpl extends SimpleJdbcDaoSupport implements 
     private static final String SELECT_FROM_CLAUSE_WITH_FILE = String.format(
             "SELECT r.*, d.%s, d.%s FROM %s r INNER JOIN %s d ON d.%s = r.%s",
             DocumentRecordField.fileName.getColumnName(), DocumentRecordField.file.getColumnName(),
-            OtherDocumentRecordDaoImpl.TABLE_NAME, PersistedClass.DocumentRecord.getTableName(),
+            OtherDocumentRecordDaoImpl.TABLE_NAME, PersistedClass.AbstractDocumentRecord.getTableName(),
             DocumentRecordField.id.getColumnName(), OtherDocumentRecordField.id.getColumnName());
     /**
      * The SELECT command for the return of a single or multiple documents without their BLOB files.
@@ -55,7 +55,7 @@ public class OtherDocumentRecordDaoImpl extends SimpleJdbcDaoSupport implements 
     private static final String SELECT_FROM_CLAUSE_WITHOUT_FILE = String.format(
             "SELECT r.*, d.%s FROM %s r INNER JOIN %s d ON d.%s = r.%s",
             DocumentRecordField.fileName.getColumnName(), OtherDocumentRecordDaoImpl.TABLE_NAME,
-            PersistedClass.DocumentRecord.getTableName(), DocumentRecordField.id.getColumnName(),
+            PersistedClass.AbstractDocumentRecord.getTableName(), DocumentRecordField.id.getColumnName(),
             OtherDocumentRecordField.id.getColumnName());
 
     private DocumentRecordDaoImpl documentRecordDao = new DocumentRecordDaoImpl();
