@@ -24,6 +24,9 @@ import com.svnavigatoru600.service.util.OrderType;
  */
 public class CalendarEventDaoImpl extends NamedParameterJdbcDaoSupport implements CalendarEventDao {
 
+    /**
+     * Database table which provides a persistence of {@link CalendarEvent CalendarEvents}.
+     */
     private static final String TABLE_NAME = PersistedClass.CalendarEvent.getTableName();
 
     @Override
