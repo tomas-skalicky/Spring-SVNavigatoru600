@@ -12,8 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.svnavigatoru600.domain.eventcalendar.CalendarEvent;
-import com.svnavigatoru600.repository.CalendarEventDao;
+import com.svnavigatoru600.service.eventcalendar.CalendarEventService;
 import com.svnavigatoru600.web.Configuration;
 
 /**
@@ -40,17 +39,15 @@ public class DeleteEventController extends AbstractEventController {
      * Constructor.
      */
     @Inject
-    public DeleteEventController(final CalendarEventDao eventDao, final MessageSource messageSource) {
-        super(eventDao, messageSource);
+    public DeleteEventController(final CalendarEventService eventService, final MessageSource messageSource) {
+        super(eventService, messageSource);
     }
 
     @RequestMapping(value = DeleteEventController.REQUEST_MAPPING_BASE_URL, method = RequestMethod.GET)
     @Transactional
     public String delete(@PathVariable int eventId, final HttpServletRequest request, final ModelMap model) {
         try {
-            // Deletes the event from the repository.
-            final CalendarEvent event = this.eventDao.findById(eventId);
-            this.eventDao.delete(event);
+            this.eventService.delete(eventId);
 
             // Returns the form success view.
             model.addAttribute(Configuration.REDIRECTION_ATTRIBUTE,

@@ -16,7 +16,7 @@ import org.springframework.web.bind.support.SessionStatus;
 
 import com.svnavigatoru600.domain.eventcalendar.CalendarEvent;
 import com.svnavigatoru600.domain.eventcalendar.PriorityType;
-import com.svnavigatoru600.repository.CalendarEventDao;
+import com.svnavigatoru600.service.eventcalendar.CalendarEventService;
 import com.svnavigatoru600.service.eventcalendar.validator.NewEventValidator;
 import com.svnavigatoru600.service.util.Localization;
 import com.svnavigatoru600.viewmodel.eventcalendar.NewEvent;
@@ -38,9 +38,9 @@ public class NewEventController extends AbstractNewEditEventController {
      * Constructor.
      */
     @Inject
-    public NewEventController(CalendarEventDao calendarEventDao, NewEventValidator validator,
+    public NewEventController(CalendarEventService eventService, NewEventValidator validator,
             MessageSource messageSource) {
-        super(calendarEventDao, validator, messageSource);
+        super(eventService, validator, messageSource);
     }
 
     /**
@@ -84,7 +84,7 @@ public class NewEventController extends AbstractNewEditEventController {
 
         try {
             // Saves the event to the repository.
-            this.eventDao.save(newEvent);
+            this.eventService.save(newEvent);
 
             // Clears the command object from the session.
             status.setComplete();

@@ -9,13 +9,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 
-import com.svnavigatoru600.domain.eventcalendar.CalendarEvent;
-import com.svnavigatoru600.repository.CalendarEventDao;
+import com.svnavigatoru600.service.eventcalendar.CalendarEventService;
 import com.svnavigatoru600.service.util.DateUtils;
 import com.svnavigatoru600.web.AbstractPrivateSectionMetaController;
 
 /**
- * Parent of all controllers which handle all operations upon the {@link CalendarEvent}s.
+ * Parent of all controllers which handle all operations upon the
+ * {@link com.svnavigatoru600.domain.eventcalendar.CalendarEvent CalendarEvents}.
  * 
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
@@ -23,11 +23,11 @@ import com.svnavigatoru600.web.AbstractPrivateSectionMetaController;
 public abstract class AbstractEventController extends AbstractPrivateSectionMetaController {
 
     protected static final String BASE_URL = "/kalendar-akci/";
-    protected CalendarEventDao eventDao;
+    protected CalendarEventService eventService;
     protected MessageSource messageSource;
 
-    public AbstractEventController(CalendarEventDao eventDao, MessageSource messageSource) {
-        this.eventDao = eventDao;
+    public AbstractEventController(CalendarEventService eventService, MessageSource messageSource) {
+        this.eventService = eventService;
         this.messageSource = messageSource;
     }
 

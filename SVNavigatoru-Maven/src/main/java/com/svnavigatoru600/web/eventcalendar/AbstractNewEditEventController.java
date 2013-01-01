@@ -10,14 +10,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.Validator;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
-import com.svnavigatoru600.domain.eventcalendar.CalendarEvent;
 import com.svnavigatoru600.domain.eventcalendar.PriorityType;
-import com.svnavigatoru600.repository.CalendarEventDao;
+import com.svnavigatoru600.service.eventcalendar.CalendarEventService;
 import com.svnavigatoru600.service.eventcalendar.validator.AbstractEventValidator;
 import com.svnavigatoru600.service.util.Localization;
 
 /**
- * Parent of controllers which create and edit the {@link CalendarEvent}s.
+ * Parent of controllers which create and edit the
+ * {@link com.svnavigatoru600.domain.eventcalendar.CalendarEvent CalendarEvents}.
  * 
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
@@ -30,9 +30,9 @@ public abstract class AbstractNewEditEventController extends AbstractEventContro
     public static final String COMMAND = "newEditEventCommand";
     protected Validator validator;
 
-    public AbstractNewEditEventController(final CalendarEventDao eventDao,
+    public AbstractNewEditEventController(final CalendarEventService eventService,
             final AbstractEventValidator validator, final MessageSource messageSource) {
-        super(eventDao, messageSource);
+        super(eventService, messageSource);
         this.validator = validator;
     }
 

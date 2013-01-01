@@ -17,7 +17,7 @@ import org.springframework.web.bind.support.SessionStatus;
 
 import com.svnavigatoru600.domain.eventcalendar.CalendarEvent;
 import com.svnavigatoru600.domain.eventcalendar.PriorityType;
-import com.svnavigatoru600.repository.CalendarEventDao;
+import com.svnavigatoru600.service.eventcalendar.CalendarEventService;
 import com.svnavigatoru600.service.eventcalendar.validator.EditEventValidator;
 import com.svnavigatoru600.service.util.Localization;
 import com.svnavigatoru600.viewmodel.eventcalendar.EditEvent;
@@ -40,9 +40,9 @@ public class EditEventController extends AbstractNewEditEventController {
      * Constructor.
      */
     @Inject
-    public EditEventController(CalendarEventDao eventDao, EditEventValidator validator,
+    public EditEventController(CalendarEventService eventService, EditEventValidator validator,
             MessageSource messageSource) {
-        super(eventDao, validator, messageSource);
+        super(eventService, validator, messageSource);
     }
 
     @RequestMapping(value = EditEventController.REQUEST_MAPPING_BASE_URL, method = RequestMethod.GET)
@@ -50,7 +50,7 @@ public class EditEventController extends AbstractNewEditEventController {
 
         EditEvent command = new EditEvent();
 
-        CalendarEvent calendarEvent = this.eventDao.findById(eventId);
+        CalendarEvent calendarEvent = this.eventService.findById(eventId);
         command.setEvent(calendarEvent);
 
         command.setNewPriority(Localization.findLocaleMessage(this.messageSource, request, calendarEvent
@@ -78,18 +78,13 @@ public class EditEventController extends AbstractNewEditEventController {
             return PageViews.EDIT.getViewName();
         }
 
-        // Updates the original data.
-        final CalendarEvent originalEvent = this.eventDao.findById(eventId);
-        final CalendarEvent newEvent = command.getEvent();
-        originalEvent.setName(newEvent.getName());
-        originalEvent.setDate(newEvent.getDate());
-        originalEvent.setDescription(newEvent.getDescription());
-        originalEvent.setPriority(PriorityType.valueOfAccordingLocalization(command.getNewPriority(),
-                this.messageSource, request));
+        CalendarEvent originalEvent = this.eventService.findById(eventId);
+        CalendarEvent newEvent = command.getEvent();
+        PriorityType newPriority = PriorityType.valueOfAccordingLocalization(command.getNewPriority(),
+                this.messageSource, request);
 
         try {
-            // Updates the event in the repository.
-            this.eventDao.update(originalEvent);
+            this.eventService.update(originalEvent, newEvent, newPriority);
 
             // Clears the command object from the session.
             status.setComplete();
