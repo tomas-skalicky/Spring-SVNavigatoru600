@@ -9,7 +9,7 @@ import java.util.Map;
 import java.util.TimeZone;
 
 /**
- * Provides a set of static functions related to {@link Date}s.
+ * Provides a set of static functions related to {@link Date Dates}.
  * 
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
