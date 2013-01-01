@@ -20,6 +20,9 @@ import com.svnavigatoru600.repository.users.impl.AuthorityField;
  */
 public class AuthorityDaoImpl extends SimpleJdbcDaoSupport implements AuthorityDao {
 
+    /**
+     * Database table which provides a persistence of {@link Authority Authorities}.
+     */
     private static final String TABLE_NAME = PersistedClass.Authority.getTableName();
 
     @Override

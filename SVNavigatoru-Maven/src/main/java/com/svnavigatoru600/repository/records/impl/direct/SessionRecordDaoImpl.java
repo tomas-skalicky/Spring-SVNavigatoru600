@@ -21,6 +21,9 @@ import com.svnavigatoru600.service.util.OrderType;
  */
 public class SessionRecordDaoImpl extends SimpleJdbcDaoSupport implements SessionRecordDao {
 
+    /**
+     * Database table which provides a persistence of {@link SessionRecord SessionRecords}.
+     */
     private static final String TABLE_NAME = PersistedClass.SessionRecord.getTableName();
 
     /**

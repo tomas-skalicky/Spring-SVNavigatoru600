@@ -24,6 +24,9 @@ import com.svnavigatoru600.repository.users.impl.direct.UserDaoImpl;
  */
 public class ThreadDaoImpl extends SimpleJdbcDaoSupport implements ThreadDao {
 
+    /**
+     * Database table which provides a persistence of {@link Thread Threads}.
+     */
     private static final String TABLE_NAME = PersistedClass.Thread.getTableName();
     protected ContributionDao contributionDao;
     protected UserDao userDao;
