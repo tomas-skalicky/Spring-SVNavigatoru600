@@ -35,7 +35,7 @@ public class SessionRecordDaoImpl extends SimpleJdbcDaoSupport implements Sessio
     private static final String SELECT_FROM_CLAUSE_WITH_FILE = String.format(
             "SELECT r.*, d.%s, d.%s FROM %s r INNER JOIN %s d ON d.%s = r.%s",
             DocumentRecordField.fileName.getColumnName(), DocumentRecordField.file.getColumnName(),
-            SessionRecordDaoImpl.TABLE_NAME, PersistedClass.DocumentRecord.getTableName(),
+            SessionRecordDaoImpl.TABLE_NAME, PersistedClass.AbstractDocumentRecord.getTableName(),
             DocumentRecordField.id.getColumnName(), SessionRecordField.id.getColumnName());
     /**
      * The SELECT command for the return of a single or multiple documents without their BLOB files.
@@ -47,7 +47,7 @@ public class SessionRecordDaoImpl extends SimpleJdbcDaoSupport implements Sessio
     private static final String SELECT_FROM_CLAUSE_WITHOUT_FILE = String.format(
             "SELECT r.*, d.%s FROM %s r INNER JOIN %s d ON d.%s = r.%s",
             DocumentRecordField.fileName.getColumnName(), SessionRecordDaoImpl.TABLE_NAME,
-            PersistedClass.DocumentRecord.getTableName(), DocumentRecordField.id.getColumnName(),
+            PersistedClass.AbstractDocumentRecord.getTableName(), DocumentRecordField.id.getColumnName(),
             SessionRecordField.id.getColumnName());
 
     private DocumentRecordDaoImpl documentRecordDao = new DocumentRecordDaoImpl();

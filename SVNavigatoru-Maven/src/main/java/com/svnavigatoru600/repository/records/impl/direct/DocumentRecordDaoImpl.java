@@ -19,7 +19,10 @@ import com.svnavigatoru600.repository.records.impl.DocumentRecordField;
  */
 public class DocumentRecordDaoImpl extends SimpleJdbcDaoSupport {
 
-    private static final String TABLE_NAME = PersistedClass.DocumentRecord.getTableName();
+    /**
+     * Database table which provides a persistence of {@link AbstractDocumentRecord AbstractDocumentRecords}.
+     */
+    private static final String TABLE_NAME = PersistedClass.AbstractDocumentRecord.getTableName();
 
     public void update(AbstractDocumentRecord record, DataSource dataSource) {
         Blob file = record.getFile();

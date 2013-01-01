@@ -9,7 +9,7 @@ public enum PersistedClass {
 
     News(DatabaseTable.news), WysiwygSection(DatabaseTable.wysiwyg_sections), CalendarEvent(
             DatabaseTable.calendar_events), Thread(DatabaseTable.threads), Contribution(
-            DatabaseTable.contributions), DocumentRecord(DatabaseTable.document_records), OtherDocumentRecord(
+            DatabaseTable.contributions), AbstractDocumentRecord(DatabaseTable.document_records), OtherDocumentRecord(
             DatabaseTable.other_document_records), OtherDocumentRecordTypeRelation(
             DatabaseTable.other_document_record_type_relations), SessionRecord(DatabaseTable.session_records), User(
             DatabaseTable.users), Authority(DatabaseTable.authorities);
