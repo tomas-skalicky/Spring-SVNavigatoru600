@@ -28,8 +28,8 @@ public class CalendarEventService {
      * Constructor.
      */
     @Inject
-    public CalendarEventService(CalendarEventDao calendarEventDao) {
-        this.eventDao = calendarEventDao;
+    public CalendarEventService(CalendarEventDao eventDao) {
+        this.eventDao = eventDao;
     }
 
     /**
