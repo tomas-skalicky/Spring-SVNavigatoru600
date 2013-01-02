@@ -71,8 +71,8 @@ public class Thread implements Serializable, Comparable<Thread> {
     }
 
     /**
-     * Gets the {@link Contribution} which has been saved the latest time among all {@link Contribution}s of
-     * this {@link Thread}.
+     * Gets the {@link Contribution} which has been saved the latest time among all {@link Contribution
+     * Contributions} of this {@link Thread}.
      */
     public Contribution getLastSavedContribution() {
         Contribution lastSavedContribution = null;
@@ -87,8 +87,8 @@ public class Thread implements Serializable, Comparable<Thread> {
     }
 
     /**
-     * Sorts according to the last saved {@link Contribution}s returned by the method
-     * <code>getLastSavedContribution</code>.
+     * Sorts {@link Thread Threads} according to their last saved {@link Contribution Contributions} returned
+     * by the {@link #getLastSavedContribution() getLastSavedContribution} method.
      */
     @Override
     public int compareTo(Thread t) {

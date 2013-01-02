@@ -20,7 +20,7 @@ import com.svnavigatoru600.service.util.Localization;
 import com.svnavigatoru600.web.records.AbstractPageViews;
 
 /**
- * Parent of all controllers which create and edit the {@link SessionRecord}s.
+ * Parent of all controllers which create and edit the {@link SessionRecord SessionRecords}.
  * 
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
@@ -39,7 +39,8 @@ public abstract class AbstractNewEditRecordController extends AbstractSessionRec
     protected Validator validator;
 
     /**
-     * Constructs a controller which considers all {@link SessionRecord}s of all {@link SessionRecordType}s.
+     * Constructs a controller which considers all {@link SessionRecord SessionRecords} of all
+     * {@link SessionRecordType SessionRecordTypes}.
      */
     public AbstractNewEditRecordController(String baseUrl, AbstractPageViews views,
             SessionRecordDao recordDao, AbstractSessionRecordValidator validator, MessageSource messageSource) {
@@ -48,8 +49,8 @@ public abstract class AbstractNewEditRecordController extends AbstractSessionRec
     }
 
     /**
-     * Constructs a controller which considers all {@link SessionRecord}s of the given <code>recordType</code>
-     * .
+     * Constructs a controller which considers all {@link SessionRecord SessionRecords} of the given
+     * <code>recordType</code> .
      */
     public AbstractNewEditRecordController(String baseUrl, AbstractPageViews views,
             SessionRecordType recordType, SessionRecordDao recordDao,
@@ -60,8 +61,8 @@ public abstract class AbstractNewEditRecordController extends AbstractSessionRec
 
     /**
      * <p>
-     * Creates a {@list List} of localized names of {@link SessionRecordType}s. The forms which use this
-     * controller can access the resulting list.
+     * Creates a {@list List} of localized names of {@link SessionRecordType SessionRecordTypes}. The forms
+     * which use this controller can access the resulting list.
      * </p>
      * <p>
      * This method is used for filling up the tag <em>radiobuttons</em> and the value of the selected

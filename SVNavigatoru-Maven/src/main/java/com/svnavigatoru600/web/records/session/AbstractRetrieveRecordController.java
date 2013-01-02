@@ -17,7 +17,7 @@ import com.svnavigatoru600.web.records.AbstractPageViews;
 import com.svnavigatoru600.web.records.RetrieveDocumentRecordUtils;
 
 /**
- * Parent of all controllers which provide retrieving of stored {@link SessionRecord}s.
+ * Parent of all controllers which provide retrieving of stored {@link SessionRecord SessionRecords}.
  * 
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
@@ -32,7 +32,8 @@ public abstract class AbstractRetrieveRecordController extends AbstractSessionRe
     protected final String retrieveUrl;
 
     /**
-     * Constructs a controller which considers all {@link SessionRecord}s of all {@link SessionRecordType}s.
+     * Constructs a controller which considers all {@link SessionRecord SessionRecords} of all
+     * {@link SessionRecordType SessionRecordTypes}.
      */
     public AbstractRetrieveRecordController(String baseUrl, AbstractPageViews views,
             SessionRecordDao recordDao, MessageSource messageSource) {
@@ -42,8 +43,8 @@ public abstract class AbstractRetrieveRecordController extends AbstractSessionRe
     }
 
     /**
-     * Constructs a controller which considers all {@link SessionRecord}s of the given <code>recordType</code>
-     * .
+     * Constructs a controller which considers all {@link SessionRecord SessionRecords} of the given
+     * <code>recordType</code> .
      */
     public AbstractRetrieveRecordController(String baseUrl, AbstractPageViews views,
             SessionRecordType recordType, SessionRecordDao recordDao, MessageSource messageSource) {

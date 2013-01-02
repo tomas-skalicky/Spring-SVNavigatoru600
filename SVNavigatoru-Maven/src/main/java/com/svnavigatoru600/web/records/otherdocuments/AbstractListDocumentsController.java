@@ -20,7 +20,7 @@ import com.svnavigatoru600.viewmodel.records.otherdocuments.ShowAllRecords;
 import com.svnavigatoru600.web.records.AbstractPageViews;
 
 /**
- * Parent of all controllers which list the {@link OtherDocumentRecord}s.
+ * Parent of all controllers which list the {@link OtherDocumentRecord OtherDocumentRecords}.
  * 
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
@@ -33,8 +33,8 @@ public abstract class AbstractListDocumentsController extends AbstractOtherDocum
     public static final String COMMAND = "showAllRecordsCommand";
 
     /**
-     * Constructs a controller which considers all {@link OtherDocumentRecord}s of all
-     * {@link OtherDocumentRecordType}s.
+     * Constructs a controller which considers all {@link OtherDocumentRecord OtherDocumentRecords} of all
+     * {@link OtherDocumentRecordType OtherDocumentRecordTypes}.
      */
     public AbstractListDocumentsController(String baseUrl, AbstractPageViews views,
             OtherDocumentRecordDao recordDao, MessageSource messageSource) {
@@ -42,8 +42,8 @@ public abstract class AbstractListDocumentsController extends AbstractOtherDocum
     }
 
     /**
-     * Constructs a controller which considers all {@link OtherDocumentRecord}s of the given
-     * <code>recordType</code>.
+     * Constructs a controller which considers all {@link OtherDocumentRecord OtherDocumentRecords} of the
+     * given <code>recordType</code>.
      */
     public AbstractListDocumentsController(String baseUrl, AbstractPageViews views,
             OtherDocumentRecordType recordType, OtherDocumentRecordDao recordDao, MessageSource messageSource) {

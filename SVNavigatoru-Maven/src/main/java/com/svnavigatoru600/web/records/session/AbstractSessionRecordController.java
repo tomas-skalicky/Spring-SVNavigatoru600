@@ -10,7 +10,7 @@ import com.svnavigatoru600.web.records.AbstractDocumentRecordController;
 import com.svnavigatoru600.web.records.AbstractPageViews;
 
 /**
- * Parent of all controllers which handle all operations upon the {@link SessionRecord}s.
+ * Parent of all controllers which handle all operations upon the {@link SessionRecord SessionRecords}.
  * 
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
@@ -18,7 +18,7 @@ import com.svnavigatoru600.web.records.AbstractPageViews;
 public abstract class AbstractSessionRecordController extends AbstractDocumentRecordController {
 
     /**
-     * If all {@link SessionRecord}s are considered (i.e. processed) by this controller,
+     * If all {@link SessionRecord SessionRecords} are considered (i.e. processed) by this controller,
      * <code>allRecordTypes</code> equals <code>true</code>. Otherwise, <code>allRecordTypes</code> equals
      * <code>false</code> and <code>RECORD_TYPE</code> determines the exact type of treated records.
      */
@@ -27,7 +27,8 @@ public abstract class AbstractSessionRecordController extends AbstractDocumentRe
     protected SessionRecordDao recordDao = null;
 
     /**
-     * Constructs a controller which considers all {@link SessionRecord}s of all {@link SessionRecordType}s.
+     * Constructs a controller which considers all {@link SessionRecord SessionRecords} of all
+     * {@link SessionRecordType SessionRecordTypes}.
      */
     public AbstractSessionRecordController(String baseUrl, AbstractPageViews views,
             SessionRecordDao recordDao, MessageSource messageSource) {
@@ -36,8 +37,8 @@ public abstract class AbstractSessionRecordController extends AbstractDocumentRe
     }
 
     /**
-     * Constructs a controller which considers all {@link SessionRecord}s of the given <code>recordType</code>
-     * .
+     * Constructs a controller which considers all {@link SessionRecord SessionRecords} of the given
+     * <code>recordType</code> .
      */
     public AbstractSessionRecordController(String baseUrl, AbstractPageViews views,
             SessionRecordType recordType, SessionRecordDao recordDao, MessageSource messageSource) {

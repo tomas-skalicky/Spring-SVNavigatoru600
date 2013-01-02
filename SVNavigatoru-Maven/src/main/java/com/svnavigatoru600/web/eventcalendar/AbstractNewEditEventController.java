@@ -38,8 +38,8 @@ public abstract class AbstractNewEditEventController extends AbstractEventContro
 
     /**
      * <p>
-     * Creates a {@list List} of localized names of {@link PriorityType}s. The forms which use this controller
-     * can access the resulting list.
+     * Creates a {@list List} of localized names of {@link PriorityType PriorityTypes}. The forms which use
+     * this controller can access the resulting list.
      * </p>
      * <p>
      * This method is used for filling up the tag <em>radiobuttons</em> and the value of the selected

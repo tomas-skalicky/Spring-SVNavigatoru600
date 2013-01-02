@@ -66,7 +66,8 @@ public class UserDaoImpl extends SimpleJdbcDaoSupport implements UserDao {
 
     /**
      * @param lazy
-     *            {@link Authority}s of the desired {@link User} will not be loaded.
+     *            If <code>true</code>, {@link Authority authorities} of the desired {@link User} will not be
+     *            loaded.
      */
     public User findByUsername(final String username, final boolean lazy) {
         this.logger.info(String.format("Load an user with the username '%s'", username));

@@ -14,7 +14,7 @@ import com.svnavigatoru600.service.records.otherdocuments.validator.AbstractOthe
 import com.svnavigatoru600.web.records.AbstractPageViews;
 
 /**
- * Parent of all controllers which create and edit the {@link OtherDocumentRecord}s.
+ * Parent of all controllers which create and edit the {@link OtherDocumentRecord OtherDocumentRecords}.
  * 
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
@@ -33,8 +33,8 @@ public abstract class AbstractNewEditDocumentController extends AbstractOtherDoc
     protected Validator validator;
 
     /**
-     * Constructs a controller which considers all {@link OtherDocumentRecord}s of all
-     * {@link OtherDocumentRecordType}s.
+     * Constructs a controller which considers all {@link OtherDocumentRecord OtherDocumentRecords} of all
+     * {@link OtherDocumentRecordType OtherDocumentRecordTypes}.
      */
     public AbstractNewEditDocumentController(String baseUrl, AbstractPageViews views,
             OtherDocumentRecordDao recordDao, AbstractOtherDocumentRecordValidator validator,
@@ -44,8 +44,8 @@ public abstract class AbstractNewEditDocumentController extends AbstractOtherDoc
     }
 
     /**
-     * Constructs a controller which considers all {@link OtherDocumentRecord}s of the given
-     * <code>recordType</code>.
+     * Constructs a controller which considers all {@link OtherDocumentRecord OtherDocumentRecords} of the
+     * given <code>recordType</code>.
      */
     public AbstractNewEditDocumentController(String baseUrl, AbstractPageViews views,
             OtherDocumentRecordType recordType, OtherDocumentRecordDao recordDao,

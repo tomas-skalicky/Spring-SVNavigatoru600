@@ -18,7 +18,7 @@ import com.svnavigatoru600.web.Configuration;
 import com.svnavigatoru600.web.records.AbstractPageViews;
 
 /**
- * Parent of all controllers which delete the {@link SessionRecord}s.
+ * Parent of all controllers which delete the {@link SessionRecord SessionRecords}.
  * 
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
@@ -34,7 +34,8 @@ public abstract class AbstractDeleteRecordController extends AbstractSessionReco
     protected final String successfulDeleteUrl;
 
     /**
-     * Constructs a controller which considers all {@link SessionRecord}s of all {@link SessionRecordType}s.
+     * Constructs a controller which considers all {@link SessionRecord SessionRecords} of all
+     * {@link SessionRecordType SessionRecordTypes}.
      */
     public AbstractDeleteRecordController(String baseUrl, AbstractPageViews views,
             SessionRecordDao recordDao, MessageSource messageSource) {
@@ -44,8 +45,8 @@ public abstract class AbstractDeleteRecordController extends AbstractSessionReco
     }
 
     /**
-     * Constructs a controller which considers all {@link SessionRecord}s of the given <code>recordType</code>
-     * .
+     * Constructs a controller which considers all {@link SessionRecord SessionRecords} of the given
+     * <code>recordType</code> .
      */
     public AbstractDeleteRecordController(String baseUrl, AbstractPageViews views,
             SessionRecordType recordType, SessionRecordDao recordDao, MessageSource messageSource) {

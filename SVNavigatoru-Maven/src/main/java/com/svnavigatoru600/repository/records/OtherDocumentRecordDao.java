@@ -23,14 +23,14 @@ public interface OtherDocumentRecordDao extends DocumentRecordDao {
     OtherDocumentRecord findByFileName(String fileName);
 
     /**
-     * Returns all {@link OtherDocumentRecord}s stored in the repository arranged according to their
-     * <code>creationTime</code>s in the given <code>order</code>.
+     * Returns all {@link OtherDocumentRecord OtherDocumentRecords} stored in the repository arranged
+     * according to their <code>creationTime</code>s in the given <code>order</code>.
      */
     List<OtherDocumentRecord> findAllOrdered(OrderType order);
 
     /**
-     * Returns all {@link OtherDocumentRecord}s stored in the repository which are of the given
-     * <code>type</code>. The {@link OtherDocumentRecord} are arranged according to their
+     * Returns all {@link OtherDocumentRecord OtherDocumentRecords} stored in the repository which are of the
+     * given <code>type</code>. The {@link OtherDocumentRecord} are arranged according to their
      * <code>creationTime</code>s in the given <code>order</code>.
      */
     List<OtherDocumentRecord> findAllOrdered(OtherDocumentRecordType type, OrderType order);

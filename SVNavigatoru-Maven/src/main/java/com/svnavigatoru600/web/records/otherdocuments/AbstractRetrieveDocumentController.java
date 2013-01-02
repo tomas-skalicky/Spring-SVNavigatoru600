@@ -17,7 +17,8 @@ import com.svnavigatoru600.web.records.AbstractPageViews;
 import com.svnavigatoru600.web.records.RetrieveDocumentRecordUtils;
 
 /**
- * Parent of all controllers which provide retrieving of stored {@link OtherDocumentRecord}s.
+ * Parent of all controllers which provide retrieving of stored {@link OtherDocumentRecord
+ * OtherDocumentRecords}.
  * 
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
@@ -32,8 +33,8 @@ public abstract class AbstractRetrieveDocumentController extends AbstractOtherDo
     protected final String retrieveUrl;
 
     /**
-     * Constructs a controller which considers all {@link OtherDocumentRecord}s of all
-     * {@link OtherDocumentRecordType}s.
+     * Constructs a controller which considers all {@link OtherDocumentRecord OtherDocumentRecords} of all
+     * {@link OtherDocumentRecordType OtherDocumentRecordTypes}.
      */
     public AbstractRetrieveDocumentController(String baseUrl, AbstractPageViews views,
             OtherDocumentRecordDao recordDao, MessageSource messageSource) {
@@ -44,8 +45,8 @@ public abstract class AbstractRetrieveDocumentController extends AbstractOtherDo
     }
 
     /**
-     * Constructs a controller which considers all {@link OtherDocumentRecord}s of the given
-     * <code>recordType</code>.
+     * Constructs a controller which considers all {@link OtherDocumentRecord OtherDocumentRecords} of the
+     * given <code>recordType</code>.
      */
     public AbstractRetrieveDocumentController(String baseUrl, AbstractPageViews views,
             OtherDocumentRecordType recordType, OtherDocumentRecordDao recordDao, MessageSource messageSource) {

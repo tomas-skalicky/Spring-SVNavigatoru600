@@ -16,7 +16,8 @@ import com.svnavigatoru600.web.records.AbstractDocumentRecordController;
 import com.svnavigatoru600.web.records.AbstractPageViews;
 
 /**
- * Parent of all controllers which handle all operations upon the {@link OtherDocumentRecord}s.
+ * Parent of all controllers which handle all operations upon the {@link OtherDocumentRecord
+ * OtherDocumentRecords}.
  * 
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
@@ -24,17 +25,18 @@ import com.svnavigatoru600.web.records.AbstractPageViews;
 public abstract class AbstractOtherDocumentRecordController extends AbstractDocumentRecordController {
 
     /**
-     * If all {@link OtherDocumentRecord}s are considered (i.e. processed) by this controller,
-     * <code>allRecordTypes</code> equals <code>true</code>. Otherwise, <code>allRecordTypes</code> equals
-     * <code>false</code> and <code>RECORD_TYPE</code> determines the exact type of treated records.
+     * If all {@link OtherDocumentRecord OtherDocumentRecords} are considered (i.e. processed) by this
+     * controller, <code>allRecordTypes</code> equals <code>true</code>. Otherwise,
+     * <code>allRecordTypes</code> equals <code>false</code> and <code>RECORD_TYPE</code> determines the exact
+     * type of treated records.
      */
     protected final OtherDocumentRecordType recordType;
     protected boolean allRecordTypes = false;
     protected OtherDocumentRecordDao recordDao = null;
 
     /**
-     * Constructs a controller which considers all {@link OtherDocumentRecord}s of all
-     * {@link OtherDocumentRecordType}s.
+     * Constructs a controller which considers all {@link OtherDocumentRecord OtherDocumentRecords} of all
+     * {@link OtherDocumentRecordType OtherDocumentRecordTypes}.
      */
     public AbstractOtherDocumentRecordController(String baseUrl, AbstractPageViews views,
             OtherDocumentRecordDao recordDao, MessageSource messageSource) {
@@ -43,8 +45,8 @@ public abstract class AbstractOtherDocumentRecordController extends AbstractDocu
     }
 
     /**
-     * Constructs a controller which considers all {@link OtherDocumentRecord}s of the given
-     * <code>recordType</code>.
+     * Constructs a controller which considers all {@link OtherDocumentRecord OtherDocumentRecords} of the
+     * given <code>recordType</code>.
      */
     public AbstractOtherDocumentRecordController(String baseUrl, AbstractPageViews views,
             OtherDocumentRecordType recordType, OtherDocumentRecordDao recordDao, MessageSource messageSource) {

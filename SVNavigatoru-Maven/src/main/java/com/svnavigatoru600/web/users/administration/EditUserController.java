@@ -185,8 +185,8 @@ public class EditUserController extends AbstractNewEditUserController {
     }
 
     /**
-     * Sends an email with the new {@link Authority}s of the given <code>user</code>. The function is invoked
-     * when user's authorities have been successfully changed by the administrator.
+     * Sends an email with the new {@link Authority Authorities} of the given <code>user</code>. The function
+     * is invoked when user's authorities have been successfully changed by the administrator.
      */
     private void sendEmailOnAuthoritiesChange(User user, HttpServletRequest request) {
         final String emailAddress = user.getEmail();

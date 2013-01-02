@@ -27,7 +27,7 @@ import com.svnavigatoru600.web.Configuration;
 import com.svnavigatoru600.web.records.AbstractPageViews;
 
 /**
- * Parent of all controllers which edit the {@link SessionRecord}s.
+ * Parent of all controllers which edit the {@link SessionRecord SessionRecords}.
  * 
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
@@ -40,7 +40,8 @@ public abstract class AbstractEditRecordController extends AbstractNewEditRecord
     public static final String DATABASE_ERROR_MESSAGE_CODE = "edit.changes-not-saved-due-to-database-error";
 
     /**
-     * Constructs a controller which considers all {@link SessionRecord}s of all {@link SessionRecordType}s.
+     * Constructs a controller which considers all {@link SessionRecord SessionRecords} of all
+     * {@link SessionRecordType SessionRecordTypes}.
      */
     public AbstractEditRecordController(String baseUrl, AbstractPageViews views, SessionRecordDao recordDao,
             EditSessionRecordValidator validator, MessageSource messageSource) {
@@ -48,8 +49,8 @@ public abstract class AbstractEditRecordController extends AbstractNewEditRecord
     }
 
     /**
-     * Constructs a controller which considers all {@link SessionRecord}s of the given <code>recordType</code>
-     * .
+     * Constructs a controller which considers all {@link SessionRecord SessionRecords} of the given
+     * <code>recordType</code> .
      */
     public AbstractEditRecordController(String baseUrl, AbstractPageViews views,
             SessionRecordType recordType, SessionRecordDao recordDao, EditSessionRecordValidator validator,

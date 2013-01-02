@@ -27,7 +27,7 @@ import com.svnavigatoru600.web.Configuration;
 import com.svnavigatoru600.web.records.AbstractPageViews;
 
 /**
- * Parent of all controllers which create the {@link SessionRecord}s.
+ * Parent of all controllers which create the {@link SessionRecord SessionRecords}.
  * 
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
@@ -40,7 +40,8 @@ public abstract class AbstractNewRecordController extends AbstractNewEditRecordC
     public static final String DATABASE_ERROR_MESSAGE_CODE = "session-records.adding-failed-due-to-database-error";
 
     /**
-     * Constructs a controller which considers all {@link SessionRecord}s of all {@link SessionRecordType}s.
+     * Constructs a controller which considers all {@link SessionRecord SessionRecords} of all
+     * {@link SessionRecordType SessionRecordTypes}.
      */
     public AbstractNewRecordController(String baseUrl, AbstractPageViews views, SessionRecordDao recordDao,
             NewSessionRecordValidator validator, MessageSource messageSource) {
@@ -48,8 +49,8 @@ public abstract class AbstractNewRecordController extends AbstractNewEditRecordC
     }
 
     /**
-     * Constructs a controller which considers all {@link SessionRecord}s of the given <code>recordType</code>
-     * .
+     * Constructs a controller which considers all {@link SessionRecord SessionRecords} of the given
+     * <code>recordType</code> .
      */
     public AbstractNewRecordController(String baseUrl, AbstractPageViews views, SessionRecordType recordType,
             SessionRecordDao recordDao, NewSessionRecordValidator validator, MessageSource messageSource) {

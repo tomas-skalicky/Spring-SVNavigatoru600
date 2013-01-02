@@ -13,9 +13,9 @@ import com.svnavigatoru600.repository.MapperInterface;
 public interface OtherDocumentRecordTypeRelationDao {
 
     /**
-     * Returns all {@link OtherDocumentRecordTypeRelation}s stored in the repository which are associated with
-     * the {@link com.svnavigatoru600.domain.records.OtherDocumentRecord OtherDocumentRecord} with the given
-     * <code>recordId</code>.
+     * Returns all {@link OtherDocumentRecordTypeRelation OtherDocumentRecordTypeRelations} stored in the
+     * repository which are associated with the {@link com.svnavigatoru600.domain.records.OtherDocumentRecord
+     * OtherDocumentRecord} with the given <code>recordId</code>.
      */
     List<OtherDocumentRecordTypeRelation> findAll(int recordId);
 

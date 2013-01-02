@@ -54,8 +54,8 @@ public final class JspCodeGenerator {
      * @param request
      * @param subItems
      *            The array of information about sub-items of the root navigation item. Each sub-item is
-     *            specified by an array of {@link String}s where on the first position there is a reference of
-     *            the item and on the second position there is its title.
+     *            specified by an array of {@link String Strings} where on the first position there is a
+     *            reference of the item and on the second position there is its title.
      */
     public static String getMainNavigationItem(String reference, String title, HttpServletRequest request,
             String[][] subItems) {
@@ -75,8 +75,8 @@ public final class JspCodeGenerator {
      * @param request
      * @param subItems
      *            The array of information about sub-items of the root navigation item. Each sub-item is
-     *            specified by an array of {@link String}s where on the first position there is a reference of
-     *            the item and on the second position there is its title.
+     *            specified by an array of {@link String Strings} where on the first position there is a
+     *            reference of the item and on the second position there is its title.
      */
     public static String getMainNavigationItem(String reference, String rootAddress, String title,
             HttpServletRequest request, String[][] subItems) {

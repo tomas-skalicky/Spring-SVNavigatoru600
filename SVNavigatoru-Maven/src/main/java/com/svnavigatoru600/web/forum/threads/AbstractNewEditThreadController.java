@@ -9,7 +9,7 @@ import com.svnavigatoru600.repository.forum.ThreadDao;
 import com.svnavigatoru600.service.forum.threads.validator.AbstractThreadValidator;
 
 /**
- * Parent of controllers which create and edit the {@link Thread}s.
+ * Parent of controllers which create and edit the {@link Thread Threads}.
  * 
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */

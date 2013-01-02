@@ -27,7 +27,7 @@ import com.svnavigatoru600.web.Configuration;
 import com.svnavigatoru600.web.records.AbstractPageViews;
 
 /**
- * Parent of all controllers which create the {@link OtherDocumentRecord}s.
+ * Parent of all controllers which create the {@link OtherDocumentRecord OtherDocumentRecords}.
  * 
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
@@ -40,8 +40,8 @@ public abstract class AbstractNewDocumentController extends AbstractNewEditDocum
     public static final String DATABASE_ERROR_MESSAGE_CODE = "other-documents.adding-failed-due-to-database-error";
 
     /**
-     * Constructs a controller which considers all {@link OtherDocumentRecord}s of all
-     * {@link OtherDocumentRecordType}s.
+     * Constructs a controller which considers all {@link OtherDocumentRecord OtherDocumentRecords} of all
+     * {@link OtherDocumentRecordType OtherDocumentRecordTypes}.
      */
     public AbstractNewDocumentController(String baseUrl, AbstractPageViews views,
             OtherDocumentRecordDao recordDao, NewRecordValidator validator, MessageSource messageSource) {
@@ -49,8 +49,8 @@ public abstract class AbstractNewDocumentController extends AbstractNewEditDocum
     }
 
     /**
-     * Constructs a controller which considers all {@link OtherDocumentRecord}s of the given
-     * <code>recordType</code>.
+     * Constructs a controller which considers all {@link OtherDocumentRecord OtherDocumentRecords} of the
+     * given <code>recordType</code>.
      */
     public AbstractNewDocumentController(String baseUrl, AbstractPageViews views,
             OtherDocumentRecordType recordType, OtherDocumentRecordDao recordDao,
