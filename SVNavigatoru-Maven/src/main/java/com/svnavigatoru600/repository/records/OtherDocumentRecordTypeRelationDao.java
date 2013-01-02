@@ -13,24 +13,30 @@ import com.svnavigatoru600.repository.MapperInterface;
 public interface OtherDocumentRecordTypeRelationDao {
 
     /**
-     * Returns all {@link OtherDocumentRecordTypeRelation OtherDocumentRecordTypeRelations} stored in the
-     * repository which are associated with the {@link com.svnavigatoru600.domain.records.OtherDocumentRecord
-     * OtherDocumentRecord} with the given <code>recordId</code>.
+     * Returns all {@link OtherDocumentRecordTypeRelation types} stored in the repository which are associated
+     * with the specified {@link com.svnavigatoru600.domain.records.OtherDocumentRecord OtherDocumentRecord}.
+     * 
+     * @param recordId
+     *            The ID of the document record which desired types are associated with.
      */
     List<OtherDocumentRecordTypeRelation> findAll(int recordId);
 
     /**
-     * Stores the given <code>types</code> to the repository. If there is already an
-     * {@link OtherDocumentRecordTypeRelation} with the same ID of
-     * {@link com.svnavigatoru600.domain.records.OtherDocumentRecord OtherDocumentRecord} and the same type,
-     * throws an exception.
+     * Stores the given {@link OtherDocumentRecordTypeRelation types} to the repository. If there is already
+     * an {@link OtherDocumentRecordTypeRelation type} with the same
+     * {@link com.svnavigatoru600.domain.records.OtherDocumentRecordTypeRelationId#getRecordId() ID} of
+     * {@link com.svnavigatoru600.domain.records.OtherDocumentRecord OtherDocumentRecord} and the same
+     * {@link com.svnavigatoru600.domain.records.OtherDocumentRecordTypeRelationId#getType() type}, throws an
+     * exception.
      */
     void save(Collection<OtherDocumentRecordTypeRelation> types);
 
     /**
-     * Deletes all {@link OtherDocumentRecordTypeRelation} of
-     * {@link com.svnavigatoru600.domain.records.OtherDocumentRecord OtherDocumentRecord} with the given
-     * <code>recordId</code> from the repository.
+     * Deletes all {@link OtherDocumentRecordTypeRelation types} of the specified
+     * {@link com.svnavigatoru600.domain.records.OtherDocumentRecord OtherDocumentRecord}.
+     * 
+     * @param recordId
+     *            The ID of the document record which desired types are associated with.
      */
     void delete(int recordId);
 }
