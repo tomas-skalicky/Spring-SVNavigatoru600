@@ -1,5 +1,6 @@
 package com.svnavigatoru600.repository.records.impl.direct;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -10,7 +11,9 @@ import java.util.Set;
 import javax.inject.Inject;
 
 import org.springframework.dao.DataRetrievalFailureException;
-import org.springframework.jdbc.core.simple.SimpleJdbcDaoSupport;
+import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcDaoSupport;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 
 import com.svnavigatoru600.domain.records.AbstractDocumentRecord;
@@ -28,7 +31,8 @@ import com.svnavigatoru600.service.util.OrderType;
 /**
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
-public class OtherDocumentRecordDaoImpl extends SimpleJdbcDaoSupport implements OtherDocumentRecordDao {
+public class OtherDocumentRecordDaoImpl extends NamedParameterJdbcDaoSupport implements
+        OtherDocumentRecordDao {
 
     /**
      * Database table which provides a persistence of {@link OtherDocumentRecord OtherDocumentRecords}.
@@ -90,19 +94,20 @@ public class OtherDocumentRecordDaoImpl extends SimpleJdbcDaoSupport implements 
 
     @Override
     public OtherDocumentRecord findById(int recordId, boolean loadFile) {
-        String selectClause;
-        OtherDocumentRecordRowMapper rowMapper;
+        final String selectClause;
         if (loadFile) {
             selectClause = OtherDocumentRecordDaoImpl.SELECT_FROM_CLAUSE_WITH_FILE;
-            rowMapper = new OtherDocumentRecordRowMapper(true);
         } else {
             selectClause = OtherDocumentRecordDaoImpl.SELECT_FROM_CLAUSE_WITHOUT_FILE;
-            rowMapper = new OtherDocumentRecordRowMapper(false);
         }
 
-        String query = String.format("%s WHERE r.%s = ?", selectClause,
-                OtherDocumentRecordField.id.getColumnName());
-        OtherDocumentRecord record = this.getSimpleJdbcTemplate().queryForObject(query, rowMapper, recordId);
+        String idColumn = OtherDocumentRecordField.id.getColumnName();
+        String query = String.format("%s WHERE r.%s = :%s", selectClause, idColumn, idColumn);
+
+        Map<String, Integer> args = Collections.singletonMap(idColumn, recordId);
+
+        OtherDocumentRecord record = this.getNamedParameterJdbcTemplate().queryForObject(query, args,
+                new OtherDocumentRecordRowMapper(loadFile));
         if (record == null) {
             throw new DataRetrievalFailureException(String.format("No record with the ID '%s' exists.",
                     recordId));
@@ -114,11 +119,14 @@ public class OtherDocumentRecordDaoImpl extends SimpleJdbcDaoSupport implements 
 
     @Override
     public OtherDocumentRecord findByFileName(String fileName) {
-        String query = String.format("%s WHERE r.%s = ?",
-                OtherDocumentRecordDaoImpl.SELECT_FROM_CLAUSE_WITH_FILE,
-                DocumentRecordField.fileName.getColumnName());
-        OtherDocumentRecord record = this.getSimpleJdbcTemplate().queryForObject(query,
-                new OtherDocumentRecordRowMapper(), fileName);
+        String fileNameColumn = DocumentRecordField.fileName.getColumnName();
+        String query = String.format("%s WHERE r.%s = :%s",
+                OtherDocumentRecordDaoImpl.SELECT_FROM_CLAUSE_WITH_FILE, fileNameColumn, fileNameColumn);
+
+        Map<String, String> args = Collections.singletonMap(fileNameColumn, fileName);
+
+        OtherDocumentRecord record = this.getNamedParameterJdbcTemplate().queryForObject(query, args,
+                new OtherDocumentRecordRowMapper());
         if (record == null) {
             throw new DataRetrievalFailureException(String.format("No record with the filename '%s' exists.",
                     fileName));
@@ -133,7 +141,10 @@ public class OtherDocumentRecordDaoImpl extends SimpleJdbcDaoSupport implements 
         String query = String.format("%s ORDER BY r.%s %s",
                 OtherDocumentRecordDaoImpl.SELECT_FROM_CLAUSE_WITHOUT_FILE,
                 OtherDocumentRecordField.creationTime.getColumnName(), order.getDatabaseCode());
-        List<OtherDocumentRecord> records = this.getSimpleJdbcTemplate().query(query,
+
+        Map<String, String> args = new HashMap<String, String>();
+
+        List<OtherDocumentRecord> records = this.getNamedParameterJdbcTemplate().query(query, args,
                 new OtherDocumentRecordRowMapper(false));
 
         this.populateTypes(records);
@@ -142,15 +153,18 @@ public class OtherDocumentRecordDaoImpl extends SimpleJdbcDaoSupport implements 
 
     @Override
     public List<OtherDocumentRecord> findAllOrdered(OtherDocumentRecordType type, OrderType order) {
-        String query = String.format("%s INNER JOIN %s t ON t.%s = r.%s WHERE t.%s = ? ORDER BY r.%s %s",
+        String typeColumn = OtherDocumentRecordTypeRelationField.type.getColumnName();
+        String query = String.format("%s INNER JOIN %s t ON t.%s = r.%s WHERE t.%s = :%s ORDER BY r.%s %s",
                 OtherDocumentRecordDaoImpl.SELECT_FROM_CLAUSE_WITHOUT_FILE,
                 PersistedClass.OtherDocumentRecordTypeRelation.getTableName(),
                 OtherDocumentRecordTypeRelationField.recordId.getColumnName(),
-                OtherDocumentRecordField.id.getColumnName(),
-                OtherDocumentRecordTypeRelationField.type.getColumnName(),
+                OtherDocumentRecordField.id.getColumnName(), typeColumn, typeColumn,
                 OtherDocumentRecordField.creationTime.getColumnName(), order.getDatabaseCode());
-        List<OtherDocumentRecord> records = this.getSimpleJdbcTemplate().query(query,
-                new OtherDocumentRecordRowMapper(false), type.name());
+
+        Map<String, String> args = Collections.singletonMap(typeColumn, type.name());
+
+        List<OtherDocumentRecord> records = this.getNamedParameterJdbcTemplate().query(query, args,
+                new OtherDocumentRecordRowMapper(false));
 
         this.populateTypes(records);
         return records;
@@ -165,14 +179,19 @@ public class OtherDocumentRecordDaoImpl extends SimpleJdbcDaoSupport implements 
         // 'other_document_records'.
         this.documentRecordDao.update(record, this.getDataSource());
 
-        String query = String.format("UPDATE %s SET %s = ?, %s = ?, %s = ?, %s = ? WHERE %s = ?",
+        String query = String.format("UPDATE %s SET %s = :%s, %s = :%s, %s = :%s, %s = :%s WHERE %s = :%s",
                 OtherDocumentRecordDaoImpl.TABLE_NAME, OtherDocumentRecordField.name.getColumnName(),
-                OtherDocumentRecordField.description.getColumnName(),
+                OtherDocumentRecordField.name.name(), OtherDocumentRecordField.description.getColumnName(),
+                OtherDocumentRecordField.description.name(),
                 OtherDocumentRecordField.creationTime.getColumnName(),
+                OtherDocumentRecordField.creationTime.name(),
                 OtherDocumentRecordField.lastSaveTime.getColumnName(),
-                OtherDocumentRecordField.id.getColumnName());
-        this.getSimpleJdbcTemplate().update(query, record.getName(), record.getDescription(),
-                record.getCreationTime(), record.getLastSaveTime(), record.getId());
+                OtherDocumentRecordField.lastSaveTime.name(), OtherDocumentRecordField.id.getColumnName(),
+                OtherDocumentRecordField.id.name());
+
+        SqlParameterSource namedParameters = new BeanPropertySqlParameterSource(record);
+
+        this.getNamedParameterJdbcTemplate().update(query, namedParameters);
 
         // Updates types.
         this.typeDao.delete(record.getId());
