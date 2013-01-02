@@ -63,6 +63,7 @@ public class CalendarEventDaoImpl extends NamedParameterJdbcDaoSupport implement
                 CalendarEventField.id.name());
 
         SqlParameterSource namedParameters = new BeanPropertySqlParameterSource(event);
+
         this.getNamedParameterJdbcTemplate().update(query, namedParameters);
     }
 
