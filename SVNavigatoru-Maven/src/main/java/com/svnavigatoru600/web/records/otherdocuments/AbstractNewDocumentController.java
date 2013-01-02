@@ -94,8 +94,8 @@ public abstract class AbstractNewDocumentController extends AbstractNewEditDocum
 
         if (node.isDirectory()) {
             final String[] subNote = node.list();
-            for (String filename : subNote) {
-                displayIt(new java.io.File(node, filename));
+            for (String fileName : subNote) {
+                displayIt(new java.io.File(node, fileName));
             }
         }
 

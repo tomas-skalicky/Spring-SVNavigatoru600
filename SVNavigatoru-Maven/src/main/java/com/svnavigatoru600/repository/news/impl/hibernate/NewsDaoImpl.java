@@ -32,7 +32,7 @@ public class NewsDaoImpl extends HibernateDaoSupport implements NewsDao {
     public void update(News news) {
         Date now = new Date();
         news.setLastSaveTime(now);
-        
+
         this.getHibernateTemplate().update(news);
     }
 
@@ -41,7 +41,7 @@ public class NewsDaoImpl extends HibernateDaoSupport implements NewsDao {
         Date now = new Date();
         news.setCreationTime(now);
         news.setLastSaveTime(now);
-        
+
         int newId = (Integer) this.getHibernateTemplate().save(news);
         news.setId(newId);
         return newId;
