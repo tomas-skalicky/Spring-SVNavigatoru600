@@ -34,29 +34,17 @@ public class SessionRecordService extends AbstractDocumentRecordService {
         this.sessionRecordDao = documentDao;
     }
 
-    /**
-     * Returns a {@link SessionRecord} stored in the repository which has the given ID.
-     * <p>
-     * The <em>Blob</em> file is loaded as well.
-     */
+    @Override
     public SessionRecord findById(int recordId) {
         return this.sessionRecordDao.findById(recordId);
     }
 
-    /**
-     * Returns a {@link SessionRecord} stored in the repository which has the given ID.
-     * 
-     * @param loadFile
-     *            If <code>true</code>, the <em>Blob</em> file will be loaded as well; otherwise not.
-     */
+    @Override
     public SessionRecord findById(int recordId, boolean loadFile) {
         return this.sessionRecordDao.findById(recordId, loadFile);
     }
 
-    /**
-     * Returns a {@link SessionRecord} stored in the repository which is associated with a file with the given
-     * <code>fileName</code>.
-     */
+    @Override
     public SessionRecord findByFileName(String fileName) {
         return this.sessionRecordDao.findByFileName(fileName);
     }

@@ -31,6 +31,7 @@ public class DeleteContributionController extends AbstractContributionController
     private ContributionService contributionService;
     private ListContributionsController listController;
 
+    @Override
     @Inject
     public void setContributionService(final ContributionService contributionService) {
         this.contributionService = contributionService;

@@ -36,6 +36,7 @@ public class EditContributionController extends AbstractNewEditContributionContr
     public static final String DATABASE_ERROR_MESSAGE_CODE = "edit.changes-not-saved-due-to-database-error";
     private ContributionService contributionService;
 
+    @Override
     @Inject
     public void setContributionService(final ContributionService contributionService) {
         this.contributionService = contributionService;

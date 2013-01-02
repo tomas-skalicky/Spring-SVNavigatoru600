@@ -8,7 +8,7 @@ import java.sql.SQLException;
 import javax.servlet.http.HttpServletResponse;
 
 import com.svnavigatoru600.domain.records.AbstractDocumentRecord;
-import com.svnavigatoru600.repository.records.DocumentRecordDao;
+import com.svnavigatoru600.service.records.AbstractDocumentRecordService;
 
 /**
  * Provides a set of static functions for retrieving {@link AbstractDocumentRecord AbstractDocumentRecords}.
@@ -20,10 +20,10 @@ public final class RetrieveDocumentRecordUtils {
     private RetrieveDocumentRecordUtils() {
     }
 
-    public static void retrieve(int recordId, DocumentRecordDao recordDao, HttpServletResponse response)
-            throws SQLException, IOException {
+    public static void retrieve(int recordId, AbstractDocumentRecordService recordService,
+            HttpServletResponse response) throws SQLException, IOException {
         // Gets the record from the DB.
-        AbstractDocumentRecord record = recordDao.findById(recordId);
+        AbstractDocumentRecord record = recordService.findById(recordId);
         Blob file = record.getFile();
         byte[] bytes = file.getBytes(1L, (int) file.length());
 
