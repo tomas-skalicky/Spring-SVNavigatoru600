@@ -1,14 +1,16 @@
 package com.svnavigatoru600.repository.records.impl.direct;
 
-import java.sql.Blob;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.sql.DataSource;
 
-import org.springframework.jdbc.core.simple.SimpleJdbcDaoSupport;
+import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcDaoSupport;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
-import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
 
 import com.svnavigatoru600.domain.records.AbstractDocumentRecord;
 import com.svnavigatoru600.repository.impl.PersistedClass;
@@ -17,7 +19,7 @@ import com.svnavigatoru600.repository.records.impl.DocumentRecordField;
 /**
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
-public class DocumentRecordDaoImpl extends SimpleJdbcDaoSupport {
+public class DocumentRecordDaoImpl extends NamedParameterJdbcDaoSupport {
 
     /**
      * Database table which provides a persistence of {@link AbstractDocumentRecord AbstractDocumentRecords}.
@@ -25,18 +27,21 @@ public class DocumentRecordDaoImpl extends SimpleJdbcDaoSupport {
     private static final String TABLE_NAME = PersistedClass.AbstractDocumentRecord.getTableName();
 
     public void update(AbstractDocumentRecord record, DataSource dataSource) {
-        Blob file = record.getFile();
-        if (file == null) {
+        if (record.getFile() == null) {
             return;
         }
 
-        String query = String.format("UPDATE %s SET %s = ?, %s = ? WHERE %s = ?",
+        String query = String.format("UPDATE %s SET %s = :%s, %s = :%s WHERE %s = :%s",
                 DocumentRecordDaoImpl.TABLE_NAME, DocumentRecordField.fileName.getColumnName(),
-                DocumentRecordField.file.getColumnName(), DocumentRecordField.id.getColumnName());
+                DocumentRecordField.fileName.name(), DocumentRecordField.file.getColumnName(),
+                DocumentRecordField.file.name(), DocumentRecordField.id.getColumnName(),
+                DocumentRecordField.id.name());
+
+        SqlParameterSource namedParameters = new BeanPropertySqlParameterSource(record);
 
         // this.getSimpleJdbcTemplate() cannot be used here since the dataSource
         // is not set (i.e. equals null).
-        (new SimpleJdbcTemplate(dataSource)).update(query, record.getFileName(), file, record.getId());
+        (new NamedParameterJdbcTemplate(dataSource)).update(query, namedParameters);
     }
 
     /**
@@ -61,10 +66,13 @@ public class DocumentRecordDaoImpl extends SimpleJdbcDaoSupport {
     }
 
     public void delete(AbstractDocumentRecord record, DataSource dataSource) {
-        String query = String.format("DELETE FROM %s WHERE %s = ?", DocumentRecordDaoImpl.TABLE_NAME,
-                DocumentRecordField.id.getColumnName());
+        String idColumn = DocumentRecordField.id.getColumnName();
+        String query = String.format("DELETE FROM %s WHERE %s = :%s", DocumentRecordDaoImpl.TABLE_NAME,
+                idColumn, idColumn);
+
+        Map<String, Integer> args = Collections.singletonMap(idColumn, record.getId());
 
         // See the update function.
-        (new SimpleJdbcTemplate(dataSource)).update(query, record.getId());
+        (new NamedParameterJdbcTemplate(dataSource)).update(query, args);
     }
 }
