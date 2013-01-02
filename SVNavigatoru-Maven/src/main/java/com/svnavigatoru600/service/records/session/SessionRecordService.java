@@ -27,5 +27,4 @@ public class SessionRecordService {
     public SessionRecordService(SessionRecordDao recordDao) {
         this.recordDao = recordDao;
     }
-
 }
