@@ -26,6 +26,27 @@ public abstract class AbstractDocumentRecordService {
     }
 
     /**
+     * Returns a {@link AbstractDocumentRecord} stored in the repository which has the given ID.
+     * <p>
+     * The <em>Blob</em> file is loaded as well.
+     */
+    public abstract AbstractDocumentRecord findById(int recordId);
+
+    /**
+     * Returns a {@link AbstractDocumentRecord} stored in the repository which has the given ID.
+     * 
+     * @param loadFile
+     *            If <code>true</code>, the <em>Blob</em> file will be loaded as well; otherwise not.
+     */
+    public abstract AbstractDocumentRecord findById(int recordId, boolean loadFile);
+
+    /**
+     * Returns a {@link AbstractDocumentRecord} stored in the repository which is associated with a file with
+     * the given <code>fileName</code>.
+     */
+    public abstract AbstractDocumentRecord findByFileName(String fileName);
+
+    /**
      * Deletes the given {@link AbstractDocumentRecord} together with all its types from the repository.
      */
     public void delete(AbstractDocumentRecord document) {
