@@ -7,6 +7,8 @@ import java.sql.SQLException;
 import javax.servlet.http.HttpServletRequest;
 import javax.sql.rowset.serial.SerialException;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.context.MessageSource;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Controller;
@@ -38,6 +40,7 @@ public abstract class AbstractNewRecordController extends AbstractNewEditRecordC
      * Code of the error message used when the {@link DataAccessException} is thrown.
      */
     public static final String DATABASE_ERROR_MESSAGE_CODE = "session-records.adding-failed-due-to-database-error";
+    private final Log logger = LogFactory.getLog(this.getClass());
 
     /**
      * Constructs a controller which considers all {@link SessionRecord SessionRecords} of all
@@ -67,11 +70,11 @@ public abstract class AbstractNewRecordController extends AbstractNewEditRecordC
         SessionRecord record = new SessionRecord();
         command.setRecord(record);
 
-        command.setNewType(Localization.findLocaleMessage(this.messageSource, request,
+        command.setNewType(Localization.findLocaleMessage(this.getMessageSource(), request,
                 recordType.getLocalizationCode()));
 
-        model.addAttribute(AbstractNewRecordController.COMMAND, command);
-        return this.views.neww;
+        model.addAttribute(AbstractNewEditRecordController.COMMAND, command);
+        return this.getViews().getNeww();
     }
 
     /**
@@ -84,16 +87,16 @@ public abstract class AbstractNewRecordController extends AbstractNewEditRecordC
     public String processSubmittedForm(NewSessionRecord command, BindingResult result, SessionStatus status,
             HttpServletRequest request, ModelMap model) {
 
-        this.validator.validate(command, result);
+        this.getValidator().validate(command, result);
         if (result.hasErrors()) {
-            return this.views.neww;
+            return this.getViews().getNeww();
         }
 
         // Updates the data of the new record. Modifies the filename to make
         // it unique.
         SessionRecord newRecord = command.getRecord();
         newRecord.setType(SessionRecordType.valueOfAccordingLocalization(command.getNewType(),
-                this.messageSource, request));
+                this.getMessageSource(), request));
         MultipartFile attachedFile = command.getNewFile();
         String fileName = attachedFile.getOriginalFilename();
         // /////////////////////////////////////////////////////////////////
@@ -128,33 +131,33 @@ public abstract class AbstractNewRecordController extends AbstractNewEditRecordC
             newRecord.setFile(blobFile);
             // \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
-            this.recordDao.save(newRecord);
+            this.getRecordDao().save(newRecord);
 
             // Clears the command object from the session.
             status.setComplete();
 
             // Returns the form success view.
             model.addAttribute(Configuration.REDIRECTION_ATTRIBUTE,
-                    String.format("%svytvoreno/", this.baseUrl));
+                    String.format("%svytvoreno/", this.getBaseUrl()));
             return Configuration.REDIRECTION_PAGE;
 
         } catch (IllegalStateException e) {
             this.logger.error(newRecord, e);
-            result.reject(AbstractNewRecordController.UPLOAD_FILE_ERROR_MESSAGE_CODE);
+            result.reject(AbstractNewEditRecordController.UPLOAD_FILE_ERROR_MESSAGE_CODE);
         } catch (IOException e) {
             this.logger.error(newRecord, e);
-            result.reject(AbstractNewRecordController.UPLOAD_FILE_ERROR_MESSAGE_CODE);
+            result.reject(AbstractNewEditRecordController.UPLOAD_FILE_ERROR_MESSAGE_CODE);
         } catch (SerialException e) {
             this.logger.error(newRecord, e);
-            result.reject(AbstractNewRecordController.UPLOAD_FILE_ERROR_MESSAGE_CODE);
+            result.reject(AbstractNewEditRecordController.UPLOAD_FILE_ERROR_MESSAGE_CODE);
         } catch (SQLException e) {
             this.logger.error(newRecord, e);
-            result.reject(AbstractNewRecordController.UPLOAD_FILE_ERROR_MESSAGE_CODE);
+            result.reject(AbstractNewEditRecordController.UPLOAD_FILE_ERROR_MESSAGE_CODE);
         } catch (DataAccessException e) {
             // We encountered a database problem.
             this.logger.error(newRecord, e);
             result.reject(AbstractNewRecordController.DATABASE_ERROR_MESSAGE_CODE);
         }
-        return this.views.neww;
+        return this.getViews().getNeww();
     }
 }

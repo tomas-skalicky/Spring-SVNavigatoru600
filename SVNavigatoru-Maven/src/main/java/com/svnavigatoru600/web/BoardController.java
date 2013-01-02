@@ -13,7 +13,7 @@ import org.springframework.web.bind.support.SessionStatus;
 
 import com.svnavigatoru600.domain.WysiwygSection;
 import com.svnavigatoru600.domain.WysiwygSectionName;
-import com.svnavigatoru600.repository.WysiwygSectionDao;
+import com.svnavigatoru600.service.WysiwygSectionService;
 
 /**
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
@@ -25,12 +25,8 @@ public class BoardController extends AbstractWysiwygSectionController {
      * Constructor.
      */
     @Inject
-    public BoardController(WysiwygSectionDao sectionDao) {
-        super(sectionDao);
-        super.sectionName = WysiwygSectionName.BOARD;
-        super.viewPageView = "viewBoard";
-        super.editPageView = "editBoard";
-        super.viewPageAddress = "/vybor/";
+    public BoardController(WysiwygSectionService sectionService) {
+        super(sectionService, WysiwygSectionName.BOARD, "viewBoard", "editBoard", "/vybor/");
     }
 
     @Override

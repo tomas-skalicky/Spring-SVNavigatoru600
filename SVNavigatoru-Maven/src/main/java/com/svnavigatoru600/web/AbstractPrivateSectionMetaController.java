@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import com.svnavigatoru600.domain.eventcalendar.CalendarEvent;
 import com.svnavigatoru600.domain.forum.Contribution;
 import com.svnavigatoru600.domain.users.User;
-import com.svnavigatoru600.repository.forum.ContributionDao;
 import com.svnavigatoru600.repository.forum.impl.ContributionField;
 import com.svnavigatoru600.service.eventcalendar.CalendarEventService;
+import com.svnavigatoru600.service.forum.contributions.ContributionService;
 import com.svnavigatoru600.service.util.OrderType;
 import com.svnavigatoru600.service.util.UserUtils;
 import com.svnavigatoru600.viewmodel.eventcalendar.EventWrapper;
@@ -39,7 +39,7 @@ public abstract class AbstractPrivateSectionMetaController extends AbstractMetaC
     private static final int LAST_SAVED_CONTRIBUTION_COUNT = 2;
 
     private CalendarEventService eventService;
-    private ContributionDao contributionDao;
+    private ContributionService contributionService;
 
     @Inject
     public void setCalendarEventService(CalendarEventService eventService) {
@@ -47,8 +47,8 @@ public abstract class AbstractPrivateSectionMetaController extends AbstractMetaC
     }
 
     @Inject
-    public void setContributionDao(ContributionDao contributionDao) {
-        this.contributionDao = contributionDao;
+    public void setContributionService(ContributionService contributionService) {
+        this.contributionService = contributionService;
     }
 
     @ModelAttribute("loggedUser")
@@ -73,7 +73,7 @@ public abstract class AbstractPrivateSectionMetaController extends AbstractMetaC
     @ModelAttribute("lastSavedContributions")
     public List<ContributionWrapper> populateLastSavedContributions(HttpServletRequest request) {
 
-        List<Contribution> contributions = this.contributionDao.findAllOrdered(
+        List<Contribution> contributions = this.contributionService.findAllOrdered(
                 ContributionField.lastSaveTime, OrderType.DESCENDING, LAST_SAVED_CONTRIBUTION_COUNT);
 
         List<ContributionWrapper> lastSavedContributions = new ArrayList<ContributionWrapper>(

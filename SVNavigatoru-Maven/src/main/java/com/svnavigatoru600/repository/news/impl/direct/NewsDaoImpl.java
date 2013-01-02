@@ -1,13 +1,12 @@
 package com.svnavigatoru600.repository.news.impl.direct;
 
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcDaoSupport;
-import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 
 import com.svnavigatoru600.domain.News;
@@ -42,27 +41,11 @@ public class NewsDaoImpl extends NamedParameterJdbcDaoSupport implements NewsDao
         String query = String.format("SELECT * FROM %s n ORDER BY %s %s", NewsDaoImpl.TABLE_NAME, arguments
                 .getSortField().getColumnName(), arguments.getSortDirection().getDatabaseCode());
 
-        Map<String, String> args = new HashMap<String, String>();
-
-        return this.getNamedParameterJdbcTemplate().query(query, args, new NewsRowMapper());
-    }
-
-    @Override
-    public void update(News news) {
-        String query = String.format("UPDATE %s SET %s = :%s, %s = :%s, %s = :%s, %s = :%s WHERE %s = :%s",
-                NewsDaoImpl.TABLE_NAME, NewsField.title.getColumnName(), NewsField.title.name(),
-                NewsField.text.getColumnName(), NewsField.text.name(),
-                NewsField.creationTime.getColumnName(), NewsField.creationTime.name(),
-                NewsField.lastSaveTime.getColumnName(), NewsField.lastSaveTime.name(),
-                NewsField.id.getColumnName(), NewsField.id.name());
-
-        SqlParameterSource namedParameters = new BeanPropertySqlParameterSource(news);
-
-        this.getNamedParameterJdbcTemplate().update(query, namedParameters);
+        return this.getJdbcTemplate().query(query, new NewsRowMapper());
     }
 
     /**
-     * Used during the save of the given <code>news</code>.
+     * Maps properties of the given {@link News} to names of the corresponding database columns.
      */
     private Map<String, Object> getNamedParameters(News news) {
         Map<String, Object> parameters = new HashMap<String, Object>();
@@ -75,6 +58,22 @@ public class NewsDaoImpl extends NamedParameterJdbcDaoSupport implements NewsDao
     }
 
     @Override
+    public void update(News news) {
+        String idColumn = NewsField.id.getColumnName();
+        String titleColumn = NewsField.title.getColumnName();
+        String textColumn = NewsField.text.getColumnName();
+        String creationTimeColumn = NewsField.creationTime.getColumnName();
+        String lastSaveTimeColumn = NewsField.lastSaveTime.getColumnName();
+        String query = String.format("UPDATE %s SET %s = :%s, %s = :%s, %s = :%s, %s = :%s WHERE %s = :%s",
+                NewsDaoImpl.TABLE_NAME, titleColumn, titleColumn, textColumn, textColumn, creationTimeColumn,
+                creationTimeColumn, lastSaveTimeColumn, lastSaveTimeColumn, idColumn, idColumn);
+
+        Date now = new Date();
+        news.setLastSaveTime(now);
+        this.getNamedParameterJdbcTemplate().update(query, this.getNamedParameters(news));
+    }
+
+    @Override
     public int save(News news) {
         SimpleJdbcInsert insert = new SimpleJdbcInsert(this.getDataSource())
                 .withTableName(NewsDaoImpl.TABLE_NAME)
@@ -82,7 +81,12 @@ public class NewsDaoImpl extends NamedParameterJdbcDaoSupport implements NewsDao
                 .usingColumns(NewsField.title.getColumnName(), NewsField.text.getColumnName(),
                         NewsField.creationTime.getColumnName(), NewsField.lastSaveTime.getColumnName());
 
-        return insert.executeAndReturnKey(this.getNamedParameters(news)).intValue();
+        Date now = new Date();
+        news.setCreationTime(now);
+        news.setLastSaveTime(now);
+        int newId = insert.executeAndReturnKey(this.getNamedParameters(news)).intValue();
+        news.setId(newId);
+        return newId;
     }
 
     @Override

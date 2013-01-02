@@ -6,6 +6,7 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.logging.LogFactory;
 import org.springframework.context.MessageSource;
 import org.springframework.dao.NonTransientDataAccessException;
 import org.springframework.stereotype.Controller;
@@ -20,12 +21,8 @@ import org.springframework.web.bind.support.SessionStatus;
 
 import com.svnavigatoru600.domain.users.AuthorityType;
 import com.svnavigatoru600.domain.users.User;
-import com.svnavigatoru600.repository.users.UserDao;
+import com.svnavigatoru600.service.users.UserService;
 import com.svnavigatoru600.service.users.validator.SendNewPasswordValidator;
-import com.svnavigatoru600.service.util.Email;
-import com.svnavigatoru600.service.util.Hash;
-import com.svnavigatoru600.service.util.Localization;
-import com.svnavigatoru600.service.util.Password;
 import com.svnavigatoru600.viewmodel.users.SendNewPassword;
 
 /**
@@ -38,7 +35,7 @@ public class ForgottenPasswordController extends AbstractMetaController {
 
     private static final String PAGE_VIEW = "forgottenPassword";
 
-    private UserDao userDao;
+    private UserService userService;
     private Validator validator;
 
     // MessageSource is necessary; otherwise we would not be able to resolve a
@@ -54,9 +51,9 @@ public class ForgottenPasswordController extends AbstractMetaController {
      * Constructor.
      */
     @Inject
-    public ForgottenPasswordController(UserDao userDao, SendNewPasswordValidator validator) {
-        this.logger.debug("The ForgottenPasswordController object created.");
-        this.userDao = userDao;
+    public ForgottenPasswordController(UserService userService, SendNewPasswordValidator validator) {
+        LogFactory.getLog(this.getClass()).debug("The ForgottenPasswordController object created.");
+        this.userService = userService;
         this.validator = validator;
     }
 
@@ -72,7 +69,7 @@ public class ForgottenPasswordController extends AbstractMetaController {
         user.setEmail("@");
         command.setUser(user);
 
-        List<User> adminsFromDb = this.userDao.findAllByAuthority(AuthorityType.ROLE_USER_ADMINISTRATOR
+        List<User> adminsFromDb = this.userService.findAllByAuthority(AuthorityType.ROLE_USER_ADMINISTRATOR
                 .name());
         List<User> newAdmins = new ArrayList<User>();
         // Excludes me (Tomas Skalicky).
@@ -115,15 +112,8 @@ public class ForgottenPasswordController extends AbstractMetaController {
         }
 
         try {
-            // Checks whether user with the provided email address exists.
-            String inputEmail = command.getUser().getEmail();
-            User user = this.userDao.findByEmail(inputEmail);
-            String newPassword = Password.generateNew();
-            user.setPassword(Hash.doSha1Hashing(newPassword));
-            this.userDao.update(user);
-
-            // Sends the new password to the user.
-            this.sendEmailOnPasswordReset(inputEmail, user.getLastName(), newPassword, request);
+            this.userService.resetPasswordAndSendEmail(command.getUser().getEmail(), request,
+                    this.messageSource);
 
             // Clears the command object from the session.
             status.setComplete();
@@ -137,28 +127,9 @@ public class ForgottenPasswordController extends AbstractMetaController {
 
         } catch (NonTransientDataAccessException e) {
             // Returns back since the email address was wrong.
-            this.logger.error(null, e);
+            LogFactory.getLog(this.getClass()).error(null, e);
             result.rejectValue("user.email", "email.occupied-by-nobody");
             return ForgottenPasswordController.PAGE_VIEW;
         }
-    }
-
-    /**
-     * Sends an email with the <code>newPassword</code> to the given <code>emailAddress</code>. The function
-     * is invoked when user's password has been successfully reset.
-     */
-    private void sendEmailOnPasswordReset(final String emailAddress, final String lastName,
-            final String newPassword, final HttpServletRequest request) {
-        if (!Email.isSpecified(emailAddress)) {
-            return;
-        }
-
-        final String subject = Localization.findLocaleMessage(this.messageSource, request,
-                "email.subject.password-reset");
-        final Object[] messageParams = new Object[] { lastName, Configuration.DOMAIN, newPassword };
-        final String messageText = Localization.findLocaleMessage(this.messageSource, request,
-                "email.text.password-reset", messageParams);
-
-        Email.sendMail(emailAddress, subject, messageText);
     }
 }

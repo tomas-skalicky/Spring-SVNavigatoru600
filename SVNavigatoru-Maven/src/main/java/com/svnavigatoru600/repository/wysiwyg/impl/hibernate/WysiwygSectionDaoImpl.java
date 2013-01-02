@@ -15,8 +15,7 @@ import com.svnavigatoru600.repository.WysiwygSectionDao;
  */
 public class WysiwygSectionDaoImpl extends HibernateDaoSupport implements WysiwygSectionDao {
 
-    /** Logger for this class and subclasses */
-    protected final Log logger = LogFactory.getLog(this.getClass());
+    private final Log logger = LogFactory.getLog(this.getClass());
 
     @Override
     public WysiwygSection findByName(WysiwygSectionName name) {

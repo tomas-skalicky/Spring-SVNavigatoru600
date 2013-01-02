@@ -11,10 +11,8 @@ public final class CheckboxUtils {
     }
 
     /**
-     * <p>
      * Creates an array of indicators which say which checkboxes are checked, and which checkboxes are not.
      * All indicators in the resulting array are set to <code>false</code>, i.e. no checkbox is checked.
-     * </p>
      */
     static boolean[] createArrayOfCheckIndicators(int typeCount) {
         boolean[] indicators = new boolean[typeCount];

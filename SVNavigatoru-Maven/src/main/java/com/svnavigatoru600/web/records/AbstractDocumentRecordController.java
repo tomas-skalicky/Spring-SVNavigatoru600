@@ -25,9 +25,9 @@ public abstract class AbstractDocumentRecordController extends AbstractPrivateSe
     /**
      * The part of the URL which is common for all operations performed on the considered documents.
      */
-    protected final String baseUrl;
-    protected final AbstractPageViews views;
-    protected MessageSource messageSource;
+    private final String baseUrl;
+    private final AbstractPageViews views;
+    private MessageSource messageSource;
 
     /**
      * Constructs a controller which considers all {@link AbstractDocumentRecord AbstractDocumentRecords}.
@@ -37,6 +37,27 @@ public abstract class AbstractDocumentRecordController extends AbstractPrivateSe
         this.baseUrl = baseUrl;
         this.views = views;
         this.messageSource = messageSource;
+    }
+
+    /**
+     * Trivial getter
+     */
+    protected String getBaseUrl() {
+        return this.baseUrl;
+    }
+
+    /**
+     * Trivial getter
+     */
+    protected AbstractPageViews getViews() {
+        return this.views;
+    }
+
+    /**
+     * Trivial getter
+     */
+    protected MessageSource getMessageSource() {
+        return this.messageSource;
     }
 
     @InitBinder

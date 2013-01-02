@@ -21,15 +21,15 @@ public abstract class AbstractNewEditNewsResponse extends AbstractNewsResponse {
     /**
      * Holds data of the command.
      */
-    protected AbstractNewEditNews command = null;
+    private AbstractNewEditNews command = null;
     /**
      * Contains global errors if any exists.
      */
-    protected List<ObjectError> globalErrors = new ArrayList<ObjectError>();
+    private List<ObjectError> globalErrors = new ArrayList<ObjectError>();
     /**
      * Contains field errors if any exists.
      */
-    protected List<FieldError> fieldErrors = new ArrayList<FieldError>();
+    private List<FieldError> fieldErrors = new ArrayList<FieldError>();
 
     public AbstractNewEditNewsResponse(AbstractNewEditNews command) {
         super();

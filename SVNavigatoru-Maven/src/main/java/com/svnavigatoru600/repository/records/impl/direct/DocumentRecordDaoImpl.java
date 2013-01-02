@@ -6,10 +6,8 @@ import java.util.Map;
 
 import javax.sql.DataSource;
 
-import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcDaoSupport;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
-import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 
 import com.svnavigatoru600.domain.records.AbstractDocumentRecord;
@@ -26,26 +24,9 @@ public class DocumentRecordDaoImpl extends NamedParameterJdbcDaoSupport {
      */
     private static final String TABLE_NAME = PersistedClass.AbstractDocumentRecord.getTableName();
 
-    public void update(AbstractDocumentRecord record, DataSource dataSource) {
-        if (record.getFile() == null) {
-            return;
-        }
-
-        String query = String.format("UPDATE %s SET %s = :%s, %s = :%s WHERE %s = :%s",
-                DocumentRecordDaoImpl.TABLE_NAME, DocumentRecordField.fileName.getColumnName(),
-                DocumentRecordField.fileName.name(), DocumentRecordField.file.getColumnName(),
-                DocumentRecordField.file.name(), DocumentRecordField.id.getColumnName(),
-                DocumentRecordField.id.name());
-
-        SqlParameterSource namedParameters = new BeanPropertySqlParameterSource(record);
-
-        // this.getSimpleJdbcTemplate() cannot be used here since the dataSource
-        // is not set (i.e. equals null).
-        (new NamedParameterJdbcTemplate(dataSource)).update(query, namedParameters);
-    }
-
     /**
-     * Used during the save of the given <code>record</code>.
+     * Maps properties of the given {@link AbstractDocumentRecord} to names of the corresponding database
+     * column.
      */
     private Map<String, Object> getNamedParameters(AbstractDocumentRecord record) {
         Map<String, Object> parameters = new HashMap<String, Object>();
@@ -53,6 +34,23 @@ public class DocumentRecordDaoImpl extends NamedParameterJdbcDaoSupport {
         parameters.put(DocumentRecordField.fileName.getColumnName(), record.getFileName());
         parameters.put(DocumentRecordField.file.getColumnName(), record.getFile());
         return parameters;
+    }
+
+    public void update(AbstractDocumentRecord record, DataSource dataSource) {
+        if (record.getFile() == null) {
+            return;
+        }
+
+        String idColumn = DocumentRecordField.id.getColumnName();
+        String fileNameColumn = DocumentRecordField.fileName.getColumnName();
+        String fileColumn = DocumentRecordField.file.getColumnName();
+        String query = String.format("UPDATE %s SET %s = :%s, %s = :%s WHERE %s = :%s",
+                DocumentRecordDaoImpl.TABLE_NAME, fileNameColumn, fileNameColumn, fileColumn, fileColumn,
+                idColumn, idColumn);
+
+        // this.getSimpleJdbcTemplate() cannot be used here since the dataSource
+        // is not set (i.e. equals null).
+        (new NamedParameterJdbcTemplate(dataSource)).update(query, this.getNamedParameters(record));
     }
 
     public int save(AbstractDocumentRecord record, DataSource dataSource) {

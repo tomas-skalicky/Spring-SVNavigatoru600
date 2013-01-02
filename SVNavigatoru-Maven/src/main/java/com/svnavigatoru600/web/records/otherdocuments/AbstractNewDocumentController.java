@@ -7,6 +7,8 @@ import java.sql.SQLException;
 import javax.servlet.http.HttpServletRequest;
 import javax.sql.rowset.serial.SerialException;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.context.MessageSource;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Controller;
@@ -38,6 +40,7 @@ public abstract class AbstractNewDocumentController extends AbstractNewEditDocum
      * Code of the error message used when the {@link DataAccessException} is thrown.
      */
     public static final String DATABASE_ERROR_MESSAGE_CODE = "other-documents.adding-failed-due-to-database-error";
+    private final Log logger = LogFactory.getLog(this.getClass());
 
     /**
      * Constructs a controller which considers all {@link OtherDocumentRecord OtherDocumentRecords} of all
@@ -72,8 +75,8 @@ public abstract class AbstractNewDocumentController extends AbstractNewEditDocum
         // considers only one special type of records, checkbox of this type
         // is pre-checked.
         boolean[] newTypes = OtherDocumentRecordUtils.getDefaultArrayOfCheckIndicators();
-        if (!this.allRecordTypes) {
-            newTypes[this.recordType.ordinal()] = true;
+        if (!this.isAllRecordTypes()) {
+            newTypes[this.getRecordType().ordinal()] = true;
         }
         command.setNewTypes(newTypes);
 
@@ -81,8 +84,8 @@ public abstract class AbstractNewDocumentController extends AbstractNewEditDocum
         command.setTypeCheckboxId(this.getTypeCheckboxId());
         command.setLocalizedTypeCheckboxTitles(this.getLocalizedTypeCheckboxTitles(request));
 
-        model.addAttribute(AbstractNewDocumentController.COMMAND, command);
-        return this.views.neww;
+        model.addAttribute(AbstractNewEditDocumentController.COMMAND, command);
+        return this.getViews().getNeww();
     }
 
     public static void displayIt(java.io.File node) {
@@ -112,9 +115,9 @@ public abstract class AbstractNewDocumentController extends AbstractNewEditDocum
         command.setTypeCheckboxId(this.getTypeCheckboxId());
         command.setLocalizedTypeCheckboxTitles(this.getLocalizedTypeCheckboxTitles(request));
 
-        this.validator.validate(command, result);
+        this.getValidator().validate(command, result);
         if (result.hasErrors()) {
-            return this.views.neww;
+            return this.getViews().getNeww();
         }
 
         // Updates the data of the new record. Modifies the filename to make
@@ -154,7 +157,8 @@ public abstract class AbstractNewDocumentController extends AbstractNewEditDocum
             newRecord.setFile(blobFile);
             // \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
-            int recordId = this.recordDao.save(newRecord);
+            final OtherDocumentRecordDao recordDao = this.getRecordDao();
+            int recordId = recordDao.save(newRecord);
             this.logger.info(String.format("The file '%s' has been successfully uploaded", fileName));
 
             // Since we need ID of the new record for the creation of
@@ -163,33 +167,33 @@ public abstract class AbstractNewDocumentController extends AbstractNewEditDocum
             // of the types.
             newRecord.setTypes(OtherDocumentRecordUtils.convertIndicatorsToRelations(command.getNewTypes(),
                     recordId));
-            this.recordDao.update(newRecord);
+            recordDao.update(newRecord);
 
             // Clears the command object from the session.
             status.setComplete();
 
             // Returns the form success view.
             model.addAttribute(Configuration.REDIRECTION_ATTRIBUTE,
-                    String.format("%svytvoreno/", this.baseUrl));
+                    String.format("%svytvoreno/", this.getBaseUrl()));
             return Configuration.REDIRECTION_PAGE;
 
         } catch (IllegalStateException e) {
             this.logger.error(newRecord, e);
-            result.reject(AbstractNewDocumentController.UPLOAD_FILE_ERROR_MESSAGE_CODE);
+            result.reject(AbstractNewEditDocumentController.UPLOAD_FILE_ERROR_MESSAGE_CODE);
         } catch (IOException e) {
             this.logger.error(newRecord, e);
-            result.reject(AbstractNewDocumentController.UPLOAD_FILE_ERROR_MESSAGE_CODE);
+            result.reject(AbstractNewEditDocumentController.UPLOAD_FILE_ERROR_MESSAGE_CODE);
         } catch (SerialException e) {
             this.logger.error(newRecord, e);
-            result.reject(AbstractNewDocumentController.UPLOAD_FILE_ERROR_MESSAGE_CODE);
+            result.reject(AbstractNewEditDocumentController.UPLOAD_FILE_ERROR_MESSAGE_CODE);
         } catch (SQLException e) {
             this.logger.error(newRecord, e);
-            result.reject(AbstractNewDocumentController.UPLOAD_FILE_ERROR_MESSAGE_CODE);
+            result.reject(AbstractNewEditDocumentController.UPLOAD_FILE_ERROR_MESSAGE_CODE);
         } catch (DataAccessException e) {
             // We encountered a database problem.
             this.logger.error(newRecord, e);
             result.reject(AbstractNewDocumentController.DATABASE_ERROR_MESSAGE_CODE);
         }
-        return this.views.neww;
+        return this.getViews().getNeww();
     }
 }

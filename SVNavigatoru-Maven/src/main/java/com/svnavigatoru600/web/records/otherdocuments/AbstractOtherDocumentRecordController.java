@@ -30,9 +30,9 @@ public abstract class AbstractOtherDocumentRecordController extends AbstractDocu
      * <code>allRecordTypes</code> equals <code>false</code> and <code>RECORD_TYPE</code> determines the exact
      * type of treated records.
      */
-    protected final OtherDocumentRecordType recordType;
-    protected boolean allRecordTypes = false;
-    protected OtherDocumentRecordDao recordDao = null;
+    private final OtherDocumentRecordType recordType;
+    private boolean allRecordTypes = false;
+    private OtherDocumentRecordDao recordDao = null;
 
     /**
      * Constructs a controller which considers all {@link OtherDocumentRecord OtherDocumentRecords} of all
@@ -53,6 +53,27 @@ public abstract class AbstractOtherDocumentRecordController extends AbstractDocu
         super(baseUrl, views, messageSource);
         this.recordType = recordType;
         this.recordDao = recordDao;
+    }
+
+    /**
+     * Trivial getter
+     */
+    protected OtherDocumentRecordType getRecordType() {
+        return this.recordType;
+    }
+
+    /**
+     * Trivial getter
+     */
+    protected boolean isAllRecordTypes() {
+        return this.allRecordTypes;
+    }
+
+    /**
+     * Trivial getter
+     */
+    protected OtherDocumentRecordDao getRecordDao() {
+        return this.recordDao;
     }
 
     /**
@@ -99,7 +120,7 @@ public abstract class AbstractOtherDocumentRecordController extends AbstractDocu
                 throw new RuntimeException("Unsupported type of documents.");
             }
             checkboxTitles.put(type.ordinal(),
-                    Localization.findLocaleMessage(this.messageSource, request, titleCode));
+                    Localization.findLocaleMessage(this.getMessageSource(), request, titleCode));
         }
         return checkboxTitles;
     }

@@ -1,7 +1,6 @@
 package com.svnavigatoru600.repository;
 
 import java.sql.Connection;
-import java.util.Date;
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -63,9 +62,6 @@ public class NewsTest extends AbstractMapperTest {
         news.setTitle(title);
         news.setText(text);
 
-        Date now = new Date();
-        news.setCreationTime(now);
-        news.setLastSaveTime(now);
         int newId = newsDao.save(news);
         this.commitChanges(sqlSession);
         return newId;
@@ -114,7 +110,6 @@ public class NewsTest extends AbstractMapperTest {
 
             // UPDATE
             news.setText(EDITED_NEWS_TEXT);
-            news.setLastSaveTime(new Date());
             newsDao.update(news);
             this.commitChanges(sqlSession);
 

@@ -3,10 +3,12 @@ package com.svnavigatoru600.domain.forum;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.inject.Inject;
+
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.svnavigatoru600.domain.users.User;
-import com.svnavigatoru600.repository.forum.ContributionDao;
+import com.svnavigatoru600.service.forum.contributions.ContributionService;
 
 /**
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
@@ -16,10 +18,11 @@ public class Contribution implements Serializable {
     private static final long serialVersionUID = 6558138282365185827L;
 
     @SuppressWarnings("unused")
-    private ContributionDao contributionDao;
+    private ContributionService contributionService;
 
-    public void setContributionDao(ContributionDao contributionDao) {
-        this.contributionDao = contributionDao;
+    @Inject
+    public void setContributionService(final ContributionService contributionService) {
+        this.contributionService = contributionService;
     }
 
     private int id;

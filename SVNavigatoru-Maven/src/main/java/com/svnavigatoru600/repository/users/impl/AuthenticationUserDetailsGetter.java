@@ -19,8 +19,7 @@ import com.svnavigatoru600.repository.users.UserDao;
  */
 public class AuthenticationUserDetailsGetter extends JdbcDaoImpl {
 
-    /** Logger for this class and subclasses */
-    protected final Log logger = LogFactory.getLog(this.getClass());
+    private final Log logger = LogFactory.getLog(this.getClass());
 
     private UserDao userDao;
 

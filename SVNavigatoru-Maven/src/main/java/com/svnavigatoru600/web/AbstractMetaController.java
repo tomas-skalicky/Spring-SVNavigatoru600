@@ -5,8 +5,6 @@ import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
@@ -20,11 +18,6 @@ import com.svnavigatoru600.service.util.Localization;
  */
 @Controller
 public abstract class AbstractMetaController {
-
-    /**
-     * Logger for this class and subclasses
-     */
-    protected final Log logger = LogFactory.getLog(this.getClass());
 
     @ModelAttribute("homeUrl")
     public String populateHomeUrl(HttpServletRequest request) {

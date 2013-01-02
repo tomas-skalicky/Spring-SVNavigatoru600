@@ -35,10 +35,9 @@ public final class AuthorityUtils {
     }
 
     /**
-     * <p>
      * Gets the default array of indicators which say which authorities (= roles) are checked (selected), and
      * which authorities are not checked.
-     * </p>
+     * <p>
      * <b>Precondition:</b> Ordinal values of all {@link AuthorityType AuthorityTypes} are exactly in the
      * range of <code>[0, 1, ..., AuthorityType.values().length-1]</code>.
      */

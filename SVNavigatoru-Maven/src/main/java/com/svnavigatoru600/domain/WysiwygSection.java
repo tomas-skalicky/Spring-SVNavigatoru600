@@ -3,9 +3,11 @@ package com.svnavigatoru600.domain;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.inject.Inject;
+
 import org.springframework.format.annotation.DateTimeFormat;
 
-import com.svnavigatoru600.repository.WysiwygSectionDao;
+import com.svnavigatoru600.service.WysiwygSectionService;
 
 /**
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
@@ -14,14 +16,15 @@ public class WysiwygSection implements Serializable {
 
     private static final long serialVersionUID = -2762455439041490854L;
 
-    private WysiwygSectionDao sectionDao;
+    private WysiwygSectionService sectionService;
 
-    public void setWysiwygSectionDao(WysiwygSectionDao sectionDao) {
-        this.sectionDao = sectionDao;
+    @Inject
+    public void setWysiwygSectionService(final WysiwygSectionService sectionService) {
+        this.sectionService = sectionService;
     }
 
     public void update() {
-        this.sectionDao.update(this);
+        this.sectionService.update(this);
     }
 
     private WysiwygSectionName name;

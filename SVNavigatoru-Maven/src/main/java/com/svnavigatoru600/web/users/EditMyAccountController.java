@@ -2,7 +2,7 @@ package com.svnavigatoru600.web.users;
 
 import javax.inject.Inject;
 
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.dao.DataAccessException;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -16,9 +16,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.support.SessionStatus;
 
 import com.svnavigatoru600.domain.users.User;
-import com.svnavigatoru600.repository.users.UserDao;
+import com.svnavigatoru600.service.users.UserService;
 import com.svnavigatoru600.service.users.validator.UpdateUserDataValidator;
-import com.svnavigatoru600.service.util.Hash;
 import com.svnavigatoru600.service.util.UserUtils;
 import com.svnavigatoru600.viewmodel.users.UpdateUserData;
 import com.svnavigatoru600.web.AbstractPrivateSectionMetaController;
@@ -37,16 +36,16 @@ public class EditMyAccountController extends AbstractPrivateSectionMetaControlle
     private static final String COMMAND = "updateUserDataCommand";
     private static final String PAGE_VIEW = "editMyUserAccount";
 
-    private UserDao userDao;
+    private UserService userService;
     private Validator validator;
 
     /**
      * Constructor.
      */
     @Inject
-    public EditMyAccountController(UserDao userDao, UpdateUserDataValidator validator) {
-        this.logger.debug("The UserAccountController object created.");
-        this.userDao = userDao;
+    public EditMyAccountController(UserService userService, UpdateUserDataValidator validator) {
+        LogFactory.getLog(this.getClass()).debug("The UserAccountController object created.");
+        this.userService = userService;
         this.validator = validator;
     }
 
@@ -95,35 +94,14 @@ public class EditMyAccountController extends AbstractPrivateSectionMetaControlle
             return EditMyAccountController.PAGE_VIEW;
         }
 
-        // Updates the original data.
-        User newUser = command.getUser();
-        User loggedUser = UserUtils.getLoggedUser();
-        // It is not possible to get the instance stored in the session, i.e.
-        // Users.getLoggedUser(). Otherwise, if we were not successful, e.g.
-        // because of the occupied email, the valid (old) user's data would be
-        // available anymore. They were removed by the new invalid data.
-        User originalUser = this.userDao.findByUsername(loggedUser.getUsername());
-        String newPassword = command.getNewPassword();
-        boolean isPasswordUpdated = StringUtils.isNotBlank(newPassword);
-        if (isPasswordUpdated) {
-            originalUser.setPassword(Hash.doSha1Hashing(newPassword));
-        }
-        originalUser.setEmail(newUser.getEmail());
-        originalUser.setPhone(newUser.getPhone());
-
-        // Sets user's email to null if the email is blank. The reason is the
-        // UNIQUE DB constraint.
-        originalUser.setEmailToNullIfBlank();
-
+        User originalUser = null;
         try {
-            // Stores the data.
-            this.userDao.update(originalUser);
-            // Updates the object in the session context.
-            loggedUser.setEmail(originalUser.getEmail());
-            loggedUser.setPhone(originalUser.getPhone());
-            if (isPasswordUpdated) {
-                loggedUser.setPassword(originalUser.getPassword());
-            }
+            // We cannot use the User object from the session, i.e. Users.getLoggedUser() since
+            // if the new user's data (e.g. email) were not valid, e.g. because of the occupied email,
+            // the old valid user's logging data would be available anymore. They were removed by the new
+            // invalid data.
+            originalUser = this.userService.findByUsername(UserUtils.getLoggedUser().getUsername());
+            this.userService.update(originalUser, command.getUser(), command.getNewPassword());
 
             // Clears the command object from the session.
             status.setComplete();
@@ -135,7 +113,7 @@ public class EditMyAccountController extends AbstractPrivateSectionMetaControlle
 
         } catch (DataAccessException e) {
             // We encountered a database problem.
-            this.logger.error(originalUser, e);
+            LogFactory.getLog(this.getClass()).error(originalUser, e);
             result.rejectValue("user.email", "email.occupied-by-somebody");
             return EditMyAccountController.PAGE_VIEW;
         }

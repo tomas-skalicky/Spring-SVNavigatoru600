@@ -19,11 +19,18 @@ public abstract class AbstractNewEditNewsController extends AbstractNewsControll
      * Command used in /main-content/news/new-edit-news.jsp.
      */
     public static final String COMMAND = "newEditNewsCommand";
-    protected Validator validator;
+    private Validator validator;
 
     public AbstractNewEditNewsController(NewsService newsService, AbstractNewsValidator validator,
             MessageSource messageSource) {
         super(newsService, messageSource);
         this.validator = validator;
+    }
+
+    /**
+     * Trivial getter
+     */
+    protected Validator getValidator() {
+        return this.validator;
     }
 }

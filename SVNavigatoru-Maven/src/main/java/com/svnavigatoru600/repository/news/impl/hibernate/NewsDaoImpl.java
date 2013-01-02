@@ -1,5 +1,6 @@
 package com.svnavigatoru600.repository.news.impl.hibernate;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
@@ -29,12 +30,21 @@ public class NewsDaoImpl extends HibernateDaoSupport implements NewsDao {
 
     @Override
     public void update(News news) {
+        Date now = new Date();
+        news.setLastSaveTime(now);
+        
         this.getHibernateTemplate().update(news);
     }
 
     @Override
     public int save(News news) {
-        return (Integer) this.getHibernateTemplate().save(news);
+        Date now = new Date();
+        news.setCreationTime(now);
+        news.setLastSaveTime(now);
+        
+        int newId = (Integer) this.getHibernateTemplate().save(news);
+        news.setId(newId);
+        return newId;
     }
 
     @Override

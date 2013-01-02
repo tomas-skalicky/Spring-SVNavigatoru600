@@ -22,7 +22,7 @@ public class GoToEditFormResponse extends AbstractGoToFormResponse {
 
     private void setFormAction(HttpServletRequest request) {
         StringBuffer endingBuilder = new StringBuffer(FORM_ACTION_MIDDLE);
-        endingBuilder.append(this.news.getId());
+        endingBuilder.append(this.getNews().getId());
         endingBuilder.append("/");
         super.setFormAction(endingBuilder.toString(), request);
     }

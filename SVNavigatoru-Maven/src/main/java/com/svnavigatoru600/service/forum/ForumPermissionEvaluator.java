@@ -11,8 +11,8 @@ import org.springframework.stereotype.Service;
 import com.svnavigatoru600.domain.forum.Contribution;
 import com.svnavigatoru600.domain.forum.Thread;
 import com.svnavigatoru600.domain.users.User;
-import com.svnavigatoru600.repository.forum.ContributionDao;
-import com.svnavigatoru600.repository.forum.ThreadDao;
+import com.svnavigatoru600.service.forum.contributions.ContributionService;
+import com.svnavigatoru600.service.forum.threads.ThreadService;
 
 /**
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
@@ -20,17 +20,17 @@ import com.svnavigatoru600.repository.forum.ThreadDao;
 @Service
 public class ForumPermissionEvaluator implements PermissionEvaluator {
 
-    private ContributionDao contributionDao;
-    private ThreadDao threadDao;
+    private ContributionService contributionService;
+    private ThreadService threadService;
 
     @Inject
-    public void setContributionDao(ContributionDao contributionDao) {
-        this.contributionDao = contributionDao;
+    public void setContributionService(ContributionService contributionService) {
+        this.contributionService = contributionService;
     }
 
     @Inject
-    public void setThreadDao(ThreadDao threadDao) {
-        this.threadDao = threadDao;
+    public void setThreadService(ThreadService threadService) {
+        this.threadService = threadService;
     }
 
     @Override
@@ -50,10 +50,10 @@ public class ForumPermissionEvaluator implements PermissionEvaluator {
     public boolean hasPermission(Authentication authentication, Serializable targetId, String targetType,
             Object permission) {
         if (Contribution.class.getName().equals(targetType)) {
-            Contribution contribution = this.contributionDao.findById((Integer) targetId);
+            Contribution contribution = this.contributionService.findById((Integer) targetId);
             return this.hasUserPermission(authentication, contribution.getAuthor(), permission);
         } else if (Thread.class.getName().equals(targetType)) {
-            Thread thread = this.threadDao.findById((Integer) targetId);
+            Thread thread = this.threadService.findById((Integer) targetId);
             return this.hasUserPermission(authentication, thread.getAuthor(), permission);
         } else {
             throw new RuntimeException("Unsupported type of target domain object.");

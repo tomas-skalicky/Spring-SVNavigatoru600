@@ -8,7 +8,7 @@ public abstract class AbstractNewsResponse {
     /**
      * Indicates whether the command has been successful, or not.
      */
-    protected boolean successful = false;
+    private boolean successful = false;
 
     /**
      * Sets up everything in a way that the processing of the command has been successful.

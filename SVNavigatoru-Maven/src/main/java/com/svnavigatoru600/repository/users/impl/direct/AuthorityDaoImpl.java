@@ -1,11 +1,12 @@
 package com.svnavigatoru600.repository.users.impl.direct;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.jdbc.core.simple.SimpleJdbcDaoSupport;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcDaoSupport;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.security.core.GrantedAuthority;
 
@@ -18,7 +19,7 @@ import com.svnavigatoru600.repository.users.impl.AuthorityField;
 /**
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
-public class AuthorityDaoImpl extends SimpleJdbcDaoSupport implements AuthorityDao {
+public class AuthorityDaoImpl extends NamedParameterJdbcDaoSupport implements AuthorityDao {
 
     /**
      * Database table which provides a persistence of {@link Authority Authorities}.
@@ -27,13 +28,17 @@ public class AuthorityDaoImpl extends SimpleJdbcDaoSupport implements AuthorityD
 
     @Override
     public List<Authority> findAll(String username) {
-        String query = String.format("SELECT * FROM %s a WHERE a.%s = ?", AuthorityDaoImpl.TABLE_NAME,
-                AuthorityField.username.getColumnName());
-        return this.getSimpleJdbcTemplate().query(query, new AuthorityRowMapper(), username);
+        String usernameColumn = AuthorityField.username.getColumnName();
+        String query = String.format("SELECT * FROM %s a WHERE a.%s = :%s", AuthorityDaoImpl.TABLE_NAME,
+                usernameColumn, usernameColumn);
+
+        Map<String, String> args = Collections.singletonMap(usernameColumn, username);
+
+        return this.getNamedParameterJdbcTemplate().query(query, args, new AuthorityRowMapper());
     }
 
     /**
-     * Used during the save of the given <code>authority</code>.
+     * Maps properties of the given {@link Authority} to names of the corresponding database columns.
      */
     private Map<String, Object> getNamedParameters(Authority authority) {
         Map<String, Object> parameters = new HashMap<String, Object>();
@@ -50,6 +55,7 @@ public class AuthorityDaoImpl extends SimpleJdbcDaoSupport implements AuthorityD
         SimpleJdbcInsert insert = new SimpleJdbcInsert(this.getDataSource()).withTableName(
                 AuthorityDaoImpl.TABLE_NAME).usingColumns(AuthorityField.username.getColumnName(),
                 AuthorityField.authority.getColumnName());
+
         insert.execute(this.getNamedParameters(authority));
     }
 
@@ -62,8 +68,12 @@ public class AuthorityDaoImpl extends SimpleJdbcDaoSupport implements AuthorityD
 
     @Override
     public void delete(String username) {
-        String query = String.format("DELETE FROM %s WHERE %s = ?", AuthorityDaoImpl.TABLE_NAME,
-                AuthorityField.username.getColumnName());
-        this.getSimpleJdbcTemplate().update(query, username);
+        String usernameColumn = AuthorityField.username.getColumnName();
+        String query = String.format("DELETE FROM %s WHERE %s = :%s", AuthorityDaoImpl.TABLE_NAME,
+                usernameColumn, usernameColumn);
+
+        Map<String, String> args = Collections.singletonMap(usernameColumn, username);
+
+        this.getNamedParameterJdbcTemplate().update(query, args);
     }
 }

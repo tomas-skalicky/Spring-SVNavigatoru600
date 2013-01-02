@@ -46,10 +46,8 @@ public class OtherDocumentRecordTypeRelationId implements Serializable {
         this.type = OtherDocumentRecordType.valueOf(type);
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see java.lang.Object#hashCode()
+    /**
+     * Generated
      */
     @Override
     public int hashCode() {
@@ -60,10 +58,8 @@ public class OtherDocumentRecordTypeRelationId implements Serializable {
         return result;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see java.lang.Object#equals(java.lang.Object)
+    /**
+     * Generated
      */
     @Override
     public boolean equals(Object obj) {

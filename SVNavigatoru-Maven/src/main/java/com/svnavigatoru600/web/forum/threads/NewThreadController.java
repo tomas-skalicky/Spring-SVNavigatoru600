@@ -6,6 +6,7 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.logging.LogFactory;
 import org.springframework.context.MessageSource;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Controller;
@@ -20,7 +21,7 @@ import org.springframework.web.bind.support.SessionStatus;
 import com.svnavigatoru600.domain.forum.Contribution;
 import com.svnavigatoru600.domain.forum.Thread;
 import com.svnavigatoru600.domain.users.User;
-import com.svnavigatoru600.repository.forum.ThreadDao;
+import com.svnavigatoru600.service.forum.threads.ThreadService;
 import com.svnavigatoru600.service.forum.threads.validator.NewThreadValidator;
 import com.svnavigatoru600.service.util.UserUtils;
 import com.svnavigatoru600.viewmodel.forum.threads.NewThread;
@@ -42,8 +43,9 @@ public class NewThreadController extends AbstractNewEditThreadController {
      * Constructor.
      */
     @Inject
-    public NewThreadController(ThreadDao threadDao, NewThreadValidator validator, MessageSource messageSource) {
-        super(threadDao, validator, messageSource);
+    public NewThreadController(ThreadService threadService, NewThreadValidator validator,
+            MessageSource messageSource) {
+        super(threadService, validator, messageSource);
     }
 
     /**
@@ -59,7 +61,7 @@ public class NewThreadController extends AbstractNewEditThreadController {
         Contribution contribution = new Contribution();
         command.setContribution(contribution);
 
-        model.addAttribute(NewThreadController.COMMAND, command);
+        model.addAttribute(AbstractNewEditThreadController.COMMAND, command);
         return PageViews.NEW.getViewName();
     }
 
@@ -74,7 +76,7 @@ public class NewThreadController extends AbstractNewEditThreadController {
     public String processSubmittedForm(@ModelAttribute(NewThreadController.COMMAND) NewThread command,
             BindingResult result, SessionStatus status, HttpServletRequest request, ModelMap model) {
 
-        this.validator.validate(command, result);
+        this.getValidator().validate(command, result);
         if (result.hasErrors()) {
             return PageViews.NEW.getViewName();
         }
@@ -95,19 +97,19 @@ public class NewThreadController extends AbstractNewEditThreadController {
 
         try {
             // Stores both the thread and the contribution to the repository.
-            this.threadDao.save(newThread);
+            this.getThreadService().save(newThread);
 
             // Clears the command object from the session.
             status.setComplete();
 
             // Returns the form success view.
             model.addAttribute(Configuration.REDIRECTION_ATTRIBUTE,
-                    String.format("%svytvoreno/", NewThreadController.BASE_URL));
+                    String.format("%svytvoreno/", AbstractThreadController.BASE_URL));
             return Configuration.REDIRECTION_PAGE;
 
         } catch (DataAccessException e) {
             // We encountered a database problem.
-            this.logger.error(newThread, e);
+            LogFactory.getLog(this.getClass()).error(newThread, e);
             result.reject(NewThreadController.DATABASE_ERROR_MESSAGE_CODE);
         }
         return PageViews.NEW.getViewName();

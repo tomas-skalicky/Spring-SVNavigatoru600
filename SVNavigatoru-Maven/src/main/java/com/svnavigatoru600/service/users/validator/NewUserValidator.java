@@ -3,16 +3,13 @@ package com.svnavigatoru600.service.users.validator;
 import javax.inject.Inject;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.Errors;
 
 import com.svnavigatoru600.domain.users.User;
-import com.svnavigatoru600.repository.users.UserDao;
+import com.svnavigatoru600.service.users.UserService;
 import com.svnavigatoru600.service.util.Email;
 import com.svnavigatoru600.service.util.Password;
-import com.svnavigatoru600.service.util.UserUtils;
 import com.svnavigatoru600.service.util.Username;
 import com.svnavigatoru600.viewmodel.users.AdministrateUserData;
 
@@ -24,14 +21,11 @@ import com.svnavigatoru600.viewmodel.users.AdministrateUserData;
 @Service
 public class NewUserValidator extends AbstractUserDataValidator {
 
-    /** Logger for this class and subclasses */
-    protected final Log logger = LogFactory.getLog(this.getClass());
-
-    private UserDao userDao;
+    private UserService userService;
 
     @Inject
-    public void setUserDao(UserDao userDao) {
-        this.userDao = userDao;
+    public void setUserService(UserService userService) {
+        this.userService = userService;
     }
 
     @Override
@@ -52,7 +46,7 @@ public class NewUserValidator extends AbstractUserDataValidator {
         } else {
             if (!Username.isValid(username)) {
                 errors.rejectValue(field, "username.bad-format");
-            } else if (UserUtils.isUsernameOccupied(username, this.userDao)) {
+            } else if (this.userService.isUsernameOccupied(username)) {
                 errors.rejectValue(field, "username.occupied-by-somebody");
             }
         }
@@ -82,7 +76,7 @@ public class NewUserValidator extends AbstractUserDataValidator {
         } else {
             if (!Email.isValid(email)) {
                 errors.rejectValue(field, "email.bad-format");
-            } else if (UserUtils.isEmailOccupied(email, this.userDao)) {
+            } else if (this.userService.isEmailOccupied(email)) {
                 errors.rejectValue(field, "email.occupied-by-somebody");
             }
         }

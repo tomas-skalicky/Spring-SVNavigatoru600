@@ -48,7 +48,7 @@ public class ListUsersController extends AbstractUserController {
         final ShowAllUsers command = new ShowAllUsers();
 
         final boolean testUsers = false;
-        final List<User> users = this.userDao.loadAllOrdered(OrderType.ASCENDING, testUsers);
+        final List<User> users = this.getUserDao().findAllOrdered(OrderType.ASCENDING, testUsers);
         command.setUsers(users);
 
         // Sets up all (but necessary) maps.
@@ -91,8 +91,8 @@ public class ListUsersController extends AbstractUserController {
 
         for (User user : users) {
             final Object[] messageParams = new Object[] { user.getUsername(), user.getFullName() };
-            questions.put(user,
-                    Localization.findLocaleMessage(this.messageSource, request, messageCode, messageParams));
+            questions.put(user, Localization.findLocaleMessage(this.getMessageSource(), request, messageCode,
+                    messageParams));
         }
         return questions;
     }

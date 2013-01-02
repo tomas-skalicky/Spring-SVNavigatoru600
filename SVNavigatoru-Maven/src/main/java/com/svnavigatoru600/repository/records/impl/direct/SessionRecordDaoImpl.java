@@ -5,9 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcDaoSupport;
-import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 
 import com.svnavigatoru600.domain.records.AbstractDocumentRecord;
@@ -95,9 +93,7 @@ public class SessionRecordDaoImpl extends NamedParameterJdbcDaoSupport implement
                 SessionRecordDaoImpl.SELECT_FROM_CLAUSE_WITHOUT_FILE,
                 SessionRecordField.sessionDate.getColumnName(), order.getDatabaseCode());
 
-        Map<String, String> args = new HashMap<String, String>();
-
-        return this.getNamedParameterJdbcTemplate().query(query, args, new SessionRecordRowMapper(false));
+        return this.getJdbcTemplate().query(query, new SessionRecordRowMapper(false));
     }
 
     @Override
@@ -112,26 +108,8 @@ public class SessionRecordDaoImpl extends NamedParameterJdbcDaoSupport implement
         return this.getNamedParameterJdbcTemplate().query(query, args, new SessionRecordRowMapper(false));
     }
 
-    @Override
-    public void update(SessionRecord record) {
-        // NOTE: updates the record in both tables 'document_records' and
-        // 'session_records'.
-        this.documentRecordDao.update(record, this.getDataSource());
-
-        String query = String.format("UPDATE %s SET %s = :%s, %s = :%s, %s = :%s WHERE %s = :%s",
-                SessionRecordDaoImpl.TABLE_NAME, SessionRecordField.type.getColumnName(),
-                SessionRecordField.type.name(), SessionRecordField.sessionDate.getColumnName(),
-                SessionRecordField.sessionDate.name(), SessionRecordField.discussedTopics.getColumnName(),
-                SessionRecordField.discussedTopics.name(), SessionRecordField.id.getColumnName(),
-                SessionRecordField.id.name());
-
-        SqlParameterSource namedParameters = new BeanPropertySqlParameterSource(record);
-
-        this.getNamedParameterJdbcTemplate().update(query, namedParameters);
-    }
-
     /**
-     * Used during the save of the given <code>record</code>.
+     * Maps properties of the given {@link SessionRecord} to names of the corresponding database columns.
      */
     private Map<String, Object> getNamedParameters(SessionRecord record) {
         Map<String, Object> parameters = new HashMap<String, Object>();
@@ -140,6 +118,23 @@ public class SessionRecordDaoImpl extends NamedParameterJdbcDaoSupport implement
         parameters.put(SessionRecordField.sessionDate.getColumnName(), record.getSessionDate());
         parameters.put(SessionRecordField.discussedTopics.getColumnName(), record.getDiscussedTopics());
         return parameters;
+    }
+
+    @Override
+    public void update(SessionRecord record) {
+        // NOTE: updates the record in both tables 'document_records' and
+        // 'session_records'.
+        this.documentRecordDao.update(record, this.getDataSource());
+
+        String idColumn = SessionRecordField.id.getColumnName();
+        String typeColumn = SessionRecordField.type.getColumnName();
+        String sessionDateColumn = SessionRecordField.sessionDate.getColumnName();
+        String discussedTopicsColumn = SessionRecordField.discussedTopics.getColumnName();
+        String query = String.format("UPDATE %s SET %s = :%s, %s = :%s, %s = :%s WHERE %s = :%s",
+                SessionRecordDaoImpl.TABLE_NAME, typeColumn, typeColumn, sessionDateColumn,
+                sessionDateColumn, discussedTopicsColumn, discussedTopicsColumn, idColumn, idColumn);
+
+        this.getNamedParameterJdbcTemplate().update(query, this.getNamedParameters(record));
     }
 
     @Override

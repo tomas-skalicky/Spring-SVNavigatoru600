@@ -2,6 +2,7 @@ package com.svnavigatoru600.web;
 
 import javax.inject.Inject;
 
+import org.apache.commons.logging.LogFactory;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,7 +13,7 @@ import org.springframework.web.bind.support.SessionStatus;
 
 import com.svnavigatoru600.domain.WysiwygSection;
 import com.svnavigatoru600.domain.WysiwygSectionName;
-import com.svnavigatoru600.repository.WysiwygSectionDao;
+import com.svnavigatoru600.service.WysiwygSectionService;
 
 /**
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
@@ -20,32 +21,37 @@ import com.svnavigatoru600.repository.WysiwygSectionDao;
 @Controller
 public abstract class AbstractWysiwygSectionController extends AbstractPrivateSectionMetaController {
 
-    protected WysiwygSectionDao sectionDao;
-    protected WysiwygSectionName sectionName;
-    protected String viewPageView;
-    protected String editPageView;
-    protected String viewPageAddress;
+    private final WysiwygSectionService sectionService;
+    private final WysiwygSectionName sectionName;
+    private final String viewPageView;
+    private final String editPageView;
+    private final String viewPageAddress;
 
     /**
      * Constructor.
      */
     @Inject
-    public AbstractWysiwygSectionController(WysiwygSectionDao sectionDao) {
-        this.logger.debug("The WysiwygSectionController object created.");
-        this.sectionDao = sectionDao;
+    public AbstractWysiwygSectionController(WysiwygSectionService sectionService,
+            WysiwygSectionName sectionName, String viewPageView, String editPageView, String viewPageAddress) {
+        LogFactory.getLog(this.getClass()).debug("The WysiwygSectionController object created.");
+        this.sectionService = sectionService;
+        this.sectionName = sectionName;
+        this.viewPageView = viewPageView;
+        this.editPageView = editPageView;
+        this.viewPageAddress = viewPageAddress;
     }
 
     public String showViewPage(ModelMap model) {
         try {
-            model.addAttribute("section", this.sectionDao.findByName(this.sectionName));
+            model.addAttribute("section", this.sectionService.findByName(this.sectionName));
         } catch (DataAccessException e) {
-            this.logger.error(null, e);
+            LogFactory.getLog(this.getClass()).error(null, e);
         }
         return this.viewPageView;
     }
 
     public String showEditPage(ModelMap model) {
-        model.addAttribute("wysiwygSectionEditCommand", this.sectionDao.findByName(this.sectionName));
+        model.addAttribute("wysiwygSectionEditCommand", this.sectionService.findByName(this.sectionName));
         return this.editPageView;
     }
 
@@ -58,12 +64,12 @@ public abstract class AbstractWysiwygSectionController extends AbstractPrivateSe
 
         try {
             // Stores the data.
-            this.sectionDao.update(command);
+            this.sectionService.update(command);
 
             // Clears the command object from the session.
             status.setComplete();
         } catch (DataAccessException e) {
-            this.logger.error(null, e);
+            LogFactory.getLog(this.getClass()).error(null, e);
             result.reject("edit.changes-not-saved-due-to-database-error");
         }
         return this.editPageView;

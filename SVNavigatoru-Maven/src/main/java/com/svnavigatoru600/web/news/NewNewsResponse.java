@@ -46,7 +46,7 @@ public class NewNewsResponse extends AbstractNewEditNewsResponse {
     private void initDateVariables(HttpServletRequest request) {
         Locale locale = Localization.getLocale(request);
 
-        News news = this.command.getNews();
+        News news = this.getCommand().getNews();
         Date creationTime = news.getCreationTime();
         this.localizedMonth = DateUtils
                 .format(creationTime, DateUtils.LONG_MONTH_FORMATS.get(locale), locale);
@@ -58,7 +58,7 @@ public class NewNewsResponse extends AbstractNewEditNewsResponse {
     }
 
     private void initMessageVariables(MessageSource messageSource, HttpServletRequest request) {
-        News news = this.command.getNews();
+        News news = this.getCommand().getNews();
         this.localizedDeleteQuestion = ListNewsController.getLocalizedDeleteQuestion(news, messageSource,
                 request);
     }

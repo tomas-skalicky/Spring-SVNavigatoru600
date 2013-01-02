@@ -6,6 +6,7 @@ import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.context.MessageSource;
 import org.springframework.dao.DataAccessException;
 import org.springframework.security.core.GrantedAuthority;
@@ -68,7 +69,7 @@ public class NewUserController extends AbstractNewEditUserController {
         command.setRoleCheckboxId(this.getRoleCheckboxId());
         command.setLocalizedRoleCheckboxTitles(this.getLocalizedRoleCheckboxTitles(request));
 
-        model.addAttribute(NewUserController.COMMAND, command);
+        model.addAttribute(AbstractNewEditUserController.COMMAND, command);
         return PageViews.NEW.getViewName();
     }
 
@@ -88,7 +89,7 @@ public class NewUserController extends AbstractNewEditUserController {
         command.setRoleCheckboxId(this.getRoleCheckboxId());
         command.setLocalizedRoleCheckboxTitles(this.getLocalizedRoleCheckboxTitles(request));
 
-        this.validator.validate(command, result);
+        this.getValidator().validate(command, result);
         if (result.hasErrors()) {
             return PageViews.NEW.getViewName();
         }
@@ -111,7 +112,7 @@ public class NewUserController extends AbstractNewEditUserController {
 
         try {
             // Stores the data.
-            this.userDao.save(newUser);
+            this.getUserDao().save(newUser);
 
             // Notifies the user about its new account.
             if (!StringUtils.isBlank(newUser.getEmail())) {
@@ -127,7 +128,7 @@ public class NewUserController extends AbstractNewEditUserController {
 
         } catch (DataAccessException e) {
             // We encountered a database problem.
-            this.logger.error(newUser, e);
+            LogFactory.getLog(this.getClass()).error(newUser, e);
             result.reject("user-administration.creation-failed-due-to-database-error");
             return PageViews.NEW.getViewName();
         }
@@ -144,11 +145,12 @@ public class NewUserController extends AbstractNewEditUserController {
             return;
         }
 
-        final String subject = Localization.findLocaleMessage(this.messageSource, request,
+        final MessageSource messageSource = this.getMessageSource();
+        final String subject = Localization.findLocaleMessage(messageSource, request,
                 "email.subject.new-user");
         final Object[] messageParams = new Object[] { newUser.getLastName(), Configuration.DOMAIN,
                 newUser.getUsername(), emailAddress, newPassword };
-        final String messageText = Localization.findLocaleMessage(this.messageSource, request,
+        final String messageText = Localization.findLocaleMessage(messageSource, request,
                 "email.text.new-user", messageParams);
 
         Email.sendMail(emailAddress, subject, messageText);

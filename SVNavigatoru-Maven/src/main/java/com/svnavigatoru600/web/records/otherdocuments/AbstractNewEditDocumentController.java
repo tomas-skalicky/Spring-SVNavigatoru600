@@ -30,7 +30,7 @@ public abstract class AbstractNewEditDocumentController extends AbstractOtherDoc
      * Command used in /main-content/records/other-documents/templates/new-edit-record.jsp.
      */
     public static final String COMMAND = "newEditRecordCommand";
-    protected Validator validator;
+    private Validator validator;
 
     /**
      * Constructs a controller which considers all {@link OtherDocumentRecord OtherDocumentRecords} of all
@@ -52,5 +52,12 @@ public abstract class AbstractNewEditDocumentController extends AbstractOtherDoc
             AbstractOtherDocumentRecordValidator validator, MessageSource messageSource) {
         super(baseUrl, views, recordType, recordDao, messageSource);
         this.validator = validator;
+    }
+
+    /**
+     * Trivial getter
+     */
+    protected Validator getValidator() {
+        return this.validator;
     }
 }

@@ -6,6 +6,7 @@ import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.context.MessageSource;
 import org.springframework.dao.DataAccessException;
 import org.springframework.security.core.GrantedAuthority;
@@ -62,7 +63,7 @@ public class EditUserController extends AbstractNewEditUserController {
 
         AdministrateUserData command = new AdministrateUserData();
 
-        User user = this.userDao.findByUsername(username);
+        User user = this.getUserDao().findByUsername(username);
         command.setUser(user);
 
         // Collection of authorities is converted to a map.
@@ -72,7 +73,7 @@ public class EditUserController extends AbstractNewEditUserController {
         command.setRoleCheckboxId(this.getRoleCheckboxId());
         command.setLocalizedRoleCheckboxTitles(this.getLocalizedRoleCheckboxTitles(request));
 
-        model.addAttribute(EditUserController.COMMAND, command);
+        model.addAttribute(AbstractNewEditUserController.COMMAND, command);
         return PageViews.EDIT.getViewName();
     }
 
@@ -82,7 +83,7 @@ public class EditUserController extends AbstractNewEditUserController {
     @RequestMapping(value = EditUserController.BASE_URL + "{username}/ulozeno/", method = RequestMethod.GET)
     public String initFormAfterSave(@PathVariable String username, HttpServletRequest request, ModelMap model) {
         final String view = this.initForm(username, request, model);
-        ((AdministrateUserData) model.get(EditUserController.COMMAND)).setDataSaved(true);
+        ((AdministrateUserData) model.get(AbstractNewEditUserController.COMMAND)).setDataSaved(true);
         return view;
     }
 
@@ -95,22 +96,23 @@ public class EditUserController extends AbstractNewEditUserController {
     @RequestMapping(value = EditUserController.BASE_URL + "{username}/", method = RequestMethod.POST)
     @Transactional
     public String processSubmittedForm(
-            @ModelAttribute(EditUserController.COMMAND) AdministrateUserData command, BindingResult result,
-            final SessionStatus status, @PathVariable String username, HttpServletRequest request,
-            ModelMap model) {
+            @ModelAttribute(AbstractNewEditUserController.COMMAND) AdministrateUserData command,
+            BindingResult result, final SessionStatus status, @PathVariable String username,
+            HttpServletRequest request, ModelMap model) {
 
         // Sets up all auxiliary (but necessary) maps.
         command.setRoleCheckboxId(this.getRoleCheckboxId());
         command.setLocalizedRoleCheckboxTitles(this.getLocalizedRoleCheckboxTitles(request));
 
-        this.validator.validate(command, result);
+        this.getValidator().validate(command, result);
         if (result.hasErrors()) {
             return PageViews.EDIT.getViewName();
         }
 
         // Updates the original data.
         final User newUser = command.getUser();
-        final User originalUser = this.userDao.findByUsername(username);
+        final UserDao userDao = this.getUserDao();
+        final User originalUser = userDao.findByUsername(username);
         // The default value of the following indicator has to be true.
         // Otherwise, the notification email would be sent to the user.
         boolean arePasswordSame = true;
@@ -139,7 +141,7 @@ public class EditUserController extends AbstractNewEditUserController {
 
         try {
             // Stores the data.
-            this.userDao.update(originalUser);
+            userDao.update(originalUser);
 
             // Notifies the user about the change.
             if (!arePasswordSame) {
@@ -159,7 +161,7 @@ public class EditUserController extends AbstractNewEditUserController {
 
         } catch (DataAccessException e) {
             // We encountered a database problem.
-            this.logger.error(originalUser, e);
+            LogFactory.getLog(this.getClass()).error(originalUser, e);
             result.reject("edit.changes-not-saved-due-to-database-error");
             return PageViews.EDIT.getViewName();
         }
@@ -175,10 +177,11 @@ public class EditUserController extends AbstractNewEditUserController {
             return;
         }
 
-        final String subject = Localization.findLocaleMessage(this.messageSource, request,
+        final MessageSource messageSource = this.getMessageSource();
+        final String subject = Localization.findLocaleMessage(messageSource, request,
                 "email.subject.password-changed");
         final Object[] messageParams = new Object[] { user.getLastName(), Configuration.DOMAIN, newPassword };
-        final String messageText = Localization.findLocaleMessage(this.messageSource, request,
+        final String messageText = Localization.findLocaleMessage(messageSource, request,
                 "email.text.password-changed", messageParams);
 
         Email.sendMail(emailAddress, subject, messageText);
@@ -194,17 +197,18 @@ public class EditUserController extends AbstractNewEditUserController {
             return;
         }
 
-        final String subject = Localization.findLocaleMessage(this.messageSource, request,
+        final MessageSource messageSource = this.getMessageSource();
+        final String subject = Localization.findLocaleMessage(messageSource, request,
                 "email.subject.authorities-changed");
 
         // Converts the new authorities to the String representation.
         final StringBuilder newAuthorities = new StringBuilder();
         if (user.canSeeNews()) {
             if (user.canEditNews()) {
-                newAuthorities.append(Localization.findLocaleMessage(this.messageSource, request,
+                newAuthorities.append(Localization.findLocaleMessage(messageSource, request,
                         "user-roles.member-of-board"));
             } else {
-                newAuthorities.append(Localization.findLocaleMessage(this.messageSource, request,
+                newAuthorities.append(Localization.findLocaleMessage(messageSource, request,
                         "user-roles.member-of-sv"));
             }
         }
@@ -212,19 +216,19 @@ public class EditUserController extends AbstractNewEditUserController {
             if (newAuthorities.length() > 0) {
                 newAuthorities.append(", ");
             }
-            newAuthorities.append(Localization.findLocaleMessage(this.messageSource, request,
+            newAuthorities.append(Localization.findLocaleMessage(messageSource, request,
                     "user-roles.user-administrator"));
         }
         if (user.getAuthorities().size() == 1) {
             // The user is registered, but has no other authority.
-            newAuthorities.append(Localization.findLocaleMessage(this.messageSource, request,
+            newAuthorities.append(Localization.findLocaleMessage(messageSource, request,
                     "user-roles.no-authority"));
         }
         // End of the conversion.
 
         final Object[] messageParams = new Object[] { user.getLastName(), Configuration.DOMAIN,
                 newAuthorities };
-        final String messageText = Localization.findLocaleMessage(this.messageSource, request,
+        final String messageText = Localization.findLocaleMessage(messageSource, request,
                 "email.text.authorities-changed", messageParams);
 
         Email.sendMail(emailAddress, subject, messageText);

@@ -10,10 +10,14 @@ import javax.mail.Transport;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.context.MessageSource;
+
+import com.svnavigatoru600.web.Configuration;
 
 /**
  * Provides a set of static functions related to emails. The implementation borrowed from <a href=
@@ -23,10 +27,7 @@ import org.apache.commons.logging.LogFactory;
  */
 public final class Email {
 
-    /**
-     * Logger for this class and subclasses
-     */
-    protected static final Log LOGGER = LogFactory.getLog(Email.class);
+    private static final Log LOGGER = LogFactory.getLog(Email.class);
 
     // DO NOT FORGET to change the implementation of the sendMail function if
     // you change these constants.
@@ -167,5 +168,27 @@ public final class Email {
         Transport.send(message);
 
         Email.LOGGER.info(String.format("Email '%s' has been sent to '%s'.", subject, recipient));
+    }
+
+    /**
+     * Sends an email with the <code>newPassword</code> to the given <code>email</code>. The method is invoked
+     * when user's password has already been successfully reset.
+     * 
+     * @param newPassword
+     *            New not-hashed password of the recipient
+     */
+    public static void sendEmailOnPasswordReset(final String email, final String lastName,
+            final String newPassword, final HttpServletRequest request, final MessageSource messageSource) {
+        if (!Email.isSpecified(email)) {
+            return;
+        }
+
+        final String subject = Localization.findLocaleMessage(messageSource, request,
+                "email.subject.password-reset");
+        final Object[] messageParams = new Object[] { lastName, Configuration.DOMAIN, newPassword };
+        final String messageText = Localization.findLocaleMessage(messageSource, request,
+                "email.text.password-reset", messageParams);
+
+        Email.sendMail(email, subject, messageText);
     }
 }

@@ -28,7 +28,7 @@ public abstract class AbstractNewEditEventController extends AbstractEventContro
      * Command used in /main-content/event-calendar/new-edit-event.jsp.
      */
     public static final String COMMAND = "newEditEventCommand";
-    protected Validator validator;
+    private Validator validator;
 
     public AbstractNewEditEventController(final CalendarEventService eventService,
             final AbstractEventValidator validator, final MessageSource messageSource) {
@@ -37,14 +37,18 @@ public abstract class AbstractNewEditEventController extends AbstractEventContro
     }
 
     /**
-     * <p>
+     * Trivial getter
+     */
+    protected Validator getValidator() {
+        return this.validator;
+    }
+
+    /**
      * Creates a {@list List} of localized names of {@link PriorityType PriorityTypes}. The forms which use
      * this controller can access the resulting list.
-     * </p>
      * <p>
      * This method is used for filling up the tag <em>radiobuttons</em> and the value of the selected
      * radiobutton is stored to <code>NewEditEvent.newPriority</code>.
-     * </p>
      */
     @ModelAttribute("priorityTypeList")
     public List<String> populatePriorityTypeList(final HttpServletRequest request) {
@@ -52,8 +56,8 @@ public abstract class AbstractNewEditEventController extends AbstractEventContro
 
         for (PriorityType type : PriorityType.values()) {
             final String localizationCode = type.getLocalizationCode();
-            priorityTypeList.add(Localization
-                    .findLocaleMessage(this.messageSource, request, localizationCode));
+            priorityTypeList.add(Localization.findLocaleMessage(this.getMessageSource(), request,
+                    localizationCode));
         }
         return priorityTypeList;
     }

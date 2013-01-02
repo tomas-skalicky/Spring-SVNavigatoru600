@@ -6,7 +6,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
@@ -17,9 +16,6 @@ import com.svnavigatoru600.domain.users.User;
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
 public class MyAuthenticationSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler {
-
-    /** Logger for this class and subclasses */
-    protected final Log logger = LogFactory.getLog(this.getClass());
 
     /**
      * Redirects according to the authorizations of the user who has logged in right now.
@@ -46,7 +42,7 @@ public class MyAuthenticationSuccessHandler extends SavedRequestAwareAuthenticat
         } else {
             targetUrl = "/chyby/403/";
         }
-        this.logger.debug("Redirecting to the URL: " + targetUrl);
+        LogFactory.getLog(this.getClass()).debug("Redirecting to the URL: " + targetUrl);
         this.getRedirectStrategy().sendRedirect(request, response, targetUrl);
     }
 }
