@@ -18,13 +18,13 @@ public class OtherDocumentRecordService {
     /**
      * The object which provides a persistence.
      */
-    private final OtherDocumentRecordDao recordDao;
+    private final OtherDocumentRecordDao otherDocumentDao;
 
     /**
      * Constructor.
      */
     @Inject
-    public OtherDocumentRecordService(OtherDocumentRecordDao recordDao) {
-        this.recordDao = recordDao;
+    public OtherDocumentRecordService(OtherDocumentRecordDao otherDocumentDao) {
+        this.otherDocumentDao = otherDocumentDao;
     }
 }

@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.support.SessionStatus;
 
-import com.svnavigatoru600.repository.records.SessionRecordDao;
+import com.svnavigatoru600.service.records.session.SessionRecordService;
 import com.svnavigatoru600.service.records.session.validator.EditSessionRecordValidator;
 import com.svnavigatoru600.viewmodel.records.session.EditSessionRecord;
 import com.svnavigatoru600.web.records.session.AbstractEditRecordController;
@@ -30,9 +30,10 @@ public class EditAllSessionRecordController extends AbstractEditRecordController
      * Constructor.
      */
     @Inject
-    public EditAllSessionRecordController(SessionRecordDao recordDao, EditSessionRecordValidator validator,
-            MessageSource messageSource) {
-        super(EditAllSessionRecordController.BASE_URL, new PageViews(), recordDao, validator, messageSource);
+    public EditAllSessionRecordController(SessionRecordService recordService,
+            EditSessionRecordValidator validator, MessageSource messageSource) {
+        super(EditAllSessionRecordController.BASE_URL, new PageViews(), recordService, validator,
+                messageSource);
     }
 
     @Override

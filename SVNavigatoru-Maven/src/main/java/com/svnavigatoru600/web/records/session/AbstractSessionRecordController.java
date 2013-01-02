@@ -5,7 +5,7 @@ import org.springframework.stereotype.Controller;
 
 import com.svnavigatoru600.domain.records.SessionRecord;
 import com.svnavigatoru600.domain.records.SessionRecordType;
-import com.svnavigatoru600.repository.records.SessionRecordDao;
+import com.svnavigatoru600.service.records.session.SessionRecordService;
 import com.svnavigatoru600.web.records.AbstractDocumentRecordController;
 import com.svnavigatoru600.web.records.AbstractPageViews;
 
@@ -24,15 +24,15 @@ public abstract class AbstractSessionRecordController extends AbstractDocumentRe
      */
     private final SessionRecordType recordType;
     private boolean allRecordTypes = false;
-    private SessionRecordDao recordDao = null;
+    private SessionRecordService recordService = null;
 
     /**
      * Constructs a controller which considers all {@link SessionRecord SessionRecords} of all
      * {@link SessionRecordType SessionRecordTypes}.
      */
     public AbstractSessionRecordController(String baseUrl, AbstractPageViews views,
-            SessionRecordDao recordDao, MessageSource messageSource) {
-        this(baseUrl, views, null, recordDao, messageSource);
+            SessionRecordService recordService, MessageSource messageSource) {
+        this(baseUrl, views, null, recordService, messageSource);
         this.allRecordTypes = true;
     }
 
@@ -41,10 +41,10 @@ public abstract class AbstractSessionRecordController extends AbstractDocumentRe
      * <code>recordType</code> .
      */
     public AbstractSessionRecordController(String baseUrl, AbstractPageViews views,
-            SessionRecordType recordType, SessionRecordDao recordDao, MessageSource messageSource) {
+            SessionRecordType recordType, SessionRecordService recordService, MessageSource messageSource) {
         super(baseUrl, views, messageSource);
         this.recordType = recordType;
-        this.recordDao = recordDao;
+        this.recordService = recordService;
     }
 
     /**
@@ -64,7 +64,7 @@ public abstract class AbstractSessionRecordController extends AbstractDocumentRe
     /**
      * Trivial getter
      */
-    protected SessionRecordDao getRecordDao() {
-        return this.recordDao;
+    protected SessionRecordService getRecordService() {
+        return this.recordService;
     }
 }

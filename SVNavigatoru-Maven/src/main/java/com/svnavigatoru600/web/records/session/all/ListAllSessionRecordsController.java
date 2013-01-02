@@ -9,7 +9,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.svnavigatoru600.repository.records.SessionRecordDao;
+import com.svnavigatoru600.service.records.session.SessionRecordService;
 import com.svnavigatoru600.web.records.session.AbstractListRecordsController;
 
 /**
@@ -24,8 +24,8 @@ public class ListAllSessionRecordsController extends AbstractListRecordsControll
      * Constructor.
      */
     @Inject
-    public ListAllSessionRecordsController(SessionRecordDao recordDao, MessageSource messageSource) {
-        super(ListAllSessionRecordsController.BASE_URL, new PageViews(), recordDao, messageSource);
+    public ListAllSessionRecordsController(SessionRecordService recordService, MessageSource messageSource) {
+        super(ListAllSessionRecordsController.BASE_URL, new PageViews(), recordService, messageSource);
     }
 
     @Override
