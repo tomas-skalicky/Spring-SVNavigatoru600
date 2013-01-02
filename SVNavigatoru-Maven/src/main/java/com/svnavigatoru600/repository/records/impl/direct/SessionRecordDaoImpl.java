@@ -1,10 +1,13 @@
 package com.svnavigatoru600.repository.records.impl.direct;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.jdbc.core.simple.SimpleJdbcDaoSupport;
+import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcDaoSupport;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 
 import com.svnavigatoru600.domain.records.AbstractDocumentRecord;
@@ -19,7 +22,7 @@ import com.svnavigatoru600.service.util.OrderType;
 /**
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
-public class SessionRecordDaoImpl extends SimpleJdbcDaoSupport implements SessionRecordDao {
+public class SessionRecordDaoImpl extends NamedParameterJdbcDaoSupport implements SessionRecordDao {
 
     /**
      * Database table which provides a persistence of {@link SessionRecord SessionRecords}.
@@ -59,26 +62,31 @@ public class SessionRecordDaoImpl extends SimpleJdbcDaoSupport implements Sessio
 
     @Override
     public SessionRecord findById(int recordId, boolean loadFile) {
-        String selectClause;
-        SessionRecordRowMapper rowMapper;
+        final String selectClause;
         if (loadFile) {
             selectClause = SessionRecordDaoImpl.SELECT_FROM_CLAUSE_WITH_FILE;
-            rowMapper = new SessionRecordRowMapper(true);
         } else {
             selectClause = SessionRecordDaoImpl.SELECT_FROM_CLAUSE_WITHOUT_FILE;
-            rowMapper = new SessionRecordRowMapper(false);
         }
 
-        String query = String
-                .format("%s WHERE r.%s = ?", selectClause, SessionRecordField.id.getColumnName());
-        return this.getSimpleJdbcTemplate().queryForObject(query, rowMapper, recordId);
+        String idColumn = SessionRecordField.id.getColumnName();
+        String query = String.format("%s WHERE r.%s = :%s", selectClause, idColumn, idColumn);
+
+        Map<String, Integer> args = Collections.singletonMap(idColumn, recordId);
+
+        return this.getNamedParameterJdbcTemplate().queryForObject(query, args,
+                new SessionRecordRowMapper(loadFile));
     }
 
     @Override
     public SessionRecord findByFileName(String fileName) {
-        String query = String.format("%s WHERE r.%s = ?", SessionRecordDaoImpl.SELECT_FROM_CLAUSE_WITH_FILE,
-                DocumentRecordField.fileName.getColumnName());
-        return this.getSimpleJdbcTemplate().queryForObject(query, new SessionRecordRowMapper(), fileName);
+        String fileNameColumn = DocumentRecordField.fileName.getColumnName();
+        String query = String.format("%s WHERE r.%s = :%s",
+                SessionRecordDaoImpl.SELECT_FROM_CLAUSE_WITH_FILE, fileNameColumn, fileNameColumn);
+
+        Map<String, String> args = Collections.singletonMap(fileNameColumn, fileName);
+
+        return this.getNamedParameterJdbcTemplate().queryForObject(query, args, new SessionRecordRowMapper());
     }
 
     @Override
@@ -86,16 +94,22 @@ public class SessionRecordDaoImpl extends SimpleJdbcDaoSupport implements Sessio
         String query = String.format("%s ORDER BY r.%s %s",
                 SessionRecordDaoImpl.SELECT_FROM_CLAUSE_WITHOUT_FILE,
                 SessionRecordField.sessionDate.getColumnName(), order.getDatabaseCode());
-        return this.getSimpleJdbcTemplate().query(query, new SessionRecordRowMapper(false));
+
+        Map<String, String> args = new HashMap<String, String>();
+
+        return this.getNamedParameterJdbcTemplate().query(query, args, new SessionRecordRowMapper(false));
     }
 
     @Override
     public List<SessionRecord> findAllOrdered(SessionRecordType type, OrderType order) {
-        String query = String.format("%s WHERE r.%s = ? ORDER BY r.%s %s",
-                SessionRecordDaoImpl.SELECT_FROM_CLAUSE_WITHOUT_FILE,
-                SessionRecordField.type.getColumnName(), SessionRecordField.sessionDate.getColumnName(),
-                order.getDatabaseCode());
-        return this.getSimpleJdbcTemplate().query(query, new SessionRecordRowMapper(false), type.name());
+        String typeColumn = SessionRecordField.type.getColumnName();
+        String query = String.format("%s WHERE r.%s = :%s ORDER BY r.%s %s",
+                SessionRecordDaoImpl.SELECT_FROM_CLAUSE_WITHOUT_FILE, typeColumn, typeColumn,
+                SessionRecordField.sessionDate.getColumnName(), order.getDatabaseCode());
+
+        Map<String, String> args = Collections.singletonMap(typeColumn, type.name());
+
+        return this.getNamedParameterJdbcTemplate().query(query, args, new SessionRecordRowMapper(false));
     }
 
     @Override
@@ -104,12 +118,16 @@ public class SessionRecordDaoImpl extends SimpleJdbcDaoSupport implements Sessio
         // 'session_records'.
         this.documentRecordDao.update(record, this.getDataSource());
 
-        String query = String.format("UPDATE %s SET %s = ?, %s = ?, %s = ? WHERE %s = ?",
+        String query = String.format("UPDATE %s SET %s = :%s, %s = :%s, %s = :%s WHERE %s = :%s",
                 SessionRecordDaoImpl.TABLE_NAME, SessionRecordField.type.getColumnName(),
-                SessionRecordField.sessionDate.getColumnName(),
-                SessionRecordField.discussedTopics.getColumnName(), SessionRecordField.id.getColumnName());
-        this.getSimpleJdbcTemplate().update(query, record.getType(), record.getSessionDate(),
-                record.getDiscussedTopics(), record.getId());
+                SessionRecordField.type.name(), SessionRecordField.sessionDate.getColumnName(),
+                SessionRecordField.sessionDate.name(), SessionRecordField.discussedTopics.getColumnName(),
+                SessionRecordField.discussedTopics.name(), SessionRecordField.id.getColumnName(),
+                SessionRecordField.id.name());
+
+        SqlParameterSource namedParameters = new BeanPropertySqlParameterSource(record);
+
+        this.getNamedParameterJdbcTemplate().update(query, namedParameters);
     }
 
     /**
