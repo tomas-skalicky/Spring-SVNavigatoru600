@@ -1,10 +1,13 @@
 package com.svnavigatoru600.repository.news.impl.direct;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.jdbc.core.simple.SimpleJdbcDaoSupport;
+import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcDaoSupport;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 
 import com.svnavigatoru600.domain.News;
@@ -16,7 +19,7 @@ import com.svnavigatoru600.repository.news.impl.NewsField;
 /**
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
-public class NewsDaoImpl extends SimpleJdbcDaoSupport implements NewsDao {
+public class NewsDaoImpl extends NamedParameterJdbcDaoSupport implements NewsDao {
 
     /**
      * Database table which provides a persistence of {@link News}.
@@ -25,26 +28,37 @@ public class NewsDaoImpl extends SimpleJdbcDaoSupport implements NewsDao {
 
     @Override
     public News findById(int newsId) {
-        String query = String.format("SELECT * FROM %s n WHERE n.%s = ?", NewsDaoImpl.TABLE_NAME,
-                NewsField.id.getColumnName());
-        return this.getSimpleJdbcTemplate().queryForObject(query, new NewsRowMapper(), newsId);
+        String idColumn = NewsField.id.getColumnName();
+        String query = String.format("SELECT * FROM %s n WHERE n.%s = :%s", NewsDaoImpl.TABLE_NAME, idColumn,
+                idColumn);
+
+        Map<String, Integer> args = Collections.singletonMap(idColumn, newsId);
+
+        return this.getNamedParameterJdbcTemplate().queryForObject(query, args, new NewsRowMapper());
     }
 
     @Override
     public List<News> findAllOrdered(FindAllOrderedArguments arguments) {
         String query = String.format("SELECT * FROM %s n ORDER BY %s %s", NewsDaoImpl.TABLE_NAME, arguments
                 .getSortField().getColumnName(), arguments.getSortDirection().getDatabaseCode());
-        return this.getSimpleJdbcTemplate().query(query, new NewsRowMapper());
+
+        Map<String, String> args = new HashMap<String, String>();
+
+        return this.getNamedParameterJdbcTemplate().query(query, args, new NewsRowMapper());
     }
 
     @Override
     public void update(News news) {
-        String query = String.format("UPDATE %s SET %s = ?, %s = ?, %s = ?, %s = ? WHERE %s = ?",
-                NewsDaoImpl.TABLE_NAME, NewsField.title.getColumnName(), NewsField.text.getColumnName(),
-                NewsField.creationTime.getColumnName(), NewsField.lastSaveTime.getColumnName(),
-                NewsField.id.getColumnName());
-        this.getSimpleJdbcTemplate().update(query, news.getTitle(), news.getText(), news.getCreationTime(),
-                news.getLastSaveTime(), news.getId());
+        String query = String.format("UPDATE %s SET %s = :%s, %s = :%s, %s = :%s, %s = :%s WHERE %s = :%s",
+                NewsDaoImpl.TABLE_NAME, NewsField.title.getColumnName(), NewsField.title.name(),
+                NewsField.text.getColumnName(), NewsField.text.name(),
+                NewsField.creationTime.getColumnName(), NewsField.creationTime.name(),
+                NewsField.lastSaveTime.getColumnName(), NewsField.lastSaveTime.name(),
+                NewsField.id.getColumnName(), NewsField.id.name());
+
+        SqlParameterSource namedParameters = new BeanPropertySqlParameterSource(news);
+
+        this.getNamedParameterJdbcTemplate().update(query, namedParameters);
     }
 
     /**
@@ -73,8 +87,12 @@ public class NewsDaoImpl extends SimpleJdbcDaoSupport implements NewsDao {
 
     @Override
     public void delete(News news) {
-        String query = String.format("DELETE FROM %s WHERE %s = ?", NewsDaoImpl.TABLE_NAME,
-                NewsField.id.getColumnName());
-        this.getSimpleJdbcTemplate().update(query, news.getId());
+        String idColumn = NewsField.id.getColumnName();
+        String query = String.format("DELETE FROM %s WHERE %s = :%s", NewsDaoImpl.TABLE_NAME, idColumn,
+                idColumn);
+
+        Map<String, Integer> args = Collections.singletonMap(idColumn, news.getId());
+
+        this.getNamedParameterJdbcTemplate().update(query, args);
     }
 }
