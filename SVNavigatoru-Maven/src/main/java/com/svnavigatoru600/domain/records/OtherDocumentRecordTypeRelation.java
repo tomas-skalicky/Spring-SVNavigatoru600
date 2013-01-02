@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 import javax.inject.Inject;
 
+import com.svnavigatoru600.service.records.OtherDocumentRecordTypeRelationService;
+
 /**
  * Helps to map the <code>types</code> array in the {@link OtherDocumentRecordType} class to Hibernate.
  * 
