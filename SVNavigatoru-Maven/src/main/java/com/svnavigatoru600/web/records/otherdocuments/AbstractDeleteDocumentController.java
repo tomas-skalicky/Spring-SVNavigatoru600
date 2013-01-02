@@ -17,7 +17,7 @@ import com.svnavigatoru600.web.Configuration;
 import com.svnavigatoru600.web.records.AbstractPageViews;
 
 /**
- * Parent of all controllers which delete the {@link OtherDocumentRecord}s.
+ * Parent of all controllers which delete the {@link OtherDocumentRecord OtherDocumentRecords}.
  * 
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
@@ -33,8 +33,8 @@ public abstract class AbstractDeleteDocumentController extends AbstractOtherDocu
     protected final String successfulDeleteUrl;
 
     /**
-     * Constructs a controller which considers all {@link OtherDocumentRecord}s of all
-     * {@link OtherDocumentRecordType}s.
+     * Constructs a controller which considers all {@link OtherDocumentRecord OtherDocumentRecords} of all
+     * {@link OtherDocumentRecordType OtherDocumentRecordTypes}.
      */
     public AbstractDeleteDocumentController(String baseUrl, AbstractPageViews views,
             OtherDocumentRecordDao recordDao, MessageSource messageSource) {
@@ -44,8 +44,8 @@ public abstract class AbstractDeleteDocumentController extends AbstractOtherDocu
     }
 
     /**
-     * Constructs a controller which considers all {@link OtherDocumentRecord}s of the given
-     * <code>recordType</code>.
+     * Constructs a controller which considers all {@link OtherDocumentRecord OtherDocumentRecords} of the
+     * given <code>recordType</code>.
      */
     public AbstractDeleteDocumentController(String baseUrl, AbstractPageViews views,
             OtherDocumentRecordType recordType, OtherDocumentRecordDao recordDao, MessageSource messageSource) {

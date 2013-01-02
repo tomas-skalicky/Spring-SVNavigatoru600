@@ -85,7 +85,8 @@ public class ThreadDaoImpl extends SimpleJdbcDaoSupport implements ThreadDao {
 
     /**
      * @param lazy
-     *            {@link Contribution}s of the desired {@link Thread} will not be loaded.
+     *            If <code>true</code>, {@link Contribution contributions} of the desired {@link Thread} will
+     *            not be loaded.
      */
     public Thread findById(final int threadId, final boolean lazy) {
         final String query = String.format("SELECT * FROM %s t WHERE t.%s = ?", ThreadDaoImpl.TABLE_NAME,

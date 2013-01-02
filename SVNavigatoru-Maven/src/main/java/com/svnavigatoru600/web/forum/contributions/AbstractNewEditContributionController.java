@@ -9,7 +9,7 @@ import com.svnavigatoru600.repository.forum.ContributionDao;
 import com.svnavigatoru600.service.forum.contributions.validator.AbstractContributionValidator;
 
 /**
- * Parent of controllers which create and edit the {@link Contribution}s.
+ * Parent of controllers which create and edit the {@link Contribution Contributions}.
  * 
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */

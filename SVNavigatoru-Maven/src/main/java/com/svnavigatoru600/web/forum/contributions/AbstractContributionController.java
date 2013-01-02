@@ -9,7 +9,7 @@ import com.svnavigatoru600.repository.forum.ContributionDao;
 import com.svnavigatoru600.web.AbstractPrivateSectionMetaController;
 
 /**
- * Parent of all controllers which handle all operations upon the {@link Contribution}s.
+ * Parent of all controllers which handle all operations upon the {@link Contribution Contributions}.
  * 
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */

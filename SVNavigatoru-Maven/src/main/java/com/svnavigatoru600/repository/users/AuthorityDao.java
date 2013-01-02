@@ -15,7 +15,7 @@ import com.svnavigatoru600.repository.MapperInterface;
 public interface AuthorityDao {
 
     /**
-     * Returns all {@link Authority}s stored in the repository which are associated with the given
+     * Returns all {@link Authority Authorities} stored in the repository which are associated with the given
      * <code>username</code>.
      */
     List<Authority> findAll(String username);
@@ -27,8 +27,8 @@ public interface AuthorityDao {
     void save(Collection<GrantedAuthority> authorities);
 
     /**
-     * Deletes all {@link Authority}s of {@link com.svnavigatoru600.domain.users.User user} with the given
-     * <code>username</code> from the repository.
+     * Deletes all {@link Authority Authorities} of {@link com.svnavigatoru600.domain.users.User user} with
+     * the given <code>username</code> from the repository.
      */
     void delete(String username);
 }

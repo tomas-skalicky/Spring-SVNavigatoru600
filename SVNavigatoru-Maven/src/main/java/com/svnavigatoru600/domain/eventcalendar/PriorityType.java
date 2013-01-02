@@ -7,7 +7,7 @@ import org.springframework.context.MessageSource;
 import com.svnavigatoru600.service.util.Localization;
 
 /**
- * All allowed priorities which {@link CalendarEvent}s can have.
+ * All allowed priorities which {@link CalendarEvent events} can have.
  * 
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */

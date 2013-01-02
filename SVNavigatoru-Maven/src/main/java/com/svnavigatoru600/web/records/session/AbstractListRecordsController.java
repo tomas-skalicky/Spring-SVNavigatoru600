@@ -22,7 +22,7 @@ import com.svnavigatoru600.viewmodel.records.session.ShowAllSessionRecords;
 import com.svnavigatoru600.web.records.AbstractPageViews;
 
 /**
- * Parent of all controllers which list the {@link SessionRecord}s.
+ * Parent of all controllers which list the {@link SessionRecord SessionRecords}.
  * 
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
@@ -35,7 +35,8 @@ public abstract class AbstractListRecordsController extends AbstractSessionRecor
     public static final String COMMAND = "showAllRecordsCommand";
 
     /**
-     * Constructs a controller which considers all {@link SessionRecord}s of all {@link SessionRecordType}s.
+     * Constructs a controller which considers all {@link SessionRecord SessionRecords} of all
+     * {@link SessionRecordType SessionRecordTypes}.
      */
     public AbstractListRecordsController(final String baseUrl, final AbstractPageViews views,
             final SessionRecordDao recordDao, final MessageSource messageSource) {
@@ -43,8 +44,8 @@ public abstract class AbstractListRecordsController extends AbstractSessionRecor
     }
 
     /**
-     * Constructs a controller which considers all {@link SessionRecord}s of the given <code>recordType</code>
-     * .
+     * Constructs a controller which considers all {@link SessionRecord SessionRecords} of the given
+     * <code>recordType</code> .
      */
     public AbstractListRecordsController(final String baseUrl, final AbstractPageViews views,
             final SessionRecordType recordType, final SessionRecordDao recordDao,

@@ -23,13 +23,13 @@ public interface UserDao {
     User findByEmail(String email);
 
     /**
-     * Returns all {@link User}s stored in the repository which have the given <code>authority</code>.
+     * Returns all {@link User Users} stored in the repository which have the given <code>authority</code>.
      */
     List<User> findAllByAuthority(String authority);
 
     /**
-     * Returns all {@link User}s stored in the repository. The {@link User} are arranged according to their
-     * last and first names in the given <code>order</code>.
+     * Returns all {@link User Users} stored in the repository. The {@link User} are arranged according to
+     * their last and first names in the given <code>order</code>.
      * 
      * @param testUsers
      *            If <code>true</code>, the method returns only test users. Otherwise, it returns only

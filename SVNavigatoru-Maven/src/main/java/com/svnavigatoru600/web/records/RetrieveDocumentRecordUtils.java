@@ -11,7 +11,7 @@ import com.svnavigatoru600.domain.records.AbstractDocumentRecord;
 import com.svnavigatoru600.repository.records.DocumentRecordDao;
 
 /**
- * Provides a set of static functions for retrieving {@link AbstractDocumentRecord}s.
+ * Provides a set of static functions for retrieving {@link AbstractDocumentRecord AbstractDocumentRecords}.
  * 
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */

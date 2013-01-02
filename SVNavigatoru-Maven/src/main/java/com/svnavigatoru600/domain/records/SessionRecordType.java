@@ -7,7 +7,7 @@ import org.springframework.context.MessageSource;
 import com.svnavigatoru600.service.util.Localization;
 
 /**
- * All types of {@link SessionRecord}s in the application.
+ * All types of {@link SessionRecord SessionRecords} in the application.
  * 
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */

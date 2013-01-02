@@ -6,12 +6,12 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.svnavigatoru600.domain.records.AbstractDocumentRecord;
 import com.svnavigatoru600.service.util.File;
 import com.svnavigatoru600.web.Configuration;
 
 /**
- * {@link Validator} common for all types of {@link AbstractDocumentRecord}s.
+ * {@link Validator} common for all sub-types of
+ * {@link com.svnavigatoru600.domain.records.AbstractDocumentRecord AbstractDocumentRecords}.
  * 
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */

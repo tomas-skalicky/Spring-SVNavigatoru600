@@ -17,7 +17,7 @@ public interface ThreadDao {
     Thread findById(int threadId);
 
     /**
-     * Returns all {@link Thread}s stored in the repository.
+     * Returns all {@link Thread Threads} stored in the repository.
      */
     List<Thread> loadAll();
 
