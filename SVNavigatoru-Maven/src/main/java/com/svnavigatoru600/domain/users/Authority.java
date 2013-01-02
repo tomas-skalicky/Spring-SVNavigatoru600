@@ -2,9 +2,11 @@ package com.svnavigatoru600.domain.users;
 
 import java.io.Serializable;
 
+import javax.inject.Inject;
+
 import org.springframework.security.core.GrantedAuthority;
 
-import com.svnavigatoru600.repository.users.AuthorityDao;
+import com.svnavigatoru600.service.users.AuthorityService;
 
 /**
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
@@ -14,10 +16,11 @@ public class Authority implements GrantedAuthority, Serializable {
     private static final long serialVersionUID = -65071618776307089L;
 
     @SuppressWarnings("unused")
-    private AuthorityDao authorityDao;
+    private AuthorityService authorityService;
 
-    public void setAuthorityDao(AuthorityDao authorityDao) {
-        this.authorityDao = authorityDao;
+    @Inject
+    public void setAuthorityService(final AuthorityService authorityService) {
+        this.authorityService = authorityService;
     }
 
     /**

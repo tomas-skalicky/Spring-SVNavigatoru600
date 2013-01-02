@@ -2,7 +2,7 @@ package com.svnavigatoru600.domain.records;
 
 import java.io.Serializable;
 
-import com.svnavigatoru600.repository.records.OtherDocumentRecordTypeRelationDao;
+import javax.inject.Inject;
 
 /**
  * Helps to map the <code>types</code> array in the {@link OtherDocumentRecordType} class to Hibernate.
@@ -14,10 +14,12 @@ public class OtherDocumentRecordTypeRelation implements Serializable {
     private static final long serialVersionUID = -490430948638448565L;
 
     @SuppressWarnings("unused")
-    private OtherDocumentRecordTypeRelationDao typeDao;
+    private OtherDocumentRecordTypeRelationService typeService;
 
-    public void setOtherDocumentRecordTypeRelationDao(OtherDocumentRecordTypeRelationDao typeDao) {
-        this.typeDao = typeDao;
+    @Inject
+    public void setOtherDocumentRecordTypeRelationService(
+            final OtherDocumentRecordTypeRelationService typeService) {
+        this.typeService = typeService;
     }
 
     /**

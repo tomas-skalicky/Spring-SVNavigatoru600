@@ -25,10 +25,9 @@ import com.svnavigatoru600.service.util.OrderType;
  */
 public class UserDaoImpl extends HibernateDaoSupport implements UserDao {
 
-    /** Logger for this class and subclasses */
-    protected final Log logger = LogFactory.getLog(this.getClass());
+    private final Log logger = LogFactory.getLog(this.getClass());
 
-    protected AuthorityDao authorityDao;
+    private AuthorityDao authorityDao;
 
     @Inject
     public void setAuthorityDao(AuthorityDao authorityDao) {
@@ -80,18 +79,18 @@ public class UserDaoImpl extends HibernateDaoSupport implements UserDao {
 
     @Override
     @SuppressWarnings("unchecked")
-    public List<User> loadAllOrdered(OrderType order, boolean testUsers) {
+    public List<User> findAllOrdered(OrderType order, boolean testUsers) {
         this.logger.info(String.format("Load all users ordered %s.", order.name()));
-        String query = String.format("FROM %s u WHERE u.%s = %s ORDER BY u.%s, u.%s %s",
-                PersistedClass.User.name(), UserField.isTestUser.getColumnName(), testUsers,
-                UserField.lastName.name(), UserField.firstName.name(), order.getDatabaseCode());
-        return (List<User>) this.getHibernateTemplate().find(query);
+        String query = String.format("FROM %s u WHERE u.%s = ? ORDER BY u.%s, u.%s %s",
+                PersistedClass.User.name(), UserField.isTestUser.name(), UserField.lastName.name(),
+                UserField.firstName.name(), order.getDatabaseCode());
+        return (List<User>) this.getHibernateTemplate().find(query, testUsers);
     }
 
     @Override
     public void update(User user) {
         String lowerCasedEmail = null;
-        if ((user != null) && (user.getEmail() != null)) {
+        if (user.getEmail() != null) {
             lowerCasedEmail = user.getEmail().toLowerCase();
         }
 
@@ -110,7 +109,7 @@ public class UserDaoImpl extends HibernateDaoSupport implements UserDao {
     @Override
     public void save(User user) {
         String lowerCasedEmail = null;
-        if ((user != null) && (user.getEmail() != null)) {
+        if (user.getEmail() != null) {
             lowerCasedEmail = user.getEmail().toLowerCase();
         }
 

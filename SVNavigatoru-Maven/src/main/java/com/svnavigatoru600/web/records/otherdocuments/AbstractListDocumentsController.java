@@ -54,11 +54,12 @@ public abstract class AbstractListDocumentsController extends AbstractOtherDocum
 
         ShowAllRecords command = new ShowAllRecords();
 
-        List<OtherDocumentRecord> records = null;
-        if (this.allRecordTypes) {
-            records = this.recordDao.findAllOrdered(OrderType.DESCENDING);
+        final OtherDocumentRecordDao recordDao = this.getRecordDao();
+        final List<OtherDocumentRecord> records;
+        if (this.isAllRecordTypes()) {
+            records = recordDao.findAllOrdered(OrderType.DESCENDING);
         } else {
-            records = this.recordDao.findAllOrdered(this.recordType, OrderType.DESCENDING);
+            records = recordDao.findAllOrdered(this.getRecordType(), OrderType.DESCENDING);
         }
         command.setRecords(records);
 
@@ -66,7 +67,7 @@ public abstract class AbstractListDocumentsController extends AbstractOtherDocum
         command.setLocalizedDeleteQuestions(this.getLocalizedDeleteQuestions(records, request));
 
         model.addAttribute(AbstractListDocumentsController.COMMAND, command);
-        return this.views.list;
+        return this.getViews().getList();
     }
 
     @PreAuthorize("hasRole('ROLE_MEMBER_OF_BOARD')")
@@ -94,8 +95,8 @@ public abstract class AbstractListDocumentsController extends AbstractOtherDocum
 
         for (OtherDocumentRecord record : records) {
             Object[] messageParams = new Object[] { record.getName() };
-            questions.put(record,
-                    Localization.findLocaleMessage(this.messageSource, request, messageCode, messageParams));
+            questions.put(record, Localization.findLocaleMessage(this.getMessageSource(), request,
+                    messageCode, messageParams));
         }
         return questions;
     }

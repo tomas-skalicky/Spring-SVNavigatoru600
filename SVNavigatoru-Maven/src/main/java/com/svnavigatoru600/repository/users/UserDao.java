@@ -19,38 +19,42 @@ public interface UserDao {
 
     /**
      * Returns a {@link User} stored in the repository which has the given <code>email</code>.
+     * <p>
+     * If <em>exactly one</em> {@link User} is found, an exception is thrown.
      */
     User findByEmail(String email);
 
     /**
-     * Returns all {@link User Users} stored in the repository which have the given <code>authority</code>.
+     * Returns all {@link User Users} stored in the repository which have the given authority.
      */
     List<User> findAllByAuthority(String authority);
 
     /**
-     * Returns all {@link User Users} stored in the repository. The {@link User} are arranged according to
-     * their last and first names in the given <code>order</code>.
+     * Returns all {@link User Users} stored in the repository arranged according to their
+     * {@link User#getLastName() last names} and {@link User#getFirstName() first names} in the given
+     * {@link OrderType order}.
      * 
      * @param testUsers
      *            If <code>true</code>, the method returns only test users. Otherwise, it returns only
-     *            non-test users.
+     *            non-test users. Test users are those, which are not accessible by the customer.
      */
-    List<User> loadAllOrdered(OrderType order, boolean testUsers);
+    List<User> findAllOrdered(OrderType order, boolean testUsers);
 
     /**
-     * Updates the given <code>user</code> in the repository. The old version of the <code>user</code> should
-     * be already stored there.
+     * Updates the given {@link User} in the repository. The old version of this user should be already stored
+     * there.
      */
     void update(User user);
 
     /**
-     * Stores the given <code>user</code> to the repository. If there is already a {@link User} with the same
-     * username or email, throws an exception.
+     * Stores the given {@link User} to the repository. If there is already a {@link User} with the same
+     * {@link User#getUsername() username} or {@link User#getEmail() email}, throws an exception.
      */
     void save(User user);
 
     /**
-     * Deletes the given <code>user</code> together with all his authorities from the repository.
+     * Deletes the given {@link User} together with all his {@link com.svnavigatoru600.domain.users.Authority
+     * Authorities} from the repository.
      */
     void delete(User user);
 }

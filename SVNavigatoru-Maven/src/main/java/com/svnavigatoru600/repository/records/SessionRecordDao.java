@@ -24,26 +24,26 @@ public interface SessionRecordDao extends DocumentRecordDao {
 
     /**
      * Returns all {@link SessionRecord SessionRecords} stored in the repository arranged according to their
-     * <code>sessionDate</code>s in the given <code>order</code>.
+     * {@link SessionRecord#getSessionDate() sessionDates} in the given {@link OrderType order}.
      */
     List<SessionRecord> findAllOrdered(OrderType order);
 
     /**
      * Returns all {@link SessionRecord SessionRecords} stored in the repository which are of the given
-     * <code>type</code>. The {@link SessionRecord} are arranged according to their <code>sessionDate</code>s
-     * in the given <code>order</code>.
+     * {@link SessionRecordType type}. The records are arranged according to their
+     * {@link SessionRecord#getSessionDate() sessionDates} in the given {@link OrderType order}.
      */
     List<SessionRecord> findAllOrdered(SessionRecordType type, OrderType order);
 
     /**
-     * Updates the given <code>record</code> in the repository. The old version of the <code>record</code>
-     * should be already stored there.
+     * Updates the given {@link SessionRecord} in the repository. The old version of this record should be
+     * already stored there.
      */
     void update(SessionRecord record);
 
     /**
-     * Stores the given <code>record</code> to the repository. If there is already a {@link SessionRecord}
-     * with the same filename, throws an exception.
+     * Stores the given {@link SessionRecord} to the repository. If there is already a {@link SessionRecord}
+     * with the same {@link SessionRecord#getFileName() filename}, throws an exception.
      * 
      * @return the generated identifier
      */

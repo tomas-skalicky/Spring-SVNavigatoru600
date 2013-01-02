@@ -43,7 +43,7 @@ public class ListEventsController extends AbstractEventController {
 
         ShowAllEvents command = new ShowAllEvents();
 
-        List<CalendarEvent> events = this.eventService.findAllFutureEventsOrdered();
+        List<CalendarEvent> events = this.getEventService().findAllFutureEventsOrdered();
         command.setEvents(events);
 
         // Sets up all auxiliary (but necessary) maps.
@@ -78,8 +78,8 @@ public class ListEventsController extends AbstractEventController {
 
         for (CalendarEvent event : events) {
             Object[] messageParams = new Object[] { event.getName() };
-            questions.put(event,
-                    Localization.findLocaleMessage(this.messageSource, request, messageCode, messageParams));
+            questions.put(event, Localization.findLocaleMessage(this.getMessageSource(), request,
+                    messageCode, messageParams));
         }
         return questions;
     }

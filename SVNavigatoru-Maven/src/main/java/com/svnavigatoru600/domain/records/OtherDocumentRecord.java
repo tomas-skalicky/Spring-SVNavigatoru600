@@ -3,9 +3,9 @@ package com.svnavigatoru600.domain.records;
 import java.util.Date;
 import java.util.Set;
 
-import org.springframework.format.annotation.DateTimeFormat;
+import javax.inject.Inject;
 
-import com.svnavigatoru600.repository.records.OtherDocumentRecordDao;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
@@ -15,10 +15,11 @@ public class OtherDocumentRecord extends AbstractDocumentRecord {
     private static final long serialVersionUID = -2588978216531929106L;
 
     @SuppressWarnings("unused")
-    private OtherDocumentRecordDao recordDao;
+    private OtherDocumentRecordService recordService;
 
-    public void setOtherDocumentRecordDao(OtherDocumentRecordDao recordDao) {
-        this.recordDao = recordDao;
+    @Inject
+    public void setOtherDocumentRecordService(final OtherDocumentRecordService recordService) {
+        this.recordService = recordService;
     }
 
     /**

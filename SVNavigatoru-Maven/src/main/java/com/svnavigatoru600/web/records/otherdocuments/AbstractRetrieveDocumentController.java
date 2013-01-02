@@ -5,6 +5,8 @@ import java.sql.SQLException;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.context.MessageSource;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Controller;
@@ -29,8 +31,7 @@ public abstract class AbstractRetrieveDocumentController extends AbstractOtherDo
      * Code of the database error message used when the {@link DataAccessException} is thrown.
      */
     public static final String DATABASE_ERROR_MESSAGE_CODE = "other-documents.retrieve-failed-due-to-database-error";
-    private static final String RETRIEVE_URL_END = "stahnout/";
-    protected final String retrieveUrl;
+    private final Log logger = LogFactory.getLog(this.getClass());
 
     /**
      * Constructs a controller which considers all {@link OtherDocumentRecord OtherDocumentRecords} of all
@@ -41,7 +42,6 @@ public abstract class AbstractRetrieveDocumentController extends AbstractOtherDo
         // Note that the allRecordTypes indicator is set up during the creation
         // of the parent.
         super(baseUrl, views, recordDao, messageSource);
-        this.retrieveUrl = this.baseUrl + AbstractRetrieveDocumentController.RETRIEVE_URL_END;
     }
 
     /**
@@ -51,12 +51,11 @@ public abstract class AbstractRetrieveDocumentController extends AbstractOtherDo
     public AbstractRetrieveDocumentController(String baseUrl, AbstractPageViews views,
             OtherDocumentRecordType recordType, OtherDocumentRecordDao recordDao, MessageSource messageSource) {
         super(baseUrl, views, recordType, recordDao, messageSource);
-        this.retrieveUrl = this.baseUrl + AbstractRetrieveDocumentController.RETRIEVE_URL_END;
     }
 
     public void retrieve(int recordId, HttpServletResponse response, ModelMap model) {
         try {
-            RetrieveDocumentRecordUtils.retrieve(recordId, this.recordDao, response);
+            RetrieveDocumentRecordUtils.retrieve(recordId, this.getRecordDao(), response);
 
             // NOTE: nothing is returned.
 

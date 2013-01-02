@@ -2,6 +2,7 @@ package com.svnavigatoru600.web.records.session;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.logging.LogFactory;
 import org.springframework.context.MessageSource;
 import org.springframework.dao.DataAccessException;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -31,7 +32,7 @@ public abstract class AbstractDeleteRecordController extends AbstractSessionReco
      */
     public static final String DATABASE_ERROR_MESSAGE_CODE = "session-records.deletion-failed-due-to-database-error";
     private static final String SUCCESSFUL_DELETE_URL_END = "smazano/";
-    protected final String successfulDeleteUrl;
+    private final String successfulDeleteUrl;
 
     /**
      * Constructs a controller which considers all {@link SessionRecord SessionRecords} of all
@@ -41,7 +42,8 @@ public abstract class AbstractDeleteRecordController extends AbstractSessionReco
             SessionRecordDao recordDao, MessageSource messageSource) {
         // Note that allRecordTypes is set up during the creation of the parent.
         super(baseUrl, views, recordDao, messageSource);
-        this.successfulDeleteUrl = this.baseUrl + AbstractDeleteRecordController.SUCCESSFUL_DELETE_URL_END;
+        this.successfulDeleteUrl = this.getBaseUrl()
+                + AbstractDeleteRecordController.SUCCESSFUL_DELETE_URL_END;
     }
 
     /**
@@ -51,7 +53,8 @@ public abstract class AbstractDeleteRecordController extends AbstractSessionReco
     public AbstractDeleteRecordController(String baseUrl, AbstractPageViews views,
             SessionRecordType recordType, SessionRecordDao recordDao, MessageSource messageSource) {
         super(baseUrl, views, recordType, recordDao, messageSource);
-        this.successfulDeleteUrl = this.baseUrl + AbstractDeleteRecordController.SUCCESSFUL_DELETE_URL_END;
+        this.successfulDeleteUrl = this.getBaseUrl()
+                + AbstractDeleteRecordController.SUCCESSFUL_DELETE_URL_END;
     }
 
     @Transactional
@@ -59,8 +62,9 @@ public abstract class AbstractDeleteRecordController extends AbstractSessionReco
         try {
             // Deletes the record from the repository and deletes the associated
             // file from the target folder.
-            AbstractDocumentRecord record = this.recordDao.findById(recordId, false);
-            this.recordDao.delete(record);
+            final SessionRecordDao recordDao = this.getRecordDao();
+            AbstractDocumentRecord record = recordDao.findById(recordId, false);
+            recordDao.delete(record);
             java.io.File file = File.getUploadedFile(record.getFileName());
             file.delete();
 
@@ -70,9 +74,9 @@ public abstract class AbstractDeleteRecordController extends AbstractSessionReco
 
         } catch (DataAccessException e) {
             // We encountered a database problem.
-            this.logger.error(e);
+            LogFactory.getLog(this.getClass()).error(e);
             model.addAttribute("error", AbstractDeleteRecordController.DATABASE_ERROR_MESSAGE_CODE);
-            return this.views.list;
+            return this.getViews().getList();
         }
     }
 }

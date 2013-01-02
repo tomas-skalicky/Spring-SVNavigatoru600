@@ -11,9 +11,7 @@ import java.util.Set;
 import javax.inject.Inject;
 
 import org.springframework.dao.DataRetrievalFailureException;
-import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcDaoSupport;
-import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 
 import com.svnavigatoru600.domain.records.AbstractDocumentRecord;
@@ -142,9 +140,7 @@ public class OtherDocumentRecordDaoImpl extends NamedParameterJdbcDaoSupport imp
                 OtherDocumentRecordDaoImpl.SELECT_FROM_CLAUSE_WITHOUT_FILE,
                 OtherDocumentRecordField.creationTime.getColumnName(), order.getDatabaseCode());
 
-        Map<String, String> args = new HashMap<String, String>();
-
-        List<OtherDocumentRecord> records = this.getNamedParameterJdbcTemplate().query(query, args,
+        List<OtherDocumentRecord> records = this.getJdbcTemplate().query(query,
                 new OtherDocumentRecordRowMapper(false));
 
         this.populateTypes(records);
@@ -170,36 +166,9 @@ public class OtherDocumentRecordDaoImpl extends NamedParameterJdbcDaoSupport imp
         return records;
     }
 
-    @Override
-    public void update(OtherDocumentRecord record) {
-        Date now = new Date();
-        record.setLastSaveTime(now);
-
-        // NOTE: updates the record in both tables 'document_records' and
-        // 'other_document_records'.
-        this.documentRecordDao.update(record, this.getDataSource());
-
-        String query = String.format("UPDATE %s SET %s = :%s, %s = :%s, %s = :%s, %s = :%s WHERE %s = :%s",
-                OtherDocumentRecordDaoImpl.TABLE_NAME, OtherDocumentRecordField.name.getColumnName(),
-                OtherDocumentRecordField.name.name(), OtherDocumentRecordField.description.getColumnName(),
-                OtherDocumentRecordField.description.name(),
-                OtherDocumentRecordField.creationTime.getColumnName(),
-                OtherDocumentRecordField.creationTime.name(),
-                OtherDocumentRecordField.lastSaveTime.getColumnName(),
-                OtherDocumentRecordField.lastSaveTime.name(), OtherDocumentRecordField.id.getColumnName(),
-                OtherDocumentRecordField.id.name());
-
-        SqlParameterSource namedParameters = new BeanPropertySqlParameterSource(record);
-
-        this.getNamedParameterJdbcTemplate().update(query, namedParameters);
-
-        // Updates types.
-        this.typeDao.delete(record.getId());
-        this.typeDao.save(record.getTypes());
-    }
-
     /**
-     * Used during the save of the given <code>record</code>.
+     * Maps properties of the given {@link OtherDocumentRecord} to names of the corresponding database
+     * columns.
      */
     private Map<String, Object> getNamedParameters(OtherDocumentRecord record) {
         Map<String, Object> parameters = new HashMap<String, Object>();
@@ -209,6 +178,32 @@ public class OtherDocumentRecordDaoImpl extends NamedParameterJdbcDaoSupport imp
         parameters.put(OtherDocumentRecordField.creationTime.getColumnName(), record.getCreationTime());
         parameters.put(OtherDocumentRecordField.lastSaveTime.getColumnName(), record.getLastSaveTime());
         return parameters;
+    }
+
+    @Override
+    public void update(OtherDocumentRecord record) {
+        Date now = new Date();
+        record.setLastSaveTime(now);
+
+        // NOTE: updates the record in both tables 'document_records' and
+        // 'other_document_records'.
+        this.documentRecordDao.update(record, this.getDataSource());
+
+        String idColumn = OtherDocumentRecordField.id.getColumnName();
+        String nameColumn = OtherDocumentRecordField.name.getColumnName();
+        String descriptionColumn = OtherDocumentRecordField.description.getColumnName();
+        String creationTimeColumn = OtherDocumentRecordField.creationTime.getColumnName();
+        String lastSaveTimeColumn = OtherDocumentRecordField.lastSaveTime.getColumnName();
+        String query = String.format("UPDATE %s SET %s = :%s, %s = :%s, %s = :%s, %s = :%s WHERE %s = :%s",
+                OtherDocumentRecordDaoImpl.TABLE_NAME, nameColumn, nameColumn, descriptionColumn,
+                descriptionColumn, creationTimeColumn, creationTimeColumn, lastSaveTimeColumn,
+                lastSaveTimeColumn, idColumn, idColumn);
+
+        this.getNamedParameterJdbcTemplate().update(query, this.getNamedParameters(record));
+
+        // Updates types.
+        this.typeDao.delete(record.getId());
+        this.typeDao.save(record.getTypes());
     }
 
     @Override

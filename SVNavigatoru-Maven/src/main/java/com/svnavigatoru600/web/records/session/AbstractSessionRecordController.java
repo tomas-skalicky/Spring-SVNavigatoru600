@@ -22,9 +22,9 @@ public abstract class AbstractSessionRecordController extends AbstractDocumentRe
      * <code>allRecordTypes</code> equals <code>true</code>. Otherwise, <code>allRecordTypes</code> equals
      * <code>false</code> and <code>RECORD_TYPE</code> determines the exact type of treated records.
      */
-    protected final SessionRecordType recordType;
-    protected boolean allRecordTypes = false;
-    protected SessionRecordDao recordDao = null;
+    private final SessionRecordType recordType;
+    private boolean allRecordTypes = false;
+    private SessionRecordDao recordDao = null;
 
     /**
      * Constructs a controller which considers all {@link SessionRecord SessionRecords} of all
@@ -45,5 +45,26 @@ public abstract class AbstractSessionRecordController extends AbstractDocumentRe
         super(baseUrl, views, messageSource);
         this.recordType = recordType;
         this.recordDao = recordDao;
+    }
+
+    /**
+     * Trivial getter
+     */
+    protected SessionRecordType getRecordType() {
+        return this.recordType;
+    }
+
+    /**
+     * Trivial getter
+     */
+    protected boolean isAllRecordTypes() {
+        return this.allRecordTypes;
+    }
+
+    /**
+     * Trivial getter
+     */
+    protected SessionRecordDao getRecordDao() {
+        return this.recordDao;
     }
 }

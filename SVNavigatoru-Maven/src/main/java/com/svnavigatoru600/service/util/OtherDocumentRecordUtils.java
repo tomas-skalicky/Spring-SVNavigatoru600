@@ -40,10 +40,9 @@ public final class OtherDocumentRecordUtils {
     }
 
     /**
-     * <p>
      * Gets the default array of indicators which say which {@link OtherDocumentRecordType
      * OtherDocumentRecordTypes} are checked (selected), and which types are not.
-     * </p>
+     * <p>
      * <b>Precondition:</b> Ordinal values of all {@link OtherDocumentRecordType OtherDocumentRecordTypes} are
      * exactly in the range of <code>[0, 1, ..., OtherDocumentRecordType.values().length-1]</code>.
      */

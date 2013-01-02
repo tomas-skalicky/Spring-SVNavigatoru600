@@ -40,7 +40,8 @@ public class OtherDocumentRecordTypeRelationDaoImpl extends NamedParameterJdbcDa
     }
 
     /**
-     * Used during the save of the given <code>relation</code>.
+     * Maps properties of the given {@link OtherDocumentRecordTypeRelation} to names of the corresponding
+     * database column.
      */
     private Map<String, Object> getNamedParameters(OtherDocumentRecordTypeRelation relation) {
         Map<String, Object> parameters = new HashMap<String, Object>();

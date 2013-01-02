@@ -13,7 +13,7 @@ import org.springframework.web.bind.support.SessionStatus;
 
 import com.svnavigatoru600.domain.WysiwygSection;
 import com.svnavigatoru600.domain.WysiwygSectionName;
-import com.svnavigatoru600.repository.WysiwygSectionDao;
+import com.svnavigatoru600.service.WysiwygSectionService;
 
 /**
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
@@ -25,12 +25,9 @@ public class UsefulLinksController extends AbstractWysiwygSectionController {
      * Constructor.
      */
     @Inject
-    public UsefulLinksController(WysiwygSectionDao sectionDao) {
-        super(sectionDao);
-        super.sectionName = WysiwygSectionName.USEFUL_LINKS;
-        super.viewPageView = "viewUsefulLinks";
-        super.editPageView = "editUsefulLinks";
-        super.viewPageAddress = "/uzitecne-odkazy/";
+    public UsefulLinksController(WysiwygSectionService sectionService) {
+        super(sectionService, WysiwygSectionName.USEFUL_LINKS, "viewUsefulLinks", "editUsefulLinks",
+                "/uzitecne-odkazy/");
     }
 
     @Override

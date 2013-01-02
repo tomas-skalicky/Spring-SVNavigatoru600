@@ -8,9 +8,9 @@ import com.svnavigatoru600.domain.records.AbstractDocumentRecord;
  */
 public abstract class AbstractPageViews {
 
-    public final String list;
-    public final String neww;
-    public final String edit;
+    private final String list;
+    private final String neww;
+    private final String edit;
 
     /**
      * Constructor.
@@ -19,5 +19,26 @@ public abstract class AbstractPageViews {
         this.list = listView;
         this.neww = newView;
         this.edit = editView;
+    }
+
+    /**
+     * Trivial getter
+     */
+    public String getList() {
+        return this.list;
+    }
+
+    /**
+     * Trivial getter
+     */
+    public String getNeww() {
+        return this.neww;
+    }
+
+    /**
+     * Trivial getter
+     */
+    public String getEdit() {
+        return this.edit;
     }
 }

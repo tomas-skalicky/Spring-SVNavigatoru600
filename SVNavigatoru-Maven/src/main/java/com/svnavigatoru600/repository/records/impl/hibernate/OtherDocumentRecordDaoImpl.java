@@ -83,7 +83,8 @@ public class OtherDocumentRecordDaoImpl extends HibernateDaoSupport implements O
 
     @Override
     public void update(OtherDocumentRecord record) {
-        record.setLastSaveTime(new Date());
+        Date now = new Date();
+        record.setLastSaveTime(now);
         this.getHibernateTemplate().update(record);
 
         // Updates types.

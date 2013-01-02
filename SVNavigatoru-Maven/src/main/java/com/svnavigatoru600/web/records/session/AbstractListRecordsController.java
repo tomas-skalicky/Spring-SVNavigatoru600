@@ -56,18 +56,20 @@ public abstract class AbstractListRecordsController extends AbstractSessionRecor
     public String initPage(final HttpServletRequest request, final ModelMap model) {
 
         final ShowAllSessionRecords command = new ShowAllSessionRecords();
-        command.setAllRecordTypes(this.allRecordTypes);
+        final boolean allRecordTypes = this.isAllRecordTypes();
+        command.setAllRecordTypes(allRecordTypes);
 
-        List<SessionRecord> records = null;
-        if (this.allRecordTypes) {
-            records = this.recordDao.findAllOrdered(OrderType.DESCENDING);
+        final SessionRecordDao recordDao = this.getRecordDao();
+        final List<SessionRecord> records;
+        if (allRecordTypes) {
+            records = recordDao.findAllOrdered(OrderType.DESCENDING);
         } else {
-            records = this.recordDao.findAllOrdered(this.recordType, OrderType.DESCENDING);
+            records = recordDao.findAllOrdered(this.getRecordType(), OrderType.DESCENDING);
         }
         command.setRecords(records);
 
         // Sets up all auxiliary (but necessary) maps.
-        if (this.allRecordTypes) {
+        if (allRecordTypes) {
             command.setLocalizedTypeTitles(this.getLocalizedTypeTitles(records, request));
         }
         final Map<SessionRecord, String> sessionDates = this.getLocalizedSessionDates(records, request);
@@ -75,7 +77,7 @@ public abstract class AbstractListRecordsController extends AbstractSessionRecor
         command.setLocalizedDeleteQuestions(this.getLocalizedDeleteQuestions(records, request, sessionDates));
 
         model.addAttribute(AbstractListRecordsController.COMMAND, command);
-        return this.views.list;
+        return this.getViews().getList();
     }
 
     @PreAuthorize("hasRole('ROLE_MEMBER_OF_BOARD')")
@@ -102,7 +104,8 @@ public abstract class AbstractListRecordsController extends AbstractSessionRecor
 
         for (SessionRecord record : records) {
             final String titleCode = record.getTypedType().getLocalizationCode();
-            typeTitles.put(record, Localization.findLocaleMessage(this.messageSource, request, titleCode));
+            typeTitles.put(record,
+                    Localization.findLocaleMessage(this.getMessageSource(), request, titleCode));
         }
         return typeTitles;
     }
@@ -135,8 +138,8 @@ public abstract class AbstractListRecordsController extends AbstractSessionRecor
 
         for (SessionRecord record : records) {
             final Object[] messageParams = new Object[] { localizedSessionDates.get(record) };
-            questions.put(record,
-                    Localization.findLocaleMessage(this.messageSource, request, messageCode, messageParams));
+            questions.put(record, Localization.findLocaleMessage(this.getMessageSource(), request,
+                    messageCode, messageParams));
         }
         return questions;
     }

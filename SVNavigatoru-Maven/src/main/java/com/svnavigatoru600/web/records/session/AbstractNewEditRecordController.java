@@ -36,7 +36,7 @@ public abstract class AbstractNewEditRecordController extends AbstractSessionRec
      * Command used in /main-content/records/session/templates/new-edit-record.jsp.
      */
     public static final String COMMAND = "newEditRecordCommand";
-    protected Validator validator;
+    private Validator validator;
 
     /**
      * Constructs a controller which considers all {@link SessionRecord SessionRecords} of all
@@ -60,14 +60,18 @@ public abstract class AbstractNewEditRecordController extends AbstractSessionRec
     }
 
     /**
-     * <p>
+     * Trivial getter
+     */
+    protected Validator getValidator() {
+        return this.validator;
+    }
+
+    /**
      * Creates a {@list List} of localized names of {@link SessionRecordType SessionRecordTypes}. The forms
      * which use this controller can access the resulting list.
-     * </p>
      * <p>
      * This method is used for filling up the tag <em>radiobuttons</em> and the value of the selected
      * radiobutton is stored to <code>NewEditSessionRecord.newType</code>.
-     * </p>
      */
     @ModelAttribute("sessionRecordTypeList")
     public List<String> populateSessionRecordTypeList(final HttpServletRequest request) {
@@ -75,7 +79,7 @@ public abstract class AbstractNewEditRecordController extends AbstractSessionRec
 
         for (SessionRecordType type : SessionRecordType.values()) {
             final String localizationCode = type.getLocalizationCode();
-            sessionRecordTypeList.add(Localization.findLocaleMessage(this.messageSource, request,
+            sessionRecordTypeList.add(Localization.findLocaleMessage(this.getMessageSource(), request,
                     localizationCode));
         }
         return sessionRecordTypeList;

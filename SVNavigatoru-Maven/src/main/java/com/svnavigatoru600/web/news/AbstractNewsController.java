@@ -16,11 +16,25 @@ import com.svnavigatoru600.web.AbstractPrivateSectionMetaController;
 public abstract class AbstractNewsController extends AbstractPrivateSectionMetaController {
 
     protected static final String BASE_URL = "/novinky/";
-    protected NewsService newsService;
-    protected MessageSource messageSource;
+    private NewsService newsService;
+    private MessageSource messageSource;
 
     public AbstractNewsController(NewsService newsService, MessageSource messageSource) {
         this.newsService = newsService;
         this.messageSource = messageSource;
+    }
+
+    /**
+     * Trivial getter
+     */
+    protected NewsService getNewsService() {
+        return this.newsService;
+    }
+
+    /**
+     * Trivial getter
+     */
+    protected MessageSource getMessageSource() {
+        return this.messageSource;
     }
 }

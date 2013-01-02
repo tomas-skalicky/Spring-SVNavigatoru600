@@ -3,6 +3,7 @@ package com.svnavigatoru600.web.forum.threads;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.logging.LogFactory;
 import org.springframework.context.MessageSource;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Controller;
@@ -16,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.support.SessionStatus;
 
 import com.svnavigatoru600.domain.forum.Thread;
-import com.svnavigatoru600.repository.forum.ThreadDao;
 import com.svnavigatoru600.service.forum.threads.ThreadService;
 import com.svnavigatoru600.service.forum.threads.validator.EditThreadValidator;
 import com.svnavigatoru600.viewmodel.forum.threads.EditThread;
@@ -34,36 +34,28 @@ public class EditThreadController extends AbstractNewEditThreadController {
      * Code of the error message used when the {@link DataAccessException} is thrown.
      */
     public static final String DATABASE_ERROR_MESSAGE_CODE = "edit.changes-not-saved-due-to-database-error";
-    /**
-     * The business-layer service for {@link Thread threads}.
-     */
-    private ThreadService threadService;
-
-    @Inject
-    public void setThreadService(final ThreadService threadService) {
-        this.threadService = threadService;
-    }
 
     /**
      * Constructor.
      */
     @Inject
-    public EditThreadController(final ThreadDao threadDao, final EditThreadValidator validator,
+    public EditThreadController(final ThreadService threadService, final EditThreadValidator validator,
             final MessageSource messageSource) {
-        super(threadDao, validator, messageSource);
+        super(threadService, validator, messageSource);
     }
 
     @RequestMapping(value = EditThreadController.REQUEST_MAPPING_BASE_URL, method = RequestMethod.GET)
     public String initForm(@PathVariable int threadId, final HttpServletRequest request, final ModelMap model) {
 
-        this.threadService.canEdit(threadId);
+        final ThreadService threadService = this.getThreadService();
+        threadService.canEdit(threadId);
 
         final EditThread command = new EditThread();
 
-        final Thread thread = this.threadDao.findById(threadId);
+        final Thread thread = threadService.findById(threadId);
         command.setThread(thread);
 
-        model.addAttribute(EditThreadController.COMMAND, command);
+        model.addAttribute(AbstractNewEditThreadController.COMMAND, command);
         return PageViews.EDIT.getViewName();
     }
 
@@ -71,7 +63,7 @@ public class EditThreadController extends AbstractNewEditThreadController {
     public String initFormAfterSave(@PathVariable int threadId, final HttpServletRequest request,
             final ModelMap model) {
         final String view = this.initForm(threadId, request, model);
-        ((EditThread) model.get(EditThreadController.COMMAND)).setDataSaved(true);
+        ((EditThread) model.get(AbstractNewEditThreadController.COMMAND)).setDataSaved(true);
         return view;
     }
 
@@ -81,33 +73,30 @@ public class EditThreadController extends AbstractNewEditThreadController {
             final BindingResult result, final SessionStatus status, @PathVariable int threadId,
             final HttpServletRequest request, final ModelMap model) {
 
-        this.threadService.canEdit(threadId);
+        final ThreadService threadService = this.getThreadService();
+        threadService.canEdit(threadId);
 
-        this.validator.validate(command, result);
+        this.getValidator().validate(command, result);
         if (result.hasErrors()) {
             return PageViews.EDIT.getViewName();
         }
 
-        // Updates the original data.
-        final Thread originalThread = this.threadDao.findById(threadId);
-        final Thread newThread = command.getThread();
-        originalThread.setName(newThread.getName());
-
+        Thread originalThread = null;
         try {
-            // Updates the thread in the repository.
-            this.threadDao.update(originalThread);
+            originalThread = threadService.findById(threadId);
+            threadService.update(originalThread, command.getThread());
 
             // Clears the command object from the session.
             status.setComplete();
 
             // Returns the form success view.
             model.addAttribute(Configuration.REDIRECTION_ATTRIBUTE,
-                    String.format("%sexistujici/%d/ulozeno/", EditThreadController.BASE_URL, threadId));
+                    String.format("%sexistujici/%d/ulozeno/", AbstractThreadController.BASE_URL, threadId));
             return Configuration.REDIRECTION_PAGE;
 
         } catch (DataAccessException e) {
             // We encountered a database problem.
-            this.logger.error(originalThread, e);
+            LogFactory.getLog(this.getClass()).error(originalThread, e);
             result.reject(EditThreadController.DATABASE_ERROR_MESSAGE_CODE);
         }
         return PageViews.EDIT.getViewName();

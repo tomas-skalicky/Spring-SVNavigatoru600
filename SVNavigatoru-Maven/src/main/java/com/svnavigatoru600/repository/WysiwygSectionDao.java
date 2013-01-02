@@ -10,13 +10,14 @@ import com.svnavigatoru600.domain.WysiwygSectionName;
 public interface WysiwygSectionDao {
 
     /**
-     * Returns a {@link WysiwygSection} stored in the repository which has the given <code>name</code>.
+     * Returns a {@link WysiwygSection} stored in the repository which has the given
+     * {@link WysiwygSectionName name}.
      */
     WysiwygSection findByName(WysiwygSectionName name);
 
     /**
-     * Updates the given <code>section</code> in the repository. The old version of the <code>section</code>
-     * should be already stored there.
+     * Updates the given {@link WysiwygSection} in the repository. The old version of this section should be
+     * already stored there.
      */
     void update(WysiwygSection section);
 }

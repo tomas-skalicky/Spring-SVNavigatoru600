@@ -6,11 +6,13 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
+import javax.inject.Inject;
+
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.svnavigatoru600.repository.users.UserDao;
+import com.svnavigatoru600.service.users.UserService;
 import com.svnavigatoru600.service.util.FullNameFormat;
 
 /**
@@ -20,14 +22,15 @@ public class User implements UserDetails, Serializable {
 
     private static final long serialVersionUID = 4756202473560293423L;
 
-    private UserDao userDao;
+    private UserService userService;
 
-    public void setUserDao(UserDao userDao) {
-        this.userDao = userDao;
+    @Inject
+    public void setUserService(final UserService userService) {
+        this.userService = userService;
     }
 
     public void update() {
-        this.userDao.update(this);
+        this.userService.update(this);
     }
 
     /**

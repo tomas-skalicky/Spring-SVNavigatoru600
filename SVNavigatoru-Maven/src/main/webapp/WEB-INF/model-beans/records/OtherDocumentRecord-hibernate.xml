@@ -4,8 +4,6 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans
 						http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
 
-	<import resource="OtherDocumentRecord.xml"/>
-
 	<bean id="otherDocumentRecordDao" class="com.svnavigatoru600.repository.records.impl.hibernate.OtherDocumentRecordDaoImpl">
 		<property name="sessionFactory" ref="sessionFactory"/>
 	</bean>

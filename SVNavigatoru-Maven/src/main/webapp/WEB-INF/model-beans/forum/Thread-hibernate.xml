@@ -4,8 +4,6 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans
 						http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
 
-	<import resource="Thread.xml"/>
-
 	<bean id="threadDao" class="com.svnavigatoru600.repository.forum.impl.hibernate.ThreadDaoImpl">
 		<property name="sessionFactory" ref="sessionFactory"/>
 	</bean>

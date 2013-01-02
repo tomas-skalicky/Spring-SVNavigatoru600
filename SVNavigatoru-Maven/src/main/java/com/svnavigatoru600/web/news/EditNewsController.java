@@ -3,6 +3,7 @@ package com.svnavigatoru600.web.news;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.logging.LogFactory;
 import org.springframework.context.MessageSource;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Controller;
@@ -49,8 +50,8 @@ public class EditNewsController extends AbstractNewEditNewsController {
     public @ResponseBody
     AbstractNewsResponse initForm(@PathVariable int newsId, HttpServletRequest request) {
 
-        News news = this.newsService.findById(newsId);
-        return new GoToEditFormResponse(news, this.messageSource, request);
+        News news = this.getNewsService().findById(newsId);
+        return new GoToEditFormResponse(news, this.getMessageSource(), request);
     }
 
     @RequestMapping(value = EditNewsController.REQUEST_MAPPING_BASE_URL, method = RequestMethod.POST)
@@ -61,19 +62,20 @@ public class EditNewsController extends AbstractNewEditNewsController {
 
         EditNewsResponse response = new EditNewsResponse(command);
 
-        this.validator.validate(command, result);
+        this.getValidator().validate(command, result);
+        final MessageSource messageSource = this.getMessageSource();
         if (result.hasErrors()) {
-            response.setFail(result, this.messageSource, request);
+            response.setFail(result, messageSource, request);
             return response;
         }
 
-        News originalNews = this.newsService.findById(newsId);
-        News newNews = command.getNews();
-        // Sets up because of the comparison of the creationTime and lastSaveTime in AJAX.
-        command.setNews(originalNews);
-
+        final NewsService newsService = this.getNewsService();
+        News originalNews = null;
         try {
-            this.newsService.update(originalNews, newNews);
+            originalNews = newsService.findById(newsId);
+            // Sets up because of the comparison of the creationTime and lastSaveTime in AJAX.
+            command.setNews(originalNews);
+            newsService.update(originalNews, command.getNews());
 
             // Clears the command object from the session.
             status.setComplete();
@@ -83,9 +85,9 @@ public class EditNewsController extends AbstractNewEditNewsController {
 
         } catch (DataAccessException e) {
             // We encountered a database problem.
-            this.logger.error(originalNews, e);
+            LogFactory.getLog(this.getClass()).error(originalNews, e);
             result.reject(EditNewsController.DATABASE_ERROR_MESSAGE_CODE);
-            response.setFail(result, this.messageSource, request);
+            response.setFail(result, messageSource, request);
             return response;
         }
     }

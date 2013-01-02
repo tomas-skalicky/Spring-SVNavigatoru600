@@ -7,6 +7,8 @@ import java.sql.SQLException;
 import javax.servlet.http.HttpServletRequest;
 import javax.sql.rowset.serial.SerialException;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.context.MessageSource;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Controller;
@@ -38,6 +40,7 @@ public abstract class AbstractEditDocumentController extends AbstractNewEditDocu
      * Code of the error message used when the {@link DataAccessException} is thrown.
      */
     public static final String DATABASE_ERROR_MESSAGE_CODE = "edit.changes-not-saved-due-to-database-error";
+    private final Log logger = LogFactory.getLog(this.getClass());
 
     /**
      * Constructs a controller which considers all {@link OtherDocumentRecord OtherDocumentRecords} of all
@@ -69,7 +72,7 @@ public abstract class AbstractEditDocumentController extends AbstractNewEditDocu
 
         final EditRecord command = new EditRecord();
 
-        final OtherDocumentRecord record = this.recordDao.findById(recordId, false);
+        final OtherDocumentRecord record = this.getRecordDao().findById(recordId, false);
         command.setRecord(record);
 
         // Collection of types is converted to a map.
@@ -79,8 +82,8 @@ public abstract class AbstractEditDocumentController extends AbstractNewEditDocu
         command.setTypeCheckboxId(this.getTypeCheckboxId());
         command.setLocalizedTypeCheckboxTitles(this.getLocalizedTypeCheckboxTitles(request));
 
-        model.addAttribute(AbstractEditDocumentController.COMMAND, command);
-        return this.views.edit;
+        model.addAttribute(AbstractNewEditDocumentController.COMMAND, command);
+        return this.getViews().getEdit();
     }
 
     /**
@@ -89,7 +92,7 @@ public abstract class AbstractEditDocumentController extends AbstractNewEditDocu
      */
     public String initFormAfterSave(final int recordId, final HttpServletRequest request, final ModelMap model) {
         final String view = this.initForm(recordId, request, model);
-        ((EditRecord) model.get(AbstractEditDocumentController.COMMAND)).setDataSaved(true);
+        ((EditRecord) model.get(AbstractNewEditDocumentController.COMMAND)).setDataSaved(true);
         return view;
     }
 
@@ -108,14 +111,15 @@ public abstract class AbstractEditDocumentController extends AbstractNewEditDocu
         command.setTypeCheckboxId(this.getTypeCheckboxId());
         command.setLocalizedTypeCheckboxTitles(this.getLocalizedTypeCheckboxTitles(request));
 
-        this.validator.validate(command, result);
+        this.getValidator().validate(command, result);
         if (result.hasErrors()) {
             command.setFileChanged(false);
-            return this.views.edit;
+            return this.getViews().getEdit();
         }
 
         // Updates the original data. Modifies the filename to make it unique.
-        final OtherDocumentRecord oldRecord = this.recordDao.findById(recordId, false);
+        final OtherDocumentRecordDao recordDao = this.getRecordDao();
+        final OtherDocumentRecord oldRecord = recordDao.findById(recordId, false);
         final OtherDocumentRecord newRecord = command.getRecord();
         oldRecord.setName(newRecord.getName());
         oldRecord.setDescription(newRecord.getDescription());
@@ -160,7 +164,7 @@ public abstract class AbstractEditDocumentController extends AbstractNewEditDocu
             // newAttachedFile.transferTo(destinationFile);
             // }
             // \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-            this.recordDao.update(oldRecord);
+            recordDao.update(oldRecord);
             // /////////////////////////////////////////////////////////////////
             // Store in the FILESYSTEM
             // --------------------------------------------------------------
@@ -175,26 +179,26 @@ public abstract class AbstractEditDocumentController extends AbstractNewEditDocu
 
             // Returns the form success view.
             model.addAttribute(Configuration.REDIRECTION_ATTRIBUTE,
-                    String.format("%s%d/ulozeno/", this.baseUrl, recordId));
+                    String.format("%s%d/ulozeno/", this.getBaseUrl(), recordId));
             return Configuration.REDIRECTION_PAGE;
 
         } catch (IllegalStateException e) {
             this.logger.error(command, e);
-            result.reject(AbstractEditDocumentController.UPLOAD_FILE_ERROR_MESSAGE_CODE);
+            result.reject(AbstractNewEditDocumentController.UPLOAD_FILE_ERROR_MESSAGE_CODE);
         } catch (IOException e) {
             this.logger.error(command, e);
-            result.reject(AbstractEditDocumentController.UPLOAD_FILE_ERROR_MESSAGE_CODE);
+            result.reject(AbstractNewEditDocumentController.UPLOAD_FILE_ERROR_MESSAGE_CODE);
         } catch (SerialException e) {
             this.logger.error(command, e);
-            result.reject(AbstractEditDocumentController.UPLOAD_FILE_ERROR_MESSAGE_CODE);
+            result.reject(AbstractNewEditDocumentController.UPLOAD_FILE_ERROR_MESSAGE_CODE);
         } catch (SQLException e) {
             this.logger.error(command, e);
-            result.reject(AbstractEditDocumentController.UPLOAD_FILE_ERROR_MESSAGE_CODE);
+            result.reject(AbstractNewEditDocumentController.UPLOAD_FILE_ERROR_MESSAGE_CODE);
         } catch (DataAccessException e) {
             // We encountered a database problem.
             this.logger.error(command, e);
             result.reject(AbstractEditDocumentController.DATABASE_ERROR_MESSAGE_CODE);
         }
-        return this.views.edit;
+        return this.getViews().getEdit();
     }
 }

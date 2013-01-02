@@ -17,7 +17,7 @@ public abstract class AbstractNewEditUserController extends AbstractUserControll
 
     public static final String COMMAND = "userCommand";
 
-    protected Validator validator;
+    private Validator validator;
 
     /**
      * Constructor.
@@ -26,5 +26,12 @@ public abstract class AbstractNewEditUserController extends AbstractUserControll
             MessageSource messageSource) {
         super(userDao, messageSource);
         this.validator = validator;
+    }
+
+    /**
+     * Trivial getter
+     */
+    protected Validator getValidator() {
+        return this.validator;
     }
 }

@@ -50,7 +50,7 @@ public class ListNewsController extends AbstractNewsController {
 
         ShowAllNews command = new ShowAllNews();
 
-        List<News> news = this.newsService.findAllOrdered();
+        List<News> news = this.getNewsService().findAllOrdered();
         command.setNews(news);
 
         // Sets up all auxiliary (but necessary) maps.
@@ -70,7 +70,7 @@ public class ListNewsController extends AbstractNewsController {
     private Map<News, String> getLocalizedDeleteQuestions(List<News> newss, HttpServletRequest request) {
         Map<News, String> questions = new HashMap<News, String>();
         for (News news : newss) {
-            questions.put(news, getLocalizedDeleteQuestion(news, this.messageSource, request));
+            questions.put(news, getLocalizedDeleteQuestion(news, this.getMessageSource(), request));
         }
         return questions;
     }

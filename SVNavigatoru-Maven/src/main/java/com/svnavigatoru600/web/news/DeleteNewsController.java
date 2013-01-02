@@ -3,6 +3,7 @@ package com.svnavigatoru600.web.news;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.logging.LogFactory;
 import org.springframework.context.MessageSource;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Controller;
@@ -44,14 +45,15 @@ public class DeleteNewsController extends AbstractNewsController {
         DeleteNewsResponse response = new DeleteNewsResponse();
 
         try {
-            this.newsService.delete(newsId);
+            this.getNewsService().delete(newsId);
 
             response.setSuccess();
 
         } catch (DataAccessException e) {
             // We encountered a database problem.
-            this.logger.error(e);
-            response.setFail(DeleteNewsController.DATABASE_ERROR_MESSAGE_CODE, this.messageSource, request);
+            LogFactory.getLog(this.getClass()).error(e);
+            response.setFail(DeleteNewsController.DATABASE_ERROR_MESSAGE_CODE, this.getMessageSource(),
+                    request);
         }
         return response;
     }

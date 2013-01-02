@@ -1,5 +1,6 @@
 package com.svnavigatoru600.repository.forum.impl.direct;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -7,7 +8,7 @@ import java.util.Map;
 
 import javax.inject.Inject;
 
-import org.springframework.jdbc.core.simple.SimpleJdbcDaoSupport;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcDaoSupport;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 
 import com.svnavigatoru600.domain.forum.Contribution;
@@ -22,14 +23,14 @@ import com.svnavigatoru600.service.util.OrderType;
 /**
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
-public class ContributionDaoImpl extends SimpleJdbcDaoSupport implements ContributionDao {
+public class ContributionDaoImpl extends NamedParameterJdbcDaoSupport implements ContributionDao {
 
     /**
      * Database table which provides a persistence of {@link Contribution Contributions}.
      */
     private static final String TABLE_NAME = PersistedClass.Contribution.getTableName();
-    protected ThreadDao threadDao;
-    protected UserDao userDao;
+    private ThreadDao threadDao;
+    private UserDao userDao;
 
     @Inject
     public void setThreadDao(ThreadDao threadDao) {
@@ -69,10 +70,14 @@ public class ContributionDaoImpl extends SimpleJdbcDaoSupport implements Contrib
 
     @Override
     public Contribution findById(int contributionId) {
-        String query = String.format("SELECT * FROM %s c WHERE c.%s = ?", ContributionDaoImpl.TABLE_NAME,
-                ContributionField.id.getColumnName());
-        Contribution contribution = this.getSimpleJdbcTemplate().queryForObject(query,
-                new ContributionRowMapper(), contributionId);
+        String idColumn = ContributionField.id.getColumnName();
+        String query = String.format("SELECT * FROM %s c WHERE c.%s = :%s", ContributionDaoImpl.TABLE_NAME,
+                idColumn, idColumn);
+
+        Map<String, Integer> args = Collections.singletonMap(idColumn, contributionId);
+
+        Contribution contribution = this.getNamedParameterJdbcTemplate().queryForObject(query, args,
+                new ContributionRowMapper());
 
         this.populateThreadAndAuthor(contribution);
         return contribution;
@@ -80,9 +85,13 @@ public class ContributionDaoImpl extends SimpleJdbcDaoSupport implements Contrib
 
     @Override
     public List<Contribution> findAll(int threadId) {
-        String query = String.format("SELECT * FROM %s c WHERE c.%s = ?", ContributionDaoImpl.TABLE_NAME,
-                ContributionField.threadId.getColumnName());
-        return this.getSimpleJdbcTemplate().query(query, new ContributionRowMapper(), threadId);
+        final String threadIdColumn = ContributionField.threadId.getColumnName();
+        String query = String.format("SELECT * FROM %s c WHERE c.%s = :%s", ContributionDaoImpl.TABLE_NAME,
+                threadIdColumn, threadIdColumn);
+
+        Map<String, Integer> args = Collections.singletonMap(threadIdColumn, threadId);
+
+        return this.getNamedParameterJdbcTemplate().query(query, args, new ContributionRowMapper());
     }
 
     /**
@@ -94,8 +103,8 @@ public class ContributionDaoImpl extends SimpleJdbcDaoSupport implements Contrib
             int maxResultSize) {
         String query = String.format("SELECT * FROM %s c ORDER BY c.%s %s", ContributionDaoImpl.TABLE_NAME,
                 sortField.getColumnName(), sortDirection.getDatabaseCode());
-        List<Contribution> contributions = this.getSimpleJdbcTemplate().query(query,
-                new ContributionRowMapper());
+
+        List<Contribution> contributions = this.getJdbcTemplate().query(query, new ContributionRowMapper());
 
         this.populateThreadAndAuthor(contributions);
         return contributions;
@@ -104,33 +113,22 @@ public class ContributionDaoImpl extends SimpleJdbcDaoSupport implements Contrib
     @Override
     public List<Contribution> findAllOrdered(int threadId, ContributionField sortField,
             OrderType sortDirection) {
-        String query = String.format("SELECT * FROM %s c WHERE c.%s = ? ORDER BY c.%s %s",
-                ContributionDaoImpl.TABLE_NAME, ContributionField.threadId.getColumnName(),
-                sortField.getColumnName(), sortDirection.getDatabaseCode());
-        List<Contribution> contributions = this.getSimpleJdbcTemplate().query(query,
-                new ContributionRowMapper(), threadId);
+        final String threadIdColumn = ContributionField.threadId.getColumnName();
+        String query = String.format("SELECT * FROM %s c WHERE c.%s = :%s ORDER BY c.%s %s",
+                ContributionDaoImpl.TABLE_NAME, threadIdColumn, threadIdColumn, sortField.getColumnName(),
+                sortDirection.getDatabaseCode());
+
+        Map<String, Integer> args = Collections.singletonMap(threadIdColumn, threadId);
+
+        List<Contribution> contributions = this.getNamedParameterJdbcTemplate().query(query, args,
+                new ContributionRowMapper());
 
         this.populateThreadAndAuthor(contributions);
         return contributions;
     }
 
-    @Override
-    public void update(Contribution contribution) {
-        Date now = new Date();
-        contribution.setLastSaveTime(now);
-
-        String query = String.format("UPDATE %s SET %s = ?, %s = ?, %s = ?, %s = ?, %s = ? WHERE %s = ?",
-                ContributionDaoImpl.TABLE_NAME, ContributionField.threadId.getColumnName(),
-                ContributionField.text.getColumnName(), ContributionField.creationTime.getColumnName(),
-                ContributionField.lastSaveTime.getColumnName(),
-                ContributionField.authorUsername.getColumnName(), ContributionField.id.getColumnName());
-        this.getSimpleJdbcTemplate().update(query, contribution.getThread().getId(), contribution.getText(),
-                contribution.getCreationTime(), contribution.getLastSaveTime(),
-                contribution.getAuthor().getUsername(), contribution.getId());
-    }
-
     /**
-     * Used during the save of the given <code>contribution</code>.
+     * Maps properties of the given {@link Contribution} to names of the corresponding database columns.
      */
     private Map<String, Object> getNamedParameters(Contribution contribution) {
         Map<String, Object> parameters = new HashMap<String, Object>();
@@ -142,6 +140,26 @@ public class ContributionDaoImpl extends SimpleJdbcDaoSupport implements Contrib
         parameters.put(ContributionField.authorUsername.getColumnName(), contribution.getAuthor()
                 .getUsername());
         return parameters;
+    }
+
+    @Override
+    public void update(Contribution contribution) {
+        Date now = new Date();
+        contribution.setLastSaveTime(now);
+
+        String idColumn = ContributionField.id.getColumnName();
+        String threadIdColumn = ContributionField.threadId.getColumnName();
+        String textColumn = ContributionField.text.getColumnName();
+        String creationTimeColumn = ContributionField.creationTime.getColumnName();
+        String lastSaveTimeColumn = ContributionField.lastSaveTime.getColumnName();
+        String authorUsernameColumn = ContributionField.authorUsername.getColumnName();
+        String query = String.format(
+                "UPDATE %s SET %s = :%s, %s = :%s, %s = :%s, %s = :%s, %s = :%s WHERE %s = :%s",
+                ContributionDaoImpl.TABLE_NAME, threadIdColumn, threadIdColumn, textColumn, textColumn,
+                creationTimeColumn, creationTimeColumn, lastSaveTimeColumn, lastSaveTimeColumn,
+                authorUsernameColumn, authorUsernameColumn, idColumn, idColumn);
+
+        this.getNamedParameterJdbcTemplate().update(query, this.getNamedParameters(contribution));
     }
 
     @Override
@@ -164,8 +182,12 @@ public class ContributionDaoImpl extends SimpleJdbcDaoSupport implements Contrib
 
     @Override
     public void delete(Contribution contribution) {
-        String query = String.format("DELETE FROM %s WHERE %s = ?", ContributionDaoImpl.TABLE_NAME,
-                ContributionField.id.getColumnName());
-        this.getSimpleJdbcTemplate().update(query, contribution.getId());
+        String idColumn = ContributionField.id.getColumnName();
+        String query = String.format("DELETE FROM %s WHERE %s = :%s", ContributionDaoImpl.TABLE_NAME,
+                idColumn, idColumn);
+
+        Map<String, Integer> args = Collections.singletonMap(idColumn, contribution.getId());
+
+        this.getNamedParameterJdbcTemplate().update(query, args);
     }
 }

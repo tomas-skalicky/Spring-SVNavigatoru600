@@ -16,18 +16,18 @@ public abstract class AbstractGoToFormResponse extends AbstractNewsResponse {
     /**
      * News which is to be visualised in the form.
      */
-    protected News news = null;
+    private News news = null;
     /**
      * Value of the "action" attribute of the form.
      */
-    protected String formAction = null;
+    private String formAction = null;
     /**
      * Localised title of the submit button.
      */
-    protected String localizedTitleOfSubmit = null;
+    private String localizedTitleOfSubmit = null;
 
     public AbstractGoToFormResponse(News news) {
-        this.successful = true;
+        this.setSuccess();
         this.news = news;
     }
 

@@ -2,9 +2,11 @@ package com.svnavigatoru600.domain.records;
 
 import java.util.Date;
 
+import javax.inject.Inject;
+
 import org.springframework.format.annotation.DateTimeFormat;
 
-import com.svnavigatoru600.repository.records.SessionRecordDao;
+import com.svnavigatoru600.service.records.session.SessionRecordService;
 
 /**
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
@@ -14,10 +16,11 @@ public class SessionRecord extends AbstractDocumentRecord {
     private static final long serialVersionUID = -7056147517890905426L;
 
     @SuppressWarnings("unused")
-    private SessionRecordDao recordDao;
+    private SessionRecordService recordService;
 
-    public void setSessionRecordDao(SessionRecordDao recordDao) {
-        this.recordDao = recordDao;
+    @Inject
+    public void setSessionRecordService(final SessionRecordService recordService) {
+        this.recordService = recordService;
     }
 
     /**

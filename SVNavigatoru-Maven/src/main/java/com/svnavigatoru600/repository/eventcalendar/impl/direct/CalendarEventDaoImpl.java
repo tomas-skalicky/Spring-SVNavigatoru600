@@ -6,9 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcDaoSupport;
-import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 
 import com.svnavigatoru600.domain.eventcalendar.CalendarEvent;
@@ -52,23 +50,8 @@ public class CalendarEventDaoImpl extends NamedParameterJdbcDaoSupport implement
         return this.getNamedParameterJdbcTemplate().query(query, args, new CalendarEventRowMapper());
     }
 
-    @Override
-    public void update(CalendarEvent event) {
-        String query = String.format("UPDATE %s SET %s = :%s, %s = :%s, %s = :%s, %s = :%s WHERE %s = :%s",
-                CalendarEventDaoImpl.TABLE_NAME, CalendarEventField.name.getColumnName(),
-                CalendarEventField.name.name(), CalendarEventField.date.getColumnName(),
-                CalendarEventField.date.name(), CalendarEventField.description.getColumnName(),
-                CalendarEventField.description.name(), CalendarEventField.priority.getColumnName(),
-                CalendarEventField.priority.name(), CalendarEventField.id.getColumnName(),
-                CalendarEventField.id.name());
-
-        SqlParameterSource namedParameters = new BeanPropertySqlParameterSource(event);
-
-        this.getNamedParameterJdbcTemplate().update(query, namedParameters);
-    }
-
     /**
-     * Used during the save of the given <code>event</code>.
+     * Maps properties of the given {@link CalendarEvent} to names of the corresponding database columns.
      */
     private Map<String, Object> getNamedParameters(CalendarEvent event) {
         Map<String, Object> parameters = new HashMap<String, Object>();
@@ -78,6 +61,20 @@ public class CalendarEventDaoImpl extends NamedParameterJdbcDaoSupport implement
         parameters.put(CalendarEventField.description.getColumnName(), event.getDescription());
         parameters.put(CalendarEventField.priority.getColumnName(), event.getPriority());
         return parameters;
+    }
+
+    @Override
+    public void update(CalendarEvent event) {
+        String idColumn = CalendarEventField.id.getColumnName();
+        String nameColumn = CalendarEventField.name.getColumnName();
+        String dateColumn = CalendarEventField.date.getColumnName();
+        String descriptionColumn = CalendarEventField.description.getColumnName();
+        String priorityColumn = CalendarEventField.priority.getColumnName();
+        String query = String.format("UPDATE %s SET %s = :%s, %s = :%s, %s = :%s, %s = :%s WHERE %s = :%s",
+                CalendarEventDaoImpl.TABLE_NAME, nameColumn, nameColumn, dateColumn, dateColumn,
+                descriptionColumn, descriptionColumn, priorityColumn, priorityColumn, idColumn, idColumn);
+
+        this.getNamedParameterJdbcTemplate().update(query, this.getNamedParameters(event));
     }
 
     @Override

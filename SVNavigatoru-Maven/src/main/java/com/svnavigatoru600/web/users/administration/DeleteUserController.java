@@ -3,6 +3,7 @@ package com.svnavigatoru600.web.users.administration;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.logging.LogFactory;
 import org.springframework.context.MessageSource;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Controller;
@@ -39,8 +40,9 @@ public class DeleteUserController extends AbstractUserController {
     public String delete(@PathVariable String username, HttpServletRequest request, ModelMap model) {
         try {
             // Deletes the user.
-            final User user = this.userDao.findByUsername(username);
-            this.userDao.delete(user);
+            final UserDao userDao = this.getUserDao();
+            final User user = userDao.findByUsername(username);
+            userDao.delete(user);
 
             // Notifies the user about the deletion of his account.
             this.sendEmailOnUserDeletion(user, request);
@@ -52,7 +54,7 @@ public class DeleteUserController extends AbstractUserController {
 
         } catch (DataAccessException e) {
             // We encountered a database problem.
-            this.logger.error(e);
+            LogFactory.getLog(this.getClass()).error(e);
             model.addAttribute("error", "user-administration.deletion-failed-due-to-database-error");
             return PageViews.LIST.getViewName();
         }
@@ -67,11 +69,12 @@ public class DeleteUserController extends AbstractUserController {
             return;
         }
 
-        final String subject = Localization.findLocaleMessage(this.messageSource, request,
+        final MessageSource messageSource = this.getMessageSource();
+        final String subject = Localization.findLocaleMessage(messageSource, request,
                 "email.subject.user-deleted");
         final Object[] messageParams = new Object[] { user.getLastName(), user.getUsername(),
                 Configuration.DOMAIN };
-        final String messageText = Localization.findLocaleMessage(this.messageSource, request,
+        final String messageText = Localization.findLocaleMessage(messageSource, request,
                 "email.text.user-deleted", messageParams);
 
         Email.sendMail(emailAddress, subject, messageText);

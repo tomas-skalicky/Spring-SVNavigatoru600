@@ -21,14 +21,19 @@ public interface AuthorityDao {
     List<Authority> findAll(String username);
 
     /**
-     * Stores the given <code>authorities</code> to the repository. If there is already an {@link Authority}
-     * with the same username and authority's name, throws an exception.
+     * Stores the given {@link GrantedAuthority authorities} to the repository. If there is already an
+     * {@link Authority} with the same {@link com.svnavigatoru600.domain.users.AuthorityId#getUsername()
+     * username} and {@link com.svnavigatoru600.domain.users.AuthorityId#getAuthority() authority's name},
+     * throws an exception.
      */
     void save(Collection<GrantedAuthority> authorities);
 
     /**
-     * Deletes all {@link Authority Authorities} of {@link com.svnavigatoru600.domain.users.User user} with
-     * the given <code>username</code> from the repository.
+     * Deletes all {@link Authority Authorities} of the specified
+     * {@link com.svnavigatoru600.domain.users.User User}.
+     * 
+     * @param username
+     *            The username (=login) of the user
      */
     void delete(String username);
 }

@@ -3,6 +3,7 @@ package com.svnavigatoru600.web.forum.threads;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.logging.LogFactory;
 import org.springframework.context.MessageSource;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Controller;
@@ -13,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.svnavigatoru600.domain.forum.Thread;
-import com.svnavigatoru600.repository.forum.ThreadDao;
 import com.svnavigatoru600.service.forum.threads.ThreadService;
 import com.svnavigatoru600.web.Configuration;
 
@@ -31,13 +31,7 @@ public class DeleteThreadController extends AbstractThreadController {
      */
     public static final String DATABASE_ERROR_MESSAGE_CODE = "forum.threads.deletion-failed-due-to-database-error";
     public static final String CANNOT_DELETE_DUE_CONTRIBUTION_MESSAGE_CODE = "forum.threads.deletion-failed-due-to-contribution-count";
-    private ThreadService threadService;
     private ListThreadsController listController;
-
-    @Inject
-    public void setThreadService(final ThreadService threadService) {
-        this.threadService = threadService;
-    }
 
     @Inject
     public void setListController(final ListThreadsController listController) {
@@ -48,26 +42,27 @@ public class DeleteThreadController extends AbstractThreadController {
      * Constructor.
      */
     @Inject
-    public DeleteThreadController(final ThreadDao threadDao, final MessageSource messageSource) {
-        super(threadDao, messageSource);
+    public DeleteThreadController(final ThreadService threadService, final MessageSource messageSource) {
+        super(threadService, messageSource);
     }
 
     @RequestMapping(value = DeleteThreadController.REQUEST_MAPPING_BASE_URL, method = RequestMethod.GET)
     @Transactional
     public String delete(@PathVariable int threadId, final HttpServletRequest request, final ModelMap model) {
 
-        this.threadService.canDelete(threadId);
+        final ThreadService threadService = this.getThreadService();
+        threadService.canDelete(threadId);
 
         try {
             // Deletes the thread from the repository.
-            final Thread thread = this.threadDao.findById(threadId);
+            final Thread thread = threadService.findById(threadId);
             if (thread.getContributions().size() > 0) {
                 final String view = this.listController.initPage(request, model);
                 model.addAttribute("error",
                         DeleteThreadController.CANNOT_DELETE_DUE_CONTRIBUTION_MESSAGE_CODE);
                 return view;
             }
-            this.threadDao.delete(thread);
+            threadService.delete(thread);
 
             // Returns the form success view.
             model.addAttribute(Configuration.REDIRECTION_ATTRIBUTE,
@@ -76,7 +71,7 @@ public class DeleteThreadController extends AbstractThreadController {
 
         } catch (DataAccessException e) {
             // We encountered a database problem.
-            this.logger.error(e);
+            LogFactory.getLog(this.getClass()).error(e);
             final String view = this.listController.initPage(request, model);
             model.addAttribute("error", DeleteThreadController.DATABASE_ERROR_MESSAGE_CODE);
             return view;

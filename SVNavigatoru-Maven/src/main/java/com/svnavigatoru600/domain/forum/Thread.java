@@ -2,12 +2,16 @@ package com.svnavigatoru600.domain.forum;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import javax.inject.Inject;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.svnavigatoru600.domain.users.User;
-import com.svnavigatoru600.repository.forum.ThreadDao;
+import com.svnavigatoru600.service.forum.threads.ThreadService;
 
 /**
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
@@ -17,10 +21,11 @@ public class Thread implements Serializable, Comparable<Thread> {
     private static final long serialVersionUID = -8105812445594624080L;
 
     @SuppressWarnings("unused")
-    private ThreadDao threadDao;
+    private ThreadService threadService;
 
-    public void setThreadDao(ThreadDao threadDao) {
-        this.threadDao = threadDao;
+    @Inject
+    public void setThreadService(ThreadService threadService) {
+        this.threadService = threadService;
     }
 
     private int id;
@@ -71,22 +76,6 @@ public class Thread implements Serializable, Comparable<Thread> {
     }
 
     /**
-     * Gets the {@link Contribution} which has been saved the latest time among all {@link Contribution
-     * Contributions} of this {@link Thread}.
-     */
-    public Contribution getLastSavedContribution() {
-        Contribution lastSavedContribution = null;
-        for (Contribution contribution : this.contributions) {
-            boolean isBetter = (lastSavedContribution == null)
-                    || (contribution.getLastSaveTime().after(lastSavedContribution.getLastSaveTime()));
-            if (isBetter) {
-                lastSavedContribution = contribution;
-            }
-        }
-        return lastSavedContribution;
-    }
-
-    /**
      * Sorts {@link Thread Threads} according to their last saved {@link Contribution Contributions} returned
      * by the {@link #getLastSavedContribution() getLastSavedContribution} method.
      */
@@ -103,5 +92,35 @@ public class Thread implements Serializable, Comparable<Thread> {
 
         // Sorts in the descending order; hence sign `-`.
         return -thisContribution.getLastSaveTime().compareTo(tContribution.getLastSaveTime());
+    }
+
+    /**
+     * Gets the {@link Contribution} which has been saved the latest time among all {@link Contribution
+     * Contributions} of this {@link Thread}.
+     */
+    public Contribution getLastSavedContribution() {
+        Contribution lastSavedContribution = null;
+        for (Contribution contribution : this.contributions) {
+            boolean isBetter = (lastSavedContribution == null)
+                    || (contribution.getLastSaveTime().after(lastSavedContribution.getLastSaveTime()));
+            if (isBetter) {
+                lastSavedContribution = contribution;
+            }
+        }
+        return lastSavedContribution;
+    }
+
+    /**
+     * Gets a {@link Map} which for each input {@link Thread} contains a {@link Contribution} which has the
+     * highest {@link Contribution#getLastSaveTime() lastSaveTime} and which belongs to that thread. Moreover,
+     * the method finds the author of such a contribution.
+     */
+    public static Map<Thread, Contribution> getLastSavedContributions(final List<Thread> threads) {
+        final Map<Thread, Contribution> lastSavedContributions = new HashMap<Thread, Contribution>();
+
+        for (Thread thread : threads) {
+            lastSavedContributions.put(thread, thread.getLastSavedContribution());
+        }
+        return lastSavedContributions;
     }
 }

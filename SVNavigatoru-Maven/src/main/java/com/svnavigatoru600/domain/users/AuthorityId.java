@@ -30,10 +30,8 @@ public class AuthorityId implements Serializable {
         this.authority = authority;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see java.lang.Object#hashCode()
+    /**
+     * Generated
      */
     @Override
     public int hashCode() {
@@ -44,10 +42,8 @@ public class AuthorityId implements Serializable {
         return result;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see java.lang.Object#equals(java.lang.Object)
+    /**
+     * Generated
      */
     @Override
     public boolean equals(Object obj) {

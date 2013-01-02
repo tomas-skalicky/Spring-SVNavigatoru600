@@ -62,10 +62,9 @@ public abstract class AbstractTailoredSeleniumTest extends AbstractSeleniumTest 
     protected static final String EMAIL_ELEMENT_ID = "user.email";
 
     /**
-     * <p>
      * Signs in to the application with the given credentials. It does not check the "remember me" checkbox.
      * It does not test, whether the login ended up with a success, or not.
-     * </p>
+     * <p>
      * <b>PRECONDITION:</b> The current location is the login page of the application.
      * 
      * @param login

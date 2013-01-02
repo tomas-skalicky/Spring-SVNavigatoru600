@@ -3,6 +3,7 @@ package com.svnavigatoru600.web.eventcalendar;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.logging.LogFactory;
 import org.springframework.context.MessageSource;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Controller;
@@ -54,10 +55,10 @@ public class NewEventController extends AbstractNewEditEventController {
         CalendarEvent calendarEvent = new CalendarEvent();
         command.setEvent(calendarEvent);
 
-        command.setNewPriority(Localization.findLocaleMessage(this.messageSource, request,
+        command.setNewPriority(Localization.findLocaleMessage(this.getMessageSource(), request,
                 PriorityType.NORMAL.getLocalizationCode()));
 
-        model.addAttribute(NewEventController.COMMAND, command);
+        model.addAttribute(AbstractNewEditEventController.COMMAND, command);
         return PageViews.NEW.getViewName();
     }
 
@@ -72,7 +73,7 @@ public class NewEventController extends AbstractNewEditEventController {
     public String processSubmittedForm(@ModelAttribute(NewEventController.COMMAND) NewEvent command,
             BindingResult result, SessionStatus status, HttpServletRequest request, ModelMap model) {
 
-        this.validator.validate(command, result);
+        this.getValidator().validate(command, result);
         if (result.hasErrors()) {
             return PageViews.NEW.getViewName();
         }
@@ -80,23 +81,23 @@ public class NewEventController extends AbstractNewEditEventController {
         // Updates the data of the new calendar event.
         CalendarEvent newEvent = command.getEvent();
         newEvent.setPriority(PriorityType.valueOfAccordingLocalization(command.getNewPriority(),
-                this.messageSource, request));
+                this.getMessageSource(), request));
 
         try {
             // Saves the event to the repository.
-            this.eventService.save(newEvent);
+            this.getEventService().save(newEvent);
 
             // Clears the command object from the session.
             status.setComplete();
 
             // Returns the form success view.
             model.addAttribute(Configuration.REDIRECTION_ATTRIBUTE,
-                    String.format("%svytvoreno/", NewEventController.BASE_URL));
+                    String.format("%svytvoreno/", AbstractEventController.BASE_URL));
             return Configuration.REDIRECTION_PAGE;
 
         } catch (DataAccessException e) {
             // We encountered a database problem.
-            this.logger.error(newEvent, e);
+            LogFactory.getLog(this.getClass()).error(newEvent, e);
             result.reject(NewEventController.DATABASE_ERROR_MESSAGE_CODE);
         }
         return PageViews.NEW.getViewName();

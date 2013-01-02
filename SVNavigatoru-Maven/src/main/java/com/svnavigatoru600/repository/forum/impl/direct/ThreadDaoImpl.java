@@ -1,5 +1,6 @@
 package com.svnavigatoru600.repository.forum.impl.direct;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -7,7 +8,7 @@ import java.util.Map;
 
 import javax.inject.Inject;
 
-import org.springframework.jdbc.core.simple.SimpleJdbcDaoSupport;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcDaoSupport;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 
 import com.svnavigatoru600.domain.forum.Contribution;
@@ -22,14 +23,14 @@ import com.svnavigatoru600.repository.users.impl.direct.UserDaoImpl;
 /**
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
-public class ThreadDaoImpl extends SimpleJdbcDaoSupport implements ThreadDao {
+public class ThreadDaoImpl extends NamedParameterJdbcDaoSupport implements ThreadDao {
 
     /**
      * Database table which provides a persistence of {@link Thread Threads}.
      */
     private static final String TABLE_NAME = PersistedClass.Thread.getTableName();
-    protected ContributionDao contributionDao;
-    protected UserDao userDao;
+    private ContributionDao contributionDao;
+    private UserDao userDao;
 
     @Inject
     public void setContributionDao(final ContributionDao contributionDao) {
@@ -89,10 +90,14 @@ public class ThreadDaoImpl extends SimpleJdbcDaoSupport implements ThreadDao {
      *            not be loaded.
      */
     public Thread findById(final int threadId, final boolean lazy) {
-        final String query = String.format("SELECT * FROM %s t WHERE t.%s = ?", ThreadDaoImpl.TABLE_NAME,
-                ThreadField.id.getColumnName());
-        final Thread thread = this.getSimpleJdbcTemplate().queryForObject(query, new ThreadRowMapper(),
-                threadId);
+        String idColumn = ThreadField.id.getColumnName();
+        final String query = String.format("SELECT * FROM %s t WHERE t.%s = :%s", ThreadDaoImpl.TABLE_NAME,
+                idColumn, idColumn);
+
+        Map<String, Integer> args = Collections.singletonMap(idColumn, threadId);
+
+        Thread thread = this.getNamedParameterJdbcTemplate().queryForObject(query, args,
+                new ThreadRowMapper());
 
         if (!lazy) {
             this.populateContributions(thread);
@@ -104,25 +109,16 @@ public class ThreadDaoImpl extends SimpleJdbcDaoSupport implements ThreadDao {
     @Override
     public List<Thread> loadAll() {
         final String query = String.format("SELECT * FROM %s t", ThreadDaoImpl.TABLE_NAME);
-        final List<Thread> threads = this.getSimpleJdbcTemplate().query(query, new ThreadRowMapper());
+
+        final List<Thread> threads = this.getJdbcTemplate().query(query, new ThreadRowMapper());
 
         this.populateContributions(threads);
         this.populateAuthor(threads);
         return threads;
     }
 
-    @Override
-    public void update(final Thread thread) {
-        final String query = String.format("UPDATE %s SET %s = ?, %s = ?, %s = ? WHERE %s = ?",
-                ThreadDaoImpl.TABLE_NAME, ThreadField.name.getColumnName(),
-                ThreadField.creationTime.getColumnName(), ThreadField.authorUsername.getColumnName(),
-                ThreadField.id.getColumnName());
-        this.getSimpleJdbcTemplate().update(query, thread.getName(), thread.getCreationTime(),
-                thread.getAuthor().getUsername(), thread.getId());
-    }
-
     /**
-     * Used during the save of the given <code>thread</code>.
+     * Maps properties of the given {@link Thread} to names of the corresponding database columns.
      */
     private Map<String, Object> getNamedParameters(final Thread thread) {
         final Map<String, Object> parameters = new HashMap<String, Object>();
@@ -131,6 +127,19 @@ public class ThreadDaoImpl extends SimpleJdbcDaoSupport implements ThreadDao {
         parameters.put(ThreadField.creationTime.getColumnName(), thread.getCreationTime());
         parameters.put(ThreadField.authorUsername.getColumnName(), thread.getAuthor().getUsername());
         return parameters;
+    }
+
+    @Override
+    public void update(final Thread thread) {
+        String idColumn = ThreadField.id.getColumnName();
+        String nameColumn = ThreadField.name.getColumnName();
+        String creationTimeColumn = ThreadField.creationTime.getColumnName();
+        String authorUsernameColumn = ThreadField.authorUsername.getColumnName();
+        final String query = String.format("UPDATE %s SET %s = :%s, %s = :%s, %s = :%s WHERE %s = :%s",
+                ThreadDaoImpl.TABLE_NAME, nameColumn, nameColumn, creationTimeColumn, creationTimeColumn,
+                authorUsernameColumn, authorUsernameColumn, idColumn, idColumn);
+
+        this.getNamedParameterJdbcTemplate().update(query, this.getNamedParameters(thread));
     }
 
     @Override
@@ -158,9 +167,13 @@ public class ThreadDaoImpl extends SimpleJdbcDaoSupport implements ThreadDao {
     }
 
     @Override
-    public void delete(final Thread thread) {
-        final String query = String.format("DELETE FROM %s WHERE %s = ?", ThreadDaoImpl.TABLE_NAME,
-                ThreadField.id.getColumnName());
-        this.getSimpleJdbcTemplate().update(query, thread.getId());
+    public void delete(Thread thread) {
+        String idColumn = ThreadField.id.getColumnName();
+        String query = String.format("DELETE FROM %s WHERE %s = :%s", ThreadDaoImpl.TABLE_NAME, idColumn,
+                idColumn);
+
+        Map<String, Integer> args = Collections.singletonMap(idColumn, thread.getId());
+
+        this.getNamedParameterJdbcTemplate().update(query, args);
     }
 }

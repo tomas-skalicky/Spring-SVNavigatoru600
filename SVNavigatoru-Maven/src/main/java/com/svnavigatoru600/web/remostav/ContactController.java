@@ -13,7 +13,7 @@ import org.springframework.web.bind.support.SessionStatus;
 
 import com.svnavigatoru600.domain.WysiwygSection;
 import com.svnavigatoru600.domain.WysiwygSectionName;
-import com.svnavigatoru600.repository.WysiwygSectionDao;
+import com.svnavigatoru600.service.WysiwygSectionService;
 import com.svnavigatoru600.web.AbstractWysiwygSectionController;
 
 /**
@@ -26,12 +26,9 @@ public class ContactController extends AbstractWysiwygSectionController {
      * Constructor.
      */
     @Inject
-    public ContactController(WysiwygSectionDao sectionDao) {
-        super(sectionDao);
-        super.sectionName = WysiwygSectionName.REMOSTAV_CONTACT;
-        super.viewPageView = "viewRemostavContact";
-        super.editPageView = "editRemostavContact";
-        super.viewPageAddress = "/remostav/kontakt/";
+    public ContactController(WysiwygSectionService sectionService) {
+        super(sectionService, WysiwygSectionName.REMOSTAV_CONTACT, "viewRemostavContact",
+                "editRemostavContact", "/remostav/kontakt/");
     }
 
     @Override

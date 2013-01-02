@@ -15,9 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.svnavigatoru600.domain.forum.Contribution;
-import com.svnavigatoru600.repository.forum.ContributionDao;
-import com.svnavigatoru600.repository.forum.ThreadDao;
 import com.svnavigatoru600.repository.forum.impl.ContributionField;
+import com.svnavigatoru600.service.forum.contributions.ContributionService;
+import com.svnavigatoru600.service.forum.threads.ThreadService;
 import com.svnavigatoru600.service.util.Localization;
 import com.svnavigatoru600.service.util.OrderType;
 import com.svnavigatoru600.viewmodel.forum.contributions.ShowAllContributions;
@@ -34,16 +34,16 @@ public class ListContributionsController extends AbstractContributionController 
      * Command used in /main-content/forum/contributions/list-contributions.jsp.
      */
     public static final String COMMAND = "showAllContributionsCommand";
-    private ThreadDao threadDao;
+    private ThreadService threadService;
 
     /**
      * Constructor.
      */
     @Inject
-    public ListContributionsController(ContributionDao contributionDao, ThreadDao threadDao,
+    public ListContributionsController(ContributionService contributionService, ThreadService threadService,
             MessageSource messageSource) {
-        super(contributionDao, messageSource);
-        this.threadDao = threadDao;
+        super(contributionService, messageSource);
+        this.threadService = threadService;
     }
 
     @RequestMapping(value = ListContributionsController.REQUEST_MAPPING_BASE_URL, method = RequestMethod.GET)
@@ -51,10 +51,10 @@ public class ListContributionsController extends AbstractContributionController 
 
         ShowAllContributions command = new ShowAllContributions();
 
-        List<Contribution> contributions = this.contributionDao.findAllOrdered(threadId,
+        List<Contribution> contributions = this.getContributionService().findAllOrdered(threadId,
                 ContributionField.creationTime, OrderType.ASCENDING);
         command.setContributions(contributions);
-        command.setThread(this.threadDao.findById(threadId));
+        command.setThread(this.threadService.findById(threadId));
 
         // Sets up all auxiliary (but necessary) maps.
         command.setLocalizedDeleteQuestions(this.getLocalizedDeleteQuestions(contributions, request));
@@ -84,7 +84,7 @@ public class ListContributionsController extends AbstractContributionController 
     private Map<Contribution, String> getLocalizedDeleteQuestions(List<Contribution> contributions,
             HttpServletRequest request) {
         final String messageCode = "forum.contributions.do-you-really-want-to-delete-contribution";
-        final String question = Localization.findLocaleMessage(this.messageSource, request, messageCode);
+        final String question = Localization.findLocaleMessage(this.getMessageSource(), request, messageCode);
         final Map<Contribution, String> questions = new HashMap<Contribution, String>();
 
         for (Contribution contribution : contributions) {

@@ -3,6 +3,7 @@ package com.svnavigatoru600.web.forum.contributions;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.logging.LogFactory;
 import org.springframework.context.MessageSource;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Controller;
@@ -16,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.support.SessionStatus;
 
 import com.svnavigatoru600.domain.forum.Contribution;
-import com.svnavigatoru600.repository.forum.ContributionDao;
 import com.svnavigatoru600.service.forum.contributions.ContributionService;
 import com.svnavigatoru600.service.forum.contributions.validator.EditContributionValidator;
 import com.svnavigatoru600.viewmodel.forum.contributions.EditContribution;
@@ -45,9 +45,9 @@ public class EditContributionController extends AbstractNewEditContributionContr
      * Constructor.
      */
     @Inject
-    public EditContributionController(final ContributionDao contributionDao,
+    public EditContributionController(final ContributionService contributionService,
             final EditContributionValidator validator, final MessageSource messageSource) {
-        super(contributionDao, validator, messageSource);
+        super(contributionService, validator, messageSource);
     }
 
     @RequestMapping(value = EditContributionController.REQUEST_MAPPING_BASE_URL, method = RequestMethod.GET)
@@ -58,11 +58,11 @@ public class EditContributionController extends AbstractNewEditContributionContr
 
         final EditContribution command = new EditContribution();
 
-        final Contribution contribution = this.contributionDao.findById(contributionId);
+        final Contribution contribution = this.getContributionService().findById(contributionId);
         command.setContribution(contribution);
         command.setThreadId(threadId);
 
-        model.addAttribute(EditContributionController.COMMAND, command);
+        model.addAttribute(AbstractNewEditContributionController.COMMAND, command);
         return PageViews.EDIT.getViewName();
     }
 
@@ -70,7 +70,7 @@ public class EditContributionController extends AbstractNewEditContributionContr
     public String initFormAfterSave(@PathVariable int threadId, @PathVariable int contributionId,
             final HttpServletRequest request, final ModelMap model) {
         final String view = this.initForm(threadId, contributionId, request, model);
-        ((EditContribution) model.get(EditContributionController.COMMAND)).setDataSaved(true);
+        ((EditContribution) model.get(AbstractNewEditContributionController.COMMAND)).setDataSaved(true);
         return view;
     }
 
@@ -83,32 +83,29 @@ public class EditContributionController extends AbstractNewEditContributionContr
 
         this.contributionService.canEdit(contributionId);
 
-        this.validator.validate(command, result);
+        this.getValidator().validate(command, result);
         if (result.hasErrors()) {
             return PageViews.EDIT.getViewName();
         }
 
-        // Updates the original data.
-        final Contribution originalContribution = this.contributionDao.findById(contributionId);
-        final Contribution newContribution = command.getContribution();
-        originalContribution.setText(newContribution.getText());
-
+        final ContributionService contributionService = this.getContributionService();
+        Contribution originalContribution = null;
         try {
-            // Updates the contribution in the repository.
-            this.contributionDao.update(originalContribution);
+            originalContribution = contributionService.findById(contributionId);
+            contributionService.update(originalContribution, command.getContribution());
 
             // Clears the command object from the session.
             status.setComplete();
 
             // Returns the form success view.
             model.addAttribute(Configuration.REDIRECTION_ATTRIBUTE, String.format(
-                    "%s%d/prispevky/existujici/%d/ulozeno/", EditContributionController.BASE_URL, threadId,
-                    contributionId));
+                    "%s%d/prispevky/existujici/%d/ulozeno/", AbstractContributionController.BASE_URL,
+                    threadId, contributionId));
             return Configuration.REDIRECTION_PAGE;
 
         } catch (DataAccessException e) {
             // We encountered a database problem.
-            this.logger.error(originalContribution, e);
+            LogFactory.getLog(this.getClass()).error(originalContribution, e);
             result.reject(EditContributionController.DATABASE_ERROR_MESSAGE_CODE);
         }
         return PageViews.EDIT.getViewName();

@@ -3,6 +3,7 @@ package com.svnavigatoru600.web.news;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.logging.LogFactory;
 import org.springframework.context.MessageSource;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Controller;
@@ -52,8 +53,8 @@ public class NewNewsController extends AbstractNewEditNewsController {
         News news = new News();
         command.setNews(news);
 
-        model.addAttribute(NewNewsController.COMMAND, command);
-        return new GoToNewFormResponse(news, this.messageSource, request);
+        model.addAttribute(AbstractNewEditNewsController.COMMAND, command);
+        return new GoToNewFormResponse(news, this.getMessageSource(), request);
     }
 
     /**
@@ -70,9 +71,10 @@ public class NewNewsController extends AbstractNewEditNewsController {
 
         NewNewsResponse response = new NewNewsResponse(command);
 
-        this.validator.validate(command, result);
+        this.getValidator().validate(command, result);
+        final MessageSource messageSource = this.getMessageSource();
         if (result.hasErrors()) {
-            response.setFail(result, this.messageSource, request);
+            response.setFail(result, messageSource, request);
             return response;
         }
 
@@ -81,19 +83,19 @@ public class NewNewsController extends AbstractNewEditNewsController {
 
         try {
             // Saves the news to the repository.
-            this.newsService.save(newNews);
+            this.getNewsService().save(newNews);
 
             // Clears the command object from the session.
             status.setComplete();
 
-            response.setSuccess(this.messageSource, request);
+            response.setSuccess(messageSource, request);
             return response;
 
         } catch (DataAccessException e) {
             // We encountered a database problem.
-            this.logger.error(newNews, e);
+            LogFactory.getLog(this.getClass()).error(newNews, e);
             result.reject(NewNewsController.DATABASE_ERROR_MESSAGE_CODE);
-            response.setFail(result, this.messageSource, request);
+            response.setFail(result, messageSource, request);
             return response;
         }
     }
