@@ -14,7 +14,7 @@ import org.springframework.ui.ModelMap;
 
 import com.svnavigatoru600.domain.records.SessionRecord;
 import com.svnavigatoru600.domain.records.SessionRecordType;
-import com.svnavigatoru600.repository.records.SessionRecordDao;
+import com.svnavigatoru600.service.records.session.SessionRecordService;
 import com.svnavigatoru600.service.util.DateUtils;
 import com.svnavigatoru600.service.util.Localization;
 import com.svnavigatoru600.service.util.OrderType;
@@ -39,8 +39,8 @@ public abstract class AbstractListRecordsController extends AbstractSessionRecor
      * {@link SessionRecordType SessionRecordTypes}.
      */
     public AbstractListRecordsController(final String baseUrl, final AbstractPageViews views,
-            final SessionRecordDao recordDao, final MessageSource messageSource) {
-        super(baseUrl, views, recordDao, messageSource);
+            final SessionRecordService recordService, final MessageSource messageSource) {
+        super(baseUrl, views, recordService, messageSource);
     }
 
     /**
@@ -48,9 +48,9 @@ public abstract class AbstractListRecordsController extends AbstractSessionRecor
      * <code>recordType</code> .
      */
     public AbstractListRecordsController(final String baseUrl, final AbstractPageViews views,
-            final SessionRecordType recordType, final SessionRecordDao recordDao,
+            final SessionRecordType recordType, final SessionRecordService recordService,
             final MessageSource messageSource) {
-        super(baseUrl, views, recordType, recordDao, messageSource);
+        super(baseUrl, views, recordType, recordService, messageSource);
     }
 
     public String initPage(final HttpServletRequest request, final ModelMap model) {
@@ -59,12 +59,12 @@ public abstract class AbstractListRecordsController extends AbstractSessionRecor
         final boolean allRecordTypes = this.isAllRecordTypes();
         command.setAllRecordTypes(allRecordTypes);
 
-        final SessionRecordDao recordDao = this.getRecordDao();
+        final SessionRecordService recordService = this.getRecordService();
         final List<SessionRecord> records;
         if (allRecordTypes) {
-            records = recordDao.findAllOrdered(OrderType.DESCENDING);
+            records = recordService.findAllOrdered(OrderType.DESCENDING);
         } else {
-            records = recordDao.findAllOrdered(this.getRecordType(), OrderType.DESCENDING);
+            records = recordService.findAllOrdered(this.getRecordType(), OrderType.DESCENDING);
         }
         command.setRecords(records);
 

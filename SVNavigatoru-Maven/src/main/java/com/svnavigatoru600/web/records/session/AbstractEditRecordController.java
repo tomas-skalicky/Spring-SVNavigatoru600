@@ -20,7 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.svnavigatoru600.domain.records.SessionRecord;
 import com.svnavigatoru600.domain.records.SessionRecordType;
-import com.svnavigatoru600.repository.records.SessionRecordDao;
+import com.svnavigatoru600.service.records.session.SessionRecordService;
 import com.svnavigatoru600.service.records.session.validator.EditSessionRecordValidator;
 import com.svnavigatoru600.service.util.File;
 import com.svnavigatoru600.service.util.Localization;
@@ -46,9 +46,10 @@ public abstract class AbstractEditRecordController extends AbstractNewEditRecord
      * Constructs a controller which considers all {@link SessionRecord SessionRecords} of all
      * {@link SessionRecordType SessionRecordTypes}.
      */
-    public AbstractEditRecordController(String baseUrl, AbstractPageViews views, SessionRecordDao recordDao,
-            EditSessionRecordValidator validator, MessageSource messageSource) {
-        super(baseUrl, views, recordDao, validator, messageSource);
+    public AbstractEditRecordController(String baseUrl, AbstractPageViews views,
+            SessionRecordService recordService, EditSessionRecordValidator validator,
+            MessageSource messageSource) {
+        super(baseUrl, views, recordService, validator, messageSource);
     }
 
     /**
@@ -56,9 +57,9 @@ public abstract class AbstractEditRecordController extends AbstractNewEditRecord
      * <code>recordType</code> .
      */
     public AbstractEditRecordController(String baseUrl, AbstractPageViews views,
-            SessionRecordType recordType, SessionRecordDao recordDao, EditSessionRecordValidator validator,
-            MessageSource messageSource) {
-        super(baseUrl, views, recordType, recordDao, validator, messageSource);
+            SessionRecordType recordType, SessionRecordService recordService,
+            EditSessionRecordValidator validator, MessageSource messageSource) {
+        super(baseUrl, views, recordType, recordService, validator, messageSource);
     }
 
     /**
@@ -71,7 +72,7 @@ public abstract class AbstractEditRecordController extends AbstractNewEditRecord
 
         EditSessionRecord command = new EditSessionRecord();
 
-        SessionRecord record = this.getRecordDao().findById(recordId, false);
+        SessionRecord record = this.getRecordService().findById(recordId, false);
         command.setRecord(record);
 
         command.setNewType(Localization.findLocaleMessage(this.getMessageSource(), request, record
@@ -108,8 +109,8 @@ public abstract class AbstractEditRecordController extends AbstractNewEditRecord
         }
 
         // Updates the original data. Modifies the filename to make it unique.
-        final SessionRecordDao recordDao = this.getRecordDao();
-        SessionRecord oldRecord = recordDao.findById(recordId, false);
+        final SessionRecordService recordService = this.getRecordService();
+        SessionRecord oldRecord = recordService.findById(recordId, false);
         SessionRecord newRecord = command.getRecord();
         oldRecord.setSessionDate(newRecord.getSessionDate());
         oldRecord.setDiscussedTopics(newRecord.getDiscussedTopics());
@@ -154,7 +155,7 @@ public abstract class AbstractEditRecordController extends AbstractNewEditRecord
             // newAttachedFile.transferTo(destinationFile);
             // }
             // \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-            recordDao.update(oldRecord);
+            recordService.update(oldRecord);
             // /////////////////////////////////////////////////////////////////
             // Store in the FILESYSTEM
             // --------------------------------------------------------------

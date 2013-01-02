@@ -14,7 +14,7 @@ import org.springframework.ui.ModelMap;
 
 import com.svnavigatoru600.domain.records.SessionRecord;
 import com.svnavigatoru600.domain.records.SessionRecordType;
-import com.svnavigatoru600.repository.records.SessionRecordDao;
+import com.svnavigatoru600.service.records.session.SessionRecordService;
 import com.svnavigatoru600.web.records.AbstractPageViews;
 import com.svnavigatoru600.web.records.RetrieveDocumentRecordUtils;
 
@@ -37,9 +37,9 @@ public abstract class AbstractRetrieveRecordController extends AbstractSessionRe
      * {@link SessionRecordType SessionRecordTypes}.
      */
     public AbstractRetrieveRecordController(String baseUrl, AbstractPageViews views,
-            SessionRecordDao recordDao, MessageSource messageSource) {
+            SessionRecordService recordService, MessageSource messageSource) {
         // Note that allRecordTypes is set up during the creation of the parent.
-        super(baseUrl, views, recordDao, messageSource);
+        super(baseUrl, views, recordService, messageSource);
     }
 
     /**
@@ -47,13 +47,13 @@ public abstract class AbstractRetrieveRecordController extends AbstractSessionRe
      * <code>recordType</code> .
      */
     public AbstractRetrieveRecordController(String baseUrl, AbstractPageViews views,
-            SessionRecordType recordType, SessionRecordDao recordDao, MessageSource messageSource) {
-        super(baseUrl, views, recordType, recordDao, messageSource);
+            SessionRecordType recordType, SessionRecordService recordService, MessageSource messageSource) {
+        super(baseUrl, views, recordType, recordService, messageSource);
     }
 
     public void retrieve(int recordId, HttpServletResponse response, ModelMap model) {
         try {
-            RetrieveDocumentRecordUtils.retrieve(recordId, this.getRecordDao(), response);
+            RetrieveDocumentRecordUtils.retrieve(recordId, this.getRecordService(), response);
 
             // NOTE: nothing is returned.
 

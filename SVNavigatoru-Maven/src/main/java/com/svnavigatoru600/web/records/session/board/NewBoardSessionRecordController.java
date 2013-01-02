@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.support.SessionStatus;
 
 import com.svnavigatoru600.domain.records.SessionRecordType;
-import com.svnavigatoru600.repository.records.SessionRecordDao;
+import com.svnavigatoru600.service.records.session.SessionRecordService;
 import com.svnavigatoru600.service.records.session.validator.NewSessionRecordValidator;
 import com.svnavigatoru600.viewmodel.records.session.NewSessionRecord;
 import com.svnavigatoru600.web.records.session.AbstractNewRecordController;
@@ -30,10 +30,10 @@ public class NewBoardSessionRecordController extends AbstractNewRecordController
      * Constructor.
      */
     @Inject
-    public NewBoardSessionRecordController(SessionRecordDao recordDao, NewSessionRecordValidator validator,
-            MessageSource messageSource) {
+    public NewBoardSessionRecordController(SessionRecordService recordService,
+            NewSessionRecordValidator validator, MessageSource messageSource) {
         super(NewBoardSessionRecordController.BASE_URL, new PageViews(),
-                SessionRecordType.SESSION_RECORD_OF_BOARD, recordDao, validator, messageSource);
+                SessionRecordType.SESSION_RECORD_OF_BOARD, recordService, validator, messageSource);
     }
 
     /**

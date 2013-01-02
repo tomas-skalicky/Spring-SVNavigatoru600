@@ -20,7 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.svnavigatoru600.domain.records.SessionRecord;
 import com.svnavigatoru600.domain.records.SessionRecordType;
-import com.svnavigatoru600.repository.records.SessionRecordDao;
+import com.svnavigatoru600.service.records.session.SessionRecordService;
 import com.svnavigatoru600.service.records.session.validator.NewSessionRecordValidator;
 import com.svnavigatoru600.service.util.File;
 import com.svnavigatoru600.service.util.Localization;
@@ -46,9 +46,10 @@ public abstract class AbstractNewRecordController extends AbstractNewEditRecordC
      * Constructs a controller which considers all {@link SessionRecord SessionRecords} of all
      * {@link SessionRecordType SessionRecordTypes}.
      */
-    public AbstractNewRecordController(String baseUrl, AbstractPageViews views, SessionRecordDao recordDao,
-            NewSessionRecordValidator validator, MessageSource messageSource) {
-        super(baseUrl, views, recordDao, validator, messageSource);
+    public AbstractNewRecordController(String baseUrl, AbstractPageViews views,
+            SessionRecordService recordService, NewSessionRecordValidator validator,
+            MessageSource messageSource) {
+        super(baseUrl, views, recordService, validator, messageSource);
     }
 
     /**
@@ -56,8 +57,9 @@ public abstract class AbstractNewRecordController extends AbstractNewEditRecordC
      * <code>recordType</code> .
      */
     public AbstractNewRecordController(String baseUrl, AbstractPageViews views, SessionRecordType recordType,
-            SessionRecordDao recordDao, NewSessionRecordValidator validator, MessageSource messageSource) {
-        super(baseUrl, views, recordType, recordDao, validator, messageSource);
+            SessionRecordService recordService, NewSessionRecordValidator validator,
+            MessageSource messageSource) {
+        super(baseUrl, views, recordType, recordService, validator, messageSource);
     }
 
     /**
@@ -131,7 +133,7 @@ public abstract class AbstractNewRecordController extends AbstractNewEditRecordC
             newRecord.setFile(blobFile);
             // \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
-            this.getRecordDao().save(newRecord);
+            this.getRecordService().save(newRecord);
 
             // Clears the command object from the session.
             status.setComplete();

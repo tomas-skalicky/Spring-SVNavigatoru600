@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.svnavigatoru600.domain.records.SessionRecordType;
-import com.svnavigatoru600.repository.records.SessionRecordDao;
+import com.svnavigatoru600.service.records.session.SessionRecordService;
 import com.svnavigatoru600.web.records.session.AbstractListRecordsController;
 
 /**
@@ -25,9 +25,9 @@ public class ListSvSessionRecordsController extends AbstractListRecordsControlle
      * Constructor.
      */
     @Inject
-    public ListSvSessionRecordsController(SessionRecordDao recordDao, MessageSource messageSource) {
+    public ListSvSessionRecordsController(SessionRecordService recordService, MessageSource messageSource) {
         super(ListSvSessionRecordsController.BASE_URL, new PageViews(),
-                SessionRecordType.SESSION_RECORD_OF_SV, recordDao, messageSource);
+                SessionRecordType.SESSION_RECORD_OF_SV, recordService, messageSource);
     }
 
     @Override

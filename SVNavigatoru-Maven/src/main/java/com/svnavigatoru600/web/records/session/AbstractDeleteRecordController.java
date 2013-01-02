@@ -13,7 +13,7 @@ import org.springframework.ui.ModelMap;
 import com.svnavigatoru600.domain.records.AbstractDocumentRecord;
 import com.svnavigatoru600.domain.records.SessionRecord;
 import com.svnavigatoru600.domain.records.SessionRecordType;
-import com.svnavigatoru600.repository.records.SessionRecordDao;
+import com.svnavigatoru600.service.records.session.SessionRecordService;
 import com.svnavigatoru600.service.util.File;
 import com.svnavigatoru600.web.Configuration;
 import com.svnavigatoru600.web.records.AbstractPageViews;
@@ -39,9 +39,9 @@ public abstract class AbstractDeleteRecordController extends AbstractSessionReco
      * {@link SessionRecordType SessionRecordTypes}.
      */
     public AbstractDeleteRecordController(String baseUrl, AbstractPageViews views,
-            SessionRecordDao recordDao, MessageSource messageSource) {
+            SessionRecordService recordService, MessageSource messageSource) {
         // Note that allRecordTypes is set up during the creation of the parent.
-        super(baseUrl, views, recordDao, messageSource);
+        super(baseUrl, views, recordService, messageSource);
         this.successfulDeleteUrl = this.getBaseUrl()
                 + AbstractDeleteRecordController.SUCCESSFUL_DELETE_URL_END;
     }
@@ -51,8 +51,8 @@ public abstract class AbstractDeleteRecordController extends AbstractSessionReco
      * <code>recordType</code> .
      */
     public AbstractDeleteRecordController(String baseUrl, AbstractPageViews views,
-            SessionRecordType recordType, SessionRecordDao recordDao, MessageSource messageSource) {
-        super(baseUrl, views, recordType, recordDao, messageSource);
+            SessionRecordType recordType, SessionRecordService recordService, MessageSource messageSource) {
+        super(baseUrl, views, recordType, recordService, messageSource);
         this.successfulDeleteUrl = this.getBaseUrl()
                 + AbstractDeleteRecordController.SUCCESSFUL_DELETE_URL_END;
     }
@@ -62,9 +62,9 @@ public abstract class AbstractDeleteRecordController extends AbstractSessionReco
         try {
             // Deletes the record from the repository and deletes the associated
             // file from the target folder.
-            final SessionRecordDao recordDao = this.getRecordDao();
-            AbstractDocumentRecord record = recordDao.findById(recordId, false);
-            recordDao.delete(record);
+            final SessionRecordService recordService = this.getRecordService();
+            AbstractDocumentRecord record = recordService.findById(recordId, false);
+            recordService.delete(record);
             java.io.File file = File.getUploadedFile(record.getFileName());
             file.delete();
 

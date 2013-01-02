@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.support.SessionStatus;
 
 import com.svnavigatoru600.domain.records.SessionRecordType;
-import com.svnavigatoru600.repository.records.SessionRecordDao;
+import com.svnavigatoru600.service.records.session.SessionRecordService;
 import com.svnavigatoru600.service.records.session.validator.EditSessionRecordValidator;
 import com.svnavigatoru600.viewmodel.records.session.EditSessionRecord;
 import com.svnavigatoru600.web.records.session.AbstractEditRecordController;
@@ -31,10 +31,10 @@ public class EditSvSessionRecordController extends AbstractEditRecordController 
      * Constructor.
      */
     @Inject
-    public EditSvSessionRecordController(SessionRecordDao recordDao, EditSessionRecordValidator validator,
-            MessageSource messageSource) {
+    public EditSvSessionRecordController(SessionRecordService recordService,
+            EditSessionRecordValidator validator, MessageSource messageSource) {
         super(EditSvSessionRecordController.BASE_URL, new PageViews(),
-                SessionRecordType.SESSION_RECORD_OF_SV, recordDao, validator, messageSource);
+                SessionRecordType.SESSION_RECORD_OF_SV, recordService, validator, messageSource);
     }
 
     @Override

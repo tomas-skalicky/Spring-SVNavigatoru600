@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 
 import com.svnavigatoru600.domain.records.SessionRecord;
 import com.svnavigatoru600.domain.records.SessionRecordType;
-import com.svnavigatoru600.repository.records.SessionRecordDao;
+import com.svnavigatoru600.service.records.session.SessionRecordService;
 import com.svnavigatoru600.service.records.session.validator.AbstractSessionRecordValidator;
 import com.svnavigatoru600.service.util.Localization;
 import com.svnavigatoru600.web.records.AbstractPageViews;
@@ -43,8 +43,9 @@ public abstract class AbstractNewEditRecordController extends AbstractSessionRec
      * {@link SessionRecordType SessionRecordTypes}.
      */
     public AbstractNewEditRecordController(String baseUrl, AbstractPageViews views,
-            SessionRecordDao recordDao, AbstractSessionRecordValidator validator, MessageSource messageSource) {
-        super(baseUrl, views, recordDao, messageSource);
+            SessionRecordService recordService, AbstractSessionRecordValidator validator,
+            MessageSource messageSource) {
+        super(baseUrl, views, recordService, messageSource);
         this.validator = validator;
     }
 
@@ -53,9 +54,9 @@ public abstract class AbstractNewEditRecordController extends AbstractSessionRec
      * <code>recordType</code> .
      */
     public AbstractNewEditRecordController(String baseUrl, AbstractPageViews views,
-            SessionRecordType recordType, SessionRecordDao recordDao,
+            SessionRecordType recordType, SessionRecordService recordService,
             AbstractSessionRecordValidator validator, MessageSource messageSource) {
-        super(baseUrl, views, recordType, recordDao, messageSource);
+        super(baseUrl, views, recordType, recordService, messageSource);
         this.validator = validator;
     }
 

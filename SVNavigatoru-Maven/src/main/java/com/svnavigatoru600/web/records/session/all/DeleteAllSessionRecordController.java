@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.svnavigatoru600.repository.records.SessionRecordDao;
+import com.svnavigatoru600.service.records.session.SessionRecordService;
 import com.svnavigatoru600.web.records.session.AbstractDeleteRecordController;
 
 /**
@@ -25,8 +25,8 @@ public class DeleteAllSessionRecordController extends AbstractDeleteRecordContro
      * Constructor.
      */
     @Inject
-    public DeleteAllSessionRecordController(SessionRecordDao recordDao, MessageSource messageSource) {
-        super(DeleteAllSessionRecordController.BASE_URL, new PageViews(), recordDao, messageSource);
+    public DeleteAllSessionRecordController(SessionRecordService recordService, MessageSource messageSource) {
+        super(DeleteAllSessionRecordController.BASE_URL, new PageViews(), recordService, messageSource);
     }
 
     @Override
