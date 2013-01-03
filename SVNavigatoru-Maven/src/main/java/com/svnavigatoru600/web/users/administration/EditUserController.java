@@ -23,7 +23,7 @@ import org.springframework.web.bind.support.SessionStatus;
 import com.svnavigatoru600.domain.users.Authority;
 import com.svnavigatoru600.domain.users.AuthorityType;
 import com.svnavigatoru600.domain.users.User;
-import com.svnavigatoru600.repository.users.UserDao;
+import com.svnavigatoru600.service.users.UserService;
 import com.svnavigatoru600.service.users.validator.AdministrateUserDataValidator;
 import com.svnavigatoru600.service.util.AuthorityUtils;
 import com.svnavigatoru600.service.util.CheckboxUtils;
@@ -47,9 +47,9 @@ public class EditUserController extends AbstractNewEditUserController {
      * Constructor.
      */
     @Inject
-    public EditUserController(UserDao userDao, AdministrateUserDataValidator validator,
+    public EditUserController(UserService userService, AdministrateUserDataValidator validator,
             MessageSource messageSource) {
-        super(userDao, validator, messageSource);
+        super(userService, validator, messageSource);
     }
 
     /**
@@ -63,7 +63,7 @@ public class EditUserController extends AbstractNewEditUserController {
 
         AdministrateUserData command = new AdministrateUserData();
 
-        User user = this.getUserDao().findByUsername(username);
+        User user = this.getUserService().findByUsername(username);
         command.setUser(user);
 
         // Collection of authorities is converted to a map.
@@ -111,8 +111,8 @@ public class EditUserController extends AbstractNewEditUserController {
 
         // Updates the original data.
         final User newUser = command.getUser();
-        final UserDao userDao = this.getUserDao();
-        final User originalUser = userDao.findByUsername(username);
+        final UserService userService = this.getUserService();
+        final User originalUser = userService.findByUsername(username);
         // The default value of the following indicator has to be true.
         // Otherwise, the notification email would be sent to the user.
         boolean arePasswordSame = true;
@@ -141,7 +141,7 @@ public class EditUserController extends AbstractNewEditUserController {
 
         try {
             // Stores the data.
-            userDao.update(originalUser);
+            userService.update(originalUser);
 
             // Notifies the user about the change.
             if (!arePasswordSame) {

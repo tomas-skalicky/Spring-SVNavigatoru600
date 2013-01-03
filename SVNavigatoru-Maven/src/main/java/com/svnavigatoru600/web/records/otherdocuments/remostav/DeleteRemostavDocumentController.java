@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.svnavigatoru600.domain.records.OtherDocumentRecordType;
-import com.svnavigatoru600.repository.records.OtherDocumentRecordDao;
+import com.svnavigatoru600.service.records.otherdocuments.OtherDocumentRecordService;
 import com.svnavigatoru600.web.records.otherdocuments.AbstractDeleteDocumentController;
 
 /**
@@ -26,9 +26,10 @@ public class DeleteRemostavDocumentController extends AbstractDeleteDocumentCont
      * Constructor.
      */
     @Inject
-    public DeleteRemostavDocumentController(OtherDocumentRecordDao recordDao, MessageSource messageSource) {
+    public DeleteRemostavDocumentController(OtherDocumentRecordService recordService,
+            MessageSource messageSource) {
         super(DeleteRemostavDocumentController.BASE_URL, new PageViews(), OtherDocumentRecordType.REMOSTAV,
-                recordDao, messageSource);
+                recordService, messageSource);
     }
 
     @Override

@@ -9,7 +9,7 @@ import org.springframework.validation.Validator;
 
 import com.svnavigatoru600.domain.records.OtherDocumentRecord;
 import com.svnavigatoru600.domain.records.OtherDocumentRecordType;
-import com.svnavigatoru600.repository.records.OtherDocumentRecordDao;
+import com.svnavigatoru600.service.records.otherdocuments.OtherDocumentRecordService;
 import com.svnavigatoru600.service.records.otherdocuments.validator.AbstractOtherDocumentRecordValidator;
 import com.svnavigatoru600.web.records.AbstractPageViews;
 
@@ -37,9 +37,9 @@ public abstract class AbstractNewEditDocumentController extends AbstractOtherDoc
      * {@link OtherDocumentRecordType OtherDocumentRecordTypes}.
      */
     public AbstractNewEditDocumentController(String baseUrl, AbstractPageViews views,
-            OtherDocumentRecordDao recordDao, AbstractOtherDocumentRecordValidator validator,
+            OtherDocumentRecordService recordService, AbstractOtherDocumentRecordValidator validator,
             MessageSource messageSource) {
-        super(baseUrl, views, recordDao, messageSource);
+        super(baseUrl, views, recordService, messageSource);
         this.validator = validator;
     }
 
@@ -48,9 +48,9 @@ public abstract class AbstractNewEditDocumentController extends AbstractOtherDoc
      * given <code>recordType</code>.
      */
     public AbstractNewEditDocumentController(String baseUrl, AbstractPageViews views,
-            OtherDocumentRecordType recordType, OtherDocumentRecordDao recordDao,
+            OtherDocumentRecordType recordType, OtherDocumentRecordService recordService,
             AbstractOtherDocumentRecordValidator validator, MessageSource messageSource) {
-        super(baseUrl, views, recordType, recordDao, messageSource);
+        super(baseUrl, views, recordType, recordService, messageSource);
         this.validator = validator;
     }
 

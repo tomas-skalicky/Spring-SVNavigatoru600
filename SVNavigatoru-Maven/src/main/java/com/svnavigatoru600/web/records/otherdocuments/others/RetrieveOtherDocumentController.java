@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.svnavigatoru600.domain.records.OtherDocumentRecordType;
-import com.svnavigatoru600.repository.records.OtherDocumentRecordDao;
+import com.svnavigatoru600.service.records.otherdocuments.OtherDocumentRecordService;
 import com.svnavigatoru600.web.records.otherdocuments.AbstractRetrieveDocumentController;
 
 /**
@@ -26,9 +26,10 @@ public class RetrieveOtherDocumentController extends AbstractRetrieveDocumentCon
      * Constructor.
      */
     @Inject
-    public RetrieveOtherDocumentController(OtherDocumentRecordDao recordDao, MessageSource messageSource) {
+    public RetrieveOtherDocumentController(OtherDocumentRecordService recordService,
+            MessageSource messageSource) {
         super(RetrieveOtherDocumentController.BASE_URL, new PageViews(), OtherDocumentRecordType.OTHER,
-                recordDao, messageSource);
+                recordService, messageSource);
     }
 
     @Override

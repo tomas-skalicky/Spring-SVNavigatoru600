@@ -1,4 +1,4 @@
-package com.svnavigatoru600.service.records;
+package com.svnavigatoru600.service.records.otherdocuments;
 
 import javax.inject.Inject;
 

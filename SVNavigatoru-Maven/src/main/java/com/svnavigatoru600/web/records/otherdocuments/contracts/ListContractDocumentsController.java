@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.svnavigatoru600.domain.records.OtherDocumentRecordType;
-import com.svnavigatoru600.repository.records.OtherDocumentRecordDao;
+import com.svnavigatoru600.service.records.otherdocuments.OtherDocumentRecordService;
 import com.svnavigatoru600.web.records.otherdocuments.AbstractListDocumentsController;
 
 /**
@@ -25,9 +25,10 @@ public class ListContractDocumentsController extends AbstractListDocumentsContro
      * Constructor.
      */
     @Inject
-    public ListContractDocumentsController(OtherDocumentRecordDao recordDao, MessageSource messageSource) {
+    public ListContractDocumentsController(OtherDocumentRecordService recordService,
+            MessageSource messageSource) {
         super(ListContractDocumentsController.BASE_URL, new PageViews(), OtherDocumentRecordType.CONTRACT,
-                recordDao, messageSource);
+                recordService, messageSource);
     }
 
     @Override

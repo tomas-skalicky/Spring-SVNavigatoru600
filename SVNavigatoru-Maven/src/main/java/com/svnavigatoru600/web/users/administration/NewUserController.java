@@ -22,7 +22,7 @@ import org.springframework.web.bind.support.SessionStatus;
 import com.svnavigatoru600.domain.users.Authority;
 import com.svnavigatoru600.domain.users.AuthorityType;
 import com.svnavigatoru600.domain.users.User;
-import com.svnavigatoru600.repository.users.UserDao;
+import com.svnavigatoru600.service.users.UserService;
 import com.svnavigatoru600.service.users.validator.NewUserValidator;
 import com.svnavigatoru600.service.util.AuthorityUtils;
 import com.svnavigatoru600.service.util.Email;
@@ -45,9 +45,9 @@ public class NewUserController extends AbstractNewEditUserController {
      * Constructor.
      */
     @Inject
-    public NewUserController(final UserDao userDao, final NewUserValidator validator,
+    public NewUserController(final UserService userService, final NewUserValidator validator,
             final MessageSource messageSource) {
-        super(userDao, validator, messageSource);
+        super(userService, validator, messageSource);
     }
 
     /**
@@ -112,7 +112,7 @@ public class NewUserController extends AbstractNewEditUserController {
 
         try {
             // Stores the data.
-            this.getUserDao().save(newUser);
+            this.getUserService().save(newUser);
 
             // Notifies the user about its new account.
             if (!StringUtils.isBlank(newUser.getEmail())) {

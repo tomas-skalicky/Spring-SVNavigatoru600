@@ -4,7 +4,7 @@ import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.Validator;
 
-import com.svnavigatoru600.repository.users.UserDao;
+import com.svnavigatoru600.service.users.UserService;
 import com.svnavigatoru600.service.users.validator.AbstractUserDataValidator;
 
 /**
@@ -22,9 +22,9 @@ public abstract class AbstractNewEditUserController extends AbstractUserControll
     /**
      * Constructor.
      */
-    public AbstractNewEditUserController(UserDao userDao, AbstractUserDataValidator validator,
+    public AbstractNewEditUserController(UserService userService, AbstractUserDataValidator validator,
             MessageSource messageSource) {
-        super(userDao, messageSource);
+        super(userService, messageSource);
         this.validator = validator;
     }
 

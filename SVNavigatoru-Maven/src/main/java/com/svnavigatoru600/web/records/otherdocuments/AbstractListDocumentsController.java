@@ -13,7 +13,7 @@ import org.springframework.ui.ModelMap;
 
 import com.svnavigatoru600.domain.records.OtherDocumentRecord;
 import com.svnavigatoru600.domain.records.OtherDocumentRecordType;
-import com.svnavigatoru600.repository.records.OtherDocumentRecordDao;
+import com.svnavigatoru600.service.records.otherdocuments.OtherDocumentRecordService;
 import com.svnavigatoru600.service.util.Localization;
 import com.svnavigatoru600.service.util.OrderType;
 import com.svnavigatoru600.viewmodel.records.otherdocuments.ShowAllRecords;
@@ -37,8 +37,8 @@ public abstract class AbstractListDocumentsController extends AbstractOtherDocum
      * {@link OtherDocumentRecordType OtherDocumentRecordTypes}.
      */
     public AbstractListDocumentsController(String baseUrl, AbstractPageViews views,
-            OtherDocumentRecordDao recordDao, MessageSource messageSource) {
-        super(baseUrl, views, recordDao, messageSource);
+            OtherDocumentRecordService recordService, MessageSource messageSource) {
+        super(baseUrl, views, recordService, messageSource);
     }
 
     /**
@@ -46,20 +46,21 @@ public abstract class AbstractListDocumentsController extends AbstractOtherDocum
      * given <code>recordType</code>.
      */
     public AbstractListDocumentsController(String baseUrl, AbstractPageViews views,
-            OtherDocumentRecordType recordType, OtherDocumentRecordDao recordDao, MessageSource messageSource) {
-        super(baseUrl, views, recordType, recordDao, messageSource);
+            OtherDocumentRecordType recordType, OtherDocumentRecordService recordService,
+            MessageSource messageSource) {
+        super(baseUrl, views, recordType, recordService, messageSource);
     }
 
     public String initPage(HttpServletRequest request, ModelMap model) {
 
         ShowAllRecords command = new ShowAllRecords();
 
-        final OtherDocumentRecordDao recordDao = this.getRecordDao();
+        final OtherDocumentRecordService recordService = this.getRecordService();
         final List<OtherDocumentRecord> records;
         if (this.isAllRecordTypes()) {
-            records = recordDao.findAllOrdered(OrderType.DESCENDING);
+            records = recordService.findAllOrdered(OrderType.DESCENDING);
         } else {
-            records = recordDao.findAllOrdered(this.getRecordType(), OrderType.DESCENDING);
+            records = recordService.findAllOrdered(this.getRecordType(), OrderType.DESCENDING);
         }
         command.setRecords(records);
 

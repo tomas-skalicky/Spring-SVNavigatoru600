@@ -13,7 +13,7 @@ import org.springframework.ui.ModelMap;
 import com.svnavigatoru600.domain.records.AbstractDocumentRecord;
 import com.svnavigatoru600.domain.records.OtherDocumentRecord;
 import com.svnavigatoru600.domain.records.OtherDocumentRecordType;
-import com.svnavigatoru600.repository.records.OtherDocumentRecordDao;
+import com.svnavigatoru600.service.records.otherdocuments.OtherDocumentRecordService;
 import com.svnavigatoru600.web.Configuration;
 import com.svnavigatoru600.web.records.AbstractPageViews;
 
@@ -38,9 +38,9 @@ public abstract class AbstractDeleteDocumentController extends AbstractOtherDocu
      * {@link OtherDocumentRecordType OtherDocumentRecordTypes}.
      */
     public AbstractDeleteDocumentController(String baseUrl, AbstractPageViews views,
-            OtherDocumentRecordDao recordDao, MessageSource messageSource) {
+            OtherDocumentRecordService recordService, MessageSource messageSource) {
         // Note that allRecordTypes is set up during the creation of the parent.
-        super(baseUrl, views, recordDao, messageSource);
+        super(baseUrl, views, recordService, messageSource);
         this.successfulDeleteUrl = this.getBaseUrl()
                 + AbstractDeleteDocumentController.SUCCESSFUL_DELETE_URL_END;
     }
@@ -50,8 +50,9 @@ public abstract class AbstractDeleteDocumentController extends AbstractOtherDocu
      * given <code>recordType</code>.
      */
     public AbstractDeleteDocumentController(String baseUrl, AbstractPageViews views,
-            OtherDocumentRecordType recordType, OtherDocumentRecordDao recordDao, MessageSource messageSource) {
-        super(baseUrl, views, recordType, recordDao, messageSource);
+            OtherDocumentRecordType recordType, OtherDocumentRecordService recordService,
+            MessageSource messageSource) {
+        super(baseUrl, views, recordType, recordService, messageSource);
         this.successfulDeleteUrl = this.getBaseUrl()
                 + AbstractDeleteDocumentController.SUCCESSFUL_DELETE_URL_END;
     }
@@ -61,9 +62,9 @@ public abstract class AbstractDeleteDocumentController extends AbstractOtherDocu
         try {
             // Deletes the record from the repository and deletes the associated
             // file from the target folder.
-            final OtherDocumentRecordDao recordDao = this.getRecordDao();
-            AbstractDocumentRecord record = recordDao.findById(recordId, false);
-            recordDao.delete(record);
+            final OtherDocumentRecordService recordService = this.getRecordService();
+            AbstractDocumentRecord record = recordService.findById(recordId, false);
+            recordService.delete(record);
             // /////////////////////////////////////////////////////////////////
             // Store in the FILESYSTEM
             // --------------------------------------------------------------

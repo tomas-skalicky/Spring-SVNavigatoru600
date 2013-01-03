@@ -20,7 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.svnavigatoru600.domain.records.OtherDocumentRecord;
 import com.svnavigatoru600.domain.records.OtherDocumentRecordType;
-import com.svnavigatoru600.repository.records.OtherDocumentRecordDao;
+import com.svnavigatoru600.service.records.otherdocuments.OtherDocumentRecordService;
 import com.svnavigatoru600.service.records.otherdocuments.validator.NewRecordValidator;
 import com.svnavigatoru600.service.util.File;
 import com.svnavigatoru600.service.util.OtherDocumentRecordUtils;
@@ -47,8 +47,9 @@ public abstract class AbstractNewDocumentController extends AbstractNewEditDocum
      * {@link OtherDocumentRecordType OtherDocumentRecordTypes}.
      */
     public AbstractNewDocumentController(String baseUrl, AbstractPageViews views,
-            OtherDocumentRecordDao recordDao, NewRecordValidator validator, MessageSource messageSource) {
-        super(baseUrl, views, recordDao, validator, messageSource);
+            OtherDocumentRecordService recordService, NewRecordValidator validator,
+            MessageSource messageSource) {
+        super(baseUrl, views, recordService, validator, messageSource);
     }
 
     /**
@@ -56,9 +57,9 @@ public abstract class AbstractNewDocumentController extends AbstractNewEditDocum
      * given <code>recordType</code>.
      */
     public AbstractNewDocumentController(String baseUrl, AbstractPageViews views,
-            OtherDocumentRecordType recordType, OtherDocumentRecordDao recordDao,
+            OtherDocumentRecordType recordType, OtherDocumentRecordService recordService,
             NewRecordValidator validator, MessageSource messageSource) {
-        super(baseUrl, views, recordType, recordDao, validator, messageSource);
+        super(baseUrl, views, recordType, recordService, validator, messageSource);
     }
 
     /**
@@ -157,8 +158,8 @@ public abstract class AbstractNewDocumentController extends AbstractNewEditDocum
             newRecord.setFile(blobFile);
             // \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
-            final OtherDocumentRecordDao recordDao = this.getRecordDao();
-            int recordId = recordDao.save(newRecord);
+            final OtherDocumentRecordService recordService = this.getRecordService();
+            int recordId = recordService.save(newRecord);
             this.logger.info(String.format("The file '%s' has been successfully uploaded", fileName));
 
             // Since we need ID of the new record for the creation of
@@ -167,7 +168,7 @@ public abstract class AbstractNewDocumentController extends AbstractNewEditDocum
             // of the types.
             newRecord.setTypes(OtherDocumentRecordUtils.convertIndicatorsToRelations(command.getNewTypes(),
                     recordId));
-            recordDao.update(newRecord);
+            recordService.update(newRecord);
 
             // Clears the command object from the session.
             status.setComplete();
