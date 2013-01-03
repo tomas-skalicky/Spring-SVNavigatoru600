@@ -8,7 +8,6 @@ import org.springframework.security.core.GrantedAuthority;
 
 import com.svnavigatoru600.domain.users.Authority;
 import com.svnavigatoru600.domain.users.AuthorityType;
-import com.svnavigatoru600.domain.users.User;
 
 /**
  * Provides a set of static functions related to {@link Authority authorities (= roles)} and their
@@ -54,8 +53,8 @@ public final class AuthorityUtils {
 
     /**
      * Converts the given array of check <code>indicators</code> to the {@link Set} of
-     * {@link GrantedAuthority GrantedAuthorities} associated with an {@link User} with the given
-     * <code>username</code>.
+     * {@link GrantedAuthority GrantedAuthorities} associated with an
+     * {@link com.svnavigatoru600.domain.users.User User} with the given <code>username</code>.
      * 
      * @return Set of those authorities which have been checked, i.e. their indicators equal <code>true</code>
      *         .

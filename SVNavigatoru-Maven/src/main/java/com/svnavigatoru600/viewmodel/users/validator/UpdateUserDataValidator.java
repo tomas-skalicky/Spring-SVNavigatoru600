@@ -5,14 +5,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
-import com.svnavigatoru600.domain.users.User;
 import com.svnavigatoru600.service.util.Email;
 import com.svnavigatoru600.service.util.Password;
 import com.svnavigatoru600.service.util.PhoneNumber;
 import com.svnavigatoru600.viewmodel.users.UpdateUserData;
 
 /**
- * Validates the data of the current {@link User} filled in in the <i>user-account.jsp</i> form.
+ * Validates the data of the current {@link com.svnavigatoru600.domain.users.User User} filled in in the
+ * <i>user-account.jsp</i> form.
  * 
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */

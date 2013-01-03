@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
-import com.svnavigatoru600.domain.eventcalendar.CalendarEvent;
 import com.svnavigatoru600.domain.records.SessionRecordType;
 import com.svnavigatoru600.service.util.DateUtils;
 
@@ -25,7 +24,8 @@ public abstract class AbstractEventValidator implements Validator {
     }
 
     /**
-     * Checks whether the given {@link CalendarEvent CalendarEvent's} <code>date</code> is valid.
+     * Checks whether the given {@link com.svnavigatoru600.domain.eventcalendar.CalendarEvent CalendarEvent's}
+     * <code>date</code> is valid.
      */
     protected void checkNewDate(Date newDate, Errors errors) {
         String field = "event.date";

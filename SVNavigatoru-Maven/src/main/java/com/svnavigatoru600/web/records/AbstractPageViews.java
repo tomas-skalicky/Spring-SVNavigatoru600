@@ -1,9 +1,8 @@
 package com.svnavigatoru600.web.records;
 
-import com.svnavigatoru600.domain.records.AbstractDocumentRecord;
-
 /**
- * Abstraction which is common for all controllers of the {@link AbstractDocumentRecord} s. In fact, this
+ * Abstraction which is common for all controllers of
+ * {@link com.svnavigatoru600.domain.records.AbstractDocumentRecord AbstractDocumentRecords}. In fact, this
  * class is an enumeration of all views (concerning MVC) available in the given context.
  */
 public abstract class AbstractPageViews {

@@ -9,13 +9,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 
-import com.svnavigatoru600.domain.records.AbstractDocumentRecord;
 import com.svnavigatoru600.service.util.DateUtils;
 import com.svnavigatoru600.web.AbstractPrivateSectionMetaController;
 
 /**
- * Parent of all controllers which handle all operations upon the {@link AbstractDocumentRecord
- * AbstractDocumentRecords}.
+ * Parent of all controllers which handle all operations upon the
+ * {@link com.svnavigatoru600.domain.records.AbstractDocumentRecord AbstractDocumentRecords}.
  * 
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
@@ -30,7 +29,8 @@ public abstract class AbstractDocumentRecordController extends AbstractPrivateSe
     private final MessageSource messageSource;
 
     /**
-     * Constructs a controller which considers all {@link AbstractDocumentRecord AbstractDocumentRecords}.
+     * Constructs a controller which considers all
+     * {@link com.svnavigatoru600.domain.records.AbstractDocumentRecord AbstractDocumentRecords}.
      */
     public AbstractDocumentRecordController(String baseUrl, AbstractPageViews views,
             MessageSource messageSource) {

@@ -16,7 +16,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.svnavigatoru600.domain.records.OtherDocumentRecord;
 import com.svnavigatoru600.domain.records.OtherDocumentRecordType;
-import com.svnavigatoru600.domain.records.OtherDocumentRecordTypeRelation;
 import com.svnavigatoru600.repository.records.OtherDocumentRecordDao;
 import com.svnavigatoru600.service.util.File;
 import com.svnavigatoru600.service.util.Localization;
@@ -221,8 +220,8 @@ public class OtherDocumentRecordService extends AbstractDocumentRecordService {
 
     /**
      * Since we need ID of the {@link OtherDocumentRecord newRecord} for the creation of
-     * {@link OtherDocumentRecordTypeRelation OtherDocumentRecordTypeRelations}, we save the new record in two
-     * steps.
+     * {@link com.svnavigatoru600.domain.records.OtherDocumentRecordTypeRelation
+     * OtherDocumentRecordTypeRelations}, we save the new record in two steps.
      * <p>
      * (1) The method converts the <code>attachedFile</code> to {@link java.sql.Blob Blob} and stores the
      * record to the repository. If there is already a record with the same

@@ -7,7 +7,6 @@ import javax.mail.MessagingException;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Transport;
-import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
@@ -17,7 +16,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.context.MessageSource;
 
-import com.svnavigatoru600.domain.users.Authority;
 import com.svnavigatoru600.domain.users.User;
 import com.svnavigatoru600.service.Configuration;
 
@@ -173,9 +171,6 @@ public final class Email {
      * 
      * @param recipient
      *            Recipient's email address
-     * 
-     * @throws MessagingException
-     * @throws AddressException
      */
     private static void sendMail(Session session, String recipient, String subject, String messageText)
             throws MessagingException {
@@ -249,7 +244,8 @@ public final class Email {
     }
 
     /**
-     * Sends an emailto the given {@link User} with his new {@link Authority Authorities}.
+     * Sends an emailto the given {@link User} with his new {@link com.svnavigatoru600.domain.users.Authority
+     * Authorities}.
      * <p>
      * The function is invoked when user's authorities have already been successfully changed by the
      * administrator.

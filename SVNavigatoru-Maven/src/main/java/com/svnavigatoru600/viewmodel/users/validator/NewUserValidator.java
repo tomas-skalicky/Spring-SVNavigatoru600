@@ -6,7 +6,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.Errors;
 
-import com.svnavigatoru600.domain.users.User;
 import com.svnavigatoru600.service.users.UserService;
 import com.svnavigatoru600.service.util.Email;
 import com.svnavigatoru600.service.util.Password;
@@ -14,7 +13,8 @@ import com.svnavigatoru600.service.util.Username;
 import com.svnavigatoru600.viewmodel.users.AdministrateUserData;
 
 /**
- * Validates the data of a new {@link User} filled in in the <i>new-user.jsp</i> form.
+ * Validates the data of a new {@link com.svnavigatoru600.domain.users.User User} filled in in the
+ * <i>new-user.jsp</i> form.
  * 
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */

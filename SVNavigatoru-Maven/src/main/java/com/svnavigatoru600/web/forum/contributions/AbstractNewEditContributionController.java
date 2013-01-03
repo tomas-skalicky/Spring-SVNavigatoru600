@@ -4,12 +4,12 @@ import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.Validator;
 
-import com.svnavigatoru600.domain.forum.Contribution;
 import com.svnavigatoru600.service.forum.ContributionService;
 import com.svnavigatoru600.viewmodel.forum.contributions.validator.AbstractContributionValidator;
 
 /**
- * Parent of controllers which create and edit the {@link Contribution Contributions}.
+ * Parent of controllers which create and edit the {@link com.svnavigatoru600.domain.forum.Contribution
+ * Contributions}.
  * 
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */

@@ -4,12 +4,12 @@ import org.springframework.context.MessageSource;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 
-import com.svnavigatoru600.domain.forum.Thread;
 import com.svnavigatoru600.service.forum.ThreadService;
 import com.svnavigatoru600.web.AbstractPrivateSectionMetaController;
 
 /**
- * Parent of all controllers which handle all operations upon the {@link Thread} s.
+ * Parent of all controllers which handle all operations upon {@link com.svnavigatoru600.domain.forum.Thread
+ * Threads}.
  * 
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */

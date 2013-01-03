@@ -1,20 +1,18 @@
 package com.svnavigatoru600.web.records.otherdocuments;
 
-import java.io.IOException;
-
 import org.springframework.context.MessageSource;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.Validator;
 
-import com.svnavigatoru600.domain.records.OtherDocumentRecord;
 import com.svnavigatoru600.domain.records.OtherDocumentRecordType;
 import com.svnavigatoru600.service.records.OtherDocumentRecordService;
 import com.svnavigatoru600.viewmodel.records.otherdocuments.validator.AbstractOtherDocumentRecordValidator;
 import com.svnavigatoru600.web.records.AbstractPageViews;
 
 /**
- * Parent of all controllers which create and edit the {@link OtherDocumentRecord OtherDocumentRecords}.
+ * Parent of all controllers which create and edit the
+ * {@link com.svnavigatoru600.domain.records.OtherDocumentRecord OtherDocumentRecords}.
  * 
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
@@ -23,7 +21,8 @@ import com.svnavigatoru600.web.records.AbstractPageViews;
 public abstract class AbstractNewEditDocumentController extends AbstractOtherDocumentRecordController {
 
     /**
-     * Code of the error message used when the {@link IllegalStateException} or {@link IOException} is thrown.
+     * Code of the error message used when the {@link IllegalStateException} or {@link java.io.IOException
+     * IOException} is thrown.
      */
     public static final String UPLOAD_FILE_ERROR_MESSAGE_CODE = "file.error-during-saving-file";
     /**
@@ -33,7 +32,8 @@ public abstract class AbstractNewEditDocumentController extends AbstractOtherDoc
     private final Validator validator;
 
     /**
-     * Constructs a controller which considers all {@link OtherDocumentRecord OtherDocumentRecords} of all
+     * Constructs a controller which considers all
+     * {@link com.svnavigatoru600.domain.records.OtherDocumentRecord OtherDocumentRecords} of all
      * {@link OtherDocumentRecordType OtherDocumentRecordTypes}.
      */
     public AbstractNewEditDocumentController(String baseUrl, AbstractPageViews views,
@@ -44,8 +44,9 @@ public abstract class AbstractNewEditDocumentController extends AbstractOtherDoc
     }
 
     /**
-     * Constructs a controller which considers all {@link OtherDocumentRecord OtherDocumentRecords} of the
-     * given <code>recordType</code>.
+     * Constructs a controller which considers all
+     * {@link com.svnavigatoru600.domain.records.OtherDocumentRecord OtherDocumentRecords} of the given
+     * <code>recordType</code>.
      */
     public AbstractNewEditDocumentController(String baseUrl, AbstractPageViews views,
             OtherDocumentRecordType recordType, OtherDocumentRecordService recordService,

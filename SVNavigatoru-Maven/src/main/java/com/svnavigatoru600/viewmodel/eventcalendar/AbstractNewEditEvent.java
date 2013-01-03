@@ -5,7 +5,6 @@ import java.util.Map;
 import org.springframework.stereotype.Service;
 
 import com.svnavigatoru600.domain.eventcalendar.CalendarEvent;
-import com.svnavigatoru600.domain.eventcalendar.PriorityType;
 
 /**
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
@@ -18,8 +17,8 @@ public abstract class AbstractNewEditEvent {
     private Map<Integer, String> localizedPriorityCheckboxTitles = null;
     /**
      * Holds a value of the <code>newPriority</code> radiobutton. The value equals a localization of the
-     * selected {@link PriorityType}. See the <code>NewEditEventController.populatePriorityTypeList</code>
-     * method.
+     * selected {@link com.svnavigatoru600.domain.eventcalendar.PriorityType PriorityType}. See the
+     * <code>NewEditEventController.populatePriorityTypeList</code> method.
      */
     private String newPriority;
 

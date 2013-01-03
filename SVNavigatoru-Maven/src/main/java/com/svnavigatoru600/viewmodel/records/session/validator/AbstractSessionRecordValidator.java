@@ -6,7 +6,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.Errors;
 
-import com.svnavigatoru600.domain.records.SessionRecord;
 import com.svnavigatoru600.domain.records.SessionRecordType;
 import com.svnavigatoru600.viewmodel.records.validator.AbstractDocumentRecordValidator;
 
@@ -29,7 +28,8 @@ public abstract class AbstractSessionRecordValidator extends AbstractDocumentRec
     }
 
     /**
-     * Checks whether the given {@link SessionRecord SessionRecord's} <code>sessionDate</code> is valid.
+     * Checks whether the given {@link com.svnavigatoru600.domain.records.SessionRecord SessionRecord's}
+     * <code>sessionDate</code> is valid.
      */
     protected void checkNewSessionDate(Date sessionDate, Errors errors) {
         String field = "record.sessionDate";
@@ -41,7 +41,8 @@ public abstract class AbstractSessionRecordValidator extends AbstractDocumentRec
     }
 
     /**
-     * Checks whether the given {@link SessionRecord SessionRecord's} <code>discussedTopics</code> is valid.
+     * Checks whether the given {@link com.svnavigatoru600.domain.records.SessionRecord SessionRecord's}
+     * <code>discussedTopics</code> is valid.
      */
     protected void checkNewDiscussedTopics(String discussedTopics, Errors errors) {
         String field = "record.discussedTopics";

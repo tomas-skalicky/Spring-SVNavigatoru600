@@ -10,14 +10,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 
-import com.svnavigatoru600.domain.records.SessionRecord;
 import com.svnavigatoru600.domain.records.SessionRecordType;
 import com.svnavigatoru600.service.records.SessionRecordService;
 import com.svnavigatoru600.web.AbstractMetaController;
 import com.svnavigatoru600.web.records.AbstractPageViews;
 
 /**
- * Parent of all controllers which delete the {@link SessionRecord SessionRecords}.
+ * Parent of all controllers which delete the {@link com.svnavigatoru600.domain.records.SessionRecord
+ * SessionRecords}.
  * 
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
@@ -33,8 +33,8 @@ public abstract class AbstractDeleteRecordController extends AbstractSessionReco
     private final String successfulDeleteUrl;
 
     /**
-     * Constructs a controller which considers all {@link SessionRecord SessionRecords} of all
-     * {@link SessionRecordType SessionRecordTypes}.
+     * Constructs a controller which considers all {@link com.svnavigatoru600.domain.records.SessionRecord
+     * SessionRecords} of all {@link SessionRecordType SessionRecordTypes}.
      */
     public AbstractDeleteRecordController(String baseUrl, AbstractPageViews views,
             SessionRecordService recordService, MessageSource messageSource) {
@@ -45,8 +45,8 @@ public abstract class AbstractDeleteRecordController extends AbstractSessionReco
     }
 
     /**
-     * Constructs a controller which considers all {@link SessionRecord SessionRecords} of the given
-     * <code>recordType</code> .
+     * Constructs a controller which considers all {@link com.svnavigatoru600.domain.records.SessionRecord
+     * SessionRecords} of the given <code>recordType</code> .
      */
     public AbstractDeleteRecordController(String baseUrl, AbstractPageViews views,
             SessionRecordType recordType, SessionRecordService recordService, MessageSource messageSource) {
