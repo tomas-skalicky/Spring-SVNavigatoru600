@@ -69,13 +69,14 @@ public class EditNewsController extends AbstractNewEditNewsController {
             return response;
         }
 
+        News newNews = command.getNews();
         NewsService newsService = this.getNewsService();
         News originalNews = null;
         try {
             originalNews = newsService.findById(newsId);
             // Sets up because of the comparison of the creationTime and lastSaveTime in AJAX.
             command.setNews(originalNews);
-            newsService.update(originalNews, command.getNews());
+            newsService.update(originalNews, newNews);
 
             // Clears the command object from the session.
             status.setComplete();
