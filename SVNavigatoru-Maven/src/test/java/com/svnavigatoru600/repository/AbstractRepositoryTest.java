@@ -15,11 +15,11 @@ import com.svnavigatoru600.repository.util.AbstractDatabaseLoader;
 import com.svnavigatoru600.repository.util.HsqlDatabaseLoader;
 
 /**
- * The parent of all MyBatis Mapper tests.
+ * The parent of all tests of DAO interfaces (MyBatis Mapper respectively).
  * 
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
-public abstract class AbstractMapperTest {
+public abstract class AbstractRepositoryTest {
 
     /**
      * Application context which contains necessary beans.
@@ -43,7 +43,7 @@ public abstract class AbstractMapperTest {
     }
 
     private static void prepareDatabase() throws Exception {
-        synchronized (AbstractMapperTest.class) {
+        synchronized (AbstractRepositoryTest.class) {
             DataSource dataSource = APPLICATION_CONTEXT.getBean(DataSource.class);
             getDatabaseLoader(dataSource).loadDatabase(dataSource);
         }

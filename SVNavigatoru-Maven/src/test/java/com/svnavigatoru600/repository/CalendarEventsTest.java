@@ -9,7 +9,7 @@ import com.svnavigatoru600.test.category.PersistenceTests;
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
 @Category(PersistenceTests.class)
-public class CalendarEventsTest extends AbstractMapperTest {
+public class CalendarEventsTest extends AbstractRepositoryTest {
 
     /**
      * Tests methods of the {@link CalendarEventDao} interface.
