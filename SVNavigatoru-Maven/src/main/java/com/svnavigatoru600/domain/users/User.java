@@ -16,6 +16,7 @@ import com.svnavigatoru600.service.users.UserService;
 import com.svnavigatoru600.service.util.AuthorityUtils;
 import com.svnavigatoru600.service.util.CheckboxUtils;
 import com.svnavigatoru600.service.util.FullNameFormat;
+import com.svnavigatoru600.service.util.UserFullNameFormatter;
 
 /**
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
@@ -108,16 +109,7 @@ public class User implements UserDetails, Serializable {
      * Gets the full name of this {@link User} in the given {@link FullNameFormat}.
      */
     public String getFullName(FullNameFormat format) {
-        switch (format) {
-        case FIRST_LAST:
-            return String.format("%s %s", this.firstName, this.lastName);
-        case LAST_FIRST:
-            return String.format("%s %s", this.lastName, this.firstName);
-        case LAST_COMMA_FIRST:
-            return String.format("%s, %s", this.lastName, this.firstName);
-        default:
-            throw new RuntimeException("Unsupported format of the full name.");
-        }
+        return format.accept(new UserFullNameFormatter(this));
     }
 
     public String getEmail() {
