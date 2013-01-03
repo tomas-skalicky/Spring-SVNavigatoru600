@@ -1,9 +1,6 @@
 package com.svnavigatoru600.repository;
 
-import java.sql.Connection;
 import java.util.List;
-
-import javax.sql.DataSource;
 
 import org.apache.ibatis.session.SqlSession;
 import org.junit.Assert;
@@ -91,8 +88,6 @@ public class NewsTest extends AbstractMapperTest {
     public void testWholeNewsDaoInterface() throws Exception {
         // SqlSession sqlSession = APPLICATION_CONTEXT.getBean(SqlSessionFactory.class).openSession();
         SqlSession sqlSession = null;
-        Connection sqlConnection = APPLICATION_CONTEXT.getBean(DataSource.class).getConnection();
-        sqlConnection.setAutoCommit(true);
 
         NewsDao newsDao = APPLICATION_CONTEXT.getBean(NewsDao.class);
 
@@ -147,7 +142,7 @@ public class NewsTest extends AbstractMapperTest {
 
         } finally {
             // sqlSession.close();
-            sqlConnection.close();
+            ;
         }
     }
 }
