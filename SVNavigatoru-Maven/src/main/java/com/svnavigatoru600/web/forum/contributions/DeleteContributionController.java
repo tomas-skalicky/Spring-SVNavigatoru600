@@ -28,14 +28,7 @@ public class DeleteContributionController extends AbstractContributionController
      * Code of the database error message used when the {@link DataAccessException} is thrown.
      */
     public static final String DATABASE_ERROR_MESSAGE_CODE = "forum.contributions.deletion-failed-due-to-database-error";
-    private ContributionService contributionService;
     private ListContributionsController listController;
-
-    @Override
-    @Inject
-    public void setContributionService(ContributionService contributionService) {
-        this.contributionService = contributionService;
-    }
 
     @Inject
     public void setListController(ListContributionsController listController) {
@@ -56,7 +49,7 @@ public class DeleteContributionController extends AbstractContributionController
             HttpServletRequest request, ModelMap model) {
 
         // Checks permission.
-        this.contributionService.canDelete(contributionId);
+        this.getContributionService().canDelete(contributionId);
 
         try {
             this.getContributionService().delete(contributionId);
