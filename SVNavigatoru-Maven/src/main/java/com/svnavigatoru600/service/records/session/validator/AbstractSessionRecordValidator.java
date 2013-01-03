@@ -29,7 +29,7 @@ public abstract class AbstractSessionRecordValidator extends AbstractDocumentRec
     }
 
     /**
-     * Checks whether the given {@link SessionRecord}'s <code>sessionDate</code> is valid.
+     * Checks whether the given {@link SessionRecord SessionRecord's} <code>sessionDate</code> is valid.
      */
     protected void checkNewSessionDate(Date sessionDate, Errors errors) {
         String field = "record.sessionDate";
@@ -41,7 +41,7 @@ public abstract class AbstractSessionRecordValidator extends AbstractDocumentRec
     }
 
     /**
-     * Checks whether the given {@link SessionRecord}'s <code>discussedTopics</code> is valid.
+     * Checks whether the given {@link SessionRecord SessionRecord's} <code>discussedTopics</code> is valid.
      */
     protected void checkNewDiscussedTopics(String discussedTopics, Errors errors) {
         String field = "record.discussedTopics";

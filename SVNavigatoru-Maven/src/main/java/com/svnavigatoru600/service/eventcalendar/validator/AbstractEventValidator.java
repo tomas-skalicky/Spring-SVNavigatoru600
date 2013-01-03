@@ -25,7 +25,7 @@ public abstract class AbstractEventValidator implements Validator {
     }
 
     /**
-     * Checks whether the given {@link CalendarEvent}'s <code>date</code> is valid.
+     * Checks whether the given {@link CalendarEvent CalendarEvent's} <code>date</code> is valid.
      */
     protected void checkNewDate(final Date newDate, final Errors errors) {
         final String field = "event.date";

@@ -12,8 +12,8 @@ import org.springframework.transaction.annotation.Transactional;
 import com.svnavigatoru600.repository.users.UserDao;
 
 /**
- * Provides an authentication via {@link com.svnavigatoru600.domain.users.User}'s username, or email. From
- * http://blog.solidcraft.eu/2011/03/spring-security-by-example-set-up-and.html.
+ * Provides an authentication via {@link com.svnavigatoru600.domain.users.User User's} username, or email.
+ * From http://blog.solidcraft.eu/2011/03/spring-security-by-example-set-up-and.html.
  * 
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
