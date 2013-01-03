@@ -27,7 +27,7 @@ public class TestUser {
      * @param username
      *            The new username of this {@link TestUser}.
      */
-    public void setUsername(final String username) {
+    public void setUsername(String username) {
         this.username = username;
     }
 
@@ -42,7 +42,7 @@ public class TestUser {
      * @param password
      *            The new password of this {@link TestUser}.
      */
-    public void setPassword(final String password) {
+    public void setPassword(String password) {
         this.password = password;
     }
 }

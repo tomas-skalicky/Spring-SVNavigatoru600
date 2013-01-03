@@ -85,7 +85,7 @@ public class ContributionDaoImpl extends NamedParameterJdbcDaoSupport implements
 
     @Override
     public List<Contribution> findAll(int threadId) {
-        final String threadIdColumn = ContributionField.threadId.getColumnName();
+        String threadIdColumn = ContributionField.threadId.getColumnName();
         String query = String.format("SELECT * FROM %s c WHERE c.%s = :%s", ContributionDaoImpl.TABLE_NAME,
                 threadIdColumn, threadIdColumn);
 
@@ -113,7 +113,7 @@ public class ContributionDaoImpl extends NamedParameterJdbcDaoSupport implements
     @Override
     public List<Contribution> findAllOrdered(int threadId, ContributionField sortField,
             OrderType sortDirection) {
-        final String threadIdColumn = ContributionField.threadId.getColumnName();
+        String threadIdColumn = ContributionField.threadId.getColumnName();
         String query = String.format("SELECT * FROM %s c WHERE c.%s = :%s ORDER BY c.%s %s",
                 ContributionDaoImpl.TABLE_NAME, threadIdColumn, threadIdColumn, sortField.getColumnName(),
                 sortDirection.getDatabaseCode());

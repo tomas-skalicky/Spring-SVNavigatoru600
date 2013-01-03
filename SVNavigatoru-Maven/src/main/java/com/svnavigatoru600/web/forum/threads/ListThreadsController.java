@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.svnavigatoru600.domain.forum.Thread;
-import com.svnavigatoru600.service.forum.threads.ThreadService;
+import com.svnavigatoru600.service.forum.ThreadService;
 import com.svnavigatoru600.service.users.UserService;
 import com.svnavigatoru600.viewmodel.forum.threads.ShowAllThreads;
 
@@ -31,7 +31,7 @@ public class ListThreadsController extends AbstractThreadController {
     private UserService userService;
 
     @Inject
-    public void setUserService(final UserService userService) {
+    public void setUserService(UserService userService) {
         this.userService = userService;
     }
 
@@ -39,17 +39,17 @@ public class ListThreadsController extends AbstractThreadController {
      * Constructor.
      */
     @Inject
-    public ListThreadsController(final ThreadService threadService, final MessageSource messageSource) {
+    public ListThreadsController(ThreadService threadService, MessageSource messageSource) {
         super(threadService, messageSource);
     }
 
     @RequestMapping(value = ListThreadsController.REQUEST_MAPPING_BASE_URL, method = RequestMethod.GET)
-    public String initPage(final HttpServletRequest request, final ModelMap model) {
+    public String initPage(HttpServletRequest request, ModelMap model) {
 
-        final ShowAllThreads command = new ShowAllThreads();
+        ShowAllThreads command = new ShowAllThreads();
 
-        final ThreadService threadService = this.getThreadService();
-        final List<Thread> threads = threadService.loadAll();
+        ThreadService threadService = this.getThreadService();
+        List<Thread> threads = threadService.loadAll();
         // Sorts in the descending order according to the last saved
         // contributions of the threads.
         Collections.sort(threads);
@@ -57,7 +57,7 @@ public class ListThreadsController extends AbstractThreadController {
 
         // Sets up all auxiliary (but necessary) maps.
         command.setLastSavedContributions(Thread.getLastSavedContributions(threads));
-        command.setLocalizedDeleteQuestions(threadService.getLocalizedDeleteQuestions(threads, request,
+        command.setLocalizedDeleteQuestions(ThreadService.getLocalizedDeleteQuestions(threads, request,
                 this.getMessageSource()));
 
         // Gets more information about authors of the last saved contributions.
@@ -68,15 +68,15 @@ public class ListThreadsController extends AbstractThreadController {
     }
 
     @RequestMapping(value = ListThreadsController.REQUEST_MAPPING_BASE_URL + "vytvoreno/", method = RequestMethod.GET)
-    public String initPageAfterCreate(final HttpServletRequest request, final ModelMap model) {
-        final String view = this.initPage(request, model);
+    public String initPageAfterCreate(HttpServletRequest request, ModelMap model) {
+        String view = this.initPage(request, model);
         ((ShowAllThreads) model.get(ListThreadsController.COMMAND)).setThreadCreated(true);
         return view;
     }
 
     @RequestMapping(value = ListThreadsController.REQUEST_MAPPING_BASE_URL + "smazano/", method = RequestMethod.GET)
-    public String initPageAfterDelete(final HttpServletRequest request, final ModelMap model) {
-        final String view = this.initPage(request, model);
+    public String initPageAfterDelete(HttpServletRequest request, ModelMap model) {
+        String view = this.initPage(request, model);
         ((ShowAllThreads) model.get(ListThreadsController.COMMAND)).setThreadDeleted(true);
         return view;
     }

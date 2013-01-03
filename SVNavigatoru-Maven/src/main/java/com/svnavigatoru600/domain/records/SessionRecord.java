@@ -6,7 +6,7 @@ import javax.inject.Inject;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
-import com.svnavigatoru600.service.records.session.SessionRecordService;
+import com.svnavigatoru600.service.records.SessionRecordService;
 
 /**
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
@@ -19,7 +19,7 @@ public class SessionRecord extends AbstractDocumentRecord {
     private SessionRecordService recordService;
 
     @Inject
-    public void setSessionRecordService(final SessionRecordService recordService) {
+    public void setSessionRecordService(SessionRecordService recordService) {
         this.recordService = recordService;
     }
 

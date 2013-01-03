@@ -23,6 +23,9 @@ public class CalendarEvent implements Serializable {
         this.eventService = eventService;
     }
 
+    /**
+     * Updates the persisted copy of this object.
+     */
     public void update() {
         this.eventService.update(this);
     }

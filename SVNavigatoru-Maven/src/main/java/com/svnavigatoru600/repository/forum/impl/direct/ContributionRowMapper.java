@@ -20,8 +20,8 @@ import com.svnavigatoru600.repository.forum.impl.ContributionField;
 public class ContributionRowMapper implements RowMapper<Contribution> {
 
     @Override
-    public Contribution mapRow(final ResultSet rs, final int rowNum) throws SQLException {
-        final Contribution contribution = new Contribution();
+    public Contribution mapRow(ResultSet rs, int rowNum) throws SQLException {
+        Contribution contribution = new Contribution();
         contribution.setId(rs.getInt(ContributionField.id.getColumnName()));
         contribution.setText(rs.getString(ContributionField.text.getColumnName()));
         // NOTE: getTimestamp is used since getDate does not return hours,
@@ -31,11 +31,11 @@ public class ContributionRowMapper implements RowMapper<Contribution> {
         contribution.setLastSaveTime(new Date(rs.getTimestamp(ContributionField.lastSaveTime.getColumnName())
                 .getTime()));
 
-        final Thread thread = new Thread();
+        Thread thread = new Thread();
         thread.setId(rs.getInt(ContributionField.threadId.getColumnName()));
         contribution.setThread(thread);
 
-        final User author = new User();
+        User author = new User();
         author.setUsername(rs.getString(ContributionField.authorUsername.getColumnName()));
         contribution.setAuthor(author);
         return contribution;

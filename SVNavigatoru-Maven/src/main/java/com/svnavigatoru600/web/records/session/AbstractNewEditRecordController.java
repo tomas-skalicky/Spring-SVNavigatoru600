@@ -1,7 +1,6 @@
 package com.svnavigatoru600.web.records.session;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,9 +13,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 
 import com.svnavigatoru600.domain.records.SessionRecord;
 import com.svnavigatoru600.domain.records.SessionRecordType;
-import com.svnavigatoru600.service.records.session.SessionRecordService;
-import com.svnavigatoru600.service.records.session.validator.AbstractSessionRecordValidator;
-import com.svnavigatoru600.service.util.Localization;
+import com.svnavigatoru600.service.records.SessionRecordService;
+import com.svnavigatoru600.viewmodel.records.session.validator.AbstractSessionRecordValidator;
 import com.svnavigatoru600.web.records.AbstractPageViews;
 
 /**
@@ -36,7 +34,7 @@ public abstract class AbstractNewEditRecordController extends AbstractSessionRec
      * Command used in /main-content/records/session/templates/new-edit-record.jsp.
      */
     public static final String COMMAND = "newEditRecordCommand";
-    private Validator validator;
+    private final Validator validator;
 
     /**
      * Constructs a controller which considers all {@link SessionRecord SessionRecords} of all
@@ -75,14 +73,7 @@ public abstract class AbstractNewEditRecordController extends AbstractSessionRec
      * radiobutton is stored to <code>NewEditSessionRecord.newType</code>.
      */
     @ModelAttribute("sessionRecordTypeList")
-    public List<String> populateSessionRecordTypeList(final HttpServletRequest request) {
-        final List<String> sessionRecordTypeList = new ArrayList<String>();
-
-        for (SessionRecordType type : SessionRecordType.values()) {
-            final String localizationCode = type.getLocalizationCode();
-            sessionRecordTypeList.add(Localization.findLocaleMessage(this.getMessageSource(), request,
-                    localizationCode));
-        }
-        return sessionRecordTypeList;
+    public List<String> populateSessionRecordTypeList(HttpServletRequest request) {
+        return SessionRecordService.getLocalizedTypes(request, this.getMessageSource());
     }
 }

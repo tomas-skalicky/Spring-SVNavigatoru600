@@ -51,7 +51,7 @@ public class SessionRecordDaoImpl extends NamedParameterJdbcDaoSupport implement
             PersistedClass.AbstractDocumentRecord.getTableName(), DocumentRecordField.id.getColumnName(),
             SessionRecordField.id.getColumnName());
 
-    private DocumentRecordDaoImpl documentRecordDao = new DocumentRecordDaoImpl();
+    private final DocumentRecordDaoImpl documentRecordDao = new DocumentRecordDaoImpl();
 
     @Override
     public SessionRecord findById(int recordId) {
@@ -60,7 +60,7 @@ public class SessionRecordDaoImpl extends NamedParameterJdbcDaoSupport implement
 
     @Override
     public SessionRecord findById(int recordId, boolean loadFile) {
-        final String selectClause;
+        String selectClause;
         if (loadFile) {
             selectClause = SessionRecordDaoImpl.SELECT_FROM_CLAUSE_WITH_FILE;
         } else {

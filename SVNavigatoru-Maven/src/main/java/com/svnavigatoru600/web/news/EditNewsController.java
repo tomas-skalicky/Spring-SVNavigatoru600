@@ -17,9 +17,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.support.SessionStatus;
 
 import com.svnavigatoru600.domain.News;
-import com.svnavigatoru600.service.news.NewsService;
-import com.svnavigatoru600.service.news.validator.EditNewsValidator;
+import com.svnavigatoru600.service.NewsService;
 import com.svnavigatoru600.viewmodel.news.EditNews;
+import com.svnavigatoru600.viewmodel.news.validator.EditNewsValidator;
 
 /**
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
@@ -63,13 +63,13 @@ public class EditNewsController extends AbstractNewEditNewsController {
         EditNewsResponse response = new EditNewsResponse(command);
 
         this.getValidator().validate(command, result);
-        final MessageSource messageSource = this.getMessageSource();
+        MessageSource messageSource = this.getMessageSource();
         if (result.hasErrors()) {
             response.setFail(result, messageSource, request);
             return response;
         }
 
-        final NewsService newsService = this.getNewsService();
+        NewsService newsService = this.getNewsService();
         News originalNews = null;
         try {
             originalNews = newsService.findById(newsId);

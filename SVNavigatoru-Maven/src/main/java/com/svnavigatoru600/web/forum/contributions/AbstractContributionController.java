@@ -5,7 +5,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 
 import com.svnavigatoru600.domain.forum.Contribution;
-import com.svnavigatoru600.service.forum.contributions.ContributionService;
+import com.svnavigatoru600.service.forum.ContributionService;
 import com.svnavigatoru600.web.AbstractPrivateSectionMetaController;
 
 /**
@@ -18,8 +18,8 @@ import com.svnavigatoru600.web.AbstractPrivateSectionMetaController;
 public abstract class AbstractContributionController extends AbstractPrivateSectionMetaController {
 
     protected static final String BASE_URL = "/forum/temata/existujici/";
-    private ContributionService contributionService;
-    private MessageSource messageSource;
+    private final ContributionService contributionService;
+    private final MessageSource messageSource;
 
     public AbstractContributionController(ContributionService contributionService, MessageSource messageSource) {
         this.contributionService = contributionService;

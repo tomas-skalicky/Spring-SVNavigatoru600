@@ -11,7 +11,8 @@ import com.svnavigatoru600.domain.users.AuthorityType;
 import com.svnavigatoru600.domain.users.User;
 
 /**
- * Provides a set of static functions related to authorities (= roles).
+ * Provides a set of static functions related to {@link Authority authorities (= roles)} and their
+ * {@link AuthorityType types}.
  * 
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */

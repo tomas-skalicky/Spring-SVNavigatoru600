@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.support.SessionStatus;
 
 import com.svnavigatoru600.domain.records.SessionRecordType;
-import com.svnavigatoru600.service.records.session.SessionRecordService;
-import com.svnavigatoru600.service.records.session.validator.EditSessionRecordValidator;
+import com.svnavigatoru600.service.records.SessionRecordService;
 import com.svnavigatoru600.viewmodel.records.session.EditSessionRecord;
+import com.svnavigatoru600.viewmodel.records.session.validator.EditSessionRecordValidator;
 import com.svnavigatoru600.web.records.session.AbstractEditRecordController;
 
 /**

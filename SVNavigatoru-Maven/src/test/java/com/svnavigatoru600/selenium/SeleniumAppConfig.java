@@ -31,7 +31,7 @@ public class SeleniumAppConfig {
      */
     @Bean(name = "testUser")
     public TestUser getTestUser() {
-        final TestUser user = new TestUser();
+        TestUser user = new TestUser();
         user.setUsername(this.environment.getProperty("testUser.username"));
         user.setPassword(this.environment.getProperty("testUser.password"));
         return user;
@@ -44,7 +44,7 @@ public class SeleniumAppConfig {
      */
     @Bean(name = "deployServer")
     public Server getDeployServer() {
-        final Server server = new Server();
+        Server server = new Server();
         server.setHost(this.environment.getProperty("deploy.host"));
         server.setPort(Integer.valueOf(this.environment.getProperty("deploy.port")).intValue());
         server.setPath(this.environment.getProperty("deploy.path"));
@@ -58,7 +58,7 @@ public class SeleniumAppConfig {
      */
     @Bean(name = "seleniumServer")
     public Server getSeleniumServer() {
-        final Server server = new Server();
+        Server server = new Server();
         server.setHost(this.environment.getProperty("seleniumHub.host"));
         server.setPort(Integer.valueOf(this.environment.getProperty("seleniumHub.port")).intValue());
         server.setPath(this.environment.getProperty("seleniumHub.path"));

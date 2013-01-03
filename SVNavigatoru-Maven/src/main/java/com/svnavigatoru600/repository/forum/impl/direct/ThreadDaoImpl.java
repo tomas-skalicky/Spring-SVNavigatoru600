@@ -33,31 +33,31 @@ public class ThreadDaoImpl extends NamedParameterJdbcDaoSupport implements Threa
     private UserDao userDao;
 
     @Inject
-    public void setContributionDao(final ContributionDao contributionDao) {
+    public void setContributionDao(ContributionDao contributionDao) {
         this.contributionDao = contributionDao;
     }
 
     @Inject
-    public void setUserDao(final UserDao userDao) {
+    public void setUserDao(UserDao userDao) {
         this.userDao = userDao;
     }
 
     @Override
-    public Thread findById(final int threadId) {
+    public Thread findById(int threadId) {
         return this.findById(threadId, false);
     }
 
     /**
      * Populates the <code>contributions</code> property of the given <code>thread</code>.
      */
-    private void populateContributions(final Thread thread) {
+    private void populateContributions(Thread thread) {
         thread.setContributions(this.contributionDao.findAll(thread.getId()));
     }
 
     /**
      * Populates the <code>contributions</code> property of all the given <code>threads</code>.
      */
-    private void populateContributions(final List<Thread> threads) {
+    private void populateContributions(List<Thread> threads) {
         for (Thread thread : threads) {
             this.populateContributions(thread);
         }
@@ -66,19 +66,19 @@ public class ThreadDaoImpl extends NamedParameterJdbcDaoSupport implements Threa
     /**
      * Populates the <code>author</code> property of the given <code>thread</code>.
      */
-    private void populateAuthor(final Thread thread) {
+    private void populateAuthor(Thread thread) {
         // "true" means that the User will be loaded without associated
         // authorities.
-        final boolean lazy = true;
+        boolean lazy = true;
 
-        final String authorUsername = thread.getAuthor().getUsername();
+        String authorUsername = thread.getAuthor().getUsername();
         thread.setAuthor(((UserDaoImpl) this.userDao).findByUsername(authorUsername, lazy));
     }
 
     /**
      * Populates the <code>author</code> property of all the given <code>threads</code>.
      */
-    private void populateAuthor(final List<Thread> threads) {
+    private void populateAuthor(List<Thread> threads) {
         for (Thread thread : threads) {
             this.populateAuthor(thread);
         }
@@ -89,9 +89,9 @@ public class ThreadDaoImpl extends NamedParameterJdbcDaoSupport implements Threa
      *            If <code>true</code>, {@link Contribution contributions} of the desired {@link Thread} will
      *            not be loaded.
      */
-    public Thread findById(final int threadId, final boolean lazy) {
+    public Thread findById(int threadId, boolean lazy) {
         String idColumn = ThreadField.id.getColumnName();
-        final String query = String.format("SELECT * FROM %s t WHERE t.%s = :%s", ThreadDaoImpl.TABLE_NAME,
+        String query = String.format("SELECT * FROM %s t WHERE t.%s = :%s", ThreadDaoImpl.TABLE_NAME,
                 idColumn, idColumn);
 
         Map<String, Integer> args = Collections.singletonMap(idColumn, threadId);
@@ -108,9 +108,9 @@ public class ThreadDaoImpl extends NamedParameterJdbcDaoSupport implements Threa
 
     @Override
     public List<Thread> loadAll() {
-        final String query = String.format("SELECT * FROM %s t", ThreadDaoImpl.TABLE_NAME);
+        String query = String.format("SELECT * FROM %s t", ThreadDaoImpl.TABLE_NAME);
 
-        final List<Thread> threads = this.getJdbcTemplate().query(query, new ThreadRowMapper());
+        List<Thread> threads = this.getJdbcTemplate().query(query, new ThreadRowMapper());
 
         this.populateContributions(threads);
         this.populateAuthor(threads);
@@ -120,8 +120,8 @@ public class ThreadDaoImpl extends NamedParameterJdbcDaoSupport implements Threa
     /**
      * Maps properties of the given {@link Thread} to names of the corresponding database columns.
      */
-    private Map<String, Object> getNamedParameters(final Thread thread) {
-        final Map<String, Object> parameters = new HashMap<String, Object>();
+    private Map<String, Object> getNamedParameters(Thread thread) {
+        Map<String, Object> parameters = new HashMap<String, Object>();
         parameters.put(ThreadField.id.getColumnName(), thread.getId());
         parameters.put(ThreadField.name.getColumnName(), thread.getName());
         parameters.put(ThreadField.creationTime.getColumnName(), thread.getCreationTime());
@@ -130,12 +130,12 @@ public class ThreadDaoImpl extends NamedParameterJdbcDaoSupport implements Threa
     }
 
     @Override
-    public void update(final Thread thread) {
+    public void update(Thread thread) {
         String idColumn = ThreadField.id.getColumnName();
         String nameColumn = ThreadField.name.getColumnName();
         String creationTimeColumn = ThreadField.creationTime.getColumnName();
         String authorUsernameColumn = ThreadField.authorUsername.getColumnName();
-        final String query = String.format("UPDATE %s SET %s = :%s, %s = :%s, %s = :%s WHERE %s = :%s",
+        String query = String.format("UPDATE %s SET %s = :%s, %s = :%s, %s = :%s WHERE %s = :%s",
                 ThreadDaoImpl.TABLE_NAME, nameColumn, nameColumn, creationTimeColumn, creationTimeColumn,
                 authorUsernameColumn, authorUsernameColumn, idColumn, idColumn);
 
@@ -143,17 +143,17 @@ public class ThreadDaoImpl extends NamedParameterJdbcDaoSupport implements Threa
     }
 
     @Override
-    public int save(final Thread thread) {
-        final Date now = new Date();
+    public int save(Thread thread) {
+        Date now = new Date();
         thread.setCreationTime(now);
 
-        final SimpleJdbcInsert insert = new SimpleJdbcInsert(this.getDataSource())
+        SimpleJdbcInsert insert = new SimpleJdbcInsert(this.getDataSource())
                 .withTableName(ThreadDaoImpl.TABLE_NAME)
                 .usingGeneratedKeyColumns(ThreadField.id.getColumnName())
                 .usingColumns(ThreadField.name.getColumnName(), ThreadField.creationTime.getColumnName(),
                         ThreadField.authorUsername.getColumnName());
 
-        final int threadId = insert.executeAndReturnKey(this.getNamedParameters(thread)).intValue();
+        int threadId = insert.executeAndReturnKey(this.getNamedParameters(thread)).intValue();
         thread.setId(threadId);
 
         // NOTE: explicit save of the thread's contributions.

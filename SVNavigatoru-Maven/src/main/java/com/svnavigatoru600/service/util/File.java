@@ -7,7 +7,7 @@ import javax.sql.rowset.serial.SerialBlob;
 
 import org.apache.commons.lang3.ArrayUtils;
 
-import com.svnavigatoru600.web.Configuration;
+import com.svnavigatoru600.service.Configuration;
 
 /**
  * Provides a set of static functions related to files.
@@ -44,7 +44,7 @@ public final class File {
     /**
      * Modifies the given <code>fileName</code> in a way that it is unique in the whole application.
      */
-    public static String getUniqueFileName(final String inputFileName) {
+    public static String getUniqueFileName(String inputFileName) {
         String uniqueFileName = null;
         java.io.File destinationFile = null;
 

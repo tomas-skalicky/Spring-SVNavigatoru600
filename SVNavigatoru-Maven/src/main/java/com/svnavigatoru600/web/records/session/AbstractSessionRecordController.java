@@ -5,7 +5,7 @@ import org.springframework.stereotype.Controller;
 
 import com.svnavigatoru600.domain.records.SessionRecord;
 import com.svnavigatoru600.domain.records.SessionRecordType;
-import com.svnavigatoru600.service.records.session.SessionRecordService;
+import com.svnavigatoru600.service.records.SessionRecordService;
 import com.svnavigatoru600.web.records.AbstractDocumentRecordController;
 import com.svnavigatoru600.web.records.AbstractPageViews;
 

@@ -18,10 +18,10 @@ import org.springframework.web.bind.support.SessionStatus;
 import com.svnavigatoru600.domain.eventcalendar.CalendarEvent;
 import com.svnavigatoru600.domain.eventcalendar.PriorityType;
 import com.svnavigatoru600.service.eventcalendar.CalendarEventService;
-import com.svnavigatoru600.service.eventcalendar.validator.NewEventValidator;
 import com.svnavigatoru600.service.util.Localization;
 import com.svnavigatoru600.viewmodel.eventcalendar.NewEvent;
-import com.svnavigatoru600.web.Configuration;
+import com.svnavigatoru600.viewmodel.eventcalendar.validator.NewEventValidator;
+import com.svnavigatoru600.web.AbstractMetaController;
 
 /**
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
@@ -91,9 +91,9 @@ public class NewEventController extends AbstractNewEditEventController {
             status.setComplete();
 
             // Returns the form success view.
-            model.addAttribute(Configuration.REDIRECTION_ATTRIBUTE,
+            model.addAttribute(AbstractMetaController.REDIRECTION_ATTRIBUTE,
                     String.format("%svytvoreno/", AbstractEventController.BASE_URL));
-            return Configuration.REDIRECTION_PAGE;
+            return AbstractMetaController.REDIRECTION_PAGE;
 
         } catch (DataAccessException e) {
             // We encountered a database problem.

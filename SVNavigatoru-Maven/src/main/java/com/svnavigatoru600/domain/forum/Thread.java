@@ -11,7 +11,7 @@ import javax.inject.Inject;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.svnavigatoru600.domain.users.User;
-import com.svnavigatoru600.service.forum.threads.ThreadService;
+import com.svnavigatoru600.service.forum.ThreadService;
 
 /**
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
@@ -81,11 +81,11 @@ public class Thread implements Serializable, Comparable<Thread> {
      */
     @Override
     public int compareTo(Thread t) {
-        final Contribution thisContribution = this.getLastSavedContribution();
+        Contribution thisContribution = this.getLastSavedContribution();
         if (thisContribution == null) {
             return 1;
         }
-        final Contribution tContribution = t.getLastSavedContribution();
+        Contribution tContribution = t.getLastSavedContribution();
         if (tContribution == null) {
             return -1;
         }
@@ -115,8 +115,8 @@ public class Thread implements Serializable, Comparable<Thread> {
      * highest {@link Contribution#getLastSaveTime() lastSaveTime} and which belongs to that thread. Moreover,
      * the method finds the author of such a contribution.
      */
-    public static Map<Thread, Contribution> getLastSavedContributions(final List<Thread> threads) {
-        final Map<Thread, Contribution> lastSavedContributions = new HashMap<Thread, Contribution>();
+    public static Map<Thread, Contribution> getLastSavedContributions(List<Thread> threads) {
+        Map<Thread, Contribution> lastSavedContributions = new HashMap<Thread, Contribution>();
 
         for (Thread thread : threads) {
             lastSavedContributions.put(thread, thread.getLastSavedContribution());

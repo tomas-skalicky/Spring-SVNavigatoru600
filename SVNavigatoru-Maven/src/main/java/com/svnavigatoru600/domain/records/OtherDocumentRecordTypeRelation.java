@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 import javax.inject.Inject;
 
-import com.svnavigatoru600.service.records.otherdocuments.OtherDocumentRecordTypeRelationService;
+import com.svnavigatoru600.service.records.OtherDocumentRecordTypeRelationService;
 
 /**
  * Helps to map the <code>types</code> array in the {@link OtherDocumentRecordType} class to Hibernate.
@@ -19,8 +19,7 @@ public class OtherDocumentRecordTypeRelation implements Serializable {
     private OtherDocumentRecordTypeRelationService typeService;
 
     @Inject
-    public void setOtherDocumentRecordTypeRelationService(
-            final OtherDocumentRecordTypeRelationService typeService) {
+    public void setOtherDocumentRecordTypeRelationService(OtherDocumentRecordTypeRelationService typeService) {
         this.typeService = typeService;
     }
 

@@ -54,7 +54,7 @@ public abstract class AbstractSeleniumTest {
      */
     @BeforeClass
     public static void openBrowser() throws Exception {
-        final Server seleniumServer = (Server) APPLICATION_CONTEXT.getBean("seleniumServer");
+        Server seleniumServer = (Server) APPLICATION_CONTEXT.getBean("seleniumServer");
         browserDriver = (new Augmenter()).augment(new RemoteWebDriver(new URL(seleniumServer.getUrl()),
                 DesiredCapabilities.firefox()));
         // browserDriver = new FirefoxDriver();
@@ -65,7 +65,7 @@ public abstract class AbstractSeleniumTest {
      */
     @Before
     public void setUp() {
-        final Server deployServer = (Server) APPLICATION_CONTEXT.getBean("deployServer");
+        Server deployServer = (Server) APPLICATION_CONTEXT.getBean("deployServer");
         browserDriver.get(deployServer.getUrl());
     }
 
@@ -97,11 +97,11 @@ public abstract class AbstractSeleniumTest {
      * @return <code>true</code> if the URL of the loaded page matches the given regular expression; otherwise
      *         <code>false</code>.
      */
-    protected boolean waitForPageUrl(final WebDriver browserDriver, final String urlRegExp) {
+    protected boolean waitForPageUrl(WebDriver browserDriver, final String urlRegExp) {
         return (new WebDriverWait(browserDriver, DEFAULT_TIMEOUT_IN_SECONDS,
                 DEFAULT_SLEEP_BETWEEN_POLLS_IN_MILLISECONDS)).until(new ExpectedCondition<Boolean>() {
             @Override
-            public Boolean apply(final WebDriver driver) {
+            public Boolean apply(WebDriver driver) {
                 return driver.getCurrentUrl().matches(urlRegExp);
             }
         });
@@ -114,7 +114,7 @@ public abstract class AbstractSeleniumTest {
      *            XPath expression of the desired element
      * @return Text in the element
      */
-    protected String getElementText(final String elementXpath) {
+    protected String getElementText(String elementXpath) {
         return browserDriver.findElement(By.xpath(elementXpath)).getText();
     }
 
@@ -125,7 +125,7 @@ public abstract class AbstractSeleniumTest {
      *            ID of the desired element
      * @return Value of the <code>value</code> attribute of the element
      */
-    protected String getAttributeValue(final String elementId) {
+    protected String getAttributeValue(String elementId) {
         return browserDriver.findElement(By.id(elementId)).getAttribute("value");
     }
 }

@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.svnavigatoru600.domain.forum.Thread;
-import com.svnavigatoru600.service.forum.threads.ThreadService;
-import com.svnavigatoru600.web.Configuration;
+import com.svnavigatoru600.service.forum.ThreadService;
+import com.svnavigatoru600.web.AbstractMetaController;
 
 /**
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
@@ -34,7 +34,7 @@ public class DeleteThreadController extends AbstractThreadController {
     private ListThreadsController listController;
 
     @Inject
-    public void setListController(final ListThreadsController listController) {
+    public void setListController(ListThreadsController listController) {
         this.listController = listController;
     }
 
@@ -42,22 +42,22 @@ public class DeleteThreadController extends AbstractThreadController {
      * Constructor.
      */
     @Inject
-    public DeleteThreadController(final ThreadService threadService, final MessageSource messageSource) {
+    public DeleteThreadController(ThreadService threadService, MessageSource messageSource) {
         super(threadService, messageSource);
     }
 
     @RequestMapping(value = DeleteThreadController.REQUEST_MAPPING_BASE_URL, method = RequestMethod.GET)
     @Transactional
-    public String delete(@PathVariable int threadId, final HttpServletRequest request, final ModelMap model) {
+    public String delete(@PathVariable int threadId, HttpServletRequest request, ModelMap model) {
 
-        final ThreadService threadService = this.getThreadService();
+        ThreadService threadService = this.getThreadService();
         threadService.canDelete(threadId);
 
         try {
             // Deletes the thread from the repository.
-            final Thread thread = threadService.findById(threadId);
+            Thread thread = threadService.findById(threadId);
             if (thread.getContributions().size() > 0) {
-                final String view = this.listController.initPage(request, model);
+                String view = this.listController.initPage(request, model);
                 model.addAttribute("error",
                         DeleteThreadController.CANNOT_DELETE_DUE_CONTRIBUTION_MESSAGE_CODE);
                 return view;
@@ -65,14 +65,14 @@ public class DeleteThreadController extends AbstractThreadController {
             threadService.delete(thread);
 
             // Returns the form success view.
-            model.addAttribute(Configuration.REDIRECTION_ATTRIBUTE,
+            model.addAttribute(AbstractMetaController.REDIRECTION_ATTRIBUTE,
                     DeleteThreadController.SUCCESSFUL_DELETE_URL);
-            return Configuration.REDIRECTION_PAGE;
+            return AbstractMetaController.REDIRECTION_PAGE;
 
         } catch (DataAccessException e) {
             // We encountered a database problem.
             LogFactory.getLog(this.getClass()).error(e);
-            final String view = this.listController.initPage(request, model);
+            String view = this.listController.initPage(request, model);
             model.addAttribute("error", DeleteThreadController.DATABASE_ERROR_MESSAGE_CODE);
             return view;
         }

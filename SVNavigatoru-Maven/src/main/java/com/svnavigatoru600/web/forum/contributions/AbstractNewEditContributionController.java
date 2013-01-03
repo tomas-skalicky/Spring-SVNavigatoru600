@@ -5,8 +5,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.Validator;
 
 import com.svnavigatoru600.domain.forum.Contribution;
-import com.svnavigatoru600.service.forum.contributions.ContributionService;
-import com.svnavigatoru600.service.forum.contributions.validator.AbstractContributionValidator;
+import com.svnavigatoru600.service.forum.ContributionService;
+import com.svnavigatoru600.viewmodel.forum.contributions.validator.AbstractContributionValidator;
 
 /**
  * Parent of controllers which create and edit the {@link Contribution Contributions}.
@@ -20,10 +20,10 @@ public abstract class AbstractNewEditContributionController extends AbstractCont
      * Command used in /main-content/forum/contributions/new-edit-contribution.jsp.
      */
     public static final String COMMAND = "newEditContributionCommand";
-    private Validator validator;
+    private final Validator validator;
 
-    public AbstractNewEditContributionController(final ContributionService contributionService,
-            final AbstractContributionValidator validator, final MessageSource messageSource) {
+    public AbstractNewEditContributionController(ContributionService contributionService,
+            AbstractContributionValidator validator, MessageSource messageSource) {
         super(contributionService, messageSource);
         this.validator = validator;
     }

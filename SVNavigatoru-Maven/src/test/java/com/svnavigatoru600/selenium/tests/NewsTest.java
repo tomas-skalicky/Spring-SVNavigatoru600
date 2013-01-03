@@ -53,7 +53,7 @@ public class NewsTest extends AbstractTailoredSeleniumTest {
      * Signs in the application. It checks the remember-me checkbox.
      */
     private void logIn() {
-        final WebDriver browserDriver = this.getBrowserDriver();
+        WebDriver browserDriver = this.getBrowserDriver();
 
         browserDriver.findElement(By.id(LOGIN_ELEMENT_ID)).sendKeys("skalicky.tomas@gmail.com");
         browserDriver.findElement(By.id(PASSWORD_ELEMENT_ID)).sendKeys("t");
@@ -66,14 +66,14 @@ public class NewsTest extends AbstractTailoredSeleniumTest {
      * Creates an entirely new news.
      */
     private void createNewNews() {
-        final WebDriver browserDriver = this.getBrowserDriver();
+        WebDriver browserDriver = this.getBrowserDriver();
 
         // HINT: Use a Firefox extension called "XPath Checker" to find out a xpath of a certain element.
         browserDriver.findElement(By.xpath(XPATH_NEW_NEWS_LINK)).click();
         Assert.isTrue((new WebDriverWait(browserDriver, DEFAULT_TIMEOUT_IN_SECONDS,
                 DEFAULT_SLEEP_BETWEEN_POLLS_IN_MILLISECONDS)).until(new ExpectedCondition<Boolean>() {
             @Override
-            public Boolean apply(final WebDriver driver) {
+            public Boolean apply(WebDriver driver) {
                 return "Přidat novinku".equals(NewsTest.this.getAttributeValue(NEW_NEWS_SUBMIT_ID));
             }
         }));
@@ -82,9 +82,9 @@ public class NewsTest extends AbstractTailoredSeleniumTest {
         browserDriver.findElement(By.id(NEW_NEWS_TITLE_ID)).sendKeys(newTitle);
 
         final String newText = "New Text";
-        final WebElement tinymceIframe = browserDriver.findElement(By.id(TINYMCE_IFRAME_ID));
+        WebElement tinymceIframe = browserDriver.findElement(By.id(TINYMCE_IFRAME_ID));
         browserDriver.switchTo().frame(tinymceIframe);
-        final WebElement newsTextBox = browserDriver.findElement(By.id(NEW_NEWS_TEXT_ID));
+        WebElement newsTextBox = browserDriver.findElement(By.id(NEW_NEWS_TEXT_ID));
         newsTextBox.sendKeys("<p>" + newTitle + "</p>");
         browserDriver.switchTo().defaultContent();
 
@@ -92,7 +92,7 @@ public class NewsTest extends AbstractTailoredSeleniumTest {
         Assert.isTrue((new WebDriverWait(browserDriver, DEFAULT_TIMEOUT_IN_SECONDS,
                 DEFAULT_SLEEP_BETWEEN_POLLS_IN_MILLISECONDS)).until(new ExpectedCondition<Boolean>() {
             @Override
-            public Boolean apply(final WebDriver driver) {
+            public Boolean apply(WebDriver driver) {
                 return newTitle.equals(NewsTest.this.getElementText(XPATH_FIRST_NEWS_TITLE))
                         && newText.equals(NewsTest.this.getElementText(XPATH_FIRST_NEWS_TEXT));
             }
@@ -104,24 +104,24 @@ public class NewsTest extends AbstractTailoredSeleniumTest {
      * the {@link #createNewNews() createNewNews} method.
      */
     private void editNewNews() {
-        final WebDriver browserDriver = this.getBrowserDriver();
+        WebDriver browserDriver = this.getBrowserDriver();
 
         browserDriver.findElement(By.xpath(XPATH_FIRST_NEWS_EDIT)).click();
         Assert.isTrue((new WebDriverWait(browserDriver, DEFAULT_TIMEOUT_IN_SECONDS,
                 DEFAULT_SLEEP_BETWEEN_POLLS_IN_MILLISECONDS)).until(new ExpectedCondition<Boolean>() {
             @Override
-            public Boolean apply(final WebDriver driver) {
+            public Boolean apply(WebDriver driver) {
                 return "Uložit změny".equals(NewsTest.this.getAttributeValue(EDIT_NEWS_SUBMIT_ID));
             }
         }));
 
-        final String newTitle = "Edited News";
+        String newTitle = "Edited News";
         browserDriver.findElement(By.id(EDIT_NEWS_TITLE_ID)).sendKeys(newTitle);
 
-        final String newTextWithFormating = "<p>Edited Text</p>";
-        final WebElement tinymceIframe = browserDriver.findElement(By.id(TINYMCE_IFRAME_ID));
+        String newTextWithFormating = "<p>Edited Text</p>";
+        WebElement tinymceIframe = browserDriver.findElement(By.id(TINYMCE_IFRAME_ID));
         browserDriver.switchTo().frame(tinymceIframe);
-        final WebElement newsTextBox = browserDriver.findElement(By.id(EDIT_NEWS_TEXT_ID));
+        WebElement newsTextBox = browserDriver.findElement(By.id(EDIT_NEWS_TEXT_ID));
         newsTextBox.sendKeys(newTextWithFormating);
         browserDriver.switchTo().defaultContent();
 
@@ -129,7 +129,7 @@ public class NewsTest extends AbstractTailoredSeleniumTest {
         Assert.isTrue((new WebDriverWait(browserDriver, DEFAULT_TIMEOUT_IN_SECONDS,
                 DEFAULT_SLEEP_BETWEEN_POLLS_IN_MILLISECONDS)).until(new ExpectedCondition<Boolean>() {
             @Override
-            public Boolean apply(final WebDriver driver) {
+            public Boolean apply(WebDriver driver) {
                 return driver.findElement(By.id(SUCCESS_EDIT_MESSAGE_ID)).isDisplayed();
             }
         }));
@@ -143,11 +143,11 @@ public class NewsTest extends AbstractTailoredSeleniumTest {
      * {@link #createNewNews() createNewNews} method.
      */
     private void deleteNewNews() {
-        final WebDriver browserDriver = this.getBrowserDriver();
+        WebDriver browserDriver = this.getBrowserDriver();
 
         browserDriver.findElement(By.xpath(XPATH_FIRST_NEWS_DELETE)).click();
         // browserDriver.waitForCondition("selenium.isConfirmationPresent()", MAX_WAIT_TIME_IN_MS);
-        // final String confirmation = browserDriver.getConfirmation();
+        // String confirmation = browserDriver.getConfirmation();
         // assertTrue("The actual value is: " + confirmation,
         // confirmation.matches("^Opravdu chcete smazat novinku `Edited News`\\?$"));
     }
@@ -156,7 +156,7 @@ public class NewsTest extends AbstractTailoredSeleniumTest {
      * Logs out from the application.
      */
     private void logOut() {
-        final WebDriver browserDriver = this.getBrowserDriver();
+        WebDriver browserDriver = this.getBrowserDriver();
 
         browserDriver.findElement(By.linkText(LOGOUT_LINK_TEXT)).click();
         this.waitForPageUrl(browserDriver, LOGIN_PAGE_URL_REG_EXP);

@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.svnavigatoru600.service.eventcalendar.CalendarEventService;
-import com.svnavigatoru600.web.Configuration;
+import com.svnavigatoru600.web.AbstractMetaController;
 
 /**
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
@@ -32,7 +32,7 @@ public class DeleteEventController extends AbstractEventController {
     private ListEventsController listController;
 
     @Inject
-    public void setListController(final ListEventsController listController) {
+    public void setListController(ListEventsController listController) {
         this.listController = listController;
     }
 
@@ -40,25 +40,25 @@ public class DeleteEventController extends AbstractEventController {
      * Constructor.
      */
     @Inject
-    public DeleteEventController(final CalendarEventService eventService, final MessageSource messageSource) {
+    public DeleteEventController(CalendarEventService eventService, MessageSource messageSource) {
         super(eventService, messageSource);
     }
 
     @RequestMapping(value = DeleteEventController.REQUEST_MAPPING_BASE_URL, method = RequestMethod.GET)
     @Transactional
-    public String delete(@PathVariable int eventId, final HttpServletRequest request, final ModelMap model) {
+    public String delete(@PathVariable int eventId, HttpServletRequest request, ModelMap model) {
         try {
             this.getEventService().delete(eventId);
 
             // Returns the form success view.
-            model.addAttribute(Configuration.REDIRECTION_ATTRIBUTE,
+            model.addAttribute(AbstractMetaController.REDIRECTION_ATTRIBUTE,
                     DeleteEventController.SUCCESSFUL_DELETE_URL);
-            return Configuration.REDIRECTION_PAGE;
+            return AbstractMetaController.REDIRECTION_PAGE;
 
         } catch (DataAccessException e) {
             // We encountered a database problem.
             LogFactory.getLog(this.getClass()).error(e);
-            final String view = this.listController.initPage(request, model);
+            String view = this.listController.initPage(request, model);
             model.addAttribute("error", DeleteEventController.DATABASE_ERROR_MESSAGE_CODE);
             return view;
         }

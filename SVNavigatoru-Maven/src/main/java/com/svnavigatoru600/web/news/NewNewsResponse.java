@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.context.MessageSource;
 
 import com.svnavigatoru600.domain.News;
+import com.svnavigatoru600.service.NewsService;
 import com.svnavigatoru600.service.util.DateUtils;
 import com.svnavigatoru600.service.util.Localization;
 import com.svnavigatoru600.service.util.UserUtils;
@@ -59,8 +60,7 @@ public class NewNewsResponse extends AbstractNewEditNewsResponse {
 
     private void initMessageVariables(MessageSource messageSource, HttpServletRequest request) {
         News news = this.getCommand().getNews();
-        this.localizedDeleteQuestion = ListNewsController.getLocalizedDeleteQuestion(news, messageSource,
-                request);
+        this.localizedDeleteQuestion = NewsService.getLocalizedDeleteQuestion(news, messageSource, request);
     }
 
     private void initEditUrlVariables(HttpServletRequest request) {

@@ -1,7 +1,6 @@
 package com.svnavigatoru600.web.records.session;
 
 import java.io.IOException;
-import java.sql.Blob;
 import java.sql.SQLException;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,16 +15,14 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.support.SessionStatus;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.svnavigatoru600.domain.records.SessionRecord;
 import com.svnavigatoru600.domain.records.SessionRecordType;
-import com.svnavigatoru600.service.records.session.SessionRecordService;
-import com.svnavigatoru600.service.records.session.validator.EditSessionRecordValidator;
-import com.svnavigatoru600.service.util.File;
+import com.svnavigatoru600.service.records.SessionRecordService;
 import com.svnavigatoru600.service.util.Localization;
 import com.svnavigatoru600.viewmodel.records.session.EditSessionRecord;
-import com.svnavigatoru600.web.Configuration;
+import com.svnavigatoru600.viewmodel.records.session.validator.EditSessionRecordValidator;
+import com.svnavigatoru600.web.AbstractMetaController;
 import com.svnavigatoru600.web.records.AbstractPageViews;
 
 /**
@@ -72,7 +69,7 @@ public abstract class AbstractEditRecordController extends AbstractNewEditRecord
 
         EditSessionRecord command = new EditSessionRecord();
 
-        SessionRecord record = this.getRecordService().findById(recordId, false);
+        SessionRecord record = this.getRecordService().findByIdWithoutFile(recordId);
         command.setRecord(record);
 
         command.setNewType(Localization.findLocaleMessage(this.getMessageSource(), request, record
@@ -86,8 +83,8 @@ public abstract class AbstractEditRecordController extends AbstractNewEditRecord
      * Initializes the form after the modified data were successfully saved to the repository and the new file
      * (if it exists) was uploaded.
      */
-    public String initFormAfterSave(final int recordId, final HttpServletRequest request, final ModelMap model) {
-        final String view = this.initForm(recordId, request, model);
+    public String initFormAfterSave(int recordId, HttpServletRequest request, ModelMap model) {
+        String view = this.initForm(recordId, request, model);
         ((EditSessionRecord) model.get(AbstractNewEditRecordController.COMMAND)).setDataSaved(true);
         return view;
     }
@@ -108,70 +105,17 @@ public abstract class AbstractEditRecordController extends AbstractNewEditRecord
             return this.getViews().getEdit();
         }
 
-        // Updates the original data. Modifies the filename to make it unique.
-        final SessionRecordService recordService = this.getRecordService();
-        SessionRecord oldRecord = recordService.findById(recordId, false);
-        SessionRecord newRecord = command.getRecord();
-        oldRecord.setSessionDate(newRecord.getSessionDate());
-        oldRecord.setDiscussedTopics(newRecord.getDiscussedTopics());
-        oldRecord.setType(SessionRecordType.valueOfAccordingLocalization(command.getNewType(),
-                this.getMessageSource(), request));
-        boolean isFileChanged = command.isFileChanged();
-        MultipartFile newAttachedFile = null;
-        String newFileName = null;
-
         try {
-            // /////////////////////////////////////////////////////////////////
-            // Store in the FILESYSTEM
-            // --------------------------------------------------------------
-            // String oldFileName = oldRecord.getFileName();
-            // \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-            if (isFileChanged) {
-                newAttachedFile = command.getNewFile();
-                newFileName = newAttachedFile.getOriginalFilename();
-                // /////////////////////////////////////////////////////////////////
-                // Store in the FILESYSTEM
-                // --------------------------------------------------------------
-                // newFileName = File.getUniqueFileName(newFileName);
-                // \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-
-                // /////////////////////////////////////////////////////////////////
-                // Store in the DB
-                // --------------------------------------------------------------
-                Blob blobFile = File.convertToBlob(newAttachedFile.getBytes());
-                oldRecord.setFile(blobFile);
-                // \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-                oldRecord.setFileName(newFileName);
-            }
-
-            // If the file has changed, deletes the old one and copies the new
-            // file to the target folder. Afterwards, updates the record in the
-            // repository.
-            // /////////////////////////////////////////////////////////////////
-            // Store in the FILESYSTEM
-            // --------------------------------------------------------------
-            // if (isFileChanged) {
-            // java.io.File destinationFile = File.getUploadedFile(newFileName);
-            // newAttachedFile.transferTo(destinationFile);
-            // }
-            // \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-            recordService.update(oldRecord);
-            // /////////////////////////////////////////////////////////////////
-            // Store in the FILESYSTEM
-            // --------------------------------------------------------------
-            // if (isFileChanged) {
-            // java.io.File oldFile = File.getUploadedFile(oldFileName);
-            // oldFile.delete();
-            // }
-            // \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+            this.getRecordService().update(recordId, command.getRecord(), command.getNewType(),
+                    command.isFileChanged(), command.getNewFile(), request, this.getMessageSource());
 
             // Clears the command object from the session.
             status.setComplete();
 
             // Returns the form success view.
-            model.addAttribute(Configuration.REDIRECTION_ATTRIBUTE,
+            model.addAttribute(AbstractMetaController.REDIRECTION_ATTRIBUTE,
                     String.format("%s%d/ulozeno/", this.getBaseUrl(), recordId));
-            return Configuration.REDIRECTION_PAGE;
+            return AbstractMetaController.REDIRECTION_PAGE;
 
         } catch (IllegalStateException e) {
             this.logger.error(command, e);

@@ -4,8 +4,8 @@ import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.Validator;
 
-import com.svnavigatoru600.service.news.NewsService;
-import com.svnavigatoru600.service.news.validator.AbstractNewsValidator;
+import com.svnavigatoru600.service.NewsService;
+import com.svnavigatoru600.viewmodel.news.validator.AbstractNewsValidator;
 
 /**
  * Parent of controllers which create and edit the {@link com.svnavigatoru600.domain.News News}.
@@ -19,7 +19,7 @@ public abstract class AbstractNewEditNewsController extends AbstractNewsControll
      * Command used in /main-content/news/new-edit-news.jsp.
      */
     public static final String COMMAND = "newEditNewsCommand";
-    private Validator validator;
+    private final Validator validator;
 
     public AbstractNewEditNewsController(NewsService newsService, AbstractNewsValidator validator,
             MessageSource messageSource) {

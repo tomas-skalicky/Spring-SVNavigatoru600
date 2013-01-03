@@ -17,12 +17,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.support.SessionStatus;
 
 import com.svnavigatoru600.domain.forum.Contribution;
-import com.svnavigatoru600.service.forum.contributions.ContributionService;
-import com.svnavigatoru600.service.forum.contributions.validator.NewContributionValidator;
-import com.svnavigatoru600.service.forum.threads.ThreadService;
+import com.svnavigatoru600.service.forum.ContributionService;
+import com.svnavigatoru600.service.forum.ThreadService;
 import com.svnavigatoru600.service.util.UserUtils;
 import com.svnavigatoru600.viewmodel.forum.contributions.NewContribution;
-import com.svnavigatoru600.web.Configuration;
+import com.svnavigatoru600.viewmodel.forum.contributions.validator.NewContributionValidator;
+import com.svnavigatoru600.web.AbstractMetaController;
 
 /**
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
@@ -99,9 +99,9 @@ public class NewContributionController extends AbstractNewEditContributionContro
             status.setComplete();
 
             // Returns the form success view.
-            model.addAttribute(Configuration.REDIRECTION_ATTRIBUTE, String.format(
+            model.addAttribute(AbstractMetaController.REDIRECTION_ATTRIBUTE, String.format(
                     "%s%d/prispevky/vytvoreno/", AbstractContributionController.BASE_URL, threadId));
-            return Configuration.REDIRECTION_PAGE;
+            return AbstractMetaController.REDIRECTION_PAGE;
 
         } catch (DataAccessException e) {
             // We encountered a database problem.

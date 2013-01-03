@@ -1,15 +1,21 @@
 package com.svnavigatoru600.service.users;
 
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.context.MessageSource;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Service;
 
 import com.svnavigatoru600.domain.users.Authority;
+import com.svnavigatoru600.domain.users.AuthorityType;
 import com.svnavigatoru600.repository.users.AuthorityDao;
+import com.svnavigatoru600.service.util.Localization;
 
 /**
  * Provides convenient methods to work with {@link Authority} objects.
@@ -59,5 +65,21 @@ public class AuthorityService {
      */
     public void delete(String username) {
         this.authorityDao.delete(username);
+    }
+
+    /**
+     * Gets a {@link Map} which for each constant of this {@link AuthorityType} enumeration contains a pair of
+     * its {@link AuthorityType#ordinal() ordinal} and its localized title.
+     */
+    public static Map<Integer, String> getLocalizedTitles(HttpServletRequest request,
+            MessageSource messageSource) {
+        Map<Integer, String> ordinalTitleMap = new HashMap<Integer, String>();
+
+        for (AuthorityType type : AuthorityType.values()) {
+            String localizedTitle = Localization.findLocaleMessage(messageSource, request,
+                    type.getTitleLocalizationCode());
+            ordinalTitleMap.put(type.ordinal(), localizedTitle);
+        }
+        return ordinalTitleMap;
     }
 }

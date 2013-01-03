@@ -36,4 +36,4 @@
 <%@ page import="com.svnavigatoru600.service.util.Localization"%>
 <%@ page import="com.svnavigatoru600.service.util.UserUtils"%>
 
-<%@ page import="com.svnavigatoru600.web.Configuration"%>
+<%@ page import="com.svnavigatoru600.service.Configuration"%>

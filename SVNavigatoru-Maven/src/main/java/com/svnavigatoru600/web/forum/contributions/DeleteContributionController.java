@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.svnavigatoru600.service.forum.contributions.ContributionService;
-import com.svnavigatoru600.web.Configuration;
+import com.svnavigatoru600.service.forum.ContributionService;
+import com.svnavigatoru600.web.AbstractMetaController;
 
 /**
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
@@ -33,12 +33,12 @@ public class DeleteContributionController extends AbstractContributionController
 
     @Override
     @Inject
-    public void setContributionService(final ContributionService contributionService) {
+    public void setContributionService(ContributionService contributionService) {
         this.contributionService = contributionService;
     }
 
     @Inject
-    public void setListController(final ListContributionsController listController) {
+    public void setListController(ListContributionsController listController) {
         this.listController = listController;
     }
 
@@ -46,15 +46,14 @@ public class DeleteContributionController extends AbstractContributionController
      * Constructor.
      */
     @Inject
-    public DeleteContributionController(final ContributionService contributionService,
-            final MessageSource messageSource) {
+    public DeleteContributionController(ContributionService contributionService, MessageSource messageSource) {
         super(contributionService, messageSource);
     }
 
     @RequestMapping(value = DeleteContributionController.REQUEST_MAPPING_BASE_URL, method = RequestMethod.GET)
     @Transactional
     public String delete(@PathVariable int threadId, @PathVariable int contributionId,
-            final HttpServletRequest request, final ModelMap model) {
+            HttpServletRequest request, ModelMap model) {
 
         // Checks permission.
         this.contributionService.canDelete(contributionId);
@@ -63,14 +62,14 @@ public class DeleteContributionController extends AbstractContributionController
             this.getContributionService().delete(contributionId);
 
             // Returns the form success view.
-            model.addAttribute(Configuration.REDIRECTION_ATTRIBUTE, String.format("%s%d/prispevky/smazano/",
-                    AbstractContributionController.BASE_URL, threadId));
-            return Configuration.REDIRECTION_PAGE;
+            model.addAttribute(AbstractMetaController.REDIRECTION_ATTRIBUTE, String.format(
+                    "%s%d/prispevky/smazano/", AbstractContributionController.BASE_URL, threadId));
+            return AbstractMetaController.REDIRECTION_PAGE;
 
         } catch (DataAccessException e) {
             // We encountered a database problem.
             LogFactory.getLog(this.getClass()).error(e);
-            final String view = this.listController.initPage(threadId, request, model);
+            String view = this.listController.initPage(threadId, request, model);
             model.addAttribute("error", DeleteContributionController.DATABASE_ERROR_MESSAGE_CODE);
             return view;
         }

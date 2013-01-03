@@ -7,10 +7,10 @@ import javax.servlet.http.HttpServletRequest;
 import com.svnavigatoru600.domain.eventcalendar.CalendarEvent;
 import com.svnavigatoru600.service.util.DateUtils;
 import com.svnavigatoru600.service.util.Localization;
-import com.svnavigatoru600.web.AbstractPrivateSectionMetaController;
 
 /**
- * Used in the {@link AbstractPrivateSectionMetaController}.
+ * Used in the {@link com.svnavigatoru600.web.AbstractPrivateSectionMetaController
+ * AbstractPrivateSectionMetaController}.
  * 
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
@@ -19,7 +19,7 @@ public class EventWrapper {
     private CalendarEvent event = null;
     private String middleDateFormattedDate = null;
 
-    public EventWrapper(final CalendarEvent event, final HttpServletRequest request) {
+    public EventWrapper(CalendarEvent event, HttpServletRequest request) {
         this.event = event;
         Locale locale = Localization.getLocale(request);
         this.middleDateFormattedDate = DateUtils.format(event.getDate(),
@@ -30,7 +30,7 @@ public class EventWrapper {
         return this.event;
     }
 
-    public void setEvent(final CalendarEvent event) {
+    public void setEvent(CalendarEvent event) {
         this.event = event;
     }
 
@@ -38,7 +38,7 @@ public class EventWrapper {
         return this.middleDateFormattedDate;
     }
 
-    public void setMiddleDateFormattedDate(final String middleDateFormattedDate) {
+    public void setMiddleDateFormattedDate(String middleDateFormattedDate) {
         this.middleDateFormattedDate = middleDateFormattedDate;
     }
 }

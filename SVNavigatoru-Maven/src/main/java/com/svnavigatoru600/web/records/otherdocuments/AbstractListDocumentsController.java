@@ -1,8 +1,6 @@
 package com.svnavigatoru600.web.records.otherdocuments;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -13,9 +11,7 @@ import org.springframework.ui.ModelMap;
 
 import com.svnavigatoru600.domain.records.OtherDocumentRecord;
 import com.svnavigatoru600.domain.records.OtherDocumentRecordType;
-import com.svnavigatoru600.service.records.otherdocuments.OtherDocumentRecordService;
-import com.svnavigatoru600.service.util.Localization;
-import com.svnavigatoru600.service.util.OrderType;
+import com.svnavigatoru600.service.records.OtherDocumentRecordService;
 import com.svnavigatoru600.viewmodel.records.otherdocuments.ShowAllRecords;
 import com.svnavigatoru600.web.records.AbstractPageViews;
 
@@ -55,50 +51,29 @@ public abstract class AbstractListDocumentsController extends AbstractOtherDocum
 
         ShowAllRecords command = new ShowAllRecords();
 
-        final OtherDocumentRecordService recordService = this.getRecordService();
-        final List<OtherDocumentRecord> records;
-        if (this.isAllRecordTypes()) {
-            records = recordService.findAllOrdered(OrderType.DESCENDING);
-        } else {
-            records = recordService.findAllOrdered(this.getRecordType(), OrderType.DESCENDING);
-        }
+        List<OtherDocumentRecord> records = this.getRecordService().findAllOrdered(this.isAllRecordTypes(),
+                this.getRecordType());
         command.setRecords(records);
 
         // Sets up all auxiliary (but necessary) maps.
-        command.setLocalizedDeleteQuestions(this.getLocalizedDeleteQuestions(records, request));
+        command.setLocalizedDeleteQuestions(OtherDocumentRecordService.getLocalizedDeleteQuestions(records,
+                request, this.getMessageSource()));
 
         model.addAttribute(AbstractListDocumentsController.COMMAND, command);
         return this.getViews().getList();
     }
 
     @PreAuthorize("hasRole('ROLE_MEMBER_OF_BOARD')")
-    public String initPageAfterCreate(final HttpServletRequest request, final ModelMap model) {
-        final String view = this.initPage(request, model);
+    public String initPageAfterCreate(HttpServletRequest request, ModelMap model) {
+        String view = this.initPage(request, model);
         ((ShowAllRecords) model.get(AbstractListDocumentsController.COMMAND)).setRecordCreated(true);
         return view;
     }
 
     @PreAuthorize("hasRole('ROLE_MEMBER_OF_BOARD')")
-    public String initPageAfterDelete(final HttpServletRequest request, final ModelMap model) {
-        final String view = this.initPage(request, model);
+    public String initPageAfterDelete(HttpServletRequest request, ModelMap model) {
+        String view = this.initPage(request, model);
         ((ShowAllRecords) model.get(AbstractListDocumentsController.COMMAND)).setRecordDeleted(true);
         return view;
-    }
-
-    /**
-     * Gets a {@link Map} which for each input {@link OtherDocumentRecord} contains an appropriate localized
-     * delete questions.
-     */
-    private Map<OtherDocumentRecord, String> getLocalizedDeleteQuestions(List<OtherDocumentRecord> records,
-            HttpServletRequest request) {
-        final String messageCode = "other-documents.do-you-really-want-to-delete-document";
-        Map<OtherDocumentRecord, String> questions = new HashMap<OtherDocumentRecord, String>();
-
-        for (OtherDocumentRecord record : records) {
-            Object[] messageParams = new Object[] { record.getName() };
-            questions.put(record, Localization.findLocaleMessage(this.getMessageSource(), request,
-                    messageCode, messageParams));
-        }
-        return questions;
     }
 }

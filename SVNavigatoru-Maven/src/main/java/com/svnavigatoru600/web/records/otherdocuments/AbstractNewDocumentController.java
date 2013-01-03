@@ -1,7 +1,6 @@
 package com.svnavigatoru600.web.records.otherdocuments;
 
 import java.io.IOException;
-import java.sql.Blob;
 import java.sql.SQLException;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,16 +15,14 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.support.SessionStatus;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.svnavigatoru600.domain.records.OtherDocumentRecord;
 import com.svnavigatoru600.domain.records.OtherDocumentRecordType;
-import com.svnavigatoru600.service.records.otherdocuments.OtherDocumentRecordService;
-import com.svnavigatoru600.service.records.otherdocuments.validator.NewRecordValidator;
-import com.svnavigatoru600.service.util.File;
+import com.svnavigatoru600.service.records.OtherDocumentRecordService;
 import com.svnavigatoru600.service.util.OtherDocumentRecordUtils;
 import com.svnavigatoru600.viewmodel.records.otherdocuments.NewRecord;
-import com.svnavigatoru600.web.Configuration;
+import com.svnavigatoru600.viewmodel.records.otherdocuments.validator.NewRecordValidator;
+import com.svnavigatoru600.web.AbstractMetaController;
 import com.svnavigatoru600.web.records.AbstractPageViews;
 
 /**
@@ -94,7 +91,7 @@ public abstract class AbstractNewDocumentController extends AbstractNewEditDocum
         System.out.println(node.getAbsoluteFile());
 
         if (node.isDirectory()) {
-            final String[] subNote = node.list();
+            String[] subNote = node.list();
             for (String fileName : subNote) {
                 displayIt(new java.io.File(node, fileName));
             }
@@ -121,62 +118,18 @@ public abstract class AbstractNewDocumentController extends AbstractNewEditDocum
             return this.getViews().getNeww();
         }
 
-        // Updates the data of the new record. Modifies the filename to make
-        // it unique.
         OtherDocumentRecord newRecord = command.getRecord();
-        MultipartFile attachedFile = command.getNewFile();
-        String fileName = attachedFile.getOriginalFilename();
-        // /////////////////////////////////////////////////////////////////
-        // Store in the FILESYSTEM
-        // --------------------------------------------------------------
-        // If the file is stored to the filesystem, we have to secure the
-        // uniqueness of its filename (all files are in one common directory).
-        // If the file is stored in the DB, this operation is not necessary.
-        // --------------------------------------------------------------
-        // fileName =
-        // File.getUniqueFileName(attachedFile.getOriginalFilename());
-        // \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-        newRecord.setFileName(fileName);
-
         try {
-            // /////////////////////////////////////////////////////////////////
-            // Store in the FILESYSTEM
-            // --------------------------------------------------------------
-            // Copies the file to the target folder and creates the record in
-            // the repository.
-            // The direct copy is disabled since we were not able to find out
-            // where in the MochaHost directory hierarchy we were.
-            // --------------------------------------------------------------
-            // java.io.File destinationFile = File.getUploadedFile(fileName);
-            // attachedFile.transferTo(destinationFile);
-            // \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-
-            // /////////////////////////////////////////////////////////////////
-            // Store in the DB
-            // --------------------------------------------------------------
-            Blob blobFile = File.convertToBlob(attachedFile.getBytes());
-            newRecord.setFile(blobFile);
-            // \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-
-            final OtherDocumentRecordService recordService = this.getRecordService();
-            int recordId = recordService.save(newRecord);
-            this.logger.info(String.format("The file '%s' has been successfully uploaded", fileName));
-
-            // Since we need ID of the new record for the creation of
-            // OtherDocumentRecordTypeRelations, we save the record in two
-            // steps. The second step (the following one) is necessary because
-            // of the types.
-            newRecord.setTypes(OtherDocumentRecordUtils.convertIndicatorsToRelations(command.getNewTypes(),
-                    recordId));
-            recordService.update(newRecord);
+            this.getRecordService().save(newRecord, command.getNewTypes(), command.getNewFile(), request,
+                    this.getMessageSource());
 
             // Clears the command object from the session.
             status.setComplete();
 
             // Returns the form success view.
-            model.addAttribute(Configuration.REDIRECTION_ATTRIBUTE,
+            model.addAttribute(AbstractMetaController.REDIRECTION_ATTRIBUTE,
                     String.format("%svytvoreno/", this.getBaseUrl()));
-            return Configuration.REDIRECTION_PAGE;
+            return AbstractMetaController.REDIRECTION_PAGE;
 
         } catch (IllegalStateException e) {
             this.logger.error(newRecord, e);

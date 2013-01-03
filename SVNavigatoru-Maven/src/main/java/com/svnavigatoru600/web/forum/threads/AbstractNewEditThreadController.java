@@ -5,8 +5,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.Validator;
 
 import com.svnavigatoru600.domain.forum.Thread;
-import com.svnavigatoru600.service.forum.threads.ThreadService;
-import com.svnavigatoru600.service.forum.threads.validator.AbstractThreadValidator;
+import com.svnavigatoru600.service.forum.ThreadService;
+import com.svnavigatoru600.viewmodel.forum.threads.validator.AbstractThreadValidator;
 
 /**
  * Parent of controllers which create and edit the {@link Thread Threads}.
@@ -20,7 +20,7 @@ public abstract class AbstractNewEditThreadController extends AbstractThreadCont
      * Command used in /main-content/forum/threads/new-edit-thread.jsp.
      */
     public static final String COMMAND = "newEditThreadCommand";
-    private Validator validator;
+    private final Validator validator;
 
     public AbstractNewEditThreadController(ThreadService threadService, AbstractThreadValidator validator,
             MessageSource messageSource) {

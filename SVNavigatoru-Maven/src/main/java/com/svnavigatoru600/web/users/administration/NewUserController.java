@@ -1,15 +1,11 @@
 package com.svnavigatoru600.web.users.administration;
 
-import java.util.Set;
-
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.context.MessageSource;
 import org.springframework.dao.DataAccessException;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
@@ -19,17 +15,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.support.SessionStatus;
 
-import com.svnavigatoru600.domain.users.Authority;
-import com.svnavigatoru600.domain.users.AuthorityType;
 import com.svnavigatoru600.domain.users.User;
+import com.svnavigatoru600.service.users.AuthorityService;
 import com.svnavigatoru600.service.users.UserService;
-import com.svnavigatoru600.service.users.validator.NewUserValidator;
 import com.svnavigatoru600.service.util.AuthorityUtils;
-import com.svnavigatoru600.service.util.Email;
-import com.svnavigatoru600.service.util.Hash;
-import com.svnavigatoru600.service.util.Localization;
 import com.svnavigatoru600.viewmodel.users.AdministrateUserData;
-import com.svnavigatoru600.web.Configuration;
+import com.svnavigatoru600.viewmodel.users.validator.NewUserValidator;
+import com.svnavigatoru600.web.AbstractMetaController;
 
 /**
  * The controller bound to the <i>new-user.jsp</i> page.
@@ -45,8 +37,7 @@ public class NewUserController extends AbstractNewEditUserController {
      * Constructor.
      */
     @Inject
-    public NewUserController(final UserService userService, final NewUserValidator validator,
-            final MessageSource messageSource) {
+    public NewUserController(UserService userService, NewUserValidator validator, MessageSource messageSource) {
         super(userService, validator, messageSource);
     }
 
@@ -54,11 +45,11 @@ public class NewUserController extends AbstractNewEditUserController {
      * Initializes the form.
      */
     @RequestMapping(value = NewUserController.BASE_URL + "novy/", method = RequestMethod.GET)
-    public String initForm(final HttpServletRequest request, final ModelMap model) {
+    public String initForm(HttpServletRequest request, ModelMap model) {
 
-        final AdministrateUserData command = new AdministrateUserData();
+        AdministrateUserData command = new AdministrateUserData();
 
-        final User user = new User();
+        User user = new User();
         user.setEnabled(true);
         command.setUser(user);
 
@@ -67,7 +58,8 @@ public class NewUserController extends AbstractNewEditUserController {
 
         // Sets up all (but necessary) maps.
         command.setRoleCheckboxId(this.getRoleCheckboxId());
-        command.setLocalizedRoleCheckboxTitles(this.getLocalizedRoleCheckboxTitles(request));
+        command.setLocalizedRoleCheckboxTitles(AuthorityService.getLocalizedTitles(request,
+                this.getMessageSource()));
 
         model.addAttribute(AbstractNewEditUserController.COMMAND, command);
         return PageViews.NEW.getViewName();
@@ -81,50 +73,31 @@ public class NewUserController extends AbstractNewEditUserController {
     @RequestMapping(value = NewUserController.BASE_URL + "novy/", method = RequestMethod.POST)
     @Transactional
     public String processSubmittedForm(
-            @ModelAttribute(NewUserController.COMMAND) AdministrateUserData command,
-            final BindingResult result, final SessionStatus status, final HttpServletRequest request,
-            final ModelMap model) {
+            @ModelAttribute(NewUserController.COMMAND) AdministrateUserData command, BindingResult result,
+            SessionStatus status, HttpServletRequest request, ModelMap model) {
 
         // Sets up all (but necessary) maps.
         command.setRoleCheckboxId(this.getRoleCheckboxId());
-        command.setLocalizedRoleCheckboxTitles(this.getLocalizedRoleCheckboxTitles(request));
+        MessageSource messageSource = this.getMessageSource();
+        command.setLocalizedRoleCheckboxTitles(AuthorityService.getLocalizedTitles(request, messageSource));
 
         this.getValidator().validate(command, result);
         if (result.hasErrors()) {
             return PageViews.NEW.getViewName();
         }
 
-        // Updates the data of the new user.
-        final User newUser = command.getUser();
-        final String newPassword = command.getNewPassword();
-        newUser.setPassword(Hash.doSha1Hashing(newPassword));
-
-        final String username = newUser.getUsername();
-        final Set<GrantedAuthority> checkedAuthorities = AuthorityUtils.convertIndicatorsToAuthorities(
-                command.getNewAuthorities(), username);
-        // The role ROLE_REGISTERED_USER is automatically added.
-        checkedAuthorities.add(new Authority(username, AuthorityType.ROLE_REGISTERED_USER.name()));
-        newUser.setAuthorities(checkedAuthorities);
-
-        // Sets user's email to null if the email is blank. The reason is the
-        // UNIQUE DB constraint.
-        newUser.setEmailToNullIfBlank();
-
+        User newUser = command.getUser();
         try {
-            // Stores the data.
-            this.getUserService().save(newUser);
-
-            // Notifies the user about its new account.
-            if (!StringUtils.isBlank(newUser.getEmail())) {
-                this.sendEmailOnUserCreation(newUser, newPassword, request);
-            }
+            this.getUserService().saveAndNotifyUser(newUser, command.getNewPassword(),
+                    command.getNewAuthorities(), request, messageSource);
 
             // Clears the command object from the session.
             status.setComplete();
 
             // Returns the form success view.
-            model.addAttribute(Configuration.REDIRECTION_ATTRIBUTE, NewUserController.BASE_URL + "vytvoreno/");
-            return Configuration.REDIRECTION_PAGE;
+            model.addAttribute(AbstractMetaController.REDIRECTION_ATTRIBUTE, NewUserController.BASE_URL
+                    + "vytvoreno/");
+            return AbstractMetaController.REDIRECTION_PAGE;
 
         } catch (DataAccessException e) {
             // We encountered a database problem.
@@ -132,27 +105,5 @@ public class NewUserController extends AbstractNewEditUserController {
             result.reject("user-administration.creation-failed-due-to-database-error");
             return PageViews.NEW.getViewName();
         }
-    }
-
-    /**
-     * Sends an email with the credentials of the <code>newUser</code>. The function is invoked when the
-     * {@link User} has been successfully added to the repository by the administrator.
-     */
-    private void sendEmailOnUserCreation(final User newUser, final String newPassword,
-            final HttpServletRequest request) {
-        final String emailAddress = newUser.getEmail();
-        if (!Email.isSpecified(emailAddress)) {
-            return;
-        }
-
-        final MessageSource messageSource = this.getMessageSource();
-        final String subject = Localization.findLocaleMessage(messageSource, request,
-                "email.subject.new-user");
-        final Object[] messageParams = new Object[] { newUser.getLastName(), Configuration.DOMAIN,
-                newUser.getUsername(), emailAddress, newPassword };
-        final String messageText = Localization.findLocaleMessage(messageSource, request,
-                "email.text.new-user", messageParams);
-
-        Email.sendMail(emailAddress, subject, messageText);
     }
 }

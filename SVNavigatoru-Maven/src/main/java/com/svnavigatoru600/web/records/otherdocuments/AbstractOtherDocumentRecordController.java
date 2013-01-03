@@ -9,7 +9,7 @@ import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 
 import com.svnavigatoru600.domain.records.OtherDocumentRecordType;
-import com.svnavigatoru600.service.records.otherdocuments.OtherDocumentRecordService;
+import com.svnavigatoru600.service.records.OtherDocumentRecordService;
 import com.svnavigatoru600.service.util.Localization;
 import com.svnavigatoru600.web.records.AbstractDocumentRecordController;
 import com.svnavigatoru600.web.records.AbstractPageViews;
@@ -101,28 +101,9 @@ public abstract class AbstractOtherDocumentRecordController extends AbstractDocu
         Map<Integer, String> checkboxTitles = new HashMap<Integer, String>();
 
         for (OtherDocumentRecordType type : OtherDocumentRecordType.values()) {
-            String titleCode = null;
-            switch (type) {
-            case ACCOUNTING:
-                titleCode = "other-documents.accounting.title";
-                break;
-            case CONTRACT:
-                titleCode = "other-documents.contract";
-                break;
-            case REGULAR_REVISION:
-                titleCode = "other-documents.regular-revision";
-                break;
-            case REMOSTAV:
-                titleCode = "remostav.title";
-                break;
-            case OTHER:
-                titleCode = "other-documents.other";
-                break;
-            default:
-                throw new RuntimeException("Unsupported type of documents.");
-            }
-            checkboxTitles.put(type.ordinal(),
-                    Localization.findLocaleMessage(this.getMessageSource(), request, titleCode));
+            String localizedTitle = Localization.findLocaleMessage(this.getMessageSource(), request,
+                    type.getTitleLocalizationCode());
+            checkboxTitles.put(type.ordinal(), localizedTitle);
         }
         return checkboxTitles;
     }

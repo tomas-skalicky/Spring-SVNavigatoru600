@@ -17,7 +17,9 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.context.MessageSource;
 
-import com.svnavigatoru600.web.Configuration;
+import com.svnavigatoru600.domain.users.Authority;
+import com.svnavigatoru600.domain.users.User;
+import com.svnavigatoru600.service.Configuration;
 
 /**
  * Provides a set of static functions related to emails. The implementation borrowed from <a href=
@@ -66,8 +68,15 @@ public final class Email {
      * Sends an email with the given arguments; no matter which way of sending (i.e. SSL, TLS, or something
      * else) is used. <b>Precondition:</b> The function assumes that the given <code>recipient</code>
      * represents a correct email address.
+     * 
+     * @param recipient
+     *            Recipient's email address
      */
     public static void sendMail(String recipient, String subject, String messageText) {
+        if (!Email.isSpecified(recipient)) {
+            return;
+        }
+
         Email.sendMailWithoutSSL(recipient, subject, messageText);
         // Email.sendMailViaSSL(recipient, subject, messageText);
         // Email.sendMailViaTLS(recipient, subject, messageText);
@@ -76,15 +85,17 @@ public final class Email {
     /**
      * Sends an email with the given arguments without SSL protocol. <b>Precondition:</b> The function assumes
      * that the given <code>recipient</code> represents a correct email address.
+     * 
+     * @param recipient
+     *            Recipient's email address
      */
-    public static void sendMailWithoutSSL(final String recipient, final String subject,
-            final String messageText) {
+    private static void sendMailWithoutSSL(String recipient, String subject, String messageText) {
         Properties props = new Properties();
         props.put("mail.smtp.host", Email.HOST);
         props.put("mail.smtp.port", Email.STANDARD_PORT);
         props.put("mail.smtp.auth", "true");
 
-        final Session session = Session.getDefaultInstance(props, new javax.mail.Authenticator() {
+        Session session = Session.getDefaultInstance(props, new javax.mail.Authenticator() {
             @Override
             protected PasswordAuthentication getPasswordAuthentication() {
                 return new PasswordAuthentication(Email.USERNAME, Email.PASSWORD);
@@ -102,8 +113,12 @@ public final class Email {
     /**
      * Sends an email with the given arguments via SSL protocol. <b>Precondition:</b> The function assumes
      * that the given <code>recipient</code> represents a correct email address.
+     * 
+     * @param recipient
+     *            Recipient's email address
      */
-    public static void sendMailViaSSL(final String recipient, final String subject, final String messageText) {
+    @SuppressWarnings("unused")
+    private static void sendMailViaSSL(String recipient, String subject, String messageText) {
         Properties props = new Properties();
         props.put("mail.smtp.host", Email.HOST);
         props.put("mail.smtp.socketFactory.port", Email.SSL_PORT);
@@ -129,16 +144,20 @@ public final class Email {
     /**
      * Sends an email with the given arguments via TLS/STARTTLS protocol. <b>Precondition:</b> The function
      * assumes that the given <code>recipient</code> represents a correct email address.
+     * 
+     * @param recipient
+     *            Recipient's email address
      */
-    public static void sendMailViaTLS(final String recipient, final String subject, final String messageText) {
-        final Properties props = new Properties();
+    @SuppressWarnings("unused")
+    private static void sendMailViaTLS(String recipient, String subject, String messageText) {
+        Properties props = new Properties();
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.starttls.enable", "true");
 
-        final Session session = Session.getInstance(props);
+        Session session = Session.getInstance(props);
 
         try {
-            final Transport transport = session.getTransport(Email.PROTOCOL);
+            Transport transport = session.getTransport(Email.PROTOCOL);
             transport.connect(Email.HOST, Email.TLS_PORT, Email.USERNAME, Email.PASSWORD);
 
             Email.sendMail(session, recipient, subject, messageText);
@@ -152,12 +171,15 @@ public final class Email {
      * The final part of all functions <code>sendMailWithoutSSL</code>, <code>sendMailViaSSL</code> and
      * <code>sendMailViaTLS</code>.
      * 
+     * @param recipient
+     *            Recipient's email address
+     * 
      * @throws MessagingException
      * @throws AddressException
      */
-    private static void sendMail(final Session session, final String recipient, final String subject,
-            final String messageText) throws MessagingException {
-        final Message message = new MimeMessage(session);
+    private static void sendMail(Session session, String recipient, String subject, String messageText)
+            throws MessagingException {
+        Message message = new MimeMessage(session);
         message.setFrom(new InternetAddress(Email.SENDER));
         message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(recipient));
         message.setSubject(subject);
@@ -171,24 +193,119 @@ public final class Email {
     }
 
     /**
-     * Sends an email with the <code>newPassword</code> to the given <code>email</code>. The method is invoked
-     * when user's password has already been successfully reset.
-     * 
-     * @param newPassword
-     *            New not-hashed password of the recipient
+     * Sends an email of the {@link User newUser} with his credentials.
+     * <p>
+     * The function is invoked when the user has already been successfully added to the repository by the
+     * administrator.
      */
-    public static void sendEmailOnPasswordReset(final String email, final String lastName,
-            final String newPassword, final HttpServletRequest request, final MessageSource messageSource) {
-        if (!Email.isSpecified(email)) {
-            return;
-        }
-
-        final String subject = Localization.findLocaleMessage(messageSource, request,
-                "email.subject.password-reset");
-        final Object[] messageParams = new Object[] { lastName, Configuration.DOMAIN, newPassword };
-        final String messageText = Localization.findLocaleMessage(messageSource, request,
-                "email.text.password-reset", messageParams);
+    public static void sendEmailOnUserCreation(User newUser, String newPassword, HttpServletRequest request,
+            MessageSource messageSource) {
+        String subject = Localization.findLocaleMessage(messageSource, request, "email.subject.new-user");
+        String email = newUser.getEmail();
+        Object[] messageParams = new Object[] { newUser.getLastName(), Configuration.DOMAIN,
+                newUser.getUsername(), email, newPassword };
+        String messageText = Localization.findLocaleMessage(messageSource, request, "email.text.new-user",
+                messageParams);
 
         Email.sendMail(email, subject, messageText);
+    }
+
+    /**
+     * Sends an email to the given {@link User} with his <code>newPassword</code>.
+     * <p>
+     * The method is invoked when user's password has already been successfully reset.
+     * 
+     * @param user
+     *            User whose password has been reset. The recipient of the email
+     * @param newPassword
+     *            New not-hashed password of the user
+     */
+    public static void sendEmailOnPasswordReset(User user, String newPassword, HttpServletRequest request,
+            MessageSource messageSource) {
+        String subject = Localization.findLocaleMessage(messageSource, request,
+                "email.subject.password-reset");
+        Object[] messageParams = new Object[] { user.getLastName(), Configuration.DOMAIN, newPassword };
+        String messageText = Localization.findLocaleMessage(messageSource, request,
+                "email.text.password-reset", messageParams);
+
+        Email.sendMail(user.getEmail(), subject, messageText);
+    }
+
+    /**
+     * Sends an email to the given {@link User} with his <code>newPassword</code>.
+     * <p>
+     * The function is invoked when user's password has already been successfully changed by the
+     * administrator.
+     */
+    public static void sendEmailOnPasswordChange(User user, String newPassword, HttpServletRequest request,
+            MessageSource messageSource) {
+        String subject = Localization.findLocaleMessage(messageSource, request,
+                "email.subject.password-changed");
+        Object[] messageParams = new Object[] { user.getLastName(), Configuration.DOMAIN, newPassword };
+        String messageText = Localization.findLocaleMessage(messageSource, request,
+                "email.text.password-changed", messageParams);
+
+        Email.sendMail(user.getEmail(), subject, messageText);
+    }
+
+    /**
+     * Sends an emailto the given {@link User} with his new {@link Authority Authorities}.
+     * <p>
+     * The function is invoked when user's authorities have already been successfully changed by the
+     * administrator.
+     */
+    public static void sendEmailOnAuthoritiesChange(User user, HttpServletRequest request,
+            MessageSource messageSource) {
+        String subject = Localization.findLocaleMessage(messageSource, request,
+                "email.subject.authorities-changed");
+
+        // Converts the new authorities to the String representation.
+        StringBuilder newAuthorities = new StringBuilder();
+        if (user.canSeeNews()) {
+            if (user.canEditNews()) {
+                newAuthorities.append(Localization.findLocaleMessage(messageSource, request,
+                        "user-roles.member-of-board"));
+            } else {
+                newAuthorities.append(Localization.findLocaleMessage(messageSource, request,
+                        "user-roles.member-of-sv"));
+            }
+        }
+        if (user.canSeeUsers()) {
+            if (newAuthorities.length() > 0) {
+                newAuthorities.append(", ");
+            }
+            newAuthorities.append(Localization.findLocaleMessage(messageSource, request,
+                    "user-roles.user-administrator"));
+        }
+        if (user.getAuthorities().size() == 1) {
+            // The user is registered, but has no other authority.
+            newAuthorities.append(Localization.findLocaleMessage(messageSource, request,
+                    "user-roles.no-authority"));
+        }
+        // End of the conversion.
+
+        Object[] messageParams = new Object[] { user.getLastName(), Configuration.DOMAIN, newAuthorities };
+        String messageText = Localization.findLocaleMessage(messageSource, request,
+                "email.text.authorities-changed", messageParams);
+
+        Email.sendMail(user.getEmail(), subject, messageText);
+    }
+
+    /**
+     * Sends an email to the given {@link User} since his account has been deleted by the administrator.
+     * <p>
+     * The method is invoked when the user has already been successfully deleted.
+     * 
+     * @param user
+     *            User which is to be deleted.
+     */
+    public static void sendEmailOnUserDeletion(User user, HttpServletRequest request,
+            MessageSource messageSource) {
+        String subject = Localization.findLocaleMessage(messageSource, request, "email.subject.user-deleted");
+        Object[] messageParams = new Object[] { user.getLastName(), user.getUsername(), Configuration.DOMAIN };
+        String messageText = Localization.findLocaleMessage(messageSource, request,
+                "email.text.user-deleted", messageParams);
+
+        Email.sendMail(user.getEmail(), subject, messageText);
     }
 }

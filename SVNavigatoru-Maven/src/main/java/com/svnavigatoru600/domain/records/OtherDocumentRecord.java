@@ -7,7 +7,7 @@ import javax.inject.Inject;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
-import com.svnavigatoru600.service.records.otherdocuments.OtherDocumentRecordService;
+import com.svnavigatoru600.service.records.OtherDocumentRecordService;
 
 /**
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
@@ -20,7 +20,7 @@ public class OtherDocumentRecord extends AbstractDocumentRecord {
     private OtherDocumentRecordService recordService;
 
     @Inject
-    public void setOtherDocumentRecordService(final OtherDocumentRecordService recordService) {
+    public void setOtherDocumentRecordService(OtherDocumentRecordService recordService) {
         this.recordService = recordService;
     }
 

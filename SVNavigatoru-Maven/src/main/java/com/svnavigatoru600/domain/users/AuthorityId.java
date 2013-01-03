@@ -35,7 +35,7 @@ public class AuthorityId implements Serializable {
      */
     @Override
     public int hashCode() {
-        final int prime = 31;
+        int prime = 31;
         int result = 1;
         result = prime * result + ((this.authority == null) ? 0 : this.authority.hashCode());
         result = prime * result + ((this.username == null) ? 0 : this.username.hashCode());
