@@ -60,7 +60,7 @@ public class OtherDocumentRecordDaoImpl extends NamedParameterJdbcDaoSupport imp
             PersistedClass.AbstractDocumentRecord.getTableName(), DocumentRecordField.id.getColumnName(),
             OtherDocumentRecordField.id.getColumnName());
 
-    private DocumentRecordDaoImpl documentRecordDao = new DocumentRecordDaoImpl();
+    private final DocumentRecordDaoImpl documentRecordDao = new DocumentRecordDaoImpl();
     private OtherDocumentRecordTypeRelationDao typeDao;
 
     @Inject
@@ -92,7 +92,7 @@ public class OtherDocumentRecordDaoImpl extends NamedParameterJdbcDaoSupport imp
 
     @Override
     public OtherDocumentRecord findById(int recordId, boolean loadFile) {
-        final String selectClause;
+        String selectClause;
         if (loadFile) {
             selectClause = OtherDocumentRecordDaoImpl.SELECT_FROM_CLAUSE_WITH_FILE;
         } else {

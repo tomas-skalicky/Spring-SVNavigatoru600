@@ -1,8 +1,6 @@
 package com.svnavigatoru600.web.records.session;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,10 +12,7 @@ import org.springframework.ui.ModelMap;
 
 import com.svnavigatoru600.domain.records.SessionRecord;
 import com.svnavigatoru600.domain.records.SessionRecordType;
-import com.svnavigatoru600.service.records.session.SessionRecordService;
-import com.svnavigatoru600.service.util.DateUtils;
-import com.svnavigatoru600.service.util.Localization;
-import com.svnavigatoru600.service.util.OrderType;
+import com.svnavigatoru600.service.records.SessionRecordService;
 import com.svnavigatoru600.viewmodel.records.session.ShowAllSessionRecords;
 import com.svnavigatoru600.web.records.AbstractPageViews;
 
@@ -38,8 +33,8 @@ public abstract class AbstractListRecordsController extends AbstractSessionRecor
      * Constructs a controller which considers all {@link SessionRecord SessionRecords} of all
      * {@link SessionRecordType SessionRecordTypes}.
      */
-    public AbstractListRecordsController(final String baseUrl, final AbstractPageViews views,
-            final SessionRecordService recordService, final MessageSource messageSource) {
+    public AbstractListRecordsController(String baseUrl, AbstractPageViews views,
+            SessionRecordService recordService, MessageSource messageSource) {
         super(baseUrl, views, recordService, messageSource);
     }
 
@@ -47,100 +42,48 @@ public abstract class AbstractListRecordsController extends AbstractSessionRecor
      * Constructs a controller which considers all {@link SessionRecord SessionRecords} of the given
      * <code>recordType</code> .
      */
-    public AbstractListRecordsController(final String baseUrl, final AbstractPageViews views,
-            final SessionRecordType recordType, final SessionRecordService recordService,
-            final MessageSource messageSource) {
+    public AbstractListRecordsController(String baseUrl, AbstractPageViews views,
+            SessionRecordType recordType, SessionRecordService recordService, MessageSource messageSource) {
         super(baseUrl, views, recordType, recordService, messageSource);
     }
 
-    public String initPage(final HttpServletRequest request, final ModelMap model) {
+    public String initPage(HttpServletRequest request, ModelMap model) {
 
-        final ShowAllSessionRecords command = new ShowAllSessionRecords();
-        final boolean allRecordTypes = this.isAllRecordTypes();
+        ShowAllSessionRecords command = new ShowAllSessionRecords();
+        boolean allRecordTypes = this.isAllRecordTypes();
         command.setAllRecordTypes(allRecordTypes);
 
-        final SessionRecordService recordService = this.getRecordService();
-        final List<SessionRecord> records;
-        if (allRecordTypes) {
-            records = recordService.findAllOrdered(OrderType.DESCENDING);
-        } else {
-            records = recordService.findAllOrdered(this.getRecordType(), OrderType.DESCENDING);
-        }
+        List<SessionRecord> records = this.getRecordService().findAllOrdered(allRecordTypes,
+                this.getRecordType());
         command.setRecords(records);
 
         // Sets up all auxiliary (but necessary) maps.
+        MessageSource messageSource = this.getMessageSource();
         if (allRecordTypes) {
-            command.setLocalizedTypeTitles(this.getLocalizedTypeTitles(records, request));
+            command.setLocalizedTypeTitles(SessionRecordService.getLocalizedTypeTitles(records, request,
+                    messageSource));
         }
-        final Map<SessionRecord, String> sessionDates = this.getLocalizedSessionDates(records, request);
+        Map<SessionRecord, String> sessionDates = SessionRecordService.getLocalizedSessionDates(records,
+                request);
         command.setLocalizedSessionDates(sessionDates);
-        command.setLocalizedDeleteQuestions(this.getLocalizedDeleteQuestions(records, request, sessionDates));
+        command.setLocalizedDeleteQuestions(SessionRecordService.getLocalizedDeleteQuestions(records,
+                request, sessionDates, messageSource));
 
         model.addAttribute(AbstractListRecordsController.COMMAND, command);
         return this.getViews().getList();
     }
 
     @PreAuthorize("hasRole('ROLE_MEMBER_OF_BOARD')")
-    public String initPageAfterCreate(final HttpServletRequest request, final ModelMap model) {
-        final String view = this.initPage(request, model);
+    public String initPageAfterCreate(HttpServletRequest request, ModelMap model) {
+        String view = this.initPage(request, model);
         ((ShowAllSessionRecords) model.get(AbstractListRecordsController.COMMAND)).setRecordCreated(true);
         return view;
     }
 
     @PreAuthorize("hasRole('ROLE_MEMBER_OF_BOARD')")
-    public String initPageAfterDelete(final HttpServletRequest request, final ModelMap model) {
-        final String view = this.initPage(request, model);
+    public String initPageAfterDelete(HttpServletRequest request, ModelMap model) {
+        String view = this.initPage(request, model);
         ((ShowAllSessionRecords) model.get(AbstractListRecordsController.COMMAND)).setRecordDeleted(true);
         return view;
-    }
-
-    /**
-     * Gets a {@link Map} which for each input {@link SessionRecord} contains a localized title of its
-     * record's type.
-     */
-    private Map<SessionRecord, String> getLocalizedTypeTitles(final List<SessionRecord> records,
-            final HttpServletRequest request) {
-        final Map<SessionRecord, String> typeTitles = new HashMap<SessionRecord, String>();
-
-        for (SessionRecord record : records) {
-            final String titleCode = record.getTypedType().getLocalizationCode();
-            typeTitles.put(record,
-                    Localization.findLocaleMessage(this.getMessageSource(), request, titleCode));
-        }
-        return typeTitles;
-    }
-
-    /**
-     * Gets a {@link Map} which for each input {@link SessionRecord} contains its localized
-     * <code>sessionDate</code>.
-     */
-    private Map<SessionRecord, String> getLocalizedSessionDates(final List<SessionRecord> records,
-            final HttpServletRequest request) {
-        final Locale locale = Localization.getLocale(request);
-        final Map<SessionRecord, String> sessionDates = new HashMap<SessionRecord, String>();
-
-        for (SessionRecord record : records) {
-            final String date = DateUtils.format(record.getSessionDate(),
-                    DateUtils.LONG_DATE_FORMATS.get(locale), locale);
-            sessionDates.put(record, date);
-        }
-        return sessionDates;
-    }
-
-    /**
-     * Gets a {@link Map} which for each input {@link SessionRecord} contains an appropriate localized delete
-     * questions.
-     */
-    private Map<SessionRecord, String> getLocalizedDeleteQuestions(final List<SessionRecord> records,
-            final HttpServletRequest request, final Map<SessionRecord, String> localizedSessionDates) {
-        final String messageCode = "session-records.do-you-really-want-to-delete-record";
-        final Map<SessionRecord, String> questions = new HashMap<SessionRecord, String>();
-
-        for (SessionRecord record : records) {
-            final Object[] messageParams = new Object[] { localizedSessionDates.get(record) };
-            questions.put(record, Localization.findLocaleMessage(this.getMessageSource(), request,
-                    messageCode, messageParams));
-        }
-        return questions;
     }
 }

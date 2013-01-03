@@ -17,11 +17,11 @@ import org.springframework.web.bind.support.SessionStatus;
 
 import com.svnavigatoru600.domain.users.User;
 import com.svnavigatoru600.service.users.UserService;
-import com.svnavigatoru600.service.users.validator.UpdateUserDataValidator;
 import com.svnavigatoru600.service.util.UserUtils;
 import com.svnavigatoru600.viewmodel.users.UpdateUserData;
+import com.svnavigatoru600.viewmodel.users.validator.UpdateUserDataValidator;
+import com.svnavigatoru600.web.AbstractMetaController;
 import com.svnavigatoru600.web.AbstractPrivateSectionMetaController;
-import com.svnavigatoru600.web.Configuration;
 
 /**
  * The controller bound to the <i>user-account.jsp</i> and <i>user-administration.jsp</i> form. For more
@@ -36,8 +36,8 @@ public class EditMyAccountController extends AbstractPrivateSectionMetaControlle
     private static final String COMMAND = "updateUserDataCommand";
     private static final String PAGE_VIEW = "editMyUserAccount";
 
-    private UserService userService;
-    private Validator validator;
+    private final UserService userService;
+    private final Validator validator;
 
     /**
      * Constructor.
@@ -58,7 +58,7 @@ public class EditMyAccountController extends AbstractPrivateSectionMetaControlle
 
         UpdateUserData command = new UpdateUserData();
 
-        final User user = UserUtils.getLoggedUser();
+        User user = UserUtils.getLoggedUser();
         command.setUser(user);
 
         model.addAttribute(EditMyAccountController.COMMAND, command);
@@ -70,8 +70,8 @@ public class EditMyAccountController extends AbstractPrivateSectionMetaControlle
      */
     @RequestMapping(value = EditMyAccountController.BASE_URL + "ulozeno/", method = RequestMethod.GET)
     @PreAuthorize("hasRole('ROLE_REGISTERED_USER')")
-    public String initFormAfterSave(final ModelMap model) {
-        final String view = this.initForm(model);
+    public String initFormAfterSave(ModelMap model) {
+        String view = this.initForm(model);
         ((UpdateUserData) model.get(EditMyAccountController.COMMAND)).setDataSaved(true);
         return view;
     }
@@ -107,9 +107,9 @@ public class EditMyAccountController extends AbstractPrivateSectionMetaControlle
             status.setComplete();
 
             // Returns the form success view.
-            model.addAttribute(Configuration.REDIRECTION_ATTRIBUTE, EditMyAccountController.BASE_URL
+            model.addAttribute(AbstractMetaController.REDIRECTION_ATTRIBUTE, EditMyAccountController.BASE_URL
                     + "ulozeno/");
-            return Configuration.REDIRECTION_PAGE;
+            return AbstractMetaController.REDIRECTION_PAGE;
 
         } catch (DataAccessException e) {
             // We encountered a database problem.

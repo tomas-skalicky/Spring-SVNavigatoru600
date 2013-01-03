@@ -16,7 +16,7 @@ public final class UserUtils {
     }
 
     /**
-     * Indicates whether the current user in the application is logged.
+     * Indicates whether the current {@link User user} in the application is logged.
      */
     public static boolean isLogged() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -24,9 +24,9 @@ public final class UserUtils {
     }
 
     /**
-     * Gets the user who is currently logged in the application.
+     * Gets the {@link User} who is currently logged in the application.
      * 
-     * <b>Precondition:</b> The User.isLogged function must be <code>true</code> .
+     * <b>Precondition:</b> The {@link UserUtils#isLogged() isLogger} function must be <code>true</code> .
      */
     public static User getLoggedUser() {
         return (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();

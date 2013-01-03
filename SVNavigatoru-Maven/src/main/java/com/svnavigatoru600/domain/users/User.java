@@ -13,6 +13,8 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.svnavigatoru600.service.users.UserService;
+import com.svnavigatoru600.service.util.AuthorityUtils;
+import com.svnavigatoru600.service.util.CheckboxUtils;
 import com.svnavigatoru600.service.util.FullNameFormat;
 
 /**
@@ -25,10 +27,13 @@ public class User implements UserDetails, Serializable {
     private UserService userService;
 
     @Inject
-    public void setUserService(final UserService userService) {
+    public void setUserService(UserService userService) {
         this.userService = userService;
     }
 
+    /**
+     * Updates the persisted copy of this object.
+     */
     public void update() {
         this.userService.update(this);
     }
@@ -218,5 +223,29 @@ public class User implements UserDetails, Serializable {
         if (StringUtils.isBlank(this.email)) {
             this.email = null;
         }
+    }
+
+    /**
+     * Sets {@link User#getAuthorities() authorities} of this {@link User} according to the given indicators.
+     * 
+     * @param indicatorsOfNewAuthorities
+     *            <code>true</code> in the index <code>x</code> in the array means that the authority with the
+     *            {@link AuthorityType#ordinal() ordinal}<code> == x</code> has been selected as one of the
+     *            new authorities of this user. And vice versa.
+     * @return <code>true</code> if the new authorities are different from those before the method invocation;
+     *         otherwise <code>false</code>.
+     */
+    public boolean updateAuthorities(boolean[] indicatorsOfNewAuthorities) {
+        Set<GrantedAuthority> checkedAuthorities = AuthorityUtils.convertIndicatorsToAuthorities(
+                indicatorsOfNewAuthorities, this.username);
+        // The role ROLE_REGISTERED_USER is automatically added.
+        checkedAuthorities.add(new Authority(this.username, AuthorityType.ROLE_REGISTERED_USER.name()));
+
+        boolean authoritiesChanged = !CheckboxUtils.areSame(
+                AuthorityUtils.getArrayOfCheckIndicators(checkedAuthorities),
+                AuthorityUtils.getArrayOfCheckIndicators(this.getAuthorities()));
+
+        this.setAuthorities(checkedAuthorities);
+        return authoritiesChanged;
     }
 }

@@ -10,11 +10,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 
-import com.svnavigatoru600.domain.records.AbstractDocumentRecord;
 import com.svnavigatoru600.domain.records.OtherDocumentRecord;
 import com.svnavigatoru600.domain.records.OtherDocumentRecordType;
-import com.svnavigatoru600.service.records.otherdocuments.OtherDocumentRecordService;
-import com.svnavigatoru600.web.Configuration;
+import com.svnavigatoru600.service.records.OtherDocumentRecordService;
+import com.svnavigatoru600.web.AbstractMetaController;
 import com.svnavigatoru600.web.records.AbstractPageViews;
 
 /**
@@ -60,21 +59,11 @@ public abstract class AbstractDeleteDocumentController extends AbstractOtherDocu
     @Transactional
     public String delete(int recordId, HttpServletRequest request, ModelMap model) {
         try {
-            // Deletes the record from the repository and deletes the associated
-            // file from the target folder.
-            final OtherDocumentRecordService recordService = this.getRecordService();
-            AbstractDocumentRecord record = recordService.findById(recordId, false);
-            recordService.delete(record);
-            // /////////////////////////////////////////////////////////////////
-            // Store in the FILESYSTEM
-            // --------------------------------------------------------------
-            // java.io.File file = File.getUploadedFile(record.getFileName());
-            // file.delete();
-            // \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+            this.getRecordService().delete(recordId);
 
             // Returns the form success view.
-            model.addAttribute(Configuration.REDIRECTION_ATTRIBUTE, this.successfulDeleteUrl);
-            return Configuration.REDIRECTION_PAGE;
+            model.addAttribute(AbstractMetaController.REDIRECTION_ATTRIBUTE, this.successfulDeleteUrl);
+            return AbstractMetaController.REDIRECTION_PAGE;
 
         } catch (DataAccessException e) {
             // We encountered a database problem.

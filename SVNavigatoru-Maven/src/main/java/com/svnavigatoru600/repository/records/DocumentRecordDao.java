@@ -12,17 +12,18 @@ public interface DocumentRecordDao {
     /**
      * Returns a {@link AbstractDocumentRecord} stored in the repository which has the given ID.
      * <p>
-     * The <em>Blob</em> file is loaded as well.
+     * The {@link java.sql.Blob Blob} file is loaded as well.
      */
-    AbstractDocumentRecord findById(int documentId);
+    AbstractDocumentRecord findById(int recordId);
 
     /**
      * Returns a {@link AbstractDocumentRecord} stored in the repository which has the given ID.
      * 
      * @param loadFile
-     *            If <code>true</code>, the <em>Blob</em> file will be loaded as well; otherwise not.
+     *            If <code>true</code>, the {@link java.sql.Blob Blob} file will be loaded as well; otherwise
+     *            not.
      */
-    AbstractDocumentRecord findById(int documentId, boolean loadFile);
+    AbstractDocumentRecord findById(int recordId, boolean loadFile);
 
     /**
      * Returns a {@link AbstractDocumentRecord} stored in the repository which is associated with a file with
@@ -33,5 +34,5 @@ public interface DocumentRecordDao {
     /**
      * Deletes the given {@link AbstractDocumentRecord} together with all its types from the repository.
      */
-    void delete(AbstractDocumentRecord document);
+    void delete(AbstractDocumentRecord record);
 }

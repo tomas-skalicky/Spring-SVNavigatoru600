@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.svnavigatoru600.domain.records.SessionRecordType;
-import com.svnavigatoru600.service.records.session.SessionRecordService;
+import com.svnavigatoru600.service.records.SessionRecordService;
 import com.svnavigatoru600.web.records.session.AbstractDeleteRecordController;
 
 /**

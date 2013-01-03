@@ -14,9 +14,8 @@ import org.springframework.ui.ModelMap;
 
 import com.svnavigatoru600.domain.records.SessionRecord;
 import com.svnavigatoru600.domain.records.SessionRecordType;
-import com.svnavigatoru600.service.records.session.SessionRecordService;
+import com.svnavigatoru600.service.records.SessionRecordService;
 import com.svnavigatoru600.web.records.AbstractPageViews;
-import com.svnavigatoru600.web.records.RetrieveDocumentRecordUtils;
 
 /**
  * Parent of all controllers which provide retrieving of stored {@link SessionRecord SessionRecords}.
@@ -53,7 +52,7 @@ public abstract class AbstractRetrieveRecordController extends AbstractSessionRe
 
     public void retrieve(int recordId, HttpServletResponse response, ModelMap model) {
         try {
-            RetrieveDocumentRecordUtils.retrieve(recordId, this.getRecordService(), response);
+            this.getRecordService().retrieve(recordId, response);
 
             // NOTE: nothing is returned.
 

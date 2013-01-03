@@ -35,7 +35,7 @@ public class Server {
      * @param host
      *            The new host
      */
-    public void setHost(final String host) {
+    public void setHost(String host) {
         this.host = host;
     }
 
@@ -54,7 +54,7 @@ public class Server {
      * @param port
      *            The new port
      */
-    public void setPort(final int port) {
+    public void setPort(int port) {
         this.port = port;
     }
 
@@ -73,7 +73,7 @@ public class Server {
      * @param path
      *            The new path
      */
-    public void setPath(final String path) {
+    public void setPath(String path) {
         this.path = path;
     }
 

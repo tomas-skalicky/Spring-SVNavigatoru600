@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.support.SessionStatus;
 
-import com.svnavigatoru600.service.records.otherdocuments.OtherDocumentRecordService;
-import com.svnavigatoru600.service.records.otherdocuments.validator.EditRecordValidator;
+import com.svnavigatoru600.service.records.OtherDocumentRecordService;
 import com.svnavigatoru600.viewmodel.records.otherdocuments.EditRecord;
+import com.svnavigatoru600.viewmodel.records.otherdocuments.validator.EditRecordValidator;
 import com.svnavigatoru600.web.records.otherdocuments.AbstractEditDocumentController;
 
 /**

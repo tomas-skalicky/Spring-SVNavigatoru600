@@ -40,7 +40,7 @@ public class CalendarEventDaoImpl extends NamedParameterJdbcDaoSupport implement
 
     @Override
     public List<CalendarEvent> findAllFutureEventsOrdered(Date earliestDate, OrderType sortDirection) {
-        final String dateColumn = CalendarEventField.date.getColumnName();
+        String dateColumn = CalendarEventField.date.getColumnName();
         String query = String.format("SELECT * FROM %s e WHERE e.%s >= :%s ORDER BY e.%s %s",
                 CalendarEventDaoImpl.TABLE_NAME, dateColumn, dateColumn, dateColumn,
                 sortDirection.getDatabaseCode());

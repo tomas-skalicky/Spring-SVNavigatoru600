@@ -1,8 +1,6 @@
 package com.svnavigatoru600.web.users.administration;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
@@ -15,8 +13,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.svnavigatoru600.domain.users.User;
 import com.svnavigatoru600.service.users.UserService;
-import com.svnavigatoru600.service.util.Localization;
-import com.svnavigatoru600.service.util.OrderType;
 import com.svnavigatoru600.viewmodel.users.ShowAllUsers;
 
 /**
@@ -35,7 +31,7 @@ public class ListUsersController extends AbstractUserController {
      * Constructor.
      */
     @Inject
-    public ListUsersController(final UserService userService, final MessageSource messageSource) {
+    public ListUsersController(UserService userService, MessageSource messageSource) {
         super(userService, messageSource);
     }
 
@@ -43,16 +39,16 @@ public class ListUsersController extends AbstractUserController {
      * Initializes the page with all users.
      */
     @RequestMapping(value = ListUsersController.BASE_URL, method = RequestMethod.GET)
-    public String initPage(final HttpServletRequest request, final ModelMap model) {
+    public String initPage(HttpServletRequest request, ModelMap model) {
 
-        final ShowAllUsers command = new ShowAllUsers();
+        ShowAllUsers command = new ShowAllUsers();
 
-        final boolean testUsers = false;
-        final List<User> users = this.getUserService().findAllOrdered(OrderType.ASCENDING, testUsers);
+        List<User> users = this.getUserService().findAllOrdered();
         command.setUsers(users);
 
         // Sets up all (but necessary) maps.
-        command.setLocalizedDeleteQuestions(this.getLocalizedDeleteQuestions(users, request));
+        command.setLocalizedDeleteQuestions(UserService.getLocalizedDeleteQuestions(users, request,
+                this.getMessageSource()));
 
         model.addAttribute(ListUsersController.COMMAND, command);
         return PageViews.LIST.getViewName();
@@ -63,8 +59,8 @@ public class ListUsersController extends AbstractUserController {
      * the repository recently.
      */
     @RequestMapping(value = ListUsersController.BASE_URL + "vytvoreno/", method = RequestMethod.GET)
-    public String initPageAfterCreate(final HttpServletRequest request, final ModelMap model) {
-        final String view = this.initPage(request, model);
+    public String initPageAfterCreate(HttpServletRequest request, ModelMap model) {
+        String view = this.initPage(request, model);
         ((ShowAllUsers) model.get(ListUsersController.COMMAND)).setUserCreated(true);
         return view;
     }
@@ -74,26 +70,9 @@ public class ListUsersController extends AbstractUserController {
      * deleted from the repository.
      */
     @RequestMapping(value = ListUsersController.BASE_URL + "smazano/", method = RequestMethod.GET)
-    public String initPageAfterDelete(final HttpServletRequest request, final ModelMap model) {
-        final String view = this.initPage(request, model);
+    public String initPageAfterDelete(HttpServletRequest request, ModelMap model) {
+        String view = this.initPage(request, model);
         ((ShowAllUsers) model.get(ListUsersController.COMMAND)).setUserDeleted(true);
         return view;
-    }
-
-    /**
-     * Gets a {@link Map} which for each input {@link User} contains an appropriate localized delete
-     * questions.
-     */
-    private Map<User, String> getLocalizedDeleteQuestions(final List<User> users,
-            final HttpServletRequest request) {
-        final String messageCode = "user-administration.do-you-really-want-to-delete-user";
-        final Map<User, String> questions = new HashMap<User, String>();
-
-        for (User user : users) {
-            final Object[] messageParams = new Object[] { user.getUsername(), user.getFullName() };
-            questions.put(user, Localization.findLocaleMessage(this.getMessageSource(), request, messageCode,
-                    messageParams));
-        }
-        return questions;
     }
 }

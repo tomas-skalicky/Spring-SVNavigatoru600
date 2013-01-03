@@ -7,7 +7,7 @@ import javax.inject.Inject;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
-import com.svnavigatoru600.service.news.NewsService;
+import com.svnavigatoru600.service.NewsService;
 
 /**
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
@@ -19,10 +19,13 @@ public class News implements Serializable {
     private NewsService newsService;
 
     @Inject
-    public void setNewsService(final NewsService newsService) {
+    public void setNewsService(NewsService newsService) {
         this.newsService = newsService;
     }
 
+    /**
+     * Updates the persisted copy of this object.
+     */
     public void update() {
         this.newsService.update(this);
     }
@@ -38,7 +41,7 @@ public class News implements Serializable {
         return this.id;
     }
 
-    public void setId(final int id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -46,7 +49,7 @@ public class News implements Serializable {
         return this.title;
     }
 
-    public void setTitle(final String title) {
+    public void setTitle(String title) {
         this.title = title;
     }
 
@@ -54,7 +57,7 @@ public class News implements Serializable {
         return this.text;
     }
 
-    public void setText(final String text) {
+    public void setText(String text) {
         this.text = text;
     }
 
@@ -62,7 +65,7 @@ public class News implements Serializable {
         return this.creationTime;
     }
 
-    public void setCreationTime(final Date creationTime) {
+    public void setCreationTime(Date creationTime) {
         this.creationTime = creationTime;
     }
 
@@ -70,7 +73,7 @@ public class News implements Serializable {
         return this.lastSaveTime;
     }
 
-    public void setLastSaveTime(final Date lastSaveTime) {
+    public void setLastSaveTime(Date lastSaveTime) {
         this.lastSaveTime = lastSaveTime;
     }
 }

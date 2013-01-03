@@ -85,13 +85,13 @@ public abstract class AbstractWysiwygSectionController extends AbstractPrivateSe
         if (result.hasErrors()) {
             return this.editPageView;
         } else {
-            model.addAttribute(Configuration.REDIRECTION_ATTRIBUTE, this.viewPageAddress);
-            return Configuration.REDIRECTION_PAGE;
+            model.addAttribute(AbstractMetaController.REDIRECTION_ATTRIBUTE, this.viewPageAddress);
+            return AbstractMetaController.REDIRECTION_PAGE;
         }
     }
 
     public String cancelChangesAndFinishEditing(ModelMap model) {
-        model.addAttribute(Configuration.REDIRECTION_ATTRIBUTE, this.viewPageAddress);
-        return Configuration.REDIRECTION_PAGE;
+        model.addAttribute(AbstractMetaController.REDIRECTION_ATTRIBUTE, this.viewPageAddress);
+        return AbstractMetaController.REDIRECTION_PAGE;
     }
 }

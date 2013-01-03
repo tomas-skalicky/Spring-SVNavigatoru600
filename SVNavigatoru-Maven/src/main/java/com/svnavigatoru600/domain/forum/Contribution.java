@@ -8,7 +8,7 @@ import javax.inject.Inject;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.svnavigatoru600.domain.users.User;
-import com.svnavigatoru600.service.forum.contributions.ContributionService;
+import com.svnavigatoru600.service.forum.ContributionService;
 
 /**
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
@@ -21,7 +21,7 @@ public class Contribution implements Serializable {
     private ContributionService contributionService;
 
     @Inject
-    public void setContributionService(final ContributionService contributionService) {
+    public void setContributionService(ContributionService contributionService) {
         this.contributionService = contributionService;
     }
 

@@ -1,15 +1,11 @@
 package com.svnavigatoru600.web.users.administration;
 
-import java.util.Set;
-
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.context.MessageSource;
 import org.springframework.dao.DataAccessException;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
@@ -20,18 +16,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.support.SessionStatus;
 
-import com.svnavigatoru600.domain.users.Authority;
-import com.svnavigatoru600.domain.users.AuthorityType;
 import com.svnavigatoru600.domain.users.User;
+import com.svnavigatoru600.service.users.AuthorityService;
 import com.svnavigatoru600.service.users.UserService;
-import com.svnavigatoru600.service.users.validator.AdministrateUserDataValidator;
 import com.svnavigatoru600.service.util.AuthorityUtils;
-import com.svnavigatoru600.service.util.CheckboxUtils;
-import com.svnavigatoru600.service.util.Email;
-import com.svnavigatoru600.service.util.Hash;
-import com.svnavigatoru600.service.util.Localization;
 import com.svnavigatoru600.viewmodel.users.AdministrateUserData;
-import com.svnavigatoru600.web.Configuration;
+import com.svnavigatoru600.viewmodel.users.validator.AdministrateUserDataValidator;
+import com.svnavigatoru600.web.AbstractMetaController;
 
 /**
  * The controller bound mainly to the <i>user/administration/edit-user.jsp</i> page.
@@ -71,7 +62,8 @@ public class EditUserController extends AbstractNewEditUserController {
 
         // Sets up all auxiliary (but necessary) maps.
         command.setRoleCheckboxId(this.getRoleCheckboxId());
-        command.setLocalizedRoleCheckboxTitles(this.getLocalizedRoleCheckboxTitles(request));
+        command.setLocalizedRoleCheckboxTitles(AuthorityService.getLocalizedTitles(request,
+                this.getMessageSource()));
 
         model.addAttribute(AbstractNewEditUserController.COMMAND, command);
         return PageViews.EDIT.getViewName();
@@ -82,7 +74,7 @@ public class EditUserController extends AbstractNewEditUserController {
      */
     @RequestMapping(value = EditUserController.BASE_URL + "{username}/ulozeno/", method = RequestMethod.GET)
     public String initFormAfterSave(@PathVariable String username, HttpServletRequest request, ModelMap model) {
-        final String view = this.initForm(username, request, model);
+        String view = this.initForm(username, request, model);
         ((AdministrateUserData) model.get(AbstractNewEditUserController.COMMAND)).setDataSaved(true);
         return view;
     }
@@ -97,67 +89,33 @@ public class EditUserController extends AbstractNewEditUserController {
     @Transactional
     public String processSubmittedForm(
             @ModelAttribute(AbstractNewEditUserController.COMMAND) AdministrateUserData command,
-            BindingResult result, final SessionStatus status, @PathVariable String username,
+            BindingResult result, SessionStatus status, @PathVariable String username,
             HttpServletRequest request, ModelMap model) {
 
         // Sets up all auxiliary (but necessary) maps.
         command.setRoleCheckboxId(this.getRoleCheckboxId());
-        command.setLocalizedRoleCheckboxTitles(this.getLocalizedRoleCheckboxTitles(request));
+        MessageSource messageSource = this.getMessageSource();
+        command.setLocalizedRoleCheckboxTitles(AuthorityService.getLocalizedTitles(request, messageSource));
 
         this.getValidator().validate(command, result);
         if (result.hasErrors()) {
             return PageViews.EDIT.getViewName();
         }
 
-        // Updates the original data.
-        final User newUser = command.getUser();
-        final UserService userService = this.getUserService();
-        final User originalUser = userService.findByUsername(username);
-        // The default value of the following indicator has to be true.
-        // Otherwise, the notification email would be sent to the user.
-        boolean arePasswordSame = true;
-        final String newPassword = command.getNewPassword();
-        final boolean isPasswordUpdated = StringUtils.isNotBlank(newPassword);
-        if (isPasswordUpdated) {
-            final String newPasswordHash = Hash.doSha1Hashing(newPassword);
-            arePasswordSame = newPasswordHash.equals(originalUser.getPassword());
-            originalUser.setPassword(newPasswordHash);
-        }
-        originalUser.setFirstName(newUser.getFirstName());
-        originalUser.setLastName(newUser.getLastName());
-
-        final Set<GrantedAuthority> checkedAuthorities = AuthorityUtils.convertIndicatorsToAuthorities(
-                command.getNewAuthorities(), username);
-        // The role ROLE_REGISTERED_USER is automatically added.
-        checkedAuthorities.add(new Authority(username, AuthorityType.ROLE_REGISTERED_USER.name()));
-        final boolean areAuthoritiesSame = CheckboxUtils.areSame(
-                AuthorityUtils.getArrayOfCheckIndicators(checkedAuthorities),
-                AuthorityUtils.getArrayOfCheckIndicators(originalUser.getAuthorities()));
-        originalUser.setAuthorities(checkedAuthorities);
-
-        // Sets user's email to null if the email is blank. The reason is the
-        // UNIQUE DB constraint.
-        originalUser.setEmailToNullIfBlank();
-
+        UserService userService = this.getUserService();
+        User originalUser = null;
         try {
-            // Stores the data.
-            userService.update(originalUser);
-
-            // Notifies the user about the change.
-            if (!arePasswordSame) {
-                this.sendEmailOnPasswordChange(originalUser, newPassword, request);
-            }
-            if (!areAuthoritiesSame) {
-                this.sendEmailOnAuthoritiesChange(originalUser, request);
-            }
+            originalUser = userService.findByUsername(username);
+            userService.updateAndNotifyUser(originalUser, command.getUser(), command.getNewPassword(),
+                    command.getNewAuthorities(), request, messageSource);
 
             // Clears the command object from the session.
             status.setComplete();
 
             // Returns the form success view.
-            model.addAttribute(Configuration.REDIRECTION_ATTRIBUTE,
+            model.addAttribute(AbstractMetaController.REDIRECTION_ATTRIBUTE,
                     String.format(EditUserController.BASE_URL + "%s/ulozeno/", username));
-            return Configuration.REDIRECTION_PAGE;
+            return AbstractMetaController.REDIRECTION_PAGE;
 
         } catch (DataAccessException e) {
             // We encountered a database problem.
@@ -165,72 +123,5 @@ public class EditUserController extends AbstractNewEditUserController {
             result.reject("edit.changes-not-saved-due-to-database-error");
             return PageViews.EDIT.getViewName();
         }
-    }
-
-    /**
-     * Sends an email with the <code>newPassword</code> to the given <code>user</code>. The function is
-     * invoked when user's password has been successfully changed by the administrator.
-     */
-    private void sendEmailOnPasswordChange(User user, String newPassword, HttpServletRequest request) {
-        String emailAddress = user.getEmail();
-        if (!Email.isSpecified(emailAddress)) {
-            return;
-        }
-
-        final MessageSource messageSource = this.getMessageSource();
-        final String subject = Localization.findLocaleMessage(messageSource, request,
-                "email.subject.password-changed");
-        final Object[] messageParams = new Object[] { user.getLastName(), Configuration.DOMAIN, newPassword };
-        final String messageText = Localization.findLocaleMessage(messageSource, request,
-                "email.text.password-changed", messageParams);
-
-        Email.sendMail(emailAddress, subject, messageText);
-    }
-
-    /**
-     * Sends an email with the new {@link Authority Authorities} of the given <code>user</code>. The function
-     * is invoked when user's authorities have been successfully changed by the administrator.
-     */
-    private void sendEmailOnAuthoritiesChange(User user, HttpServletRequest request) {
-        final String emailAddress = user.getEmail();
-        if (!Email.isSpecified(emailAddress)) {
-            return;
-        }
-
-        final MessageSource messageSource = this.getMessageSource();
-        final String subject = Localization.findLocaleMessage(messageSource, request,
-                "email.subject.authorities-changed");
-
-        // Converts the new authorities to the String representation.
-        final StringBuilder newAuthorities = new StringBuilder();
-        if (user.canSeeNews()) {
-            if (user.canEditNews()) {
-                newAuthorities.append(Localization.findLocaleMessage(messageSource, request,
-                        "user-roles.member-of-board"));
-            } else {
-                newAuthorities.append(Localization.findLocaleMessage(messageSource, request,
-                        "user-roles.member-of-sv"));
-            }
-        }
-        if (user.canSeeUsers()) {
-            if (newAuthorities.length() > 0) {
-                newAuthorities.append(", ");
-            }
-            newAuthorities.append(Localization.findLocaleMessage(messageSource, request,
-                    "user-roles.user-administrator"));
-        }
-        if (user.getAuthorities().size() == 1) {
-            // The user is registered, but has no other authority.
-            newAuthorities.append(Localization.findLocaleMessage(messageSource, request,
-                    "user-roles.no-authority"));
-        }
-        // End of the conversion.
-
-        final Object[] messageParams = new Object[] { user.getLastName(), Configuration.DOMAIN,
-                newAuthorities };
-        final String messageText = Localization.findLocaleMessage(messageSource, request,
-                "email.text.authorities-changed", messageParams);
-
-        Email.sendMail(emailAddress, subject, messageText);
     }
 }

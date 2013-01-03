@@ -43,8 +43,7 @@ public final class SqlExecutor {
     /**
      * Executes the given SQL statement in the schema determined by the given {@link Connection}.
      */
-    public static void executeSqlStatement(final String sqlStatement, final Connection connection)
-            throws SQLException {
+    public static void executeSqlStatement(String sqlStatement, Connection connection) throws SQLException {
         Statement statement = connection.createStatement();
         statement.execute(sqlStatement);
     }
@@ -55,7 +54,7 @@ public final class SqlExecutor {
      * @param fileName
      *            The name of the SQL file.
      */
-    public static void executeSqlFile(DataSource dataSource, final String fileName) throws SQLException,
+    public static void executeSqlFile(DataSource dataSource, String fileName) throws SQLException,
             IOException {
         Connection connection = null;
         BufferedReader reader = null;
@@ -97,9 +96,9 @@ public final class SqlExecutor {
 
                 // Executes all complete statements.
                 while (sqlBuilder.indexOf(SQL_COMMAND_ENDING) >= 0) {
-                    final String sql = sqlBuilder.toString();
-                    final int commandEndIndex = sql.indexOf(SQL_COMMAND_ENDING) + 1;
-                    final String sqlStatement = sql.substring(0, commandEndIndex);
+                    String sql = sqlBuilder.toString();
+                    int commandEndIndex = sql.indexOf(SQL_COMMAND_ENDING) + 1;
+                    String sqlStatement = sql.substring(0, commandEndIndex);
                     executeSqlStatement(sqlStatement, connection);
                     sqlBuilder.delete(0, commandEndIndex);
                 }

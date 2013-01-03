@@ -1,8 +1,6 @@
 package com.svnavigatoru600.web.news;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
@@ -14,8 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.svnavigatoru600.domain.News;
-import com.svnavigatoru600.service.news.NewsService;
-import com.svnavigatoru600.service.util.Localization;
+import com.svnavigatoru600.service.NewsService;
 import com.svnavigatoru600.viewmodel.news.ShowAllNews;
 
 /**
@@ -54,34 +51,13 @@ public class ListNewsController extends AbstractNewsController {
         command.setNews(news);
 
         // Sets up all auxiliary (but necessary) maps.
-        command.setLocalizedDeleteQuestions(this.getLocalizedDeleteQuestions(news, request));
+        command.setLocalizedDeleteQuestions(NewsService.getLocalizedDeleteQuestions(news, request,
+                this.getMessageSource()));
 
         model.addAttribute(ListNewsController.COMMAND, command);
 
         this.newNewsController.initForm(request, model);
 
         return PageViews.LIST.getViewName();
-    }
-
-    /**
-     * Gets a {@link Map} which for each input {@link News} contains an appropriate localized delete
-     * questions.
-     */
-    private Map<News, String> getLocalizedDeleteQuestions(List<News> newss, HttpServletRequest request) {
-        Map<News, String> questions = new HashMap<News, String>();
-        for (News news : newss) {
-            questions.put(news, getLocalizedDeleteQuestion(news, this.getMessageSource(), request));
-        }
-        return questions;
-    }
-
-    /**
-     * For the given {@link News}, gets an appropriate localized delete questions.
-     */
-    static String getLocalizedDeleteQuestion(News news, MessageSource messageSource,
-            HttpServletRequest request) {
-        final String messageCode = "news.do-you-really-want-to-delete-news";
-        Object[] messageParams = new Object[] { news.getTitle() };
-        return Localization.findLocaleMessage(messageSource, request, messageCode, messageParams);
     }
 }

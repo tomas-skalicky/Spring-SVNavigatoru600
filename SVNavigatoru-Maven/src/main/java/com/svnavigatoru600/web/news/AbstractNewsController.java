@@ -3,7 +3,7 @@ package com.svnavigatoru600.web.news;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 
-import com.svnavigatoru600.service.news.NewsService;
+import com.svnavigatoru600.service.NewsService;
 import com.svnavigatoru600.web.AbstractPrivateSectionMetaController;
 
 /**
@@ -16,8 +16,8 @@ import com.svnavigatoru600.web.AbstractPrivateSectionMetaController;
 public abstract class AbstractNewsController extends AbstractPrivateSectionMetaController {
 
     protected static final String BASE_URL = "/novinky/";
-    private NewsService newsService;
-    private MessageSource messageSource;
+    private final NewsService newsService;
+    private final MessageSource messageSource;
 
     public AbstractNewsController(NewsService newsService, MessageSource messageSource) {
         this.newsService = newsService;

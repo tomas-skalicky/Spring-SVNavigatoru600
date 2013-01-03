@@ -27,11 +27,11 @@ public abstract class AbstractDatabaseLoader {
      * Loads a database which is encapsulated in the given {@link DataSource}. Loads both DB schema and
      * default data.
      */
-    public void loadDatabase(final DataSource dataSource) throws SQLException, IOException {
-        final String createSchemaFile = this.getCreateSchemaFile(dataSource);
+    public void loadDatabase(DataSource dataSource) throws SQLException, IOException {
+        String createSchemaFile = this.getCreateSchemaFile(dataSource);
         SqlExecutor.executeSqlFile(dataSource, createSchemaFile);
 
-        final String importDataFile = this.getImportDataFile(dataSource);
+        String importDataFile = this.getImportDataFile(dataSource);
         SqlExecutor.executeSqlFile(dataSource, importDataFile);
     }
 

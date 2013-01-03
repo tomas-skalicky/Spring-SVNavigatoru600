@@ -11,8 +11,6 @@ import org.springframework.stereotype.Service;
 import com.svnavigatoru600.domain.forum.Contribution;
 import com.svnavigatoru600.domain.forum.Thread;
 import com.svnavigatoru600.domain.users.User;
-import com.svnavigatoru600.service.forum.contributions.ContributionService;
-import com.svnavigatoru600.service.forum.threads.ThreadService;
 
 /**
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>

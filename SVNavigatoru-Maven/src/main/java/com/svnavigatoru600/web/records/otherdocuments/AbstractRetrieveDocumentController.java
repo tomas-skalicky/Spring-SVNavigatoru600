@@ -14,9 +14,8 @@ import org.springframework.ui.ModelMap;
 
 import com.svnavigatoru600.domain.records.OtherDocumentRecord;
 import com.svnavigatoru600.domain.records.OtherDocumentRecordType;
-import com.svnavigatoru600.service.records.otherdocuments.OtherDocumentRecordService;
+import com.svnavigatoru600.service.records.OtherDocumentRecordService;
 import com.svnavigatoru600.web.records.AbstractPageViews;
-import com.svnavigatoru600.web.records.RetrieveDocumentRecordUtils;
 
 /**
  * Parent of all controllers which provide retrieving of stored {@link OtherDocumentRecord
@@ -56,7 +55,7 @@ public abstract class AbstractRetrieveDocumentController extends AbstractOtherDo
 
     public void retrieve(int recordId, HttpServletResponse response, ModelMap model) {
         try {
-            RetrieveDocumentRecordUtils.retrieve(recordId, this.getRecordService(), response);
+            this.getRecordService().retrieve(recordId, response);
 
             // NOTE: nothing is returned.
 

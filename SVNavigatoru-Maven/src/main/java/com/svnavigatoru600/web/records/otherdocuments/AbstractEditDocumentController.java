@@ -1,7 +1,6 @@
 package com.svnavigatoru600.web.records.otherdocuments;
 
 import java.io.IOException;
-import java.sql.Blob;
 import java.sql.SQLException;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,16 +15,14 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.support.SessionStatus;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.svnavigatoru600.domain.records.OtherDocumentRecord;
 import com.svnavigatoru600.domain.records.OtherDocumentRecordType;
-import com.svnavigatoru600.service.records.otherdocuments.OtherDocumentRecordService;
-import com.svnavigatoru600.service.records.otherdocuments.validator.EditRecordValidator;
-import com.svnavigatoru600.service.util.File;
+import com.svnavigatoru600.service.records.OtherDocumentRecordService;
 import com.svnavigatoru600.service.util.OtherDocumentRecordUtils;
 import com.svnavigatoru600.viewmodel.records.otherdocuments.EditRecord;
-import com.svnavigatoru600.web.Configuration;
+import com.svnavigatoru600.viewmodel.records.otherdocuments.validator.EditRecordValidator;
+import com.svnavigatoru600.web.AbstractMetaController;
 import com.svnavigatoru600.web.records.AbstractPageViews;
 
 /**
@@ -46,9 +43,9 @@ public abstract class AbstractEditDocumentController extends AbstractNewEditDocu
      * Constructs a controller which considers all {@link OtherDocumentRecord OtherDocumentRecords} of all
      * {@link OtherDocumentRecordType OtherDocumentRecordTypes}.
      */
-    public AbstractEditDocumentController(final String baseUrl, final AbstractPageViews views,
-            final OtherDocumentRecordService recordService, final EditRecordValidator validator,
-            final MessageSource messageSource) {
+    public AbstractEditDocumentController(String baseUrl, AbstractPageViews views,
+            OtherDocumentRecordService recordService, EditRecordValidator validator,
+            MessageSource messageSource) {
         super(baseUrl, views, recordService, validator, messageSource);
     }
 
@@ -56,9 +53,9 @@ public abstract class AbstractEditDocumentController extends AbstractNewEditDocu
      * Constructs a controller which considers all {@link OtherDocumentRecord OtherDocumentRecords} of the
      * given <code>recordType</code>.
      */
-    public AbstractEditDocumentController(final String baseUrl, final AbstractPageViews views,
-            final OtherDocumentRecordType recordType, final OtherDocumentRecordService recordService,
-            final EditRecordValidator validator, final MessageSource messageSource) {
+    public AbstractEditDocumentController(String baseUrl, AbstractPageViews views,
+            OtherDocumentRecordType recordType, OtherDocumentRecordService recordService,
+            EditRecordValidator validator, MessageSource messageSource) {
         super(baseUrl, views, recordType, recordService, validator, messageSource);
     }
 
@@ -68,11 +65,11 @@ public abstract class AbstractEditDocumentController extends AbstractNewEditDocu
      * @param recordId
      *            ID of the modified {@link OtherDocumentRecord}
      */
-    public String initForm(final int recordId, final HttpServletRequest request, final ModelMap model) {
+    public String initForm(int recordId, HttpServletRequest request, ModelMap model) {
 
-        final EditRecord command = new EditRecord();
+        EditRecord command = new EditRecord();
 
-        final OtherDocumentRecord record = this.getRecordService().findById(recordId, false);
+        OtherDocumentRecord record = this.getRecordService().findByIdWithoutFile(recordId);
         command.setRecord(record);
 
         // Collection of types is converted to a map.
@@ -90,8 +87,8 @@ public abstract class AbstractEditDocumentController extends AbstractNewEditDocu
      * Initializes the form after the modified data were successfully saved to the repository and the new file
      * (if it exists) was uploaded.
      */
-    public String initFormAfterSave(final int recordId, final HttpServletRequest request, final ModelMap model) {
-        final String view = this.initForm(recordId, request, model);
+    public String initFormAfterSave(int recordId, HttpServletRequest request, ModelMap model) {
+        String view = this.initForm(recordId, request, model);
         ((EditRecord) model.get(AbstractNewEditDocumentController.COMMAND)).setDataSaved(true);
         return view;
     }
@@ -103,9 +100,8 @@ public abstract class AbstractEditDocumentController extends AbstractNewEditDocu
      * @return The name of the view which is to be shown.
      */
     @Transactional
-    public String processSubmittedForm(final EditRecord command, final BindingResult result,
-            final SessionStatus status, final int recordId, final HttpServletRequest request,
-            final ModelMap model) {
+    public String processSubmittedForm(EditRecord command, BindingResult result, SessionStatus status,
+            int recordId, HttpServletRequest request, ModelMap model) {
 
         // Sets up all auxiliary (but necessary) maps.
         command.setTypeCheckboxId(this.getTypeCheckboxId());
@@ -117,70 +113,17 @@ public abstract class AbstractEditDocumentController extends AbstractNewEditDocu
             return this.getViews().getEdit();
         }
 
-        // Updates the original data. Modifies the filename to make it unique.
-        final OtherDocumentRecordService recordService = this.getRecordService();
-        final OtherDocumentRecord oldRecord = recordService.findById(recordId, false);
-        final OtherDocumentRecord newRecord = command.getRecord();
-        oldRecord.setName(newRecord.getName());
-        oldRecord.setDescription(newRecord.getDescription());
-        oldRecord.setTypes(OtherDocumentRecordUtils.convertIndicatorsToRelations(command.getNewTypes(),
-                recordId));
-        final boolean isFileChanged = command.isFileChanged();
-        MultipartFile newAttachedFile = null;
-        String newFileName = null;
-
         try {
-            // /////////////////////////////////////////////////////////////////
-            // Store in the FILESYSTEM
-            // --------------------------------------------------------------
-            // String oldFileName = oldRecord.getFileName();
-            // \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-            if (isFileChanged) {
-                newAttachedFile = command.getNewFile();
-                newFileName = newAttachedFile.getOriginalFilename();
-                // /////////////////////////////////////////////////////////////////
-                // Store in the FILESYSTEM
-                // --------------------------------------------------------------
-                // newFileName = File.getUniqueFileName(newFileName);
-                // \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-
-                // /////////////////////////////////////////////////////////////////
-                // Store in the DB
-                // --------------------------------------------------------------
-                final Blob blobFile = File.convertToBlob(newAttachedFile.getBytes());
-                oldRecord.setFile(blobFile);
-                // \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-                oldRecord.setFileName(newFileName);
-            }
-
-            // If the file has changed, deletes the old one and copies the new
-            // file to the target folder. Afterwards, updates the record in the
-            // repository.
-            // /////////////////////////////////////////////////////////////////
-            // Store in the FILESYSTEM
-            // --------------------------------------------------------------
-            // if (isFileChanged) {
-            // java.io.File destinationFile = File.getUploadedFile(newFileName);
-            // newAttachedFile.transferTo(destinationFile);
-            // }
-            // \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-            recordService.update(oldRecord);
-            // /////////////////////////////////////////////////////////////////
-            // Store in the FILESYSTEM
-            // --------------------------------------------------------------
-            // if (isFileChanged) {
-            // java.io.File oldFile = File.getUploadedFile(oldFileName);
-            // oldFile.delete();
-            // }
-            // \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+            this.getRecordService().update(recordId, command.getRecord(), command.getNewTypes(),
+                    command.isFileChanged(), command.getNewFile(), request, this.getMessageSource());
 
             // Clears the command object from the session.
             status.setComplete();
 
             // Returns the form success view.
-            model.addAttribute(Configuration.REDIRECTION_ATTRIBUTE,
+            model.addAttribute(AbstractMetaController.REDIRECTION_ATTRIBUTE,
                     String.format("%s%d/ulozeno/", this.getBaseUrl(), recordId));
-            return Configuration.REDIRECTION_PAGE;
+            return AbstractMetaController.REDIRECTION_PAGE;
 
         } catch (IllegalStateException e) {
             this.logger.error(command, e);

@@ -18,7 +18,7 @@ public abstract class AbstractDocumentRecordRowMapper {
     /**
      * Determines whether this mapper will consider the <b>Blob</b> file.
      */
-    private boolean loadFile;
+    private final boolean loadFile;
 
     /**
      * Constructor.

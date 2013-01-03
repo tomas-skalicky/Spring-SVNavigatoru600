@@ -19,10 +19,10 @@ import org.springframework.web.bind.support.SessionStatus;
 import com.svnavigatoru600.domain.eventcalendar.CalendarEvent;
 import com.svnavigatoru600.domain.eventcalendar.PriorityType;
 import com.svnavigatoru600.service.eventcalendar.CalendarEventService;
-import com.svnavigatoru600.service.eventcalendar.validator.EditEventValidator;
 import com.svnavigatoru600.service.util.Localization;
 import com.svnavigatoru600.viewmodel.eventcalendar.EditEvent;
-import com.svnavigatoru600.web.Configuration;
+import com.svnavigatoru600.viewmodel.eventcalendar.validator.EditEventValidator;
+import com.svnavigatoru600.web.AbstractMetaController;
 
 /**
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
@@ -63,7 +63,7 @@ public class EditEventController extends AbstractNewEditEventController {
 
     @RequestMapping(value = EditEventController.REQUEST_MAPPING_BASE_URL + "ulozeno/", method = RequestMethod.GET)
     public String initFormAfterSave(@PathVariable int eventId, HttpServletRequest request, ModelMap model) {
-        final String view = this.initForm(eventId, request, model);
+        String view = this.initForm(eventId, request, model);
         ((EditEvent) model.get(AbstractNewEditEventController.COMMAND)).setDataSaved(true);
         return view;
     }
@@ -79,7 +79,7 @@ public class EditEventController extends AbstractNewEditEventController {
             return PageViews.EDIT.getViewName();
         }
 
-        final CalendarEventService eventService = this.getEventService();
+        CalendarEventService eventService = this.getEventService();
         CalendarEvent originalEvent = null;
         try {
             originalEvent = eventService.findById(eventId);
@@ -91,9 +91,9 @@ public class EditEventController extends AbstractNewEditEventController {
             status.setComplete();
 
             // Returns the form success view.
-            model.addAttribute(Configuration.REDIRECTION_ATTRIBUTE,
+            model.addAttribute(AbstractMetaController.REDIRECTION_ATTRIBUTE,
                     String.format("%sexistujici/%d/ulozeno/", AbstractEventController.BASE_URL, eventId));
-            return Configuration.REDIRECTION_PAGE;
+            return AbstractMetaController.REDIRECTION_PAGE;
 
         } catch (DataAccessException e) {
             // We encountered a database problem.

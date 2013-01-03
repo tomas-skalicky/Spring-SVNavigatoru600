@@ -23,8 +23,8 @@ import com.svnavigatoru600.web.AbstractPrivateSectionMetaController;
 public abstract class AbstractEventController extends AbstractPrivateSectionMetaController {
 
     protected static final String BASE_URL = "/kalendar-akci/";
-    private CalendarEventService eventService;
-    private MessageSource messageSource;
+    private final CalendarEventService eventService;
+    private final MessageSource messageSource;
 
     public AbstractEventController(CalendarEventService eventService, MessageSource messageSource) {
         this.eventService = eventService;

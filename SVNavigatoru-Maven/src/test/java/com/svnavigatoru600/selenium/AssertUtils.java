@@ -22,7 +22,7 @@ public final class AssertUtils {
      *            The browser
      * @return The report about the current URL that the browser is looking at.
      */
-    public static String getActualUrlReport(final WebDriver browserDriver) {
+    public static String getActualUrlReport(WebDriver browserDriver) {
         return String.format("Actual location is '%s'", browserDriver.getCurrentUrl());
     }
 }

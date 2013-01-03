@@ -1,7 +1,6 @@
 package com.svnavigatoru600.web.records.session;
 
 import java.io.IOException;
-import java.sql.Blob;
 import java.sql.SQLException;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,16 +15,14 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.support.SessionStatus;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.svnavigatoru600.domain.records.SessionRecord;
 import com.svnavigatoru600.domain.records.SessionRecordType;
-import com.svnavigatoru600.service.records.session.SessionRecordService;
-import com.svnavigatoru600.service.records.session.validator.NewSessionRecordValidator;
-import com.svnavigatoru600.service.util.File;
+import com.svnavigatoru600.service.records.SessionRecordService;
 import com.svnavigatoru600.service.util.Localization;
 import com.svnavigatoru600.viewmodel.records.session.NewSessionRecord;
-import com.svnavigatoru600.web.Configuration;
+import com.svnavigatoru600.viewmodel.records.session.validator.NewSessionRecordValidator;
+import com.svnavigatoru600.web.AbstractMetaController;
 import com.svnavigatoru600.web.records.AbstractPageViews;
 
 /**
@@ -94,54 +91,18 @@ public abstract class AbstractNewRecordController extends AbstractNewEditRecordC
             return this.getViews().getNeww();
         }
 
-        // Updates the data of the new record. Modifies the filename to make
-        // it unique.
         SessionRecord newRecord = command.getRecord();
-        newRecord.setType(SessionRecordType.valueOfAccordingLocalization(command.getNewType(),
-                this.getMessageSource(), request));
-        MultipartFile attachedFile = command.getNewFile();
-        String fileName = attachedFile.getOriginalFilename();
-        // /////////////////////////////////////////////////////////////////
-        // Store in the FILESYSTEM
-        // --------------------------------------------------------------
-        // If the file is stored to the filesystem, we have to secure the
-        // uniqueness of its filename (all files are in one common directory).
-        // If the file is stored in the DB, this operation is not necessary.
-        // --------------------------------------------------------------
-        // fileName =
-        // File.getUniqueFileName(attachedFile.getOriginalFilename());
-        // \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-        newRecord.setFileName(fileName);
-
         try {
-            // /////////////////////////////////////////////////////////////////
-            // Store in the FILESYSTEM
-            // --------------------------------------------------------------
-            // Copies the file to the target folder and creates the record in
-            // the repository.
-            // The direct copy is disabled since we were not able to find out
-            // where in the MochaHost directory hierarchy we were.
-            // --------------------------------------------------------------
-            // java.io.File destinationFile = File.getUploadedFile(fileName);
-            // attachedFile.transferTo(destinationFile);
-            // \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-
-            // /////////////////////////////////////////////////////////////////
-            // Store in the DB
-            // --------------------------------------------------------------
-            Blob blobFile = File.convertToBlob(attachedFile.getBytes());
-            newRecord.setFile(blobFile);
-            // \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-
-            this.getRecordService().save(newRecord);
+            this.getRecordService().save(newRecord, command.getNewType(), command.getNewFile(), request,
+                    this.getMessageSource());
 
             // Clears the command object from the session.
             status.setComplete();
 
             // Returns the form success view.
-            model.addAttribute(Configuration.REDIRECTION_ATTRIBUTE,
+            model.addAttribute(AbstractMetaController.REDIRECTION_ATTRIBUTE,
                     String.format("%svytvoreno/", this.getBaseUrl()));
-            return Configuration.REDIRECTION_PAGE;
+            return AbstractMetaController.REDIRECTION_PAGE;
 
         } catch (IllegalStateException e) {
             this.logger.error(newRecord, e);

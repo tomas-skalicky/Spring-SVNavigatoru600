@@ -29,7 +29,7 @@ public class OtherDocumentRecordTypeRelationDaoImpl extends NamedParameterJdbcDa
 
     @Override
     public List<OtherDocumentRecordTypeRelation> findAll(int recordId) {
-        final String recordIdColumn = OtherDocumentRecordTypeRelationField.recordId.getColumnName();
+        String recordIdColumn = OtherDocumentRecordTypeRelationField.recordId.getColumnName();
         String query = String.format("SELECT * FROM %s r WHERE r.%s = :%s",
                 OtherDocumentRecordTypeRelationDaoImpl.TABLE_NAME, recordIdColumn, recordIdColumn);
 

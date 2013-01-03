@@ -7,5 +7,20 @@ package com.svnavigatoru600.domain.records;
  */
 public enum OtherDocumentRecordType {
 
-    ACCOUNTING, CONTRACT, REGULAR_REVISION, REMOSTAV, OTHER
+    ACCOUNTING("other-documents.accounting.title"), CONTRACT("other-documents.contract"), REGULAR_REVISION(
+            "other-documents.regular-revision"), REMOSTAV("remostav.title"), OTHER("other-documents.other");
+
+    private final String titleLocalizationCode;
+
+    private OtherDocumentRecordType(String titleLocalizationCode) {
+        this.titleLocalizationCode = titleLocalizationCode;
+    }
+
+    /**
+     * Gets the localization code of the title of this {@link OtherDocumentRecordType}. Values which
+     * correspond to this code are stored in <code>messages*.properties</code> files.
+     */
+    public String getTitleLocalizationCode() {
+        return this.titleLocalizationCode;
+    }
 }

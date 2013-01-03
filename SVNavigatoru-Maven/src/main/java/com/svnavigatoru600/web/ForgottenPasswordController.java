@@ -19,11 +19,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.support.SessionStatus;
 
-import com.svnavigatoru600.domain.users.AuthorityType;
 import com.svnavigatoru600.domain.users.User;
 import com.svnavigatoru600.service.users.UserService;
-import com.svnavigatoru600.service.users.validator.SendNewPasswordValidator;
 import com.svnavigatoru600.viewmodel.users.SendNewPassword;
+import com.svnavigatoru600.viewmodel.users.validator.SendNewPasswordValidator;
 
 /**
  * The controller bound to the <i>forgotten-password.jsp</i> form.
@@ -35,8 +34,8 @@ public class ForgottenPasswordController extends AbstractMetaController {
 
     private static final String PAGE_VIEW = "forgottenPassword";
 
-    private UserService userService;
-    private Validator validator;
+    private final UserService userService;
+    private final Validator validator;
 
     // MessageSource is necessary; otherwise we would not be able to resolve a
     // message which is to be sent via email.
@@ -69,8 +68,7 @@ public class ForgottenPasswordController extends AbstractMetaController {
         user.setEmail("@");
         command.setUser(user);
 
-        List<User> adminsFromDb = this.userService.findAllByAuthority(AuthorityType.ROLE_USER_ADMINISTRATOR
-                .name());
+        List<User> adminsFromDb = this.userService.findAllAdministrators();
         List<User> newAdmins = new ArrayList<User>();
         // Excludes me (Tomas Skalicky).
         for (User admin : adminsFromDb) {
@@ -112,18 +110,18 @@ public class ForgottenPasswordController extends AbstractMetaController {
         }
 
         try {
-            this.userService.resetPasswordAndSendEmail(command.getUser().getEmail(), request,
+            this.userService.resetPasswordAndNotifyUser(command.getUser().getEmail(), request,
                     this.messageSource);
 
             // Clears the command object from the session.
             status.setComplete();
 
             // Returns the form success view.
-            model.addAttribute(Configuration.REDIRECTION_ATTRIBUTE, "/prihlaseni/");
+            model.addAttribute(AbstractMetaController.REDIRECTION_ATTRIBUTE, "/prihlaseni/");
             // ATTENTION: The view name must be redirected. Otherwise, the user
             // would be able to "resend" the request and his password would be
             // reset once again. This is the counterpart to the following catch.
-            return Configuration.REDIRECTION_PAGE;
+            return AbstractMetaController.REDIRECTION_PAGE;
 
         } catch (NonTransientDataAccessException e) {
             // Returns back since the email address was wrong.

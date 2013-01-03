@@ -9,8 +9,8 @@ import org.springframework.validation.Validator;
 
 import com.svnavigatoru600.domain.records.OtherDocumentRecord;
 import com.svnavigatoru600.domain.records.OtherDocumentRecordType;
-import com.svnavigatoru600.service.records.otherdocuments.OtherDocumentRecordService;
-import com.svnavigatoru600.service.records.otherdocuments.validator.AbstractOtherDocumentRecordValidator;
+import com.svnavigatoru600.service.records.OtherDocumentRecordService;
+import com.svnavigatoru600.viewmodel.records.otherdocuments.validator.AbstractOtherDocumentRecordValidator;
 import com.svnavigatoru600.web.records.AbstractPageViews;
 
 /**
@@ -30,7 +30,7 @@ public abstract class AbstractNewEditDocumentController extends AbstractOtherDoc
      * Command used in /main-content/records/other-documents/templates/new-edit-record.jsp.
      */
     public static final String COMMAND = "newEditRecordCommand";
-    private Validator validator;
+    private final Validator validator;
 
     /**
      * Constructs a controller which considers all {@link OtherDocumentRecord OtherDocumentRecords} of all

@@ -18,8 +18,8 @@ public class HasherTest {
      */
     @Test
     public void testDoSha1Hashing() {
-        final String stringToHash = "tomspassword";
-        final String expected = "e1d06df3f843c11e857fa844a5dd00f45808bd1b";
+        String stringToHash = "tomspassword";
+        String expected = "e1d06df3f843c11e857fa844a5dd00f45808bd1b";
         Assert.assertEquals(expected, Hash.doSha1Hashing(stringToHash));
     }
 }

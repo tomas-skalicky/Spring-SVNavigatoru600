@@ -27,7 +27,7 @@ public abstract class AbstractDocumentRecordController extends AbstractPrivateSe
      */
     private final String baseUrl;
     private final AbstractPageViews views;
-    private MessageSource messageSource;
+    private final MessageSource messageSource;
 
     /**
      * Constructs a controller which considers all {@link AbstractDocumentRecord AbstractDocumentRecords}.

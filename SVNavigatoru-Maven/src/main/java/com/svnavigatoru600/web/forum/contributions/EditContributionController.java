@@ -17,10 +17,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.support.SessionStatus;
 
 import com.svnavigatoru600.domain.forum.Contribution;
-import com.svnavigatoru600.service.forum.contributions.ContributionService;
-import com.svnavigatoru600.service.forum.contributions.validator.EditContributionValidator;
+import com.svnavigatoru600.service.forum.ContributionService;
 import com.svnavigatoru600.viewmodel.forum.contributions.EditContribution;
-import com.svnavigatoru600.web.Configuration;
+import com.svnavigatoru600.viewmodel.forum.contributions.validator.EditContributionValidator;
+import com.svnavigatoru600.web.AbstractMetaController;
 
 /**
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
@@ -38,7 +38,7 @@ public class EditContributionController extends AbstractNewEditContributionContr
 
     @Override
     @Inject
-    public void setContributionService(final ContributionService contributionService) {
+    public void setContributionService(ContributionService contributionService) {
         this.contributionService = contributionService;
     }
 
@@ -46,20 +46,20 @@ public class EditContributionController extends AbstractNewEditContributionContr
      * Constructor.
      */
     @Inject
-    public EditContributionController(final ContributionService contributionService,
-            final EditContributionValidator validator, final MessageSource messageSource) {
+    public EditContributionController(ContributionService contributionService,
+            EditContributionValidator validator, MessageSource messageSource) {
         super(contributionService, validator, messageSource);
     }
 
     @RequestMapping(value = EditContributionController.REQUEST_MAPPING_BASE_URL, method = RequestMethod.GET)
     public String initForm(@PathVariable int threadId, @PathVariable int contributionId,
-            final HttpServletRequest request, final ModelMap model) {
+            HttpServletRequest request, ModelMap model) {
 
         this.contributionService.canEdit(contributionId);
 
-        final EditContribution command = new EditContribution();
+        EditContribution command = new EditContribution();
 
-        final Contribution contribution = this.getContributionService().findById(contributionId);
+        Contribution contribution = this.getContributionService().findById(contributionId);
         command.setContribution(contribution);
         command.setThreadId(threadId);
 
@@ -69,8 +69,8 @@ public class EditContributionController extends AbstractNewEditContributionContr
 
     @RequestMapping(value = EditContributionController.REQUEST_MAPPING_BASE_URL + "ulozeno/", method = RequestMethod.GET)
     public String initFormAfterSave(@PathVariable int threadId, @PathVariable int contributionId,
-            final HttpServletRequest request, final ModelMap model) {
-        final String view = this.initForm(threadId, contributionId, request, model);
+            HttpServletRequest request, ModelMap model) {
+        String view = this.initForm(threadId, contributionId, request, model);
         ((EditContribution) model.get(AbstractNewEditContributionController.COMMAND)).setDataSaved(true);
         return view;
     }
@@ -80,7 +80,7 @@ public class EditContributionController extends AbstractNewEditContributionContr
     public String processSubmittedForm(
             @ModelAttribute(EditContributionController.COMMAND) EditContribution command,
             BindingResult result, SessionStatus status, @PathVariable int threadId,
-            @PathVariable int contributionId, final HttpServletRequest request, final ModelMap model) {
+            @PathVariable int contributionId, HttpServletRequest request, ModelMap model) {
 
         this.contributionService.canEdit(contributionId);
 
@@ -89,7 +89,7 @@ public class EditContributionController extends AbstractNewEditContributionContr
             return PageViews.EDIT.getViewName();
         }
 
-        final ContributionService contributionService = this.getContributionService();
+        ContributionService contributionService = this.getContributionService();
         Contribution originalContribution = null;
         try {
             originalContribution = contributionService.findById(contributionId);
@@ -99,10 +99,10 @@ public class EditContributionController extends AbstractNewEditContributionContr
             status.setComplete();
 
             // Returns the form success view.
-            model.addAttribute(Configuration.REDIRECTION_ATTRIBUTE, String.format(
+            model.addAttribute(AbstractMetaController.REDIRECTION_ATTRIBUTE, String.format(
                     "%s%d/prispevky/existujici/%d/ulozeno/", AbstractContributionController.BASE_URL,
                     threadId, contributionId));
-            return Configuration.REDIRECTION_PAGE;
+            return AbstractMetaController.REDIRECTION_PAGE;
 
         } catch (DataAccessException e) {
             // We encountered a database problem.

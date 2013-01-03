@@ -19,7 +19,7 @@ public class Authority implements GrantedAuthority, Serializable {
     private AuthorityService authorityService;
 
     @Inject
-    public void setAuthorityService(final AuthorityService authorityService) {
+    public void setAuthorityService(AuthorityService authorityService) {
         this.authorityService = authorityService;
     }
 

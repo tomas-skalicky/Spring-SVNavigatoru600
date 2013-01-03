@@ -5,7 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.Validator;
 
 import com.svnavigatoru600.service.users.UserService;
-import com.svnavigatoru600.service.users.validator.AbstractUserDataValidator;
+import com.svnavigatoru600.viewmodel.users.validator.AbstractUserDataValidator;
 
 /**
  * Parent of all controllers which create and edit {@link com.svnavigatoru600.domain.users.User users}.
@@ -17,7 +17,7 @@ public abstract class AbstractNewEditUserController extends AbstractUserControll
 
     public static final String COMMAND = "userCommand";
 
-    private Validator validator;
+    private final Validator validator;
 
     /**
      * Constructor.

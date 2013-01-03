@@ -5,7 +5,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 
 import com.svnavigatoru600.domain.forum.Thread;
-import com.svnavigatoru600.service.forum.threads.ThreadService;
+import com.svnavigatoru600.service.forum.ThreadService;
 import com.svnavigatoru600.web.AbstractPrivateSectionMetaController;
 
 /**
@@ -18,8 +18,8 @@ import com.svnavigatoru600.web.AbstractPrivateSectionMetaController;
 public abstract class AbstractThreadController extends AbstractPrivateSectionMetaController {
 
     protected static final String BASE_URL = "/forum/temata/";
-    private ThreadService threadService;
-    private MessageSource messageSource;
+    private final ThreadService threadService;
+    private final MessageSource messageSource;
 
     public AbstractThreadController(ThreadService threadService, MessageSource messageSource) {
         this.threadService = threadService;

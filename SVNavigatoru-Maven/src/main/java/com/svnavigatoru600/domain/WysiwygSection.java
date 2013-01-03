@@ -19,10 +19,13 @@ public class WysiwygSection implements Serializable {
     private WysiwygSectionService sectionService;
 
     @Inject
-    public void setWysiwygSectionService(final WysiwygSectionService sectionService) {
+    public void setWysiwygSectionService(WysiwygSectionService sectionService) {
         this.sectionService = sectionService;
     }
 
+    /**
+     * Updates the persisted copy of this object.
+     */
     public void update() {
         this.sectionService.update(this);
     }

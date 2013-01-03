@@ -38,10 +38,10 @@ public abstract class AbstractMapperTest {
     /**
      * Gets a {@link AbstractDatabaseLoader database loader} which is able to prepare a database for tests.
      */
-    private static AbstractDatabaseLoader getDatabaseLoader(final DataSource dataSource) {
+    private static AbstractDatabaseLoader getDatabaseLoader(DataSource dataSource) {
         if (dataSource instanceof ComboPooledDataSource) {
-            final ComboPooledDataSource source = (ComboPooledDataSource) dataSource;
-            final String driverClass = source.getDriverClass();
+            ComboPooledDataSource source = (ComboPooledDataSource) dataSource;
+            String driverClass = source.getDriverClass();
 
             if ("org.hsqldb.jdbcDriver".equals(driverClass)) {
                 return new HsqlDatabaseLoader();

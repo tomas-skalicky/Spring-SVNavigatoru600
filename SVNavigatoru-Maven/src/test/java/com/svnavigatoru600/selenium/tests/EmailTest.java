@@ -26,14 +26,14 @@ public class EmailTest extends AbstractTailoredSeleniumTest {
      */
     @Test
     public void testEditEmail() throws Exception {
-        final WebDriver browserDriver = this.getBrowserDriver();
+        WebDriver browserDriver = this.getBrowserDriver();
 
-        final String password = "password";
-        final String originalEmail = "vaclavas@ramacz.aa";
+        String password = "password";
+        String originalEmail = "vaclavas@ramacz.aa";
         this.logIn(originalEmail, password);
         this.waitForPageUrl(browserDriver, HOMEPAGE_URL_REG_EXP);
 
-        final String newEmail = "vaclavas@rama-cz.aa";
+        String newEmail = "vaclavas@rama-cz.aa";
         this.changeEmail(newEmail, browserDriver);
 
         browserDriver.findElement(By.linkText(LOGOUT_LINK_TEXT)).click();
@@ -56,14 +56,14 @@ public class EmailTest extends AbstractTailoredSeleniumTest {
      * @param browserDriver
      *            The web browser where the test is running
      */
-    private void changeEmail(final String newEmail, final WebDriver browserDriver) {
+    private void changeEmail(String newEmail, WebDriver browserDriver) {
 
         // Goes to the user account page.
         browserDriver.findElement(By.linkText(USER_ACCOUNT_LINK_TEXT)).click();
         this.waitForPageUrl(browserDriver, USER_ACCOUNT_PAGE_URL_REG_EXP);
 
         // Performs the change.
-        final WebElement userEmailElement = browserDriver.findElement(By.id(EMAIL_ELEMENT_ID));
+        WebElement userEmailElement = browserDriver.findElement(By.id(EMAIL_ELEMENT_ID));
         userEmailElement.clear();
         userEmailElement.sendKeys(newEmail);
 

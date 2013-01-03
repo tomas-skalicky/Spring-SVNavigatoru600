@@ -1,15 +1,20 @@
 package com.svnavigatoru600.service.eventcalendar;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
 
 import com.svnavigatoru600.domain.eventcalendar.CalendarEvent;
 import com.svnavigatoru600.domain.eventcalendar.PriorityType;
 import com.svnavigatoru600.repository.CalendarEventDao;
 import com.svnavigatoru600.service.util.DateUtils;
+import com.svnavigatoru600.service.util.Localization;
 import com.svnavigatoru600.service.util.OrderType;
 
 /**
@@ -104,5 +109,22 @@ public class CalendarEventService {
     public void delete(int eventId) {
         CalendarEvent event = this.findById(eventId);
         this.eventDao.delete(event);
+    }
+
+    /**
+     * Gets a {@link Map} which for each input {@link CalendarEvent} contains a corresponding localized delete
+     * question which is asked before deletion of that event.
+     */
+    public static Map<CalendarEvent, String> getLocalizedDeleteQuestions(List<CalendarEvent> events,
+            HttpServletRequest request, MessageSource messageSource) {
+        String messageCode = "event-calendar.do-you-really-want-to-delete-event";
+        Map<CalendarEvent, String> questions = new HashMap<CalendarEvent, String>();
+
+        for (CalendarEvent event : events) {
+            Object[] messageParams = new Object[] { event.getName() };
+            questions.put(event,
+                    Localization.findLocaleMessage(messageSource, request, messageCode, messageParams));
+        }
+        return questions;
     }
 }
