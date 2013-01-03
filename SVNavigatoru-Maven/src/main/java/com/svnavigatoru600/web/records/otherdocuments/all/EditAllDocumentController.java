@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.support.SessionStatus;
 
-import com.svnavigatoru600.repository.records.OtherDocumentRecordDao;
+import com.svnavigatoru600.service.records.otherdocuments.OtherDocumentRecordService;
 import com.svnavigatoru600.service.records.otherdocuments.validator.EditRecordValidator;
 import com.svnavigatoru600.viewmodel.records.otherdocuments.EditRecord;
 import com.svnavigatoru600.web.records.otherdocuments.AbstractEditDocumentController;
@@ -30,9 +30,9 @@ public class EditAllDocumentController extends AbstractEditDocumentController {
      * Constructor.
      */
     @Inject
-    public EditAllDocumentController(OtherDocumentRecordDao recordDao, EditRecordValidator validator,
+    public EditAllDocumentController(OtherDocumentRecordService recordService, EditRecordValidator validator,
             MessageSource messageSource) {
-        super(EditAllDocumentController.BASE_URL, new PageViews(), recordDao, validator, messageSource);
+        super(EditAllDocumentController.BASE_URL, new PageViews(), recordService, validator, messageSource);
     }
 
     @Override

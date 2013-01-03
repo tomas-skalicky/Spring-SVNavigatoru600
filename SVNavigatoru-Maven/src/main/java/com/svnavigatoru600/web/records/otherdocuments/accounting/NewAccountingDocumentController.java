@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.support.SessionStatus;
 
 import com.svnavigatoru600.domain.records.OtherDocumentRecordType;
-import com.svnavigatoru600.repository.records.OtherDocumentRecordDao;
+import com.svnavigatoru600.service.records.otherdocuments.OtherDocumentRecordService;
 import com.svnavigatoru600.service.records.otherdocuments.validator.NewRecordValidator;
 import com.svnavigatoru600.viewmodel.records.otherdocuments.NewRecord;
 import com.svnavigatoru600.web.records.otherdocuments.AbstractNewDocumentController;
@@ -30,10 +30,10 @@ public class NewAccountingDocumentController extends AbstractNewDocumentControll
      * Constructor.
      */
     @Inject
-    public NewAccountingDocumentController(OtherDocumentRecordDao recordDao, NewRecordValidator validator,
-            MessageSource messageSource) {
+    public NewAccountingDocumentController(OtherDocumentRecordService recordService,
+            NewRecordValidator validator, MessageSource messageSource) {
         super(NewAccountingDocumentController.BASE_URL, new PageViews(), OtherDocumentRecordType.ACCOUNTING,
-                recordDao, validator, messageSource);
+                recordService, validator, messageSource);
     }
 
     @Override

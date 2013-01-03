@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.svnavigatoru600.domain.users.User;
-import com.svnavigatoru600.repository.users.UserDao;
+import com.svnavigatoru600.service.users.UserService;
 import com.svnavigatoru600.service.util.Email;
 import com.svnavigatoru600.service.util.Localization;
 import com.svnavigatoru600.web.Configuration;
@@ -31,8 +31,8 @@ public class DeleteUserController extends AbstractUserController {
      * Constructor.
      */
     @Inject
-    public DeleteUserController(UserDao userDao, MessageSource messageSource) {
-        super(userDao, messageSource);
+    public DeleteUserController(UserService userService, MessageSource messageSource) {
+        super(userService, messageSource);
     }
 
     @RequestMapping(value = DeleteUserController.BASE_URL + "existujici/{username}/smazat/", method = RequestMethod.GET)
@@ -40,9 +40,9 @@ public class DeleteUserController extends AbstractUserController {
     public String delete(@PathVariable String username, HttpServletRequest request, ModelMap model) {
         try {
             // Deletes the user.
-            final UserDao userDao = this.getUserDao();
-            final User user = userDao.findByUsername(username);
-            userDao.delete(user);
+            final UserService userService = this.getUserService();
+            final User user = userService.findByUsername(username);
+            userService.delete(user);
 
             // Notifies the user about the deletion of his account.
             this.sendEmailOnUserDeletion(user, request);

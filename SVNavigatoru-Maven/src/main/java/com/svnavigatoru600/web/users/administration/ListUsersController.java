@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.svnavigatoru600.domain.users.User;
-import com.svnavigatoru600.repository.users.UserDao;
+import com.svnavigatoru600.service.users.UserService;
 import com.svnavigatoru600.service.util.Localization;
 import com.svnavigatoru600.service.util.OrderType;
 import com.svnavigatoru600.viewmodel.users.ShowAllUsers;
@@ -35,8 +35,8 @@ public class ListUsersController extends AbstractUserController {
      * Constructor.
      */
     @Inject
-    public ListUsersController(final UserDao userDao, final MessageSource messageSource) {
-        super(userDao, messageSource);
+    public ListUsersController(final UserService userService, final MessageSource messageSource) {
+        super(userService, messageSource);
     }
 
     /**
@@ -48,7 +48,7 @@ public class ListUsersController extends AbstractUserController {
         final ShowAllUsers command = new ShowAllUsers();
 
         final boolean testUsers = false;
-        final List<User> users = this.getUserDao().findAllOrdered(OrderType.ASCENDING, testUsers);
+        final List<User> users = this.getUserService().findAllOrdered(OrderType.ASCENDING, testUsers);
         command.setUsers(users);
 
         // Sets up all (but necessary) maps.

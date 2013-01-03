@@ -11,7 +11,7 @@ import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 
 import com.svnavigatoru600.domain.users.AuthorityType;
-import com.svnavigatoru600.repository.users.UserDao;
+import com.svnavigatoru600.service.users.UserService;
 import com.svnavigatoru600.service.util.Localization;
 import com.svnavigatoru600.web.AbstractPrivateSectionMetaController;
 
@@ -24,24 +24,24 @@ import com.svnavigatoru600.web.AbstractPrivateSectionMetaController;
 @Controller
 public abstract class AbstractUserController extends AbstractPrivateSectionMetaController {
 
-    private UserDao userDao = null;
+    private UserService userService = null;
     private MessageSource messageSource = null;
 
     /**
      * Constructor.
      */
     @Inject
-    public AbstractUserController(UserDao userDao, MessageSource messageSource) {
+    public AbstractUserController(UserService userService, MessageSource messageSource) {
         LogFactory.getLog(this.getClass()).debug("The UserController object created.");
-        this.userDao = userDao;
+        this.userService = userService;
         this.messageSource = messageSource;
     }
 
     /**
      * Trivial getter
      */
-    protected UserDao getUserDao() {
-        return this.userDao;
+    protected UserService getUserService() {
+        return this.userService;
     }
 
     /**

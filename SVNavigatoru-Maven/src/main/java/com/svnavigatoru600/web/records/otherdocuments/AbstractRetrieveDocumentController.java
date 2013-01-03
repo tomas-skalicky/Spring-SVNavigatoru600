@@ -14,7 +14,7 @@ import org.springframework.ui.ModelMap;
 
 import com.svnavigatoru600.domain.records.OtherDocumentRecord;
 import com.svnavigatoru600.domain.records.OtherDocumentRecordType;
-import com.svnavigatoru600.repository.records.OtherDocumentRecordDao;
+import com.svnavigatoru600.service.records.otherdocuments.OtherDocumentRecordService;
 import com.svnavigatoru600.web.records.AbstractPageViews;
 import com.svnavigatoru600.web.records.RetrieveDocumentRecordUtils;
 
@@ -38,10 +38,10 @@ public abstract class AbstractRetrieveDocumentController extends AbstractOtherDo
      * {@link OtherDocumentRecordType OtherDocumentRecordTypes}.
      */
     public AbstractRetrieveDocumentController(String baseUrl, AbstractPageViews views,
-            OtherDocumentRecordDao recordDao, MessageSource messageSource) {
+            OtherDocumentRecordService recordService, MessageSource messageSource) {
         // Note that the allRecordTypes indicator is set up during the creation
         // of the parent.
-        super(baseUrl, views, recordDao, messageSource);
+        super(baseUrl, views, recordService, messageSource);
     }
 
     /**
@@ -49,13 +49,14 @@ public abstract class AbstractRetrieveDocumentController extends AbstractOtherDo
      * given <code>recordType</code>.
      */
     public AbstractRetrieveDocumentController(String baseUrl, AbstractPageViews views,
-            OtherDocumentRecordType recordType, OtherDocumentRecordDao recordDao, MessageSource messageSource) {
-        super(baseUrl, views, recordType, recordDao, messageSource);
+            OtherDocumentRecordType recordType, OtherDocumentRecordService recordService,
+            MessageSource messageSource) {
+        super(baseUrl, views, recordType, recordService, messageSource);
     }
 
     public void retrieve(int recordId, HttpServletResponse response, ModelMap model) {
         try {
-            RetrieveDocumentRecordUtils.retrieve(recordId, this.getRecordDao(), response);
+            RetrieveDocumentRecordUtils.retrieve(recordId, this.getRecordService(), response);
 
             // NOTE: nothing is returned.
 

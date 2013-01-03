@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.svnavigatoru600.repository.records.OtherDocumentRecordDao;
+import com.svnavigatoru600.service.records.otherdocuments.OtherDocumentRecordService;
 import com.svnavigatoru600.web.records.otherdocuments.AbstractRetrieveDocumentController;
 
 /**
@@ -25,8 +25,8 @@ public class RetrieveAllDocumentController extends AbstractRetrieveDocumentContr
      * Constructor.
      */
     @Inject
-    public RetrieveAllDocumentController(OtherDocumentRecordDao recordDao, MessageSource messageSource) {
-        super(RetrieveAllDocumentController.BASE_URL, new PageViews(), recordDao, messageSource);
+    public RetrieveAllDocumentController(OtherDocumentRecordService recordService, MessageSource messageSource) {
+        super(RetrieveAllDocumentController.BASE_URL, new PageViews(), recordService, messageSource);
     }
 
     @Override

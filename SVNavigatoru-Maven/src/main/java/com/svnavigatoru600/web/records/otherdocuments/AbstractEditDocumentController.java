@@ -20,7 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.svnavigatoru600.domain.records.OtherDocumentRecord;
 import com.svnavigatoru600.domain.records.OtherDocumentRecordType;
-import com.svnavigatoru600.repository.records.OtherDocumentRecordDao;
+import com.svnavigatoru600.service.records.otherdocuments.OtherDocumentRecordService;
 import com.svnavigatoru600.service.records.otherdocuments.validator.EditRecordValidator;
 import com.svnavigatoru600.service.util.File;
 import com.svnavigatoru600.service.util.OtherDocumentRecordUtils;
@@ -47,9 +47,9 @@ public abstract class AbstractEditDocumentController extends AbstractNewEditDocu
      * {@link OtherDocumentRecordType OtherDocumentRecordTypes}.
      */
     public AbstractEditDocumentController(final String baseUrl, final AbstractPageViews views,
-            final OtherDocumentRecordDao recordDao, final EditRecordValidator validator,
+            final OtherDocumentRecordService recordService, final EditRecordValidator validator,
             final MessageSource messageSource) {
-        super(baseUrl, views, recordDao, validator, messageSource);
+        super(baseUrl, views, recordService, validator, messageSource);
     }
 
     /**
@@ -57,9 +57,9 @@ public abstract class AbstractEditDocumentController extends AbstractNewEditDocu
      * given <code>recordType</code>.
      */
     public AbstractEditDocumentController(final String baseUrl, final AbstractPageViews views,
-            final OtherDocumentRecordType recordType, final OtherDocumentRecordDao recordDao,
+            final OtherDocumentRecordType recordType, final OtherDocumentRecordService recordService,
             final EditRecordValidator validator, final MessageSource messageSource) {
-        super(baseUrl, views, recordType, recordDao, validator, messageSource);
+        super(baseUrl, views, recordType, recordService, validator, messageSource);
     }
 
     /**
@@ -72,7 +72,7 @@ public abstract class AbstractEditDocumentController extends AbstractNewEditDocu
 
         final EditRecord command = new EditRecord();
 
-        final OtherDocumentRecord record = this.getRecordDao().findById(recordId, false);
+        final OtherDocumentRecord record = this.getRecordService().findById(recordId, false);
         command.setRecord(record);
 
         // Collection of types is converted to a map.
@@ -118,8 +118,8 @@ public abstract class AbstractEditDocumentController extends AbstractNewEditDocu
         }
 
         // Updates the original data. Modifies the filename to make it unique.
-        final OtherDocumentRecordDao recordDao = this.getRecordDao();
-        final OtherDocumentRecord oldRecord = recordDao.findById(recordId, false);
+        final OtherDocumentRecordService recordService = this.getRecordService();
+        final OtherDocumentRecord oldRecord = recordService.findById(recordId, false);
         final OtherDocumentRecord newRecord = command.getRecord();
         oldRecord.setName(newRecord.getName());
         oldRecord.setDescription(newRecord.getDescription());
@@ -164,7 +164,7 @@ public abstract class AbstractEditDocumentController extends AbstractNewEditDocu
             // newAttachedFile.transferTo(destinationFile);
             // }
             // \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-            recordDao.update(oldRecord);
+            recordService.update(oldRecord);
             // /////////////////////////////////////////////////////////////////
             // Store in the FILESYSTEM
             // --------------------------------------------------------------
