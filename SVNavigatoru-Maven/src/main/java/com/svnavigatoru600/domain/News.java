@@ -76,4 +76,11 @@ public class News implements Serializable {
     public void setLastSaveTime(Date lastSaveTime) {
         this.lastSaveTime = lastSaveTime;
     }
+
+    @Override
+    public String toString() {
+        return new StringBuilder("[id=").append(this.id).append(", title=").append(this.title)
+                .append(", text=").append(this.text).append(", creationTime=").append(this.creationTime)
+                .append(", lastSaveTime=").append(this.lastSaveTime).append("]").toString();
+    }
 }
