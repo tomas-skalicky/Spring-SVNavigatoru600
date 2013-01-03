@@ -30,6 +30,7 @@ public class OtherDocumentRecordService extends AbstractDocumentRecordService {
      */
     @Inject
     public OtherDocumentRecordService(OtherDocumentRecordDao otherDocumentDao) {
+        super(otherDocumentDao);
         this.otherDocumentDao = otherDocumentDao;
     }
 

@@ -29,8 +29,9 @@ public class SessionRecordService extends AbstractDocumentRecordService {
      * Constructor.
      */
     @Inject
-    public SessionRecordService(SessionRecordDao documentDao) {
-        this.sessionRecordDao = documentDao;
+    public SessionRecordService(SessionRecordDao sessionRecordDao) {
+        super(sessionRecordDao);
+        this.sessionRecordDao = sessionRecordDao;
     }
 
     @Override
