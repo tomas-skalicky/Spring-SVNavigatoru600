@@ -34,13 +34,6 @@ public class EditContributionController extends AbstractNewEditContributionContr
      * Code of the error message used when the {@link DataAccessException} is thrown.
      */
     public static final String DATABASE_ERROR_MESSAGE_CODE = "edit.changes-not-saved-due-to-database-error";
-    private ContributionService contributionService;
-
-    @Override
-    @Inject
-    public void setContributionService(ContributionService contributionService) {
-        this.contributionService = contributionService;
-    }
 
     /**
      * Constructor.
@@ -55,7 +48,7 @@ public class EditContributionController extends AbstractNewEditContributionContr
     public String initForm(@PathVariable int threadId, @PathVariable int contributionId,
             HttpServletRequest request, ModelMap model) {
 
-        this.contributionService.canEdit(contributionId);
+        this.getContributionService().canEdit(contributionId);
 
         EditContribution command = new EditContribution();
 
@@ -82,7 +75,7 @@ public class EditContributionController extends AbstractNewEditContributionContr
             BindingResult result, SessionStatus status, @PathVariable int threadId,
             @PathVariable int contributionId, HttpServletRequest request, ModelMap model) {
 
-        this.contributionService.canEdit(contributionId);
+        this.getContributionService().canEdit(contributionId);
 
         this.getValidator().validate(command, result);
         if (result.hasErrors()) {
