@@ -1,6 +1,5 @@
 package com.svnavigatoru600.web.records.session;
 
-import java.io.IOException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -11,14 +10,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.Validator;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
-import com.svnavigatoru600.domain.records.SessionRecord;
 import com.svnavigatoru600.domain.records.SessionRecordType;
 import com.svnavigatoru600.service.records.SessionRecordService;
 import com.svnavigatoru600.viewmodel.records.session.validator.AbstractSessionRecordValidator;
 import com.svnavigatoru600.web.records.AbstractPageViews;
 
 /**
- * Parent of all controllers which create and edit the {@link SessionRecord SessionRecords}.
+ * Parent of all controllers which create and edit the
+ * {@link com.svnavigatoru600.domain.records.SessionRecord SessionRecords}.
  * 
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
@@ -27,7 +26,8 @@ import com.svnavigatoru600.web.records.AbstractPageViews;
 public abstract class AbstractNewEditRecordController extends AbstractSessionRecordController {
 
     /**
-     * Code of the error message used when the {@link IllegalStateException} or {@link IOException} is thrown.
+     * Code of the error message used when the {@link IllegalStateException} or {@link java.io.IOException
+     * IOException} is thrown.
      */
     public static final String UPLOAD_FILE_ERROR_MESSAGE_CODE = "file.error-during-saving-file";
     /**
@@ -37,8 +37,8 @@ public abstract class AbstractNewEditRecordController extends AbstractSessionRec
     private final Validator validator;
 
     /**
-     * Constructs a controller which considers all {@link SessionRecord SessionRecords} of all
-     * {@link SessionRecordType SessionRecordTypes}.
+     * Constructs a controller which considers all {@link com.svnavigatoru600.domain.records.SessionRecord
+     * SessionRecords} of all {@link SessionRecordType SessionRecordTypes}.
      */
     public AbstractNewEditRecordController(String baseUrl, AbstractPageViews views,
             SessionRecordService recordService, AbstractSessionRecordValidator validator,
@@ -48,8 +48,8 @@ public abstract class AbstractNewEditRecordController extends AbstractSessionRec
     }
 
     /**
-     * Constructs a controller which considers all {@link SessionRecord SessionRecords} of the given
-     * <code>recordType</code> .
+     * Constructs a controller which considers all {@link com.svnavigatoru600.domain.records.SessionRecord
+     * SessionRecords} of the given <code>recordType</code> .
      */
     public AbstractNewEditRecordController(String baseUrl, AbstractPageViews views,
             SessionRecordType recordType, SessionRecordService recordService,

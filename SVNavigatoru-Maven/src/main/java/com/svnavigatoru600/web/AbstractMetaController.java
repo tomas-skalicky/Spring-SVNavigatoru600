@@ -6,7 +6,6 @@ import java.util.Locale;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
 import com.svnavigatoru600.service.util.DateUtils;
@@ -21,7 +20,7 @@ import com.svnavigatoru600.service.util.Localization;
 public abstract class AbstractMetaController {
 
     /**
-     * The JSP page which helps to clear the {@link ModelMap}.
+     * The JSP page which helps to clear the {@link org.springframework.ui.ModelMap ModelMap}.
      */
     protected static final String REDIRECTION_PAGE = "page-for-redirection";
     /**

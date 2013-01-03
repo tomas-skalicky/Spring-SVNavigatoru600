@@ -4,12 +4,11 @@ import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.Validator;
 
-import com.svnavigatoru600.domain.forum.Thread;
 import com.svnavigatoru600.service.forum.ThreadService;
 import com.svnavigatoru600.viewmodel.forum.threads.validator.AbstractThreadValidator;
 
 /**
- * Parent of controllers which create and edit the {@link Thread Threads}.
+ * Parent of controllers which create and edit the {@link com.svnavigatoru600.domain.forum.Thread Threads}.
  * 
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */

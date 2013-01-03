@@ -4,7 +4,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.svnavigatoru600.domain.records.SessionRecord;
-import com.svnavigatoru600.domain.records.SessionRecordType;
 
 /**
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
@@ -16,8 +15,8 @@ public abstract class AbstractNewEditSessionRecord {
     private MultipartFile newFile = null;
     /**
      * Holds a value of the <code>newType</code> radiobutton. The value equals a localization of the selected
-     * {@link SessionRecordType}. See the <code>NewEditRecordController.populateSessionRecordTypeList</code>
-     * method.
+     * {@link com.svnavigatoru600.domain.records.SessionRecordType SessionRecordType}. See the
+     * <code>NewEditRecordController.populateSessionRecordTypeList</code> method.
      */
     private String newType;
 

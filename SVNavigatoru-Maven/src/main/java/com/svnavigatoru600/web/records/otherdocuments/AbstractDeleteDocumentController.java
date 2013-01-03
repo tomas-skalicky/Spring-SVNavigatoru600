@@ -10,14 +10,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 
-import com.svnavigatoru600.domain.records.OtherDocumentRecord;
 import com.svnavigatoru600.domain.records.OtherDocumentRecordType;
 import com.svnavigatoru600.service.records.OtherDocumentRecordService;
 import com.svnavigatoru600.web.AbstractMetaController;
 import com.svnavigatoru600.web.records.AbstractPageViews;
 
 /**
- * Parent of all controllers which delete the {@link OtherDocumentRecord OtherDocumentRecords}.
+ * Parent of all controllers which delete the {@link com.svnavigatoru600.domain.records.OtherDocumentRecord
+ * OtherDocumentRecords}.
  * 
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
@@ -33,7 +33,8 @@ public abstract class AbstractDeleteDocumentController extends AbstractOtherDocu
     private final String successfulDeleteUrl;
 
     /**
-     * Constructs a controller which considers all {@link OtherDocumentRecord OtherDocumentRecords} of all
+     * Constructs a controller which considers all
+     * {@link com.svnavigatoru600.domain.records.OtherDocumentRecord OtherDocumentRecords} of all
      * {@link OtherDocumentRecordType OtherDocumentRecordTypes}.
      */
     public AbstractDeleteDocumentController(String baseUrl, AbstractPageViews views,
@@ -45,8 +46,9 @@ public abstract class AbstractDeleteDocumentController extends AbstractOtherDocu
     }
 
     /**
-     * Constructs a controller which considers all {@link OtherDocumentRecord OtherDocumentRecords} of the
-     * given <code>recordType</code>.
+     * Constructs a controller which considers all
+     * {@link com.svnavigatoru600.domain.records.OtherDocumentRecord OtherDocumentRecords} of the given
+     * <code>recordType</code>.
      */
     public AbstractDeleteDocumentController(String baseUrl, AbstractPageViews views,
             OtherDocumentRecordType recordType, OtherDocumentRecordService recordService,

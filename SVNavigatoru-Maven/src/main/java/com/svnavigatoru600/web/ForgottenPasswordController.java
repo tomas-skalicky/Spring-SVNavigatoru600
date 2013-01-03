@@ -72,7 +72,7 @@ public class ForgottenPasswordController extends AbstractMetaController {
         List<User> newAdmins = new ArrayList<User>();
         // Excludes me (Tomas Skalicky).
         for (User admin : adminsFromDb) {
-            boolean isMe = (admin.getEmail() != null) && admin.getEmail().equals("skalicky.tomas@gmail.com");
+            boolean isMe = (admin.getEmail() != null) && "skalicky.tomas@gmail.com".equals(admin.getEmail());
             if (!isMe) {
                 newAdmins.add(admin);
             }

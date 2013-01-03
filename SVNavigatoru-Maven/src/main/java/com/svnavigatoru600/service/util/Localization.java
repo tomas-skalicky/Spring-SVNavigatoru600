@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.context.MessageSource;
 import org.springframework.context.NoSuchMessageException;
-import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.servlet.support.RequestContext;
@@ -64,8 +63,8 @@ public final class Localization {
     }
 
     /**
-     * Localizes the global errors of the {@link BindingResult} object. The reason for usage of this method is
-     * an application of AJAX requests.
+     * Localizes the global errors of the {@link org.springframework.validation.BindingResult BindingResult}
+     * object. The reason for usage of this method is an application of AJAX requests.
      */
     public static List<ObjectError> localizeGlobalErrors(List<ObjectError> errors,
             MessageSource messageSource, HttpServletRequest request) {
@@ -79,8 +78,8 @@ public final class Localization {
     }
 
     /**
-     * Localizes the field errors of the {@link BindingResult} object. The reason for usage of this method is
-     * an application of AJAX requests.
+     * Localizes the field errors of the {@link org.springframework.validation.BindingResult BindingResult}
+     * object. The reason for usage of this method is an application of AJAX requests.
      */
     public static List<FieldError> localizeFieldErrors(List<FieldError> errors, MessageSource messageSource,
             HttpServletRequest request) {
