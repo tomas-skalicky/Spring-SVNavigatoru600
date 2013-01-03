@@ -1,7 +1,5 @@
 package com.svnavigatoru600.service;
 
-import com.svnavigatoru600.domain.records.AbstractDocumentRecord;
-
 /**
  * This class is a set of constants which configure the whole application.
  * 
@@ -14,7 +12,8 @@ public final class Configuration {
      */
     public static final String DOMAIN = "www.svnavigatoru600.com";
     /**
-     * The directory where all files of all {@link AbstractDocumentRecord} are stored.
+     * The directory where all files of all {@link com.svnavigatoru600.domain.records.AbstractDocumentRecord
+     * AbstractDocumentRecord} are stored.
      */
     public static final String FILE_STORAGE = "uploaded-files/";
     /**

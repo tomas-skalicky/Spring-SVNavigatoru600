@@ -7,18 +7,18 @@ package com.svnavigatoru600.service.util;
  */
 public enum OrderType {
 
-    ASCENDING, DESCENDING, WITHOUT_ORDER;
+    ASCENDING("ASC"), DESCENDING("DESC"), WITHOUT_ORDER("");
 
+    private final String databaseCode;
+
+    private OrderType(String databaseCode) {
+        this.databaseCode = databaseCode;
+    }
+
+    /**
+     * Gets a corresponding SQL snippet which has the same meaning as this {@link OrderType}.
+     */
     public String getDatabaseCode() {
-        switch (this) {
-        case ASCENDING:
-            return "ASC";
-        case DESCENDING:
-            return "DESC";
-        case WITHOUT_ORDER:
-            return "";
-        default:
-            throw new RuntimeException("Unsupported order.");
-        }
+        return this.databaseCode;
     }
 }

@@ -29,8 +29,7 @@ public class AuthenticationUserDetailsGetter extends JdbcDaoImpl {
 
     @Override
     @Transactional
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException,
-            DataAccessException {
+    public UserDetails loadUserByUsername(String username) {
         try {
             return this.userDao.findByUsername(username);
         } catch (DataAccessException e) {
