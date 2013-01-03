@@ -122,7 +122,7 @@ public class NewsTest extends AbstractMapperTest {
             Assert.assertTrue(news.getLastSaveTime().after(news.getCreationTime()));
 
             // SELECT ALL
-            int secondNewsId = this.createTestNews(NEWS_TITLE, NEWS_TEXT, newsDao, sqlSession);
+            int secondNewsId = this.createDefaultTestNews(newsDao, sqlSession);
             List<News> foundNews = newsDao.findAllOrdered(new FindAllOrderedArguments(NewsField.creationTime,
                     OrderType.ASCENDING));
             news = foundNews.get(foundNews.size() - 2);
