@@ -4,7 +4,6 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
-import com.svnavigatoru600.domain.records.OtherDocumentRecord;
 import com.svnavigatoru600.domain.records.OtherDocumentRecordType;
 import com.svnavigatoru600.domain.records.OtherDocumentRecordTypeRelation;
 
@@ -15,6 +14,12 @@ import com.svnavigatoru600.domain.records.OtherDocumentRecordTypeRelation;
  */
 public final class OtherDocumentRecordUtils {
 
+    /**
+     * The minimal allowed length of {@link com.svnavigatoru600.domain.records.OtherDocumentRecord
+     * OtherDocumentRecord's} name.
+     */
+    private static final int RECORD_NAME_MINIMAL_LENGTH = 3;
+
     private OtherDocumentRecordUtils() {
     }
 
@@ -22,7 +27,7 @@ public final class OtherDocumentRecordUtils {
      * Indicates whether the given <code>recordName</code> is valid.
      */
     public static boolean isRecordNameValid(String recordName) {
-        return (recordName != null) && (recordName.length() >= 3);
+        return (recordName != null) && (recordName.length() >= RECORD_NAME_MINIMAL_LENGTH);
     }
 
     /**
@@ -57,7 +62,8 @@ public final class OtherDocumentRecordUtils {
     /**
      * Converts the given array of check <code>indicators</code> to the {@link Set} of
      * {@link OtherDocumentRecordTypeRelation OtherDocumentRecordTypeRelations} associated with an
-     * {@link OtherDocumentRecord} with the given <code>recordId</code>.
+     * {@link com.svnavigatoru600.domain.records.OtherDocumentRecord OtherDocumentRecord} with the given
+     * <code>recordId</code>.
      * 
      * @return Set of those record types which have been checked, i.e. their indicators equal
      *         <code>true</code>.

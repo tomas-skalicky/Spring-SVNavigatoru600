@@ -29,11 +29,11 @@ public final class HttpResponseUtils {
      */
     public static void sendFile(HttpServletResponse response, byte[] fileBytes, String fileName,
             String fileExtension) throws IOException {
-        if (fileExtension.equalsIgnoreCase("txt")) {
+        if ("txt".equalsIgnoreCase(fileExtension)) {
             response.setContentType("text/plain");
-        } else if (fileExtension.equalsIgnoreCase("doc") || fileExtension.equalsIgnoreCase("docx")) {
+        } else if ("doc".equalsIgnoreCase(fileExtension) || "docx".equalsIgnoreCase(fileExtension)) {
             response.setContentType("application/msword");
-        } else if (fileExtension.equalsIgnoreCase("pdf")) {
+        } else if ("pdf".equalsIgnoreCase(fileExtension)) {
             response.setContentType("application/pdf");
         } else {
             response.setContentType("application/octet-stream");
