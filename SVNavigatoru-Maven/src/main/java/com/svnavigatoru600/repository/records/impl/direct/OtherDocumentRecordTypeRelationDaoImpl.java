@@ -40,33 +40,33 @@ public class OtherDocumentRecordTypeRelationDaoImpl extends NamedParameterJdbcDa
     }
 
     /**
-     * Maps properties of the given {@link OtherDocumentRecordTypeRelation} to names of the corresponding
-     * database column.
+     * Maps properties of the given {@link OtherDocumentRecordTypeRelation typeRelation} to names of the
+     * corresponding database column.
      */
-    private Map<String, Object> getNamedParameters(OtherDocumentRecordTypeRelation relation) {
+    private Map<String, Object> getNamedParameters(OtherDocumentRecordTypeRelation typeRelation) {
         Map<String, Object> parameters = new HashMap<String, Object>();
-        OtherDocumentRecordTypeRelationId id = relation.getId();
+        OtherDocumentRecordTypeRelationId id = typeRelation.getId();
         parameters.put(OtherDocumentRecordTypeRelationField.recordId.getColumnName(), id.getRecordId());
         parameters.put(OtherDocumentRecordTypeRelationField.type.getColumnName(), id.getType());
         return parameters;
     }
 
     /**
-     * Saves the given <code>relation</code> to the repository.
+     * Saves the given {@link OtherDocumentRecordTypeRelation typeRelation} to the repository.
      */
-    public void save(OtherDocumentRecordTypeRelation relation) {
+    public void save(OtherDocumentRecordTypeRelation typeRelation) {
         SimpleJdbcInsert insert = new SimpleJdbcInsert(this.getDataSource()).withTableName(
                 OtherDocumentRecordTypeRelationDaoImpl.TABLE_NAME).usingColumns(
                 OtherDocumentRecordTypeRelationField.recordId.getColumnName(),
                 OtherDocumentRecordTypeRelationField.type.getColumnName());
 
-        insert.execute(this.getNamedParameters(relation));
+        insert.execute(this.getNamedParameters(typeRelation));
     }
 
     @Override
-    public void save(Collection<OtherDocumentRecordTypeRelation> types) {
-        for (OtherDocumentRecordTypeRelation type : types) {
-            this.save(type);
+    public void save(Collection<OtherDocumentRecordTypeRelation> typeRelations) {
+        for (OtherDocumentRecordTypeRelation typeRelation : typeRelations) {
+            this.save(typeRelation);
         }
     }
 
