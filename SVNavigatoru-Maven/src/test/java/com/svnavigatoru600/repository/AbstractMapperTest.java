@@ -1,7 +1,11 @@
 package com.svnavigatoru600.repository;
 
+import java.sql.Connection;
+
 import javax.sql.DataSource;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
@@ -22,6 +26,16 @@ public abstract class AbstractMapperTest {
      */
     protected static final ApplicationContext APPLICATION_CONTEXT = new FileSystemXmlApplicationContext(
             "classpath:applicationContext-business.xml");
+
+    /**
+     * Default setting of connection's auto commit mode.
+     */
+    protected static final boolean DEFAULT_AUTO_COMMIT = true;
+
+    /**
+     * Connection to a database which is opened at the very beginning of each test and closed at its very end.
+     */
+    private Connection sqlConnection = null;
 
     @BeforeClass
     public static void setUpDatabase() throws Exception {
@@ -52,5 +66,22 @@ public abstract class AbstractMapperTest {
             throw new IllegalArgumentException("Not supported implementation of javax.sql.DataSource: "
                     + dataSource.getClass());
         }
+    }
+
+    @Before
+    public void initializeConnection() throws Exception {
+        this.sqlConnection = APPLICATION_CONTEXT.getBean(DataSource.class).getConnection();
+        this.sqlConnection.setAutoCommit(DEFAULT_AUTO_COMMIT);
+    }
+
+    /**
+     * NOTE: {@link After} method is guaranteed to run even if a {@link Before} or {@link org.junit.Test Test}
+     * method throws an exception (see
+     * http://stackoverflow.com/questions/9490569/does-teardown-get-called-if-test
+     * -case-throws-exception-junit).
+     */
+    @After
+    public void closeConnection() throws Exception {
+        this.sqlConnection.close();
     }
 }
