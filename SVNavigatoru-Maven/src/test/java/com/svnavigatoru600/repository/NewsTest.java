@@ -18,7 +18,7 @@ import com.svnavigatoru600.test.category.PersistenceTests;
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
 @Category(PersistenceTests.class)
-public class NewsTest extends AbstractMapperTest {
+public class NewsTest extends AbstractRepositoryTest {
 
     /**
      * The default title of the test news.
