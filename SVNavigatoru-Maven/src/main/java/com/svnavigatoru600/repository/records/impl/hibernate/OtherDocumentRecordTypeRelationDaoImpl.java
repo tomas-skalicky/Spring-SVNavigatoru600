@@ -27,9 +27,9 @@ public class OtherDocumentRecordTypeRelationDaoImpl extends HibernateDaoSupport 
     }
 
     @Override
-    public void save(Collection<OtherDocumentRecordTypeRelation> types) {
-        for (OtherDocumentRecordTypeRelation type : types) {
-            this.getHibernateTemplate().save(type);
+    public void save(Collection<OtherDocumentRecordTypeRelation> typeRelations) {
+        for (OtherDocumentRecordTypeRelation typeRelation : typeRelations) {
+            this.getHibernateTemplate().save(typeRelation);
         }
     }
 
