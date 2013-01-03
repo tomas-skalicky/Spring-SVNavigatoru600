@@ -10,15 +10,40 @@ public enum FullNameFormat {
     /**
      * For example: "Tomas Skalicky"
      */
-    FIRST_LAST,
+    FIRST_LAST {
+        @Override
+        public <E> E accept(FullNameFormatVisitor<E> visitor) {
+            return visitor.visitFirstLast();
+        }
+    },
 
     /**
      * For example: "Skalicky Tomas"
      */
-    LAST_FIRST,
+    LAST_FIRST {
+        @Override
+        public <E> E accept(FullNameFormatVisitor<E> visitor) {
+            return visitor.visitLastFirst();
+        }
+    },
 
     /**
      * For example: "Skalicky, Tomas"
      */
-    LAST_COMMA_FIRST
+    LAST_COMMA_FIRST {
+        @Override
+        public <E> E accept(FullNameFormatVisitor<E> visitor) {
+            return visitor.visitLastCommaFirst();
+        }
+    };
+
+    public abstract <E> E accept(FullNameFormatVisitor<E> visitor);
+
+    public interface FullNameFormatVisitor<E> {
+        E visitFirstLast();
+
+        E visitLastFirst();
+
+        E visitLastCommaFirst();
+    }
 }
