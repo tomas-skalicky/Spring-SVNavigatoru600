@@ -36,7 +36,7 @@ public class NewsDaoTest extends AbstractRepositoryTest {
         NewsDao newsDao = TEST_UTILS.getNewsDao();
 
         // INSERT
-        int newsId = TEST_UTILS.createDefaultTestNews(newsDao);
+        int newsId = TEST_UTILS.createDefaultTestNews();
 
         // SELECT ONE
         News news = newsDao.findById(newsId);
@@ -54,7 +54,7 @@ public class NewsDaoTest extends AbstractRepositoryTest {
         NewsDao newsDao = TEST_UTILS.getNewsDao();
 
         // INSERT & SELECT ONE
-        int newsId = TEST_UTILS.createDefaultTestNews(newsDao);
+        int newsId = TEST_UTILS.createDefaultTestNews();
         News news = newsDao.findById(newsId);
 
         // UPDATE
@@ -76,7 +76,7 @@ public class NewsDaoTest extends AbstractRepositoryTest {
         NewsDao newsDao = TEST_UTILS.getNewsDao();
 
         // INSERT & SELECT ONE
-        int newsId = TEST_UTILS.createDefaultTestNews(newsDao);
+        int newsId = TEST_UTILS.createDefaultTestNews();
         News news = newsDao.findById(newsId);
 
         // DELETE
@@ -97,8 +97,8 @@ public class NewsDaoTest extends AbstractRepositoryTest {
         NewsDao newsDao = TEST_UTILS.getNewsDao();
 
         // TWO INSERTS
-        int firstNewsId = TEST_UTILS.createDefaultTestNews(newsDao);
-        int secondNewsId = TEST_UTILS.createDefaultTestNews(newsDao);
+        int firstNewsId = TEST_UTILS.createDefaultTestNews();
+        int secondNewsId = TEST_UTILS.createDefaultTestNews();
 
         // SELECT ALL
         List<News> foundNews = newsDao.findAllOrdered(new FindAllOrderedArguments(NewsField.creationTime,

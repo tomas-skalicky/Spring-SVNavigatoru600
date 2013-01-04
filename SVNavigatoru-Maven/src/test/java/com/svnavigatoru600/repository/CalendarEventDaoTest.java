@@ -44,7 +44,7 @@ public class CalendarEventDaoTest extends AbstractRepositoryTest {
         CalendarEventDao eventDao = TEST_UTILS.getEventDao();
 
         // INSERT
-        int eventId = TEST_UTILS.createDefaultTestEvent(eventDao);
+        int eventId = TEST_UTILS.createDefaultTestEvent();
 
         // SELECT ONE
         CalendarEvent event = eventDao.findById(eventId);
@@ -61,7 +61,7 @@ public class CalendarEventDaoTest extends AbstractRepositoryTest {
         CalendarEventDao eventDao = TEST_UTILS.getEventDao();
 
         // INSERT & SELECT ONE
-        int eventId = TEST_UTILS.createDefaultTestEvent(eventDao);
+        int eventId = TEST_UTILS.createDefaultTestEvent();
         CalendarEvent event = eventDao.findById(eventId);
 
         // UPDATE
@@ -86,7 +86,7 @@ public class CalendarEventDaoTest extends AbstractRepositoryTest {
         CalendarEventDao eventDao = TEST_UTILS.getEventDao();
 
         // INSERT & SELECT ONE
-        int eventId = TEST_UTILS.createDefaultTestEvent(eventDao);
+        int eventId = TEST_UTILS.createDefaultTestEvent();
         CalendarEvent event = eventDao.findById(eventId);
 
         // DELETE
@@ -108,10 +108,10 @@ public class CalendarEventDaoTest extends AbstractRepositoryTest {
         Date now = new Date();
 
         // THREE INSERTS
-        int firstEventId = TEST_UTILS.createDefaultTestEvent(DateUtils.getDay(now, 2), eventDao);
-        int secondEventId = TEST_UTILS.createDefaultTestEvent(DateUtils.getDay(now, 1), eventDao);
+        int firstEventId = TEST_UTILS.createDefaultTestEvent(DateUtils.getDay(now, 2));
+        int secondEventId = TEST_UTILS.createDefaultTestEvent(DateUtils.getDay(now, 1));
         @SuppressWarnings("unused")
-        int thirdNewsId = TEST_UTILS.createDefaultTestEvent(DateUtils.getDay(now, -1), eventDao);
+        int thirdNewsId = TEST_UTILS.createDefaultTestEvent(DateUtils.getDay(now, -1));
 
         // SELECT ALL
         List<CalendarEvent> foundEvents = eventDao.findAllFutureEventsOrdered(now, OrderType.ASCENDING);

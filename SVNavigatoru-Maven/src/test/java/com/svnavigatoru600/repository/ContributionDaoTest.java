@@ -13,7 +13,6 @@ import com.svnavigatoru600.domain.forum.Contribution;
 import com.svnavigatoru600.domain.forum.Thread;
 import com.svnavigatoru600.domain.users.User;
 import com.svnavigatoru600.repository.forum.ContributionDao;
-import com.svnavigatoru600.repository.forum.ThreadDao;
 import com.svnavigatoru600.repository.forum.impl.ContributionField;
 import com.svnavigatoru600.service.util.OrderType;
 import com.svnavigatoru600.test.category.PersistenceTests;
@@ -40,7 +39,7 @@ public class ContributionDaoTest extends AbstractRepositoryTest {
     private Thread defaultThread = null;
 
     @Before
-    public void createUserAndThread() {
+    public void createDefaultAuthorAndThread() {
         this.defaultAuthor = TEST_UTILS.createDefaultTestUser();
         this.defaultThread = this.createDefaultTestThread();
     }
@@ -117,7 +116,7 @@ public class ContributionDaoTest extends AbstractRepositoryTest {
         int secondContributionId = this.createDefaultTestContribution(contributionDao);
         @SuppressWarnings("unused")
         int thirdContributionId = TEST_UTILS.createTestContribution(this.createDefaultTestThread(),
-                RepositoryTestUtils.CONTRIBUTION_DEFAULT_TEXT, this.defaultAuthor, contributionDao);
+                RepositoryTestUtils.CONTRIBUTION_DEFAULT_TEXT, this.defaultAuthor);
 
         // SELECT ALL
         List<Contribution> foundContributions = contributionDao.findAll(this.defaultThread.getId());
@@ -136,7 +135,7 @@ public class ContributionDaoTest extends AbstractRepositoryTest {
         int firstContributionId = this.createDefaultTestContribution(contributionDao);
         int secondContributionId = this.createDefaultTestContribution(contributionDao);
         int thirdContributionId = TEST_UTILS.createTestContribution(this.createDefaultTestThread(),
-                RepositoryTestUtils.CONTRIBUTION_DEFAULT_TEXT, this.defaultAuthor, contributionDao);
+                RepositoryTestUtils.CONTRIBUTION_DEFAULT_TEXT, this.defaultAuthor);
 
         // SELECT ALL
         int maxResultSize = 2;
@@ -155,7 +154,7 @@ public class ContributionDaoTest extends AbstractRepositoryTest {
         int firstContributionId = this.createDefaultTestContribution(contributionDao);
         @SuppressWarnings("unused")
         int secondContributionId = TEST_UTILS.createTestContribution(this.createDefaultTestThread(),
-                RepositoryTestUtils.CONTRIBUTION_DEFAULT_TEXT, this.defaultAuthor, contributionDao);
+                RepositoryTestUtils.CONTRIBUTION_DEFAULT_TEXT, this.defaultAuthor);
         int thirdContributionId = this.createDefaultTestContribution(contributionDao);
 
         // SELECT ALL
@@ -174,7 +173,7 @@ public class ContributionDaoTest extends AbstractRepositoryTest {
      */
     private int createDefaultTestContribution(ContributionDao contributionDao) {
         return TEST_UTILS.createTestContribution(this.defaultThread,
-                RepositoryTestUtils.CONTRIBUTION_DEFAULT_TEXT, this.defaultAuthor, contributionDao);
+                RepositoryTestUtils.CONTRIBUTION_DEFAULT_TEXT, this.defaultAuthor);
     }
 
     /**
@@ -183,9 +182,8 @@ public class ContributionDaoTest extends AbstractRepositoryTest {
      * @return Newly created thread
      */
     Thread createDefaultTestThread() {
-        ThreadDao threadDao = TEST_UTILS.getThreadDao();
-        int threadId = this.createDefaultTestThread(threadDao);
-        return threadDao.findById(threadId);
+        int threadId = this.createDefaultTestThreadAndGetId();
+        return TEST_UTILS.getThreadDao().findById(threadId);
     }
 
     /**
@@ -193,8 +191,8 @@ public class ContributionDaoTest extends AbstractRepositoryTest {
      * 
      * @return ID of the newly created thread
      */
-    private int createDefaultTestThread(ThreadDao threadDao) {
+    private int createDefaultTestThreadAndGetId() {
         return TEST_UTILS.createTestThread(RepositoryTestUtils.THREAD_DEFAULT_NAME, this.defaultAuthor,
-                RepositoryTestUtils.THREAD_DEFAULT_CONTRIBUTIONS, threadDao);
+                RepositoryTestUtils.THREAD_DEFAULT_CONTRIBUTIONS);
     }
 }
