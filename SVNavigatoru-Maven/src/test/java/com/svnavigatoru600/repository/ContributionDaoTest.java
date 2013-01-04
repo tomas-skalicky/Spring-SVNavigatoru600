@@ -195,6 +195,6 @@ public class ContributionDaoTest extends AbstractRepositoryTest {
      */
     private int createDefaultTestThread(ThreadDao threadDao) {
         return TEST_UTILS.createTestThread(RepositoryTestUtils.THREAD_DEFAULT_NAME, this.defaultAuthor,
-                threadDao);
+                RepositoryTestUtils.THREAD_DEFAULT_CONTRIBUTIONS, threadDao);
     }
 }

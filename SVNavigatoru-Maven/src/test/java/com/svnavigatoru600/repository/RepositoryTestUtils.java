@@ -3,6 +3,7 @@ package com.svnavigatoru600.repository;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.springframework.context.ApplicationContext;
@@ -62,9 +63,56 @@ public final class RepositoryTestUtils {
      */
     static final String THREAD_DEFAULT_NAME = "thread name 1";
     /**
+     * Default contributions of test thread.
+     */
+    static final List<Contribution> THREAD_DEFAULT_CONTRIBUTIONS = new ArrayList<Contribution>();
+    /**
      * Default text of test contribution.
      */
     static final String CONTRIBUTION_DEFAULT_TEXT = "contribution text 1";
+    /**
+     * Default username (=login) of test user.
+     */
+    static final String USER_DEFAULT_USERNAME = "username 1";
+    /**
+     * Default password of test user.
+     */
+    static final String USER_DEFAULT_PASSWORD = "password 1";
+    /**
+     * Default indicator of test user whether the user is active.
+     */
+    static final boolean USER_DEFAULT_ENABLED = true;
+    /**
+     * Default first name of test user.
+     */
+    static final String USER_DEFAULT_FIRST_NAME = "first name 1";
+    /**
+     * Default last name of test user.
+     */
+    static final String USER_DEFAULT_LAST_NAME = "last name 1";
+    /**
+     * Default email of test user.
+     */
+    static final String USER_DEFAULT_EMAIL = "email 1";
+    /**
+     * Default phone of test user.
+     */
+    static final String USER_DEFAULT_PHONE = "phone 1";
+    /**
+     * Default indicator of test user whether the user is a test one.
+     */
+    static final boolean USER_DEFAULT_IS_TEST_USER = false;
+    /**
+     * Default authorities of test user.
+     */
+    static final Set<GrantedAuthority> USER_DEFAULT_AUTHORITIES;
+
+    static {
+        USER_DEFAULT_AUTHORITIES = new HashSet<GrantedAuthority>();
+        USER_DEFAULT_AUTHORITIES.add(new Authority(USER_DEFAULT_USERNAME, AuthorityType.ROLE_REGISTERED_USER
+                .name()));
+    }
+
     /**
      * Application context which contains necessary beans.
      */
@@ -182,11 +230,11 @@ public final class RepositoryTestUtils {
      * 
      * @return ID of the newly created thread
      */
-    int createTestThread(String name, User author, ThreadDao threadDao) {
+    int createTestThread(String name, User author, List<Contribution> contributions, ThreadDao threadDao) {
         Thread thread = new Thread();
         thread.setName(name);
         thread.setAuthor(author);
-        thread.setContributions(new ArrayList<Contribution>());
+        thread.setContributions(contributions);
         return threadDao.save(thread);
     }
 
@@ -204,18 +252,10 @@ public final class RepositoryTestUtils {
      */
     User createDefaultTestUser() {
         UserDao userDao = this.getUserDao();
-        String username = "username 1";
-        String password = "password 1";
-        boolean enabled = true;
-        String firstName = "first name 1";
-        String lastName = "last name 1";
-        String email = "email 1";
-        String phone = "phone 1";
-        boolean isTestUser = false;
-        Set<GrantedAuthority> authorities = new HashSet<GrantedAuthority>();
-        authorities.add(new Authority(username, AuthorityType.ROLE_REGISTERED_USER.name()));
-        this.createTestUser(username, password, enabled, firstName, lastName, email, phone, isTestUser,
-                authorities, userDao);
+        String username = USER_DEFAULT_USERNAME;
+        this.createTestUser(username, USER_DEFAULT_PASSWORD, USER_DEFAULT_ENABLED, USER_DEFAULT_FIRST_NAME,
+                USER_DEFAULT_LAST_NAME, USER_DEFAULT_EMAIL, USER_DEFAULT_PHONE, USER_DEFAULT_IS_TEST_USER,
+                USER_DEFAULT_AUTHORITIES, userDao);
         return userDao.findByUsername(username);
     }
 
