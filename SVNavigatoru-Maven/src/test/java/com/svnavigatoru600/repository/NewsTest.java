@@ -21,8 +21,17 @@ import com.svnavigatoru600.test.category.PersistenceTests;
 @Category(PersistenceTests.class)
 public class NewsTest extends AbstractRepositoryTest {
 
+    /**
+     * Default title of the test news.
+     */
     private static final String NEWS_TITLE = "title 1";
+    /**
+     * Default text of the test news.
+     */
     private static final String NEWS_TEXT = "text 1";
+    /**
+     * Text of the edited test news.
+     */
     private static final String EDITED_NEWS_TEXT = "text 2";
 
     @Test
@@ -99,23 +108,22 @@ public class NewsTest extends AbstractRepositoryTest {
     }
 
     /**
-     * Creates and saves a default test instance of {@link News}.
+     * Creates and saves a default test news.
      * 
-     * @return The ID of the created instance of {@link News}
+     * @return ID of the newly created news
      */
     private int createDefaultTestNews(NewsDao newsDao) {
         return this.createTestNews(NEWS_TITLE, NEWS_TEXT, newsDao);
     }
 
     /**
-     * Creates and saves a test instance of {@link News}.
+     * Creates and saves a test news.
      * 
      * @param title
-     *            The title of the {@link News}
+     *            Title of the news
      * @param text
-     *            The text of the {@link News}
-     * @param newsDao
-     * @return The ID of the created instance of {@link News}
+     *            Text of the news
+     * @return ID of the newly created news
      */
     private int createTestNews(String title, String text, NewsDao newsDao) {
         News news = new News();
