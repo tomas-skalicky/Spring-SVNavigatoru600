@@ -1,5 +1,6 @@
 package com.svnavigatoru600.repository;
 
+import java.util.Date;
 import java.util.List;
 
 import org.junit.Assert;
@@ -51,6 +52,9 @@ public class NewsTest extends AbstractRepositoryTest {
         Assert.assertEquals(newsId, news.getId());
         Assert.assertEquals(NEWS_DEFAULT_TITLE, news.getTitle());
         Assert.assertEquals(NEWS_DEFAULT_TEXT, news.getText());
+        Assert.assertTrue(new Date().after(news.getCreationTime()));
+        Assert.assertTrue(new Date().after(news.getLastSaveTime()));
+        Assert.assertEquals(news.getCreationTime(), news.getLastSaveTime());
     }
 
     @Test
