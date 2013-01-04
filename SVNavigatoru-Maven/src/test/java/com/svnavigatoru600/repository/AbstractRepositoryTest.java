@@ -6,7 +6,6 @@ import javax.sql.DataSource;
 
 import org.junit.After;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
 
@@ -28,6 +27,11 @@ public abstract class AbstractRepositoryTest {
             "classpath:applicationContext-business.xml");
 
     /**
+     * Data source initialised in an {@link Before} method.
+     */
+    private DataSource dataSource = null;
+
+    /**
      * Default setting of connection's auto commit mode.
      */
     protected static final boolean DEFAULT_AUTO_COMMIT = true;
@@ -37,15 +41,35 @@ public abstract class AbstractRepositoryTest {
      */
     private Connection sqlConnection = null;
 
-    @BeforeClass
-    public static void setUpDatabase() throws Exception {
-        prepareDatabase();
+    @Before
+    public void initializeConnection() throws Exception {
+        this.dataSource = APPLICATION_CONTEXT.getBean(DataSource.class);
+        prepareDatabase(this.dataSource);
+        this.sqlConnection = this.dataSource.getConnection();
+        this.sqlConnection.setAutoCommit(DEFAULT_AUTO_COMMIT);
     }
 
-    private static void prepareDatabase() throws Exception {
-        synchronized (AbstractRepositoryTest.class) {
-            DataSource dataSource = APPLICATION_CONTEXT.getBean(DataSource.class);
+    /**
+     * NOTE: {@link After} method is guaranteed to run even if a {@link Before} or {@link org.junit.Test Test}
+     * method throws an exception (see
+     * http://stackoverflow.com/questions/9490569/does-teardown-get-called-if-test
+     * -case-throws-exception-junit).
+     */
+    @After
+    public void closeConnection() throws Exception {
+        this.sqlConnection.close();
+        emptyDatabase(this.dataSource);
+    }
+
+    private static void prepareDatabase(DataSource dataSource) throws Exception {
+        synchronized (DataSource.class) {
             getDatabaseLoader(dataSource).loadDatabase(dataSource);
+        }
+    }
+
+    private static void emptyDatabase(DataSource dataSource) throws Exception {
+        synchronized (DataSource.class) {
+            getDatabaseLoader(dataSource).emptyDatabase(dataSource);
         }
     }
 
@@ -66,22 +90,5 @@ public abstract class AbstractRepositoryTest {
             throw new IllegalArgumentException("Not supported implementation of javax.sql.DataSource: "
                     + dataSource.getClass());
         }
-    }
-
-    @Before
-    public void initializeConnection() throws Exception {
-        this.sqlConnection = APPLICATION_CONTEXT.getBean(DataSource.class).getConnection();
-        this.sqlConnection.setAutoCommit(DEFAULT_AUTO_COMMIT);
-    }
-
-    /**
-     * NOTE: {@link After} method is guaranteed to run even if a {@link Before} or {@link org.junit.Test Test}
-     * method throws an exception (see
-     * http://stackoverflow.com/questions/9490569/does-teardown-get-called-if-test
-     * -case-throws-exception-junit).
-     */
-    @After
-    public void closeConnection() throws Exception {
-        this.sqlConnection.close();
     }
 }
