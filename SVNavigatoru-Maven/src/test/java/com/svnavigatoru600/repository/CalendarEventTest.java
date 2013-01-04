@@ -17,7 +17,7 @@ import com.svnavigatoru600.test.category.PersistenceTests;
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
 @Category(PersistenceTests.class)
-public class CalendarEventsTest extends AbstractRepositoryTest {
+public class CalendarEventTest extends AbstractRepositoryTest {
 
     /**
      * Default name of test event.
