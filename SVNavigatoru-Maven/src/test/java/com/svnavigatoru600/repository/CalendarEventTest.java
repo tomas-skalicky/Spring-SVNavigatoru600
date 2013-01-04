@@ -175,7 +175,6 @@ public class CalendarEventTest extends AbstractRepositoryTest {
         event.setDate(date);
         event.setDescription(description);
         event.setPriority(priority);
-
         return eventDao.save(event);
     }
 }
