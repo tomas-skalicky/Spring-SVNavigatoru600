@@ -28,20 +28,30 @@ public abstract class AbstractDatabaseLoader {
      * default data.
      */
     public void loadDatabase(DataSource dataSource) throws SQLException, IOException {
-        String createSchemaFile = this.getCreateSchemaFile(dataSource);
-        SqlExecutor.executeSqlFile(dataSource, createSchemaFile);
-
-        String importDataFile = this.getImportDataFile(dataSource);
-        SqlExecutor.executeSqlFile(dataSource, importDataFile);
+        SqlExecutor.executeSqlFile(dataSource, this.getCreateSchemaFile(dataSource));
+        SqlExecutor.executeSqlFile(dataSource, this.getImportDataFile(dataSource));
     }
 
     /**
-     * Returns a name of the SQL file which contains SQL commands for creating a database schema.
+     * Loads a database which is encapsulated in the given {@link DataSource}. Loads both DB schema and
+     * default data.
+     */
+    public void emptyDatabase(DataSource dataSource) throws SQLException, IOException {
+        SqlExecutor.executeSqlFile(dataSource, this.getDropSchemaFile(dataSource));
+    }
+
+    /**
+     * @return Name of the SQL file containing statements for creating a database schema.
      */
     protected abstract String getCreateSchemaFile(DataSource dataSource);
 
     /**
-     * Returns a name of the SQL file which contains SQL commands for importing a default data.
+     * @return Name of the SQL file containing statements for importing default data.
      */
     protected abstract String getImportDataFile(DataSource dataSource);
+
+    /**
+     * @return Name of the SQL file containing statements for dropping a database schema.
+     */
+    protected abstract String getDropSchemaFile(DataSource dataSource);
 }

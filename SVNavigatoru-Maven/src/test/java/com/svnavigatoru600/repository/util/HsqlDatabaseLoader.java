@@ -14,13 +14,23 @@ import org.jpatterns.gof.FactoryMethodPattern.ConcreteCreator;
 @ConcreteCreator
 public class HsqlDatabaseLoader extends AbstractDatabaseLoader {
 
+    /**
+     * Relative path of the folder containing all HSQLDB scripts for test purposes.
+     */
+    private static final String HSQLDB_SCRIPTS_HOME = TEST_RESOURCES_RELATIVE_PATH + "/db/hsqldb";
+
     @Override
     protected String getCreateSchemaFile(DataSource dataSource) {
-        return TEST_RESOURCES_RELATIVE_PATH + "/db/hsqldb/create_schema.sql";
+        return HSQLDB_SCRIPTS_HOME + "/create_schema.sql";
     }
 
     @Override
     protected String getImportDataFile(DataSource dataSource) {
-        return TEST_RESOURCES_RELATIVE_PATH + "/db/hsqldb/load_test_data.sql";
+        return HSQLDB_SCRIPTS_HOME + "/load_test_data.sql";
+    }
+
+    @Override
+    protected String getDropSchemaFile(DataSource dataSource) {
+        return HSQLDB_SCRIPTS_HOME + "/drop_schema.sql";
     }
 }
