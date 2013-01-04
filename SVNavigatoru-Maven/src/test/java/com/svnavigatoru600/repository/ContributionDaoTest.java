@@ -26,12 +26,12 @@ import com.svnavigatoru600.service.util.OrderType;
 import com.svnavigatoru600.test.category.PersistenceTests;
 
 /**
- * Tests methods of the {@link Contribution} interface.
+ * Tests methods of the {@link ContributionDao} interface.
  * 
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
 @Category(PersistenceTests.class)
-public class ContributionTest extends AbstractRepositoryTest {
+public class ContributionDaoTest extends AbstractRepositoryTest {
 
     /**
      * Default name of test thread.
