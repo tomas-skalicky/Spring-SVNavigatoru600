@@ -25,17 +25,14 @@ public abstract class AbstractRepositoryTest {
      */
     protected static final ApplicationContext APPLICATION_CONTEXT = new FileSystemXmlApplicationContext(
             "classpath:applicationContext-business.xml");
-
     /**
      * Data source initialised in an {@link Before} method.
      */
     private DataSource dataSource = null;
-
     /**
      * Default setting of connection's auto commit mode.
      */
     protected static final boolean DEFAULT_AUTO_COMMIT = true;
-
     /**
      * Connection to a database which is opened at the very beginning of each test and closed at its very end.
      */
