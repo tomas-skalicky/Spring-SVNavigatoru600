@@ -32,17 +32,14 @@ public class ContributionDaoImpl extends HibernateDaoSupport implements Contribu
         return (List<Contribution>) this.getHibernateTemplate().findByCriteria(criteria);
     }
 
-    /**
-     * @param maxResultSize
-     *            NOT USED YET
-     */
     @Override
     @SuppressWarnings("unchecked")
     public List<Contribution> findAllOrdered(ContributionField sortField, OrderType sortDirection,
             int maxResultSize) {
         String query = String.format("FROM %s c ORDER BY c.%s %s", PersistedClass.Contribution.name(),
                 sortField.name(), sortDirection.getDatabaseCode());
-        return (List<Contribution>) this.getHibernateTemplate().find(query);
+        List<Contribution> contributionsFromDb = (List<Contribution>) this.getHibernateTemplate().find(query);
+        return contributionsFromDb.subList(0, Math.min(contributionsFromDb.size(), maxResultSize));
     }
 
     @Override

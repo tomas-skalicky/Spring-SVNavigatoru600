@@ -31,8 +31,7 @@ public interface ContributionDao {
      * Returns all {@link Contribution Contributions} stored in the repository arranged according to the given
      * {@link ContributionField sortField} and {@link OrderType sortDirection}.
      * <p>
-     * NOT IMPLEMENTED YET: It returns only the first <code>maxResultSize</code> {@link Contribution
-     * Contributions}.
+     * It returns only the first <code>maxResultSize</code> {@link Contribution Contributions}.
      */
     List<Contribution> findAllOrdered(ContributionField sortField, OrderType sortDirection, int maxResultSize);
 
