@@ -27,8 +27,12 @@ import com.svnavigatoru600.repository.users.UserDao;
  * those which return an implementation of DAO interface and<br />
  * those which return an instance of persisted class.
  * <p>
- * DO NOT CREATE any default instances or any other of persisted classes (e.g. Contribution, CalendarEvent)
- * here, in advance. The first the classes can be instantiated is in {@link org.junit.Before Before} methods.
+ * DO NOT CREATE any default instances or any other instances of persisted classes (e.g. Contribution,
+ * CalendarEvent) here, in advance. The very first time the classes can be instantiated is in
+ * {@link org.junit.Before Before} methods.<br />
+ * The reason is a potential danger that a certain test would change an instance created here and other tests
+ * in the same test class would use this changed object in a belief that the object has really the original
+ * properties, but it has not.
  * 
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
@@ -134,8 +138,8 @@ public final class RepositoryTestUtils {
      * 
      * @return ID of the newly created event
      */
-    int createDefaultTestEvent(CalendarEventDao eventDao) {
-        return this.createDefaultTestEvent(EVENT_DEFAULT_DATE, eventDao);
+    int createDefaultTestEvent() {
+        return this.createDefaultTestEvent(EVENT_DEFAULT_DATE);
     }
 
     /**
@@ -143,9 +147,9 @@ public final class RepositoryTestUtils {
      * 
      * @return ID of the newly created event
      */
-    int createDefaultTestEvent(Date date, CalendarEventDao eventDao) {
+    int createDefaultTestEvent(Date date) {
         return this.createTestEvent(EVENT_DEFAULT_NAME, date, EVENT_DEFAULT_DESCRIPTION,
-                EVENT_DEFAULT_PRIORITY, eventDao);
+                EVENT_DEFAULT_PRIORITY);
     }
 
     /**
@@ -153,14 +157,13 @@ public final class RepositoryTestUtils {
      * 
      * @return ID of the newly created event
      */
-    int createTestEvent(String name, Date date, String description, PriorityType priority,
-            CalendarEventDao eventDao) {
+    int createTestEvent(String name, Date date, String description, PriorityType priority) {
         CalendarEvent event = new CalendarEvent();
         event.setName(name);
         event.setDate(date);
         event.setDescription(description);
         event.setPriority(priority);
-        return eventDao.save(event);
+        return this.getEventDao().save(event);
     }
 
     /**
@@ -175,8 +178,8 @@ public final class RepositoryTestUtils {
      * 
      * @return ID of the newly created news
      */
-    int createDefaultTestNews(NewsDao newsDao) {
-        return this.createTestNews(NEWS_DEFAULT_TITLE, NEWS_DEFAULT_TEXT, newsDao);
+    int createDefaultTestNews() {
+        return this.createTestNews(NEWS_DEFAULT_TITLE, NEWS_DEFAULT_TEXT);
     }
 
     /**
@@ -184,11 +187,11 @@ public final class RepositoryTestUtils {
      * 
      * @return ID of the newly created news
      */
-    int createTestNews(String title, String text, NewsDao newsDao) {
+    int createTestNews(String title, String text) {
         News news = new News();
         news.setTitle(title);
         news.setText(text);
-        return newsDao.save(news);
+        return this.getNewsDao().save(news);
     }
 
     /**
@@ -210,12 +213,12 @@ public final class RepositoryTestUtils {
      * 
      * @return ID of the newly created contribution
      */
-    int createTestContribution(Thread thread, String text, User author, ContributionDao contributionDao) {
+    int createTestContribution(Thread thread, String text, User author) {
         Contribution contribution = new Contribution();
         contribution.setThread(thread);
         contribution.setText(text);
         contribution.setAuthor(author);
-        return contributionDao.save(contribution);
+        return this.getContributionDao().save(contribution);
     }
 
     /**
@@ -230,12 +233,12 @@ public final class RepositoryTestUtils {
      * 
      * @return ID of the newly created thread
      */
-    int createTestThread(String name, User author, List<Contribution> contributions, ThreadDao threadDao) {
+    int createTestThread(String name, User author, List<Contribution> contributions) {
         Thread thread = new Thread();
         thread.setName(name);
         thread.setAuthor(author);
         thread.setContributions(contributions);
-        return threadDao.save(thread);
+        return this.getThreadDao().save(thread);
     }
 
     /**
@@ -251,12 +254,11 @@ public final class RepositoryTestUtils {
      * @return ID of the newly created user
      */
     User createDefaultTestUser() {
-        UserDao userDao = this.getUserDao();
         String username = USER_DEFAULT_USERNAME;
         this.createTestUser(username, USER_DEFAULT_PASSWORD, USER_DEFAULT_ENABLED, USER_DEFAULT_FIRST_NAME,
                 USER_DEFAULT_LAST_NAME, USER_DEFAULT_EMAIL, USER_DEFAULT_PHONE, USER_DEFAULT_IS_TEST_USER,
-                USER_DEFAULT_AUTHORITIES, userDao);
-        return userDao.findByUsername(username);
+                USER_DEFAULT_AUTHORITIES);
+        return this.getUserDao().findByUsername(username);
     }
 
     /**
@@ -265,7 +267,7 @@ public final class RepositoryTestUtils {
      * @return ID of the newly created user
      */
     void createTestUser(String username, String password, boolean enabled, String firstName, String lastName,
-            String email, String phone, boolean isTestUser, Set<GrantedAuthority> authorities, UserDao userDao) {
+            String email, String phone, boolean isTestUser, Set<GrantedAuthority> authorities) {
         User user = new User();
         user.setUsername(username);
         user.setPassword(password);
@@ -276,6 +278,6 @@ public final class RepositoryTestUtils {
         user.setPhone(phone);
         user.setTestUser(isTestUser);
         user.setAuthorities(authorities);
-        userDao.save(user);
+        this.getUserDao().save(user);
     }
 }
