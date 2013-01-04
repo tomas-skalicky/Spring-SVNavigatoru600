@@ -22,13 +22,13 @@ import com.svnavigatoru600.test.category.PersistenceTests;
 public class NewsTest extends AbstractRepositoryTest {
 
     /**
-     * Default title of the test news.
+     * Default title of test news.
      */
-    private static final String NEWS_TITLE = "title 1";
+    private static final String NEWS_DEFAULT_TITLE = "title 1";
     /**
-     * Default text of the test news.
+     * Default text of test news.
      */
-    private static final String NEWS_TEXT = "text 1";
+    private static final String NEWS_DEFAULT_TEXT = "text 1";
     /**
      * Text of the edited test news.
      */
@@ -46,8 +46,8 @@ public class NewsTest extends AbstractRepositoryTest {
         Assert.assertNotNull(news);
         Assert.assertTrue(news.getId() >= 1);
         Assert.assertEquals(newsId, news.getId());
-        Assert.assertEquals(NEWS_TITLE, news.getTitle());
-        Assert.assertEquals(NEWS_TEXT, news.getText());
+        Assert.assertEquals(NEWS_DEFAULT_TITLE, news.getTitle());
+        Assert.assertEquals(NEWS_DEFAULT_TEXT, news.getText());
     }
 
     @Test
@@ -113,16 +113,12 @@ public class NewsTest extends AbstractRepositoryTest {
      * @return ID of the newly created news
      */
     private int createDefaultTestNews(NewsDao newsDao) {
-        return this.createTestNews(NEWS_TITLE, NEWS_TEXT, newsDao);
+        return this.createTestNews(NEWS_DEFAULT_TITLE, NEWS_DEFAULT_TEXT, newsDao);
     }
 
     /**
      * Creates and saves a test news.
      * 
-     * @param title
-     *            Title of the news
-     * @param text
-     *            Text of the news
      * @return ID of the newly created news
      */
     private int createTestNews(String title, String text, NewsDao newsDao) {
