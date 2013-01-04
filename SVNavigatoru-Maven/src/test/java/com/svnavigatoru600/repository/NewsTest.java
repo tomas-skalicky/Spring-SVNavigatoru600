@@ -40,14 +40,13 @@ public class NewsTest extends AbstractRepositoryTest {
 
     @Test
     public void testCreateRetrieve() throws Exception {
-        NewsDao newsDao = APPLICATION_CONTEXT.getBean(NewsDao.class);
+        NewsDao newsDao = this.getNewsDao();
 
         // INSERT
         int newsId = this.createDefaultTestNews(newsDao);
 
         // SELECT ONE
         News news = newsDao.findById(newsId);
-        Assert.assertNotNull(news);
         Assert.assertTrue(news.getId() >= 1);
         Assert.assertEquals(newsId, news.getId());
         Assert.assertEquals(NEWS_DEFAULT_TITLE, news.getTitle());
@@ -56,7 +55,7 @@ public class NewsTest extends AbstractRepositoryTest {
 
     @Test
     public void testUpdate() throws Exception {
-        NewsDao newsDao = APPLICATION_CONTEXT.getBean(NewsDao.class);
+        NewsDao newsDao = this.getNewsDao();
 
         // INSERT & SELECT ONE
         int newsId = this.createDefaultTestNews(newsDao);
@@ -69,7 +68,6 @@ public class NewsTest extends AbstractRepositoryTest {
 
         // SELECT ONE
         news = newsDao.findById(news.getId());
-        Assert.assertNotNull(news);
         Assert.assertTrue(news.getId() >= 1);
         Assert.assertEquals(newsId, news.getId());
         Assert.assertEquals(EDITED_NEWS_TITLE, news.getTitle());
@@ -79,7 +77,7 @@ public class NewsTest extends AbstractRepositoryTest {
 
     @Test
     public void testDelete() throws Exception {
-        NewsDao newsDao = APPLICATION_CONTEXT.getBean(NewsDao.class);
+        NewsDao newsDao = this.getNewsDao();
 
         // INSERT & SELECT ONE
         int newsId = this.createDefaultTestNews(newsDao);
@@ -99,8 +97,8 @@ public class NewsTest extends AbstractRepositoryTest {
     }
 
     @Test
-    public void testSelectAll() throws Exception {
-        NewsDao newsDao = APPLICATION_CONTEXT.getBean(NewsDao.class);
+    public void testFindAllOrdered() throws Exception {
+        NewsDao newsDao = this.getNewsDao();
 
         // TWO INSERTS
         int firstNewsId = this.createDefaultTestNews(newsDao);
@@ -109,8 +107,17 @@ public class NewsTest extends AbstractRepositoryTest {
         // SELECT ALL
         List<News> foundNews = newsDao.findAllOrdered(new FindAllOrderedArguments(NewsField.creationTime,
                 OrderType.ASCENDING));
+        int expectedFoundNewsCount = 2;
+        Assert.assertEquals(expectedFoundNewsCount, foundNews.size());
         Assert.assertEquals(firstNewsId, foundNews.get(foundNews.size() - 2).getId());
         Assert.assertEquals(secondNewsId, foundNews.get(foundNews.size() - 1).getId());
+    }
+
+    /**
+     * Gets a {@link NewsDao} from an application context.
+     */
+    private NewsDao getNewsDao() {
+        return APPLICATION_CONTEXT.getBean(NewsDao.class);
     }
 
     /**
@@ -132,7 +139,6 @@ public class NewsTest extends AbstractRepositoryTest {
         news.setTitle(title);
         news.setText(text);
 
-        int newId = newsDao.save(news);
-        return newId;
+        return newsDao.save(news);
     }
 }
