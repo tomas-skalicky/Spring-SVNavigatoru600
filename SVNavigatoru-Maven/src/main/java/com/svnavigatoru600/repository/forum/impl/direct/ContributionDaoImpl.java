@@ -94,20 +94,19 @@ public class ContributionDaoImpl extends NamedParameterJdbcDaoSupport implements
         return this.getNamedParameterJdbcTemplate().query(query, args, new ContributionRowMapper());
     }
 
-    /**
-     * @param maxResultSize
-     *            NOT USED YET
-     */
     @Override
     public List<Contribution> findAllOrdered(ContributionField sortField, OrderType sortDirection,
             int maxResultSize) {
         String query = String.format("SELECT * FROM %s c ORDER BY c.%s %s", ContributionDaoImpl.TABLE_NAME,
                 sortField.getColumnName(), sortDirection.getDatabaseCode());
 
-        List<Contribution> contributions = this.getJdbcTemplate().query(query, new ContributionRowMapper());
+        List<Contribution> contributionsFromDb = this.getJdbcTemplate().query(query,
+                new ContributionRowMapper());
+        List<Contribution> filteredContributions = contributionsFromDb.subList(0,
+                Math.min(contributionsFromDb.size(), maxResultSize));
 
-        this.populateThreadAndAuthor(contributions);
-        return contributions;
+        this.populateThreadAndAuthor(filteredContributions);
+        return filteredContributions;
     }
 
     @Override
