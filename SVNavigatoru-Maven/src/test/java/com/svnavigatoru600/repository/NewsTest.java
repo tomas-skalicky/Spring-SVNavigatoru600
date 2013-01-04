@@ -30,6 +30,10 @@ public class NewsTest extends AbstractRepositoryTest {
      */
     private static final String NEWS_DEFAULT_TEXT = "text 1";
     /**
+     * Title of the edited test news.
+     */
+    private static final String EDITED_NEWS_TITLE = "title 2";
+    /**
      * Text of the edited test news.
      */
     private static final String EDITED_NEWS_TEXT = "text 2";
@@ -59,6 +63,7 @@ public class NewsTest extends AbstractRepositoryTest {
         News news = newsDao.findById(newsId);
 
         // UPDATE
+        news.setTitle(EDITED_NEWS_TITLE);
         news.setText(EDITED_NEWS_TEXT);
         newsDao.update(news);
 
@@ -67,6 +72,7 @@ public class NewsTest extends AbstractRepositoryTest {
         Assert.assertNotNull(news);
         Assert.assertTrue(news.getId() >= 1);
         Assert.assertEquals(newsId, news.getId());
+        Assert.assertEquals(EDITED_NEWS_TITLE, news.getTitle());
         Assert.assertEquals(EDITED_NEWS_TEXT, news.getText());
         Assert.assertTrue(news.getLastSaveTime().after(news.getCreationTime()));
     }
