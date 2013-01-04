@@ -1,11 +1,16 @@
 package com.svnavigatoru600.service.util;
 
+import org.jpatterns.gof.VisitorPattern;
+import org.jpatterns.gof.VisitorPattern.ConcreteVisitor;
+
 import com.svnavigatoru600.domain.users.User;
 import com.svnavigatoru600.service.util.FullNameFormat.FullNameFormatVisitor;
 
 /**
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
+@VisitorPattern(participants = { FullNameFormatVisitor.class, UserFullNameFormatter.class })
+@ConcreteVisitor
 public class UserFullNameFormatter implements FullNameFormatVisitor<String> {
 
     /**
