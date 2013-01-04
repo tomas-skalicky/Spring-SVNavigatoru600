@@ -26,6 +26,10 @@ public abstract class AbstractRepositoryTest {
     protected static final ApplicationContext APPLICATION_CONTEXT = new FileSystemXmlApplicationContext(
             "classpath:applicationContext-business.xml");
     /**
+     * Utility functions for retrieving DAO objects or creation default representants of persisted classes.
+     */
+    protected static final RepositoryTestUtils TEST_UTILS = new RepositoryTestUtils(APPLICATION_CONTEXT);
+    /**
      * Data source initialised in an {@link Before} method.
      */
     private DataSource dataSource = null;

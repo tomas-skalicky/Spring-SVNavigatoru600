@@ -23,22 +23,6 @@ import com.svnavigatoru600.test.category.PersistenceTests;
 public class CalendarEventDaoTest extends AbstractRepositoryTest {
 
     /**
-     * Default name of test event.
-     */
-    private static final String EVENT_DEFAULT_NAME = "name 1";
-    /**
-     * Default date of test event. It equals now.
-     */
-    private static final Date EVENT_DEFAULT_DATE = new Date();
-    /**
-     * Default description of test event.
-     */
-    private static final String EVENT_DEFAULT_DESCRIPTION = "description 1";
-    /**
-     * Default priority of test event.
-     */
-    private static final PriorityType EVENT_DEFAULT_PRIORITY = PriorityType.LOW;
-    /**
      * Name of the edited test event.
      */
     private static final String EDITED_EVENT_NAME = "name 2";
@@ -57,27 +41,27 @@ public class CalendarEventDaoTest extends AbstractRepositoryTest {
 
     @Test
     public void testCreateRetrieve() throws Exception {
-        CalendarEventDao eventDao = this.getEventDao();
+        CalendarEventDao eventDao = TEST_UTILS.getEventDao();
 
         // INSERT
-        int eventId = this.createDefaultTestEvent(eventDao);
+        int eventId = TEST_UTILS.createDefaultTestEvent(eventDao);
 
         // SELECT ONE
         CalendarEvent event = eventDao.findById(eventId);
         Assert.assertTrue(event.getId() >= 1);
         Assert.assertEquals(eventId, event.getId());
-        Assert.assertEquals(EVENT_DEFAULT_NAME, event.getName());
-        Assert.assertEquals(EVENT_DEFAULT_DATE, event.getDate());
-        Assert.assertEquals(EVENT_DEFAULT_DESCRIPTION, event.getDescription());
-        Assert.assertEquals(EVENT_DEFAULT_PRIORITY.name(), event.getPriority());
+        Assert.assertEquals(RepositoryTestUtils.EVENT_DEFAULT_NAME, event.getName());
+        Assert.assertEquals(RepositoryTestUtils.EVENT_DEFAULT_DATE, event.getDate());
+        Assert.assertEquals(RepositoryTestUtils.EVENT_DEFAULT_DESCRIPTION, event.getDescription());
+        Assert.assertEquals(RepositoryTestUtils.EVENT_DEFAULT_PRIORITY.name(), event.getPriority());
     }
 
     @Test
     public void testUpdate() throws Exception {
-        CalendarEventDao eventDao = this.getEventDao();
+        CalendarEventDao eventDao = TEST_UTILS.getEventDao();
 
         // INSERT & SELECT ONE
-        int eventId = this.createDefaultTestEvent(eventDao);
+        int eventId = TEST_UTILS.createDefaultTestEvent(eventDao);
         CalendarEvent event = eventDao.findById(eventId);
 
         // UPDATE
@@ -99,10 +83,10 @@ public class CalendarEventDaoTest extends AbstractRepositoryTest {
 
     @Test
     public void testDelete() throws Exception {
-        CalendarEventDao eventDao = this.getEventDao();
+        CalendarEventDao eventDao = TEST_UTILS.getEventDao();
 
         // INSERT & SELECT ONE
-        int eventId = this.createDefaultTestEvent(eventDao);
+        int eventId = TEST_UTILS.createDefaultTestEvent(eventDao);
         CalendarEvent event = eventDao.findById(eventId);
 
         // DELETE
@@ -120,14 +104,14 @@ public class CalendarEventDaoTest extends AbstractRepositoryTest {
 
     @Test
     public void testFindAllOrdered() throws Exception {
-        CalendarEventDao eventDao = this.getEventDao();
+        CalendarEventDao eventDao = TEST_UTILS.getEventDao();
         Date now = new Date();
 
         // THREE INSERTS
-        int firstEventId = this.createDefaultTestEvent(DateUtils.getDay(now, 2), eventDao);
-        int secondEventId = this.createDefaultTestEvent(DateUtils.getDay(now, 1), eventDao);
+        int firstEventId = TEST_UTILS.createDefaultTestEvent(DateUtils.getDay(now, 2), eventDao);
+        int secondEventId = TEST_UTILS.createDefaultTestEvent(DateUtils.getDay(now, 1), eventDao);
         @SuppressWarnings("unused")
-        int thirdNewsId = this.createDefaultTestEvent(DateUtils.getDay(now, -1), eventDao);
+        int thirdNewsId = TEST_UTILS.createDefaultTestEvent(DateUtils.getDay(now, -1), eventDao);
 
         // SELECT ALL
         List<CalendarEvent> foundEvents = eventDao.findAllFutureEventsOrdered(now, OrderType.ASCENDING);
@@ -135,46 +119,5 @@ public class CalendarEventDaoTest extends AbstractRepositoryTest {
         Assert.assertEquals(expectedFoundEventCount, foundEvents.size());
         Assert.assertEquals(secondEventId, foundEvents.get(0).getId());
         Assert.assertEquals(firstEventId, foundEvents.get(1).getId());
-    }
-
-    /**
-     * Gets a {@link CalendarEventDao} from an application context.
-     */
-    private CalendarEventDao getEventDao() {
-        return APPLICATION_CONTEXT.getBean(CalendarEventDao.class);
-    }
-
-    /**
-     * Creates and saves a default test event.
-     * 
-     * @return ID of the newly created event
-     */
-    private int createDefaultTestEvent(CalendarEventDao eventDao) {
-        return this.createDefaultTestEvent(EVENT_DEFAULT_DATE, eventDao);
-    }
-
-    /**
-     * Creates and saves a default test event with the given date.
-     * 
-     * @return ID of the newly created event
-     */
-    private int createDefaultTestEvent(Date date, CalendarEventDao eventDao) {
-        return this.createTestEvent(EVENT_DEFAULT_NAME, date, EVENT_DEFAULT_DESCRIPTION,
-                EVENT_DEFAULT_PRIORITY, eventDao);
-    }
-
-    /**
-     * Creates and saves a test event.
-     * 
-     * @return ID of the newly created event
-     */
-    private int createTestEvent(String name, Date date, String description, PriorityType priority,
-            CalendarEventDao eventDao) {
-        CalendarEvent event = new CalendarEvent();
-        event.setName(name);
-        event.setDate(date);
-        event.setDescription(description);
-        event.setPriority(priority);
-        return eventDao.save(event);
     }
 }

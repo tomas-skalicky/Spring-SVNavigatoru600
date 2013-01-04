@@ -23,35 +23,27 @@ import com.svnavigatoru600.test.category.PersistenceTests;
 public class NewsDaoTest extends AbstractRepositoryTest {
 
     /**
-     * Default title of test news.
-     */
-    private static final String NEWS_DEFAULT_TITLE = "title 1";
-    /**
-     * Default text of test news.
-     */
-    private static final String NEWS_DEFAULT_TEXT = "text 1";
-    /**
      * Title of the edited test news.
      */
-    private static final String EDITED_NEWS_TITLE = "title 2";
+    private static final String EDITED_NEWS_TITLE = "news title 2";
     /**
      * Text of the edited test news.
      */
-    private static final String EDITED_NEWS_TEXT = "text 2";
+    private static final String EDITED_NEWS_TEXT = "news text 2";
 
     @Test
     public void testCreateRetrieve() throws Exception {
-        NewsDao newsDao = this.getNewsDao();
+        NewsDao newsDao = TEST_UTILS.getNewsDao();
 
         // INSERT
-        int newsId = this.createDefaultTestNews(newsDao);
+        int newsId = TEST_UTILS.createDefaultTestNews(newsDao);
 
         // SELECT ONE
         News news = newsDao.findById(newsId);
         Assert.assertTrue(news.getId() >= 1);
         Assert.assertEquals(newsId, news.getId());
-        Assert.assertEquals(NEWS_DEFAULT_TITLE, news.getTitle());
-        Assert.assertEquals(NEWS_DEFAULT_TEXT, news.getText());
+        Assert.assertEquals(RepositoryTestUtils.NEWS_DEFAULT_TITLE, news.getTitle());
+        Assert.assertEquals(RepositoryTestUtils.NEWS_DEFAULT_TEXT, news.getText());
         Assert.assertTrue(new Date().after(news.getCreationTime()));
         Assert.assertTrue(new Date().after(news.getLastSaveTime()));
         Assert.assertEquals(news.getCreationTime(), news.getLastSaveTime());
@@ -59,10 +51,10 @@ public class NewsDaoTest extends AbstractRepositoryTest {
 
     @Test
     public void testUpdate() throws Exception {
-        NewsDao newsDao = this.getNewsDao();
+        NewsDao newsDao = TEST_UTILS.getNewsDao();
 
         // INSERT & SELECT ONE
-        int newsId = this.createDefaultTestNews(newsDao);
+        int newsId = TEST_UTILS.createDefaultTestNews(newsDao);
         News news = newsDao.findById(newsId);
 
         // UPDATE
@@ -81,10 +73,10 @@ public class NewsDaoTest extends AbstractRepositoryTest {
 
     @Test
     public void testDelete() throws Exception {
-        NewsDao newsDao = this.getNewsDao();
+        NewsDao newsDao = TEST_UTILS.getNewsDao();
 
         // INSERT & SELECT ONE
-        int newsId = this.createDefaultTestNews(newsDao);
+        int newsId = TEST_UTILS.createDefaultTestNews(newsDao);
         News news = newsDao.findById(newsId);
 
         // DELETE
@@ -102,11 +94,11 @@ public class NewsDaoTest extends AbstractRepositoryTest {
 
     @Test
     public void testFindAllOrdered() throws Exception {
-        NewsDao newsDao = this.getNewsDao();
+        NewsDao newsDao = TEST_UTILS.getNewsDao();
 
         // TWO INSERTS
-        int firstNewsId = this.createDefaultTestNews(newsDao);
-        int secondNewsId = this.createDefaultTestNews(newsDao);
+        int firstNewsId = TEST_UTILS.createDefaultTestNews(newsDao);
+        int secondNewsId = TEST_UTILS.createDefaultTestNews(newsDao);
 
         // SELECT ALL
         List<News> foundNews = newsDao.findAllOrdered(new FindAllOrderedArguments(NewsField.creationTime,
@@ -115,33 +107,5 @@ public class NewsDaoTest extends AbstractRepositoryTest {
         Assert.assertEquals(expectedFoundNewsCount, foundNews.size());
         Assert.assertEquals(firstNewsId, foundNews.get(0).getId());
         Assert.assertEquals(secondNewsId, foundNews.get(1).getId());
-    }
-
-    /**
-     * Gets a {@link NewsDao} from an application context.
-     */
-    private NewsDao getNewsDao() {
-        return APPLICATION_CONTEXT.getBean(NewsDao.class);
-    }
-
-    /**
-     * Creates and saves a default test news.
-     * 
-     * @return ID of the newly created news
-     */
-    private int createDefaultTestNews(NewsDao newsDao) {
-        return this.createTestNews(NEWS_DEFAULT_TITLE, NEWS_DEFAULT_TEXT, newsDao);
-    }
-
-    /**
-     * Creates and saves a test news.
-     * 
-     * @return ID of the newly created news
-     */
-    private int createTestNews(String title, String text, NewsDao newsDao) {
-        News news = new News();
-        news.setTitle(title);
-        news.setText(text);
-        return newsDao.save(news);
     }
 }
