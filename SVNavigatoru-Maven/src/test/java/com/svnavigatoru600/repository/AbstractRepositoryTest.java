@@ -47,8 +47,8 @@ public abstract class AbstractRepositoryTest {
     }
 
     /**
-     * NOTE: {@link After} method is guaranteed to run even if a {@link Before} or {@link org.junit.Test Test}
-     * method throws an exception (see
+     * NOTE: All {@link After} methods are guaranteed to run even if {@link Before} or {@link org.junit.Test
+     * Test} method throws an exception (see
      * http://stackoverflow.com/questions/9490569/does-teardown-get-called-if-test
      * -case-throws-exception-junit).
      */

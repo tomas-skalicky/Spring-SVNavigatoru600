@@ -138,7 +138,6 @@ public class NewsTest extends AbstractRepositoryTest {
         News news = new News();
         news.setTitle(title);
         news.setText(text);
-
         return newsDao.save(news);
     }
 }
