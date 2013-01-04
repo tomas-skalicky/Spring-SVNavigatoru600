@@ -25,11 +25,11 @@ public class WysiwygSectionDaoTest extends AbstractRepositoryTest {
     /**
      * Extension of the existing source code of a test section.
      */
-    private static final String TEST_SECTION_SOURCE_CODE_EXTENSION = "text 2";
+    private static final String TEST_SECTION_SOURCE_CODE_EXTENSION = "section text 2";
 
     @Test
     public void testUpdateRetrieve() throws Exception {
-        WysiwygSectionDao sectionDao = this.getSectionDao();
+        WysiwygSectionDao sectionDao = TEST_UTILS.getSectionDao();
 
         // SELECT ONE
         WysiwygSection section = sectionDao.findByName(TEST_SECTION_NAME);
@@ -46,12 +46,5 @@ public class WysiwygSectionDaoTest extends AbstractRepositoryTest {
         section = sectionDao.findByName(TEST_SECTION_NAME);
         Assert.assertEquals(newSourceCode, section.getSourceCode());
         Assert.assertTrue(section.getLastSaveTime().after(sectionLastSaveTime));
-    }
-
-    /**
-     * Gets a {@link WysiwygSectionDao} from an application context.
-     */
-    private WysiwygSectionDao getSectionDao() {
-        return APPLICATION_CONTEXT.getBean(WysiwygSectionDao.class);
     }
 }
