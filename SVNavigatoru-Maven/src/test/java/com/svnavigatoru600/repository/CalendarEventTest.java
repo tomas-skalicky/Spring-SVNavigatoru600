@@ -133,8 +133,8 @@ public class CalendarEventTest extends AbstractRepositoryTest {
         List<CalendarEvent> foundEvents = eventDao.findAllFutureEventsOrdered(now, OrderType.ASCENDING);
         int expectedFoundEventCount = 2;
         Assert.assertEquals(expectedFoundEventCount, foundEvents.size());
-        Assert.assertEquals(firstEventId, foundEvents.get(foundEvents.size() - 1).getId());
-        Assert.assertEquals(secondEventId, foundEvents.get(foundEvents.size() - 2).getId());
+        Assert.assertEquals(secondEventId, foundEvents.get(0).getId());
+        Assert.assertEquals(firstEventId, foundEvents.get(1).getId());
     }
 
     /**
