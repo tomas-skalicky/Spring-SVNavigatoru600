@@ -2,7 +2,6 @@ package com.svnavigatoru600.repository;
 
 import java.util.List;
 
-import org.apache.ibatis.session.SqlSession;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -15,53 +14,88 @@ import com.svnavigatoru600.service.util.OrderType;
 import com.svnavigatoru600.test.category.PersistenceTests;
 
 /**
+ * Tests methods of the {@link NewsDao} interface.
+ * 
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
 @Category(PersistenceTests.class)
 public class NewsTest extends AbstractRepositoryTest {
 
-    /**
-     * The default title of the test news.
-     */
-    private static final String NEWS_TITLE = "Test title";
-    /**
-     * The default text of the test news.
-     */
-    private static final String NEWS_TEXT = "Test text";
-    /**
-     * The text of the edited test news.
-     */
-    private static final String EDITED_NEWS_TEXT = "Test text 2";
+    private static final String NEWS_TITLE = "title 1";
+    private static final String NEWS_TEXT = "text 1";
+    private static final String EDITED_NEWS_TEXT = "text 2";
 
-    /**
-     * If the given {@link SqlSession} is determined, the changes - carried out in the database - are
-     * committed.
-     */
-    private void commitChanges(SqlSession sqlSession) {
-        if (sqlSession != null) {
-            sqlSession.commit();
+    @Test
+    public void testCreateRetrieve() throws Exception {
+        NewsDao newsDao = APPLICATION_CONTEXT.getBean(NewsDao.class);
+
+        // INSERT
+        int newsId = this.createDefaultTestNews(newsDao);
+
+        // SELECT ONE
+        News news = newsDao.findById(newsId);
+        Assert.assertNotNull(news);
+        Assert.assertTrue(news.getId() >= 1);
+        Assert.assertEquals(newsId, news.getId());
+        Assert.assertEquals(NEWS_TITLE, news.getTitle());
+        Assert.assertEquals(NEWS_TEXT, news.getText());
+    }
+
+    @Test
+    public void testUpdate() throws Exception {
+        NewsDao newsDao = APPLICATION_CONTEXT.getBean(NewsDao.class);
+
+        // INSERT & SELECT ONE
+        int newsId = this.createDefaultTestNews(newsDao);
+        News news = newsDao.findById(newsId);
+
+        // UPDATE
+        news.setText(EDITED_NEWS_TEXT);
+        newsDao.update(news);
+
+        // SELECT ONE
+        news = newsDao.findById(news.getId());
+        Assert.assertNotNull(news);
+        Assert.assertTrue(news.getId() >= 1);
+        Assert.assertEquals(newsId, news.getId());
+        Assert.assertEquals(EDITED_NEWS_TEXT, news.getText());
+        Assert.assertTrue(news.getLastSaveTime().after(news.getCreationTime()));
+    }
+
+    @Test
+    public void testDelete() throws Exception {
+        NewsDao newsDao = APPLICATION_CONTEXT.getBean(NewsDao.class);
+
+        // INSERT & SELECT ONE
+        int newsId = this.createDefaultTestNews(newsDao);
+        News news = newsDao.findById(newsId);
+
+        // DELETE
+        newsDao.delete(news);
+
+        // SELECT ONE
+        try {
+            news = newsDao.findById(news.getId());
+            Assert.fail("The news has been found");
+        } catch (EmptyResultDataAccessException ex) {
+            // OK since the news cannot have been found.
+            ;
         }
     }
 
-    /**
-     * Creates and saves a test instance of {@link News}.
-     * 
-     * @param newsDao
-     * @param sqlSession
-     * @param title
-     *            The title of the {@link News}
-     * @param text
-     *            The text of the {@link News}
-     * @return The ID of the created instance of {@link News}
-     */
-    private int createTestNews(String title, String text, NewsDao newsDao, SqlSession sqlSession) {
-        News news = new News();
-        news.setTitle(title);
-        news.setText(text);
+    @Test
+    public void testSelectAll() throws Exception {
+        NewsDao newsDao = APPLICATION_CONTEXT.getBean(NewsDao.class);
 
-        int newId = newsDao.save(news);
-        this.commitChanges(sqlSession);
-        return newId;
+        // TWO INSERTS
+        int firstNewsId = this.createDefaultTestNews(newsDao);
+        int secondNewsId = this.createDefaultTestNews(newsDao);
+
+        // SELECT ALL
+        List<News> foundNews = newsDao.findAllOrdered(new FindAllOrderedArguments(NewsField.creationTime,
+                OrderType.ASCENDING));
+        Assert.assertEquals(firstNewsId, foundNews.get(foundNews.size() - 2).getId());
+        Assert.assertEquals(secondNewsId, foundNews.get(foundNews.size() - 1).getId());
     }
 
     /**
@@ -69,80 +103,26 @@ public class NewsTest extends AbstractRepositoryTest {
      * 
      * @return The ID of the created instance of {@link News}
      */
-    private int createDefaultTestNews(NewsDao newsDao, SqlSession sqlSession) {
-        return this.createTestNews(NEWS_TITLE, NEWS_TEXT, newsDao, sqlSession);
+    private int createDefaultTestNews(NewsDao newsDao) {
+        return this.createTestNews(NEWS_TITLE, NEWS_TEXT, newsDao);
     }
 
     /**
-     * Deletes the given {@link News news}.
+     * Creates and saves a test instance of {@link News}.
+     * 
+     * @param title
+     *            The title of the {@link News}
+     * @param text
+     *            The text of the {@link News}
+     * @param newsDao
+     * @return The ID of the created instance of {@link News}
      */
-    private void deleteNews(News news, NewsDao newsDao, SqlSession sqlSession) {
-        newsDao.delete(news);
-        this.commitChanges(sqlSession);
-    }
+    private int createTestNews(String title, String text, NewsDao newsDao) {
+        News news = new News();
+        news.setTitle(title);
+        news.setText(text);
 
-    /**
-     * Tests methods of the {@link NewsDao} interface.
-     */
-    @Test
-    public void testWholeNewsDaoInterface() throws Exception {
-        // SqlSession sqlSession = APPLICATION_CONTEXT.getBean(SqlSessionFactory.class).openSession();
-        SqlSession sqlSession = null;
-
-        NewsDao newsDao = APPLICATION_CONTEXT.getBean(NewsDao.class);
-
-        try {
-            // INSERT
-            int newsId = this.createDefaultTestNews(newsDao, sqlSession);
-
-            // SELECT ONE
-            News news = newsDao.findById(newsId);
-            Assert.assertNotNull(news);
-            Assert.assertTrue(news.getId() >= 1);
-            Assert.assertEquals(newsId, news.getId());
-            Assert.assertEquals(NEWS_TITLE, news.getTitle());
-            Assert.assertEquals(NEWS_TEXT, news.getText());
-
-            // UPDATE
-            news.setText(EDITED_NEWS_TEXT);
-            newsDao.update(news);
-            this.commitChanges(sqlSession);
-
-            // SELECT ONE
-            news = newsDao.findById(news.getId());
-            Assert.assertNotNull(news);
-            Assert.assertTrue(news.getId() >= 1);
-            Assert.assertEquals(newsId, news.getId());
-            Assert.assertEquals(EDITED_NEWS_TEXT, news.getText());
-            Assert.assertTrue(news.getLastSaveTime().after(news.getCreationTime()));
-
-            // SELECT ALL
-            int secondNewsId = this.createDefaultTestNews(newsDao, sqlSession);
-            List<News> foundNews = newsDao.findAllOrdered(new FindAllOrderedArguments(NewsField.creationTime,
-                    OrderType.ASCENDING));
-            news = foundNews.get(foundNews.size() - 2);
-            Assert.assertEquals(newsId, news.getId());
-            News secondNews = foundNews.get(foundNews.size() - 1);
-            Assert.assertEquals(secondNewsId, secondNews.getId());
-
-            // DELETE
-            this.deleteNews(news, newsDao, sqlSession);
-
-            // SELECT ONE
-            try {
-                news = newsDao.findById(news.getId());
-                Assert.fail("The news has been found");
-            } catch (EmptyResultDataAccessException ex) {
-                // OK since the news cannot have been found.
-                ;
-            }
-
-            // DELETE
-            this.deleteNews(secondNews, newsDao, sqlSession);
-
-        } finally {
-            // sqlSession.close();
-            ;
-        }
+        int newId = newsDao.save(news);
+        return newId;
     }
 }
