@@ -240,4 +240,14 @@ public class User implements UserDetails, Serializable {
         this.setAuthorities(checkedAuthorities);
         return authoritiesChanged;
     }
+
+    @Override
+    public String toString() {
+        return new StringBuilder("[username=").append(this.username).append(", password=")
+                .append(this.password).append(", enabled=").append(this.enabled).append(", firstName=")
+                .append(this.firstName).append(", lastName=").append(this.lastName).append(", email=")
+                .append(this.email).append(", phone=").append(this.phone).append(", isTestUser=")
+                .append(this.isTestUser).append(", authorities=").append(this.authorities).append("]")
+                .toString();
+    }
 }

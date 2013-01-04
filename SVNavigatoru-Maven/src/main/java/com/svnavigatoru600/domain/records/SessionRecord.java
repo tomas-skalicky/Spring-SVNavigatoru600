@@ -78,4 +78,11 @@ public class SessionRecord extends AbstractDocumentRecord {
     public void setDiscussedTopics(String discussedTopics) {
         this.discussedTopics = discussedTopics;
     }
+
+    @Override
+    public String toString() {
+        return new StringBuilder(super.toString()).append(" [type=").append(this.type)
+                .append(", sessionDate=").append(this.sessionDate).append(", discussedTopics=")
+                .append(this.discussedTopics).append("]").toString();
+    }
 }

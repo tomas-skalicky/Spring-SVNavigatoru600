@@ -81,4 +81,12 @@ public class Contribution implements Serializable {
     public void setAuthor(User author) {
         this.author = author;
     }
+
+    @Override
+    public String toString() {
+        return new StringBuilder("[id=").append(this.id).append(", thread=").append(this.thread)
+                .append(", text=").append(this.text).append(", creationTime=").append(this.creationTime)
+                .append(", lastSaveTime=").append(this.lastSaveTime).append(", author=").append(this.author)
+                .append("]").toString();
+    }
 }

@@ -82,4 +82,10 @@ public class OtherDocumentRecordTypeRelationId implements Serializable {
         }
         return true;
     }
+
+    @Override
+    public String toString() {
+        return new StringBuilder().append("[recordId=").append(this.recordId).append(", type=")
+                .append(this.type).append("]").toString();
+    }
 }
