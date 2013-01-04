@@ -23,6 +23,9 @@ public interface CalendarEventDao {
      * <p>
      * Moreover, only {@link CalendarEvent CalendarEvents} which will take place are returned, the passed ones
      * are not.
+     * 
+     * @param earliestDate
+     *            Represents the time "now"
      */
     List<CalendarEvent> findAllFutureEventsOrdered(Date earliestDate, OrderType sortDirection);
 
