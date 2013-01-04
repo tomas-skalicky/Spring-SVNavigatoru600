@@ -113,8 +113,8 @@ public class NewsTest extends AbstractRepositoryTest {
                 OrderType.ASCENDING));
         int expectedFoundNewsCount = 2;
         Assert.assertEquals(expectedFoundNewsCount, foundNews.size());
-        Assert.assertEquals(firstNewsId, foundNews.get(foundNews.size() - 2).getId());
-        Assert.assertEquals(secondNewsId, foundNews.get(foundNews.size() - 1).getId());
+        Assert.assertEquals(firstNewsId, foundNews.get(0).getId());
+        Assert.assertEquals(secondNewsId, foundNews.get(1).getId());
     }
 
     /**
