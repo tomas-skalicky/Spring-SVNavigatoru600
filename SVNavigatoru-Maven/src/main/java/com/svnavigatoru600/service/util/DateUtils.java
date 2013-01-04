@@ -65,19 +65,83 @@ public final class DateUtils {
     }
 
     /**
-     * Gets the today date. It means that hours, minutes, seconds and so on are set to zero.
+     * Gets the today date. It means that hours, minutes and so on are set to zero. In other words, the
+     * returned {@link Date} could be printed out in the format:
+     * <p>
+     * <code>YYYY-MM-DD</code> 00:00:00.000
+     * <p>
+     * where <code>YYYY-MM-DD</code> represents today.
      */
     public static Date getToday() {
+        return DateUtils.getDay(0);
+    }
+
+    /**
+     * Gets the yesterday date. It means that hours, minutes and so on are set to zero. In other words, the
+     * returned {@link Date} could be printed out in the format:
+     * <p>
+     * (<code>YYYY-MM-DD</code> - 1) 00:00:00.000
+     * <p>
+     * where <code>YYYY-MM-DD</code> represents today.
+     */
+    public static Date getYesterday() {
+        return DateUtils.getDay(-1);
+    }
+
+    /**
+     * Gets the tomorrow date. It means that hours, minutes and so on are set to zero. In other words, the
+     * returned {@link Date} could be printed out in the format:
+     * <p>
+     * (<code>YYYY-MM-DD</code> + 1) 00:00:00.000
+     * <p>
+     * where <code>YYYY-MM-DD</code> represents today.
+     */
+    public static Date getTomorrow() {
+        return DateUtils.getDay(1);
+    }
+
+    /**
+     * Gets the date of particular day. It means that hours, minutes and so on are set to zero. In other
+     * words, the returned {@link Date} could be printed out in the format:
+     * <p>
+     * (<code>YYYY-MM-DD</code> + <code>dayOffsetFromToday</code>) 00:00:00.000
+     * <p>
+     * where <code>YYYY-MM-DD</code> represents today.
+     * 
+     * @param dayOffsetFromToday
+     *            The number of days from today specifies the particular day. Can be both positive and
+     *            negative.
+     */
+    public static Date getDay(int dayOffsetFromToday) {
         Date now = new Date();
+        return DateUtils.getDay(now, dayOffsetFromToday);
+    }
+
+    /**
+     * Gets the date of particular day. It means that hours, minutes and so on are set to zero. In other
+     * words, the returned {@link Date} could be printed out in the format:
+     * <p>
+     * (<code>YYYY-MM-DD</code> + <code>dayOffset</code>) 00:00:00.000
+     * <p>
+     * where <code>YYYY-MM-DD</code> represents the day of the given <code>date</code>.
+     * 
+     * @param date
+     *            Date on which we apply the given <code>dayOffset</code> to get the particular day.
+     * @param dayOffset
+     *            The number of days from <code>date</code>. Can be both positive and negative.
+     */
+    public static Date getDay(Date date, int dayOffset) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeZone(DateUtils.TIME_ZONE);
-        calendar.setTime(now);
+        calendar.setTime(date);
 
         // Sets time exactly to midnight, i.e. 00:00:00.000
         calendar.set(Calendar.HOUR_OF_DAY, 0);
         calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
         calendar.set(Calendar.MILLISECOND, 0);
+
+        calendar.add(Calendar.DAY_OF_MONTH, dayOffset);
         return calendar.getTime();
     }
 }
