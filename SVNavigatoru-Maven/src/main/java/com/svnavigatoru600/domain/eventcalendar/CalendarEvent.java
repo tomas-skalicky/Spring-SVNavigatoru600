@@ -94,4 +94,11 @@ public class CalendarEvent implements Serializable {
     public void setPriority(String priority) {
         this.priority = PriorityType.valueOf(priority);
     }
+
+    @Override
+    public String toString() {
+        return new StringBuilder("[id=").append(this.id).append(", name=").append(this.name)
+                .append(", date=").append(this.date).append(", description=").append(this.description)
+                .append(", priority=").append(this.priority).append("]").toString();
+    }
 }

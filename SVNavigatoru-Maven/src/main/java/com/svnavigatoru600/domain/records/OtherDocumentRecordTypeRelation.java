@@ -44,4 +44,9 @@ public class OtherDocumentRecordTypeRelation implements Serializable {
     public void setId(OtherDocumentRecordTypeRelationId id) {
         this.id = id;
     }
+
+    @Override
+    public String toString() {
+        return this.id.toString();
+    }
 }

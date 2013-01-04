@@ -123,4 +123,11 @@ public class Thread implements Serializable, Comparable<Thread> {
         }
         return lastSavedContributions;
     }
+
+    @Override
+    public String toString() {
+        return new StringBuilder("[id=").append(this.id).append(", name=").append(this.name)
+                .append(", creationTime=").append(this.creationTime).append(", author=").append(this.author)
+                .append("]").toString();
+    }
 }

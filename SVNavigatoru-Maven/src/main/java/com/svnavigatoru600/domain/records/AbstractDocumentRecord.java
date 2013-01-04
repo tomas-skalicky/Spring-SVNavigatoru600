@@ -44,4 +44,10 @@ public abstract class AbstractDocumentRecord implements Serializable {
     public void setFile(Blob file) {
         this.file = file;
     }
+
+    @Override
+    public String toString() {
+        return new StringBuilder("[id=").append(this.id).append(", fileName=").append(this.fileName)
+                .append("]").toString();
+    }
 }

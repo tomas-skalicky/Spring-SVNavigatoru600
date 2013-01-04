@@ -71,4 +71,11 @@ public class WysiwygSection implements Serializable {
     public void setSourceCode(String sourceCode) {
         this.sourceCode = sourceCode;
     }
+
+    @Override
+    public String toString() {
+        return new StringBuilder("[name=").append(this.name).append(", lastSaveTime=")
+                .append(this.lastSaveTime).append(", sourceCode=").append(this.sourceCode).append("]")
+                .toString();
+    }
 }

@@ -85,4 +85,12 @@ public class OtherDocumentRecord extends AbstractDocumentRecord {
     public void setLastSaveTime(Date lastSaveTime) {
         this.lastSaveTime = lastSaveTime;
     }
+
+    @Override
+    public String toString() {
+        return new StringBuilder(super.toString()).append(" [name=").append(this.name)
+                .append(", description=").append(this.description).append(", types=").append(this.types)
+                .append(", creationTime=").append(this.creationTime).append(", lastSaveTime=")
+                .append(this.lastSaveTime).append("]").toString();
+    }
 }
