@@ -155,10 +155,11 @@ public class ThreadDaoImpl extends NamedParameterJdbcDaoSupport implements Threa
         thread.setId(threadId);
 
         // NOTE: explicit save of the thread's contributions.
+        ContributionDaoImpl castedContributionDao = (ContributionDaoImpl) this.contributionDao;
         for (Contribution contribution : thread.getContributions()) {
             contribution.setCreationTime(now);
             contribution.setLastSaveTime(now);
-            this.contributionDao.save(contribution);
+            castedContributionDao.saveWithoutTimeSetup(contribution);
         }
 
         return threadId;
