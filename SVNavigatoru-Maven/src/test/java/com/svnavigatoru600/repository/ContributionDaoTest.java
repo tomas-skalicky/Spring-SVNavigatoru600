@@ -138,7 +138,6 @@ public class ContributionDaoTest extends AbstractRepositoryTest {
         // SELECT ONE
         contribution = contributionDao.findById(contribution.getId());
         Assert.assertEquals(contributionId, contribution.getId());
-        Assert.assertNotNull(contribution.getThread());
         Assert.assertNotSame(this.defaultThread.getId(), contribution.getThread().getId());
         Assert.assertEquals(EDITED_CONTRIBUTION_TEXT, contribution.getText());
         Assert.assertTrue(contribution.getLastSaveTime().after(contribution.getCreationTime()));

@@ -248,10 +248,18 @@ public final class RepositoryTestUtils {
      * @return ID of the newly created user
      */
     User createDefaultTestUser() {
-        String username = USER_DEFAULT_USERNAME;
+        return this
+                .createDefaultTestUser(USER_DEFAULT_USERNAME, USER_DEFAULT_EMAIL, USER_DEFAULT_AUTHORITIES);
+    }
+
+    /**
+     * Creates and saves a default test user.
+     * 
+     * @return ID of the newly created user
+     */
+    User createDefaultTestUser(String username, String email, Set<GrantedAuthority> authorities) {
         this.createTestUser(username, USER_DEFAULT_PASSWORD, USER_DEFAULT_ENABLED, USER_DEFAULT_FIRST_NAME,
-                USER_DEFAULT_LAST_NAME, USER_DEFAULT_EMAIL, USER_DEFAULT_PHONE, USER_DEFAULT_IS_TEST_USER,
-                USER_DEFAULT_AUTHORITIES);
+                USER_DEFAULT_LAST_NAME, email, USER_DEFAULT_PHONE, USER_DEFAULT_IS_TEST_USER, authorities);
         return this.getUserDao().findByUsername(username);
     }
 

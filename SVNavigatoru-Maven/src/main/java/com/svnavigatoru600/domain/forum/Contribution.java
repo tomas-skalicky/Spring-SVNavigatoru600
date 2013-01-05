@@ -41,6 +41,14 @@ public class Contribution implements Serializable {
     }
 
     /**
+     * Initialises contribution's text and author. Other properties are not touched.
+     */
+    public Contribution(String text, User author) {
+        this.text = text;
+        this.author = author;
+    }
+
+    /**
      * Initialises contribution's thread, text and author. Other properties are not touched.
      */
     public Contribution(Thread thread, String text, User author) {
