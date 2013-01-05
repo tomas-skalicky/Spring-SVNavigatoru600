@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com</groupId>
 	<artifactId>svnavigatoru600</artifactId>
 	<packaging>war</packaging>
-	<version>1.0.0</version>
+	<version>1.0.0-SNAPSHOT</version>
 
 	<name>The SVNavigatoru600 web app</name>
 	<url>http://svnavigatoru600.com</url>
@@ -40,8 +41,7 @@
 		<!-- The URI has to end up with a slash (see http://maven.40175.n5.nabble.com/scm-connection-in-parent-pom-td3224641.html) -->
 		<connection>scm:git:ssh://git@github.com:tomas-skalicky/Spring-SVNavigatoru600.git</connection>
 		<developerConnection>scm:git:ssh://git@github.com:tomas-skalicky/Spring-SVNavigatoru600.git</developerConnection>
-	  <tag>svnavigatoru600-1.0.0</tag>
-  </scm>
+	</scm>
 
 
 	<properties>
