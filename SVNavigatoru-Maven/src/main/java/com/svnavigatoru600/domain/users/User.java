@@ -249,7 +249,7 @@ public class User implements UserDetails, Serializable {
         Set<GrantedAuthority> checkedAuthorities = AuthorityUtils.convertIndicatorsToAuthorities(
                 indicatorsOfNewAuthorities, this.username);
         // The role ROLE_REGISTERED_USER is automatically added.
-        checkedAuthorities.add(new Authority(this.username, AuthorityType.ROLE_REGISTERED_USER.name()));
+        checkedAuthorities.add(new Authority(this.username, AuthorityType.ROLE_REGISTERED_USER));
 
         boolean authoritiesChanged = !CheckboxUtils.areSame(
                 AuthorityUtils.getArrayOfCheckIndicators(checkedAuthorities),

@@ -48,9 +48,7 @@ public class AuthorityDaoImpl extends NamedParameterJdbcDaoSupport implements Au
         return parameters;
     }
 
-    /**
-     * Saves the given <code>authority</code> to the repository.
-     */
+    @Override
     public void save(Authority authority) {
         SimpleJdbcInsert insert = new SimpleJdbcInsert(this.getDataSource()).withTableName(
                 AuthorityDaoImpl.TABLE_NAME).usingColumns(AuthorityField.username.getColumnName(),

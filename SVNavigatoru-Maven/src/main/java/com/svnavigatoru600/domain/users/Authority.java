@@ -29,10 +29,10 @@ public class Authority implements GrantedAuthority, Serializable {
     public Authority() {
     }
 
-    public Authority(String username, String authorityType) {
+    public Authority(String username, AuthorityType authorityType) {
         this.id = new AuthorityId();
         this.id.setUsername(username);
-        this.id.setAuthority(authorityType);
+        this.id.setAuthority(authorityType.name());
     }
 
     private AuthorityId id;
