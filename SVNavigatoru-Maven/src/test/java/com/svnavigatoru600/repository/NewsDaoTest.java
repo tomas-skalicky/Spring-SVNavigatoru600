@@ -50,6 +50,23 @@ public class NewsDaoTest extends AbstractRepositoryTest {
     }
 
     @Test
+    public void testFindAllOrdered() throws Exception {
+        NewsDao newsDao = TEST_UTILS.getNewsDao();
+
+        // TWO INSERTS
+        int firstNewsId = TEST_UTILS.createDefaultTestNews();
+        int secondNewsId = TEST_UTILS.createDefaultTestNews();
+
+        // SELECT ALL
+        List<News> foundNews = newsDao.findAllOrdered(new FindAllOrderedArguments(NewsField.creationTime,
+                OrderType.ASCENDING));
+        int expectedFoundNewsCount = 2;
+        Assert.assertEquals(expectedFoundNewsCount, foundNews.size());
+        Assert.assertEquals(firstNewsId, foundNews.get(0).getId());
+        Assert.assertEquals(secondNewsId, foundNews.get(1).getId());
+    }
+
+    @Test
     public void testUpdate() throws Exception {
         NewsDao newsDao = TEST_UTILS.getNewsDao();
 
@@ -90,22 +107,5 @@ public class NewsDaoTest extends AbstractRepositoryTest {
             // OK since the news cannot have been found.
             ;
         }
-    }
-
-    @Test
-    public void testFindAllOrdered() throws Exception {
-        NewsDao newsDao = TEST_UTILS.getNewsDao();
-
-        // TWO INSERTS
-        int firstNewsId = TEST_UTILS.createDefaultTestNews();
-        int secondNewsId = TEST_UTILS.createDefaultTestNews();
-
-        // SELECT ALL
-        List<News> foundNews = newsDao.findAllOrdered(new FindAllOrderedArguments(NewsField.creationTime,
-                OrderType.ASCENDING));
-        int expectedFoundNewsCount = 2;
-        Assert.assertEquals(expectedFoundNewsCount, foundNews.size());
-        Assert.assertEquals(firstNewsId, foundNews.get(0).getId());
-        Assert.assertEquals(secondNewsId, foundNews.get(1).getId());
     }
 }

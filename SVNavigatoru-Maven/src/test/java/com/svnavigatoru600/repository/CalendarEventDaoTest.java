@@ -57,6 +57,25 @@ public class CalendarEventDaoTest extends AbstractRepositoryTest {
     }
 
     @Test
+    public void testFindAllOrdered() throws Exception {
+        CalendarEventDao eventDao = TEST_UTILS.getEventDao();
+        Date now = new Date();
+
+        // THREE INSERTS
+        int firstEventId = TEST_UTILS.createDefaultTestEvent(DateUtils.getDay(now, 2));
+        int secondEventId = TEST_UTILS.createDefaultTestEvent(DateUtils.getDay(now, 1));
+        @SuppressWarnings("unused")
+        int thirdNewsId = TEST_UTILS.createDefaultTestEvent(DateUtils.getDay(now, -1));
+
+        // SELECT ALL
+        List<CalendarEvent> foundEvents = eventDao.findAllFutureEventsOrdered(now, OrderType.ASCENDING);
+        int expectedFoundEventCount = 2;
+        Assert.assertEquals(expectedFoundEventCount, foundEvents.size());
+        Assert.assertEquals(secondEventId, foundEvents.get(0).getId());
+        Assert.assertEquals(firstEventId, foundEvents.get(1).getId());
+    }
+
+    @Test
     public void testUpdate() throws Exception {
         CalendarEventDao eventDao = TEST_UTILS.getEventDao();
 
@@ -100,24 +119,5 @@ public class CalendarEventDaoTest extends AbstractRepositoryTest {
             // OK since the event cannot have been found.
             ;
         }
-    }
-
-    @Test
-    public void testFindAllOrdered() throws Exception {
-        CalendarEventDao eventDao = TEST_UTILS.getEventDao();
-        Date now = new Date();
-
-        // THREE INSERTS
-        int firstEventId = TEST_UTILS.createDefaultTestEvent(DateUtils.getDay(now, 2));
-        int secondEventId = TEST_UTILS.createDefaultTestEvent(DateUtils.getDay(now, 1));
-        @SuppressWarnings("unused")
-        int thirdNewsId = TEST_UTILS.createDefaultTestEvent(DateUtils.getDay(now, -1));
-
-        // SELECT ALL
-        List<CalendarEvent> foundEvents = eventDao.findAllFutureEventsOrdered(now, OrderType.ASCENDING);
-        int expectedFoundEventCount = 2;
-        Assert.assertEquals(expectedFoundEventCount, foundEvents.size());
-        Assert.assertEquals(secondEventId, foundEvents.get(0).getId());
-        Assert.assertEquals(firstEventId, foundEvents.get(1).getId());
     }
 }
