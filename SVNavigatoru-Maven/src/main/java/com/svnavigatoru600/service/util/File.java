@@ -69,4 +69,16 @@ public final class File {
     public static Blob convertToBlob(byte[] bytes) throws SQLException {
         return new SerialBlob(bytes);
     }
+
+    /**
+     * Creates a new {@link Blob} with the given <code>bytes</code>.
+     */
+    public static Blob convertToBlobNoException(byte[] bytes) {
+        try {
+            return File.convertToBlob(bytes);
+        } catch (SQLException ex) {
+            new RuntimeException(ex);
+        }
+        return null;
+    }
 }

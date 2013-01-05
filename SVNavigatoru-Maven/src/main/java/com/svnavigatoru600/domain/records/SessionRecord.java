@@ -1,5 +1,6 @@
 package com.svnavigatoru600.domain.records;
 
+import java.sql.Blob;
 import java.util.Date;
 
 import javax.inject.Inject;
@@ -44,11 +45,12 @@ public class SessionRecord extends AbstractDocumentRecord {
     }
 
     /**
-     * Initialises record's filename, type, session date and discussed topics. Other properties are not
+     * Initialises record's filename, file, type, session date and discussed topics. Other properties are not
      * touched.
      */
-    public SessionRecord(String fileName, SessionRecordType type, Date sessionDate, String discussedTopics) {
-        super(fileName);
+    public SessionRecord(String fileName, Blob file, SessionRecordType type, Date sessionDate,
+            String discussedTopics) {
+        super(fileName, file);
         this.type = type;
         this.sessionDate = sessionDate;
         this.discussedTopics = discussedTopics;

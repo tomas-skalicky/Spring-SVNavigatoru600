@@ -1,5 +1,6 @@
 package com.svnavigatoru600.repository;
 
+import java.sql.Blob;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
@@ -14,13 +15,18 @@ import com.svnavigatoru600.domain.eventcalendar.CalendarEvent;
 import com.svnavigatoru600.domain.eventcalendar.PriorityType;
 import com.svnavigatoru600.domain.forum.Contribution;
 import com.svnavigatoru600.domain.forum.Thread;
+import com.svnavigatoru600.domain.records.SessionRecord;
+import com.svnavigatoru600.domain.records.SessionRecordType;
 import com.svnavigatoru600.domain.users.Authority;
 import com.svnavigatoru600.domain.users.AuthorityType;
 import com.svnavigatoru600.domain.users.User;
 import com.svnavigatoru600.repository.forum.ContributionDao;
 import com.svnavigatoru600.repository.forum.ThreadDao;
+import com.svnavigatoru600.repository.records.SessionRecordDao;
 import com.svnavigatoru600.repository.users.AuthorityDao;
 import com.svnavigatoru600.repository.users.UserDao;
+import com.svnavigatoru600.service.util.DateUtils;
+import com.svnavigatoru600.service.util.File;
 
 /**
  * Contains convenient methods used in {@link AbstractRepositoryTest DAO tests}. The methods are basically two
@@ -127,6 +133,34 @@ public final class RepositoryTestUtils {
      * Default type of user's test authority.
      */
     static final AuthorityType AUTHORITY_DEFAULT_TYPE = AuthorityType.ROLE_REGISTERED_USER;
+    /**
+     * Default filename of test document record.
+     */
+    static final String DOCUMENT_RECORD_DEFAULT_FILE_NAME = "file name 1";
+    /**
+     * Default file of test document record.
+     */
+    static final Blob DOCUMENT_RECORD_DEFAULT_FILE = File.convertToBlobNoException(new byte[1]);
+    /**
+     * Filename of the edited test document record.
+     */
+    static final String EDITED_DOCUMENT_RECORD_FILE_NAME = "file name 2";
+    /**
+     * File of the edited test document record.
+     */
+    static final Blob EDITED_DOCUMENT_RECORD_FILE = File.convertToBlobNoException(new byte[2]);
+    /**
+     * Default type of test session record.
+     */
+    static final SessionRecordType SESSION_RECORD_DEFAULT_TYPE = SessionRecordType.SESSION_RECORD_OF_BOARD;
+    /**
+     * Default session date of test session record. It represents a day after 7 days from today.
+     */
+    static final Date SESSION_RECORD_DEFAULT_SESSION_DATE = DateUtils.getDay(7);
+    /**
+     * Default discussed topics of test session record.
+     */
+    static final String SESSION_RECORD_DEFAULT_DISCUSSED_TOPICS = "session record discussed topics 1";
 
     /**
      * Application context which contains necessary beans.
@@ -314,5 +348,51 @@ public final class RepositoryTestUtils {
     void createTestAuthority(String username, AuthorityType authorityType) {
         Authority authority = new Authority(username, authorityType);
         this.getAuthorityDao().save(authority);
+    }
+
+    /**
+     * Gets a {@link SessionRecordDao} from an application context.
+     */
+    SessionRecordDao getSessionRecordDao() {
+        return this.applicationContext.getBean(SessionRecordDao.class);
+    }
+
+    /**
+     * Creates and saves a default test session record. It is not associated with any file.
+     * 
+     * @return ID of the newly created record
+     */
+    int createDefaultTestSessionRecord() {
+        return this.createDefaultTestSessionRecord(SESSION_RECORD_DEFAULT_SESSION_DATE);
+    }
+
+    /**
+     * Creates and saves a default test session record. It is not associated with any file.
+     * 
+     * @return ID of the newly created record
+     */
+    int createDefaultTestSessionRecord(Date sessionDate) {
+        return this.createDefaultTestSessionRecord(SESSION_RECORD_DEFAULT_TYPE, sessionDate);
+    }
+
+    /**
+     * Creates and saves a default test session record. It is not associated with any file.
+     * 
+     * @return ID of the newly created record
+     */
+    int createDefaultTestSessionRecord(SessionRecordType type, Date sessionDate) {
+        return this.createTestSessionRecord(DOCUMENT_RECORD_DEFAULT_FILE_NAME, DOCUMENT_RECORD_DEFAULT_FILE,
+                type, sessionDate, SESSION_RECORD_DEFAULT_DISCUSSED_TOPICS);
+    }
+
+    /**
+     * Creates and saves a test session record. It is not associated with any file.
+     * 
+     * @return ID of the newly created record
+     */
+    int createTestSessionRecord(String fileName, Blob file, SessionRecordType type, Date sessionDate,
+            String discussedTopics) {
+        SessionRecord record = new SessionRecord(fileName, file, type, sessionDate, discussedTopics);
+        return this.getSessionRecordDao().save(record);
     }
 }

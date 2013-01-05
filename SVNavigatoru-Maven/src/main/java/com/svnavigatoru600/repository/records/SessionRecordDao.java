@@ -22,6 +22,8 @@ public interface SessionRecordDao extends DocumentRecordDao {
     /**
      * Returns all {@link SessionRecord SessionRecords} stored in the repository arranged according to their
      * {@link SessionRecord#getSessionDate() sessionDates} in the given {@link OrderType order}.
+     * <p>
+     * Records' associated {@link SessionRecord#getFile() files} are NOT loaded.
      */
     List<SessionRecord> findAllOrdered(OrderType order);
 
@@ -29,6 +31,8 @@ public interface SessionRecordDao extends DocumentRecordDao {
      * Returns all {@link SessionRecord SessionRecords} stored in the repository which are of the given
      * {@link SessionRecordType type}. The records are arranged according to their
      * {@link SessionRecord#getSessionDate() sessionDates} in the given {@link OrderType order}.
+     * <p>
+     * Records' associated {@link SessionRecord#getFile() files} are NOT loaded.
      */
     List<SessionRecord> findAllOrdered(SessionRecordType type, OrderType order);
 
