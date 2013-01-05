@@ -65,7 +65,7 @@ public final class AuthorityUtils {
             boolean isAuthorityChecked = indicators[i];
             if (isAuthorityChecked) {
                 AuthorityType authorityType = AuthorityType.values()[i];
-                checkedAuthorities.add(new Authority(username, authorityType.name()));
+                checkedAuthorities.add(new Authority(username, authorityType));
             }
         }
         return checkedAuthorities;
