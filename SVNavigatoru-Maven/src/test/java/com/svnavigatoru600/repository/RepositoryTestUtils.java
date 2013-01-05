@@ -83,7 +83,7 @@ public final class RepositoryTestUtils {
      */
     static final String USER_DEFAULT_PASSWORD = "password 1";
     /**
-     * Default indicator of test user whether the user is active.
+     * Default flag of test user whether he is active.
      */
     static final boolean USER_DEFAULT_ENABLED = true;
     /**
@@ -103,7 +103,7 @@ public final class RepositoryTestUtils {
      */
     static final String USER_DEFAULT_PHONE = "phone 1";
     /**
-     * Default indicator of test user whether the user is a test one.
+     * Default flag of test user whether he is a test one.
      */
     static final boolean USER_DEFAULT_IS_TEST_USER = false;
     /**
