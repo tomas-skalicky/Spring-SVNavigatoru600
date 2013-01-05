@@ -31,8 +31,8 @@ public final class OtherDocumentRecordUtils {
     }
 
     /**
-     * Gets an array of indicators which say which {@link OtherDocumentRecordType OtherDocumentRecordTypes}
-     * are checked, and which types are not. The array is filled in according to the given array of checked
+     * Gets an array of flags which say which {@link OtherDocumentRecordType OtherDocumentRecordTypes} are
+     * checked, and which types are not. The array is filled in according to the given array of checked
      * {@link OtherDocumentRecordTypeRelation} called <code>types</code>.
      */
     public static boolean[] getArrayOfCheckIndicators(Collection<OtherDocumentRecordTypeRelation> types) {
@@ -45,7 +45,7 @@ public final class OtherDocumentRecordUtils {
     }
 
     /**
-     * Gets the default array of indicators which say which {@link OtherDocumentRecordType
+     * Gets the default array of flags which say which {@link OtherDocumentRecordType
      * OtherDocumentRecordTypes} are checked (selected), and which types are not.
      * <p>
      * <b>Precondition:</b> Ordinal values of all {@link OtherDocumentRecordType OtherDocumentRecordTypes} are

@@ -51,7 +51,7 @@ public abstract class AbstractNewRecordController extends AbstractNewEditRecordC
 
     /**
      * Constructs a controller which considers all {@link SessionRecord SessionRecords} of the given
-     * <code>recordType</code> .
+     * <code>recordType</code>.
      */
     public AbstractNewRecordController(String baseUrl, AbstractPageViews views, SessionRecordType recordType,
             SessionRecordService recordService, NewSessionRecordValidator validator,

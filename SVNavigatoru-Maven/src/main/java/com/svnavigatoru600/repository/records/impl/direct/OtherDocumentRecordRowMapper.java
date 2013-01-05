@@ -30,7 +30,7 @@ public class OtherDocumentRecordRowMapper extends AbstractDocumentRecordRowMappe
      * Constructor.
      * 
      * @param loadFile
-     *            Indicator whether the Blob file will be set up.
+     *            Flag whether the Blob file will be set up.
      */
     public OtherDocumentRecordRowMapper(boolean loadFile) {
         super(loadFile);

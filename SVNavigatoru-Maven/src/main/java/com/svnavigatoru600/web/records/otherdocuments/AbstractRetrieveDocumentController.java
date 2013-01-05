@@ -38,8 +38,7 @@ public abstract class AbstractRetrieveDocumentController extends AbstractOtherDo
      */
     public AbstractRetrieveDocumentController(String baseUrl, AbstractPageViews views,
             OtherDocumentRecordService recordService, MessageSource messageSource) {
-        // Note that the allRecordTypes indicator is set up during the creation
-        // of the parent.
+        // Note that the allRecordTypes flag is set up during the creation of the parent.
         super(baseUrl, views, recordService, messageSource);
     }
 

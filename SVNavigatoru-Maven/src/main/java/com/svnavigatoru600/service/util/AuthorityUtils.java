@@ -21,7 +21,7 @@ public final class AuthorityUtils {
     }
 
     /**
-     * Gets an array of indicators which say which authorities (= roles) are checked (selected), and which
+     * Gets an array of flags which say which authorities (= roles) are checked (selected), and which
      * authorities are not checked. The array is filled in according to the given array of checked
      * {@link GrantedAuthority} called <code>authorities</code>.
      */
@@ -35,8 +35,8 @@ public final class AuthorityUtils {
     }
 
     /**
-     * Gets the default array of indicators which say which authorities (= roles) are checked (selected), and
-     * which authorities are not checked.
+     * Gets the default array of flags which say which authorities (= roles) are checked (selected), and which
+     * authorities are not checked.
      * <p>
      * <b>Precondition:</b> Ordinal values of all {@link AuthorityType AuthorityTypes} are exactly in the
      * range of <code>[0, 1, ..., AuthorityType.values().length-1]</code>.
@@ -56,8 +56,7 @@ public final class AuthorityUtils {
      * {@link GrantedAuthority GrantedAuthorities} associated with an
      * {@link com.svnavigatoru600.domain.users.User User} with the given <code>username</code>.
      * 
-     * @return Set of those authorities which have been checked, i.e. their indicators equal <code>true</code>
-     *         .
+     * @return Set of those authorities which have been checked, i.e. their flags equal <code>true</code>.
      */
     public static Set<GrantedAuthority> convertIndicatorsToAuthorities(boolean[] indicators, String username) {
         Set<GrantedAuthority> checkedAuthorities = new HashSet<GrantedAuthority>();
