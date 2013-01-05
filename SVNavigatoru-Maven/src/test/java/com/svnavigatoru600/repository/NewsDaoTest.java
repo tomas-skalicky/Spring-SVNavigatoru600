@@ -81,7 +81,6 @@ public class NewsDaoTest extends AbstractRepositoryTest {
 
         // SELECT ONE
         news = newsDao.findById(news.getId());
-        Assert.assertTrue(news.getId() >= 1);
         Assert.assertEquals(newsId, news.getId());
         Assert.assertEquals(EDITED_NEWS_TITLE, news.getTitle());
         Assert.assertEquals(EDITED_NEWS_TEXT, news.getText());
