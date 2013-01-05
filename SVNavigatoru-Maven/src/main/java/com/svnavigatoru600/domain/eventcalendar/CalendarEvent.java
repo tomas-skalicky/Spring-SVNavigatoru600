@@ -37,6 +37,22 @@ public class CalendarEvent implements Serializable {
     private String description;
     private PriorityType priority;
 
+    /**
+     * Initialises no property.
+     */
+    public CalendarEvent() {
+    }
+
+    /**
+     * Initialises event's name, date, description and priority. Other properties are not touched.
+     */
+    public CalendarEvent(String name, Date date, String description, PriorityType priority) {
+        this.name = name;
+        this.date = date;
+        this.description = description;
+        this.priority = priority;
+    }
+
     public int getId() {
         return this.id;
     }

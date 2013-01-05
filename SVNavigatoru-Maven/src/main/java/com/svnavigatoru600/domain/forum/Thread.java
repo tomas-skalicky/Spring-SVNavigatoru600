@@ -35,6 +35,21 @@ public class Thread implements Serializable, Comparable<Thread> {
     private User author;
     private List<Contribution> contributions;
 
+    /**
+     * Initialises no property.
+     */
+    public Thread() {
+    }
+
+    /**
+     * Initialises thread's name, author and contributions. Other properties are not touched.
+     */
+    public Thread(String name, User author, List<Contribution> contributions) {
+        this.name = name;
+        this.author = author;
+        this.contributions = contributions;
+    }
+
     public int getId() {
         return this.id;
     }
