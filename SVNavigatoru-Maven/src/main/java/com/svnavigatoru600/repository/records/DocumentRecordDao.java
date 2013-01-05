@@ -12,7 +12,7 @@ public interface DocumentRecordDao {
     /**
      * Returns a {@link AbstractDocumentRecord} stored in the repository which has the given ID.
      * <p>
-     * The {@link java.sql.Blob Blob} file is loaded as well.
+     * Record's associated {@link AbstractDocumentRecord#getFile() file} is loaded as well.
      */
     AbstractDocumentRecord findById(int recordId);
 
@@ -20,8 +20,8 @@ public interface DocumentRecordDao {
      * Returns a {@link AbstractDocumentRecord} stored in the repository which has the given ID.
      * 
      * @param loadFile
-     *            If <code>true</code>, the {@link java.sql.Blob Blob} file will be loaded as well; otherwise
-     *            not.
+     *            If <code>true</code>, the associated {@link AbstractDocumentRecord#getFile() file} will be
+     *            loaded as well; otherwise not.
      */
     AbstractDocumentRecord findById(int recordId, boolean loadFile);
 
