@@ -40,7 +40,7 @@ public class CalendarEventDaoTest extends AbstractRepositoryTest {
     private static final PriorityType EDITED_EVENT_PRIORITY = PriorityType.HIGH;
 
     @Test
-    public void testCreateRetrieve() throws Exception {
+    public void testSaveFindById() throws Exception {
         CalendarEventDao eventDao = TEST_UTILS.getEventDao();
 
         // INSERT

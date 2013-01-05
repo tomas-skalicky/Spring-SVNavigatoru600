@@ -28,7 +28,7 @@ public class WysiwygSectionDaoTest extends AbstractRepositoryTest {
     private static final String TEST_SECTION_SOURCE_CODE_EXTENSION = "section text 2";
 
     @Test
-    public void testUpdateRetrieve() throws Exception {
+    public void testUpdateFindByName() throws Exception {
         WysiwygSectionDao sectionDao = TEST_UTILS.getSectionDao();
 
         // SELECT ONE

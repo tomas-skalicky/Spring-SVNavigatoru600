@@ -32,7 +32,7 @@ public class NewsDaoTest extends AbstractRepositoryTest {
     private static final String EDITED_NEWS_TEXT = "news text 2";
 
     @Test
-    public void testCreateRetrieve() throws Exception {
+    public void testSaveFindById() throws Exception {
         NewsDao newsDao = TEST_UTILS.getNewsDao();
 
         // INSERT

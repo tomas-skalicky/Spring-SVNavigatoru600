@@ -45,7 +45,7 @@ public class ContributionDaoTest extends AbstractRepositoryTest {
     }
 
     @Test
-    public void testCreateRetrieve() throws Exception {
+    public void testSaveFindById() throws Exception {
         ContributionDao contributionDao = TEST_UTILS.getContributionDao();
 
         // INSERT
