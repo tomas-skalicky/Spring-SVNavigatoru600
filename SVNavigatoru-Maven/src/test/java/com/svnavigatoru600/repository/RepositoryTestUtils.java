@@ -221,11 +221,17 @@ public final class RepositoryTestUtils {
 
     /**
      * Creates and saves a test thread.
+     * <p>
+     * {@link Contribution#getThread() thread} of the given <code>contributions</code> need not be set. This
+     * method does it itself.
      * 
      * @return ID of the newly created thread
      */
     int createTestThread(String name, User author, List<Contribution> contributions) {
         Thread thread = new Thread(name, author, contributions);
+        for (Contribution contribution : contributions) {
+            contribution.setThread(thread);
+        }
         return this.getThreadDao().save(thread);
     }
 
