@@ -21,10 +21,26 @@ public interface AuthorityDao {
     List<Authority> findAll(String username);
 
     /**
+     * Stores the given {@link Authority authority} to the repository. If there is already an authority with
+     * the same {@link com.svnavigatoru600.domain.users.AuthorityId#getUsername() username} and
+     * {@link com.svnavigatoru600.domain.users.AuthorityId#getAuthority() authority's name}, throws an
+     * exception.
+     * <p>
+     * <b>Preconditions:</b> {@link com.svnavigatoru600.domain.users.User User} with the new
+     * <code>authority</code>' {@link com.svnavigatoru600.domain.users.AuthorityId#getUsername() username}
+     * must have already been persisted in the repository.
+     */
+    void save(Authority authority);
+
+    /**
      * Stores the given {@link GrantedAuthority authorities} to the repository. If there is already an
      * {@link Authority} with the same {@link com.svnavigatoru600.domain.users.AuthorityId#getUsername()
      * username} and {@link com.svnavigatoru600.domain.users.AuthorityId#getAuthority() authority's name},
      * throws an exception.
+     * <p>
+     * <b>Preconditions:</b> {@link com.svnavigatoru600.domain.users.User Users} with the new
+     * <code>authorities</code>' {@link com.svnavigatoru600.domain.users.AuthorityId#getUsername() usernames}
+     * must have already been persisted in the repository.
      */
     void save(Collection<GrantedAuthority> authorities);
 

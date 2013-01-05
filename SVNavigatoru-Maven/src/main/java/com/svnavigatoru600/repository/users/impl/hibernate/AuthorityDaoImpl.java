@@ -27,9 +27,14 @@ public class AuthorityDaoImpl extends HibernateDaoSupport implements AuthorityDa
     }
 
     @Override
+    public void save(Authority authority) {
+        this.getHibernateTemplate().save(authority);
+    }
+
+    @Override
     public void save(Collection<GrantedAuthority> authorities) {
         for (GrantedAuthority authority : authorities) {
-            this.getHibernateTemplate().save(authority);
+            this.save((Authority) authority);
         }
     }
 
