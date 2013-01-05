@@ -77,17 +77,6 @@ public class SessionRecordDaoImpl extends NamedParameterJdbcDaoSupport implement
     }
 
     @Override
-    public SessionRecord findByFileName(String fileName) {
-        String fileNameColumn = DocumentRecordField.fileName.getColumnName();
-        String query = String.format("%s WHERE r.%s = :%s",
-                SessionRecordDaoImpl.SELECT_FROM_CLAUSE_WITH_FILE, fileNameColumn, fileNameColumn);
-
-        Map<String, String> args = Collections.singletonMap(fileNameColumn, fileName);
-
-        return this.getNamedParameterJdbcTemplate().queryForObject(query, args, new SessionRecordRowMapper());
-    }
-
-    @Override
     public List<SessionRecord> findAllOrdered(OrderType order) {
         String query = String.format("%s ORDER BY r.%s %s",
                 SessionRecordDaoImpl.SELECT_FROM_CLAUSE_WITHOUT_FILE,

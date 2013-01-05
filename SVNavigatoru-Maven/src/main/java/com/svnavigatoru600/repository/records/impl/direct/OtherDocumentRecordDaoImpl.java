@@ -116,25 +116,6 @@ public class OtherDocumentRecordDaoImpl extends NamedParameterJdbcDaoSupport imp
     }
 
     @Override
-    public OtherDocumentRecord findByFileName(String fileName) {
-        String fileNameColumn = DocumentRecordField.fileName.getColumnName();
-        String query = String.format("%s WHERE r.%s = :%s",
-                OtherDocumentRecordDaoImpl.SELECT_FROM_CLAUSE_WITH_FILE, fileNameColumn, fileNameColumn);
-
-        Map<String, String> args = Collections.singletonMap(fileNameColumn, fileName);
-
-        OtherDocumentRecord record = this.getNamedParameterJdbcTemplate().queryForObject(query, args,
-                new OtherDocumentRecordRowMapper());
-        if (record == null) {
-            throw new DataRetrievalFailureException(String.format("No record with the filename '%s' exists.",
-                    fileName));
-        }
-
-        this.populateTypes(record);
-        return record;
-    }
-
-    @Override
     public List<OtherDocumentRecord> findAllOrdered(OrderType order) {
         String query = String.format("%s ORDER BY r.%s %s",
                 OtherDocumentRecordDaoImpl.SELECT_FROM_CLAUSE_WITHOUT_FILE,

@@ -60,11 +60,6 @@ public class SessionRecordService extends AbstractDocumentRecordService {
         return this.findById(recordId, false);
     }
 
-    @Override
-    public SessionRecord findByFileName(String fileName) {
-        return this.sessionRecordDao.findByFileName(fileName);
-    }
-
     /**
      * Returns all {@link SessionRecord SessionRecords} stored in the repository arranged according to their
      * {@link SessionRecord#getSessionDate() sessionDates} in the given {@link OrderType order}.

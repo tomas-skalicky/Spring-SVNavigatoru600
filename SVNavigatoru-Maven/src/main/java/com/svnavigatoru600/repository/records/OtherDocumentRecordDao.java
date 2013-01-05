@@ -19,9 +19,6 @@ public interface OtherDocumentRecordDao extends DocumentRecordDao {
     @Override
     OtherDocumentRecord findById(int recordId, boolean loadFile);
 
-    @Override
-    OtherDocumentRecord findByFileName(String fileName);
-
     /**
      * Returns all {@link OtherDocumentRecord OtherDocumentRecords} stored in the repository arranged
      * according to their {@link OtherDocumentRecord#getCreationTime() creationTimes} in the given
