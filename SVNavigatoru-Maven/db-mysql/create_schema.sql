@@ -18,7 +18,8 @@ CREATE TABLE users (
 	last_name VARCHAR(20) NOT NULL,
 	email VARCHAR(100) UNIQUE,
 	phone VARCHAR(20),
-	is_test_user BOOLEAN NOT NULL DEFAULT 0
+	is_test_user BOOLEAN NOT NULL DEFAULT 0,
+	CONSTRAINT email_validator CHECK (email LIKE '_%@_%._%')
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE authorities (

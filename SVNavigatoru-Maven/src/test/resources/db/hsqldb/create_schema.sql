@@ -16,7 +16,8 @@ CREATE TABLE users (
 	last_name VARCHAR(20) NOT NULL,
 	email VARCHAR(100) UNIQUE,
 	phone VARCHAR(20),
-	is_test_user BOOLEAN DEFAULT 0 NOT NULL
+	is_test_user BOOLEAN DEFAULT 0 NOT NULL,
+	CONSTRAINT email_validator CHECK (email LIKE '_%@_%._%')
 );
 
 CREATE TABLE authorities (
