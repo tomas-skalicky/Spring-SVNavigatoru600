@@ -21,6 +21,19 @@ public abstract class AbstractDocumentRecord implements Serializable {
     private String fileName;
     private Blob file;
 
+    /**
+     * Initialises no property.
+     */
+    protected AbstractDocumentRecord() {
+    }
+
+    /**
+     * Initialises record's filename. Other properties are not touched.
+     */
+    protected AbstractDocumentRecord(String fileName) {
+        this.fileName = fileName;
+    }
+
     public int getId() {
         return this.id;
     }

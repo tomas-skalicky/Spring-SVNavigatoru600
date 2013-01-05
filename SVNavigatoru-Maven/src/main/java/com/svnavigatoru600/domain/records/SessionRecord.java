@@ -38,6 +38,23 @@ public class SessionRecord extends AbstractDocumentRecord {
     private String discussedTopics;
 
     /**
+     * Initialises no property.
+     */
+    public SessionRecord() {
+    }
+
+    /**
+     * Initialises record's filename, type, session date and discussed topics. Other properties are not
+     * touched.
+     */
+    public SessionRecord(String fileName, SessionRecordType type, Date sessionDate, String discussedTopics) {
+        super(fileName);
+        this.type = type;
+        this.sessionDate = sessionDate;
+        this.discussedTopics = discussedTopics;
+    }
+
+    /**
      * Different - not "getType" - name of the getter method is necessary. Otherwise, the methods' signatures
      * would be identical.
      */
