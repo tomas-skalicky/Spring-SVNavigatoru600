@@ -24,15 +24,25 @@ public class Authority implements GrantedAuthority, Serializable {
     }
 
     /**
-     * Default constructor. Necessary.
+     * Initialises no property.
      */
     public Authority() {
     }
 
+    /**
+     * Initialises authority's username and its type. Other properties are not touched.
+     */
     public Authority(String username, AuthorityType authorityType) {
+        this(username, authorityType.name());
+    }
+
+    /**
+     * Initialises authority's username and its type. Other properties are not touched.
+     */
+    public Authority(String username, String authorityTypeName) {
         this.id = new AuthorityId();
         this.id.setUsername(username);
-        this.id.setAuthority(authorityType.name());
+        this.id.setAuthority(authorityTypeName);
     }
 
     private AuthorityId id;
