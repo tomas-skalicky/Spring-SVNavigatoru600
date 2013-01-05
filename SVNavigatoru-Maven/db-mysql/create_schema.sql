@@ -9,6 +9,7 @@ USE skalicky_sv_navigatoru;
  * the empty string.
  * 
  * The default value of is_test_user is "false".
+ * The default values of all notifications' flags are "true".
  */
 CREATE TABLE users (
 	username VARCHAR(50) PRIMARY KEY,
@@ -19,6 +20,11 @@ CREATE TABLE users (
 	email VARCHAR(100) UNIQUE,
 	phone VARCHAR(20),
 	is_test_user BOOLEAN NOT NULL DEFAULT 0,
+	news_notifications BOOLEAN NOT NULL DEFAULT 1,
+	event_notifications BOOLEAN NOT NULL DEFAULT 1,
+	forum_notifications BOOLEAN NOT NULL DEFAULT 1,
+	other_document_notifications BOOLEAN NOT NULL DEFAULT 1,
+	other_section_notifications BOOLEAN NOT NULL DEFAULT 1,
 	CONSTRAINT email_validator CHECK (email LIKE '_%@_%._%')
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

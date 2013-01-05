@@ -7,6 +7,7 @@
  * the empty string.
  * 
  * The default value of is_test_user is "false".
+ * The default values of all notifications' flags are "true".
  */
 CREATE TABLE users (
 	username VARCHAR(50) PRIMARY KEY,
@@ -17,6 +18,11 @@ CREATE TABLE users (
 	email VARCHAR(100) UNIQUE,
 	phone VARCHAR(20),
 	is_test_user BOOLEAN DEFAULT 0 NOT NULL,
+	news_notifications BOOLEAN DEFAULT 1 NOT NULL,
+	event_notifications BOOLEAN DEFAULT 1 NOT NULL,
+	forum_notifications BOOLEAN DEFAULT 1 NOT NULL,
+	other_document_notifications BOOLEAN DEFAULT 1 NOT NULL,
+	other_section_notifications BOOLEAN DEFAULT 1 NOT NULL,
 	CONSTRAINT email_validator CHECK (email LIKE '_%@_%._%')
 );
 

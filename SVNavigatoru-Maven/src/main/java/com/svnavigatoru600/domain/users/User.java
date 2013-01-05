@@ -47,6 +47,15 @@ public class User implements UserDetails, Serializable {
     private String email;
     private String phone;
     private boolean isTestUser;
+    /**
+     * The following five subscribed* fields concern email notifications on certain group of news (of any
+     * type).
+     */
+    private boolean subscribedToNews;
+    private boolean subscribedToEvents;
+    private boolean subscribedToForum;
+    private boolean subscribedToOtherDocuments;
+    private boolean subscribedToOtherSections;
     private Set<GrantedAuthority> authorities;
 
     /**
@@ -152,6 +161,26 @@ public class User implements UserDetails, Serializable {
 
     public void setTestUser(boolean isTestUser) {
         this.isTestUser = isTestUser;
+    }
+
+    public boolean isSubscribedToNews() {
+        return this.subscribedToNews;
+    }
+
+    public boolean isSubscribedToEvents() {
+        return this.subscribedToEvents;
+    }
+
+    public boolean isSubscribedToForum() {
+        return this.subscribedToForum;
+    }
+
+    public boolean isSubscribedToOtherDocuments() {
+        return this.subscribedToOtherDocuments;
+    }
+
+    public boolean isSubscribedToOtherSections() {
+        return this.subscribedToOtherSections;
     }
 
     @Override
@@ -265,7 +294,11 @@ public class User implements UserDetails, Serializable {
                 .append(this.password).append(", enabled=").append(this.enabled).append(", firstName=")
                 .append(this.firstName).append(", lastName=").append(this.lastName).append(", email=")
                 .append(this.email).append(", phone=").append(this.phone).append(", isTestUser=")
-                .append(this.isTestUser).append(", authorities=").append(this.authorities).append("]")
-                .toString();
+                .append(this.isTestUser).append(", subscribedToNews=").append(this.subscribedToNews)
+                .append(", subscribedToEvents=").append(this.subscribedToEvents)
+                .append(", subscribedToForum=").append(this.subscribedToForum)
+                .append(", subscribedToOtherDocuments=").append(this.subscribedToOtherDocuments)
+                .append(", subscribedToOtherSections=").append(this.subscribedToOtherSections)
+                .append(", authorities=").append(this.authorities).append("]").toString();
     }
 }
