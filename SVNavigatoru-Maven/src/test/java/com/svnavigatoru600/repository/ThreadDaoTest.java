@@ -17,7 +17,7 @@ import com.svnavigatoru600.repository.forum.ThreadDao;
 import com.svnavigatoru600.test.category.PersistenceTests;
 
 /**
- * Tests methods of the {@link Thread} interface.
+ * Tests methods of the {@link ThreadDao} interface.
  * 
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
@@ -39,7 +39,7 @@ public class ThreadDaoTest extends AbstractRepositoryTest {
     }
 
     @Test
-    public void testCreateRetrieve() throws Exception {
+    public void testSaveFindById() throws Exception {
         ThreadDao threadDao = TEST_UTILS.getThreadDao();
 
         // INSERT
@@ -73,7 +73,7 @@ public class ThreadDaoTest extends AbstractRepositoryTest {
     }
 
     @Test
-    public void testLoadAll() throws Exception {
+    public void testLoadAllNoContribution() throws Exception {
         ThreadDao threadDao = TEST_UTILS.getThreadDao();
 
         // TWO INSERTS
