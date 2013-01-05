@@ -192,12 +192,10 @@ public class OtherDocumentRecordDaoImpl extends NamedParameterJdbcDaoSupport imp
         String idColumn = OtherDocumentRecordField.id.getColumnName();
         String nameColumn = OtherDocumentRecordField.name.getColumnName();
         String descriptionColumn = OtherDocumentRecordField.description.getColumnName();
-        String creationTimeColumn = OtherDocumentRecordField.creationTime.getColumnName();
         String lastSaveTimeColumn = OtherDocumentRecordField.lastSaveTime.getColumnName();
         String query = String.format("UPDATE %s SET %s = :%s, %s = :%s, %s = :%s, %s = :%s WHERE %s = :%s",
                 OtherDocumentRecordDaoImpl.TABLE_NAME, nameColumn, nameColumn, descriptionColumn,
-                descriptionColumn, creationTimeColumn, creationTimeColumn, lastSaveTimeColumn,
-                lastSaveTimeColumn, idColumn, idColumn);
+                descriptionColumn, lastSaveTimeColumn, lastSaveTimeColumn, idColumn, idColumn);
 
         this.getNamedParameterJdbcTemplate().update(query, this.getNamedParameters(record));
 

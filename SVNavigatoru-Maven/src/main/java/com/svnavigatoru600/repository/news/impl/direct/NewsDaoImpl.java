@@ -62,11 +62,10 @@ public class NewsDaoImpl extends NamedParameterJdbcDaoSupport implements NewsDao
         String idColumn = NewsField.id.getColumnName();
         String titleColumn = NewsField.title.getColumnName();
         String textColumn = NewsField.text.getColumnName();
-        String creationTimeColumn = NewsField.creationTime.getColumnName();
         String lastSaveTimeColumn = NewsField.lastSaveTime.getColumnName();
-        String query = String.format("UPDATE %s SET %s = :%s, %s = :%s, %s = :%s, %s = :%s WHERE %s = :%s",
-                NewsDaoImpl.TABLE_NAME, titleColumn, titleColumn, textColumn, textColumn, creationTimeColumn,
-                creationTimeColumn, lastSaveTimeColumn, lastSaveTimeColumn, idColumn, idColumn);
+        String query = String.format("UPDATE %s SET %s = :%s, %s = :%s, %s = :%s WHERE %s = :%s",
+                NewsDaoImpl.TABLE_NAME, titleColumn, titleColumn, textColumn, textColumn, lastSaveTimeColumn,
+                lastSaveTimeColumn, idColumn, idColumn);
 
         Date now = new Date();
         news.setLastSaveTime(now);

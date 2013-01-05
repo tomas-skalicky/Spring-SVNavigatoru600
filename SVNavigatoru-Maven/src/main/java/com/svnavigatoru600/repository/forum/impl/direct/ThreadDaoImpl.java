@@ -133,26 +133,24 @@ public class ThreadDaoImpl extends NamedParameterJdbcDaoSupport implements Threa
     public void update(Thread thread) {
         String idColumn = ThreadField.id.getColumnName();
         String nameColumn = ThreadField.name.getColumnName();
-        String creationTimeColumn = ThreadField.creationTime.getColumnName();
         String authorUsernameColumn = ThreadField.authorUsername.getColumnName();
-        String query = String.format("UPDATE %s SET %s = :%s, %s = :%s, %s = :%s WHERE %s = :%s",
-                ThreadDaoImpl.TABLE_NAME, nameColumn, nameColumn, creationTimeColumn, creationTimeColumn,
-                authorUsernameColumn, authorUsernameColumn, idColumn, idColumn);
+        String query = String.format("UPDATE %s SET %s = :%s, %s = :%s WHERE %s = :%s",
+                ThreadDaoImpl.TABLE_NAME, nameColumn, nameColumn, authorUsernameColumn, authorUsernameColumn,
+                idColumn, idColumn);
 
         this.getNamedParameterJdbcTemplate().update(query, this.getNamedParameters(thread));
     }
 
     @Override
     public int save(Thread thread) {
-        Date now = new Date();
-        thread.setCreationTime(now);
-
         SimpleJdbcInsert insert = new SimpleJdbcInsert(this.getDataSource())
                 .withTableName(ThreadDaoImpl.TABLE_NAME)
                 .usingGeneratedKeyColumns(ThreadField.id.getColumnName())
                 .usingColumns(ThreadField.name.getColumnName(), ThreadField.creationTime.getColumnName(),
                         ThreadField.authorUsername.getColumnName());
 
+        Date now = new Date();
+        thread.setCreationTime(now);
         int threadId = insert.executeAndReturnKey(this.getNamedParameters(thread)).intValue();
         thread.setId(threadId);
 
