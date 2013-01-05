@@ -39,12 +39,6 @@ public class User implements UserDetails, Serializable {
         this.userService.update(this);
     }
 
-    /**
-     * Default constructor. It is necessary because of /WEB-INF/model-beans/User.xml.
-     */
-    public User() {
-    }
-
     private String username;
     private String password;
     private boolean enabled;
@@ -54,6 +48,30 @@ public class User implements UserDetails, Serializable {
     private String phone;
     private boolean isTestUser;
     private Set<GrantedAuthority> authorities;
+
+    /**
+     * Default constructor. It is necessary because of /WEB-INF/model-beans/User.xml. It initialises no
+     * property.
+     */
+    public User() {
+    }
+
+    /**
+     * Initialises user's username (=login), password, flag if he is active, first name, last name, email,
+     * phone, flag if he is a test user and authorities. Other properties are not touched.
+     */
+    public User(String username, String password, boolean enabled, String firstName, String lastName,
+            String email, String phone, boolean isTestUser, Set<GrantedAuthority> authorities) {
+        this.username = username;
+        this.password = password;
+        this.enabled = enabled;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.phone = phone;
+        this.isTestUser = isTestUser;
+        this.authorities = authorities;
+    }
 
     @Override
     public String getUsername() {
@@ -218,7 +236,7 @@ public class User implements UserDetails, Serializable {
     }
 
     /**
-     * Sets {@link User#getAuthorities() authorities} of this {@link User} according to the given indicators.
+     * Sets {@link User#getAuthorities() authorities} of this {@link User} according to the given flags.
      * 
      * @param indicatorsOfNewAuthorities
      *            <code>true</code> in the index <code>x</code> in the array means that the authority with the

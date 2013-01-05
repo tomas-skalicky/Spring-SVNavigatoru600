@@ -34,6 +34,21 @@ public class Contribution implements Serializable {
     private Date lastSaveTime;
     private User author;
 
+    /**
+     * Initialises no property.
+     */
+    public Contribution() {
+    }
+
+    /**
+     * Initialises contribution's thread, text and author. Other properties are not touched.
+     */
+    public Contribution(Thread thread, String text, User author) {
+        this.thread = thread;
+        this.text = text;
+        this.author = author;
+    }
+
     public int getId() {
         return this.id;
     }

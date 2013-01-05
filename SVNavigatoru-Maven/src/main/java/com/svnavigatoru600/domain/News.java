@@ -37,6 +37,20 @@ public class News implements Serializable {
     private Date creationTime;
     private Date lastSaveTime;
 
+    /**
+     * Initialises no property.
+     */
+    public News() {
+    }
+
+    /**
+     * Initialises news' title and text. Other properties are not touched.
+     */
+    public News(String title, String text) {
+        this.title = title;
+        this.text = text;
+    }
+
     public int getId() {
         return this.id;
     }
