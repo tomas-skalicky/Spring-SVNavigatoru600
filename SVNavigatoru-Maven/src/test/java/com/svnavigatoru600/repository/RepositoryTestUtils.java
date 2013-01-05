@@ -158,11 +158,7 @@ public final class RepositoryTestUtils {
      * @return ID of the newly created event
      */
     int createTestEvent(String name, Date date, String description, PriorityType priority) {
-        CalendarEvent event = new CalendarEvent();
-        event.setName(name);
-        event.setDate(date);
-        event.setDescription(description);
-        event.setPriority(priority);
+        CalendarEvent event = new CalendarEvent(name, date, description, priority);
         return this.getEventDao().save(event);
     }
 
@@ -188,9 +184,7 @@ public final class RepositoryTestUtils {
      * @return ID of the newly created news
      */
     int createTestNews(String title, String text) {
-        News news = new News();
-        news.setTitle(title);
-        news.setText(text);
+        News news = new News(title, text);
         return this.getNewsDao().save(news);
     }
 
@@ -214,10 +208,7 @@ public final class RepositoryTestUtils {
      * @return ID of the newly created contribution
      */
     int createTestContribution(Thread thread, String text, User author) {
-        Contribution contribution = new Contribution();
-        contribution.setThread(thread);
-        contribution.setText(text);
-        contribution.setAuthor(author);
+        Contribution contribution = new Contribution(thread, text, author);
         return this.getContributionDao().save(contribution);
     }
 
@@ -234,10 +225,7 @@ public final class RepositoryTestUtils {
      * @return ID of the newly created thread
      */
     int createTestThread(String name, User author, List<Contribution> contributions) {
-        Thread thread = new Thread();
-        thread.setName(name);
-        thread.setAuthor(author);
-        thread.setContributions(contributions);
+        Thread thread = new Thread(name, author, contributions);
         return this.getThreadDao().save(thread);
     }
 
@@ -268,16 +256,8 @@ public final class RepositoryTestUtils {
      */
     void createTestUser(String username, String password, boolean enabled, String firstName, String lastName,
             String email, String phone, boolean isTestUser, Set<GrantedAuthority> authorities) {
-        User user = new User();
-        user.setUsername(username);
-        user.setPassword(password);
-        user.setEnabled(enabled);
-        user.setFirstName(firstName);
-        user.setLastName(lastName);
-        user.setEmail(email);
-        user.setPhone(phone);
-        user.setTestUser(isTestUser);
-        user.setAuthorities(authorities);
+        User user = new User(username, password, enabled, firstName, lastName, email, phone, isTestUser,
+                authorities);
         this.getUserDao().save(user);
     }
 }
