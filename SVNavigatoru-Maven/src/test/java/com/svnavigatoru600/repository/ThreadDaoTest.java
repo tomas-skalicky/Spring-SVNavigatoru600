@@ -40,7 +40,7 @@ public class ThreadDaoTest extends AbstractRepositoryTest {
     /**
      * Default email of the second test user.
      */
-    private static final String SECOND_USER_DEFAULT_EMAIL = "email 2";
+    private static final String SECOND_USER_DEFAULT_EMAIL = "email2@host.com";
     /**
      * Default authorities of the second test user.
      */

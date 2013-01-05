@@ -97,7 +97,7 @@ public final class RepositoryTestUtils {
     /**
      * Default email of test user.
      */
-    static final String USER_DEFAULT_EMAIL = "email 1";
+    static final String USER_DEFAULT_EMAIL = "email1@host.com";
     /**
      * Default phone of test user.
      */
