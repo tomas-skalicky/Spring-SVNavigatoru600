@@ -19,9 +19,6 @@ public interface SessionRecordDao extends DocumentRecordDao {
     @Override
     SessionRecord findById(int recordId, boolean loadFile);
 
-    @Override
-    SessionRecord findByFileName(String fileName);
-
     /**
      * Returns all {@link SessionRecord SessionRecords} stored in the repository arranged according to their
      * {@link SessionRecord#getSessionDate() sessionDates} in the given {@link OrderType order}.

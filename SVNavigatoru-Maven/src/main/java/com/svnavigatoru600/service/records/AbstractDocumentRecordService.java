@@ -52,12 +52,6 @@ public abstract class AbstractDocumentRecordService {
     public abstract AbstractDocumentRecord findByIdWithoutFile(int recordId);
 
     /**
-     * Returns a {@link AbstractDocumentRecord} stored in the repository which is associated with a file with
-     * the given <code>fileName</code>.
-     */
-    public abstract AbstractDocumentRecord findByFileName(String fileName);
-
-    /**
      * Deletes the given {@link AbstractDocumentRecord} together with all its types from the repository.
      * Moreover, deletes the associated {@link java.io.File file}.
      */

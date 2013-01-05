@@ -59,11 +59,6 @@ public class OtherDocumentRecordService extends AbstractDocumentRecordService {
         return this.findById(recordId, false);
     }
 
-    @Override
-    public OtherDocumentRecord findByFileName(String fileName) {
-        return this.otherDocumentDao.findByFileName(fileName);
-    }
-
     /**
      * Returns all {@link OtherDocumentRecord OtherDocumentRecords} stored in the repository arranged
      * according to their {@link OtherDocumentRecord#getCreationTime() creationTimes} in the given
