@@ -92,7 +92,6 @@ public class CalendarEventDaoTest extends AbstractRepositoryTest {
 
         // SELECT ONE
         event = eventDao.findById(event.getId());
-        Assert.assertTrue(event.getId() >= 1);
         Assert.assertEquals(eventId, event.getId());
         Assert.assertEquals(EDITED_EVENT_NAME, event.getName());
         Assert.assertEquals(EDITED_EVENT_DATE, event.getDate());
