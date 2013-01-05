@@ -11,8 +11,8 @@ public final class CheckboxUtils {
     }
 
     /**
-     * Creates an array of indicators which say which checkboxes are checked, and which checkboxes are not.
-     * All indicators in the resulting array are set to <code>false</code>, i.e. no checkbox is checked.
+     * Creates an array of flags which say which checkboxes are checked, and which checkboxes are not. All
+     * flags in the resulting array are set to <code>false</code>, i.e. no checkbox is checked.
      */
     static boolean[] createArrayOfCheckIndicators(int typeCount) {
         boolean[] indicators = new boolean[typeCount];
@@ -23,8 +23,8 @@ public final class CheckboxUtils {
     }
 
     /**
-     * Compares whether the given arrays of check indicators are same. The indicators say which checkboxes are
-     * selected and which are not.
+     * Compares whether the given arrays of check flags are same. The flags say which checkboxes are selected
+     * and which are not.
      */
     public static boolean areSame(boolean[] arrayOfCheckIndicators1, boolean[] arrayOfCheckIndicators2) {
         if (arrayOfCheckIndicators1.length != arrayOfCheckIndicators2.length) {

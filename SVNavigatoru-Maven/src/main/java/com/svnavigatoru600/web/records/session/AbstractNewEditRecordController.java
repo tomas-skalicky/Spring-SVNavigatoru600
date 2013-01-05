@@ -49,7 +49,7 @@ public abstract class AbstractNewEditRecordController extends AbstractSessionRec
 
     /**
      * Constructs a controller which considers all {@link com.svnavigatoru600.domain.records.SessionRecord
-     * SessionRecords} of the given <code>recordType</code> .
+     * SessionRecords} of the given <code>recordType</code>.
      */
     public AbstractNewEditRecordController(String baseUrl, AbstractPageViews views,
             SessionRecordType recordType, SessionRecordService recordService,

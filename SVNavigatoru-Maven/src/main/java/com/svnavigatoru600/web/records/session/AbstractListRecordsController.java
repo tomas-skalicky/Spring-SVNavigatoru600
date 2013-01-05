@@ -40,7 +40,7 @@ public abstract class AbstractListRecordsController extends AbstractSessionRecor
 
     /**
      * Constructs a controller which considers all {@link SessionRecord SessionRecords} of the given
-     * <code>recordType</code> .
+     * <code>recordType</code>.
      */
     public AbstractListRecordsController(String baseUrl, AbstractPageViews views,
             SessionRecordType recordType, SessionRecordService recordService, MessageSource messageSource) {

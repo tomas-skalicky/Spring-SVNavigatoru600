@@ -46,7 +46,7 @@ public abstract class AbstractDeleteRecordController extends AbstractSessionReco
 
     /**
      * Constructs a controller which considers all {@link com.svnavigatoru600.domain.records.SessionRecord
-     * SessionRecords} of the given <code>recordType</code> .
+     * SessionRecords} of the given <code>recordType</code>.
      */
     public AbstractDeleteRecordController(String baseUrl, AbstractPageViews views,
             SessionRecordType recordType, SessionRecordService recordService, MessageSource messageSource) {

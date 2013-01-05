@@ -26,7 +26,7 @@ public final class UserUtils {
     /**
      * Gets the {@link User} who is currently logged in the application.
      * 
-     * <b>Precondition:</b> The {@link UserUtils#isLogged() isLogger} function must be <code>true</code> .
+     * <b>Precondition:</b> The {@link UserUtils#isLogged() isLogger} function must be <code>true</code>.
      */
     public static User getLoggedUser() {
         return (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
