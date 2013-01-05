@@ -100,7 +100,7 @@ public class NewsDaoTest extends AbstractRepositoryTest {
 
         // SELECT ONE
         try {
-            news = newsDao.findById(news.getId());
+            newsDao.findById(news.getId());
             Assert.fail("The news has been found");
         } catch (EmptyResultDataAccessException ex) {
             // OK since the news cannot have been found.

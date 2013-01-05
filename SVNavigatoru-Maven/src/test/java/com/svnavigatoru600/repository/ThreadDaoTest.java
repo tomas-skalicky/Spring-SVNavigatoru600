@@ -10,6 +10,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.security.core.GrantedAuthority;
 
 import com.svnavigatoru600.domain.forum.Contribution;
@@ -84,10 +85,7 @@ public class ThreadDaoTest extends AbstractRepositoryTest {
         ThreadDao threadDao = TEST_UTILS.getThreadDao();
 
         // INSERT
-        Contribution contribution = new Contribution(RepositoryTestUtils.CONTRIBUTION_DEFAULT_TEXT,
-                this.defaultAuthor);
-        int threadId = TEST_UTILS.createTestThread(RepositoryTestUtils.THREAD_DEFAULT_NAME,
-                this.defaultAuthor, Arrays.asList(contribution));
+        int threadId = this.createDefaultTestThreadWithContribution();
 
         // SELECT ONE
         Thread thread = threadDao.findById(threadId);
@@ -119,16 +117,12 @@ public class ThreadDaoTest extends AbstractRepositoryTest {
         ThreadDao threadDao = TEST_UTILS.getThreadDao();
 
         // INSERT
-        Contribution contribution = new Contribution(RepositoryTestUtils.CONTRIBUTION_DEFAULT_TEXT,
-                this.defaultAuthor);
-        User author = this.defaultAuthor;
-        int threadId = TEST_UTILS.createTestThread(RepositoryTestUtils.THREAD_DEFAULT_NAME, author,
-                Arrays.asList(contribution));
+        int threadId = this.createDefaultTestThreadWithContribution();
 
         // SELECT ALL
         List<Thread> foundThreads = threadDao.loadAll();
         Thread thread = foundThreads.get(0);
-        Assert.assertEquals(author.getUsername(), thread.getAuthor().getUsername());
+        Assert.assertEquals(this.defaultAuthor.getUsername(), thread.getAuthor().getUsername());
         int expectedContributionId = TEST_UTILS.getContributionDao().findAll(threadId).get(0).getId();
         int actualContributionId = thread.getContributions().get(0).getId();
         Assert.assertEquals(expectedContributionId, actualContributionId);
@@ -156,6 +150,37 @@ public class ThreadDaoTest extends AbstractRepositoryTest {
         Assert.assertEquals(EDITED_THREAD_NAME, thread.getName());
     }
 
+    @Test
+    public void testDelete() throws Exception {
+        ThreadDao threadDao = TEST_UTILS.getThreadDao();
+
+        // INSERT & SELECT ONE
+        int threadId = this.createDefaultTestThreadWithContribution();
+        Thread thread = threadDao.findById(threadId);
+
+        // DELETE
+        threadDao.delete(thread);
+
+        // SELECT ONE
+        try {
+            threadDao.findById(thread.getId());
+            Assert.fail("The thread has been found");
+        } catch (EmptyResultDataAccessException ex) {
+            // OK since the thread cannot have been found.
+            ;
+        }
+
+        // SELECT ONE
+        try {
+            int contributionId = thread.getContributions().get(0).getId();
+            TEST_UTILS.getContributionDao().findById(contributionId);
+            Assert.fail("The contribution has been found");
+        } catch (EmptyResultDataAccessException ex) {
+            // OK since the contribution cannot have been found.
+            ;
+        }
+    }
+
     /**
      * Creates and saves a default test thread.
      * 
@@ -164,5 +189,25 @@ public class ThreadDaoTest extends AbstractRepositoryTest {
     private int createDefaultTestThread() {
         return TEST_UTILS.createTestThread(RepositoryTestUtils.THREAD_DEFAULT_NAME, this.defaultAuthor,
                 RepositoryTestUtils.THREAD_DEFAULT_CONTRIBUTIONS);
+    }
+
+    /**
+     * Creates and saves a default test thread.
+     * 
+     * @return ID of the newly created thread
+     */
+    private int createDefaultTestThreadWithContribution() {
+        Contribution contribution = this.getDefaultTestContribution();
+        return TEST_UTILS.createTestThread(RepositoryTestUtils.THREAD_DEFAULT_NAME, this.defaultAuthor,
+                Arrays.asList(contribution));
+    }
+
+    /**
+     * Gets a default test contribution. Does not persists the contribution. Its thread property is not set.
+     * 
+     * @return The default contribution object
+     */
+    private Contribution getDefaultTestContribution() {
+        return new Contribution(RepositoryTestUtils.CONTRIBUTION_DEFAULT_TEXT, this.defaultAuthor);
     }
 }
