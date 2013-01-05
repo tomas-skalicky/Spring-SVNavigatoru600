@@ -1,6 +1,5 @@
 package com.svnavigatoru600.selenium.tests;
 
-import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -40,7 +39,7 @@ public class NewsTest extends AbstractTailoredSeleniumTest {
      * @throws Exception
      *             If anything goes wrong.
      */
-    @Test
+    // @Test
     public void testAddEditDelete() throws Exception {
         this.logIn();
         this.createNewNews();
