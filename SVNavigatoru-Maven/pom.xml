@@ -37,6 +37,13 @@
 	</distributionManagement>
 
 
+	<scm>
+		<!-- The URI has to end up with a slash (see http://maven.40175.n5.nabble.com/scm-connection-in-parent-pom-td3224641.html) -->
+		<connection>scm:git:ssh://git@github.com:tomas-skalicky/Spring-SVNavigatoru600.git</connection>
+		<developerConnection>scm:git:ssh://git@github.com:tomas-skalicky/Spring-SVNavigatoru600.git</developerConnection>
+	</scm>
+
+
 	<properties>
 		<!-- Bound with the maven.build.timestamp variable -->
 		<!-- (see http://maven.apache.org/guides/introduction/introduction-to-the-pom.html#Available_Variables) -->
