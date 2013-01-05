@@ -2,21 +2,16 @@ package com.svnavigatoru600.repository;
 
 import java.util.Arrays;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.security.core.GrantedAuthority;
 
 import com.svnavigatoru600.domain.forum.Contribution;
 import com.svnavigatoru600.domain.forum.Thread;
-import com.svnavigatoru600.domain.users.Authority;
-import com.svnavigatoru600.domain.users.AuthorityType;
 import com.svnavigatoru600.domain.users.User;
 import com.svnavigatoru600.repository.forum.ThreadDao;
 import com.svnavigatoru600.test.category.PersistenceTests;
@@ -33,25 +28,6 @@ public class ThreadDaoTest extends AbstractRepositoryTest {
      * Name of the edited test thread.
      */
     private static final String EDITED_THREAD_NAME = "thread name 2";
-    /**
-     * Default username of the second test user.
-     */
-    private static final String SECOND_USER_DEFAULT_USERNAME = "username 2";
-    /**
-     * Default email of the second test user.
-     */
-    private static final String SECOND_USER_DEFAULT_EMAIL = "email2@host.com";
-    /**
-     * Default authorities of the second test user.
-     */
-    static final Set<GrantedAuthority> SECOND_USER_DEFAULT_AUTHORITIES;
-
-    static {
-        SECOND_USER_DEFAULT_AUTHORITIES = new HashSet<GrantedAuthority>();
-        SECOND_USER_DEFAULT_AUTHORITIES.add(new Authority(SECOND_USER_DEFAULT_USERNAME,
-                AuthorityType.ROLE_REGISTERED_USER.name()));
-    }
-
     /**
      * Default test author of threads and contributions.
      */
@@ -138,15 +114,14 @@ public class ThreadDaoTest extends AbstractRepositoryTest {
 
         // UPDATE
         thread.setName(EDITED_THREAD_NAME);
-        String newUsername = SECOND_USER_DEFAULT_USERNAME;
-        thread.setAuthor(TEST_UTILS.createDefaultTestUser(newUsername, SECOND_USER_DEFAULT_EMAIL,
-                SECOND_USER_DEFAULT_AUTHORITIES));
+        thread.setAuthor(TEST_UTILS.createSecondDefaultTestUser());
         threadDao.update(thread);
 
         // SELECT ONE
         thread = threadDao.findById(thread.getId());
         Assert.assertEquals(threadId, thread.getId());
-        Assert.assertEquals(newUsername, thread.getAuthor().getUsername());
+        Assert.assertEquals(RepositoryTestUtils.SECOND_USER_DEFAULT_USERNAME, thread.getAuthor()
+                .getUsername());
         Assert.assertEquals(EDITED_THREAD_NAME, thread.getName());
     }
 

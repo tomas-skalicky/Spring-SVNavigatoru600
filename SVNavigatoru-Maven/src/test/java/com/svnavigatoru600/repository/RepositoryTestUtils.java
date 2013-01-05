@@ -19,6 +19,7 @@ import com.svnavigatoru600.domain.users.AuthorityType;
 import com.svnavigatoru600.domain.users.User;
 import com.svnavigatoru600.repository.forum.ContributionDao;
 import com.svnavigatoru600.repository.forum.ThreadDao;
+import com.svnavigatoru600.repository.users.AuthorityDao;
 import com.svnavigatoru600.repository.users.UserDao;
 
 /**
@@ -109,13 +110,23 @@ public final class RepositoryTestUtils {
     /**
      * Default authorities of test user.
      */
-    static final Set<GrantedAuthority> USER_DEFAULT_AUTHORITIES;
-
-    static {
-        USER_DEFAULT_AUTHORITIES = new HashSet<GrantedAuthority>();
-        USER_DEFAULT_AUTHORITIES.add(new Authority(USER_DEFAULT_USERNAME, AuthorityType.ROLE_REGISTERED_USER
-                .name()));
-    }
+    static final Set<GrantedAuthority> USER_DEFAULT_AUTHORITIES = new HashSet<GrantedAuthority>();
+    /**
+     * Default username of the second test user.
+     */
+    static final String SECOND_USER_DEFAULT_USERNAME = "username 2";
+    /**
+     * Default email of the second test user.
+     */
+    static final String SECOND_USER_DEFAULT_EMAIL = "email2@host.com";
+    /**
+     * Default authorities of the second test user.
+     */
+    static final Set<GrantedAuthority> SECOND_USER_DEFAULT_AUTHORITIES = new HashSet<GrantedAuthority>();
+    /**
+     * Default type of user's test authority.
+     */
+    static final AuthorityType AUTHORITY_DEFAULT_TYPE = AuthorityType.ROLE_REGISTERED_USER;
 
     /**
      * Application context which contains necessary beans.
@@ -243,9 +254,9 @@ public final class RepositoryTestUtils {
     }
 
     /**
-     * Creates and saves a default test user.
+     * Creates and saves the first default test user.
      * 
-     * @return ID of the newly created user
+     * @return Newly created user
      */
     User createDefaultTestUser() {
         return this
@@ -253,9 +264,19 @@ public final class RepositoryTestUtils {
     }
 
     /**
+     * Creates and saves the second default test user.
+     * 
+     * @return Newly created user
+     */
+    User createSecondDefaultTestUser() {
+        return this.createDefaultTestUser(SECOND_USER_DEFAULT_USERNAME, SECOND_USER_DEFAULT_EMAIL,
+                SECOND_USER_DEFAULT_AUTHORITIES);
+    }
+
+    /**
      * Creates and saves a default test user.
      * 
-     * @return ID of the newly created user
+     * @return Newly created user
      */
     User createDefaultTestUser(String username, String email, Set<GrantedAuthority> authorities) {
         this.createTestUser(username, USER_DEFAULT_PASSWORD, USER_DEFAULT_ENABLED, USER_DEFAULT_FIRST_NAME,
@@ -265,13 +286,33 @@ public final class RepositoryTestUtils {
 
     /**
      * Creates and saves a test user.
-     * 
-     * @return ID of the newly created user
      */
     void createTestUser(String username, String password, boolean enabled, String firstName, String lastName,
             String email, String phone, boolean isTestUser, Set<GrantedAuthority> authorities) {
         User user = new User(username, password, enabled, firstName, lastName, email, phone, isTestUser,
                 authorities);
         this.getUserDao().save(user);
+    }
+
+    /**
+     * Gets a {@link AuthorityDao} from an application context.
+     */
+    AuthorityDao getAuthorityDao() {
+        return this.applicationContext.getBean(AuthorityDao.class);
+    }
+
+    /**
+     * Creates and saves a default test authority.
+     */
+    void createDefaultTestAuthority(String username) {
+        this.createTestAuthority(username, AUTHORITY_DEFAULT_TYPE);
+    }
+
+    /**
+     * Creates and saves a test authority.
+     */
+    void createTestAuthority(String username, AuthorityType authorityType) {
+        Authority authority = new Authority(username, authorityType);
+        this.getAuthorityDao().save(authority);
     }
 }
