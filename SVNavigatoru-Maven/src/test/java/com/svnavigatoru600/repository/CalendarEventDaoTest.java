@@ -112,7 +112,7 @@ public class CalendarEventDaoTest extends AbstractRepositoryTest {
 
         // SELECT ONE
         try {
-            event = eventDao.findById(event.getId());
+            eventDao.findById(event.getId());
             Assert.fail("The event has been found");
         } catch (EmptyResultDataAccessException ex) {
             // OK since the event cannot have been found.

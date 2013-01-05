@@ -156,7 +156,7 @@ public class ContributionDaoTest extends AbstractRepositoryTest {
 
         // SELECT ONE
         try {
-            contribution = contributionDao.findById(contribution.getId());
+            contributionDao.findById(contribution.getId());
             Assert.fail("The contribution has been found");
         } catch (EmptyResultDataAccessException ex) {
             // OK since the contribution cannot have been found.
