@@ -30,7 +30,7 @@
 			<td><form:textarea path="event.description" cols="20" rows="3" /></td>
 		</tr>
 		<tr>
-			<td><form:label path="newPriority"><spring:message code="event-calendar.priority" />: *</form:label></td>
+			<td><form:label path="newPriority"><spring:message code="event-calendar.priority" />:</form:label></td>
 			<td><ul>
 					<form:select path="newPriority" items="${priorityTypeList}" element="li" />
 				</ul></td>
