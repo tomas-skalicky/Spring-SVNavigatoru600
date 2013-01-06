@@ -89,16 +89,7 @@ public class UserDaoImpl extends HibernateDaoSupport implements UserDao {
 
     @Override
     public void update(User user) {
-        String lowerCasedEmail = null;
-        if (user.getEmail() != null) {
-            lowerCasedEmail = user.getEmail().toLowerCase();
-        }
-
-        this.logger
-                .info(String
-                        .format("Update an user (username '%s', password '%s', enabled '%b', first_name '%s', last_name '%s', email '%s', phone '%s')",
-                                user.getUsername(), user.getPassword(), user.isEnabled(),
-                                user.getFirstName(), user.getLastName(), lowerCasedEmail, user.getPhone()));
+        this.logger.info("Update an user " + user);
         this.getHibernateTemplate().update(user);
 
         // Updates authorities.
@@ -108,17 +99,7 @@ public class UserDaoImpl extends HibernateDaoSupport implements UserDao {
 
     @Override
     public void save(User user) {
-        String lowerCasedEmail = null;
-        if (user.getEmail() != null) {
-            lowerCasedEmail = user.getEmail().toLowerCase();
-        }
-
-        this.logger
-                .info(String
-                        .format("Save a new user (username '%s', password '%s', enabled '%b', first_name '%s', last_name '%s', email '%s', phone '%s')",
-                                user.getUsername(), user.getPassword(), user.isEnabled(),
-                                user.getFirstName(), user.getLastName(), lowerCasedEmail, user.getPhone()));
-
+        this.logger.info("Save a new user " + user);
         this.getHibernateTemplate().save(user);
 
         // Not necessary to save authorities explicitly. The command above has

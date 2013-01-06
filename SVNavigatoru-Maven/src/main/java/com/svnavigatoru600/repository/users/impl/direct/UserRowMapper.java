@@ -27,6 +27,12 @@ public class UserRowMapper implements RowMapper<User> {
         user.setLastName(rs.getString(UserField.lastName.getColumnName()));
         user.setEmail(rs.getString(UserField.email.getColumnName()));
         user.setPhone(rs.getString(UserField.phone.getColumnName()));
+        user.setTestUser(rs.getBoolean(UserField.isTestUser.getColumnName()));
+        user.setSubscribedToNews(rs.getBoolean(UserField.subscribedToNews.getColumnName()));
+        user.setSubscribedToEvents(rs.getBoolean(UserField.subscribedToEvents.getColumnName()));
+        user.setSubscribedToForum(rs.getBoolean(UserField.subscribedToForum.getColumnName()));
+        user.setSubscribedToOtherDocuments(rs.getBoolean(UserField.subscribedToOtherDocuments.getColumnName()));
+        user.setSubscribedToOtherSections(rs.getBoolean(UserField.subscribedToOtherSections.getColumnName()));
         return user;
     }
 }

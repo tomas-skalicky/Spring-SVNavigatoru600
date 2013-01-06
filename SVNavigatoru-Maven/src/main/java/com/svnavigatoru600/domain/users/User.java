@@ -143,6 +143,14 @@ public class User implements UserDetails, Serializable {
         return this.email;
     }
 
+    public String getLowerCasedEmail() {
+        if (this.email != null) {
+            return this.email.toLowerCase();
+        } else {
+            return this.email;
+        }
+    }
+
     public void setEmail(String email) {
         this.email = email;
     }
@@ -167,20 +175,40 @@ public class User implements UserDetails, Serializable {
         return this.subscribedToNews;
     }
 
+    public void setSubscribedToNews(boolean subscribedToNews) {
+        this.subscribedToNews = subscribedToNews;
+    }
+
     public boolean isSubscribedToEvents() {
         return this.subscribedToEvents;
+    }
+
+    public void setSubscribedToEvents(boolean subscribedToEvents) {
+        this.subscribedToEvents = subscribedToEvents;
     }
 
     public boolean isSubscribedToForum() {
         return this.subscribedToForum;
     }
 
+    public void setSubscribedToForum(boolean subscribedToForum) {
+        this.subscribedToForum = subscribedToForum;
+    }
+
     public boolean isSubscribedToOtherDocuments() {
         return this.subscribedToOtherDocuments;
     }
 
+    public void setSubscribedToOtherDocuments(boolean subscribedToOtherDocuments) {
+        this.subscribedToOtherDocuments = subscribedToOtherDocuments;
+    }
+
     public boolean isSubscribedToOtherSections() {
         return this.subscribedToOtherSections;
+    }
+
+    public void setSubscribedToOtherSections(boolean subscribedToOtherSections) {
+        this.subscribedToOtherSections = subscribedToOtherSections;
     }
 
     @Override
