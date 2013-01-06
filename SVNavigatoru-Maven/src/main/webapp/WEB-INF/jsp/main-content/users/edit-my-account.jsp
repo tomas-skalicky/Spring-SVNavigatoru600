@@ -15,64 +15,47 @@
 	<table>
 		<%-- Login data --%>
 		<tr>
-			<td><label for="username"><spring:message code="username" />:</label>
-			</td>
+			<td><label for="username"><spring:message code="username" />:</label></td>
 			<td>
 				<%-- The tag <form:hidden> is necessary to submit the username
 					since disabled tags <input> and <form:input> do not do that. --%> <c:out
 					value="${updateUserDataCommand.user.username}" /> <form:hidden path="user.username" /></td>
 		</tr>
 		<tr>
-			<td><form:label path="newPassword">
-					<spring:message code="password.new" />:</form:label>
-			</td>
-			<td><form:password path="newPassword" autocomplete="${updateUserDataCommand.newPassword}" class="longText" />
-			</td>
+			<td><form:label path="newPassword"><spring:message code="password.new" />:</form:label></td>
+			<td><form:password path="newPassword" autocomplete="${updateUserDataCommand.newPassword}" class="longText" /></td>
 		</tr>
 		<tr>
-			<td><form:label path="newPasswordConfirmation">
-					<spring:message code="password.confirm-new" />:</form:label>
-			</td>
+			<td><form:label path="newPasswordConfirmation"><spring:message code="password.confirm-new" />:</form:label></td>
 			<td><form:password path="newPasswordConfirmation"
-					autocomplete="${updateUserDataCommand.newPasswordConfirmation}" class="longText" />
-			</td>
+					autocomplete="${updateUserDataCommand.newPasswordConfirmation}" class="longText" /></td>
 		</tr>
 		<tr>
 			<td colspan="2"><span class="formNote"><spring:message
-						code="edit-user-data.your-password-will-not-change-if" />
-			</span>
-			</td>
+						code="edit-user-data.your-password-will-not-change-if" /></span></td>
 		</tr>
 
 
 		<%-- Other user's data --%>
 		<tr>
-			<td><label for="fullName"><spring:message code="full-name" />:</label>
-			</td>
+			<td><label for="fullName"><spring:message code="full-name" />:</label></td>
 			<td><c:out value="${updateUserDataCommand.user.firstName} ${updateUserDataCommand.user.lastName}" /> <form:hidden
 					path="user.firstName" /> <form:hidden path="user.lastName" /></td>
 		</tr>
 		<tr>
-			<td><form:label path="user.email">
-					<spring:message code="email" />:</form:label>
-			</td>
-			<td><form:input path="user.email" autocomplete="${updateUserDataCommand.user.email}" class="longText" />*</td>
+			<td><form:label path="user.email"><spring:message code="email" />:</form:label></td>
+			<td><form:input path="user.email" autocomplete="${updateUserDataCommand.user.email}" class="longText" /></td>
 		</tr>
 		<tr>
-			<td><form:label path="user.phone">
-					<spring:message code="phone" />:</form:label>
-			</td>
-			<td><form:input path="user.phone" autocomplete="${updateUserDataCommand.user.phone}" class="longText" />*</td>
+			<td><form:label path="user.phone"><spring:message code="phone" />:</form:label></td>
+			<td><form:input path="user.phone" autocomplete="${updateUserDataCommand.user.phone}" class="longText" /></td>
 		</tr>
 
 
 		<tr>
-			<td><span class="formNote">* <spring:message code="optional-data" />
-			</span>
-			</td>
+			<td></td>
 			<td><input type="submit" value="<spring:message code="edit.save-changes" />"
-				onclick="setFormAction('updateUserDataCommand', '<c:url value='/uzivatelsky-ucet/' />')" />
-			</td>
+				onclick="setFormAction('updateUserDataCommand', '<c:url value='/uzivatelsky-ucet/' />')" /></td>
 		</tr>
 	</table>
 
