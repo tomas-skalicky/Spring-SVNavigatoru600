@@ -17,21 +17,15 @@
 
 	<table>
 		<tr>
-			<td><form:label path="record.name">
-					<spring:message code="other-documents.document-name" />:</form:label>
-			</td>
-			<td><form:input path="record.name" autocomplete="${newEditRecordCommand.record.name}" class="longText" />
-			</td>
+			<td><form:label path="record.name"><spring:message code="other-documents.document-name" />: *</form:label></td>
+			<td><form:input path="record.name" autocomplete="${newEditRecordCommand.record.name}" class="longText" /></td>
 		</tr>
 		<tr>
-			<td><form:label path="record.description">
-					<spring:message code="other-documents.document-description" />:</form:label>
-			</td>
-			<td><form:textarea path="record.description" cols="20" rows="3" />*</td>
+			<td><form:label path="record.description"><spring:message code="other-documents.document-description" />:</form:label></td>
+			<td><form:textarea path="record.description" cols="20" rows="3" /></td>
 		</tr>
 		<tr>
-			<td><label for="newFile"><spring:message code="attached-file" />:</label>
-			</td>
+			<td><label for="newFile"><spring:message code="attached-file" />: *</label></td>
 			<td><c:if test="${not empty newEditRecordCommand.record.fileName}">
 					<%@ include file="/WEB-INF/jsp/main-content/records/other-documents/templates/edit-file.jsp"%>
 				</c:if> <c:if test="${empty newEditRecordCommand.record.fileName}">
@@ -39,7 +33,7 @@
 				</c:if></td>
 		</tr>
 		<tr>
-			<td><spring:message code="other-documents.areas-which-the-document-reaches" />:</td>
+			<td><spring:message code="other-documents.areas-which-the-document-reaches" />: *</td>
 			<td>
 				<ul>
 					<%
@@ -64,9 +58,7 @@
 
 
 		<tr>
-			<td><span class="formNote">* <spring:message code="optional-data" />
-			</span>
-			</td>
+			<td><span class="formNote">* <spring:message code="required-data" /></span></td>
 			<td><input type="submit" value="<spring:message code="${buttonTittle}" />"
 				onclick="setFormAction('<%=AbstractNewEditDocumentController.COMMAND%>', '<c:url value='${successUrl}' />')" /></td>
 		</tr>

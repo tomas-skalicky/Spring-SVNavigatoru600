@@ -10,16 +10,11 @@
 	<table>
 		<%-- Login data --%>
 		<tr>
-			<td><form:label path="user.username">
-					<spring:message code="username" />:</form:label>
-			</td>
-			<td><form:input path="user.username" autocomplete="${userCommand.user.username}" class="longText" />
-			</td>
+			<td><form:label path="user.username"><spring:message code="username" />: *</form:label></td>
+			<td><form:input path="user.username" autocomplete="${userCommand.user.username}" class="longText" /></td>
 		</tr>
 		<tr>
-			<td><form:label path="newPassword">
-					<spring:message code="password" />:</form:label>
-			</td>
+			<td><form:label path="newPassword"><spring:message code="password" />: *</form:label></td>
 			<td><form:input path="newPassword" autocomplete="${userCommand.newPassword}" class="longText" /> <a href="#"
 				onclick="$('#newPassword').val(generatePassword(8));"><spring:message code="user-administration.generate" />
 			</a></td>
@@ -28,27 +23,20 @@
 
 		<%-- Other user's data --%>
 		<tr>
-			<td><form:label path="user.firstName">
-					<spring:message code="first-name" />:</form:label>
-			</td>
-			<td><form:input path="user.firstName" autocomplete="${userCommand.user.firstName}" class="longText" />
-			</td>
+			<td><form:label path="user.firstName"><spring:message code="first-name" />: *</form:label></td>
+			<td><form:input path="user.firstName" autocomplete="${userCommand.user.firstName}" class="longText" /></td>
 		</tr>
 		<tr>
-			<td><form:label path="user.lastName">
-					<spring:message code="last-name" />:</form:label>
-			</td>
+			<td><form:label path="user.lastName"><spring:message code="last-name" />: *</form:label></td>
 			<td><form:input path="user.lastName" autocomplete="${userCommand.user.lastName}" class="longText" />
 			</td>
 		</tr>
 		<tr>
-			<td><form:label path="user.email">
-					<spring:message code="email" />:</form:label>
-			</td>
-			<td><form:input path="user.email" autocomplete="${userCommand.user.email}" class="longText" />*</td>
+			<td><form:label path="user.email"><spring:message code="email" />:</form:label></td>
+			<td><form:input path="user.email" autocomplete="${userCommand.user.email}" class="longText" /></td>
 		</tr>
 		<tr>
-			<td><spring:message code="user-roles" />:</td>
+			<td><spring:message code="user-roles" />: *</td>
 			<td>
 				<ul>
 					<c:set var="newAuthorities" value="${userCommand.newAuthorities}" />
@@ -58,12 +46,9 @@
 
 
 		<tr>
-			<td><span class="formNote">* <spring:message code="optional-data" />
-			</span>
-			</td>
+			<td><span class="formNote">* <spring:message code="required-data" /></span></td>
 			<td><input type="submit" value="<spring:message code="user-administration.create-user" />"
-				onclick="setFormAction('userCommand', '<c:url value='/administrace-uzivatelu/novy/' />')" />
-			</td>
+				onclick="setFormAction('userCommand', '<c:url value='/administrace-uzivatelu/novy/' />')" /></td>
 		</tr>
 	</table>
 

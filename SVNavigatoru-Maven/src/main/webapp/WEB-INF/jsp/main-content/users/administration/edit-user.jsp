@@ -16,32 +16,24 @@
 	<table>
 		<%-- Login data --%>
 		<tr>
-			<td><form:label path="newPassword">
-					<spring:message code="password.new" />:</form:label>
-			</td>
+			<td><form:label path="newPassword"><spring:message code="password.new" />:</form:label></td>
 			<td><form:input path="newPassword" autocomplete="${userCommand.newPassword}" class="longText" /> <a href="#"
 				onclick="$('#newPassword').val(generatePassword(8));"><spring:message code="user-administration.generate" />
 			</a></td>
 		</tr>
 		<tr>
-			<td colspan="2"><span class="formNote"><spring:message code="edit-user-data.password-will-not-change-if" />
-			</span>
-			</td>
+			<td colspan="2"><span class="formNote"><spring:message code="edit-user-data.password-will-not-change-if" /></span></td>
 		</tr>
 
 
 		<%-- Other user's data --%>
 		<tr>
-			<td><form:label path="user.firstName">
-					<spring:message code="first-name" />:</form:label>
-			</td>
+			<td><form:label path="user.firstName"><spring:message code="first-name" />:</form:label></td>
 			<td><form:input path="user.firstName" autocomplete="${userCommand.user.firstName}" class="longText" />
 			</td>
 		</tr>
 		<tr>
-			<td><form:label path="user.lastName">
-					<spring:message code="last-name" />:</form:label>
-			</td>
+			<td><form:label path="user.lastName"><spring:message code="last-name" />:</form:label></td>
 			<td><form:input path="user.lastName" autocomplete="${userCommand.user.lastName}" class="longText" />
 			</td>
 		</tr>
