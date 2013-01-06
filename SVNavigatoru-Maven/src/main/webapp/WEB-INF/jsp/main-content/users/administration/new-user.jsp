@@ -28,15 +28,14 @@
 		</tr>
 		<tr>
 			<td><form:label path="user.lastName"><spring:message code="last-name" />: *</form:label></td>
-			<td><form:input path="user.lastName" autocomplete="${userCommand.user.lastName}" class="longText" />
-			</td>
+			<td><form:input path="user.lastName" autocomplete="${userCommand.user.lastName}" class="longText" /></td>
 		</tr>
 		<tr>
 			<td><form:label path="user.email"><spring:message code="email" />:</form:label></td>
 			<td><form:input path="user.email" autocomplete="${userCommand.user.email}" class="longText" /></td>
 		</tr>
 		<tr>
-			<td><spring:message code="user-roles" />: *</td>
+			<td><spring:message code="user-roles" />:</td>
 			<td>
 				<ul>
 					<c:set var="newAuthorities" value="${userCommand.newAuthorities}" />

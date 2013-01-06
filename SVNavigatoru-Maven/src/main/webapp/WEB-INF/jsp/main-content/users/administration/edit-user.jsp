@@ -28,14 +28,12 @@
 
 		<%-- Other user's data --%>
 		<tr>
-			<td><form:label path="user.firstName"><spring:message code="first-name" />:</form:label></td>
-			<td><form:input path="user.firstName" autocomplete="${userCommand.user.firstName}" class="longText" />
-			</td>
+			<td><form:label path="user.firstName"><spring:message code="first-name" />: *</form:label></td>
+			<td><form:input path="user.firstName" autocomplete="${userCommand.user.firstName}" class="longText" /></td>
 		</tr>
 		<tr>
-			<td><form:label path="user.lastName"><spring:message code="last-name" />:</form:label></td>
-			<td><form:input path="user.lastName" autocomplete="${userCommand.user.lastName}" class="longText" />
-			</td>
+			<td><form:label path="user.lastName"><spring:message code="last-name" />: *</form:label></td>
+			<td><form:input path="user.lastName" autocomplete="${userCommand.user.lastName}" class="longText" /></td>
 		</tr>
 		<tr>
 			<td><spring:message code="user-roles" />:</td>
@@ -48,7 +46,7 @@
 
 
 		<tr>
-			<td></td>
+			<td><span class="formNote">* <spring:message code="required-data" /></td>
 			<td><input type="submit" value="<spring:message code="edit.save-changes" />"
 				onclick="setFormAction('userCommand',
 					'<c:url value='/administrace-uzivatelu/existujici/${userCommand.user.username}/' />')" />
