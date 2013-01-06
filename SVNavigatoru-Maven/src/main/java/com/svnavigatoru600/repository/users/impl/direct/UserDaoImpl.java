@@ -161,27 +161,22 @@ public class UserDaoImpl extends NamedParameterJdbcDaoSupport implements UserDao
         parameters.put(UserField.enabled.getColumnName(), user.isEnabled());
         parameters.put(UserField.firstName.getColumnName(), user.getFirstName());
         parameters.put(UserField.lastName.getColumnName(), user.getLastName());
+        parameters.put(UserField.email.getColumnName(), user.getLowerCasedEmail());
         parameters.put(UserField.phone.getColumnName(), user.getPhone());
-
-        String lowerCasedEmail = null;
-        if ((user != null) && (user.getEmail() != null)) {
-            lowerCasedEmail = user.getEmail().toLowerCase();
-        }
-        parameters.put(UserField.email.getColumnName(), lowerCasedEmail);
+        parameters.put(UserField.isTestUser.getColumnName(), user.isTestUser());
+        parameters.put(UserField.subscribedToNews.getColumnName(), user.isSubscribedToNews());
+        parameters.put(UserField.subscribedToEvents.getColumnName(), user.isSubscribedToEvents());
+        parameters.put(UserField.subscribedToForum.getColumnName(), user.isSubscribedToForum());
+        parameters.put(UserField.subscribedToOtherDocuments.getColumnName(),
+                user.isSubscribedToOtherDocuments());
+        parameters.put(UserField.subscribedToOtherSections.getColumnName(),
+                user.isSubscribedToOtherSections());
         return parameters;
     }
 
     @Override
     public void update(User user) {
-        String lowerCasedEmail = null;
-        if (user.getEmail() != null) {
-            lowerCasedEmail = user.getEmail().toLowerCase();
-        }
-        this.logger
-                .info(String
-                        .format("Update an user (username '%s', password '%s', enabled '%b', first_name '%s', last_name '%s', email '%s', phone '%s')",
-                                user.getUsername(), user.getPassword(), user.isEnabled(),
-                                user.getFirstName(), user.getLastName(), lowerCasedEmail, user.getPhone()));
+        this.logger.info("Update an user " + user);
 
         // Parameters are those words which begin with ':' in the following query.
         String usernameColumn = UserField.username.getColumnName();
@@ -191,11 +186,22 @@ public class UserDaoImpl extends NamedParameterJdbcDaoSupport implements UserDao
         String lastNameColumn = UserField.lastName.getColumnName();
         String emailColumn = UserField.email.getColumnName();
         String phoneColumn = UserField.phone.getColumnName();
-        String query = String.format(
-                "UPDATE %s SET %s = :%s, %s = :%s, %s = :%s, %s = :%s, %s = :%s, %s = :%s WHERE %s = :%s",
-                UserDaoImpl.TABLE_NAME, passwordColumn, passwordColumn, enabledColumn, enabledColumn,
-                firstNameColumn, firstNameColumn, lastNameColumn, lastNameColumn, emailColumn, emailColumn,
-                phoneColumn, phoneColumn, usernameColumn, usernameColumn);
+        String isTestUserColumn = UserField.isTestUser.getColumnName();
+        String subscribedToNewsColumn = UserField.subscribedToNews.getColumnName();
+        String subscribedToEventsColumn = UserField.subscribedToEvents.getColumnName();
+        String subscribedToForumColumn = UserField.subscribedToForum.getColumnName();
+        String subscribedToOtherDocumentsColumn = UserField.subscribedToOtherDocuments.getColumnName();
+        String subscribedToOtherSectionsColumn = UserField.subscribedToOtherSections.getColumnName();
+        String query = String.format("UPDATE %s SET %s = :%s, %s = :%s, %s = :%s, %s = :%s,"
+                + " %s = :%s, %s = :%s, %s = :%s, %s = :%s, %s = :%s, %s = :%s, %s = :%s, %s = :%s"
+                + " WHERE %s = :%s", UserDaoImpl.TABLE_NAME, passwordColumn, passwordColumn, enabledColumn,
+                enabledColumn, firstNameColumn, firstNameColumn, lastNameColumn, lastNameColumn, emailColumn,
+                emailColumn, phoneColumn, phoneColumn, isTestUserColumn, isTestUserColumn,
+                subscribedToNewsColumn, subscribedToNewsColumn, subscribedToEventsColumn,
+                subscribedToEventsColumn, subscribedToForumColumn, subscribedToForumColumn,
+                subscribedToOtherDocumentsColumn, subscribedToOtherDocumentsColumn,
+                subscribedToOtherSectionsColumn, subscribedToOtherSectionsColumn, usernameColumn,
+                usernameColumn);
 
         this.getNamedParameterJdbcTemplate().update(query, this.getNamedParameters(user));
 
@@ -206,22 +212,17 @@ public class UserDaoImpl extends NamedParameterJdbcDaoSupport implements UserDao
 
     @Override
     public void save(User user) {
-        String lowerCasedEmail = null;
-        if (user.getEmail() != null) {
-            lowerCasedEmail = user.getEmail().toLowerCase();
-        }
-
-        this.logger
-                .info(String
-                        .format("Save a new user (username '%s', password '%s', enabled '%b', first_name '%s', last_name '%s', email '%s', phone '%s')",
-                                user.getUsername(), user.getPassword(), user.isEnabled(),
-                                user.getFirstName(), user.getLastName(), lowerCasedEmail, user.getPhone()));
+        this.logger.info("Save a new user " + user);
 
         SimpleJdbcInsert insert = new SimpleJdbcInsert(this.getDataSource()).withTableName(
                 UserDaoImpl.TABLE_NAME).usingColumns(UserField.username.getColumnName(),
                 UserField.password.getColumnName(), UserField.enabled.getColumnName(),
                 UserField.firstName.getColumnName(), UserField.lastName.getColumnName(),
-                UserField.email.getColumnName(), UserField.phone.getColumnName());
+                UserField.email.getColumnName(), UserField.phone.getColumnName(),
+                UserField.isTestUser.getColumnName(), UserField.subscribedToNews.getColumnName(),
+                UserField.subscribedToEvents.getColumnName(), UserField.subscribedToForum.getColumnName(),
+                UserField.subscribedToOtherDocuments.getColumnName(),
+                UserField.subscribedToOtherSections.getColumnName());
 
         insert.execute(this.getNamedParameters(user));
 
