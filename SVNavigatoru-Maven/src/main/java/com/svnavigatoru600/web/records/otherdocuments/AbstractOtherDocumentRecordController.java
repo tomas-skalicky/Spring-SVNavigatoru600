@@ -1,16 +1,10 @@
 package com.svnavigatoru600.web.records.otherdocuments;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 
 import com.svnavigatoru600.domain.records.OtherDocumentRecordType;
 import com.svnavigatoru600.service.records.OtherDocumentRecordService;
-import com.svnavigatoru600.service.util.Localization;
 import com.svnavigatoru600.web.records.AbstractDocumentRecordController;
 import com.svnavigatoru600.web.records.AbstractPageViews;
 
@@ -76,35 +70,5 @@ public abstract class AbstractOtherDocumentRecordController extends AbstractDocu
      */
     protected OtherDocumentRecordService getRecordService() {
         return this.recordService;
-    }
-
-    /**
-     * Gets a {@link Map} which for each {@link OtherDocumentRecordType} (more precisely its ordinal) contains
-     * an appropriate ID of its checkbox.
-     */
-    protected Map<Integer, String> getTypeCheckboxId() {
-        String commonIdFormat = "newTypes[%s]";
-        Map<Integer, String> checkboxIds = new HashMap<Integer, String>();
-
-        for (OtherDocumentRecordType type : OtherDocumentRecordType.values()) {
-            int typeOrdinal = type.ordinal();
-            checkboxIds.put(typeOrdinal, String.format(commonIdFormat, typeOrdinal));
-        }
-        return checkboxIds;
-    }
-
-    /**
-     * Gets a {@link Map} which for each {@link OtherDocumentRecordType} (more precisely its ordinal) contains
-     * an appropriate localized title of its checkbox.
-     */
-    protected Map<Integer, String> getLocalizedTypeCheckboxTitles(HttpServletRequest request) {
-        Map<Integer, String> checkboxTitles = new HashMap<Integer, String>();
-
-        for (OtherDocumentRecordType type : OtherDocumentRecordType.values()) {
-            String localizedTitle = Localization.findLocaleMessage(this.getMessageSource(), request,
-                    type.getTitleLocalizationCode());
-            checkboxTitles.put(type.ordinal(), localizedTitle);
-        }
-        return checkboxTitles;
     }
 }

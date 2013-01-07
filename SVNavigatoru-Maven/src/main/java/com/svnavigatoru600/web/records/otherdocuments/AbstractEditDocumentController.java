@@ -76,8 +76,9 @@ public abstract class AbstractEditDocumentController extends AbstractNewEditDocu
         command.setNewTypes(OtherDocumentRecordUtils.getArrayOfCheckIndicators(record.getTypes()));
 
         // Sets up all auxiliary (but necessary) maps.
-        command.setTypeCheckboxId(this.getTypeCheckboxId());
-        command.setLocalizedTypeCheckboxTitles(this.getLocalizedTypeCheckboxTitles(request));
+        command.setTypeCheckboxId(OtherDocumentRecordService.getTypeCheckboxId());
+        command.setLocalizedTypeCheckboxTitles(OtherDocumentRecordService.getLocalizedTypeTitles(request,
+                this.getMessageSource()));
 
         model.addAttribute(AbstractNewEditDocumentController.COMMAND, command);
         return this.getViews().getEdit();
@@ -104,8 +105,10 @@ public abstract class AbstractEditDocumentController extends AbstractNewEditDocu
             int recordId, HttpServletRequest request, ModelMap model) {
 
         // Sets up all auxiliary (but necessary) maps.
-        command.setTypeCheckboxId(this.getTypeCheckboxId());
-        command.setLocalizedTypeCheckboxTitles(this.getLocalizedTypeCheckboxTitles(request));
+        command.setTypeCheckboxId(OtherDocumentRecordService.getTypeCheckboxId());
+        MessageSource messageSource = this.getMessageSource();
+        command.setLocalizedTypeCheckboxTitles(OtherDocumentRecordService.getLocalizedTypeTitles(request,
+                messageSource));
 
         this.getValidator().validate(command, result);
         if (result.hasErrors()) {
@@ -115,7 +118,7 @@ public abstract class AbstractEditDocumentController extends AbstractNewEditDocu
 
         try {
             this.getRecordService().update(recordId, command.getRecord(), command.getNewTypes(),
-                    command.isFileChanged(), command.getNewFile(), request, this.getMessageSource());
+                    command.isFileChanged(), command.getNewFile(), request, messageSource);
 
             // Clears the command object from the session.
             status.setComplete();
