@@ -50,6 +50,14 @@
 			<td><form:label path="user.phone"><spring:message code="phone" />:</form:label></td>
 			<td><form:input path="user.phone" autocomplete="${updateUserDataCommand.user.phone}" class="longText" /></td>
 		</tr>
+		<tr>
+			<td><spring:message code="notifications.notify-on-news-in" />:</td>
+			<td>
+				<ul>
+					<c:set var="user" value="${updateUserDataCommand.user}" />
+					<%@ include file="/WEB-INF/jsp/main-content/users/notification-administration.jsp"%>
+				</ul></td>
+		</tr>
 
 
 		<tr>
