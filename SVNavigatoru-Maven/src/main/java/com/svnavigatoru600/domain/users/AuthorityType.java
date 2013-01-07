@@ -28,11 +28,9 @@ public enum AuthorityType {
     ROLE_USER_ADMINISTRATOR("user-roles.user-administrator");
 
     private final String titleLocalizationCode;
-    private final int ordinal;
 
     private AuthorityType(String titleLocalizationCode) {
         this.titleLocalizationCode = titleLocalizationCode;
-        this.ordinal = this.ordinal();
     }
 
     /**
@@ -44,9 +42,11 @@ public enum AuthorityType {
     }
 
     /**
+     * This getter is necessary for Spring Expression Language (SpEL).
+     * 
      * @return The same value as {@link #ordinal()}.
      */
     public long getOrdinal() {
-        return this.ordinal;
+        return this.ordinal();
     }
 }
