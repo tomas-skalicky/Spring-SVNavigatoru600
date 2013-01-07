@@ -321,4 +321,35 @@ public class OtherDocumentRecordService extends AbstractDocumentRecordService {
         }
         return questions;
     }
+
+    /**
+     * Gets a {@link Map} which for each constant of the {@link OtherDocumentRecordType} enumeration contains
+     * a pair of its {@link OtherDocumentRecordType#getOrdinal() ordinal} and ID of its checkbox.
+     */
+    public static Map<Long, String> getTypeCheckboxId() {
+        String commonIdFormat = "newTypes[%s]";
+        Map<Long, String> checkboxIds = new HashMap<Long, String>();
+
+        for (OtherDocumentRecordType type : OtherDocumentRecordType.values()) {
+            long typeOrdinal = type.getOrdinal();
+            checkboxIds.put(typeOrdinal, String.format(commonIdFormat, typeOrdinal));
+        }
+        return checkboxIds;
+    }
+
+    /**
+     * Gets a {@link Map} which for each constant of the {@link OtherDocumentRecordType} enumeration contains
+     * a pair of its {@link OtherDocumentRecordType#getOrdinal() ordinal} and its localized title.
+     */
+    public static Map<Long, String> getLocalizedTypeTitles(HttpServletRequest request,
+            MessageSource messageSource) {
+        Map<Long, String> checkboxTitles = new HashMap<Long, String>();
+
+        for (OtherDocumentRecordType type : OtherDocumentRecordType.values()) {
+            String localizedTitle = Localization.findLocaleMessage(messageSource, request,
+                    type.getTitleLocalizationCode());
+            checkboxTitles.put(type.getOrdinal(), localizedTitle);
+        }
+        return checkboxTitles;
+    }
 }

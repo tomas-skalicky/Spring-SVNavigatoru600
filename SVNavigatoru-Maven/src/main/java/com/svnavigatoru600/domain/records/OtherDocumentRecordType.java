@@ -23,4 +23,13 @@ public enum OtherDocumentRecordType {
     public String getTitleLocalizationCode() {
         return this.titleLocalizationCode;
     }
+
+    /**
+     * This getter is necessary for Spring Expression Language (SpEL).
+     * 
+     * @return The same value as {@link #ordinal()}.
+     */
+    public long getOrdinal() {
+        return this.ordinal();
+    }
 }

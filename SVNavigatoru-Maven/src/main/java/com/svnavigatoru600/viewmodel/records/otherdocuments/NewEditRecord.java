@@ -17,8 +17,8 @@ public class NewEditRecord {
     private OtherDocumentRecord record = null;
     private MultipartFile newFile = null;
     private boolean[] newTypes = new boolean[OtherDocumentRecordType.values().length];
-    private Map<Integer, String> typeCheckboxId = null;
-    private Map<Integer, String> localizedTypeCheckboxTitles = null;
+    private Map<Long, String> typeCheckboxId = null;
+    private Map<Long, String> localizedTypeCheckboxTitles = null;
 
     public OtherDocumentRecord getRecord() {
         return this.record;
@@ -44,19 +44,19 @@ public class NewEditRecord {
         this.newTypes = newTypes;
     }
 
-    public Map<Integer, String> getTypeCheckboxId() {
+    public Map<Long, String> getTypeCheckboxId() {
         return this.typeCheckboxId;
     }
 
-    public void setTypeCheckboxId(Map<Integer, String> typeCheckboxId) {
+    public void setTypeCheckboxId(Map<Long, String> typeCheckboxId) {
         this.typeCheckboxId = typeCheckboxId;
     }
 
-    public Map<Integer, String> getLocalizedTypeCheckboxTitles() {
+    public Map<Long, String> getLocalizedTypeCheckboxTitles() {
         return this.localizedTypeCheckboxTitles;
     }
 
-    public void setLocalizedTypeCheckboxTitles(Map<Integer, String> localizedTypeCheckboxTitles) {
+    public void setLocalizedTypeCheckboxTitles(Map<Long, String> localizedTypeCheckboxTitles) {
         this.localizedTypeCheckboxTitles = localizedTypeCheckboxTitles;
     }
 }

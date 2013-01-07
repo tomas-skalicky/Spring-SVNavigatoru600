@@ -79,8 +79,9 @@ public abstract class AbstractNewDocumentController extends AbstractNewEditDocum
         command.setNewTypes(newTypes);
 
         // Sets up all auxiliary (but necessary) maps.
-        command.setTypeCheckboxId(this.getTypeCheckboxId());
-        command.setLocalizedTypeCheckboxTitles(this.getLocalizedTypeCheckboxTitles(request));
+        command.setTypeCheckboxId(OtherDocumentRecordService.getTypeCheckboxId());
+        command.setLocalizedTypeCheckboxTitles(OtherDocumentRecordService.getLocalizedTypeTitles(request,
+                this.getMessageSource()));
 
         model.addAttribute(AbstractNewEditDocumentController.COMMAND, command);
         return this.getViews().getNeww();
@@ -110,8 +111,10 @@ public abstract class AbstractNewDocumentController extends AbstractNewEditDocum
             HttpServletRequest request, ModelMap model) {
 
         // Sets up all auxiliary (but necessary) maps.
-        command.setTypeCheckboxId(this.getTypeCheckboxId());
-        command.setLocalizedTypeCheckboxTitles(this.getLocalizedTypeCheckboxTitles(request));
+        command.setTypeCheckboxId(OtherDocumentRecordService.getTypeCheckboxId());
+        MessageSource messageSource = this.getMessageSource();
+        command.setLocalizedTypeCheckboxTitles(OtherDocumentRecordService.getLocalizedTypeTitles(request,
+                messageSource));
 
         this.getValidator().validate(command, result);
         if (result.hasErrors()) {
@@ -121,7 +124,7 @@ public abstract class AbstractNewDocumentController extends AbstractNewEditDocum
         OtherDocumentRecord newRecord = command.getRecord();
         try {
             this.getRecordService().save(newRecord, command.getNewTypes(), command.getNewFile(), request,
-                    this.getMessageSource());
+                    messageSource);
 
             // Clears the command object from the session.
             status.setComplete();
