@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import com.svnavigatoru600.domain.forum.Contribution;
 import com.svnavigatoru600.domain.forum.Thread;
 import com.svnavigatoru600.domain.users.AuthorityType;
+import com.svnavigatoru600.domain.users.NotificationType;
 import com.svnavigatoru600.domain.users.User;
 import com.svnavigatoru600.repository.users.UserDao;
 import com.svnavigatoru600.service.util.Email;
@@ -330,5 +331,21 @@ public class UserService {
                     Localization.findLocaleMessage(messageSource, request, messageCode, messageParams));
         }
         return questions;
+    }
+
+    /**
+     * Gets a {@link Map} which for each constant of the {@link NotificationType} enumeration contains a pair
+     * of its {@link NotificationType#ordinal() ordinal} and its localized title.
+     */
+    public static Map<Long, String> getLocalizedNotificationTitles(HttpServletRequest request,
+            MessageSource messageSource) {
+        Map<Long, String> ordinalTitleMap = new HashMap<Long, String>();
+
+        for (NotificationType type : NotificationType.values()) {
+            String localizedTitle = Localization.findLocaleMessage(messageSource, request,
+                    type.getTitleLocalizationCode());
+            ordinalTitleMap.put((long) type.ordinal(), localizedTitle);
+        }
+        return ordinalTitleMap;
     }
 }
