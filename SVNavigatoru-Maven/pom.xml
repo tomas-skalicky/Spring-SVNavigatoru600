@@ -41,8 +41,8 @@
 		<connection>scm:git:git://github.com/tomas-skalicky/Spring-SVNavigatoru600.git</connection>
 		<developerConnection>scm:git:[fetch=]https://github.com/tomas-skalicky/Spring-SVNavigatoru600.git[push=]git@github.com:tomas-skalicky/Spring-SVNavigatoru600.git</developerConnection>
 		<url>https://github.com/tomas-skalicky/Spring-SVNavigatoru600</url>
-	  <tag>HEAD</tag>
-  </scm>
+		<tag>HEAD</tag>
+	</scm>
 
 
 	<properties>
@@ -337,6 +337,16 @@
 		</dependency>
 
 		<dependency>
+			<groupId>org.glassfish.web</groupId>
+			<artifactId>javax.servlet.jsp.jstl</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>javax.servlet.jsp.jstl</groupId>
+			<artifactId>javax.servlet.jsp.jstl-api</artifactId>
+		</dependency>
+
+		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>jcl-over-slf4j</artifactId>
 		</dependency>
@@ -349,11 +359,6 @@
 		<dependency>
 			<groupId>org.jpatterns</groupId>
 			<artifactId>jpatterns</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>jstl</artifactId>
 		</dependency>
 
 		<dependency>
@@ -515,6 +520,18 @@
 			</dependency>
 
 			<dependency>
+				<groupId>org.glassfish.web</groupId>
+				<artifactId>javax.servlet.jsp.jstl</artifactId>
+				<version>1.2.1</version>
+			</dependency>
+
+			<dependency>
+				<groupId>javax.servlet.jsp.jstl</groupId>
+				<artifactId>javax.servlet.jsp.jstl-api</artifactId>
+				<version>1.2.1</version>
+			</dependency>
+
+			<dependency>
 				<groupId>org.slf4j</groupId>
 				<artifactId>jcl-over-slf4j</artifactId>
 				<version>1.6.4</version>
@@ -530,12 +547,6 @@
 				<groupId>org.jpatterns</groupId>
 				<artifactId>jpatterns</artifactId>
 				<version>0.0.1</version>
-			</dependency>
-
-			<dependency>
-				<groupId>javax.servlet</groupId>
-				<artifactId>jstl</artifactId>
-				<version>1.2</version>
 			</dependency>
 
 			<dependency>
