@@ -39,7 +39,10 @@
 			<td><spring:message code="user-roles" />:</td>
 			<td>
 				<ul>
+					<!-- Properties of command bean cannot be accessed outside in the included file. -->
 					<c:set var="newAuthorities" value="${userCommand.newAuthorities}" />
+					<c:set var="roleCheckboxId" value="${userCommand.roleCheckboxId}" />
+					<c:set var="localizedRoleCheckboxTitles" value="${userCommand.localizedRoleCheckboxTitles}" />
 					<%@ include file="/WEB-INF/jsp/main-content/users/administration/authority-administration.jsp"%>
 				</ul></td>
 		</tr>

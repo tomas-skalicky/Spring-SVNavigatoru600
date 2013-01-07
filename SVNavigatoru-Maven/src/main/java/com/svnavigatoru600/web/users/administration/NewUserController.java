@@ -57,8 +57,8 @@ public class NewUserController extends AbstractNewEditUserController {
         command.setNewAuthorities(AuthorityUtils.getDefaultArrayOfCheckIndicators());
 
         // Sets up all (but necessary) maps.
-        command.setRoleCheckboxId(this.getRoleCheckboxId());
-        command.setLocalizedRoleCheckboxTitles(AuthorityService.getLocalizedTitles(request,
+        command.setRoleCheckboxId(AuthorityService.getRoleCheckboxId());
+        command.setLocalizedRoleCheckboxTitles(AuthorityService.getLocalizedRoleTitles(request,
                 this.getMessageSource()));
 
         model.addAttribute(AbstractNewEditUserController.COMMAND, command);
@@ -77,9 +77,9 @@ public class NewUserController extends AbstractNewEditUserController {
             SessionStatus status, HttpServletRequest request, ModelMap model) {
 
         // Sets up all (but necessary) maps.
-        command.setRoleCheckboxId(this.getRoleCheckboxId());
+        command.setRoleCheckboxId(AuthorityService.getRoleCheckboxId());
         MessageSource messageSource = this.getMessageSource();
-        command.setLocalizedRoleCheckboxTitles(AuthorityService.getLocalizedTitles(request, messageSource));
+        command.setLocalizedRoleCheckboxTitles(AuthorityService.getLocalizedRoleTitles(request, messageSource));
 
         this.getValidator().validate(command, result);
         if (result.hasErrors()) {

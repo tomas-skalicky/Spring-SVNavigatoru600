@@ -2,8 +2,8 @@
 <%@ include file="../../include-preceding-html.jsp"%>
 
 
-<% String newsId = "template"; %>
-<div id="post_<%=newsId%>" class="post invisible">
+<c:set var="newsId" value="template" />
+<div id="post_${newsId}" class="post invisible">
 	<div class="post-header">
 		<h3></h3>
 		<p class="post-date">
@@ -14,18 +14,16 @@
 
 
 		<%-- Administration of events --%>
-		<%
-		// Not an arror. The "loggedUser" variable is in the "list-news.jsp" file.
-		if (loggedUser.canEditNews()) {%>
+		<c:if test="${canLoggedUserEditNews}">
 			<p class="controls">
 				<%-- Edit icon --%>
-				<a id="edit[<%=newsId%>]" href="#" title="<spring:message code="news.modify-news" />" class="edit" onclick=""></a>
+				<a id="edit[${newsId}]" href="#" title="<spring:message code="news.modify-news" />" class="edit" onclick=""></a>
 
 				<%-- Delete icon --%>
-				<a id="delete[<%=newsId%>]" href="#" title="<spring:message code="news.delete-news" />" class="delete" onclick=""></a>
+				<a id="delete[${newsId}]" href="#" title="<spring:message code="news.delete-news" />" class="delete" onclick=""></a>
 			</p>
 			<div class="clearfix"></div>
-		<%}%>
+		</c:if>
 
 	</div>
 	<div class="post-content clearfix"></div>

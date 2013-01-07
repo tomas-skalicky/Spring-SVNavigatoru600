@@ -19,8 +19,12 @@ public class AdministrateUserData {
     private User user = null;
     private String newPassword = "";
     private boolean[] newAuthorities = new boolean[AuthorityType.values().length];
-    private Map<Integer, String> roleCheckboxId = null;
-    private Map<Integer, String> localizedRoleCheckboxTitles = null;
+    /**
+     * Integer cannot be used as a key type since such a map cannot be accessed by JSTL (see
+     * http://stackoverflow.com/questions/924451/jstl-access-a-map-value-by-key).
+     */
+    private Map<Long, String> roleCheckboxId = null;
+    private Map<Long, String> localizedRoleCheckboxTitles = null;
     private boolean dataSaved = false;
 
     public User getUser() {
@@ -47,19 +51,19 @@ public class AdministrateUserData {
         this.newAuthorities = newAuthorities;
     }
 
-    public Map<Integer, String> getRoleCheckboxId() {
+    public Map<Long, String> getRoleCheckboxId() {
         return this.roleCheckboxId;
     }
 
-    public void setRoleCheckboxId(Map<Integer, String> roleCheckboxId) {
+    public void setRoleCheckboxId(Map<Long, String> roleCheckboxId) {
         this.roleCheckboxId = roleCheckboxId;
     }
 
-    public Map<Integer, String> getLocalizedRoleCheckboxTitles() {
+    public Map<Long, String> getLocalizedRoleCheckboxTitles() {
         return this.localizedRoleCheckboxTitles;
     }
 
-    public void setLocalizedRoleCheckboxTitles(Map<Integer, String> localizedRoleCheckboxTitles) {
+    public void setLocalizedRoleCheckboxTitles(Map<Long, String> localizedRoleCheckboxTitles) {
         this.localizedRoleCheckboxTitles = localizedRoleCheckboxTitles;
     }
 
