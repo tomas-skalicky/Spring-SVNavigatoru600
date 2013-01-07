@@ -46,7 +46,8 @@ public class EditMyAccountController extends AbstractPrivateSectionMetaControlle
      * Constructor.
      */
     @Inject
-    public EditMyAccountController(UserService userService, UpdateUserDataValidator validator, MessageSource messageSource) {
+    public EditMyAccountController(UserService userService, UpdateUserDataValidator validator,
+            MessageSource messageSource) {
         LogFactory.getLog(this.getClass()).debug("The UserAccountController object created.");
         this.userService = userService;
         this.validator = validator;
@@ -66,7 +67,8 @@ public class EditMyAccountController extends AbstractPrivateSectionMetaControlle
         command.setUser(user);
 
         // Sets up all auxiliary (but necessary) maps.
-        command.setLocalizedNotificationCheckboxTitles(UserService.getLocalizedNotificationTitles(request, this.messageSource));
+        command.setLocalizedNotificationCheckboxTitles(UserService.getLocalizedNotificationTitles(request,
+                this.messageSource));
 
         model.addAttribute(EditMyAccountController.COMMAND, command);
         return EditMyAccountController.PAGE_VIEW;

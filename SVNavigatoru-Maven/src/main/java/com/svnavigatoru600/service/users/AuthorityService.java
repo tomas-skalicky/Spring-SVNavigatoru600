@@ -69,14 +69,14 @@ public class AuthorityService {
 
     /**
      * Gets a {@link Map} which for each constant of the {@link AuthorityType} enumeration contains a pair of
-     * its {@link AuthorityType#ordinal() ordinal} and ID of its checkbox.
+     * its {@link AuthorityType#getOrdinal() ordinal} and ID of its checkbox.
      */
     public static Map<Long, String> getRoleCheckboxId() {
         String commonIdFormat = "newAuthorities[%s]";
         Map<Long, String> checkboxIds = new HashMap<Long, String>();
 
         for (AuthorityType type : AuthorityType.values()) {
-            long typeOrdinal = type.ordinal();
+            long typeOrdinal = type.getOrdinal();
             checkboxIds.put(typeOrdinal, String.format(commonIdFormat, typeOrdinal));
         }
         return checkboxIds;
@@ -84,7 +84,7 @@ public class AuthorityService {
 
     /**
      * Gets a {@link Map} which for each constant of the {@link AuthorityType} enumeration contains a pair of
-     * its {@link AuthorityType#ordinal() ordinal} and its localized title.
+     * its {@link AuthorityType#getOrdinal() ordinal} and its localized title.
      */
     public static Map<Long, String> getLocalizedRoleTitles(HttpServletRequest request,
             MessageSource messageSource) {
@@ -93,7 +93,7 @@ public class AuthorityService {
         for (AuthorityType type : AuthorityType.values()) {
             String localizedTitle = Localization.findLocaleMessage(messageSource, request,
                     type.getTitleLocalizationCode());
-            ordinalTitleMap.put((long) type.ordinal(), localizedTitle);
+            ordinalTitleMap.put(type.getOrdinal(), localizedTitle);
         }
         return ordinalTitleMap;
     }
