@@ -10,7 +10,7 @@
 <spring:eval expression="T(com.svnavigatoru600.domain.users.AuthorityType).ROLE_MEMBER_OF_SV.ordinal" var="memberOfSvOrdinal" />
 <spring:eval expression="T(com.svnavigatoru600.domain.users.AuthorityType).ROLE_MEMBER_OF_BOARD.ordinal" var="memberOfBoardOrdinal" />
 
-<c:set var="roleCounter" value="0" />
+<c:set var="roleCounter" value="${0}" />
 <c:forEach items="${newAuthorities}" var="roleCheck">
 	<%-- Checkboxes are discussed in http://www.mkyong.com/spring-mvc/spring-mvc-checkbox-and-checkboxes-example/. --%>
 	<c:set var="checkboxId" value="${roleCheckboxId[roleCounter]}" />

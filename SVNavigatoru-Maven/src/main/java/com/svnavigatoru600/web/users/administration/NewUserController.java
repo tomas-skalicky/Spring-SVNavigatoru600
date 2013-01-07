@@ -79,7 +79,8 @@ public class NewUserController extends AbstractNewEditUserController {
         // Sets up all (but necessary) maps.
         command.setRoleCheckboxId(AuthorityService.getRoleCheckboxId());
         MessageSource messageSource = this.getMessageSource();
-        command.setLocalizedRoleCheckboxTitles(AuthorityService.getLocalizedRoleTitles(request, messageSource));
+        command.setLocalizedRoleCheckboxTitles(AuthorityService
+                .getLocalizedRoleTitles(request, messageSource));
 
         this.getValidator().validate(command, result);
         if (result.hasErrors()) {

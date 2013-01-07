@@ -335,7 +335,7 @@ public class UserService {
 
     /**
      * Gets a {@link Map} which for each constant of the {@link NotificationType} enumeration contains a pair
-     * of its {@link NotificationType#ordinal() ordinal} and its localized title.
+     * of its {@link NotificationType#getOrdinal() ordinal} and its localized title.
      */
     public static Map<Long, String> getLocalizedNotificationTitles(HttpServletRequest request,
             MessageSource messageSource) {
@@ -344,7 +344,7 @@ public class UserService {
         for (NotificationType type : NotificationType.values()) {
             String localizedTitle = Localization.findLocaleMessage(messageSource, request,
                     type.getTitleLocalizationCode());
-            ordinalTitleMap.put((long) type.ordinal(), localizedTitle);
+            ordinalTitleMap.put(type.getOrdinal(), localizedTitle);
         }
         return ordinalTitleMap;
     }
