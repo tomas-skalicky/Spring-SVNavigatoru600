@@ -12,11 +12,9 @@ public enum NotificationType {
             "notifications.in-other-sections");
 
     private final String titleLocalizationCode;
-    private final int ordinal;
 
     private NotificationType(String titleLocalizationCode) {
         this.titleLocalizationCode = titleLocalizationCode;
-        this.ordinal = this.ordinal();
     }
 
     /**
@@ -28,9 +26,11 @@ public enum NotificationType {
     }
 
     /**
+     * This getter is necessary for Spring Expression Language (SpEL).
+     * 
      * @return The same value as {@link #ordinal()}.
      */
     public long getOrdinal() {
-        return this.ordinal;
+        return this.ordinal();
     }
 }
