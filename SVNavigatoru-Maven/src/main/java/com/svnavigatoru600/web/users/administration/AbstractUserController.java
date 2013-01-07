@@ -1,15 +1,11 @@
 package com.svnavigatoru600.web.users.administration;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import javax.inject.Inject;
 
 import org.apache.commons.logging.LogFactory;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 
-import com.svnavigatoru600.domain.users.AuthorityType;
 import com.svnavigatoru600.service.users.UserService;
 import com.svnavigatoru600.web.AbstractPrivateSectionMetaController;
 
@@ -47,20 +43,5 @@ public abstract class AbstractUserController extends AbstractPrivateSectionMetaC
      */
     protected MessageSource getMessageSource() {
         return this.messageSource;
-    }
-
-    /**
-     * Gets a {@link Map} which for each {@link AuthorityType} (more precisely its ordinal) contains an
-     * appropriate ID of its checkbox.
-     */
-    protected Map<Integer, String> getRoleCheckboxId() {
-        String commonIdFormat = "newAuthorities[%s]";
-        Map<Integer, String> checkboxIds = new HashMap<Integer, String>();
-
-        for (AuthorityType type : AuthorityType.values()) {
-            int typeOrdinal = type.ordinal();
-            checkboxIds.put(typeOrdinal, String.format(commonIdFormat, typeOrdinal));
-        }
-        return checkboxIds;
     }
 }

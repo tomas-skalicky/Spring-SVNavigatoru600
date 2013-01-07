@@ -23,28 +23,29 @@
 
 
 
+<spring:eval expression="T(com.svnavigatoru600.service.util.UserUtils).loggedUser.canEditNews()" var="canLoggedUserEditNews" />
+
 <c:set var="sectionUrl" value="novinky" />
-<%
-User loggedUser = UserUtils.getLoggedUser();
-if (loggedUser.canEditNews()) {%>
+<c:if test="${canLoggedUserEditNews}">
 	<p id="newNewsLink">
 		<a href="<c:url value="/${sectionUrl}/novy/" />" onclick="goToNewNewsForm(); return false;">
 			<strong><spring:message code="news.add-new-news" /></strong>
 		</a>
 	</p>
 	<%@ include file="/WEB-INF/jsp/main-content/news/new-edit-news.jsp"%>
-<%}%>
+</c:if>
 
 
 
 <div id="newsList">
-<%
-if (loggedUser.canEditNews()) {%>
+<c:if test="${canLoggedUserEditNews}">
 	<%-- For visualization of the new news via AJAX --%>
 	<%@ include file="/WEB-INF/jsp/main-content/news/list-news-template.jsp"%>
-<%}
+</c:if>
 
 
+
+<%
 Locale locale = Localization.getLocale(request);
 
 // Gets the command from the ModelMap.
@@ -67,8 +68,8 @@ for (News news : newss) {
 
 
 		<%-- Administration of events --%>
+		<c:if test="${canLoggedUserEditNews}">
 		<%
-		if (loggedUser.canEditNews()) {
 			int newsId = news.getId();
 			%>
 			<p class="controls">
@@ -86,7 +87,7 @@ for (News news : newss) {
 						'<c:out value="${urlBeginning}" />'); return false;"></a>
 			</p>
 			<div class="clearfix"></div>
-		<%}%>
+		</c:if>
 
 	</div>
 	<div class="post-content clearfix"><%=news.getText()%></div>
