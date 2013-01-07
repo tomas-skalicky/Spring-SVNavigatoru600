@@ -1,5 +1,7 @@
 package com.svnavigatoru600.viewmodel.users;
 
+import java.util.Map;
+
 import org.springframework.stereotype.Service;
 
 import com.svnavigatoru600.domain.users.User;
@@ -15,6 +17,11 @@ public class UpdateUserData {
     private User user = null;
     private String newPassword = "";
     private String newPasswordConfirmation = "";
+    /**
+     * Integer cannot be used as a key type since such a map cannot be accessed by JSTL (see
+     * http://stackoverflow.com/questions/924451/jstl-access-a-map-value-by-key).
+     */
+    private Map<Long, String> localizedNotificationCheckboxTitles = null;
     private boolean dataSaved = false;
 
     public User getUser() {
@@ -39,6 +46,14 @@ public class UpdateUserData {
 
     public void setNewPasswordConfirmation(String newPasswordConfirmation) {
         this.newPasswordConfirmation = newPasswordConfirmation;
+    }
+
+    public Map<Long, String> getLocalizedNotificationCheckboxTitles() {
+        return this.localizedNotificationCheckboxTitles;
+    }
+
+    public void setLocalizedNotificationCheckboxTitles(Map<Long, String> localizedNotificationCheckboxTitles) {
+        this.localizedNotificationCheckboxTitles = localizedNotificationCheckboxTitles;
     }
 
     public boolean isDataSaved() {

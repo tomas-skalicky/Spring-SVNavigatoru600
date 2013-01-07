@@ -1,8 +1,10 @@
 package com.svnavigatoru600.web.users;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.logging.LogFactory;
+import org.springframework.context.MessageSource;
 import org.springframework.dao.DataAccessException;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -38,15 +40,17 @@ public class EditMyAccountController extends AbstractPrivateSectionMetaControlle
 
     private final UserService userService;
     private final Validator validator;
+    private final MessageSource messageSource;
 
     /**
      * Constructor.
      */
     @Inject
-    public EditMyAccountController(UserService userService, UpdateUserDataValidator validator) {
+    public EditMyAccountController(UserService userService, UpdateUserDataValidator validator, MessageSource messageSource) {
         LogFactory.getLog(this.getClass()).debug("The UserAccountController object created.");
         this.userService = userService;
         this.validator = validator;
+        this.messageSource = messageSource;
     }
 
     /**
@@ -54,12 +58,15 @@ public class EditMyAccountController extends AbstractPrivateSectionMetaControlle
      */
     @RequestMapping(value = EditMyAccountController.BASE_URL, method = RequestMethod.GET)
     @PreAuthorize("hasRole('ROLE_REGISTERED_USER')")
-    public String initForm(ModelMap model) {
+    public String initForm(HttpServletRequest request, ModelMap model) {
 
         UpdateUserData command = new UpdateUserData();
 
         User user = UserUtils.getLoggedUser();
         command.setUser(user);
+
+        // Sets up all auxiliary (but necessary) maps.
+        command.setLocalizedNotificationCheckboxTitles(UserService.getLocalizedNotificationTitles(request, this.messageSource));
 
         model.addAttribute(EditMyAccountController.COMMAND, command);
         return EditMyAccountController.PAGE_VIEW;
@@ -70,8 +77,8 @@ public class EditMyAccountController extends AbstractPrivateSectionMetaControlle
      */
     @RequestMapping(value = EditMyAccountController.BASE_URL + "ulozeno/", method = RequestMethod.GET)
     @PreAuthorize("hasRole('ROLE_REGISTERED_USER')")
-    public String initFormAfterSave(ModelMap model) {
-        String view = this.initForm(model);
+    public String initFormAfterSave(HttpServletRequest request, ModelMap model) {
+        String view = this.initForm(request, model);
         ((UpdateUserData) model.get(EditMyAccountController.COMMAND)).setDataSaved(true);
         return view;
     }
