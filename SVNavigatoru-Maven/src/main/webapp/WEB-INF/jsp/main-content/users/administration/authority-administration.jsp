@@ -1,4 +1,4 @@
-<%-- Statically included (= copied) to new-user.jsp and edit-user.jsp. --%>
+<%-- Statically included (= copied) to new-user.jsp and edit-user.jsp --%>
 
 <%@ page pageEncoding="UTF-8"%>
 <%@ include file="../../../include-preceding-html.jsp"%>
