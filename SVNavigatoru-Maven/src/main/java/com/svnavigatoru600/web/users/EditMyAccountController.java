@@ -96,7 +96,13 @@ public class EditMyAccountController extends AbstractPrivateSectionMetaControlle
     @Transactional
     public String processSubmittedForm(
             @ModelAttribute(EditMyAccountController.COMMAND) UpdateUserData command, BindingResult result,
-            SessionStatus status, ModelMap model) {
+            SessionStatus status, HttpServletRequest request, ModelMap model) {
+
+        // Sets up all auxiliary (but necessary) maps.
+        // It is necessary to do it again since they are not push as a part of the command back. They have
+        // been set to null.
+        command.setLocalizedNotificationCheckboxTitles(UserService.getLocalizedNotificationTitles(request,
+                this.messageSource));
 
         this.validator.validate(command, result);
         if (result.hasErrors()) {
