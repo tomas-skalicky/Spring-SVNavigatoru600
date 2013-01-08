@@ -126,8 +126,7 @@ public class UserService {
         if (isPasswordUpdated) {
             userToUpdate.setPassword(Hash.doSha1Hashing(newPassword));
         }
-        userToUpdate.setEmail(newUser.getEmail());
-        userToUpdate.setPhone(newUser.getPhone());
+        userToUpdate.copyEmailPhoneSubscriptions(newUser);
 
         // Sets user's email to null if the email is blank. The reason is the
         // UNIQUE DB constraint.
@@ -137,8 +136,7 @@ public class UserService {
         this.update(userToUpdate);
 
         User loggedUser = UserUtils.getLoggedUser();
-        loggedUser.setEmail(userToUpdate.getEmail());
-        loggedUser.setPhone(userToUpdate.getPhone());
+        loggedUser.copyEmailPhoneSubscriptions(userToUpdate);
         if (isPasswordUpdated) {
             loggedUser.setPassword(userToUpdate.getPassword());
         }

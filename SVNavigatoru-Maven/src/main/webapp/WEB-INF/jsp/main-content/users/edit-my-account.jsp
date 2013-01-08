@@ -55,6 +55,7 @@
 			<td>
 				<ul>
 					<c:set var="user" value="${updateUserDataCommand.user}" />
+					<c:set var="localizedNotificationCheckboxTitles" value="${updateUserDataCommand.localizedNotificationCheckboxTitles}" />
 					<%@ include file="/WEB-INF/jsp/main-content/users/notification-administration.jsp"%>
 				</ul></td>
 		</tr>
