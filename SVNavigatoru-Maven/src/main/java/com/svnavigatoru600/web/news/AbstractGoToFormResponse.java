@@ -32,10 +32,8 @@ public abstract class AbstractGoToFormResponse extends AbstractNewsResponse {
     }
 
     protected void setFormAction(String formActionEnding, HttpServletRequest request) {
-        StringBuffer urlBuilder = new StringBuffer(request.getContextPath());
-        urlBuilder.append(SECTION_URL);
-        urlBuilder.append(formActionEnding);
-        this.formAction = urlBuilder.toString();
+        this.formAction = new StringBuffer(request.getContextPath()).append(SECTION_URL)
+                .append(formActionEnding).toString();
     }
 
     protected void setLocalizedTitleOfSubmit(String titleCode, MessageSource messageSource,
