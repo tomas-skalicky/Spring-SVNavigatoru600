@@ -36,16 +36,13 @@
 			<td><spring:message code="other-documents.areas-which-the-document-reaches" />: *</td>
 			<td>
 				<ul>
-					<%-- value="0" does not work. It is likely considered to be a string. --%>
-					<c:set var="typeCounter" value="${0}" />
-					<c:forEach items="${newEditRecordCommand.newTypes}" var="typeCheck">
+					<c:forEach items="${newEditRecordCommand.newTypes}" var="typeCheck" varStatus="typeStatus">
+						<c:set var="typeCounter" value="${0 + typeStatus.index}" />
 						<c:set var="checkboxId" value="${newEditRecordCommand.typeCheckboxId[typeCounter]}" />
 						<c:set var="checkboxTitle" value="${newEditRecordCommand.localizedTypeCheckboxTitles[typeCounter]}" />
 						
 						<li><input type="checkbox" id="${checkboxId}" name="${checkboxId}" class="checkbox"
 							<c:if test="${typeCheck == true}">checked="checked"</c:if> /> <label for="${checkboxId}">${checkboxTitle}</label></li>
-
-						<c:set var="typeCounter" value="${typeCounter + 1}" />
 					</c:forEach>
 				</ul></td>
 		</tr>
