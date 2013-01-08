@@ -333,4 +333,30 @@ public class User implements UserDetails, Serializable {
                 .append(", subscribedToOtherSections=").append(this.subscribedToOtherSections)
                 .append(", authorities=").append(this.authorities).append("]").toString();
     }
+
+    /**
+     * Updates email, phone and subscription properties of this {@link User} according to the given user.
+     * 
+     * @param sourceUser
+     *            {@link User} which is used as a source.
+     */
+    public void copyEmailPhoneSubscriptions(User sourceUser) {
+        this.email = sourceUser.email;
+        this.phone = sourceUser.phone;
+        this.copySubscriptions(sourceUser);
+    }
+
+    /**
+     * Updates subscription properties of this {@link User} according to the given user.
+     * 
+     * @param sourceUser
+     *            {@link User} which is used as a source.
+     */
+    public void copySubscriptions(User sourceUser) {
+        this.subscribedToNews = sourceUser.subscribedToNews;
+        this.subscribedToEvents = sourceUser.subscribedToEvents;
+        this.subscribedToForum = sourceUser.subscribedToForum;
+        this.subscribedToOtherDocuments = sourceUser.subscribedToOtherDocuments;
+        this.subscribedToOtherSections = sourceUser.subscribedToOtherSections;
+    }
 }
