@@ -16,6 +16,7 @@ import com.svnavigatoru600.domain.records.SessionRecordType;
 import com.svnavigatoru600.service.records.SessionRecordService;
 import com.svnavigatoru600.viewmodel.records.session.NewSessionRecord;
 import com.svnavigatoru600.viewmodel.records.session.validator.NewSessionRecordValidator;
+import com.svnavigatoru600.web.SendNotificationNewModelFiller;
 import com.svnavigatoru600.web.records.session.AbstractNewRecordController;
 
 /**
@@ -31,9 +32,10 @@ public class NewAllSessionRecordController extends AbstractNewRecordController {
      */
     @Inject
     public NewAllSessionRecordController(SessionRecordService recordService,
-            NewSessionRecordValidator validator, MessageSource messageSource) {
-        super(NewAllSessionRecordController.BASE_URL, new PageViews(), recordService, validator,
-                messageSource);
+            SendNotificationNewModelFiller sendNotificationModelFiller, NewSessionRecordValidator validator,
+            MessageSource messageSource) {
+        super(NewAllSessionRecordController.BASE_URL, new PageViews(), recordService,
+                sendNotificationModelFiller, validator, messageSource);
     }
 
     /**

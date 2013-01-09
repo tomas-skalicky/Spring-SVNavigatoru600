@@ -19,6 +19,13 @@
 			<td><form:label path="news.text"><spring:message code="news.text" />:</form:label></td>
 			<td><form:textarea path="news.text" class="notStandaloneWysiwygEditor" cols="20" rows="10" /></td>
 		</tr>
+		<tr>
+			<td></td>
+			<td id="sendNotification">
+				<c:set var="sendNotification" value="${newEditNewsCommand.sendNotification}" />
+				<%@ include file="/WEB-INF/jsp/main-content/notification-checkbox.jsp"%>
+			</td>
+		</tr>
 
 		<tr>
 			<td></td>

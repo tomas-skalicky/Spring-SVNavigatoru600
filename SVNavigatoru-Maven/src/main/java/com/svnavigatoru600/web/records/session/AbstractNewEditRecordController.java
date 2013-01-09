@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import com.svnavigatoru600.domain.records.SessionRecordType;
 import com.svnavigatoru600.service.records.SessionRecordService;
 import com.svnavigatoru600.viewmodel.records.session.validator.AbstractSessionRecordValidator;
+import com.svnavigatoru600.web.SendNotificationModelFiller;
 import com.svnavigatoru600.web.records.AbstractPageViews;
 
 /**
@@ -35,16 +36,18 @@ public abstract class AbstractNewEditRecordController extends AbstractSessionRec
      */
     public static final String COMMAND = "newEditRecordCommand";
     private final Validator validator;
+    private final SendNotificationModelFiller sendNotificationModelFiller;
 
     /**
      * Constructs a controller which considers all {@link com.svnavigatoru600.domain.records.SessionRecord
      * SessionRecords} of all {@link SessionRecordType SessionRecordTypes}.
      */
     public AbstractNewEditRecordController(String baseUrl, AbstractPageViews views,
-            SessionRecordService recordService, AbstractSessionRecordValidator validator,
-            MessageSource messageSource) {
+            SessionRecordService recordService, SendNotificationModelFiller sendNotificationModelFiller,
+            AbstractSessionRecordValidator validator, MessageSource messageSource) {
         super(baseUrl, views, recordService, messageSource);
         this.validator = validator;
+        this.sendNotificationModelFiller = sendNotificationModelFiller;
     }
 
     /**
@@ -53,9 +56,11 @@ public abstract class AbstractNewEditRecordController extends AbstractSessionRec
      */
     public AbstractNewEditRecordController(String baseUrl, AbstractPageViews views,
             SessionRecordType recordType, SessionRecordService recordService,
+            SendNotificationModelFiller sendNotificationModelFiller,
             AbstractSessionRecordValidator validator, MessageSource messageSource) {
         super(baseUrl, views, recordType, recordService, messageSource);
         this.validator = validator;
+        this.sendNotificationModelFiller = sendNotificationModelFiller;
     }
 
     /**
@@ -63,6 +68,13 @@ public abstract class AbstractNewEditRecordController extends AbstractSessionRec
      */
     protected Validator getValidator() {
         return this.validator;
+    }
+
+    /**
+     * Trivial getter
+     */
+    protected SendNotificationModelFiller getSendNotificationModelFiller() {
+        return this.sendNotificationModelFiller;
     }
 
     /**

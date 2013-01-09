@@ -35,6 +35,13 @@
 					<form:select path="newPriority" items="${priorityTypeList}" element="li" />
 				</ul></td>
 		</tr>
+		<tr>
+			<td></td>
+			<td id="sendNotification">
+				<c:set var="sendNotification" value="${newEditEventCommand.sendNotification}" />
+				<%@ include file="/WEB-INF/jsp/main-content/notification-checkbox.jsp"%>
+			</td>
+		</tr>
 
 
 		<tr>

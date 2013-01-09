@@ -22,6 +22,7 @@ import com.svnavigatoru600.service.util.Localization;
 import com.svnavigatoru600.viewmodel.eventcalendar.NewEvent;
 import com.svnavigatoru600.viewmodel.eventcalendar.validator.NewEventValidator;
 import com.svnavigatoru600.web.AbstractMetaController;
+import com.svnavigatoru600.web.SendNotificationNewModelFiller;
 
 /**
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
@@ -39,9 +40,10 @@ public class NewEventController extends AbstractNewEditEventController {
      * Constructor.
      */
     @Inject
-    public NewEventController(CalendarEventService eventService, NewEventValidator validator,
+    public NewEventController(CalendarEventService eventService,
+            SendNotificationNewModelFiller sendNotificationModelFiller, NewEventValidator validator,
             MessageSource messageSource) {
-        super(eventService, validator, messageSource);
+        super(eventService, sendNotificationModelFiller, validator, messageSource);
     }
 
     /**
@@ -55,8 +57,12 @@ public class NewEventController extends AbstractNewEditEventController {
         CalendarEvent calendarEvent = new CalendarEvent();
         command.setEvent(calendarEvent);
 
-        command.setNewPriority(Localization.findLocaleMessage(this.getMessageSource(), request,
+        MessageSource messageSource = this.getMessageSource();
+        command.setNewPriority(Localization.findLocaleMessage(messageSource, request,
                 PriorityType.NORMAL.getLocalizationCode()));
+
+        this.getSendNotificationModelFiller().populateSendNotificationInInitForm(command, request,
+                messageSource);
 
         model.addAttribute(AbstractNewEditEventController.COMMAND, command);
         return PageViews.NEW.getViewName();
@@ -73,6 +79,10 @@ public class NewEventController extends AbstractNewEditEventController {
     public String processSubmittedForm(@ModelAttribute(NewEventController.COMMAND) NewEvent command,
             BindingResult result, SessionStatus status, HttpServletRequest request, ModelMap model) {
 
+        MessageSource messageSource = this.getMessageSource();
+        this.getSendNotificationModelFiller().populateSendNotificationInSubmitForm(command, request,
+                messageSource);
+
         this.getValidator().validate(command, result);
         if (result.hasErrors()) {
             return PageViews.NEW.getViewName();
@@ -81,7 +91,7 @@ public class NewEventController extends AbstractNewEditEventController {
         // Updates the data of the new calendar event.
         CalendarEvent newEvent = command.getEvent();
         newEvent.setPriority(PriorityType.valueOfAccordingLocalization(command.getNewPriority(),
-                this.getMessageSource(), request));
+                messageSource, request));
 
         try {
             // Saves the event to the repository.

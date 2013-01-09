@@ -16,6 +16,7 @@ import org.springframework.web.bind.support.SessionStatus;
 import com.svnavigatoru600.service.records.SessionRecordService;
 import com.svnavigatoru600.viewmodel.records.session.EditSessionRecord;
 import com.svnavigatoru600.viewmodel.records.session.validator.EditSessionRecordValidator;
+import com.svnavigatoru600.web.SendNotificationEditModelFiller;
 import com.svnavigatoru600.web.records.session.AbstractEditRecordController;
 
 /**
@@ -31,9 +32,10 @@ public class EditAllSessionRecordController extends AbstractEditRecordController
      */
     @Inject
     public EditAllSessionRecordController(SessionRecordService recordService,
+            SendNotificationEditModelFiller sendNotificationModelFiller,
             EditSessionRecordValidator validator, MessageSource messageSource) {
-        super(EditAllSessionRecordController.BASE_URL, new PageViews(), recordService, validator,
-                messageSource);
+        super(EditAllSessionRecordController.BASE_URL, new PageViews(), recordService,
+                sendNotificationModelFiller, validator, messageSource);
     }
 
     @Override

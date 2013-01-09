@@ -18,6 +18,8 @@ import org.springframework.web.bind.support.SessionStatus;
 
 import com.svnavigatoru600.domain.News;
 import com.svnavigatoru600.service.NewsService;
+import com.svnavigatoru600.viewmodel.NewControllerSendNotification;
+import com.svnavigatoru600.viewmodel.SendNotification;
 import com.svnavigatoru600.viewmodel.news.NewNews;
 import com.svnavigatoru600.viewmodel.news.validator.NewNewsValidator;
 
@@ -52,9 +54,12 @@ public class NewNewsController extends AbstractNewEditNewsController {
 
         News news = new News();
         command.setNews(news);
+        MessageSource messageSource = this.getMessageSource();
+        SendNotification sendNotification = new NewControllerSendNotification(request, messageSource);
+        command.setSendNotification(sendNotification);
 
         model.addAttribute(AbstractNewEditNewsController.COMMAND, command);
-        return new GoToNewFormResponse(news, this.getMessageSource(), request);
+        return new GoToNewFormResponse(news, sendNotification, messageSource, request);
     }
 
     /**

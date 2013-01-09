@@ -16,6 +16,7 @@ import org.springframework.web.bind.support.SessionStatus;
 import com.svnavigatoru600.service.records.OtherDocumentRecordService;
 import com.svnavigatoru600.viewmodel.records.otherdocuments.EditRecord;
 import com.svnavigatoru600.viewmodel.records.otherdocuments.validator.EditRecordValidator;
+import com.svnavigatoru600.web.SendNotificationEditModelFiller;
 import com.svnavigatoru600.web.records.otherdocuments.AbstractEditDocumentController;
 
 /**
@@ -30,9 +31,11 @@ public class EditAllDocumentController extends AbstractEditDocumentController {
      * Constructor.
      */
     @Inject
-    public EditAllDocumentController(OtherDocumentRecordService recordService, EditRecordValidator validator,
+    public EditAllDocumentController(OtherDocumentRecordService recordService,
+            SendNotificationEditModelFiller sendNotificationModelFiller, EditRecordValidator validator,
             MessageSource messageSource) {
-        super(EditAllDocumentController.BASE_URL, new PageViews(), recordService, validator, messageSource);
+        super(EditAllDocumentController.BASE_URL, new PageViews(), recordService,
+                sendNotificationModelFiller, validator, messageSource);
     }
 
     @Override

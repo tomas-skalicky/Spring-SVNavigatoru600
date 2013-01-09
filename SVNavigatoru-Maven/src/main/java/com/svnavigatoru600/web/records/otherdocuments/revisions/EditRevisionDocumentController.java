@@ -17,6 +17,7 @@ import com.svnavigatoru600.domain.records.OtherDocumentRecordType;
 import com.svnavigatoru600.service.records.OtherDocumentRecordService;
 import com.svnavigatoru600.viewmodel.records.otherdocuments.EditRecord;
 import com.svnavigatoru600.viewmodel.records.otherdocuments.validator.EditRecordValidator;
+import com.svnavigatoru600.web.SendNotificationEditModelFiller;
 import com.svnavigatoru600.web.records.otherdocuments.AbstractEditDocumentController;
 
 /**
@@ -32,9 +33,11 @@ public class EditRevisionDocumentController extends AbstractEditDocumentControll
      */
     @Inject
     public EditRevisionDocumentController(OtherDocumentRecordService recordService,
-            EditRecordValidator validator, MessageSource messageSource) {
+            SendNotificationEditModelFiller sendNotificationModelFiller, EditRecordValidator validator,
+            MessageSource messageSource) {
         super(EditRevisionDocumentController.BASE_URL, new PageViews(),
-                OtherDocumentRecordType.REGULAR_REVISION, recordService, validator, messageSource);
+                OtherDocumentRecordType.REGULAR_REVISION, recordService, sendNotificationModelFiller,
+                validator, messageSource);
     }
 
     @Override

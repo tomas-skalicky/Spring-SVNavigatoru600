@@ -26,26 +26,33 @@ import com.svnavigatoru600.service.util.UserUtils;
 import com.svnavigatoru600.viewmodel.forum.threads.NewThread;
 import com.svnavigatoru600.viewmodel.forum.threads.validator.NewThreadValidator;
 import com.svnavigatoru600.web.AbstractMetaController;
+import com.svnavigatoru600.web.SendNotificationController;
+import com.svnavigatoru600.web.SendNotificationModelFiller;
+import com.svnavigatoru600.web.SendNotificationNewModelFiller;
 
 /**
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
 @Controller
-public class NewThreadController extends AbstractNewEditThreadController {
+public class NewThreadController extends AbstractNewEditThreadController implements
+        SendNotificationController {
 
     private static final String REQUEST_MAPPING_BASE_URL = NewThreadController.BASE_URL + "novy/";
     /**
      * Code of the error message used when the {@link DataAccessException} is thrown.
      */
     public static final String DATABASE_ERROR_MESSAGE_CODE = "forum.threads.adding-failed-due-to-database-error";
+    private final SendNotificationModelFiller sendNotificationModelFiller;
 
     /**
      * Constructor.
      */
     @Inject
-    public NewThreadController(ThreadService threadService, NewThreadValidator validator,
+    public NewThreadController(ThreadService threadService,
+            SendNotificationNewModelFiller sendNotificationModelFiller, NewThreadValidator validator,
             MessageSource messageSource) {
         super(threadService, validator, messageSource);
+        this.sendNotificationModelFiller = sendNotificationModelFiller;
     }
 
     /**
@@ -61,6 +68,9 @@ public class NewThreadController extends AbstractNewEditThreadController {
         Contribution contribution = new Contribution();
         command.setContribution(contribution);
 
+        this.sendNotificationModelFiller.populateSendNotificationInInitForm(command, request,
+                this.getMessageSource());
+
         model.addAttribute(AbstractNewEditThreadController.COMMAND, command);
         return PageViews.NEW.getViewName();
     }
@@ -75,6 +85,9 @@ public class NewThreadController extends AbstractNewEditThreadController {
     @Transactional
     public String processSubmittedForm(@ModelAttribute(NewThreadController.COMMAND) NewThread command,
             BindingResult result, SessionStatus status, HttpServletRequest request, ModelMap model) {
+
+        this.sendNotificationModelFiller.populateSendNotificationInSubmitForm(command, request,
+                this.getMessageSource());
 
         this.getValidator().validate(command, result);
         if (result.hasErrors()) {

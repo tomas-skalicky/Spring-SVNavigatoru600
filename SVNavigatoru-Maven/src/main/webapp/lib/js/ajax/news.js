@@ -16,6 +16,8 @@ var newsTitleFieldName = "news.title";
 var $newsTitleElement = $("#news\\.title");
 var newsTextFieldName = "news.text";
 var $newsTextElement = $("#news\\.text");
+var $sendNotificationStatusElement = $("#sendNotification\\.status1");
+var $sendNotificationCheckboxTitleElement = $("#sendNotification label");
 var $formSubmitButton = $("#newsForm\\.submitButton");
 
 /***********************************************************************************************************************
@@ -34,6 +36,7 @@ function goToNewNewsForm() {
 		data : {},
 		success : function(response) {
 			setDefaultsToInputFields();
+			setSendNotification(response.sendNotification);
 			setFormAction(response.formAction);
 			setTitleOfSubmitButton(response.localizedTitleOfSubmit);
 			showNewsForm();
@@ -60,6 +63,7 @@ function goToEditNewsForm(newsId, urlBeginning) {
 		data : {},
 		success : function(response) {
 			setInputFields(response.news);
+			setSendNotification(response.sendNotification);
 			setFormAction(response.formAction);
 			setTitleOfSubmitButton(response.localizedTitleOfSubmit);
 			showNewsForm();
@@ -80,6 +84,11 @@ function setInputFields(news) {
 	$newsIdElement.attr("value", news.id);
 	$newsTitleElement.attr("value", news.title);
 	$newsTextElement.attr("value", news.text);
+}
+
+function setSendNotification(sendNotification) {
+	$sendNotificationStatusElement.attr("checked", sendNotification.status);
+	$sendNotificationCheckboxTitleElement.html(sendNotification.checkboxTitle);
 }
 
 function setFormAction(action) {
@@ -135,13 +144,16 @@ $("#newEditNewsCommand").submit(function(event) {
 	var $action = $form.attr("action");
 
 	// Sends the data using post and puts the results in appropriate HTML elements.
+	// NOTE: $sendNotificationStatusElement.attr("checked") ? 1 : 0 used instead of just
+	// $sendNotificationStatusElement.attr("checked") since the latter returns string, not boolean.
 	$.ajax({
 		type : "POST",
 		url : $action,
 		data : {
 			"news.id" : $newsIdElement.val(),
 			"news.title" : $newsTitleElement.val(),
-			"news.text" : $newsTextElement.val()
+			"news.text" : $newsTextElement.val(),
+			"sendNotification.status" : $sendNotificationStatusElement.attr("checked") ? 1 : 0
 		},
 		success : function(response) {
 			if (response.successful) {

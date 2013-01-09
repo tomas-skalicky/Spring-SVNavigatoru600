@@ -6,6 +6,7 @@ import org.springframework.validation.Validator;
 
 import com.svnavigatoru600.service.NewsService;
 import com.svnavigatoru600.viewmodel.news.validator.AbstractNewsValidator;
+import com.svnavigatoru600.web.SendNotificationController;
 
 /**
  * Parent of controllers which create and edit the {@link com.svnavigatoru600.domain.News News}.
@@ -13,7 +14,8 @@ import com.svnavigatoru600.viewmodel.news.validator.AbstractNewsValidator;
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
 @Controller
-public abstract class AbstractNewEditNewsController extends AbstractNewsController {
+public abstract class AbstractNewEditNewsController extends AbstractNewsController implements
+        SendNotificationController {
 
     /**
      * Command used in /main-content/news/new-edit-news.jsp.

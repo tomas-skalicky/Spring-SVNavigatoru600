@@ -46,6 +46,13 @@
 					</c:forEach>
 				</ul></td>
 		</tr>
+		<tr>
+			<td></td>
+			<td id="sendNotification">
+				<c:set var="sendNotification" value="${newEditRecordCommand.sendNotification}" />
+				<%@ include file="/WEB-INF/jsp/main-content/notification-checkbox.jsp"%>
+			</td>
+		</tr>
 
 
 		<tr>

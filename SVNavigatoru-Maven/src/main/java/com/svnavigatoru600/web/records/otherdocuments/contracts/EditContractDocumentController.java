@@ -17,6 +17,7 @@ import com.svnavigatoru600.domain.records.OtherDocumentRecordType;
 import com.svnavigatoru600.service.records.OtherDocumentRecordService;
 import com.svnavigatoru600.viewmodel.records.otherdocuments.EditRecord;
 import com.svnavigatoru600.viewmodel.records.otherdocuments.validator.EditRecordValidator;
+import com.svnavigatoru600.web.SendNotificationEditModelFiller;
 import com.svnavigatoru600.web.records.otherdocuments.AbstractEditDocumentController;
 
 /**
@@ -32,9 +33,10 @@ public class EditContractDocumentController extends AbstractEditDocumentControll
      */
     @Inject
     public EditContractDocumentController(OtherDocumentRecordService recordService,
-            EditRecordValidator validator, MessageSource messageSource) {
+            SendNotificationEditModelFiller sendNotificationModelFiller, EditRecordValidator validator,
+            MessageSource messageSource) {
         super(EditContractDocumentController.BASE_URL, new PageViews(), OtherDocumentRecordType.CONTRACT,
-                recordService, validator, messageSource);
+                recordService, sendNotificationModelFiller, validator, messageSource);
     }
 
     @Override

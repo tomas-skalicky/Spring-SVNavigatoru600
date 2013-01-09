@@ -16,6 +16,7 @@ import com.svnavigatoru600.domain.records.OtherDocumentRecordType;
 import com.svnavigatoru600.service.records.OtherDocumentRecordService;
 import com.svnavigatoru600.viewmodel.records.otherdocuments.NewRecord;
 import com.svnavigatoru600.viewmodel.records.otherdocuments.validator.NewRecordValidator;
+import com.svnavigatoru600.web.SendNotificationNewModelFiller;
 import com.svnavigatoru600.web.records.otherdocuments.AbstractNewDocumentController;
 
 /**
@@ -31,9 +32,11 @@ public class NewRevisionDocumentController extends AbstractNewDocumentController
      */
     @Inject
     public NewRevisionDocumentController(OtherDocumentRecordService recordService,
-            NewRecordValidator validator, MessageSource messageSource) {
+            SendNotificationNewModelFiller sendNotificationModelFiller, NewRecordValidator validator,
+            MessageSource messageSource) {
         super(NewRevisionDocumentController.BASE_URL, new PageViews(),
-                OtherDocumentRecordType.REGULAR_REVISION, recordService, validator, messageSource);
+                OtherDocumentRecordType.REGULAR_REVISION, recordService, sendNotificationModelFiller,
+                validator, messageSource);
     }
 
     @Override
