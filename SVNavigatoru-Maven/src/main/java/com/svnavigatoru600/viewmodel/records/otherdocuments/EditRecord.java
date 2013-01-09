@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
 @Service
-public class EditRecord extends NewEditRecord {
+public class EditRecord extends AbstractNewEditRecord {
 
     private boolean fileChanged = false;
     private boolean dataSaved = false;
