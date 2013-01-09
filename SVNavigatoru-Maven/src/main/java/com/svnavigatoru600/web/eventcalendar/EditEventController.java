@@ -74,6 +74,23 @@ public class EditEventController extends AbstractNewEditEventController {
         return view;
     }
 
+    // Does not work. I do not know why.
+    /**
+     * see http://stackoverflow.com/questions/13213061/springmvc-requestmapping-for-get-parameters
+     */
+    // @RequestMapping(value = EditEventController.REQUEST_MAPPING_BASE_URL + "ulozeno/", params = {
+    // "eventId",
+    // "sendNotification" }, method = RequestMethod.GET)
+    // public String initFormAfterSave(@PathVariable("eventId") int eventId,
+    // @PathVariable("sendNotification") boolean sendNotification, HttpServletRequest request,
+    // ModelMap model) {
+    // String view = this.initForm(eventId, request, model);
+    // EditEvent command = (EditEvent) model.get(AbstractNewEditEventController.COMMAND);
+    // command.setDataSaved(true);
+    // command.getSendNotification().setStatus(sendNotification);
+    // return view;
+    // }
+
     @RequestMapping(value = EditEventController.REQUEST_MAPPING_BASE_URL, method = RequestMethod.POST)
     @Transactional
     public String processSubmittedForm(@ModelAttribute(EditEventController.COMMAND) EditEvent command,
@@ -103,6 +120,10 @@ public class EditEventController extends AbstractNewEditEventController {
             // Returns the form success view.
             model.addAttribute(AbstractMetaController.REDIRECTION_ATTRIBUTE,
                     String.format("%sexistujici/%d/ulozeno/", AbstractEventController.BASE_URL, eventId));
+            // Does not work. I do not know why.
+            // model.addAttribute(AbstractMetaController.REDIRECTION_ATTRIBUTE, String.format(
+            // "%sexistujici/%d/ulozeno/?%s=%b", AbstractEventController.BASE_URL, eventId,
+            // SEND_NOTIFICATION_GET_PARAMETER, command.getSendNotification()));
             return AbstractMetaController.REDIRECTION_PAGE;
 
         } catch (DataAccessException e) {
