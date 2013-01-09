@@ -23,6 +23,7 @@ import com.svnavigatoru600.service.util.Localization;
 import com.svnavigatoru600.viewmodel.records.session.NewSessionRecord;
 import com.svnavigatoru600.viewmodel.records.session.validator.NewSessionRecordValidator;
 import com.svnavigatoru600.web.AbstractMetaController;
+import com.svnavigatoru600.web.SendNotificationModelFiller;
 import com.svnavigatoru600.web.records.AbstractPageViews;
 
 /**
@@ -44,9 +45,9 @@ public abstract class AbstractNewRecordController extends AbstractNewEditRecordC
      * {@link SessionRecordType SessionRecordTypes}.
      */
     public AbstractNewRecordController(String baseUrl, AbstractPageViews views,
-            SessionRecordService recordService, NewSessionRecordValidator validator,
-            MessageSource messageSource) {
-        super(baseUrl, views, recordService, validator, messageSource);
+            SessionRecordService recordService, SendNotificationModelFiller sendNotificationModelFiller,
+            NewSessionRecordValidator validator, MessageSource messageSource) {
+        super(baseUrl, views, recordService, sendNotificationModelFiller, validator, messageSource);
     }
 
     /**
@@ -54,9 +55,10 @@ public abstract class AbstractNewRecordController extends AbstractNewEditRecordC
      * <code>recordType</code>.
      */
     public AbstractNewRecordController(String baseUrl, AbstractPageViews views, SessionRecordType recordType,
-            SessionRecordService recordService, NewSessionRecordValidator validator,
-            MessageSource messageSource) {
-        super(baseUrl, views, recordType, recordService, validator, messageSource);
+            SessionRecordService recordService, SendNotificationModelFiller sendNotificationModelFiller,
+            NewSessionRecordValidator validator, MessageSource messageSource) {
+        super(baseUrl, views, recordType, recordService, sendNotificationModelFiller, validator,
+                messageSource);
     }
 
     /**
@@ -69,8 +71,12 @@ public abstract class AbstractNewRecordController extends AbstractNewEditRecordC
         SessionRecord record = new SessionRecord();
         command.setRecord(record);
 
-        command.setNewType(Localization.findLocaleMessage(this.getMessageSource(), request,
+        MessageSource messageSource = this.getMessageSource();
+        command.setNewType(Localization.findLocaleMessage(messageSource, request,
                 recordType.getLocalizationCode()));
+
+        this.getSendNotificationModelFiller().populateSendNotificationInInitForm(command, request,
+                messageSource);
 
         model.addAttribute(AbstractNewEditRecordController.COMMAND, command);
         return this.getViews().getNeww();
@@ -86,6 +92,10 @@ public abstract class AbstractNewRecordController extends AbstractNewEditRecordC
     public String processSubmittedForm(NewSessionRecord command, BindingResult result, SessionStatus status,
             HttpServletRequest request, ModelMap model) {
 
+        MessageSource messageSource = this.getMessageSource();
+        this.getSendNotificationModelFiller().populateSendNotificationInSubmitForm(command, request,
+                messageSource);
+
         this.getValidator().validate(command, result);
         if (result.hasErrors()) {
             return this.getViews().getNeww();
@@ -94,7 +104,7 @@ public abstract class AbstractNewRecordController extends AbstractNewEditRecordC
         SessionRecord newRecord = command.getRecord();
         try {
             this.getRecordService().save(newRecord, command.getNewType(), command.getNewFile(), request,
-                    this.getMessageSource());
+                    messageSource);
 
             // Clears the command object from the session.
             status.setComplete();

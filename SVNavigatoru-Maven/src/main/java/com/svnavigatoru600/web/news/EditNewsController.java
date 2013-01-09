@@ -18,6 +18,8 @@ import org.springframework.web.bind.support.SessionStatus;
 
 import com.svnavigatoru600.domain.News;
 import com.svnavigatoru600.service.NewsService;
+import com.svnavigatoru600.viewmodel.EditControllerSendNotification;
+import com.svnavigatoru600.viewmodel.SendNotification;
 import com.svnavigatoru600.viewmodel.news.EditNews;
 import com.svnavigatoru600.viewmodel.news.validator.EditNewsValidator;
 
@@ -51,7 +53,9 @@ public class EditNewsController extends AbstractNewEditNewsController {
     AbstractNewsResponse initForm(@PathVariable int newsId, HttpServletRequest request) {
 
         News news = this.getNewsService().findById(newsId);
-        return new GoToEditFormResponse(news, this.getMessageSource(), request);
+        MessageSource messageSource = this.getMessageSource();
+        SendNotification sendNotification = new EditControllerSendNotification(request, messageSource);
+        return new GoToEditFormResponse(news, sendNotification, messageSource, request);
     }
 
     @RequestMapping(value = EditNewsController.REQUEST_MAPPING_BASE_URL, method = RequestMethod.POST)

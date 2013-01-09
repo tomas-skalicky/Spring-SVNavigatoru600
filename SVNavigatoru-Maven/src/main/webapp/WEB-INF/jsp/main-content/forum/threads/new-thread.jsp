@@ -23,6 +23,13 @@
 			<td><form:textarea path="contribution.text" class="notStandaloneWysiwygEditor" cols="20" rows="10" />
 			</td>
 		</tr>
+		<tr>
+			<td></td>
+			<td id="sendNotification">
+				<c:set var="sendNotification" value="${newEditThreadCommand.sendNotification}" />
+				<%@ include file="/WEB-INF/jsp/main-content/notification-checkbox.jsp"%>
+			</td>
+		</tr>
 
 
 		<tr>

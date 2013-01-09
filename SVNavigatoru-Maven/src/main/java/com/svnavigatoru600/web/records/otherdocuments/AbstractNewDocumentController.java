@@ -23,6 +23,7 @@ import com.svnavigatoru600.service.util.OtherDocumentRecordUtils;
 import com.svnavigatoru600.viewmodel.records.otherdocuments.NewRecord;
 import com.svnavigatoru600.viewmodel.records.otherdocuments.validator.NewRecordValidator;
 import com.svnavigatoru600.web.AbstractMetaController;
+import com.svnavigatoru600.web.SendNotificationModelFiller;
 import com.svnavigatoru600.web.records.AbstractPageViews;
 
 /**
@@ -44,9 +45,10 @@ public abstract class AbstractNewDocumentController extends AbstractNewEditDocum
      * {@link OtherDocumentRecordType OtherDocumentRecordTypes}.
      */
     public AbstractNewDocumentController(String baseUrl, AbstractPageViews views,
-            OtherDocumentRecordService recordService, NewRecordValidator validator,
+            OtherDocumentRecordService recordService,
+            SendNotificationModelFiller sendNotificationModelFiller, NewRecordValidator validator,
             MessageSource messageSource) {
-        super(baseUrl, views, recordService, validator, messageSource);
+        super(baseUrl, views, recordService, sendNotificationModelFiller, validator, messageSource);
     }
 
     /**
@@ -55,8 +57,10 @@ public abstract class AbstractNewDocumentController extends AbstractNewEditDocum
      */
     public AbstractNewDocumentController(String baseUrl, AbstractPageViews views,
             OtherDocumentRecordType recordType, OtherDocumentRecordService recordService,
-            NewRecordValidator validator, MessageSource messageSource) {
-        super(baseUrl, views, recordType, recordService, validator, messageSource);
+            SendNotificationModelFiller sendNotificationModelFiller, NewRecordValidator validator,
+            MessageSource messageSource) {
+        super(baseUrl, views, recordType, recordService, sendNotificationModelFiller, validator,
+                messageSource);
     }
 
     /**
@@ -80,8 +84,12 @@ public abstract class AbstractNewDocumentController extends AbstractNewEditDocum
 
         // Sets up all auxiliary (but necessary) maps.
         command.setTypeCheckboxId(OtherDocumentRecordService.getTypeCheckboxId());
+        MessageSource messageSource = this.getMessageSource();
         command.setLocalizedTypeCheckboxTitles(OtherDocumentRecordService.getLocalizedTypeTitles(request,
-                this.getMessageSource()));
+                messageSource));
+
+        this.getSendNotificationModelFiller().populateSendNotificationInInitForm(command, request,
+                messageSource);
 
         model.addAttribute(AbstractNewEditDocumentController.COMMAND, command);
         return this.getViews().getNeww();
@@ -115,6 +123,8 @@ public abstract class AbstractNewDocumentController extends AbstractNewEditDocum
         MessageSource messageSource = this.getMessageSource();
         command.setLocalizedTypeCheckboxTitles(OtherDocumentRecordService.getLocalizedTypeTitles(request,
                 messageSource));
+        this.getSendNotificationModelFiller().populateSendNotificationInSubmitForm(command, request,
+                messageSource);
 
         this.getValidator().validate(command, result);
         if (result.hasErrors()) {

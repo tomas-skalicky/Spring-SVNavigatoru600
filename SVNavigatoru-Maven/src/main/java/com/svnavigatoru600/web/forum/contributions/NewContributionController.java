@@ -23,6 +23,7 @@ import com.svnavigatoru600.service.util.UserUtils;
 import com.svnavigatoru600.viewmodel.forum.contributions.NewContribution;
 import com.svnavigatoru600.viewmodel.forum.contributions.validator.NewContributionValidator;
 import com.svnavigatoru600.web.AbstractMetaController;
+import com.svnavigatoru600.web.SendNotificationNewModelFiller;
 
 /**
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
@@ -48,8 +49,9 @@ public class NewContributionController extends AbstractNewEditContributionContro
      */
     @Inject
     public NewContributionController(ContributionService contributionService,
-            NewContributionValidator validator, MessageSource messageSource) {
-        super(contributionService, validator, messageSource);
+            SendNotificationNewModelFiller sendNotificationModelFiller, NewContributionValidator validator,
+            MessageSource messageSource) {
+        super(contributionService, sendNotificationModelFiller, validator, messageSource);
     }
 
     /**
@@ -63,6 +65,9 @@ public class NewContributionController extends AbstractNewEditContributionContro
         Contribution contribution = new Contribution();
         command.setContribution(contribution);
         command.setThreadId(threadId);
+
+        this.getSendNotificationModelFiller().populateSendNotificationInInitForm(command, request,
+                this.getMessageSource());
 
         model.addAttribute(AbstractNewEditContributionController.COMMAND, command);
         return PageViews.NEW.getViewName();
@@ -79,6 +84,9 @@ public class NewContributionController extends AbstractNewEditContributionContro
     public String processSubmittedForm(
             @ModelAttribute(NewContributionController.COMMAND) NewContribution command, BindingResult result,
             SessionStatus status, @PathVariable int threadId, HttpServletRequest request, ModelMap model) {
+
+        this.getSendNotificationModelFiller().populateSendNotificationInSubmitForm(command, request,
+                this.getMessageSource());
 
         this.getValidator().validate(command, result);
         if (result.hasErrors()) {

@@ -8,6 +8,7 @@ import org.springframework.validation.Validator;
 import com.svnavigatoru600.domain.records.OtherDocumentRecordType;
 import com.svnavigatoru600.service.records.OtherDocumentRecordService;
 import com.svnavigatoru600.viewmodel.records.otherdocuments.validator.AbstractOtherDocumentRecordValidator;
+import com.svnavigatoru600.web.SendNotificationModelFiller;
 import com.svnavigatoru600.web.records.AbstractPageViews;
 
 /**
@@ -30,6 +31,7 @@ public abstract class AbstractNewEditDocumentController extends AbstractOtherDoc
      */
     public static final String COMMAND = "newEditRecordCommand";
     private final Validator validator;
+    private final SendNotificationModelFiller sendNotificationModelFiller;
 
     /**
      * Constructs a controller which considers all
@@ -37,10 +39,12 @@ public abstract class AbstractNewEditDocumentController extends AbstractOtherDoc
      * {@link OtherDocumentRecordType OtherDocumentRecordTypes}.
      */
     public AbstractNewEditDocumentController(String baseUrl, AbstractPageViews views,
-            OtherDocumentRecordService recordService, AbstractOtherDocumentRecordValidator validator,
-            MessageSource messageSource) {
+            OtherDocumentRecordService recordService,
+            SendNotificationModelFiller sendNotificationModelFiller,
+            AbstractOtherDocumentRecordValidator validator, MessageSource messageSource) {
         super(baseUrl, views, recordService, messageSource);
         this.validator = validator;
+        this.sendNotificationModelFiller = sendNotificationModelFiller;
     }
 
     /**
@@ -50,9 +54,11 @@ public abstract class AbstractNewEditDocumentController extends AbstractOtherDoc
      */
     public AbstractNewEditDocumentController(String baseUrl, AbstractPageViews views,
             OtherDocumentRecordType recordType, OtherDocumentRecordService recordService,
+            SendNotificationModelFiller sendNotificationModelFiller,
             AbstractOtherDocumentRecordValidator validator, MessageSource messageSource) {
         super(baseUrl, views, recordType, recordService, messageSource);
         this.validator = validator;
+        this.sendNotificationModelFiller = sendNotificationModelFiller;
     }
 
     /**
@@ -60,5 +66,12 @@ public abstract class AbstractNewEditDocumentController extends AbstractOtherDoc
      */
     protected Validator getValidator() {
         return this.validator;
+    }
+
+    /**
+     * Trivial getter
+     */
+    protected SendNotificationModelFiller getSendNotificationModelFiller() {
+        return this.sendNotificationModelFiller;
     }
 }

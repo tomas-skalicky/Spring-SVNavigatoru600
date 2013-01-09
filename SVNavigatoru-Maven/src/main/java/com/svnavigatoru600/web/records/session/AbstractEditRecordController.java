@@ -23,6 +23,7 @@ import com.svnavigatoru600.service.util.Localization;
 import com.svnavigatoru600.viewmodel.records.session.EditSessionRecord;
 import com.svnavigatoru600.viewmodel.records.session.validator.EditSessionRecordValidator;
 import com.svnavigatoru600.web.AbstractMetaController;
+import com.svnavigatoru600.web.SendNotificationModelFiller;
 import com.svnavigatoru600.web.records.AbstractPageViews;
 
 /**
@@ -44,9 +45,9 @@ public abstract class AbstractEditRecordController extends AbstractNewEditRecord
      * {@link SessionRecordType SessionRecordTypes}.
      */
     public AbstractEditRecordController(String baseUrl, AbstractPageViews views,
-            SessionRecordService recordService, EditSessionRecordValidator validator,
-            MessageSource messageSource) {
-        super(baseUrl, views, recordService, validator, messageSource);
+            SessionRecordService recordService, SendNotificationModelFiller sendNotificationModelFiller,
+            EditSessionRecordValidator validator, MessageSource messageSource) {
+        super(baseUrl, views, recordService, sendNotificationModelFiller, validator, messageSource);
     }
 
     /**
@@ -55,8 +56,10 @@ public abstract class AbstractEditRecordController extends AbstractNewEditRecord
      */
     public AbstractEditRecordController(String baseUrl, AbstractPageViews views,
             SessionRecordType recordType, SessionRecordService recordService,
-            EditSessionRecordValidator validator, MessageSource messageSource) {
-        super(baseUrl, views, recordType, recordService, validator, messageSource);
+            SendNotificationModelFiller sendNotificationModelFiller, EditSessionRecordValidator validator,
+            MessageSource messageSource) {
+        super(baseUrl, views, recordType, recordService, sendNotificationModelFiller, validator,
+                messageSource);
     }
 
     /**
@@ -72,8 +75,12 @@ public abstract class AbstractEditRecordController extends AbstractNewEditRecord
         SessionRecord record = this.getRecordService().findByIdWithoutFile(recordId);
         command.setRecord(record);
 
-        command.setNewType(Localization.findLocaleMessage(this.getMessageSource(), request, record
-                .getTypedType().getLocalizationCode()));
+        MessageSource messageSource = this.getMessageSource();
+        command.setNewType(Localization.findLocaleMessage(messageSource, request, record.getTypedType()
+                .getLocalizationCode()));
+
+        this.getSendNotificationModelFiller().populateSendNotificationInInitForm(command, request,
+                messageSource);
 
         model.addAttribute(AbstractNewEditRecordController.COMMAND, command);
         return this.getViews().getEdit();
@@ -99,6 +106,10 @@ public abstract class AbstractEditRecordController extends AbstractNewEditRecord
     public String processSubmittedForm(EditSessionRecord command, BindingResult result, SessionStatus status,
             int recordId, HttpServletRequest request, ModelMap model) {
 
+        MessageSource messageSource = this.getMessageSource();
+        this.getSendNotificationModelFiller().populateSendNotificationInSubmitForm(command, request,
+                messageSource);
+
         this.getValidator().validate(command, result);
         if (result.hasErrors()) {
             command.setFileChanged(false);
@@ -107,7 +118,7 @@ public abstract class AbstractEditRecordController extends AbstractNewEditRecord
 
         try {
             this.getRecordService().update(recordId, command.getRecord(), command.getNewType(),
-                    command.isFileChanged(), command.getNewFile(), request, this.getMessageSource());
+                    command.isFileChanged(), command.getNewFile(), request, messageSource);
 
             // Clears the command object from the session.
             status.setComplete();

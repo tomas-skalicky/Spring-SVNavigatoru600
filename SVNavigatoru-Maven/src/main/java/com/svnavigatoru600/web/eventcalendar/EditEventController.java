@@ -23,6 +23,7 @@ import com.svnavigatoru600.service.util.Localization;
 import com.svnavigatoru600.viewmodel.eventcalendar.EditEvent;
 import com.svnavigatoru600.viewmodel.eventcalendar.validator.EditEventValidator;
 import com.svnavigatoru600.web.AbstractMetaController;
+import com.svnavigatoru600.web.SendNotificationEditModelFiller;
 
 /**
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
@@ -41,9 +42,10 @@ public class EditEventController extends AbstractNewEditEventController {
      * Constructor.
      */
     @Inject
-    public EditEventController(CalendarEventService eventService, EditEventValidator validator,
+    public EditEventController(CalendarEventService eventService,
+            SendNotificationEditModelFiller sendNotificationModelFiller, EditEventValidator validator,
             MessageSource messageSource) {
-        super(eventService, validator, messageSource);
+        super(eventService, sendNotificationModelFiller, validator, messageSource);
     }
 
     @RequestMapping(value = EditEventController.REQUEST_MAPPING_BASE_URL, method = RequestMethod.GET)
@@ -54,8 +56,12 @@ public class EditEventController extends AbstractNewEditEventController {
         CalendarEvent calendarEvent = this.getEventService().findById(eventId);
         command.setEvent(calendarEvent);
 
-        command.setNewPriority(Localization.findLocaleMessage(this.getMessageSource(), request, calendarEvent
+        MessageSource messageSource = this.getMessageSource();
+        command.setNewPriority(Localization.findLocaleMessage(messageSource, request, calendarEvent
                 .getTypedPriority().getLocalizationCode()));
+
+        this.getSendNotificationModelFiller().populateSendNotificationInInitForm(command, request,
+                messageSource);
 
         model.addAttribute(AbstractNewEditEventController.COMMAND, command);
         return PageViews.EDIT.getViewName();
@@ -74,6 +80,10 @@ public class EditEventController extends AbstractNewEditEventController {
             BindingResult result, SessionStatus status, @PathVariable int eventId,
             HttpServletRequest request, ModelMap model) {
 
+        MessageSource messageSource = this.getMessageSource();
+        this.getSendNotificationModelFiller().populateSendNotificationInSubmitForm(command, request,
+                messageSource);
+
         this.getValidator().validate(command, result);
         if (result.hasErrors()) {
             return PageViews.EDIT.getViewName();
@@ -84,7 +94,7 @@ public class EditEventController extends AbstractNewEditEventController {
         try {
             originalEvent = eventService.findById(eventId);
             PriorityType newPriority = PriorityType.valueOfAccordingLocalization(command.getNewPriority(),
-                    this.getMessageSource(), request);
+                    messageSource, request);
             eventService.update(originalEvent, command.getEvent(), newPriority);
 
             // Clears the command object from the session.

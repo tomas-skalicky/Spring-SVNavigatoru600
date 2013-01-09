@@ -14,6 +14,8 @@ import com.svnavigatoru600.domain.eventcalendar.PriorityType;
 import com.svnavigatoru600.service.eventcalendar.CalendarEventService;
 import com.svnavigatoru600.service.util.Localization;
 import com.svnavigatoru600.viewmodel.eventcalendar.validator.AbstractEventValidator;
+import com.svnavigatoru600.web.SendNotificationController;
+import com.svnavigatoru600.web.SendNotificationModelFiller;
 
 /**
  * Parent of controllers which create and edit the
@@ -22,18 +24,22 @@ import com.svnavigatoru600.viewmodel.eventcalendar.validator.AbstractEventValida
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
 @Controller
-public abstract class AbstractNewEditEventController extends AbstractEventController {
+public abstract class AbstractNewEditEventController extends AbstractEventController implements
+        SendNotificationController {
 
     /**
      * Command used in /main-content/event-calendar/new-edit-event.jsp.
      */
     public static final String COMMAND = "newEditEventCommand";
     private final Validator validator;
+    private final SendNotificationModelFiller sendNotificationModelFiller;
 
     public AbstractNewEditEventController(CalendarEventService eventService,
-            AbstractEventValidator validator, MessageSource messageSource) {
+            SendNotificationModelFiller sendNotificationModelFiller, AbstractEventValidator validator,
+            MessageSource messageSource) {
         super(eventService, messageSource);
         this.validator = validator;
+        this.sendNotificationModelFiller = sendNotificationModelFiller;
     }
 
     /**
@@ -41,6 +47,13 @@ public abstract class AbstractNewEditEventController extends AbstractEventContro
      */
     protected Validator getValidator() {
         return this.validator;
+    }
+
+    /**
+     * Trivial getter
+     */
+    protected SendNotificationModelFiller getSendNotificationModelFiller() {
+        return this.sendNotificationModelFiller;
     }
 
     /**
