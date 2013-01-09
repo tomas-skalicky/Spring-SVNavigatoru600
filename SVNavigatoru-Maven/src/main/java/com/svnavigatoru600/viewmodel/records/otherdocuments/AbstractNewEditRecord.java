@@ -1,5 +1,6 @@
 package com.svnavigatoru600.viewmodel.records.otherdocuments;
 
+import java.util.Arrays;
 import java.util.Map;
 
 import org.springframework.stereotype.Service;
@@ -7,18 +8,21 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.svnavigatoru600.domain.records.OtherDocumentRecord;
 import com.svnavigatoru600.domain.records.OtherDocumentRecordType;
+import com.svnavigatoru600.viewmodel.SendNotification;
+import com.svnavigatoru600.viewmodel.SendNotificationViewModel;
 
 /**
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
 @Service
-public class NewEditRecord {
+public abstract class AbstractNewEditRecord implements SendNotificationViewModel {
 
     private OtherDocumentRecord record = null;
     private MultipartFile newFile = null;
     private boolean[] newTypes = new boolean[OtherDocumentRecordType.values().length];
     private Map<Long, String> typeCheckboxId = null;
     private Map<Long, String> localizedTypeCheckboxTitles = null;
+    private SendNotification sendNotification = null;
 
     public OtherDocumentRecord getRecord() {
         return this.record;
@@ -58,5 +62,24 @@ public class NewEditRecord {
 
     public void setLocalizedTypeCheckboxTitles(Map<Long, String> localizedTypeCheckboxTitles) {
         this.localizedTypeCheckboxTitles = localizedTypeCheckboxTitles;
+    }
+
+    @Override
+    public SendNotification getSendNotification() {
+        return this.sendNotification;
+    }
+
+    @Override
+    public void setSendNotification(SendNotification sendNotification) {
+        this.sendNotification = sendNotification;
+    }
+
+    @Override
+    public String toString() {
+        return new StringBuilder("[record=").append(this.record).append(", newTypes=")
+                .append(Arrays.toString(this.newTypes)).append(", typeCheckboxId=")
+                .append(this.typeCheckboxId).append(", localizedTypeCheckboxTitles=")
+                .append(this.localizedTypeCheckboxTitles).append(", sendNotification=")
+                .append(this.sendNotification).append("]").toString();
     }
 }
