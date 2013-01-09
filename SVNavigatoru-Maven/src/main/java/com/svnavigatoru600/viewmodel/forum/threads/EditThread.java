@@ -17,4 +17,10 @@ public class EditThread extends AbstractNewEditThread {
     public void setDataSaved(boolean dataSaved) {
         this.dataSaved = dataSaved;
     }
+
+    @Override
+    public String toString() {
+        return new StringBuilder(super.toString()).append(" [dataSaved=").append(this.dataSaved).append("]")
+                .toString();
+    }
 }
