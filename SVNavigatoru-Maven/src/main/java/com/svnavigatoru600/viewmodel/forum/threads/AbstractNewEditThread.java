@@ -19,4 +19,9 @@ public abstract class AbstractNewEditThread {
     public void setThread(Thread thread) {
         this.thread = thread;
     }
+
+    @Override
+    public String toString() {
+        return new StringBuilder("[thread=").append(this.thread).append("]").toString();
+    }
 }
