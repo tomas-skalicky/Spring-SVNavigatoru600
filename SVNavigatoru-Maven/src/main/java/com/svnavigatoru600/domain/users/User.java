@@ -232,15 +232,26 @@ public class User implements UserDetails, Serializable {
     }
 
     /**
+     * Returns an object of the authority with the given {@link AuthorityType authorityType} if this
+     * {@link User} has such a role (~ rights). Otherwise, returns <code>null</code>
+     */
+    private GrantedAuthority getAuthority(AuthorityType authorityType) {
+        String typeName = authorityType.name();
+        Collection<GrantedAuthority> ownedAuthorities = this.getAuthorities();
+
+        for (GrantedAuthority ownedAuthority : ownedAuthorities) {
+            if (ownedAuthority.getAuthority().equals(typeName)) {
+                return ownedAuthority;
+            }
+        }
+        return null;
+    }
+
+    /**
      * Indicates whether this {@link User} has the given authority.
      */
     public boolean hasAuthority(AuthorityType authority) {
-        for (GrantedAuthority ownedAuthority : this.getAuthorities()) {
-            if (ownedAuthority.getAuthority().equals(authority.name())) {
-                return true;
-            }
-        }
-        return false;
+        return (this.getAuthority(authority) != null);
     }
 
     /**
@@ -358,5 +369,32 @@ public class User implements UserDetails, Serializable {
         this.subscribedToForum = sourceUser.subscribedToForum;
         this.subscribedToOtherDocuments = sourceUser.subscribedToOtherDocuments;
         this.subscribedToOtherSections = sourceUser.subscribedToOtherSections;
+    }
+
+    /**
+     * Adds the specified {@link Authority} to this {@link User} if he has not this authority now. Otherwise,
+     * does nothing.
+     * 
+     * @param type
+     *            Type of the authority which is to be added to this user.
+     */
+    public void addAuthority(AuthorityType type) {
+        if (!this.hasAuthority(type)) {
+            this.getAuthorities().add(new Authority(this.username, type));
+        }
+    }
+
+    /**
+     * Removes the specified {@link Authority} from this {@link User} if he has this authority now. Otherwise,
+     * does nothing.
+     * 
+     * @param type
+     *            Type of the authority which is to be taken away from this user.
+     */
+    public void removeAuthority(AuthorityType type) {
+        GrantedAuthority authority = this.getAuthority(type);
+        if (authority != null) {
+            this.getAuthorities().remove(authority);
+        }
     }
 }
