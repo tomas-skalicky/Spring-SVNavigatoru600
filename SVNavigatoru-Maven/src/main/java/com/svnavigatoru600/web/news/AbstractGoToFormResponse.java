@@ -19,7 +19,7 @@ public abstract class AbstractGoToFormResponse extends AbstractNewsResponse {
      */
     private News news = null;
     /**
-     * Checkbox via which the user can say whether to notify the others of a certain news, or not.
+     * Checkbox via which the user can say whether to notify the others about a certain news, or not.
      */
     private SendNotification sendNotification = null;
     /**

@@ -51,7 +51,7 @@
 			<td><form:input path="user.phone" autocomplete="${updateUserDataCommand.user.phone}" class="longText" /></td>
 		</tr>
 		<tr>
-			<td><spring:message code="notifications.notify-on-news-in" />:</td>
+			<td><spring:message code="notifications.notify-of-news-in" />:</td>
 			<td>
 				<ul>
 					<c:set var="user" value="${updateUserDataCommand.user}" />
