@@ -66,8 +66,8 @@ public class UserDaoImpl extends NamedParameterJdbcDaoSupport implements UserDao
 
     /**
      * @param lazy
-     *            If <code>true</code>, {@link Authority authorities} of the desired {@link User} will not be
-     *            loaded.
+     *            If <code>true</code>, {@link Authority authorities} of the desired {@link User} are not
+     *            populated.
      */
     public User findByUsername(String username, boolean lazy) {
         this.logger.info(String.format("Load an user with the username '%s'", username));
