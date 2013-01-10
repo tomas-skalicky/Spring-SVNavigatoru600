@@ -57,7 +57,7 @@ public interface AuthorityDao {
     /**
      * Deletes a persisted {@link Authority Authority} of the specified
      * {@link com.svnavigatoru600.domain.users.User User} and the given {@link AuthorityType authorityType} if
-     * such an authority exists. If it does not exist, TODO
+     * such an authority exists. If it does not exist, NO exception is thrown.
      * 
      * @param username
      *            Username (=login) of the user
