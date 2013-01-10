@@ -69,8 +69,8 @@ public class UserDaoImpl extends HibernateDaoSupport implements UserDao {
     public List<User> findAllByAuthority(String authority) {
         this.logger.info(String.format("Load all users with the authority '%s')", authority));
 
-        // If we did not explicitly select the user u, Hibernate would return
-        // tuples User-(the given)Authority.
+        // If we did not explicitly select the user u, Hibernate would return tuples User-(the
+        // given)Authority.
         String query = String.format("SELECT u FROM %s u INNER JOIN u.%s a WHERE a.%s = ?",
                 PersistedClass.User.name(), UserField.authorities.name(),
                 AuthorityField.authority.getFieldChain());
@@ -102,8 +102,7 @@ public class UserDaoImpl extends HibernateDaoSupport implements UserDao {
         this.logger.info("Save a new user " + user);
         this.getHibernateTemplate().save(user);
 
-        // Not necessary to save authorities explicitly. The command above has
-        // already done it.
+        // Not necessary to save authorities explicitly. The command above has already done it.
     }
 
     @Override
