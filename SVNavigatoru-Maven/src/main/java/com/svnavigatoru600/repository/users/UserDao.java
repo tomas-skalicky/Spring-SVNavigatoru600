@@ -25,7 +25,9 @@ public interface UserDao {
     User findByEmail(String email);
 
     /**
-     * Returns all {@link User Users} stored in the repository which have the given authority.
+     * Returns all {@link User Users} stored in the repository which have the given <code>authority</code>.
+     * <p>
+     * {@link com.svnavigatoru600.domain.users.Authority Authorities} of the returned users are loaded.
      */
     List<User> findAllByAuthority(String authority);
 
@@ -36,7 +38,7 @@ public interface UserDao {
      * 
      * @param testUsers
      *            If <code>true</code>, the method returns only test users. Otherwise, it returns only
-     *            non-test users. Test users are those, which are not accessible by the customer.
+     *            non-test users. Test users are those which are not accessible by the customer.
      */
     List<User> findAllOrdered(OrderType order, boolean testUsers);
 

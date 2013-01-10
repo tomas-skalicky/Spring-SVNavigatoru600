@@ -63,7 +63,10 @@ public class UserService {
     }
 
     /**
-     * Returns all {@link User Users} stored in the repository which have the given authority.
+     * Returns all {@link User Users} stored in the repository which have the given {@link AuthorityType
+     * authority}.
+     * <p>
+     * {@link com.svnavigatoru600.domain.users.Authority Authorities} of the returned users are loaded.
      */
     public List<User> findAllByAuthority(AuthorityType authority) {
         return this.userDao.findAllByAuthority(authority.name());
@@ -83,7 +86,7 @@ public class UserService {
      * 
      * @param testUsers
      *            If <code>true</code>, the method returns only test users. Otherwise, it returns only
-     *            non-test users. Test users are those, which are not accessible by the customer.
+     *            non-test users. Test users are those which are not accessible by the customer.
      */
     public List<User> findAllOrdered(OrderType order, boolean testUsers) {
         return this.userDao.findAllOrdered(order, testUsers);
