@@ -136,13 +136,13 @@ public class UserDaoImpl extends NamedParameterJdbcDaoSupport implements UserDao
 
     @Override
     public List<User> findAllByAuthorityAndSubscription(String authority, NotificationType notificationType) {
-        this.logger.info(String.format("Load all users with the authority '%s' and subscription '%')",
+        this.logger.info(String.format("Load all users with the authority '%s' and subscription '%s')",
                 authority, notificationType.name()));
 
         String authorityColumn = AuthorityField.authority.getColumnName();
         String subscriptionColumn = UserField.getSubscriptionField(notificationType).getColumnName();
         String query = String.format(
-                "SELECT u.* FROM %s u INNER JOIN %s a ON a.%s = u.%s WHERE a.%s = :%s, u.%s = :%s",
+                "SELECT u.* FROM %s u INNER JOIN %s a ON a.%s = u.%s WHERE a.%s = :%s AND u.%s = :%s",
                 UserDaoImpl.TABLE_NAME, PersistedClass.Authority.getTableName(),
                 AuthorityField.username.getColumnName(), UserField.username.getColumnName(), authorityColumn,
                 authorityColumn, subscriptionColumn, subscriptionColumn);

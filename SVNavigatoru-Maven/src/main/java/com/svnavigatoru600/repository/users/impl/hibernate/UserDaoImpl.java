@@ -81,7 +81,7 @@ public class UserDaoImpl extends HibernateDaoSupport implements UserDao {
     @SuppressWarnings("unchecked")
     @Override
     public List<User> findAllByAuthorityAndSubscription(String authority, NotificationType notificationType) {
-        this.logger.info(String.format("Load all users with the authority '%s' and subscription '%')",
+        this.logger.info(String.format("Load all users with the authority '%s' and subscription '%s')",
                 authority, notificationType.name()));
 
         String subscriptionColumn = UserField.getSubscriptionField(notificationType).getColumnName();
