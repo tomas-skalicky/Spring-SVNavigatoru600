@@ -90,6 +90,17 @@ public class UserService {
     }
 
     /**
+     * Returns all {@link User Users} stored in the repository which have the given {@link AuthorityType
+     * authority} and which are subscribed to the given {@link NotificationType notifications}.
+     * <p>
+     * {@link com.svnavigatoru600.domain.users.Authority Authorities} of the returned users are NOT populated.
+     */
+    public List<User> findAllByAuthorityAndSubscription(AuthorityType authority,
+            NotificationType notificationType) {
+        return this.userDao.findAllByAuthorityAndSubscription(authority.name(), notificationType);
+    }
+
+    /**
      * Returns all {@link User Users} stored in the repository arranged according to their
      * {@link User#getLastName() last names} and {@link User#getFirstName() first names} in the given
      * {@link OrderType order}.

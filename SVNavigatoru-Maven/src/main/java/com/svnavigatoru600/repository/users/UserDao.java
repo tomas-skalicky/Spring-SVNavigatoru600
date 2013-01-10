@@ -2,6 +2,7 @@ package com.svnavigatoru600.repository.users;
 
 import java.util.List;
 
+import com.svnavigatoru600.domain.users.NotificationType;
 import com.svnavigatoru600.domain.users.User;
 import com.svnavigatoru600.repository.MapperInterface;
 import com.svnavigatoru600.service.util.OrderType;
@@ -39,6 +40,14 @@ public interface UserDao {
     List<User> findAllByAuthority(String authority);
 
     /**
+     * Returns all {@link User Users} stored in the repository which have the given <code>authority</code> and
+     * which are subscribed to the given {@link NotificationType notifications}.
+     * <p>
+     * {@link com.svnavigatoru600.domain.users.Authority Authorities} of the returned users are NOT populated.
+     */
+    List<User> findAllByAuthorityAndSubscription(String authority, NotificationType notificationType);
+
+    /**
      * Returns all {@link User Users} stored in the repository arranged according to their
      * {@link User#getLastName() last names} and {@link User#getFirstName() first names} in the given
      * {@link OrderType order}.
@@ -71,4 +80,14 @@ public interface UserDao {
      * Authorities} from the repository.
      */
     void delete(User user);
+
+    /**
+     * Deletes a certain {@link User} together with all his {@link com.svnavigatoru600.domain.users.Authority
+     * Authorities} from the repository if the user is there. If he is not persisted in the repository, throws
+     * NO exception.
+     * 
+     * @param username
+     *            Username (= login) of the user which is to be deleted
+     */
+    void delete(String username);
 }
