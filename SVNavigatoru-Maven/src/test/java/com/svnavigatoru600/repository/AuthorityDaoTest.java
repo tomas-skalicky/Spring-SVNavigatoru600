@@ -1,6 +1,7 @@
 package com.svnavigatoru600.repository;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import org.junit.Assert;
@@ -134,5 +135,26 @@ public class AuthorityDaoTest extends AbstractRepositoryTest {
         List<Authority> foundAuthorities = authorityDao.findAll(username);
         int expectedFoundAuthorityCount = 1;
         Assert.assertEquals(expectedFoundAuthorityCount, foundAuthorities.size());
+    }
+
+    @Test
+    public void testDeleteSingleAuthority() {
+        AuthorityDao authorityDao = TEST_UTILS.getAuthorityDao();
+
+        // TWO INSERTS
+        String username = this.defaultAuthor.getUsername();
+        TEST_UTILS.createDefaultTestAuthority(username);
+        TEST_UTILS.createSecondDefaultTestAuthority(username);
+
+        // DELETE
+        authorityDao.delete(username, RepositoryTestUtils.AUTHORITY_DEFAULT_TYPE);
+
+        // SELECT ALL
+        List<Authority> foundAuthorities = authorityDao.findAll(username);
+        int expectedFoundAuthorityCount = 1;
+        Assert.assertEquals(expectedFoundAuthorityCount, foundAuthorities.size());
+        Collection<String> foundAuthorityTypes = TEST_UTILS.extractAuthorityTypes(foundAuthorities);
+        Assert.assertTrue(foundAuthorityTypes.contains(RepositoryTestUtils.SECOND_AUTHORITY_DEFAULT_TYPE
+                .name()));
     }
 }

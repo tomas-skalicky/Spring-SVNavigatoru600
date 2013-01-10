@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.security.core.GrantedAuthority;
 
 import com.svnavigatoru600.domain.users.Authority;
+import com.svnavigatoru600.domain.users.AuthorityType;
 import com.svnavigatoru600.repository.MapperInterface;
 
 /**
@@ -49,7 +50,19 @@ public interface AuthorityDao {
      * {@link com.svnavigatoru600.domain.users.User User}.
      * 
      * @param username
-     *            The username (=login) of the user
+     *            Username (=login) of the user
      */
     void delete(String username);
+
+    /**
+     * Deletes a persisted {@link Authority Authority} of the specified
+     * {@link com.svnavigatoru600.domain.users.User User} and the given {@link AuthorityType authorityType} if
+     * such an authority exists. If it does not exist, TODO
+     * 
+     * @param username
+     *            Username (=login) of the user
+     * @param authorityType
+     *            Type of the authority which is to be deleted
+     */
+    void delete(String username, AuthorityType authorityType);
 }
