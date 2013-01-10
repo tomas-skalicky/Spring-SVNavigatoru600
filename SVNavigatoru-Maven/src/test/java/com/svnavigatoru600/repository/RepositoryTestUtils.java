@@ -2,6 +2,7 @@ package com.svnavigatoru600.repository;
 
 import java.sql.Blob;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -133,6 +134,11 @@ public final class RepositoryTestUtils {
      * Default type of user's test authority.
      */
     static final AuthorityType AUTHORITY_DEFAULT_TYPE = AuthorityType.ROLE_REGISTERED_USER;
+    /**
+     * Default type of user's second test authority. This type is different from
+     * {@link #AUTHORITY_DEFAULT_TYPE}.
+     */
+    static final AuthorityType SECOND_AUTHORITY_DEFAULT_TYPE = AuthorityType.ROLE_MEMBER_OF_SV;
     /**
      * Default filename of test document record.
      */
@@ -343,11 +349,40 @@ public final class RepositoryTestUtils {
     }
 
     /**
+     * Creates and saves the second default test authority.
+     */
+    void createSecondDefaultTestAuthority(String username) {
+        this.createTestAuthority(username, SECOND_AUTHORITY_DEFAULT_TYPE);
+    }
+
+    /**
      * Creates and saves a test authority.
      */
     void createTestAuthority(String username, AuthorityType authorityType) {
         Authority authority = new Authority(username, authorityType);
         this.getAuthorityDao().save(authority);
+    }
+
+    /**
+     * Extracts types of the given authorities.
+     * 
+     * @return Extracted types
+     */
+    Collection<String> extractAuthorityTypes(Collection<Authority> authorities) {
+        return this.extractAuthorityTypes(authorities.toArray(new Authority[authorities.size()]));
+    }
+
+    /**
+     * Extracts types of the given authorities.
+     * 
+     * @return Extracted types
+     */
+    Collection<String> extractAuthorityTypes(Authority[] authorities) {
+        List<String> types = new ArrayList<String>(authorities.length);
+        for (Authority authority : authorities) {
+            types.add(authority.getId().getAuthority());
+        }
+        return types;
     }
 
     /**
