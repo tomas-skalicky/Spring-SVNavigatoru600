@@ -87,7 +87,7 @@ public class ThreadDaoImpl extends NamedParameterJdbcDaoSupport implements Threa
     /**
      * @param lazy
      *            If <code>true</code>, {@link Contribution contributions} of the desired {@link Thread} will
-     *            not be loaded.
+     *            not be populated.
      */
     public Thread findById(int threadId, boolean lazy) {
         String idColumn = ThreadField.id.getColumnName();
