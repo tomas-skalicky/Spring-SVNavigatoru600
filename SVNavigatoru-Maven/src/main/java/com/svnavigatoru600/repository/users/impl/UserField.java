@@ -1,5 +1,7 @@
 package com.svnavigatoru600.repository.users.impl;
 
+import com.svnavigatoru600.domain.users.NotificationType;
+
 /**
  * Names of the fields of the {@link com.svnavigatoru600.domain.users.User User} class.
  * 
@@ -35,5 +37,28 @@ public enum UserField {
     private enum UserColumn {
 
         username, password, enabled, first_name, last_name, email, phone, is_test_user, news_notifications, event_notifications, forum_notifications, other_document_notifications, other_section_notifications
+    }
+
+    /**
+     * Gets the {@link UserField} corresponding to the given {@link NotificationType notificationType}.
+     * <p>
+     * Do NOT put these information to the {@link NotificationType} enum though you could get rid of the
+     * switch. The problem is that it would be a mixture of domain and repository tiers.
+     */
+    public static UserField getSubscriptionField(NotificationType notificationType) {
+        switch (notificationType) {
+        case IN_NEWS:
+            return subscribedToNews;
+        case IN_EVENTS:
+            return subscribedToEvents;
+        case IN_FORUM:
+            return subscribedToForum;
+        case IN_OTHER_DOCUMENTS:
+            return subscribedToOtherDocuments;
+        case IN_OTHER_SECTIONS:
+            return subscribedToOtherSections;
+        default:
+            throw new RuntimeException("Unsupported type of notification");
+        }
     }
 }

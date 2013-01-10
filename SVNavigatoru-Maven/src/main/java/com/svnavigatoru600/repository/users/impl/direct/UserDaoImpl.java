@@ -16,6 +16,7 @@ import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.security.core.GrantedAuthority;
 
 import com.svnavigatoru600.domain.users.Authority;
+import com.svnavigatoru600.domain.users.NotificationType;
 import com.svnavigatoru600.domain.users.User;
 import com.svnavigatoru600.repository.impl.PersistedClass;
 import com.svnavigatoru600.repository.users.AuthorityDao;
@@ -134,6 +135,26 @@ public class UserDaoImpl extends NamedParameterJdbcDaoSupport implements UserDao
     }
 
     @Override
+    public List<User> findAllByAuthorityAndSubscription(String authority, NotificationType notificationType) {
+        this.logger.info(String.format("Load all users with the authority '%s' and subscription '%')",
+                authority, notificationType.name()));
+
+        String authorityColumn = AuthorityField.authority.getColumnName();
+        String subscriptionColumn = UserField.getSubscriptionField(notificationType).getColumnName();
+        String query = String.format(
+                "SELECT u.* FROM %s u INNER JOIN %s a ON a.%s = u.%s WHERE a.%s = :%s, u.%s = :%s",
+                UserDaoImpl.TABLE_NAME, PersistedClass.Authority.getTableName(),
+                AuthorityField.username.getColumnName(), UserField.username.getColumnName(), authorityColumn,
+                authorityColumn, subscriptionColumn, subscriptionColumn);
+
+        Map<String, String> args = new HashMap<String, String>();
+        args.put(authorityColumn, authority);
+        args.put(subscriptionColumn, Boolean.TRUE.toString());
+
+        return this.getNamedParameterJdbcTemplate().query(query, args, new UserRowMapper());
+    }
+
+    @Override
     public List<User> findAllOrdered(OrderType order, boolean testUsers) {
         this.logger.info(String.format("Load all users ordered %s.", order.name()));
 
@@ -232,11 +253,16 @@ public class UserDaoImpl extends NamedParameterJdbcDaoSupport implements UserDao
 
     @Override
     public void delete(User user) {
+        this.delete(user.getUsername());
+    }
+
+    @Override
+    public void delete(String username) {
         String usernameColumn = UserField.username.getColumnName();
         String query = String.format("DELETE FROM %s WHERE %s = :%s", UserDaoImpl.TABLE_NAME, usernameColumn,
                 usernameColumn);
 
-        Map<String, String> args = Collections.singletonMap(usernameColumn, user.getUsername());
+        Map<String, String> args = Collections.singletonMap(usernameColumn, username);
 
         this.getNamedParameterJdbcTemplate().update(query, args);
     }

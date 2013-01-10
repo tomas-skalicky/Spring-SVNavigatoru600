@@ -12,6 +12,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
+import com.svnavigatoru600.domain.users.NotificationType;
 import com.svnavigatoru600.domain.users.User;
 import com.svnavigatoru600.repository.impl.PersistedClass;
 import com.svnavigatoru600.repository.users.AuthorityDao;
@@ -77,6 +78,22 @@ public class UserDaoImpl extends HibernateDaoSupport implements UserDao {
         return (List<User>) this.getHibernateTemplate().find(query, authority);
     }
 
+    @SuppressWarnings("unchecked")
+    @Override
+    public List<User> findAllByAuthorityAndSubscription(String authority, NotificationType notificationType) {
+        this.logger.info(String.format("Load all users with the authority '%s' and subscription '%')",
+                authority, notificationType.name()));
+
+        String subscriptionColumn = UserField.getSubscriptionField(notificationType).getColumnName();
+
+        // If we did not explicitly select the user u, Hibernate would return tuples User-(the
+        // given)Authority.
+        String query = String.format("SELECT u FROM %s u INNER JOIN u.%s a WHERE a.%s = ? AND u.%s = ?",
+                PersistedClass.User.name(), UserField.authorities.name(),
+                AuthorityField.authority.getFieldChain(), subscriptionColumn);
+        return (List<User>) this.getHibernateTemplate().find(query, authority, Boolean.TRUE.toString());
+    }
+
     @Override
     @SuppressWarnings("unchecked")
     public List<User> findAllOrdered(OrderType order, boolean testUsers) {
@@ -108,5 +125,13 @@ public class UserDaoImpl extends HibernateDaoSupport implements UserDao {
     @Override
     public void delete(User user) {
         this.getHibernateTemplate().delete(user);
+    }
+
+    @Override
+    public void delete(String username) {
+        User user = this.findByUsername(username);
+        if (user != null) {
+            this.delete(user);
+        }
     }
 }
