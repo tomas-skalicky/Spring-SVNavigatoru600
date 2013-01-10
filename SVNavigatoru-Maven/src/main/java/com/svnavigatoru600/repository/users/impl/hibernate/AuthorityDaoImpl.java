@@ -9,6 +9,7 @@ import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import org.springframework.security.core.GrantedAuthority;
 
 import com.svnavigatoru600.domain.users.Authority;
+import com.svnavigatoru600.domain.users.AuthorityType;
 import com.svnavigatoru600.repository.users.AuthorityDao;
 import com.svnavigatoru600.repository.users.impl.AuthorityField;
 
@@ -43,6 +44,17 @@ public class AuthorityDaoImpl extends HibernateDaoSupport implements AuthorityDa
     public void delete(String username) {
         DetachedCriteria criteria = DetachedCriteria.forClass(Authority.class);
         criteria.add(Restrictions.eq(AuthorityField.username.getFieldChain(), username));
+
+        this.getHibernateTemplate().deleteAll(
+                (List<Authority>) this.getHibernateTemplate().findByCriteria(criteria));
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public void delete(String username, AuthorityType authorityType) {
+        DetachedCriteria criteria = DetachedCriteria.forClass(Authority.class);
+        criteria.add(Restrictions.eq(AuthorityField.username.getFieldChain(), username));
+        criteria.add(Restrictions.eq(AuthorityField.authority.getFieldChain(), authorityType.name()));
 
         this.getHibernateTemplate().deleteAll(
                 (List<Authority>) this.getHibernateTemplate().findByCriteria(criteria));

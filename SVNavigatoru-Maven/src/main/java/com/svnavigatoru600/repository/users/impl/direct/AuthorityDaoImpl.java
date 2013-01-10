@@ -12,6 +12,7 @@ import org.springframework.security.core.GrantedAuthority;
 
 import com.svnavigatoru600.domain.users.Authority;
 import com.svnavigatoru600.domain.users.AuthorityId;
+import com.svnavigatoru600.domain.users.AuthorityType;
 import com.svnavigatoru600.repository.impl.PersistedClass;
 import com.svnavigatoru600.repository.users.AuthorityDao;
 import com.svnavigatoru600.repository.users.impl.AuthorityField;
@@ -71,6 +72,20 @@ public class AuthorityDaoImpl extends NamedParameterJdbcDaoSupport implements Au
                 usernameColumn, usernameColumn);
 
         Map<String, String> args = Collections.singletonMap(usernameColumn, username);
+
+        this.getNamedParameterJdbcTemplate().update(query, args);
+    }
+
+    @Override
+    public void delete(String username, AuthorityType authorityType) {
+        String usernameColumn = AuthorityField.username.getColumnName();
+        String typeColumn = AuthorityField.authority.getColumnName();
+        String query = String.format("DELETE FROM %s WHERE %s = :%s AND %s = :%s",
+                AuthorityDaoImpl.TABLE_NAME, usernameColumn, usernameColumn, typeColumn, typeColumn);
+
+        Map<String, String> args = new HashMap<String, String>();
+        args.put(usernameColumn, username);
+        args.put(typeColumn, authorityType.name());
 
         this.getNamedParameterJdbcTemplate().update(query, args);
     }
