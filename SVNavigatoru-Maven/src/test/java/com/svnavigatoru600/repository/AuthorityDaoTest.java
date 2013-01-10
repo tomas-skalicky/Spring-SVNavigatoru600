@@ -143,8 +143,8 @@ public class AuthorityDaoTest extends AbstractRepositoryTest {
 
         // TWO INSERTS
         String username = this.defaultAuthor.getUsername();
-        TEST_UTILS.createDefaultTestAuthority(username);
-        TEST_UTILS.createSecondDefaultTestAuthority(username);
+        TEST_UTILS.createTestAuthority(username, RepositoryTestUtils.AUTHORITY_DEFAULT_TYPE);
+        TEST_UTILS.createTestAuthority(username, RepositoryTestUtils.SECOND_AUTHORITY_DEFAULT_TYPE);
 
         // DELETE
         authorityDao.delete(username, RepositoryTestUtils.AUTHORITY_DEFAULT_TYPE);
@@ -156,5 +156,20 @@ public class AuthorityDaoTest extends AbstractRepositoryTest {
         Collection<String> foundAuthorityTypes = TEST_UTILS.extractAuthorityTypes(foundAuthorities);
         Assert.assertTrue(foundAuthorityTypes.contains(RepositoryTestUtils.SECOND_AUTHORITY_DEFAULT_TYPE
                 .name()));
+    }
+
+    @Test
+    public void testDeleteNotExistingAuthority() {
+        AuthorityDao authorityDao = TEST_UTILS.getAuthorityDao();
+
+        // INSERT & DELETE
+        String username = this.defaultAuthor.getUsername();
+        AuthorityType type = RepositoryTestUtils.AUTHORITY_DEFAULT_TYPE;
+        TEST_UTILS.createTestAuthority(username, type);
+        authorityDao.delete(username, type);
+
+        // DELETE
+        authorityDao.delete(username, type);
+        // OK since no exception is thrown when the authority had not existed before.
     }
 }
