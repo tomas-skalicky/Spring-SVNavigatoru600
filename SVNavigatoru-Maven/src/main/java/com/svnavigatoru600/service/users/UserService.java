@@ -47,7 +47,8 @@ public class UserService {
     }
 
     /**
-     * Returns an {@link User} stored in the repository which has the given <code>username</code>.
+     * Returns an {@link User} stored in the repository which has the given <code>username</code>. If such an
+     * {@link User} is not found, an exception is thrown.
      * <p>
      * The returned user has its {@link User#getAuthorities() authorities} populated.
      */
