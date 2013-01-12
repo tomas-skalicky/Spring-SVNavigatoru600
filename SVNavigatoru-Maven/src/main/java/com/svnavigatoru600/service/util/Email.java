@@ -45,6 +45,9 @@ public final class Email {
 
     private static final String VALID_EMAIL_REGEXP = "^[\\w\\-]+(\\.[\\w\\-]+)*@([\\w\\-]+\\.)+[a-zA-Z]{2,}$";
 
+    private static final String MAIL_SMTP_HOST = "mail.smtp.host";
+    private static final String MAIL_SMTP_PORT = "mail.smtp.port";
+    private static final String MAIL_SMTP_AUTH = "mail.smtp.auth";
     private Email() {
     }
 
@@ -89,9 +92,9 @@ public final class Email {
      */
     private static void sendMailWithoutSSL(String recipient, String subject, String messageText) {
         Properties props = new Properties();
-        props.put("mail.smtp.host", Email.HOST);
-        props.put("mail.smtp.port", Email.STANDARD_PORT);
-        props.put("mail.smtp.auth", "true");
+        props.put(MAIL_SMTP_HOST, Email.HOST);
+        props.put(MAIL_SMTP_PORT, Email.STANDARD_PORT);
+        props.put(MAIL_SMTP_AUTH, Boolean.TRUE);
 
         Session session = Session.getDefaultInstance(props, new javax.mail.Authenticator() {
             @Override
@@ -118,11 +121,11 @@ public final class Email {
     @SuppressWarnings("unused")
     private static void sendMailViaSSL(String recipient, String subject, String messageText) {
         Properties props = new Properties();
-        props.put("mail.smtp.host", Email.HOST);
+        props.put(MAIL_SMTP_HOST, Email.HOST);
         props.put("mail.smtp.socketFactory.port", Email.SSL_PORT);
         props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
-        props.put("mail.smtp.auth", "true");
-        props.put("mail.smtp.port", Email.SSL_PORT);
+        props.put(MAIL_SMTP_AUTH, Boolean.TRUE);
+        props.put(MAIL_SMTP_PORT, Email.SSL_PORT);
 
         Session session = Session.getDefaultInstance(props, new javax.mail.Authenticator() {
             @Override
@@ -149,8 +152,8 @@ public final class Email {
     @SuppressWarnings("unused")
     private static void sendMailViaTLS(String recipient, String subject, String messageText) {
         Properties props = new Properties();
-        props.put("mail.smtp.auth", "true");
-        props.put("mail.smtp.starttls.enable", "true");
+        props.put(MAIL_SMTP_AUTH, Boolean.TRUE);
+        props.put("mail.smtp.starttls.enable", Boolean.TRUE);
 
         Session session = Session.getInstance(props);
 
@@ -187,6 +190,48 @@ public final class Email {
         Email.LOGGER.info(String.format("Email '%s' has been sent to '%s'.", subject, recipient));
     }
 
+    private static final String USER_ACCOUNT_TITLE_CODE = "user-account.title";
+    private static final String EMAIL_CODE = "email";
+    private static final String PASSWORD_CODE = "password";
+
+    private static final String USER_ROLES_NO_AUTHORITY_CODE = "user-roles.no-authority";
+    private static final String USER_ROLES_MEMBER_OF_SV_CODE = "user-roles.member-of-sv";
+    private static final String USER_ROLES_MEMBER_OF_BOARD_CODE = "user-roles.member-of-board";
+    private static final String USER_ROLES_USER_ADMINISTRATOR_CODE = "user-roles.user-administrator";
+
+    private static final String EMAIL_TEXT_ADDRESSING_CODE = "email.text.addressing";
+    private static final String EMAIL_TEXT_ADMIN_SIGNATURE_CODE = "email.text.admin-signature";
+    private static final String EMAIL_SUBJECT_NEW_USER_CODE = "email.subject.new-user";
+    private static final String EMAIL_TEXT_NEW_USER_CODE = "email.text.new-user";
+    private static final String EMAIL_SUBJECT_PASSWORD_RESET_CODE = "email.subject.password-reset";
+    private static final String EMAIL_TEXT_PASSWORD_RESET_CODE = "email.text.password-reset";
+    private static final String EMAIL_SUBJECT_PASSWORD_CHANGED_CODE = "email.subject.password-changed";
+    private static final String EMAIL_TEXT_PASSWORD_CHANGED_CODE = "email.text.password-changed";
+    private static final String EMAIL_SUBJECT_AUTHORITIES_CHANGED_CODE = "email.subject.authorities-changed";
+    private static final String EMAIL_TEXT_AUTHORITIES_CHANGED_CODE = "email.text.authorities-changed";
+    private static final String EMAIL_SUBJECT_USER_DELETED_CODE = "email.subject.user-deleted";
+    private static final String EMAIL_TEXT_USER_DELETED_CODE = "email.text.user-deleted";
+
+    /**
+     * Gets localized addressing of the {@link User recipient}.
+     * 
+     * @param recipient
+     *            Addressed user
+     */
+    public static String getLocalizedRecipientAddressing(User recipient, HttpServletRequest request,
+            MessageSource messageSource) {
+        return Localization.findLocaleMessage(messageSource, request, Email.EMAIL_TEXT_ADDRESSING_CODE,
+                recipient.getLastName());
+    }
+
+    /**
+     * Gets localized signature of administrator of these web pages.
+     */
+    public static String getLocalizedAdminSignature(HttpServletRequest request, MessageSource messageSource) {
+        return Localization.findLocaleMessage(messageSource, request, Email.EMAIL_TEXT_ADMIN_SIGNATURE_CODE,
+                Configuration.DOMAIN);
+    }
+
     /**
      * Sends an email of the {@link User newUser} with his credentials.
      * <p>
@@ -195,12 +240,21 @@ public final class Email {
      */
     public static void sendEmailOnUserCreation(User newUser, String newPassword, HttpServletRequest request,
             MessageSource messageSource) {
-        String subject = Localization.findLocaleMessage(messageSource, request, "email.subject.new-user");
         String email = newUser.getEmail();
-        Object[] messageParams = new Object[] { newUser.getLastName(), Configuration.DOMAIN,
-                newUser.getUsername(), email, newPassword };
-        String messageText = Localization.findLocaleMessage(messageSource, request, "email.text.new-user",
-                messageParams);
+
+        String subject = Localization.findLocaleMessage(messageSource, request,
+                Email.EMAIL_SUBJECT_NEW_USER_CODE);
+
+        String addressing = Email.getLocalizedRecipientAddressing(newUser, request, messageSource);
+        String usernameLabel = Localization.findLocaleMessage(messageSource, request,
+                Email.USER_ACCOUNT_TITLE_CODE);
+        String emailLabel = Localization.findLocaleMessage(messageSource, request, Email.EMAIL_CODE);
+        String passwordLabel = Localization.findLocaleMessage(messageSource, request, Email.PASSWORD_CODE);
+        String signature = Email.getLocalizedAdminSignature(request, messageSource);
+        Object[] messageParams = new Object[] { addressing, Configuration.DOMAIN, usernameLabel,
+                newUser.getUsername(), emailLabel, email, passwordLabel, newPassword, signature };
+        String messageText = Localization.findLocaleMessage(messageSource, request,
+                Email.EMAIL_TEXT_NEW_USER_CODE, messageParams);
 
         Email.sendMail(email, subject, messageText);
     }
@@ -218,10 +272,13 @@ public final class Email {
     public static void sendEmailOnPasswordReset(User user, String newPassword, HttpServletRequest request,
             MessageSource messageSource) {
         String subject = Localization.findLocaleMessage(messageSource, request,
-                "email.subject.password-reset");
-        Object[] messageParams = new Object[] { user.getLastName(), Configuration.DOMAIN, newPassword };
+                Email.EMAIL_SUBJECT_PASSWORD_RESET_CODE);
+
+        String addressing = Email.getLocalizedRecipientAddressing(user, request, messageSource);
+        String signature = Email.getLocalizedAdminSignature(request, messageSource);
+        Object[] messageParams = new Object[] { addressing, Configuration.DOMAIN, newPassword, signature };
         String messageText = Localization.findLocaleMessage(messageSource, request,
-                "email.text.password-reset", messageParams);
+                Email.EMAIL_TEXT_PASSWORD_RESET_CODE, messageParams);
 
         Email.sendMail(user.getEmail(), subject, messageText);
     }
@@ -235,12 +292,48 @@ public final class Email {
     public static void sendEmailOnPasswordChange(User user, String newPassword, HttpServletRequest request,
             MessageSource messageSource) {
         String subject = Localization.findLocaleMessage(messageSource, request,
-                "email.subject.password-changed");
-        Object[] messageParams = new Object[] { user.getLastName(), Configuration.DOMAIN, newPassword };
+                Email.EMAIL_SUBJECT_PASSWORD_CHANGED_CODE);
+
+        String addressing = Email.getLocalizedRecipientAddressing(user, request, messageSource);
+        String signature = Email.getLocalizedAdminSignature(request, messageSource);
+        Object[] messageParams = new Object[] { addressing, Configuration.DOMAIN, newPassword, signature };
         String messageText = Localization.findLocaleMessage(messageSource, request,
-                "email.text.password-changed", messageParams);
+                Email.EMAIL_TEXT_PASSWORD_CHANGED_CODE, messageParams);
 
         Email.sendMail(user.getEmail(), subject, messageText);
+    }
+
+    /**
+     * Converts the new authorities of the given {@link User user} to a {@link String} representation. The
+     * conversion is for email purposes.
+     */
+    private static String convertAuthoritiesForEmail(User user, HttpServletRequest request,
+            MessageSource messageSource) {
+        StringBuilder newAuthorities = new StringBuilder();
+        if (user.canSeeNews()) {
+            if (user.canEditNews()) {
+                newAuthorities.append(Localization.findLocaleMessage(messageSource, request,
+                        Email.USER_ROLES_MEMBER_OF_BOARD_CODE));
+            } else {
+                newAuthorities.append(Localization.findLocaleMessage(messageSource, request,
+                        Email.USER_ROLES_MEMBER_OF_SV_CODE));
+            }
+        }
+
+        if (user.canSeeUsers()) {
+            if (newAuthorities.length() > 0) {
+                newAuthorities.append(", ");
+            }
+            newAuthorities.append(Localization.findLocaleMessage(messageSource, request,
+                    Email.USER_ROLES_USER_ADMINISTRATOR_CODE));
+        }
+
+        if (user.getAuthorities().size() == 1) {
+            // The user is registered, but has no other authority.
+            newAuthorities.append(Localization.findLocaleMessage(messageSource, request,
+                    Email.USER_ROLES_NO_AUTHORITY_CODE));
+        }
+        return newAuthorities.toString();
     }
 
     /**
@@ -253,36 +346,14 @@ public final class Email {
     public static void sendEmailOnAuthoritiesChange(User user, HttpServletRequest request,
             MessageSource messageSource) {
         String subject = Localization.findLocaleMessage(messageSource, request,
-                "email.subject.authorities-changed");
+                Email.EMAIL_SUBJECT_AUTHORITIES_CHANGED_CODE);
 
-        // Converts the new authorities to the String representation.
-        StringBuilder newAuthorities = new StringBuilder();
-        if (user.canSeeNews()) {
-            if (user.canEditNews()) {
-                newAuthorities.append(Localization.findLocaleMessage(messageSource, request,
-                        "user-roles.member-of-board"));
-            } else {
-                newAuthorities.append(Localization.findLocaleMessage(messageSource, request,
-                        "user-roles.member-of-sv"));
-            }
-        }
-        if (user.canSeeUsers()) {
-            if (newAuthorities.length() > 0) {
-                newAuthorities.append(", ");
-            }
-            newAuthorities.append(Localization.findLocaleMessage(messageSource, request,
-                    "user-roles.user-administrator"));
-        }
-        if (user.getAuthorities().size() == 1) {
-            // The user is registered, but has no other authority.
-            newAuthorities.append(Localization.findLocaleMessage(messageSource, request,
-                    "user-roles.no-authority"));
-        }
-        // End of the conversion.
-
-        Object[] messageParams = new Object[] { user.getLastName(), Configuration.DOMAIN, newAuthorities };
+        String addressing = Email.getLocalizedRecipientAddressing(user, request, messageSource);
+        String newAuthorities = Email.convertAuthoritiesForEmail(user, request, messageSource);
+        String signature = Email.getLocalizedAdminSignature(request, messageSource);
+        Object[] messageParams = new Object[] { addressing, Configuration.DOMAIN, newAuthorities, signature };
         String messageText = Localization.findLocaleMessage(messageSource, request,
-                "email.text.authorities-changed", messageParams);
+                Email.EMAIL_TEXT_AUTHORITIES_CHANGED_CODE, messageParams);
 
         Email.sendMail(user.getEmail(), subject, messageText);
     }
@@ -297,10 +368,14 @@ public final class Email {
      */
     public static void sendEmailOnUserDeletion(User user, HttpServletRequest request,
             MessageSource messageSource) {
-        String subject = Localization.findLocaleMessage(messageSource, request, "email.subject.user-deleted");
-        Object[] messageParams = new Object[] { user.getLastName(), user.getUsername(), Configuration.DOMAIN };
+        String subject = Localization.findLocaleMessage(messageSource, request,
+                Email.EMAIL_SUBJECT_USER_DELETED_CODE);
+
+        String addressing = Email.getLocalizedRecipientAddressing(user, request, messageSource);
+        String signature = Email.getLocalizedAdminSignature(request, messageSource);
+        Object[] messageParams = new Object[] { addressing, user.getUsername(), signature };
         String messageText = Localization.findLocaleMessage(messageSource, request,
-                "email.text.user-deleted", messageParams);
+                Email.EMAIL_TEXT_USER_DELETED_CODE, messageParams);
 
         Email.sendMail(user.getEmail(), subject, messageText);
     }
