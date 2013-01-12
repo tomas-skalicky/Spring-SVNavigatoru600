@@ -23,12 +23,53 @@ public final class Localization {
     }
 
     /**
-     * Gets a message which corresponds to the given <code>code</code>. The current localization is to be
-     * used.
+     * Gets a localization of the message which has the given <code>messageCode</code>. The code requires NO
+     * parameter.
+     * <p>
+     * The current locale settings is used.
+     * 
+     * @param messageCode
+     *            Code of the message stored typically in messages*.properties.
      */
     public static String findLocaleMessage(MessageSource messageSource, HttpServletRequest request,
             String messageCode) {
         return Localization.findLocaleMessage(messageSource, request, messageCode, new Object[] {});
+    }
+
+    /**
+     * Gets a localization of the message which has the given <code>messageCode</code>. The code requires ONE
+     * parameter.
+     * <p>
+     * The current locale settings is used.
+     * 
+     * @param messageCode
+     *            Code of the message stored typically in messages*.properties.
+     * @param parameter
+     *            Parameter of the code which substitutes the <code>{0}</code> placeholder in the
+     *            localization.
+     */
+    public static String findLocaleMessage(MessageSource messageSource, HttpServletRequest request,
+            String messageCode, Object parameter) {
+        return Localization
+                .findLocaleMessage(messageSource, request, messageCode, new Object[] { parameter });
+    }
+
+    /**
+     * Gets a localization of the message which has the given <code>messageCode</code>. The code requires a
+     * various number of parameters depending on the given code.
+     * <p>
+     * The current locale settings is used.
+     * 
+     * @param messageCode
+     *            Code of the message stored typically in messages*.properties.
+     * @param parameters
+     *            Parameters of the code which substitute placeholders in the localization. The order of the
+     *            parameters in the array is important. For instance: the 2nd parameter (with index 1)
+     *            substitutes the <code>{1}</code> placeholder in the localization.
+     */
+    public static String findLocaleMessage(MessageSource messageSource, HttpServletRequest request,
+            String messageCode, Object[] parameters) {
+        return messageSource.getMessage(messageCode, parameters, Localization.getLocale(request));
     }
 
     /**
@@ -37,22 +78,6 @@ public final class Localization {
     public static Locale getLocale(HttpServletRequest request) {
         RequestContext requestContext = new RequestContext(request);
         return requestContext.getLocale();
-    }
-
-    /**
-     * Gets a message which corresponds to the given <code>code</code>. The current localization is to be
-     * used.
-     * 
-     * @param messageSource
-     * @param request
-     * @param messageCode
-     * @param parameters
-     *            Parameters in the localization of the desired message. References are done via
-     *            "{&lt;number>}".
-     */
-    public static String findLocaleMessage(MessageSource messageSource, HttpServletRequest request,
-            String messageCode, Object[] parameters) {
-        return messageSource.getMessage(messageCode, parameters, Localization.getLocale(request));
     }
 
     /**
