@@ -69,6 +69,16 @@ public interface UserDao {
     void update(User user);
 
     /**
+     * Updates the given {@link User} in the repository. The old version of this user should be already stored
+     * there.
+     * 
+     * @param persistAuthorities
+     *            If <code>true</code>, {@link com.svnavigatoru600.domain.users.Authority authorities} of the
+     *            user are persisted (= updated); otherwise not.
+     */
+    void update(User user, boolean persistAuthorities);
+
+    /**
      * Stores the given {@link User} to the repository. If there is already a {@link User} with the same
      * {@link User#getUsername() username} or {@link User#getEmail() email}, throws an exception.
      * {@link com.svnavigatoru600.domain.users.Authority Authorities} of the user are persisted as well.
