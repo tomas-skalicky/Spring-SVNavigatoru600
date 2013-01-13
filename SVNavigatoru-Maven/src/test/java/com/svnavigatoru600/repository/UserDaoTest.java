@@ -1,5 +1,6 @@
 package com.svnavigatoru600.repository;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
@@ -185,6 +186,30 @@ public class UserDaoTest extends AbstractRepositoryTest {
         Assert.assertEquals(this.secondUser.getUsername(), foundUsers.get(0).getUsername());
     }
 
+    @Test
+    public void testFindAllByAuthorityAndSubscriptionAllUsers() throws Exception {
+        UserDao userDao = TEST_UTILS.getUserDao();
+
+        // THREE UPDATES
+        AuthorityType authorityType = RepositoryTestUtils.AUTHORITY_DEFAULT_TYPE;
+        NotificationType notificationType = NotificationType.IN_OTHER_DOCUMENTS;
+        this.firstUser.addAuthority(authorityType);
+        this.firstUser.setSubscribedToOtherDocuments(true);
+        userDao.update(this.firstUser);
+        this.secondUser.addAuthority(authorityType);
+        this.secondUser.setSubscribedToOtherDocuments(true);
+        userDao.update(this.secondUser);
+
+        // SELECT ALL
+        List<User> foundUsers = userDao.findAllByAuthorityAndSubscription(authorityType.name(),
+                notificationType);
+        int expectedFoundUserCount = 2;
+        List<String> usernames = this.getUsernames(foundUsers);
+        Assert.assertEquals(expectedFoundUserCount, usernames.size());
+        Assert.assertTrue(usernames.contains(this.firstUser.getUsername()));
+        Assert.assertTrue(usernames.contains(this.secondUser.getUsername()));
+    }
+
     /**
      * Creates and saves the first test user.
      * 
@@ -231,5 +256,16 @@ public class UserDaoTest extends AbstractRepositoryTest {
         }
 
         TEST_UTILS.getUserDao().update(user);
+    }
+
+    /**
+     * Gets an array of usernames of the given users.
+     */
+    private List<String> getUsernames(List<User> users) {
+        List<String> usernames = new ArrayList<String>(users.size());
+        for (User user : users) {
+            usernames.add(user.getUsername());
+        }
+        return usernames;
     }
 }
