@@ -197,6 +197,11 @@ public class UserDaoImpl extends NamedParameterJdbcDaoSupport implements UserDao
 
     @Override
     public void update(User user) {
+        this.update(user, true);
+    }
+
+    @Override
+    public void update(User user, boolean persistAuthorities) {
         this.logger.info("Update an user " + user);
 
         // Parameters are those words which begin with ':' in the following query.
@@ -226,9 +231,11 @@ public class UserDaoImpl extends NamedParameterJdbcDaoSupport implements UserDao
 
         this.getNamedParameterJdbcTemplate().update(query, this.getNamedParameters(user));
 
-        // Updates authorities.
-        this.authorityDao.delete(user.getUsername());
-        this.authorityDao.save(user.getAuthorities());
+        if (persistAuthorities) {
+            // Updates authorities.
+            this.authorityDao.delete(user.getUsername());
+            this.authorityDao.save(user.getAuthorities());
+        }
     }
 
     @Override
