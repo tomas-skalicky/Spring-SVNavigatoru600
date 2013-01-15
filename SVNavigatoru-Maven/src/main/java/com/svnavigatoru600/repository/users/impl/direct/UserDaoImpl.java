@@ -8,6 +8,7 @@ import java.util.Map;
 
 import javax.inject.Inject;
 
+import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.dao.DataRetrievalFailureException;
@@ -149,7 +150,7 @@ public class UserDaoImpl extends NamedParameterJdbcDaoSupport implements UserDao
 
         Map<String, String> args = new HashMap<String, String>();
         args.put(authorityColumn, authority);
-        args.put(subscriptionColumn, Boolean.TRUE.toString());
+        args.put(subscriptionColumn, BooleanUtils.toIntegerObject(true).toString());
 
         return this.getNamedParameterJdbcTemplate().query(query, args, new UserRowMapper());
     }
