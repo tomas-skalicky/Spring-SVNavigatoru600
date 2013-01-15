@@ -88,7 +88,8 @@ public class NewNewsController extends AbstractNewEditNewsController {
 
         try {
             // Saves the news to the repository.
-            this.getNewsService().save(newNews);
+            this.getNewsService().saveAndNotifyUsers(newNews, command.getSendNotification().isStatus(),
+                    request, messageSource);
 
             // Clears the command object from the session.
             status.setComplete();

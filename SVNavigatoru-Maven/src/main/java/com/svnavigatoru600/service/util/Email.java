@@ -1,5 +1,6 @@
 package com.svnavigatoru600.service.util;
 
+import java.util.List;
 import java.util.Properties;
 
 import javax.mail.Message;
@@ -16,8 +17,11 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.context.MessageSource;
 
+import com.svnavigatoru600.domain.News;
+import com.svnavigatoru600.domain.users.NotificationType;
 import com.svnavigatoru600.domain.users.User;
 import com.svnavigatoru600.service.Configuration;
+import com.svnavigatoru600.web.users.EditMyAccountController;
 
 /**
  * Provides a set of static functions related to emails. The implementation borrowed from <a href=
@@ -48,6 +52,7 @@ public final class Email {
     private static final String MAIL_SMTP_HOST = "mail.smtp.host";
     private static final String MAIL_SMTP_PORT = "mail.smtp.port";
     private static final String MAIL_SMTP_AUTH = "mail.smtp.auth";
+
     private Email() {
     }
 
@@ -378,5 +383,72 @@ public final class Email {
                 Email.EMAIL_TEXT_USER_DELETED_CODE, messageParams);
 
         Email.sendMail(user.getEmail(), subject, messageText);
+    }
+
+    private static final String NOTIFICATIONS_EMAIL_TEXT_SIGNATURE_CODE = "notifications.email.text.signature";
+    private static final String NOTIFICATIONS_EMAIL_TEXT_UNSUBSCRIPTION_LINK_TEXT_CODE = "notifications.email.text.unsubscription-link-text";
+    private static final String NOTIFICATIONS_EMAIL_NEWS_SUBJECT_NEWS_CREATED = "notifications.email.news.subject.news-created";
+    private static final String NOTIFICATIONS_EMAIL_NEWS_TEXT_NEWS_CREATED = "notifications.email.news.text.news-created";
+
+    /**
+     * Gets a localized signature of emails which serve as notifications of news and changes.
+     * 
+     * @param notificationType
+     *            Type which caused that the currently logged user is going to receive an notification.
+     * @param linkForUnsubscription
+     *            URL which unsubscribes the currently logged user from the receiving notifications of the
+     *            <code>notificationType</code> if the user clicks on it. Moreover, controller associated with
+     *            the URL redirects the user to the settings site of the user account.
+     */
+    public static String getLocalizedNotificationSignature(NotificationType notificationType,
+            String linkForUnsubscription, HttpServletRequest request, MessageSource messageSource) {
+
+        String sectionWhichIsToBeUnsubscribed = Localization.findLocaleMessage(messageSource, request,
+                notificationType.getTitleLocalizationCode());
+        String linkText = Localization.findLocaleMessage(messageSource, request,
+                Email.NOTIFICATIONS_EMAIL_TEXT_UNSUBSCRIPTION_LINK_TEXT_CODE);
+        String hereClickToUnsubscribe = String.format("<a href='%s'>%s</a>", linkForUnsubscription, linkText);
+
+        Object[] messageParams = new Object[] { Configuration.DOMAIN, sectionWhichIsToBeUnsubscribed,
+                hereClickToUnsubscribe };
+        return Localization.findLocaleMessage(messageSource, request,
+                Email.NOTIFICATIONS_EMAIL_TEXT_SIGNATURE_CODE, messageParams);
+    }
+
+    /**
+     * Gets URL which unsubscribes the currently logged user from receiving notifications of the
+     * <code>notificationType</code> if the user clicks on it. Moreover, controller associated with the URL
+     * redirects the user to the settings site of the user account.
+     */
+    private static String getLinkForUnsubscription(NotificationType notificationType, User user) {
+        return String.format("%s%s%s/%s%d/", Configuration.DOMAIN, EditMyAccountController.BASE_URL,
+                user.getUsername(), EditMyAccountController.UNSUBSCRIBE_FROM_NOTIFICATIONS_URL_PART,
+                notificationType.ordinal());
+    }
+
+    /**
+     * Sends emails to the given {@link User Users} with notification of the newly posted {@link News}.
+     */
+    public static void sendEmailOnNewsCreation(News news, List<User> usersToNotify,
+            HttpServletRequest request, MessageSource messageSource) {
+        String newsTitle = news.getTitle();
+        String subject = Localization.findLocaleMessage(messageSource, request,
+                Email.NOTIFICATIONS_EMAIL_NEWS_SUBJECT_NEWS_CREATED, newsTitle);
+
+        NotificationType notificationType = NotificationType.IN_NEWS;
+        String serverNameAndPort = String.format("%s:%d", request.getServerName(), request.getServerPort());
+        String newsText = Url.convertImageRelativeUrlsToAbsolute(news.getText(), serverNameAndPort);
+
+        for (User user : usersToNotify) {
+            String addressing = Email.getLocalizedRecipientAddressing(user, request, messageSource);
+            String linkForUnsubscription = Email.getLinkForUnsubscription(notificationType, user);
+            String signature = Email.getLocalizedNotificationSignature(notificationType,
+                    linkForUnsubscription, request, messageSource);
+            Object[] messageParams = new Object[] { addressing, newsTitle, newsText, signature };
+            String messageText = Localization.findLocaleMessage(messageSource, request,
+                    Email.NOTIFICATIONS_EMAIL_NEWS_TEXT_NEWS_CREATED, messageParams);
+
+            Email.sendMail(user.getEmail(), subject, messageText);
+        }
     }
 }

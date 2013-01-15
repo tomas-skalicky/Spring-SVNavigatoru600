@@ -11,9 +11,14 @@ import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
 
 import com.svnavigatoru600.domain.News;
+import com.svnavigatoru600.domain.users.AuthorityType;
+import com.svnavigatoru600.domain.users.NotificationType;
+import com.svnavigatoru600.domain.users.User;
 import com.svnavigatoru600.repository.NewsDao;
 import com.svnavigatoru600.repository.news.impl.FindAllOrderedArguments;
 import com.svnavigatoru600.repository.news.impl.NewsField;
+import com.svnavigatoru600.service.users.UserService;
+import com.svnavigatoru600.service.util.Email;
 import com.svnavigatoru600.service.util.Localization;
 import com.svnavigatoru600.service.util.OrderType;
 
@@ -29,6 +34,11 @@ public class NewsService {
      * The object which provides a persistence.
      */
     private final NewsDao newsDao;
+    /**
+     * Does the work which concerns mainly notification of {@link com.svnavigatoru600.domain.users.User users}
+     * .
+     */
+    private UserService userService;
 
     /**
      * Constructor.
@@ -36,6 +46,11 @@ public class NewsService {
     @Inject
     public NewsService(NewsDao newsDao) {
         this.newsDao = newsDao;
+    }
+
+    @Inject
+    public void setUserService(UserService userService) {
+        this.userService = userService;
     }
 
     /**
@@ -86,6 +101,34 @@ public class NewsService {
      */
     public int save(News news) {
         return this.newsDao.save(news);
+    }
+
+    /**
+     * Updates corresponding {@link java.util.Date Date} fields of the given {@link News} and stores the news
+     * to the repository.
+     * <p>
+     * Finally, notifies all users which have corresponding rights by email about a creation of the news.
+     * 
+     * @param sendNotification
+     *            If <code>true</code>, the notification is sent; otherwise not.
+     */
+    public void saveAndNotifyUsers(News news, boolean sendNotification, HttpServletRequest request,
+            MessageSource messageSource) {
+        this.save(news);
+
+        if (sendNotification) {
+            this.notifyUsersOfCreation(news, request, messageSource);
+        }
+    }
+
+    /**
+     * Notifies all users which have corresponding rights by email about a creation of the given {@link News
+     * news}.
+     */
+    private void notifyUsersOfCreation(News news, HttpServletRequest request, MessageSource messageSource) {
+        List<User> usersToNotify = this.userService.findAllWithEmailByAuthorityAndSubscription(
+                AuthorityType.ROLE_MEMBER_OF_SV, NotificationType.IN_NEWS);
+        Email.sendEmailOnNewsCreation(news, usersToNotify, request, messageSource);
     }
 
     /**
