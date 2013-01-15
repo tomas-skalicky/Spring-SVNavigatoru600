@@ -23,6 +23,8 @@ public class UpdateUserData {
      */
     private Map<Long, String> localizedNotificationCheckboxTitles = null;
     private boolean dataSaved = false;
+    private boolean notificationsUnsubscribed = false;
+    private String localizedUnsubscribedNotificationTitle = null;
 
     public User getUser() {
         return this.user;
@@ -62,5 +64,21 @@ public class UpdateUserData {
 
     public void setDataSaved(boolean dataSaved) {
         this.dataSaved = dataSaved;
+    }
+
+    public boolean isNotificationsUnsubscribed() {
+        return this.notificationsUnsubscribed;
+    }
+
+    public void setNotificationsUnsubscribed(boolean notificationsUnsubscribed) {
+        this.notificationsUnsubscribed = notificationsUnsubscribed;
+    }
+
+    public String getLocalizedUnsubscribedNotificationTitle() {
+        return this.localizedUnsubscribedNotificationTitle;
+    }
+
+    public void setLocalizedUnsubscribedNotificationTitle(String localizedUnsubscribedNotificationTitle) {
+        this.localizedUnsubscribedNotificationTitle = localizedUnsubscribedNotificationTitle;
     }
 }

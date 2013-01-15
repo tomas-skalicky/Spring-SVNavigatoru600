@@ -1,5 +1,6 @@
 package com.svnavigatoru600.service.users;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
 import com.svnavigatoru600.domain.forum.Contribution;
 import com.svnavigatoru600.domain.forum.Thread;
 import com.svnavigatoru600.domain.users.AuthorityType;
+import com.svnavigatoru600.domain.users.NotificationSubscriber;
 import com.svnavigatoru600.domain.users.NotificationType;
 import com.svnavigatoru600.domain.users.User;
 import com.svnavigatoru600.repository.users.UserDao;
@@ -98,6 +100,25 @@ public class UserService {
     public List<User> findAllByAuthorityAndSubscription(AuthorityType authority,
             NotificationType notificationType) {
         return this.userDao.findAllByAuthorityAndSubscription(authority.name(), notificationType);
+    }
+
+    /**
+     * Returns all {@link User Users} with email stored in the repository which have the given
+     * {@link AuthorityType authority} and which are subscribed to the given {@link NotificationType
+     * notifications}.
+     * <p>
+     * {@link com.svnavigatoru600.domain.users.Authority Authorities} of the returned users are NOT populated.
+     */
+    public List<User> findAllWithEmailByAuthorityAndSubscription(AuthorityType authority,
+            NotificationType notificationType) {
+        List<User> users = this.userDao.findAllByAuthorityAndSubscription(authority.name(), notificationType);
+        List<User> usersWithEmail = new ArrayList<User>(users.size());
+        for (User user : users) {
+            if (StringUtils.isNotBlank(user.getEmail())) {
+                usersWithEmail.add(user);
+            }
+        }
+        return usersWithEmail;
     }
 
     /**
@@ -283,6 +304,19 @@ public class UserService {
         this.userDao.delete(user);
 
         Email.sendEmailOnUserDeletion(user, request, messageSource);
+    }
+
+    /**
+     * Unsubscribes the specified {@link User} from receiving notifications which are of the given
+     * {@link NotificationType}. This change is persisted.
+     * 
+     * @param username
+     *            Username (= login) of the affected user.
+     */
+    public void unsubscribeFromNotifications(String username, NotificationType notificationType) {
+        User user = this.userDao.findByUsername(username);
+        notificationType.accept(new NotificationSubscriber(user, false));
+        this.userDao.update(user, false);
     }
 
     /**

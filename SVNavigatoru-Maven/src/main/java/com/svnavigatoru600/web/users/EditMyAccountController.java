@@ -13,12 +13,15 @@ import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.support.SessionStatus;
 
+import com.svnavigatoru600.domain.users.NotificationType;
 import com.svnavigatoru600.domain.users.User;
 import com.svnavigatoru600.service.users.UserService;
+import com.svnavigatoru600.service.util.Localization;
 import com.svnavigatoru600.service.util.UserUtils;
 import com.svnavigatoru600.viewmodel.users.UpdateUserData;
 import com.svnavigatoru600.viewmodel.users.validator.UpdateUserDataValidator;
@@ -34,7 +37,9 @@ import com.svnavigatoru600.web.AbstractPrivateSectionMetaController;
 @Controller
 public class EditMyAccountController extends AbstractPrivateSectionMetaController {
 
-    private static final String BASE_URL = "/uzivatelsky-ucet/";
+    public static final String BASE_URL = "/uzivatelsky-ucet/";
+    public static final String UNSUBSCRIBE_FROM_NOTIFICATIONS_URL_PART = "odhlasit-notifikace/";
+    public static final String NOTIFICATIONS_UNSUBSCRIBED_URL_PART = "odhlaseno/";
     private static final String COMMAND = "updateUserDataCommand";
     private static final String PAGE_VIEW = "editMyUserAccount";
 
@@ -132,5 +137,60 @@ public class EditMyAccountController extends AbstractPrivateSectionMetaControlle
             result.rejectValue("user.email", "email.occupied-by-somebody");
             return EditMyAccountController.PAGE_VIEW;
         }
+    }
+
+    /**
+     * Unsubscribes notifications of the given <code>notificationType</code> and redirects processing in order
+     * to avoid re-submitting.
+     * 
+     * @param username
+     *            Username (= login) of the user who is to be unsubscribed from receiving notifications of the
+     *            <code>notificationType</code>.
+     * @param notificationType
+     *            Ordinal of notifications' type which is to be deactivated by the user.
+     */
+    @RequestMapping(value = EditMyAccountController.BASE_URL + "{username}/"
+            + EditMyAccountController.UNSUBSCRIBE_FROM_NOTIFICATIONS_URL_PART + "{notificationType}/", method = RequestMethod.GET)
+    @PreAuthorize("hasRole('ROLE_REGISTERED_USER')")
+    public String unsubscribeNotificationsAndRedirect(@PathVariable("username") String username,
+            @PathVariable("notificationType") int notificationType, HttpServletRequest request, ModelMap model) {
+        try {
+            this.userService.unsubscribeFromNotifications(username,
+                    NotificationType.values()[notificationType]);
+
+            // Returns the form success view.
+            model.addAttribute(AbstractMetaController.REDIRECTION_ATTRIBUTE, EditMyAccountController.BASE_URL
+                    + EditMyAccountController.UNSUBSCRIBE_FROM_NOTIFICATIONS_URL_PART + notificationType
+                    + "/" + EditMyAccountController.NOTIFICATIONS_UNSUBSCRIBED_URL_PART);
+            return AbstractMetaController.REDIRECTION_PAGE;
+
+        } catch (DataAccessException e) {
+            // We encountered a database problem.
+            LogFactory.getLog(this.getClass()).error(
+                    String.format("DB error: username=%s, notificationType=%d", username, notificationType),
+                    e);
+            return EditMyAccountController.PAGE_VIEW;
+        }
+    }
+
+    /**
+     * Initializes the form after the given <code>notificationType</code> have been successfully unsubscribed
+     * and these changes have been persisted.
+     */
+    @RequestMapping(value = EditMyAccountController.BASE_URL
+            + EditMyAccountController.UNSUBSCRIBE_FROM_NOTIFICATIONS_URL_PART + "{notificationType}/"
+            + EditMyAccountController.NOTIFICATIONS_UNSUBSCRIBED_URL_PART, method = RequestMethod.GET)
+    @PreAuthorize("hasRole('ROLE_REGISTERED_USER')")
+    public String initFormAfterUnsubscription(@PathVariable("notificationType") int notificationType,
+            HttpServletRequest request, ModelMap model) {
+        String view = this.initForm(request, model);
+
+        UpdateUserData command = (UpdateUserData) model.get(EditMyAccountController.COMMAND);
+        command.setNotificationsUnsubscribed(true);
+
+        String localizationCode = NotificationType.values()[notificationType].getTitleLocalizationCode();
+        String localizedTitle = Localization.findLocaleMessage(this.messageSource, request, localizationCode);
+        command.setLocalizedUnsubscribedNotificationTitle(localizedTitle);
+        return view;
     }
 }

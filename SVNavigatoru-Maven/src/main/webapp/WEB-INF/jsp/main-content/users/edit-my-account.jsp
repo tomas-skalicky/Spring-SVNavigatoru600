@@ -8,6 +8,11 @@
 		<spring:message code="edit.changes-successfully-saved" />
 	</p>
 </c:if>
+<c:if test="${updateUserDataCommand.notificationsUnsubscribed}">
+	<p class="successfulOperation">
+		<spring:message code="notifications.notifications-successfully-unsubscribed" arguments="${updateUserDataCommand.localizedUnsubscribedNotificationTitle}" />
+	</p>
+</c:if>
 
 <form:form action="IS_FILLED_BY_JAVASCRIPT" commandName="updateUserDataCommand" method="POST">
 	<form:errors path="*" cssClass="error" element="p" />
