@@ -181,7 +181,7 @@ public final class Email {
         message.setFrom(new InternetAddress(Email.SENDER));
         message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(recipient));
         message.setSubject(subject);
-        message.setContent(messageText, "text/plain; charset=\"UTF-8\"");
+        message.setContent(messageText, "text/html; charset=\"UTF-8\"");
         // Option without the charset specification:
         // message.setText(messageText);
 
