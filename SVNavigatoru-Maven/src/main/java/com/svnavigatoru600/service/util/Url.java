@@ -49,8 +49,7 @@ public final class Url {
      * @return Text only with absolute URLs of images
      */
     public static String convertImageRelativeUrlsToAbsolute(String text, HttpServletRequest request) {
-        String serverNameAndPort = String.format("%s:%d", request.getServerName(), request.getServerPort());
-        return Url.convertImageRelativeUrlsToAbsolute(text, serverNameAndPort);
+        return Url.convertImageRelativeUrlsToAbsolute(text, HttpRequestUtils.getServerNameAndPort(request));
     }
 
     /**

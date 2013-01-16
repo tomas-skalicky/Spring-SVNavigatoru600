@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.svnavigatoru600.domain.users.NotificationType;
 import com.svnavigatoru600.domain.users.User;
+import com.svnavigatoru600.service.util.HttpRequestUtils;
 import com.svnavigatoru600.service.util.Localization;
 import com.svnavigatoru600.web.users.EditMyAccountController;
 
@@ -36,10 +37,11 @@ public abstract class AbstractNotificationEmailService extends AbstractEmailServ
      * {@link #getNotificationType() type} if the user clicks on it. Moreover, controller associated with the
      * URL redirects the user to the settings page of the user account.
      */
-    private String getLinkForUnsubscription(User user) {
-        return String.format("%s%s%s/%s%d/", Configuration.DOMAIN, EditMyAccountController.BASE_URL, user
-                .getUsername(), EditMyAccountController.UNSUBSCRIBE_FROM_NOTIFICATIONS_URL_PART, this
-                .getNotificationType().ordinal());
+    private String getLinkForUnsubscription(User user, HttpServletRequest request) {
+        return String.format("%s%s%s/%s%d/", HttpRequestUtils.getContextHomeDirectory(request),
+                EditMyAccountController.BASE_URL, user.getUsername(),
+                EditMyAccountController.UNSUBSCRIBE_FROM_NOTIFICATIONS_URL_PART, this.getNotificationType()
+                        .ordinal());
     }
 
     /**
@@ -56,7 +58,7 @@ public abstract class AbstractNotificationEmailService extends AbstractEmailServ
         String linkText = Localization.findLocaleMessage(messageSource, request,
                 AbstractNotificationEmailService.NOTIFICATIONS_EMAIL_TEXT_UNSUBSCRIPTION_LINK_TEXT_CODE);
         String hereClickToUnsubscribe = String.format("<a href='%s'>%s</a>",
-                this.getLinkForUnsubscription(user), linkText);
+                this.getLinkForUnsubscription(user, request), linkText);
 
         Object[] messageParams = new Object[] { Configuration.DOMAIN, sectionWhichIsToBeUnsubscribed,
                 hereClickToUnsubscribe };
