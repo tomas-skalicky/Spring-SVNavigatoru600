@@ -251,7 +251,7 @@ public class User implements UserDetails, Serializable {
      * Indicates whether this {@link User} has the given authority.
      */
     public boolean hasAuthority(AuthorityType authority) {
-        return (this.getAuthority(authority) != null);
+        return this.getAuthority(authority) != null;
     }
 
     /**
