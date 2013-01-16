@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.support.SessionStatus;
 
+import com.svnavigatoru600.domain.users.NotificationSubscriber;
 import com.svnavigatoru600.domain.users.NotificationType;
 import com.svnavigatoru600.domain.users.User;
 import com.svnavigatoru600.service.users.UserService;
@@ -153,14 +154,18 @@ public class EditMyAccountController extends AbstractPrivateSectionMetaControlle
             + EditMyAccountController.UNSUBSCRIBE_FROM_NOTIFICATIONS_URL_PART + "{notificationType}/", method = RequestMethod.GET)
     @PreAuthorize("hasRole('ROLE_REGISTERED_USER')")
     public String unsubscribeNotificationsAndRedirect(@PathVariable("username") String username,
-            @PathVariable("notificationType") int notificationType, HttpServletRequest request, ModelMap model) {
+            @PathVariable("notificationType") int notificationTypeOrdinal, HttpServletRequest request,
+            ModelMap model) {
+        NotificationType notificationType = NotificationType.values()[notificationTypeOrdinal];
         try {
-            this.userService.unsubscribeFromNotifications(username,
-                    NotificationType.values()[notificationType]);
+            this.userService.unsubscribeFromNotifications(username, notificationType);
+
+            // It is necessary to update the instance which is in the session.
+            notificationType.accept(new NotificationSubscriber(UserUtils.getLoggedUser(), false));
 
             // Returns the form success view.
             model.addAttribute(AbstractMetaController.REDIRECTION_ATTRIBUTE, EditMyAccountController.BASE_URL
-                    + EditMyAccountController.UNSUBSCRIBE_FROM_NOTIFICATIONS_URL_PART + notificationType
+                    + EditMyAccountController.UNSUBSCRIBE_FROM_NOTIFICATIONS_URL_PART + notificationTypeOrdinal
                     + "/" + EditMyAccountController.NOTIFICATIONS_UNSUBSCRIBED_URL_PART);
             return AbstractMetaController.REDIRECTION_PAGE;
 
