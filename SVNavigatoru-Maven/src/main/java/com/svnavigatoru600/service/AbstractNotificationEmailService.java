@@ -19,7 +19,7 @@ import com.svnavigatoru600.web.users.EditMyAccountController;
  * @author <a href="mailto:tomas.skalicky@gfk.com">Tomas Skalicky</a>
  */
 @Service
-public abstract class NotificationEmailService extends AbstractEmailService {
+public abstract class AbstractNotificationEmailService extends AbstractEmailService {
 
     private static final String NOTIFICATIONS_EMAIL_TEXT_SIGNATURE_CODE = "notifications.email.text.signature";
     private static final String NOTIFICATIONS_EMAIL_TEXT_UNSUBSCRIPTION_LINK_TEXT_CODE = "notifications.email.text.unsubscription-link-text";
@@ -54,14 +54,14 @@ public abstract class NotificationEmailService extends AbstractEmailService {
         String sectionWhichIsToBeUnsubscribed = Localization.findLocaleMessage(messageSource, request, this
                 .getNotificationType().getTitleLocalizationCode());
         String linkText = Localization.findLocaleMessage(messageSource, request,
-                NotificationEmailService.NOTIFICATIONS_EMAIL_TEXT_UNSUBSCRIPTION_LINK_TEXT_CODE);
+                AbstractNotificationEmailService.NOTIFICATIONS_EMAIL_TEXT_UNSUBSCRIPTION_LINK_TEXT_CODE);
         String hereClickToUnsubscribe = String.format("<a href='%s'>%s</a>",
                 this.getLinkForUnsubscription(user), linkText);
 
         Object[] messageParams = new Object[] { Configuration.DOMAIN, sectionWhichIsToBeUnsubscribed,
                 hereClickToUnsubscribe };
         return Localization.findLocaleMessage(messageSource, request,
-                NotificationEmailService.NOTIFICATIONS_EMAIL_TEXT_SIGNATURE_CODE, messageParams);
+                AbstractNotificationEmailService.NOTIFICATIONS_EMAIL_TEXT_SIGNATURE_CODE, messageParams);
     }
 
     /**

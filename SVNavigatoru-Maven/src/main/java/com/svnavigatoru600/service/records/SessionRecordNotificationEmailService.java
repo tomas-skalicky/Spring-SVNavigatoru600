@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import com.svnavigatoru600.domain.records.SessionRecord;
 import com.svnavigatoru600.domain.users.NotificationType;
 import com.svnavigatoru600.domain.users.User;
-import com.svnavigatoru600.service.NotificationEmailService;
+import com.svnavigatoru600.service.AbstractNotificationEmailService;
 import com.svnavigatoru600.service.util.DateUtils;
 import com.svnavigatoru600.service.util.Email;
 import com.svnavigatoru600.service.util.Localization;
@@ -24,7 +24,7 @@ import com.svnavigatoru600.service.util.Url;
  * @author <a href="mailto:tomas.skalicky@gfk.com">Tomas Skalicky</a>
  */
 @Service
-public class SessionRecordNotificationEmailService extends NotificationEmailService {
+public class SessionRecordNotificationEmailService extends AbstractNotificationEmailService {
 
     private static final String SESSION_TYPE_CODE = "session-records.type-of-session";
     private static final String SESSION_DATE_CODE = "session-records.session-date";

@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import com.svnavigatoru600.domain.forum.Thread;
 import com.svnavigatoru600.domain.users.NotificationType;
 import com.svnavigatoru600.domain.users.User;
-import com.svnavigatoru600.service.NotificationEmailService;
+import com.svnavigatoru600.service.AbstractNotificationEmailService;
 import com.svnavigatoru600.service.util.Email;
 import com.svnavigatoru600.service.util.Localization;
 import com.svnavigatoru600.service.util.Url;
@@ -21,7 +21,7 @@ import com.svnavigatoru600.service.util.Url;
  * @author <a href="mailto:tomas.skalicky@gfk.com">Tomas Skalicky</a>
  */
 @Service
-public class ThreadNotificationEmailService extends NotificationEmailService {
+public class ThreadNotificationEmailService extends AbstractNotificationEmailService {
 
     private static final String THREAD_AUTHOR_CODE = "forum.contributions.author";
     private static final String FIRST_CONTRIBUTION_CODE = "forum.contributions.first";
