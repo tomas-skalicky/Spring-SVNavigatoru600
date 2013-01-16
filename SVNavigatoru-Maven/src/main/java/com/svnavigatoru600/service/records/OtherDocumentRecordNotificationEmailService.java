@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import com.svnavigatoru600.domain.records.OtherDocumentRecord;
 import com.svnavigatoru600.domain.users.NotificationType;
 import com.svnavigatoru600.domain.users.User;
-import com.svnavigatoru600.service.NotificationEmailService;
+import com.svnavigatoru600.service.AbstractNotificationEmailService;
 import com.svnavigatoru600.service.util.Email;
 import com.svnavigatoru600.service.util.Localization;
 import com.svnavigatoru600.service.util.Url;
@@ -22,7 +22,7 @@ import com.svnavigatoru600.service.util.Url;
  * @author <a href="mailto:tomas.skalicky@gfk.com">Tomas Skalicky</a>
  */
 @Service
-public class OtherDocumentRecordNotificationEmailService extends NotificationEmailService {
+public class OtherDocumentRecordNotificationEmailService extends AbstractNotificationEmailService {
 
     private static final String DOCUMENT_NAME_CODE = "Název dokumentu";
     private static final String DOCUMENT_DESCRIPTION_CODE = "Popis dokumentu";

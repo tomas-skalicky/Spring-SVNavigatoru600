@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import com.svnavigatoru600.domain.eventcalendar.CalendarEvent;
 import com.svnavigatoru600.domain.users.NotificationType;
 import com.svnavigatoru600.domain.users.User;
-import com.svnavigatoru600.service.NotificationEmailService;
+import com.svnavigatoru600.service.AbstractNotificationEmailService;
 import com.svnavigatoru600.service.util.DateUtils;
 import com.svnavigatoru600.service.util.Email;
 import com.svnavigatoru600.service.util.Localization;
@@ -24,7 +24,7 @@ import com.svnavigatoru600.service.util.Url;
  * @author <a href="mailto:tomas.skalicky@gfk.com">Tomas Skalicky</a>
  */
 @Service
-public class CalendarEventNotificationEmailService extends NotificationEmailService {
+public class CalendarEventNotificationEmailService extends AbstractNotificationEmailService {
 
     private static final String EVENT_DATE_CODE = "event-calendar.date";
     private static final String EVENT_DESCRIPTION_CODE = "event-calendar.description";
