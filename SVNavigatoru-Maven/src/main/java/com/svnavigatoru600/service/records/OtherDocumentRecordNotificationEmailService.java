@@ -24,8 +24,8 @@ import com.svnavigatoru600.service.util.Url;
 @Service
 public class OtherDocumentRecordNotificationEmailService extends AbstractNotificationEmailService {
 
-    private static final String DOCUMENT_NAME_CODE = "Název dokumentu";
-    private static final String DOCUMENT_DESCRIPTION_CODE = "Popis dokumentu";
+    private static final String DOCUMENT_NAME_CODE = "other-documents.document-name";
+    private static final String DOCUMENT_DESCRIPTION_CODE = "other-documents.document-description";
 
     private static final String RECORD_CREATED_SUBJECT_CODE = "notifications.email.other-document.subject.record-created";
     private static final String RECORD_CREATED_TEXT_CODE = "notifications.email.other-document.text.record-created";
@@ -56,11 +56,6 @@ public class OtherDocumentRecordNotificationEmailService extends AbstractNotific
                 OtherDocumentRecordNotificationEmailService.RECORD_UPDATED_TEXT_CODE, usersToNotify, request,
                 messageSource);
     }
-
-    // notifications.email.other-document.text.record-created={0}byl vložen nový dokument:<br/><br/>{1}:
-    // {2}<br/>{3}: {4}{5}
-    // notifications.email.other-document.text.record-updated={0}došlo k aktualizaci dokumentu:<br/><br/>{1}:
-    // {2}<br/>{3}: {4}{5}
 
     /**
      * Sends emails to the given {@link User Users} with notification of the newly posted or updated
