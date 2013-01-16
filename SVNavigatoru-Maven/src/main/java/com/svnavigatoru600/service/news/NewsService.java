@@ -29,6 +29,7 @@ import com.svnavigatoru600.service.util.OrderType;
 @Service
 public class NewsService implements SubjectOfNotificationService {
 
+    private static final String DELETE_NEWS_QUESTION_CODE = "news.do-you-really-want-to-delete-news";
     /**
      * The object which provides a persistence.
      */
@@ -205,8 +206,8 @@ public class NewsService implements SubjectOfNotificationService {
      */
     public static String getLocalizedDeleteQuestion(News news, MessageSource messageSource,
             HttpServletRequest request) {
-        String messageCode = "news.do-you-really-want-to-delete-news";
         Object[] messageParams = new Object[] { news.getTitle() };
-        return Localization.findLocaleMessage(messageSource, request, messageCode, messageParams);
+        return Localization.findLocaleMessage(messageSource, request, DELETE_NEWS_QUESTION_CODE,
+                messageParams);
     }
 }
