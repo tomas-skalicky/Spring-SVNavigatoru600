@@ -82,8 +82,9 @@ public class EditContributionController extends AbstractNewEditContributionContr
 
         this.getContributionService().canEdit(contributionId);
 
+        MessageSource messageSource = this.getMessageSource();
         this.getSendNotificationModelFiller().populateSendNotificationInSubmitForm(command, request,
-                this.getMessageSource());
+                messageSource);
 
         this.getValidator().validate(command, result);
         if (result.hasErrors()) {
@@ -94,7 +95,8 @@ public class EditContributionController extends AbstractNewEditContributionContr
         Contribution originalContribution = null;
         try {
             originalContribution = contributionService.findById(contributionId);
-            contributionService.update(originalContribution, command.getContribution());
+            contributionService.updateAndNotifyUsers(originalContribution, command.getContribution(), command
+                    .getSendNotification().isStatus(), request, messageSource);
 
             // Clears the command object from the session.
             status.setComplete();

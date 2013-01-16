@@ -3,7 +3,7 @@ package com.svnavigatoru600.web.news;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 
-import com.svnavigatoru600.service.NewsService;
+import com.svnavigatoru600.service.news.NewsService;
 import com.svnavigatoru600.web.AbstractPrivateSectionMetaController;
 
 /**

@@ -112,7 +112,8 @@ public class EditEventController extends AbstractNewEditEventController {
             originalEvent = eventService.findById(eventId);
             PriorityType newPriority = PriorityType.valueOfAccordingLocalization(command.getNewPriority(),
                     messageSource, request);
-            eventService.update(originalEvent, command.getEvent(), newPriority);
+            eventService.updateAndNotifyUsers(originalEvent, command.getEvent(), newPriority, command
+                    .getSendNotification().isStatus(), request, messageSource);
 
             // Clears the command object from the session.
             status.setComplete();

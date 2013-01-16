@@ -7,7 +7,7 @@ import javax.inject.Inject;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
-import com.svnavigatoru600.service.NewsService;
+import com.svnavigatoru600.service.news.NewsService;
 
 /**
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>

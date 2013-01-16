@@ -4,10 +4,16 @@ import java.io.IOException;
 import java.sql.Blob;
 import java.sql.SQLException;
 
+import javax.inject.Inject;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.stereotype.Service;
+
 import com.svnavigatoru600.domain.records.AbstractDocumentRecord;
+import com.svnavigatoru600.domain.users.User;
 import com.svnavigatoru600.repository.records.DocumentRecordDao;
+import com.svnavigatoru600.service.SubjectOfNotificationService;
+import com.svnavigatoru600.service.users.UserService;
 import com.svnavigatoru600.service.util.File;
 import com.svnavigatoru600.service.util.HttpResponseUtils;
 
@@ -16,7 +22,8 @@ import com.svnavigatoru600.service.util.HttpResponseUtils;
  * 
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
-public abstract class AbstractDocumentRecordService {
+@Service
+public abstract class AbstractDocumentRecordService implements SubjectOfNotificationService {
 
     public static final String EXTENSION_DELIMITER = ".";
 
@@ -24,9 +31,27 @@ public abstract class AbstractDocumentRecordService {
      * The object which provides a persistence.
      */
     private final DocumentRecordDao recordDao;
+    /**
+     * Does the work which concerns mainly notification of {@link User users}.
+     */
+    private UserService userService;
 
     public AbstractDocumentRecordService(DocumentRecordDao recordDao) {
         this.recordDao = recordDao;
+    }
+
+    /**
+     * Trivial getter
+     * 
+     * @return the userService
+     */
+    protected UserService getUserService() {
+        return this.userService;
+    }
+
+    @Inject
+    public void setUserService(UserService userService) {
+        this.userService = userService;
     }
 
     /**

@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.support.SessionStatus;
 
 import com.svnavigatoru600.domain.News;
-import com.svnavigatoru600.service.NewsService;
+import com.svnavigatoru600.service.news.NewsService;
 import com.svnavigatoru600.viewmodel.EditControllerSendNotification;
 import com.svnavigatoru600.viewmodel.SendNotification;
 import com.svnavigatoru600.viewmodel.news.EditNews;
@@ -80,7 +80,8 @@ public class EditNewsController extends AbstractNewEditNewsController {
             originalNews = newsService.findById(newsId);
             // Sets up because of the comparison of the creationTime and lastSaveTime in AJAX.
             command.setNews(originalNews);
-            newsService.update(originalNews, newNews);
+            newsService.updateAndNotifyUsers(originalNews, newNews, command.getSendNotification().isStatus(),
+                    request, messageSource);
 
             // Clears the command object from the session.
             status.setComplete();

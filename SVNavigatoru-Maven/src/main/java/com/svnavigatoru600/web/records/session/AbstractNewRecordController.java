@@ -103,8 +103,8 @@ public abstract class AbstractNewRecordController extends AbstractNewEditRecordC
 
         SessionRecord newRecord = command.getRecord();
         try {
-            this.getRecordService().save(newRecord, command.getNewType(), command.getNewFile(), request,
-                    messageSource);
+            this.getRecordService().saveAndNotifyUsers(newRecord, command.getNewType(), command.getNewFile(),
+                    command.getSendNotification().isStatus(), request, messageSource);
 
             // Clears the command object from the session.
             status.setComplete();

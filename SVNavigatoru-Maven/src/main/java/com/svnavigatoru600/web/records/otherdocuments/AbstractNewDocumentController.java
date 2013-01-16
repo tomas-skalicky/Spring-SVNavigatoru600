@@ -133,8 +133,8 @@ public abstract class AbstractNewDocumentController extends AbstractNewEditDocum
 
         OtherDocumentRecord newRecord = command.getRecord();
         try {
-            this.getRecordService().save(newRecord, command.getNewTypes(), command.getNewFile(), request,
-                    messageSource);
+            this.getRecordService().saveAndNotifyUsers(newRecord, command.getNewTypes(),
+                    command.getNewFile(), command.getSendNotification().isStatus(), request, messageSource);
 
             // Clears the command object from the session.
             status.setComplete();

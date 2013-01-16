@@ -8,6 +8,9 @@ import junit.framework.Assert;
 
 import org.junit.After;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
+
+import com.svnavigatoru600.test.category.FastTests;
 
 /**
  * Tests the rest of methods of the {@link User} class which are not tested in the {@link UserCopyMethodsTest}
@@ -15,6 +18,7 @@ import org.junit.Test;
  * 
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
+@Category(FastTests.class)
 public class UserTest extends AbstractUserTest {
 
     @After
@@ -103,5 +107,26 @@ public class UserTest extends AbstractUserTest {
                 Assert.assertFalse(user.hasAuthority(authority));
             }
         }
+    }
+
+    @Test
+    public void testFilterWithNoEmailOut() {
+        User firstUser = new User();
+        firstUser.setEmail(null);
+        User secondUser = new User();
+        secondUser.setEmail("");
+        User thirdUser = new User();
+        thirdUser.setEmail("     ");
+        User forthUser = new User();
+        forthUser.setEmail("email");
+        User fifthUser = new User();
+        fifthUser.setEmail("email@host.com");
+
+        List<User> inputUsers = Arrays.asList(firstUser, secondUser, thirdUser, forthUser, fifthUser);
+        List<User> expectedUsers = Arrays.asList(forthUser, fifthUser);
+
+        List<User> actualUsers = User.filterWithNoEmailOut(inputUsers);
+        Assert.assertEquals(expectedUsers.size(), actualUsers.size());
+        Assert.assertTrue(actualUsers.containsAll(expectedUsers));
     }
 }

@@ -6,13 +6,17 @@ import junit.framework.Assert;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import org.springframework.security.core.GrantedAuthority;
+
+import com.svnavigatoru600.test.category.FastTests;
 
 /**
  * Tests only copy*** methods of the {@link User} class.
  * 
  * @author <a href="mailto:tomas.skalicky@gfk.com">Tomas Skalicky</a>
  */
+@Category(FastTests.class)
 public class UserCopyMethodsTest extends AbstractUserTest {
 
     private static final String NEW_USERNAME = "username 2";

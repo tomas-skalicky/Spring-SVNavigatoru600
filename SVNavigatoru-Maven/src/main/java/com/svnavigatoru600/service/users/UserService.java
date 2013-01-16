@@ -20,7 +20,6 @@ import com.svnavigatoru600.domain.users.NotificationSubscriber;
 import com.svnavigatoru600.domain.users.NotificationType;
 import com.svnavigatoru600.domain.users.User;
 import com.svnavigatoru600.repository.users.UserDao;
-import com.svnavigatoru600.service.util.Email;
 import com.svnavigatoru600.service.util.Hash;
 import com.svnavigatoru600.service.util.Localization;
 import com.svnavigatoru600.service.util.OrderType;
@@ -39,6 +38,10 @@ public class UserService {
      * The object which provides a persistence.
      */
     private final UserDao userDao;
+    /**
+     * Assembles emails concerning user administration and sends them to corresponding {@link User users}.
+     */
+    private UserEmailService emailService;
 
     /**
      * Constructor.
@@ -46,6 +49,11 @@ public class UserService {
     @Inject
     public UserService(UserDao userDao) {
         this.userDao = userDao;
+    }
+
+    @Inject
+    public void setEmailService(UserEmailService emailService) {
+        this.emailService = emailService;
     }
 
     /**
@@ -233,10 +241,10 @@ public class UserService {
         this.update(userToUpdate);
 
         if (passwordChanged) {
-            Email.sendEmailOnPasswordChange(userToUpdate, newPassword, request, messageSource);
+            this.emailService.sendEmailOnPasswordChange(userToUpdate, newPassword, request, messageSource);
         }
         if (authoritiesChanged) {
-            Email.sendEmailOnAuthoritiesChange(userToUpdate, request, messageSource);
+            this.emailService.sendEmailOnAuthoritiesChange(userToUpdate, request, messageSource);
         }
     }
 
@@ -278,7 +286,7 @@ public class UserService {
         this.save(newUser);
 
         if (!StringUtils.isBlank(newUser.getEmail())) {
-            Email.sendEmailOnUserCreation(newUser, newPassword, request, messageSource);
+            this.emailService.sendEmailOnUserCreation(newUser, newPassword, request, messageSource);
         }
     }
 
@@ -303,7 +311,7 @@ public class UserService {
         User user = this.findByUsername(username);
         this.userDao.delete(user);
 
-        Email.sendEmailOnUserDeletion(user, request, messageSource);
+        this.emailService.sendEmailOnUserDeletion(user, request, messageSource);
     }
 
     /**
@@ -364,7 +372,7 @@ public class UserService {
         user.setPassword(Hash.doSha1Hashing(newPassword));
         this.update(user);
 
-        Email.sendEmailOnPasswordReset(user, newPassword, request, messageSource);
+        this.emailService.sendEmailOnPasswordReset(user, newPassword, request, messageSource);
     }
 
     /**

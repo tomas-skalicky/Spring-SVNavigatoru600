@@ -1,6 +1,7 @@
 package com.svnavigatoru600.service.util;
 
 import javax.servlet.ServletRequest;
+import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -33,10 +34,49 @@ public final class Url {
      * =&gt; www.svnavigatoru600.com/tinymce/jscripts/tiny_mce/plugins/emotions/img/smiley-undecided.gif
      * </pre>
      * 
+     * or
+     * 
+     * <pre>
+     * /svnavigatoru600/tinymce/jscripts/tiny_mce/plugins/emotions/img/smiley-undecided.gif
+     * 
+     * =&gt; localhost:9980/svnavigatoru600/tinymce/jscripts/tiny_mce/plugins/emotions/img/smiley-undecided.gif
+     * </pre>
+     * 
+     * @param text
+     *            Contains relative URLs of images
+     * @param request
+     *            Contains information about the current server and port where the application is running.
+     * @return Text only with absolute URLs of images
+     */
+    public static String convertImageRelativeUrlsToAbsolute(String text, HttpServletRequest request) {
+        String serverNameAndPort = String.format("%s:%d", request.getServerName(), request.getServerPort());
+        return Url.convertImageRelativeUrlsToAbsolute(text, serverNameAndPort);
+    }
+
+    /**
+     * Converts all occurrences of relative URLs of images in the given <code>text</code> to corresponding
+     * absolute URLs.
+     * <p>
+     * Sample:
+     * 
+     * <pre>
+     * /tinymce/jscripts/tiny_mce/plugins/emotions/img/smiley-undecided.gif
+     * 
+     * =&gt; www.svnavigatoru600.com/tinymce/jscripts/tiny_mce/plugins/emotions/img/smiley-undecided.gif
+     * </pre>
+     * 
+     * or
+     * 
+     * <pre>
+     * /svnavigatoru600/tinymce/jscripts/tiny_mce/plugins/emotions/img/smiley-undecided.gif
+     * 
+     * =&gt; localhost:9980/svnavigatoru600/tinymce/jscripts/tiny_mce/plugins/emotions/img/smiley-undecided.gif
+     * </pre>
+     * 
      * @param text
      *            Contains relative URLs of images
      * @param serverNameAndPort
-     *            E.g. www.svnavigatoru600.com:8080
+     *            For instance <code>localhost:9980</code>
      * @return Text only with absolute URLs of images
      */
     public static String convertImageRelativeUrlsToAbsolute(String text, String serverNameAndPort) {
