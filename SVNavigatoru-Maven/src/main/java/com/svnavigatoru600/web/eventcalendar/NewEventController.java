@@ -95,7 +95,8 @@ public class NewEventController extends AbstractNewEditEventController {
 
         try {
             // Saves the event to the repository.
-            this.getEventService().save(newEvent);
+            this.getEventService().saveAndNotifyUsers(newEvent, command.getSendNotification().isStatus(),
+                    request, messageSource);
 
             // Clears the command object from the session.
             status.setComplete();

@@ -33,9 +33,8 @@ public abstract class AbstractUserTest {
 
     @Before
     public void setUpDefaultUser() throws Exception {
-        this.defaultUser = new User(DEFAULT_USERNAME, DEFAULT_PASSWORD, DEFAULT_ENABLED,
-                DEFAULT_FIRST_NAME, DEFAULT_LAST_NAME, DEFAULT_EMAIL, DEFAULT_PHONE, DEFAULT_IS_TEST_USER,
-                DEFAULT_AUTHORITIES);
+        this.defaultUser = new User(DEFAULT_USERNAME, DEFAULT_PASSWORD, DEFAULT_ENABLED, DEFAULT_FIRST_NAME,
+                DEFAULT_LAST_NAME, DEFAULT_EMAIL, DEFAULT_PHONE, DEFAULT_IS_TEST_USER, DEFAULT_AUTHORITIES);
         this.defaultUser.setSubscribedToNews(DEFAULT_SUBSCRIBED_TO_NEWS);
         this.defaultUser.setSubscribedToEvents(DEFAULT_SUBSCRIBED_TO_EVENTS);
         this.defaultUser.setSubscribedToForum(DEFAULT_SUBSCRIBED_TO_FORUM);

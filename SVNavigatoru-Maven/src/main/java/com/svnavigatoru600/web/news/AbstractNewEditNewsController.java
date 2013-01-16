@@ -4,7 +4,7 @@ import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.Validator;
 
-import com.svnavigatoru600.service.NewsService;
+import com.svnavigatoru600.service.news.NewsService;
 import com.svnavigatoru600.viewmodel.news.validator.AbstractNewsValidator;
 import com.svnavigatoru600.web.SendNotificationController;
 

@@ -397,4 +397,19 @@ public class User implements UserDetails, Serializable {
             this.getAuthorities().remove(authority);
         }
     }
+
+    /**
+     * Filters all {@link User Users} from the given {@link List} out who have not email.
+     * 
+     * @return All users from the <code>users</code> who have email.
+     */
+    public static List<User> filterWithNoEmailOut(List<User> users) {
+        List<User> usersWithEmail = new ArrayList<User>(users.size());
+        for (User user : users) {
+            if (StringUtils.isNotBlank(user.getEmail())) {
+                usersWithEmail.add(user);
+            }
+        }
+        return usersWithEmail;
+    }
 }

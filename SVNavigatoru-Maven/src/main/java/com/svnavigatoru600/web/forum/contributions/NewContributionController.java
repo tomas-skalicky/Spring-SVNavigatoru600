@@ -85,8 +85,9 @@ public class NewContributionController extends AbstractNewEditContributionContro
             @ModelAttribute(NewContributionController.COMMAND) NewContribution command, BindingResult result,
             SessionStatus status, @PathVariable int threadId, HttpServletRequest request, ModelMap model) {
 
+        MessageSource messageSource = this.getMessageSource();
         this.getSendNotificationModelFiller().populateSendNotificationInSubmitForm(command, request,
-                this.getMessageSource());
+                messageSource);
 
         this.getValidator().validate(command, result);
         if (result.hasErrors()) {
@@ -101,7 +102,8 @@ public class NewContributionController extends AbstractNewEditContributionContro
             newContribution.setThread(this.threadService.findById(threadId));
 
             // Saves the contribution to the repository.
-            this.getContributionService().save(newContribution);
+            this.getContributionService().saveAndNotifyUsers(newContribution,
+                    command.getSendNotification().isStatus(), request, messageSource);
 
             // Clears the command object from the session.
             status.setComplete();

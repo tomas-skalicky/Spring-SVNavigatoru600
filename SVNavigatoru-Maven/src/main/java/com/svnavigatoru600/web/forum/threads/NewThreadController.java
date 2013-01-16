@@ -1,7 +1,6 @@
 package com.svnavigatoru600.web.forum.threads;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Arrays;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
@@ -86,8 +85,9 @@ public class NewThreadController extends AbstractNewEditThreadController impleme
     public String processSubmittedForm(@ModelAttribute(NewThreadController.COMMAND) NewThread command,
             BindingResult result, SessionStatus status, HttpServletRequest request, ModelMap model) {
 
-        this.sendNotificationModelFiller.populateSendNotificationInSubmitForm(command, request,
-                this.getMessageSource());
+        MessageSource messageSource = this.getMessageSource();
+        this.sendNotificationModelFiller
+                .populateSendNotificationInSubmitForm(command, request, messageSource);
 
         this.getValidator().validate(command, result);
         if (result.hasErrors()) {
@@ -103,14 +103,13 @@ public class NewThreadController extends AbstractNewEditThreadController impleme
         firstContribution.setThread(newThread);
         firstContribution.setAuthor(author);
 
-        List<Contribution> contributions = new ArrayList<Contribution>();
-        contributions.add(command.getContribution());
-        newThread.setContributions(contributions);
+        newThread.setContributions(Arrays.asList(firstContribution));
         // End of update.
 
         try {
             // Stores both the thread and the contribution to the repository.
-            this.getThreadService().save(newThread);
+            this.getThreadService().saveAndNotifyUsers(newThread, command.getSendNotification().isStatus(),
+                    request, messageSource);
 
             // Clears the command object from the session.
             status.setComplete();

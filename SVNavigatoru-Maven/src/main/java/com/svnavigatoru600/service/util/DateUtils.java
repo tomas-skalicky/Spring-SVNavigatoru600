@@ -15,8 +15,17 @@ import java.util.TimeZone;
  */
 public final class DateUtils {
 
+    /**
+     * d.M.yy
+     */
     public static final Map<Locale, String> SHORT_DATE_FORMATS;
+    /**
+     * d.M.yyyy
+     */
     public static final Map<Locale, String> MIDDLE_DATE_FORMATS;
+    /**
+     * d. MMMM yyyy
+     */
     public static final Map<Locale, String> LONG_DATE_FORMATS;
     public static final Map<Locale, String> SHORT_DAY_FORMATS;
     public static final Map<Locale, String> LONG_MONTH_FORMATS;

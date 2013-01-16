@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.support.SessionStatus;
 
 import com.svnavigatoru600.domain.News;
-import com.svnavigatoru600.service.NewsService;
+import com.svnavigatoru600.service.news.NewsService;
 import com.svnavigatoru600.viewmodel.NewControllerSendNotification;
 import com.svnavigatoru600.viewmodel.SendNotification;
 import com.svnavigatoru600.viewmodel.news.NewNews;

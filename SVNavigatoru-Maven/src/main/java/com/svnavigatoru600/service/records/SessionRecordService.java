@@ -17,6 +17,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.svnavigatoru600.domain.records.SessionRecord;
 import com.svnavigatoru600.domain.records.SessionRecordType;
+import com.svnavigatoru600.domain.users.AuthorityType;
+import com.svnavigatoru600.domain.users.User;
 import com.svnavigatoru600.repository.records.SessionRecordDao;
 import com.svnavigatoru600.service.util.DateUtils;
 import com.svnavigatoru600.service.util.File;
@@ -35,6 +37,10 @@ public class SessionRecordService extends AbstractDocumentRecordService {
      * The object which provides a persistence.
      */
     private final SessionRecordDao sessionRecordDao;
+    /**
+     * Assembles notification emails and sends them to authorized {@link User users}.
+     */
+    private SessionRecordNotificationEmailService emailService;
 
     /**
      * Constructor.
@@ -43,6 +49,11 @@ public class SessionRecordService extends AbstractDocumentRecordService {
     public SessionRecordService(SessionRecordDao sessionRecordDao) {
         super(sessionRecordDao);
         this.sessionRecordDao = sessionRecordDao;
+    }
+
+    @Inject
+    public void setEmailService(SessionRecordNotificationEmailService emailService) {
+        this.emailService = emailService;
     }
 
     @Override
@@ -113,8 +124,8 @@ public class SessionRecordService extends AbstractDocumentRecordService {
      * @param recordToUpdateId
      *            ID of the persisted {@link SessionRecord}
      * @param newRecord
-     *            The {@link SessionRecord} which contains new values of properties of the persisted record.
-     *            These values are copied to it.
+     *            {@link SessionRecord} which contains new values of properties of the persisted record. These
+     *            values are copied to it.
      * @param newType
      *            New type of the persisted record
      * @param isFileReplaced
@@ -203,6 +214,48 @@ public class SessionRecordService extends AbstractDocumentRecordService {
     }
 
     /**
+     * First, the method performs the
+     * {@link #update(int, SessionRecord, String, boolean, MultipartFile, HttpServletRequest, MessageSource)
+     * update} method. Then, this method notifies all users which have corresponding rights by email.
+     * 
+     * @param recordToUpdateId
+     *            ID of the persisted {@link SessionRecord}
+     * @param newRecord
+     *            {@link SessionRecord} which contains new values of properties of the persisted record. These
+     *            values are copied to it.
+     * @param newType
+     *            New type of the persisted record
+     * @param isFileReplaced
+     *            Indicates whether the attached file of the persisted record has been replaced by other file.
+     * @param newAttachedFile
+     *            New attached file of the persisted record
+     * @param sendNotification
+     *            If <code>true</code>, the notification is sent; otherwise not.
+     */
+    public void updateAndNotifyUsers(int recordToUpdateId, SessionRecord newRecord, String newType,
+            boolean isFileReplaced, MultipartFile newAttachedFile, boolean sendNotification,
+            HttpServletRequest request, MessageSource messageSource) throws SQLException, IOException {
+        this.update(recordToUpdateId, newRecord, newType, isFileReplaced, newAttachedFile, request,
+                messageSource);
+
+        if (sendNotification) {
+            this.notifyUsersOfUpdate(this.findByIdWithoutFile(recordToUpdateId), request, messageSource);
+        }
+    }
+
+    @Override
+    public List<User> gainUsersToNotify() {
+        return this.getUserService().findAllWithEmailByAuthorityAndSubscription(
+                AuthorityType.ROLE_MEMBER_OF_SV, this.emailService.getNotificationType());
+    }
+
+    @Override
+    public void notifyUsersOfUpdate(Object updatedRecord, HttpServletRequest request,
+            MessageSource messageSource) {
+        this.emailService.sendEmailOnUpdate(updatedRecord, this.gainUsersToNotify(), request, messageSource);
+    }
+
+    /**
      * Stores the given {@link SessionRecord} to the repository. If there is already a record with the same
      * {@link SessionRecord#getFileName() filename}, throws an exception.
      * 
@@ -279,11 +332,41 @@ public class SessionRecordService extends AbstractDocumentRecordService {
     }
 
     /**
+     * First, the method performs the
+     * {@link #save(SessionRecord, String, MultipartFile, HttpServletRequest, MessageSource) save} method.
+     * Then, this method notifies all users which have corresponding rights by email.
+     * 
+     * @param newRecord
+     *            New session record
+     * @param recordType
+     *            Type of the new record
+     * @param attachedFile
+     *            File which is attached to the new record.
+     * @param sendNotification
+     *            If <code>true</code>, the notification is sent; otherwise not.
+     */
+    public void saveAndNotifyUsers(SessionRecord newRecord, String recordType, MultipartFile attachedFile,
+            boolean sendNotification, HttpServletRequest request, MessageSource messageSource)
+            throws SQLException, IOException {
+        this.save(newRecord, recordType, attachedFile, request, messageSource);
+
+        if (sendNotification) {
+            this.notifyUsersOfCreation(newRecord, request, messageSource);
+        }
+    }
+
+    @Override
+    public void notifyUsersOfCreation(Object newRecord, HttpServletRequest request,
+            MessageSource messageSource) {
+        this.emailService.sendEmailOnCreation(newRecord, this.gainUsersToNotify(), request, messageSource);
+    }
+
+    /**
      * Deletes the specified {@link SessionRecord} together with all its {@link SessionRecordType types} from
      * the repository. Moreover, deletes the associated {@link java.io.File file}.
      * 
      * @param recordId
-     *            The ID of the session record
+     *            ID of the session record
      */
     public void delete(int recordId) {
         SessionRecord record = this.findByIdWithoutFile(recordId);

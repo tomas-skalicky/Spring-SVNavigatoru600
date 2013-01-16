@@ -117,8 +117,9 @@ public abstract class AbstractEditRecordController extends AbstractNewEditRecord
         }
 
         try {
-            this.getRecordService().update(recordId, command.getRecord(), command.getNewType(),
-                    command.isFileChanged(), command.getNewFile(), request, messageSource);
+            this.getRecordService().updateAndNotifyUsers(recordId, command.getRecord(), command.getNewType(),
+                    command.isFileChanged(), command.getNewFile(), command.getSendNotification().isStatus(),
+                    request, messageSource);
 
             // Clears the command object from the session.
             status.setComplete();

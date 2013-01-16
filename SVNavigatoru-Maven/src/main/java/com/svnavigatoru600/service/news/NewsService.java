@@ -1,4 +1,4 @@
-package com.svnavigatoru600.service;
+package com.svnavigatoru600.service.news;
 
 import java.util.HashMap;
 import java.util.List;
@@ -12,13 +12,12 @@ import org.springframework.stereotype.Service;
 
 import com.svnavigatoru600.domain.News;
 import com.svnavigatoru600.domain.users.AuthorityType;
-import com.svnavigatoru600.domain.users.NotificationType;
 import com.svnavigatoru600.domain.users.User;
 import com.svnavigatoru600.repository.NewsDao;
 import com.svnavigatoru600.repository.news.impl.FindAllOrderedArguments;
 import com.svnavigatoru600.repository.news.impl.NewsField;
+import com.svnavigatoru600.service.SubjectOfNotificationService;
 import com.svnavigatoru600.service.users.UserService;
-import com.svnavigatoru600.service.util.Email;
 import com.svnavigatoru600.service.util.Localization;
 import com.svnavigatoru600.service.util.OrderType;
 
@@ -28,17 +27,20 @@ import com.svnavigatoru600.service.util.OrderType;
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
 @Service
-public class NewsService {
+public class NewsService implements SubjectOfNotificationService {
 
     /**
      * The object which provides a persistence.
      */
     private final NewsDao newsDao;
     /**
-     * Does the work which concerns mainly notification of {@link com.svnavigatoru600.domain.users.User users}
-     * .
+     * Does the work which concerns mainly notification of {@link User users}.
      */
     private UserService userService;
+    /**
+     * Assembles notification emails and sends them to authorized {@link User users}.
+     */
+    private NewsNotificationEmailService emailService;
 
     /**
      * Constructor.
@@ -51,6 +53,11 @@ public class NewsService {
     @Inject
     public void setUserService(UserService userService) {
         this.userService = userService;
+    }
+
+    @Inject
+    public void setEmailService(NewsNotificationEmailService emailService) {
+        this.emailService = emailService;
     }
 
     /**
@@ -82,15 +89,50 @@ public class NewsService {
      * repository. The old version of this news should be already stored there.
      * 
      * @param newsToUpdate
-     *            The persisted {@link News}
+     *            Persisted {@link News}
      * @param newNews
-     *            The {@link News} which contains new values of properties of <code>newsToUpdate</code>. These
+     *            {@link News} which contains new values of properties of <code>newsToUpdate</code>. These
      *            values are copied to the persisted news.
      */
     public void update(News newsToUpdate, News newNews) {
         newsToUpdate.setTitle(newNews.getTitle());
         newsToUpdate.setText(newNews.getText());
         this.update(newsToUpdate);
+    }
+
+    /**
+     * Updates properties of the given <code>newsToUpdate</code> and persists this {@link News} into the
+     * repository. The old version of this news should be already stored there.
+     * <p>
+     * Finally, notifies all users which have corresponding rights by email about changes in the news.
+     * 
+     * @param newsToUpdate
+     *            Persisted {@link News}
+     * @param newNews
+     *            {@link News} which contains new values of properties of <code>newsToUpdate</code>. These
+     *            values are copied to the persisted news.
+     * @param sendNotification
+     *            If <code>true</code>, the notification is sent; otherwise not.
+     */
+    public void updateAndNotifyUsers(News newsToUpdate, News newNews, boolean sendNotification,
+            HttpServletRequest request, MessageSource messageSource) {
+        this.update(newsToUpdate, newNews);
+
+        if (sendNotification) {
+            this.notifyUsersOfUpdate(newsToUpdate, request, messageSource);
+        }
+    }
+
+    @Override
+    public List<User> gainUsersToNotify() {
+        return this.userService.findAllWithEmailByAuthorityAndSubscription(AuthorityType.ROLE_MEMBER_OF_SV,
+                this.emailService.getNotificationType());
+    }
+
+    @Override
+    public void notifyUsersOfUpdate(Object updatedNews, HttpServletRequest request,
+            MessageSource messageSource) {
+        this.emailService.sendEmailOnUpdate(updatedNews, this.gainUsersToNotify(), request, messageSource);
     }
 
     /**
@@ -104,31 +146,26 @@ public class NewsService {
     }
 
     /**
-     * Updates corresponding {@link java.util.Date Date} fields of the given {@link News} and stores the news
-     * to the repository.
+     * Updates corresponding {@link java.util.Date Date} fields of the given new {@link News} (if there are
+     * any appropriate) and stores the news to the repository.
      * <p>
      * Finally, notifies all users which have corresponding rights by email about a creation of the news.
      * 
      * @param sendNotification
      *            If <code>true</code>, the notification is sent; otherwise not.
      */
-    public void saveAndNotifyUsers(News news, boolean sendNotification, HttpServletRequest request,
+    public void saveAndNotifyUsers(News newNews, boolean sendNotification, HttpServletRequest request,
             MessageSource messageSource) {
-        this.save(news);
+        this.save(newNews);
 
         if (sendNotification) {
-            this.notifyUsersOfCreation(news, request, messageSource);
+            this.notifyUsersOfCreation(newNews, request, messageSource);
         }
     }
 
-    /**
-     * Notifies all users which have corresponding rights by email about a creation of the given {@link News
-     * news}.
-     */
-    private void notifyUsersOfCreation(News news, HttpServletRequest request, MessageSource messageSource) {
-        List<User> usersToNotify = this.userService.findAllWithEmailByAuthorityAndSubscription(
-                AuthorityType.ROLE_MEMBER_OF_SV, NotificationType.IN_NEWS);
-        Email.sendEmailOnNewsCreation(news, usersToNotify, request, messageSource);
+    @Override
+    public void notifyUsersOfCreation(Object newNews, HttpServletRequest request, MessageSource messageSource) {
+        this.emailService.sendEmailOnCreation(newNews, this.gainUsersToNotify(), request, messageSource);
     }
 
     /**
