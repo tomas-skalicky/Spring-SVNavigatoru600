@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Service;
 
 import com.svnavigatoru600.domain.records.AbstractDocumentRecord;
-import com.svnavigatoru600.domain.users.User;
 import com.svnavigatoru600.repository.records.DocumentRecordDao;
 import com.svnavigatoru600.service.SubjectOfNotificationService;
 import com.svnavigatoru600.service.users.UserService;
@@ -32,7 +31,8 @@ public abstract class AbstractDocumentRecordService implements SubjectOfNotifica
      */
     private final DocumentRecordDao recordDao;
     /**
-     * Does the work which concerns mainly notification of {@link User users}.
+     * Does the work which concerns mainly notification of {@link com.svnavigatoru600.domain.users.User users}
+     * .
      */
     private UserService userService;
 
