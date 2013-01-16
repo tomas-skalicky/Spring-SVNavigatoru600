@@ -16,7 +16,7 @@
 				ed.windowManager.open({
 					file : url + '/emotions.htm',
 					width : 250 + parseInt(ed.getLang('emotions.delta_width', 0)),
-					height : 160 + parseInt(ed.getLang('emotions.delta_height', 0)),
+					height : 190 + parseInt(ed.getLang('emotions.delta_height', 0)),
 					inline : 1
 				}, {
 					plugin_url : url
