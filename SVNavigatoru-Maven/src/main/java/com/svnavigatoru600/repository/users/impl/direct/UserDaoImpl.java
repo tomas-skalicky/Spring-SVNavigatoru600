@@ -8,7 +8,6 @@ import java.util.Map;
 
 import javax.inject.Inject;
 
-import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.dao.DataRetrievalFailureException;
@@ -148,9 +147,9 @@ public class UserDaoImpl extends NamedParameterJdbcDaoSupport implements UserDao
                 AuthorityField.username.getColumnName(), UserField.username.getColumnName(), authorityColumn,
                 authorityColumn, subscriptionColumn, subscriptionColumn);
 
-        Map<String, String> args = new HashMap<String, String>();
+        Map<String, Object> args = new HashMap<String, Object>();
         args.put(authorityColumn, authority);
-        args.put(subscriptionColumn, BooleanUtils.toIntegerObject(true).toString());
+        args.put(subscriptionColumn, Boolean.TRUE);
 
         return this.getNamedParameterJdbcTemplate().query(query, args, new UserRowMapper());
     }
