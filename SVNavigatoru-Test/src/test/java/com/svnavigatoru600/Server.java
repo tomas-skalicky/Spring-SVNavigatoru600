@@ -1,4 +1,4 @@
-package com.svnavigatoru600.selenium;
+package com.svnavigatoru600;
 
 /**
  * A deploy or selenium server used in Selenium tests.

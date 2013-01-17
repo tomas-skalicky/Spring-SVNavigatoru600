@@ -12,21 +12,16 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+
+import com.svnavigatoru600.AbstractAvailabilityTest;
+import com.svnavigatoru600.Server;
 
 /**
- * Ancestor of all Selenium tests of the Viewer project.
+ * Ancestor of all Selenium tests.
  * 
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
-public abstract class AbstractSeleniumTest {
-
-    /**
-     * Context which provide us with the access to Beans of servers, test user and so on.
-     */
-    protected static final ApplicationContext APPLICATION_CONTEXT = new AnnotationConfigApplicationContext(
-            SeleniumAppConfig.class);
+public abstract class AbstractSeleniumTest extends AbstractAvailabilityTest {
 
     /**
      * Time in seconds how long in total the browser may wait at most. If the given expectations are fulfilled

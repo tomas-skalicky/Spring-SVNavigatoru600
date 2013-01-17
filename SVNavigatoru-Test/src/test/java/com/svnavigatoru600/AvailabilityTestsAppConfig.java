@@ -1,4 +1,4 @@
-package com.svnavigatoru600.selenium;
+package com.svnavigatoru600;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -6,15 +6,16 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 
+
 /**
- * {@link org.springframework.context.ApplicationContext Application context} for Selenium tests. It creates
- * necessary {@link Bean beans}.
+ * {@link org.springframework.context.ApplicationContext Application context} for all
+ * {@link AbstractAvailabilityTest availability tests}. It creates necessary {@link Bean beans}.
  * 
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
 @Configuration
-@PropertySource("classpath:selenium_environment.properties")
-public class SeleniumAppConfig {
+@PropertySource("classpath:availability_tests_environment.properties")
+public class AvailabilityTestsAppConfig {
 
     /**
      * Used together with the {@link PropertySource} annotation of this class.
