@@ -9,8 +9,8 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
 
-	<name>Test project of the SVNavigatoru600.com web app</name>
-	<url>http://svnavigatoru600.com</url>
+	<name>Availability Tests of the SVNavigatoru600.com web app</name>
+	<url>http://www.svnavigatoru600.com</url>
 
 
 <!-- Jenkins's plugin called Multi SCMs contains a bug. As a result, the plugin cannot be used with multiple Git repositories, -->
@@ -51,21 +51,20 @@
 		<extensions>
 			<extension>
 				<!-- Necessary for a deployment to Nexus -->
-				<!-- Added since (unlike the Maven 2.x,) the Maven 3 does not support 
-					the dav protocol by default. -->
+				<!-- Added since (unlike the Maven 2.x,) the Maven 3 does not support the dav protocol by default. -->
 				<groupId>org.apache.maven.wagon</groupId>
 				<artifactId>wagon-webdav-jackrabbit</artifactId>
 				<version>1.0-beta-7</version>
 			</extension>
 		</extensions>
-		
-		
+
+
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-checkstyle-plugin</artifactId>
 			</plugin>
-			
+
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -89,7 +88,7 @@
 						<includeTestSourceDirectory>true</includeTestSourceDirectory>
 					</configuration>
 				</plugin>
-			
+
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-compiler-plugin</artifactId>
@@ -108,9 +107,8 @@
 					<version>2.12.4</version>
 					<dependencies>
 						<dependency>
-							<!-- Necessary dependency. Otherwise, groups element does not work. 
-								The problem should be fixed in the version 2.13 of maven-surefire-plugin. 
-								See http://stackoverflow.com/questions/4970196/running-all-tests-from-a-category-using-maven -->
+							<!-- Necessary dependency. Otherwise, groups element does not work. The problem should be fixed 
+								in the version 2.13 of maven-surefire-plugin. See http://stackoverflow.com/questions/4970196/running-all-tests-from-a-category-using-maven -->
 							<groupId>org.apache.maven.surefire</groupId>
 							<artifactId>surefire-junit47</artifactId>
 							<version>2.12.4</version>
@@ -136,6 +134,11 @@
 		<dependency>
 			<groupId>org.junit.extensions</groupId>
 			<artifactId>cpsuite</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.jsoup</groupId>
+			<artifactId>jsoup</artifactId>
 		</dependency>
 
 		<dependency>
@@ -178,6 +181,13 @@
 				<groupId>org.junit.extensions</groupId>
 				<artifactId>cpsuite</artifactId>
 				<version>1.2.5</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.jsoup</groupId>
+				<artifactId>jsoup</artifactId>
+				<version>1.7.1</version>
+				<scope>test</scope>
 			</dependency>
 
 			<dependency>
