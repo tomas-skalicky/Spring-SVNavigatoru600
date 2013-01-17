@@ -1,4 +1,4 @@
-package com.svnavigatoru600.selenium;
+package com.svnavigatoru600.test.selenium;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;

@@ -1,4 +1,4 @@
-package com.svnavigatoru600.jsoup;
+package com.svnavigatoru600.test.jsoup;
 
 import junit.framework.Assert;
 
@@ -8,8 +8,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
-import com.svnavigatoru600.AbstractAvailabilityTest;
-import com.svnavigatoru600.Server;
+import com.svnavigatoru600.test.AbstractAvailabilityTest;
+import com.svnavigatoru600.test.Server;
 import com.svnavigatoru600.test.category.FastTests;
 
 /**

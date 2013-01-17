@@ -1,4 +1,4 @@
-package com.svnavigatoru600.selenium.tests;
+package com.svnavigatoru600.test.selenium.tests;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -6,10 +6,10 @@ import org.junit.experimental.categories.Category;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
-import com.svnavigatoru600.TestUser;
-import com.svnavigatoru600.selenium.AbstractTailoredSeleniumTest;
-import com.svnavigatoru600.selenium.AssertUtils;
+import com.svnavigatoru600.test.TestUser;
 import com.svnavigatoru600.test.category.SeleniumTests;
+import com.svnavigatoru600.test.selenium.AbstractTailoredSeleniumTest;
+import com.svnavigatoru600.test.selenium.AssertUtils;
 
 /**
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>

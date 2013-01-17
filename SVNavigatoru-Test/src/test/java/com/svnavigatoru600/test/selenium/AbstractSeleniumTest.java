@@ -1,4 +1,4 @@
-package com.svnavigatoru600.selenium;
+package com.svnavigatoru600.test.selenium;
 
 import java.net.URL;
 import java.util.concurrent.TimeUnit;
@@ -13,8 +13,8 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import com.svnavigatoru600.AbstractAvailabilityTest;
-import com.svnavigatoru600.Server;
+import com.svnavigatoru600.test.AbstractAvailabilityTest;
+import com.svnavigatoru600.test.Server;
 
 /**
  * Ancestor of all Selenium tests.
