@@ -5,6 +5,9 @@ import junit.framework.Assert;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
+
+import com.svnavigatoru600.test.category.FastTests;
 
 /**
  * Tests verifying that the web app is running and the login page is reachable.
@@ -17,6 +20,7 @@ public class AvailabilityTest {
     private static final String LOGIN_PAGE = AvailabilityTest.DOMAIN_NAME + "/prihlaseni/";
 
     @Test
+    @Category(FastTests.class)
     public void testLoginPage() throws Exception {
 
         Document loginPage = Jsoup.connect(LOGIN_PAGE).get();
