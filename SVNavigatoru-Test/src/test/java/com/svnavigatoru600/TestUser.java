@@ -1,4 +1,4 @@
-package com.svnavigatoru600.selenium;
+package com.svnavigatoru600;
 
 /**
  * Represents the user created only for the purposes of Selenium testing.
