@@ -8,9 +8,9 @@ import com.svnavigatoru600.domain.users.NotificationType.NotificationTypeVisitor
 /**
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
-@VisitorPattern(participants = { NotificationTypeVisitor.class, NotificationSubscriber.class })
+@VisitorPattern
 @ConcreteVisitor
-public class NotificationSubscriber implements NotificationTypeVisitor {
+public class NotificationSubscriberVisitor implements NotificationTypeVisitor {
 
     /**
      * Instance of {@link User} of which settings of subscriptions are changed.
@@ -21,7 +21,7 @@ public class NotificationSubscriber implements NotificationTypeVisitor {
      */
     private final boolean newIsSubscribed;
 
-    public NotificationSubscriber(User user, boolean newIsSubscribed) {
+    public NotificationSubscriberVisitor(User user, boolean newIsSubscribed) {
         this.user = user;
         this.newIsSubscribed = newIsSubscribed;
     }

@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
 import com.svnavigatoru600.domain.forum.Contribution;
 import com.svnavigatoru600.domain.forum.Thread;
 import com.svnavigatoru600.domain.users.AuthorityType;
-import com.svnavigatoru600.domain.users.NotificationSubscriber;
+import com.svnavigatoru600.domain.users.NotificationSubscriberVisitor;
 import com.svnavigatoru600.domain.users.NotificationType;
 import com.svnavigatoru600.domain.users.User;
 import com.svnavigatoru600.repository.users.UserDao;
@@ -323,7 +323,7 @@ public class UserService {
      */
     public void unsubscribeFromNotifications(String username, NotificationType notificationType) {
         User user = this.userDao.findByUsername(username);
-        notificationType.accept(new NotificationSubscriber(user, false));
+        notificationType.accept(new NotificationSubscriberVisitor(user, false));
         this.userDao.update(user, false);
     }
 

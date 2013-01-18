@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.support.SessionStatus;
 
-import com.svnavigatoru600.domain.users.NotificationSubscriber;
+import com.svnavigatoru600.domain.users.NotificationSubscriberVisitor;
 import com.svnavigatoru600.domain.users.NotificationType;
 import com.svnavigatoru600.domain.users.User;
 import com.svnavigatoru600.service.users.UserService;
@@ -161,7 +161,7 @@ public class EditMyAccountController extends AbstractPrivateSectionMetaControlle
             this.userService.unsubscribeFromNotifications(username, notificationType);
 
             // It is necessary to update the instance which is in the session.
-            notificationType.accept(new NotificationSubscriber(UserUtils.getLoggedUser(), false));
+            notificationType.accept(new NotificationSubscriberVisitor(UserUtils.getLoggedUser(), false));
 
             // Returns the form success view.
             model.addAttribute(AbstractMetaController.REDIRECTION_ATTRIBUTE, EditMyAccountController.BASE_URL

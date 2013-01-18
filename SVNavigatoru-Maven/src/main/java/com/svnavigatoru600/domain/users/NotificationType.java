@@ -69,7 +69,7 @@ public enum NotificationType {
     /**
      * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
      */
-    @VisitorPattern(participants = { NotificationTypeVisitor.class, NotificationSubscriber.class })
+    @VisitorPattern
     @Visitor
     public interface NotificationTypeVisitor {
         void visitInNews();
