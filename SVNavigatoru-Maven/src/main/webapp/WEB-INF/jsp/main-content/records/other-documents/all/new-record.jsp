@@ -1,5 +1,6 @@
 <%@ page pageEncoding="UTF-8"%>
 <%@ include file="../../../../include-preceding-html.jsp"%>
 
-<c:set var="successUrl" value="/dalsi-dokumenty/novy/" />
+<spring:eval expression="T(com.svnavigatoru600.url.records.otherdocuments.AllDocumentsUrlParts).NEW_URL" var="newRecordUrl" />
+<c:set var="successUrl" value="${newRecordUrl}" />
 <%@ include file="/WEB-INF/jsp/main-content/records/other-documents/templates/new-record.jsp"%>
