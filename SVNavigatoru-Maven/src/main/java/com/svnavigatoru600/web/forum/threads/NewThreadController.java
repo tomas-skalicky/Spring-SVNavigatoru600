@@ -22,6 +22,7 @@ import com.svnavigatoru600.domain.forum.Thread;
 import com.svnavigatoru600.domain.users.User;
 import com.svnavigatoru600.service.forum.ThreadService;
 import com.svnavigatoru600.service.util.UserUtils;
+import com.svnavigatoru600.url.forum.ThreadsUrlParts;
 import com.svnavigatoru600.viewmodel.forum.threads.NewThread;
 import com.svnavigatoru600.viewmodel.forum.threads.validator.NewThreadValidator;
 import com.svnavigatoru600.web.AbstractMetaController;
@@ -36,7 +37,6 @@ import com.svnavigatoru600.web.SendNotificationNewModelFiller;
 public class NewThreadController extends AbstractNewEditThreadController implements
         SendNotificationController {
 
-    private static final String REQUEST_MAPPING_BASE_URL = NewThreadController.BASE_URL + "novy/";
     /**
      * Code of the error message used when the {@link DataAccessException} is thrown.
      */
@@ -57,7 +57,7 @@ public class NewThreadController extends AbstractNewEditThreadController impleme
     /**
      * Initializes the form.
      */
-    @RequestMapping(value = NewThreadController.REQUEST_MAPPING_BASE_URL, method = RequestMethod.GET)
+    @RequestMapping(value = ThreadsUrlParts.NEW_URL, method = RequestMethod.GET)
     public String initForm(HttpServletRequest request, ModelMap model) {
 
         NewThread command = new NewThread();
@@ -80,7 +80,7 @@ public class NewThreadController extends AbstractNewEditThreadController impleme
      * 
      * @return The name of the view which is to be shown.
      */
-    @RequestMapping(value = NewThreadController.REQUEST_MAPPING_BASE_URL, method = RequestMethod.POST)
+    @RequestMapping(value = ThreadsUrlParts.NEW_URL, method = RequestMethod.POST)
     @Transactional
     public String processSubmittedForm(@ModelAttribute(NewThreadController.COMMAND) NewThread command,
             BindingResult result, SessionStatus status, HttpServletRequest request, ModelMap model) {
@@ -115,8 +115,7 @@ public class NewThreadController extends AbstractNewEditThreadController impleme
             status.setComplete();
 
             // Returns the form success view.
-            model.addAttribute(AbstractMetaController.REDIRECTION_ATTRIBUTE,
-                    String.format("%svytvoreno/", AbstractThreadController.BASE_URL));
+            model.addAttribute(AbstractMetaController.REDIRECTION_ATTRIBUTE, ThreadsUrlParts.CREATED_URL);
             return AbstractMetaController.REDIRECTION_PAGE;
 
         } catch (DataAccessException e) {

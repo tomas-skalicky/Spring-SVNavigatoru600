@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.svnavigatoru600.domain.forum.Contribution;
 import com.svnavigatoru600.service.forum.ContributionService;
 import com.svnavigatoru600.service.forum.ThreadService;
+import com.svnavigatoru600.url.forum.ContributionsUrlParts;
 import com.svnavigatoru600.viewmodel.forum.contributions.ShowAllContributions;
 
 /**
@@ -23,8 +24,7 @@ import com.svnavigatoru600.viewmodel.forum.contributions.ShowAllContributions;
 @Controller
 public class ListContributionsController extends AbstractContributionController {
 
-    private static final String REQUEST_MAPPING_BASE_URL = ListContributionsController.BASE_URL
-            + "{threadId}/prispevky/";
+    private static final String BASE_URL = ContributionsUrlParts.BASE_URL + "{threadId}/";
     /**
      * Command used in /main-content/forum/contributions/list-contributions.jsp.
      */
@@ -41,7 +41,8 @@ public class ListContributionsController extends AbstractContributionController 
         this.threadService = threadService;
     }
 
-    @RequestMapping(value = ListContributionsController.REQUEST_MAPPING_BASE_URL, method = RequestMethod.GET)
+    @RequestMapping(value = ListContributionsController.BASE_URL
+            + ContributionsUrlParts.CONTRIBUTIONS_EXTENSION, method = RequestMethod.GET)
     public String initPage(@PathVariable int threadId, HttpServletRequest request, ModelMap model) {
 
         ShowAllContributions command = new ShowAllContributions();
@@ -58,14 +59,16 @@ public class ListContributionsController extends AbstractContributionController 
         return PageViews.LIST.getViewName();
     }
 
-    @RequestMapping(value = ListContributionsController.REQUEST_MAPPING_BASE_URL + "vytvoreno/", method = RequestMethod.GET)
+    @RequestMapping(value = ListContributionsController.BASE_URL
+            + ContributionsUrlParts.CONTRIBUTIONS_CREATED_EXTENSION, method = RequestMethod.GET)
     public String initPageAfterCreate(@PathVariable int threadId, HttpServletRequest request, ModelMap model) {
         String view = this.initPage(threadId, request, model);
         ((ShowAllContributions) model.get(ListContributionsController.COMMAND)).setContributionCreated(true);
         return view;
     }
 
-    @RequestMapping(value = ListContributionsController.REQUEST_MAPPING_BASE_URL + "smazano/", method = RequestMethod.GET)
+    @RequestMapping(value = ListContributionsController.BASE_URL
+            + ContributionsUrlParts.CONTRIBUTIONS_DELETED_EXTENSION, method = RequestMethod.GET)
     public String initPageAfterDelete(@PathVariable int threadId, HttpServletRequest request, ModelMap model) {
         String view = this.initPage(threadId, request, model);
         ((ShowAllContributions) model.get(ListContributionsController.COMMAND)).setContributionDeleted(true);

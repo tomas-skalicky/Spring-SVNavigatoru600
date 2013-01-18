@@ -12,6 +12,7 @@ import org.springframework.ui.ModelMap;
 
 import com.svnavigatoru600.domain.records.OtherDocumentRecordType;
 import com.svnavigatoru600.service.records.OtherDocumentRecordService;
+import com.svnavigatoru600.url.CommonUrlParts;
 import com.svnavigatoru600.web.AbstractMetaController;
 import com.svnavigatoru600.web.records.AbstractPageViews;
 
@@ -29,7 +30,6 @@ public abstract class AbstractDeleteDocumentController extends AbstractOtherDocu
      * Code of the database error message used when the {@link DataAccessException} is thrown.
      */
     public static final String DATABASE_ERROR_MESSAGE_CODE = "other-documents.deletion-failed-due-to-database-error";
-    private static final String SUCCESSFUL_DELETE_URL_END = "smazano/";
     private final String successfulDeleteUrl;
 
     /**
@@ -41,8 +41,7 @@ public abstract class AbstractDeleteDocumentController extends AbstractOtherDocu
             OtherDocumentRecordService recordService, MessageSource messageSource) {
         // Note that allRecordTypes is set up during the creation of the parent.
         super(baseUrl, views, recordService, messageSource);
-        this.successfulDeleteUrl = this.getBaseUrl()
-                + AbstractDeleteDocumentController.SUCCESSFUL_DELETE_URL_END;
+        this.successfulDeleteUrl = this.getBaseUrl() + CommonUrlParts.DELETED_EXTENSION;
     }
 
     /**
@@ -54,8 +53,7 @@ public abstract class AbstractDeleteDocumentController extends AbstractOtherDocu
             OtherDocumentRecordType recordType, OtherDocumentRecordService recordService,
             MessageSource messageSource) {
         super(baseUrl, views, recordType, recordService, messageSource);
-        this.successfulDeleteUrl = this.getBaseUrl()
-                + AbstractDeleteDocumentController.SUCCESSFUL_DELETE_URL_END;
+        this.successfulDeleteUrl = this.getBaseUrl() + CommonUrlParts.DELETED_EXTENSION;
     }
 
     @Transactional

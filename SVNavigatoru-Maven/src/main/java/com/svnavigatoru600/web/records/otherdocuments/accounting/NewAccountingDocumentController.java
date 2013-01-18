@@ -14,6 +14,7 @@ import org.springframework.web.bind.support.SessionStatus;
 
 import com.svnavigatoru600.domain.records.OtherDocumentRecordType;
 import com.svnavigatoru600.service.records.OtherDocumentRecordService;
+import com.svnavigatoru600.url.records.otherdocuments.AccountingUrlParts;
 import com.svnavigatoru600.viewmodel.records.otherdocuments.NewRecord;
 import com.svnavigatoru600.viewmodel.records.otherdocuments.validator.NewRecordValidator;
 import com.svnavigatoru600.web.SendNotificationNewModelFiller;
@@ -25,8 +26,6 @@ import com.svnavigatoru600.web.records.otherdocuments.AbstractNewDocumentControl
 @Controller
 public class NewAccountingDocumentController extends AbstractNewDocumentController {
 
-    private static final String BASE_URL = "/dalsi-dokumenty/ucetnictvi/";
-
     /**
      * Constructor.
      */
@@ -34,18 +33,18 @@ public class NewAccountingDocumentController extends AbstractNewDocumentControll
     public NewAccountingDocumentController(OtherDocumentRecordService recordService,
             SendNotificationNewModelFiller sendNotificationModelFiller, NewRecordValidator validator,
             MessageSource messageSource) {
-        super(NewAccountingDocumentController.BASE_URL, new PageViews(), OtherDocumentRecordType.ACCOUNTING,
+        super(AccountingUrlParts.BASE_URL, new PageViews(), OtherDocumentRecordType.ACCOUNTING,
                 recordService, sendNotificationModelFiller, validator, messageSource);
     }
 
     @Override
-    @RequestMapping(value = NewAccountingDocumentController.BASE_URL + "novy/", method = RequestMethod.GET)
+    @RequestMapping(value = AccountingUrlParts.NEW_URL, method = RequestMethod.GET)
     public String initForm(HttpServletRequest request, ModelMap model) {
         return super.initForm(request, model);
     }
 
     @Override
-    @RequestMapping(value = NewAccountingDocumentController.BASE_URL + "novy/", method = RequestMethod.POST)
+    @RequestMapping(value = AccountingUrlParts.NEW_URL, method = RequestMethod.POST)
     public String processSubmittedForm(
             @ModelAttribute(AbstractNewDocumentController.COMMAND) NewRecord command, BindingResult result,
             SessionStatus status, HttpServletRequest request, ModelMap model) {

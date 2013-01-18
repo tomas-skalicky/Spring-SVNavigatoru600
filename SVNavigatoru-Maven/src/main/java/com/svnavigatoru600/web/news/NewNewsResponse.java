@@ -12,6 +12,7 @@ import com.svnavigatoru600.service.news.NewsService;
 import com.svnavigatoru600.service.util.DateUtils;
 import com.svnavigatoru600.service.util.Localization;
 import com.svnavigatoru600.service.util.UserUtils;
+import com.svnavigatoru600.url.news.NewsUrlParts;
 import com.svnavigatoru600.viewmodel.news.AbstractNewEditNews;
 
 /**
@@ -64,10 +65,8 @@ public class NewNewsResponse extends AbstractNewEditNewsResponse {
     }
 
     private void initEditUrlVariables(HttpServletRequest request) {
-        StringBuffer urlBuilder = new StringBuffer(request.getContextPath());
-        urlBuilder.append(AbstractNewsController.BASE_URL);
-        urlBuilder.append("existujici/");
-        this.editUrlBeginning = urlBuilder.toString();
+        this.editUrlBeginning = new StringBuffer(request.getContextPath()).append(NewsUrlParts.EXISTING_URL)
+                .toString();
     }
 
     public String getLocalizedMonth() {

@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.svnavigatoru600.domain.records.SessionRecordType;
 import com.svnavigatoru600.service.records.SessionRecordService;
+import com.svnavigatoru600.url.records.RecordsCommonUrlParts;
+import com.svnavigatoru600.url.records.session.BoardSessionsUrlParts;
 import com.svnavigatoru600.web.records.session.AbstractRetrieveRecordController;
 
 /**
@@ -20,20 +22,19 @@ import com.svnavigatoru600.web.records.session.AbstractRetrieveRecordController;
 @Controller
 public class RetrieveBoardSessionRecordController extends AbstractRetrieveRecordController {
 
-    private static final String BASE_URL = "/zapisy-z-jednani/vybor/";
-
     /**
      * Constructor.
      */
     @Inject
     public RetrieveBoardSessionRecordController(SessionRecordService recordService,
             MessageSource messageSource) {
-        super(RetrieveBoardSessionRecordController.BASE_URL, new PageViews(),
-                SessionRecordType.SESSION_RECORD_OF_BOARD, recordService, messageSource);
+        super(BoardSessionsUrlParts.BASE_URL, new PageViews(), SessionRecordType.SESSION_RECORD_OF_BOARD,
+                recordService, messageSource);
     }
 
     @Override
-    @RequestMapping(value = RetrieveBoardSessionRecordController.BASE_URL + "existujici/{recordId}/stahnout/", method = RequestMethod.GET)
+    @RequestMapping(value = BoardSessionsUrlParts.EXISTING_URL + "{recordId}/"
+            + RecordsCommonUrlParts.DOWNLOAD_EXTENSION, method = RequestMethod.GET)
     public void retrieve(@PathVariable int recordId, HttpServletResponse response, ModelMap model) {
         super.retrieve(recordId, response, model);
     }

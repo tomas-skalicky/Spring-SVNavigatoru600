@@ -15,6 +15,8 @@ import org.springframework.web.bind.support.SessionStatus;
 
 import com.svnavigatoru600.domain.records.OtherDocumentRecordType;
 import com.svnavigatoru600.service.records.OtherDocumentRecordService;
+import com.svnavigatoru600.url.CommonUrlParts;
+import com.svnavigatoru600.url.records.otherdocuments.RevisionsUrlParts;
 import com.svnavigatoru600.viewmodel.records.otherdocuments.EditRecord;
 import com.svnavigatoru600.viewmodel.records.otherdocuments.validator.EditRecordValidator;
 import com.svnavigatoru600.web.SendNotificationEditModelFiller;
@@ -26,8 +28,6 @@ import com.svnavigatoru600.web.records.otherdocuments.AbstractEditDocumentContro
 @Controller
 public class EditRevisionDocumentController extends AbstractEditDocumentController {
 
-    private static final String BASE_URL = "/dalsi-dokumenty/pravidelne-revize/existujici/";
-
     /**
      * Constructor.
      */
@@ -35,25 +35,24 @@ public class EditRevisionDocumentController extends AbstractEditDocumentControll
     public EditRevisionDocumentController(OtherDocumentRecordService recordService,
             SendNotificationEditModelFiller sendNotificationModelFiller, EditRecordValidator validator,
             MessageSource messageSource) {
-        super(EditRevisionDocumentController.BASE_URL, new PageViews(),
-                OtherDocumentRecordType.REGULAR_REVISION, recordService, sendNotificationModelFiller,
-                validator, messageSource);
+        super(RevisionsUrlParts.EXISTING_URL, new PageViews(), OtherDocumentRecordType.REGULAR_REVISION,
+                recordService, sendNotificationModelFiller, validator, messageSource);
     }
 
     @Override
-    @RequestMapping(value = EditRevisionDocumentController.BASE_URL + "{recordId}/", method = RequestMethod.GET)
+    @RequestMapping(value = RevisionsUrlParts.EXISTING_URL + "{recordId}/", method = RequestMethod.GET)
     public String initForm(@PathVariable int recordId, HttpServletRequest request, ModelMap model) {
         return super.initForm(recordId, request, model);
     }
 
     @Override
-    @RequestMapping(value = EditRevisionDocumentController.BASE_URL + "{recordId}/ulozeno/", method = RequestMethod.GET)
+    @RequestMapping(value = RevisionsUrlParts.EXISTING_URL + "{recordId}/" + CommonUrlParts.SAVED_EXTENSION, method = RequestMethod.GET)
     public String initFormAfterSave(@PathVariable int recordId, HttpServletRequest request, ModelMap model) {
         return super.initFormAfterSave(recordId, request, model);
     }
 
     @Override
-    @RequestMapping(value = EditRevisionDocumentController.BASE_URL + "{recordId}/", method = RequestMethod.POST)
+    @RequestMapping(value = RevisionsUrlParts.EXISTING_URL + "{recordId}/", method = RequestMethod.POST)
     public String processSubmittedForm(
             @ModelAttribute(AbstractEditDocumentController.COMMAND) EditRecord command, BindingResult result,
             SessionStatus status, @PathVariable int recordId, HttpServletRequest request, ModelMap model) {

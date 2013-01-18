@@ -18,6 +18,7 @@ import org.springframework.web.bind.support.SessionStatus;
 
 import com.svnavigatoru600.domain.News;
 import com.svnavigatoru600.service.news.NewsService;
+import com.svnavigatoru600.url.news.NewsUrlParts;
 import com.svnavigatoru600.viewmodel.EditControllerSendNotification;
 import com.svnavigatoru600.viewmodel.SendNotification;
 import com.svnavigatoru600.viewmodel.news.EditNews;
@@ -29,8 +30,6 @@ import com.svnavigatoru600.viewmodel.news.validator.EditNewsValidator;
 @Controller
 public class EditNewsController extends AbstractNewEditNewsController {
 
-    private static final String REQUEST_MAPPING_BASE_URL = EditNewsController.BASE_URL
-            + "existujici/{newsId}/";
     /**
      * Code of the error message used when the {@link DataAccessException} is thrown.
      */
@@ -48,7 +47,7 @@ public class EditNewsController extends AbstractNewEditNewsController {
     /**
      * Initialises the form.
      */
-    @RequestMapping(value = EditNewsController.REQUEST_MAPPING_BASE_URL, method = RequestMethod.GET)
+    @RequestMapping(value = NewsUrlParts.EXISTING_URL + "{newsId}/", method = RequestMethod.GET)
     public @ResponseBody
     AbstractNewsResponse initForm(@PathVariable int newsId, HttpServletRequest request) {
 
@@ -58,7 +57,7 @@ public class EditNewsController extends AbstractNewEditNewsController {
         return new GoToEditFormResponse(news, sendNotification, messageSource, request);
     }
 
-    @RequestMapping(value = EditNewsController.REQUEST_MAPPING_BASE_URL, method = RequestMethod.POST)
+    @RequestMapping(value = NewsUrlParts.EXISTING_URL + "{newsId}/", method = RequestMethod.POST)
     @Transactional
     public @ResponseBody
     AbstractNewsResponse processSubmittedForm(@ModelAttribute(EditNewsController.COMMAND) EditNews command,

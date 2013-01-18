@@ -20,6 +20,8 @@ import com.svnavigatoru600.domain.users.User;
 import com.svnavigatoru600.service.users.AuthorityService;
 import com.svnavigatoru600.service.users.UserService;
 import com.svnavigatoru600.service.util.AuthorityUtils;
+import com.svnavigatoru600.url.CommonUrlParts;
+import com.svnavigatoru600.url.users.UserAdministrationUrlParts;
 import com.svnavigatoru600.viewmodel.users.AdministrateUserData;
 import com.svnavigatoru600.viewmodel.users.validator.AdministrateUserDataValidator;
 import com.svnavigatoru600.web.AbstractMetaController;
@@ -31,8 +33,6 @@ import com.svnavigatoru600.web.AbstractMetaController;
  */
 @Controller
 public class EditUserController extends AbstractNewEditUserController {
-
-    private static final String BASE_URL = "/administrace-uzivatelu/existujici/";
 
     /**
      * Constructor.
@@ -49,7 +49,7 @@ public class EditUserController extends AbstractNewEditUserController {
      * @param username
      *            The username of the administrated user.
      */
-    @RequestMapping(value = EditUserController.BASE_URL + "{username}/", method = RequestMethod.GET)
+    @RequestMapping(value = UserAdministrationUrlParts.EXISTING_URL + "{username}/", method = RequestMethod.GET)
     public String initForm(@PathVariable String username, HttpServletRequest request, ModelMap model) {
 
         AdministrateUserData command = new AdministrateUserData();
@@ -72,7 +72,8 @@ public class EditUserController extends AbstractNewEditUserController {
     /**
      * Initializes the form after the modified data were successfully saved to the repository.
      */
-    @RequestMapping(value = EditUserController.BASE_URL + "{username}/ulozeno/", method = RequestMethod.GET)
+    @RequestMapping(value = UserAdministrationUrlParts.EXISTING_URL + "{username}/"
+            + CommonUrlParts.SAVED_EXTENSION, method = RequestMethod.GET)
     public String initFormAfterSave(@PathVariable String username, HttpServletRequest request, ModelMap model) {
         String view = this.initForm(username, request, model);
         ((AdministrateUserData) model.get(AbstractNewEditUserController.COMMAND)).setDataSaved(true);
@@ -85,7 +86,7 @@ public class EditUserController extends AbstractNewEditUserController {
      * 
      * @return The name of the view which is to be shown.
      */
-    @RequestMapping(value = EditUserController.BASE_URL + "{username}/", method = RequestMethod.POST)
+    @RequestMapping(value = UserAdministrationUrlParts.EXISTING_URL + "{username}/", method = RequestMethod.POST)
     @Transactional
     public String processSubmittedForm(
             @ModelAttribute(AbstractNewEditUserController.COMMAND) AdministrateUserData command,
@@ -114,8 +115,8 @@ public class EditUserController extends AbstractNewEditUserController {
             status.setComplete();
 
             // Returns the form success view.
-            model.addAttribute(AbstractMetaController.REDIRECTION_ATTRIBUTE,
-                    String.format(EditUserController.BASE_URL + "%s/ulozeno/", username));
+            model.addAttribute(AbstractMetaController.REDIRECTION_ATTRIBUTE, String.format("%s%s/%s",
+                    UserAdministrationUrlParts.EXISTING_URL, username, CommonUrlParts.SAVED_EXTENSION));
             return AbstractMetaController.REDIRECTION_PAGE;
 
         } catch (DataAccessException e) {

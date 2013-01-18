@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.svnavigatoru600.service.records.SessionRecordService;
+import com.svnavigatoru600.url.records.session.AllSessionsUrlParts;
 import com.svnavigatoru600.web.records.session.AbstractListRecordsController;
 
 /**
@@ -18,30 +19,28 @@ import com.svnavigatoru600.web.records.session.AbstractListRecordsController;
 @Controller
 public class ListAllSessionRecordsController extends AbstractListRecordsController {
 
-    private static final String BASE_URL = "/zapisy-z-jednani/";
-
     /**
      * Constructor.
      */
     @Inject
     public ListAllSessionRecordsController(SessionRecordService recordService, MessageSource messageSource) {
-        super(ListAllSessionRecordsController.BASE_URL, new PageViews(), recordService, messageSource);
+        super(AllSessionsUrlParts.BASE_URL, new PageViews(), recordService, messageSource);
     }
 
     @Override
-    @RequestMapping(value = ListAllSessionRecordsController.BASE_URL, method = RequestMethod.GET)
+    @RequestMapping(value = AllSessionsUrlParts.BASE_URL, method = RequestMethod.GET)
     public String initPage(HttpServletRequest request, ModelMap model) {
         return super.initPage(request, model);
     }
 
     @Override
-    @RequestMapping(value = ListAllSessionRecordsController.BASE_URL + "vytvoreno/", method = RequestMethod.GET)
+    @RequestMapping(value = AllSessionsUrlParts.CREATED_URL, method = RequestMethod.GET)
     public String initPageAfterCreate(HttpServletRequest request, ModelMap model) {
         return super.initPageAfterCreate(request, model);
     }
 
     @Override
-    @RequestMapping(value = ListAllSessionRecordsController.BASE_URL + "smazano/", method = RequestMethod.GET)
+    @RequestMapping(value = AllSessionsUrlParts.DELETED_URL, method = RequestMethod.GET)
     public String initPageAfterDelete(HttpServletRequest request, ModelMap model) {
         return super.initPageAfterDelete(request, model);
     }

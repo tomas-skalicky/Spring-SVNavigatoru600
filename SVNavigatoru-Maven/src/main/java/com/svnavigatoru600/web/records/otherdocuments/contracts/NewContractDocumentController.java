@@ -14,6 +14,7 @@ import org.springframework.web.bind.support.SessionStatus;
 
 import com.svnavigatoru600.domain.records.OtherDocumentRecordType;
 import com.svnavigatoru600.service.records.OtherDocumentRecordService;
+import com.svnavigatoru600.url.records.otherdocuments.ContractsUrlParts;
 import com.svnavigatoru600.viewmodel.records.otherdocuments.NewRecord;
 import com.svnavigatoru600.viewmodel.records.otherdocuments.validator.NewRecordValidator;
 import com.svnavigatoru600.web.SendNotificationNewModelFiller;
@@ -25,8 +26,6 @@ import com.svnavigatoru600.web.records.otherdocuments.AbstractNewDocumentControl
 @Controller
 public class NewContractDocumentController extends AbstractNewDocumentController {
 
-    private static final String BASE_URL = "/dalsi-dokumenty/smlouvy/";
-
     /**
      * Constructor.
      */
@@ -34,18 +33,18 @@ public class NewContractDocumentController extends AbstractNewDocumentController
     public NewContractDocumentController(OtherDocumentRecordService recordService,
             SendNotificationNewModelFiller sendNotificationModelFiller, NewRecordValidator validator,
             MessageSource messageSource) {
-        super(NewContractDocumentController.BASE_URL, new PageViews(), OtherDocumentRecordType.CONTRACT,
-                recordService, sendNotificationModelFiller, validator, messageSource);
+        super(ContractsUrlParts.BASE_URL, new PageViews(), OtherDocumentRecordType.CONTRACT, recordService,
+                sendNotificationModelFiller, validator, messageSource);
     }
 
     @Override
-    @RequestMapping(value = NewContractDocumentController.BASE_URL + "novy/", method = RequestMethod.GET)
+    @RequestMapping(value = ContractsUrlParts.NEW_URL, method = RequestMethod.GET)
     public String initForm(HttpServletRequest request, ModelMap model) {
         return super.initForm(request, model);
     }
 
     @Override
-    @RequestMapping(value = NewContractDocumentController.BASE_URL + "novy/", method = RequestMethod.POST)
+    @RequestMapping(value = ContractsUrlParts.NEW_URL, method = RequestMethod.POST)
     public String processSubmittedForm(
             @ModelAttribute(AbstractNewDocumentController.COMMAND) NewRecord command, BindingResult result,
             SessionStatus status, HttpServletRequest request, ModelMap model) {

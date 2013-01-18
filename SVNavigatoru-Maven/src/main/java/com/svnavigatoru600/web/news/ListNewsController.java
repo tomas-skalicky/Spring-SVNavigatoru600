@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.svnavigatoru600.domain.News;
 import com.svnavigatoru600.service.news.NewsService;
+import com.svnavigatoru600.url.news.NewsUrlParts;
 import com.svnavigatoru600.viewmodel.news.ShowAllNews;
 
 /**
@@ -21,7 +22,6 @@ import com.svnavigatoru600.viewmodel.news.ShowAllNews;
 @Controller
 public class ListNewsController extends AbstractNewsController {
 
-    private static final String REQUEST_MAPPING_BASE_URL = ListNewsController.BASE_URL;
     /**
      * Command used in /main-content/news/list-news.jsp.
      */
@@ -42,7 +42,7 @@ public class ListNewsController extends AbstractNewsController {
         super(newsService, messageSource);
     }
 
-    @RequestMapping(value = ListNewsController.REQUEST_MAPPING_BASE_URL, method = RequestMethod.GET)
+    @RequestMapping(value = NewsUrlParts.BASE_URL, method = RequestMethod.GET)
     public String initPage(HttpServletRequest request, ModelMap model) {
 
         ShowAllNews command = new ShowAllNews();

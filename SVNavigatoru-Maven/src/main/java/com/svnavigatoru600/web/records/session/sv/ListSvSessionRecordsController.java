@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.svnavigatoru600.domain.records.SessionRecordType;
 import com.svnavigatoru600.service.records.SessionRecordService;
+import com.svnavigatoru600.url.records.session.SvUrlParts;
 import com.svnavigatoru600.web.records.session.AbstractListRecordsController;
 
 /**
@@ -19,31 +20,29 @@ import com.svnavigatoru600.web.records.session.AbstractListRecordsController;
 @Controller
 public class ListSvSessionRecordsController extends AbstractListRecordsController {
 
-    private static final String BASE_URL = "/zapisy-z-jednani/sv/";
-
     /**
      * Constructor.
      */
     @Inject
     public ListSvSessionRecordsController(SessionRecordService recordService, MessageSource messageSource) {
-        super(ListSvSessionRecordsController.BASE_URL, new PageViews(),
-                SessionRecordType.SESSION_RECORD_OF_SV, recordService, messageSource);
+        super(SvUrlParts.BASE_URL, new PageViews(), SessionRecordType.SESSION_RECORD_OF_SV, recordService,
+                messageSource);
     }
 
     @Override
-    @RequestMapping(value = ListSvSessionRecordsController.BASE_URL, method = RequestMethod.GET)
+    @RequestMapping(value = SvUrlParts.BASE_URL, method = RequestMethod.GET)
     public String initPage(HttpServletRequest request, ModelMap model) {
         return super.initPage(request, model);
     }
 
     @Override
-    @RequestMapping(value = ListSvSessionRecordsController.BASE_URL + "vytvoreno/", method = RequestMethod.GET)
+    @RequestMapping(value = SvUrlParts.CREATED_URL, method = RequestMethod.GET)
     public String initPageAfterCreate(HttpServletRequest request, ModelMap model) {
         return super.initPageAfterCreate(request, model);
     }
 
     @Override
-    @RequestMapping(value = ListSvSessionRecordsController.BASE_URL + "smazano/", method = RequestMethod.GET)
+    @RequestMapping(value = SvUrlParts.DELETED_URL, method = RequestMethod.GET)
     public String initPageAfterDelete(HttpServletRequest request, ModelMap model) {
         return super.initPageAfterDelete(request, model);
     }

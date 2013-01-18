@@ -15,7 +15,6 @@ import com.svnavigatoru600.web.AbstractPrivateSectionMetaController;
 @Controller
 public abstract class AbstractNewsController extends AbstractPrivateSectionMetaController {
 
-    protected static final String BASE_URL = "/novinky/";
     private final NewsService newsService;
     private final MessageSource messageSource;
 

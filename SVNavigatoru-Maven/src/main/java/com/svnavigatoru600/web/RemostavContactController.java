@@ -1,4 +1,4 @@
-package com.svnavigatoru600.web.remostav;
+package com.svnavigatoru600.web;
 
 import javax.inject.Inject;
 
@@ -14,38 +14,38 @@ import org.springframework.web.bind.support.SessionStatus;
 import com.svnavigatoru600.domain.WysiwygSection;
 import com.svnavigatoru600.domain.WysiwygSectionName;
 import com.svnavigatoru600.service.WysiwygSectionService;
-import com.svnavigatoru600.web.AbstractWysiwygSectionController;
+import com.svnavigatoru600.url.RemostavContactsUrlParts;
 
 /**
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
 @Controller
-public class ContactController extends AbstractWysiwygSectionController {
+public class RemostavContactController extends AbstractWysiwygSectionController {
 
     /**
      * Constructor.
      */
     @Inject
-    public ContactController(WysiwygSectionService sectionService) {
+    public RemostavContactController(WysiwygSectionService sectionService) {
         super(sectionService, WysiwygSectionName.REMOSTAV_CONTACT, "viewRemostavContact",
-                "editRemostavContact", "/remostav/kontakt/");
+                "editRemostavContact", RemostavContactsUrlParts.BASE_URL);
     }
 
     @Override
-    @RequestMapping(value = "/remostav/kontakt/", method = RequestMethod.GET)
+    @RequestMapping(value = RemostavContactsUrlParts.BASE_URL, method = RequestMethod.GET)
     public String showViewPage(ModelMap model) {
         return super.showViewPage(model);
     }
 
     @Override
-    @RequestMapping(value = "/remostav/kontakt/editace/", method = RequestMethod.GET)
+    @RequestMapping(value = RemostavContactsUrlParts.EDIT_URL, method = RequestMethod.GET)
     @PreAuthorize("hasRole('ROLE_MEMBER_OF_BOARD')")
     public String showEditPage(ModelMap model) {
         return super.showEditPage(model);
     }
 
     @Override
-    @RequestMapping(value = "/remostav/kontakt/editace/ulozit/", method = RequestMethod.POST)
+    @RequestMapping(value = RemostavContactsUrlParts.SAVE_EDIT_URL, method = RequestMethod.POST)
     @PreAuthorize("hasRole('ROLE_MEMBER_OF_BOARD')")
     public String saveChanges(@ModelAttribute("wysiwygSectionEditCommand") WysiwygSection command,
             BindingResult result, SessionStatus status, ModelMap model) {
@@ -53,7 +53,7 @@ public class ContactController extends AbstractWysiwygSectionController {
     }
 
     @Override
-    @RequestMapping(value = "/remostav/kontakt/editace/ulozit-a-skoncit/", method = RequestMethod.POST)
+    @RequestMapping(value = RemostavContactsUrlParts.SAVE_EDIT_AND_EXIT_URL, method = RequestMethod.POST)
     @PreAuthorize("hasRole('ROLE_MEMBER_OF_BOARD')")
     public String saveChangesAndFinishEditing(
             @ModelAttribute("wysiwygSectionEditCommand") WysiwygSection command, BindingResult result,
@@ -62,7 +62,7 @@ public class ContactController extends AbstractWysiwygSectionController {
     }
 
     @Override
-    @RequestMapping(value = "/remostav/kontakt/editace/neukladat-a-skoncit/", method = RequestMethod.POST)
+    @RequestMapping(value = RemostavContactsUrlParts.DONT_SAVE_EDIT_AND_EXIT_URL, method = RequestMethod.POST)
     @PreAuthorize("hasRole('ROLE_MEMBER_OF_BOARD')")
     public String cancelChangesAndFinishEditing(ModelMap model) {
         return super.cancelChangesAndFinishEditing(model);

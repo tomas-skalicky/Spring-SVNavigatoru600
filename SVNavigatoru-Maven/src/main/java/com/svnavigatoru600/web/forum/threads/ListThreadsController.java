@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.svnavigatoru600.domain.forum.Thread;
 import com.svnavigatoru600.service.forum.ThreadService;
 import com.svnavigatoru600.service.users.UserService;
+import com.svnavigatoru600.url.forum.ThreadsUrlParts;
 import com.svnavigatoru600.viewmodel.forum.threads.ShowAllThreads;
 
 /**
@@ -23,7 +24,6 @@ import com.svnavigatoru600.viewmodel.forum.threads.ShowAllThreads;
 @Controller
 public class ListThreadsController extends AbstractThreadController {
 
-    private static final String REQUEST_MAPPING_BASE_URL = ListThreadsController.BASE_URL;
     /**
      * Command used in /main-content/forum/threads/list-threads.jsp.
      */
@@ -43,7 +43,7 @@ public class ListThreadsController extends AbstractThreadController {
         super(threadService, messageSource);
     }
 
-    @RequestMapping(value = ListThreadsController.REQUEST_MAPPING_BASE_URL, method = RequestMethod.GET)
+    @RequestMapping(value = ThreadsUrlParts.BASE_URL, method = RequestMethod.GET)
     public String initPage(HttpServletRequest request, ModelMap model) {
 
         ShowAllThreads command = new ShowAllThreads();
@@ -67,14 +67,14 @@ public class ListThreadsController extends AbstractThreadController {
         return PageViews.LIST.getViewName();
     }
 
-    @RequestMapping(value = ListThreadsController.REQUEST_MAPPING_BASE_URL + "vytvoreno/", method = RequestMethod.GET)
+    @RequestMapping(value = ThreadsUrlParts.CREATED_URL, method = RequestMethod.GET)
     public String initPageAfterCreate(HttpServletRequest request, ModelMap model) {
         String view = this.initPage(request, model);
         ((ShowAllThreads) model.get(ListThreadsController.COMMAND)).setThreadCreated(true);
         return view;
     }
 
-    @RequestMapping(value = ListThreadsController.REQUEST_MAPPING_BASE_URL + "smazano/", method = RequestMethod.GET)
+    @RequestMapping(value = ThreadsUrlParts.DELETED_URL, method = RequestMethod.GET)
     public String initPageAfterDelete(HttpServletRequest request, ModelMap model) {
         String view = this.initPage(request, model);
         ((ShowAllThreads) model.get(ListThreadsController.COMMAND)).setThreadDeleted(true);

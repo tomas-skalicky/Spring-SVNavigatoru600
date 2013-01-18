@@ -20,6 +20,7 @@ import com.svnavigatoru600.domain.forum.Contribution;
 import com.svnavigatoru600.service.forum.ContributionService;
 import com.svnavigatoru600.service.forum.ThreadService;
 import com.svnavigatoru600.service.util.UserUtils;
+import com.svnavigatoru600.url.forum.ContributionsUrlParts;
 import com.svnavigatoru600.viewmodel.forum.contributions.NewContribution;
 import com.svnavigatoru600.viewmodel.forum.contributions.validator.NewContributionValidator;
 import com.svnavigatoru600.web.AbstractMetaController;
@@ -31,8 +32,8 @@ import com.svnavigatoru600.web.SendNotificationNewModelFiller;
 @Controller
 public class NewContributionController extends AbstractNewEditContributionController {
 
-    private static final String REQUEST_MAPPING_BASE_URL = NewContributionController.BASE_URL
-            + "{threadId}/prispevky/novy/";
+    private static final String BASE_URL = ContributionsUrlParts.BASE_URL + "{threadId}/"
+            + ContributionsUrlParts.CONTRIBUTIONS_NEW_EXTENSION;
     /**
      * Code of the error message used when the {@link DataAccessException} is thrown.
      */
@@ -57,7 +58,7 @@ public class NewContributionController extends AbstractNewEditContributionContro
     /**
      * Initializes the form.
      */
-    @RequestMapping(value = NewContributionController.REQUEST_MAPPING_BASE_URL, method = RequestMethod.GET)
+    @RequestMapping(value = NewContributionController.BASE_URL, method = RequestMethod.GET)
     public String initForm(@PathVariable int threadId, HttpServletRequest request, ModelMap model) {
 
         NewContribution command = new NewContribution();
@@ -79,7 +80,7 @@ public class NewContributionController extends AbstractNewEditContributionContro
      * 
      * @return The name of the view which is to be shown.
      */
-    @RequestMapping(value = NewContributionController.REQUEST_MAPPING_BASE_URL, method = RequestMethod.POST)
+    @RequestMapping(value = NewContributionController.BASE_URL, method = RequestMethod.POST)
     @Transactional
     public String processSubmittedForm(
             @ModelAttribute(NewContributionController.COMMAND) NewContribution command, BindingResult result,
@@ -109,8 +110,9 @@ public class NewContributionController extends AbstractNewEditContributionContro
             status.setComplete();
 
             // Returns the form success view.
-            model.addAttribute(AbstractMetaController.REDIRECTION_ATTRIBUTE, String.format(
-                    "%s%d/prispevky/vytvoreno/", AbstractContributionController.BASE_URL, threadId));
+            model.addAttribute(AbstractMetaController.REDIRECTION_ATTRIBUTE, String.format("%s%d/%s",
+                    ContributionsUrlParts.BASE_URL, threadId,
+                    ContributionsUrlParts.CONTRIBUTIONS_CREATED_EXTENSION));
             return AbstractMetaController.REDIRECTION_PAGE;
 
         } catch (DataAccessException e) {

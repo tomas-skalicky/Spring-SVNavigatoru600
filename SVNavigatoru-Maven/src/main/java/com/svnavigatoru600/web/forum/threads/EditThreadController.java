@@ -18,6 +18,7 @@ import org.springframework.web.bind.support.SessionStatus;
 
 import com.svnavigatoru600.domain.forum.Thread;
 import com.svnavigatoru600.service.forum.ThreadService;
+import com.svnavigatoru600.url.CommonUrlParts;
 import com.svnavigatoru600.viewmodel.forum.threads.EditThread;
 import com.svnavigatoru600.viewmodel.forum.threads.validator.EditThreadValidator;
 import com.svnavigatoru600.web.AbstractMetaController;
@@ -28,8 +29,6 @@ import com.svnavigatoru600.web.AbstractMetaController;
 @Controller
 public class EditThreadController extends AbstractNewEditThreadController {
 
-    private static final String REQUEST_MAPPING_BASE_URL = EditThreadController.BASE_URL
-            + "existujici/{threadId}/";
     /**
      * Code of the error message used when the {@link DataAccessException} is thrown.
      */
@@ -44,7 +43,7 @@ public class EditThreadController extends AbstractNewEditThreadController {
         super(threadService, validator, messageSource);
     }
 
-    @RequestMapping(value = EditThreadController.REQUEST_MAPPING_BASE_URL, method = RequestMethod.GET)
+    @RequestMapping(value = CommonUrlParts.EXISTING_EXTENSION + "{threadId}/", method = RequestMethod.GET)
     public String initForm(@PathVariable int threadId, HttpServletRequest request, ModelMap model) {
 
         ThreadService threadService = this.getThreadService();
@@ -59,14 +58,15 @@ public class EditThreadController extends AbstractNewEditThreadController {
         return PageViews.EDIT.getViewName();
     }
 
-    @RequestMapping(value = EditThreadController.REQUEST_MAPPING_BASE_URL + "ulozeno/", method = RequestMethod.GET)
+    @RequestMapping(value = CommonUrlParts.EXISTING_EXTENSION + "{threadId}/"
+            + CommonUrlParts.SAVED_EXTENSION, method = RequestMethod.GET)
     public String initFormAfterSave(@PathVariable int threadId, HttpServletRequest request, ModelMap model) {
         String view = this.initForm(threadId, request, model);
         ((EditThread) model.get(AbstractNewEditThreadController.COMMAND)).setDataSaved(true);
         return view;
     }
 
-    @RequestMapping(value = EditThreadController.REQUEST_MAPPING_BASE_URL, method = RequestMethod.POST)
+    @RequestMapping(value = CommonUrlParts.EXISTING_EXTENSION + "{threadId}/", method = RequestMethod.POST)
     @Transactional
     public String processSubmittedForm(@ModelAttribute(EditThreadController.COMMAND) EditThread command,
             BindingResult result, SessionStatus status, @PathVariable int threadId,
@@ -89,8 +89,8 @@ public class EditThreadController extends AbstractNewEditThreadController {
             status.setComplete();
 
             // Returns the form success view.
-            model.addAttribute(AbstractMetaController.REDIRECTION_ATTRIBUTE,
-                    String.format("%sexistujici/%d/ulozeno/", AbstractThreadController.BASE_URL, threadId));
+            model.addAttribute(AbstractMetaController.REDIRECTION_ATTRIBUTE, String.format("%s%d/%s",
+                    CommonUrlParts.EXISTING_EXTENSION, threadId, CommonUrlParts.SAVED_EXTENSION));
             return AbstractMetaController.REDIRECTION_PAGE;
 
         } catch (DataAccessException e) {

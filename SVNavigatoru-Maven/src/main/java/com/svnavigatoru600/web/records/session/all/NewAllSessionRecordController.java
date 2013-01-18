@@ -14,6 +14,7 @@ import org.springframework.web.bind.support.SessionStatus;
 
 import com.svnavigatoru600.domain.records.SessionRecordType;
 import com.svnavigatoru600.service.records.SessionRecordService;
+import com.svnavigatoru600.url.records.session.AllSessionsUrlParts;
 import com.svnavigatoru600.viewmodel.records.session.NewSessionRecord;
 import com.svnavigatoru600.viewmodel.records.session.validator.NewSessionRecordValidator;
 import com.svnavigatoru600.web.SendNotificationNewModelFiller;
@@ -25,8 +26,6 @@ import com.svnavigatoru600.web.records.session.AbstractNewRecordController;
 @Controller
 public class NewAllSessionRecordController extends AbstractNewRecordController {
 
-    private static final String BASE_URL = "/zapisy-z-jednani/";
-
     /**
      * Constructor.
      */
@@ -34,20 +33,20 @@ public class NewAllSessionRecordController extends AbstractNewRecordController {
     public NewAllSessionRecordController(SessionRecordService recordService,
             SendNotificationNewModelFiller sendNotificationModelFiller, NewSessionRecordValidator validator,
             MessageSource messageSource) {
-        super(NewAllSessionRecordController.BASE_URL, new PageViews(), recordService,
-                sendNotificationModelFiller, validator, messageSource);
+        super(AllSessionsUrlParts.BASE_URL, new PageViews(), recordService, sendNotificationModelFiller,
+                validator, messageSource);
     }
 
     /**
      * This method cannot be annotated with {@link Override} since it has one less parameter.
      */
-    @RequestMapping(value = NewAllSessionRecordController.BASE_URL + "novy/", method = RequestMethod.GET)
+    @RequestMapping(value = AllSessionsUrlParts.NEW_URL, method = RequestMethod.GET)
     public String initForm(HttpServletRequest request, ModelMap model) {
         return super.initForm(SessionRecordType.SESSION_RECORD_OF_BOARD, request, model);
     }
 
     @Override
-    @RequestMapping(value = NewAllSessionRecordController.BASE_URL + "novy/", method = RequestMethod.POST)
+    @RequestMapping(value = AllSessionsUrlParts.NEW_URL, method = RequestMethod.POST)
     public String processSubmittedForm(
             @ModelAttribute(AbstractNewRecordController.COMMAND) NewSessionRecord command,
             BindingResult result, SessionStatus status, HttpServletRequest request, ModelMap model) {

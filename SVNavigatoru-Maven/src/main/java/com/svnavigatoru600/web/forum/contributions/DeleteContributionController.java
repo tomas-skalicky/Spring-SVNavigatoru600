@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.svnavigatoru600.service.forum.ContributionService;
+import com.svnavigatoru600.url.CommonUrlParts;
+import com.svnavigatoru600.url.forum.ContributionsUrlParts;
 import com.svnavigatoru600.web.AbstractMetaController;
 
 /**
@@ -22,8 +24,6 @@ import com.svnavigatoru600.web.AbstractMetaController;
 @Controller
 public class DeleteContributionController extends AbstractContributionController {
 
-    private static final String REQUEST_MAPPING_BASE_URL = DeleteContributionController.BASE_URL
-            + "{threadId}/prispevky/existujici/{contributionId}/smazat/";
     /**
      * Code of the database error message used when the {@link DataAccessException} is thrown.
      */
@@ -43,7 +43,9 @@ public class DeleteContributionController extends AbstractContributionController
         super(contributionService, messageSource);
     }
 
-    @RequestMapping(value = DeleteContributionController.REQUEST_MAPPING_BASE_URL, method = RequestMethod.GET)
+    @RequestMapping(value = ContributionsUrlParts.BASE_URL + "{threadId}/"
+            + ContributionsUrlParts.CONTRIBUTIONS_EXISTING_EXTENSION + "{contributionId}/"
+            + CommonUrlParts.DELETE_EXTENSION, method = RequestMethod.GET)
     @Transactional
     public String delete(@PathVariable int threadId, @PathVariable int contributionId,
             HttpServletRequest request, ModelMap model) {
@@ -55,8 +57,9 @@ public class DeleteContributionController extends AbstractContributionController
             this.getContributionService().delete(contributionId);
 
             // Returns the form success view.
-            model.addAttribute(AbstractMetaController.REDIRECTION_ATTRIBUTE, String.format(
-                    "%s%d/prispevky/smazano/", AbstractContributionController.BASE_URL, threadId));
+            model.addAttribute(AbstractMetaController.REDIRECTION_ATTRIBUTE, String.format("%s%d/%s",
+                    ContributionsUrlParts.BASE_URL, threadId,
+                    ContributionsUrlParts.CONTRIBUTIONS_DELETED_EXTENSION));
             return AbstractMetaController.REDIRECTION_PAGE;
 
         } catch (DataAccessException e) {

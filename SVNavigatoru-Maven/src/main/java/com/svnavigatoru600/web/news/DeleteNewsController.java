@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.svnavigatoru600.service.news.NewsService;
+import com.svnavigatoru600.url.CommonUrlParts;
+import com.svnavigatoru600.url.news.NewsUrlParts;
 
 /**
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
@@ -22,8 +24,6 @@ import com.svnavigatoru600.service.news.NewsService;
 @Controller
 public class DeleteNewsController extends AbstractNewsController {
 
-    private static final String REQUEST_MAPPING_BASE_URL = DeleteNewsController.BASE_URL
-            + "existujici/{newsId}/smazat/";
     /**
      * Code of the database error message used when the {@link DataAccessException} is thrown.
      */
@@ -37,7 +37,7 @@ public class DeleteNewsController extends AbstractNewsController {
         super(newsService, messageSource);
     }
 
-    @RequestMapping(value = DeleteNewsController.REQUEST_MAPPING_BASE_URL, method = RequestMethod.GET)
+    @RequestMapping(value = NewsUrlParts.EXISTING_URL + "{newsId}/" + CommonUrlParts.DELETE_EXTENSION, method = RequestMethod.GET)
     @Transactional
     public @ResponseBody
     AbstractNewsResponse delete(@PathVariable int newsId, HttpServletRequest request, ModelMap model) {

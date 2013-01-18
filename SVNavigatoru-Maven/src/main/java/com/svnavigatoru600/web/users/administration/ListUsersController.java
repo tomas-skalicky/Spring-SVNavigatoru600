@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.svnavigatoru600.domain.users.User;
 import com.svnavigatoru600.service.users.UserService;
+import com.svnavigatoru600.url.users.UserAdministrationUrlParts;
 import com.svnavigatoru600.viewmodel.users.ShowAllUsers;
 
 /**
@@ -24,7 +25,6 @@ import com.svnavigatoru600.viewmodel.users.ShowAllUsers;
 @Controller
 public class ListUsersController extends AbstractUserController {
 
-    private static final String BASE_URL = "/administrace-uzivatelu/";
     private static final String COMMAND = "showAllUsersCommand";
 
     /**
@@ -38,7 +38,7 @@ public class ListUsersController extends AbstractUserController {
     /**
      * Initializes the page with all users.
      */
-    @RequestMapping(value = ListUsersController.BASE_URL, method = RequestMethod.GET)
+    @RequestMapping(value = UserAdministrationUrlParts.BASE_URL, method = RequestMethod.GET)
     public String initPage(HttpServletRequest request, ModelMap model) {
 
         ShowAllUsers command = new ShowAllUsers();
@@ -58,7 +58,7 @@ public class ListUsersController extends AbstractUserController {
      * Initializes the page with all available users including the one which has been successfully added to
      * the repository recently.
      */
-    @RequestMapping(value = ListUsersController.BASE_URL + "vytvoreno/", method = RequestMethod.GET)
+    @RequestMapping(value = UserAdministrationUrlParts.CREATED_URL, method = RequestMethod.GET)
     public String initPageAfterCreate(HttpServletRequest request, ModelMap model) {
         String view = this.initPage(request, model);
         ((ShowAllUsers) model.get(ListUsersController.COMMAND)).setUserCreated(true);
@@ -69,7 +69,7 @@ public class ListUsersController extends AbstractUserController {
      * Initializes the page with all available users and notifies that one other user has been successfully
      * deleted from the repository.
      */
-    @RequestMapping(value = ListUsersController.BASE_URL + "smazano/", method = RequestMethod.GET)
+    @RequestMapping(value = UserAdministrationUrlParts.DELETED_URL, method = RequestMethod.GET)
     public String initPageAfterDelete(HttpServletRequest request, ModelMap model) {
         String view = this.initPage(request, model);
         ((ShowAllUsers) model.get(ListUsersController.COMMAND)).setUserDeleted(true);

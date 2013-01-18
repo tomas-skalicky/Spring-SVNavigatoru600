@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.svnavigatoru600.service.records.OtherDocumentRecordService;
+import com.svnavigatoru600.url.records.otherdocuments.AllDocumentsUrlParts;
 import com.svnavigatoru600.web.records.otherdocuments.AbstractListDocumentsController;
 
 /**
@@ -18,30 +19,28 @@ import com.svnavigatoru600.web.records.otherdocuments.AbstractListDocumentsContr
 @Controller
 public class ListAllDocumentsController extends AbstractListDocumentsController {
 
-    private static final String BASE_URL = "/dalsi-dokumenty/";
-
     /**
      * Constructor.
      */
     @Inject
     public ListAllDocumentsController(OtherDocumentRecordService recordService, MessageSource messageSource) {
-        super(ListAllDocumentsController.BASE_URL, new PageViews(), recordService, messageSource);
+        super(AllDocumentsUrlParts.BASE_URL, new PageViews(), recordService, messageSource);
     }
 
     @Override
-    @RequestMapping(value = ListAllDocumentsController.BASE_URL, method = RequestMethod.GET)
+    @RequestMapping(value = AllDocumentsUrlParts.BASE_URL, method = RequestMethod.GET)
     public String initPage(HttpServletRequest request, ModelMap model) {
         return super.initPage(request, model);
     }
 
     @Override
-    @RequestMapping(value = ListAllDocumentsController.BASE_URL + "vytvoreno/", method = RequestMethod.GET)
+    @RequestMapping(value = AllDocumentsUrlParts.CREATED_URL, method = RequestMethod.GET)
     public String initPageAfterCreate(HttpServletRequest request, ModelMap model) {
         return super.initPageAfterCreate(request, model);
     }
 
     @Override
-    @RequestMapping(value = ListAllDocumentsController.BASE_URL + "smazano/", method = RequestMethod.GET)
+    @RequestMapping(value = AllDocumentsUrlParts.DELETED_URL, method = RequestMethod.GET)
     public String initPageAfterDelete(HttpServletRequest request, ModelMap model) {
         return super.initPageAfterDelete(request, model);
     }

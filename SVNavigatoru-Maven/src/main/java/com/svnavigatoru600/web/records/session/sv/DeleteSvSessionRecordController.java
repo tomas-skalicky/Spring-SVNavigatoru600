@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.svnavigatoru600.domain.records.SessionRecordType;
 import com.svnavigatoru600.service.records.SessionRecordService;
+import com.svnavigatoru600.url.CommonUrlParts;
+import com.svnavigatoru600.url.records.session.SvUrlParts;
 import com.svnavigatoru600.web.records.session.AbstractDeleteRecordController;
 
 /**
@@ -20,19 +22,17 @@ import com.svnavigatoru600.web.records.session.AbstractDeleteRecordController;
 @Controller
 public class DeleteSvSessionRecordController extends AbstractDeleteRecordController {
 
-    private static final String BASE_URL = "/zapisy-z-jednani/sv/";
-
     /**
      * Constructor.
      */
     @Inject
     public DeleteSvSessionRecordController(SessionRecordService recordService, MessageSource messageSource) {
-        super(DeleteSvSessionRecordController.BASE_URL, new PageViews(),
-                SessionRecordType.SESSION_RECORD_OF_SV, recordService, messageSource);
+        super(SvUrlParts.BASE_URL, new PageViews(), SessionRecordType.SESSION_RECORD_OF_SV, recordService,
+                messageSource);
     }
 
     @Override
-    @RequestMapping(value = DeleteSvSessionRecordController.BASE_URL + "existujici/{recordId}/smazat/", method = RequestMethod.GET)
+    @RequestMapping(value = SvUrlParts.EXISTING_URL + "{recordId}/" + CommonUrlParts.DELETE_EXTENSION, method = RequestMethod.GET)
     public String delete(@PathVariable int recordId, HttpServletRequest request, ModelMap model) {
         return super.delete(recordId, request, model);
     }

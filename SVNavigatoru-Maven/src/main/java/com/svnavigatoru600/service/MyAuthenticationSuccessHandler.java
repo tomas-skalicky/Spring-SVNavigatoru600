@@ -11,6 +11,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
 
 import com.svnavigatoru600.domain.users.User;
+import com.svnavigatoru600.url.ErrorsUrlParts;
+import com.svnavigatoru600.url.users.UserAccountUrlParts;
+import com.svnavigatoru600.url.users.UserAdministrationUrlParts;
 
 /**
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
@@ -36,11 +39,11 @@ public class MyAuthenticationSuccessHandler extends SavedRequestAwareAuthenticat
 
         String targetUrl;
         if (user.canSeeUsers()) {
-            targetUrl = "/administrace-uzivatelu/";
+            targetUrl = UserAdministrationUrlParts.BASE_URL;
         } else if (user.canSeeHisAccount()) {
-            targetUrl = "/uzivatelsky-ucet/";
+            targetUrl = UserAccountUrlParts.BASE_URL;
         } else {
-            targetUrl = "/chyby/403/";
+            targetUrl = ErrorsUrlParts.ERROR_403;
         }
         LogFactory.getLog(this.getClass()).debug("Redirecting to the URL: " + targetUrl);
         this.getRedirectStrategy().sendRedirect(request, response, targetUrl);

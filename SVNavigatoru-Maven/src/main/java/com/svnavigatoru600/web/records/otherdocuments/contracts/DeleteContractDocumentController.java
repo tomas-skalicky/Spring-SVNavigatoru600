@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.svnavigatoru600.domain.records.OtherDocumentRecordType;
 import com.svnavigatoru600.service.records.OtherDocumentRecordService;
+import com.svnavigatoru600.url.CommonUrlParts;
+import com.svnavigatoru600.url.records.otherdocuments.ContractsUrlParts;
 import com.svnavigatoru600.web.records.otherdocuments.AbstractDeleteDocumentController;
 
 /**
@@ -20,20 +22,18 @@ import com.svnavigatoru600.web.records.otherdocuments.AbstractDeleteDocumentCont
 @Controller
 public class DeleteContractDocumentController extends AbstractDeleteDocumentController {
 
-    private static final String BASE_URL = "/dalsi-dokumenty/smlouvy/";
-
     /**
      * Constructor.
      */
     @Inject
     public DeleteContractDocumentController(OtherDocumentRecordService recordService,
             MessageSource messageSource) {
-        super(DeleteContractDocumentController.BASE_URL, new PageViews(), OtherDocumentRecordType.CONTRACT,
-                recordService, messageSource);
+        super(ContractsUrlParts.BASE_URL, new PageViews(), OtherDocumentRecordType.CONTRACT, recordService,
+                messageSource);
     }
 
     @Override
-    @RequestMapping(value = DeleteContractDocumentController.BASE_URL + "existujici/{recordId}/smazat/", method = RequestMethod.GET)
+    @RequestMapping(value = ContractsUrlParts.EXISTING_URL + "{recordId}/" + CommonUrlParts.DELETE_EXTENSION, method = RequestMethod.GET)
     public String delete(@PathVariable int recordId, HttpServletRequest request, ModelMap model) {
         return super.delete(recordId, request, model);
     }

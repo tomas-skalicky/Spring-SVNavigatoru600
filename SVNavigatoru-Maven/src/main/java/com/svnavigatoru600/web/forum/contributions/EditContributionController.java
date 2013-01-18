@@ -18,6 +18,8 @@ import org.springframework.web.bind.support.SessionStatus;
 
 import com.svnavigatoru600.domain.forum.Contribution;
 import com.svnavigatoru600.service.forum.ContributionService;
+import com.svnavigatoru600.url.CommonUrlParts;
+import com.svnavigatoru600.url.forum.ContributionsUrlParts;
 import com.svnavigatoru600.viewmodel.forum.contributions.EditContribution;
 import com.svnavigatoru600.viewmodel.forum.contributions.validator.EditContributionValidator;
 import com.svnavigatoru600.web.AbstractMetaController;
@@ -29,8 +31,8 @@ import com.svnavigatoru600.web.SendNotificationEditModelFiller;
 @Controller
 public class EditContributionController extends AbstractNewEditContributionController {
 
-    private static final String REQUEST_MAPPING_BASE_URL = EditContributionController.BASE_URL
-            + "{threadId}/prispevky/existujici/{contributionId}/";
+    private static final String BASE_URL = ContributionsUrlParts.BASE_URL + "{threadId}/"
+            + ContributionsUrlParts.CONTRIBUTIONS_EXISTING_EXTENSION + "{contributionId}/";
     /**
      * Code of the error message used when the {@link DataAccessException} is thrown.
      */
@@ -46,7 +48,7 @@ public class EditContributionController extends AbstractNewEditContributionContr
         super(contributionService, sendNotificationModelFiller, validator, messageSource);
     }
 
-    @RequestMapping(value = EditContributionController.REQUEST_MAPPING_BASE_URL, method = RequestMethod.GET)
+    @RequestMapping(value = EditContributionController.BASE_URL, method = RequestMethod.GET)
     public String initForm(@PathVariable int threadId, @PathVariable int contributionId,
             HttpServletRequest request, ModelMap model) {
 
@@ -65,7 +67,7 @@ public class EditContributionController extends AbstractNewEditContributionContr
         return PageViews.EDIT.getViewName();
     }
 
-    @RequestMapping(value = EditContributionController.REQUEST_MAPPING_BASE_URL + "ulozeno/", method = RequestMethod.GET)
+    @RequestMapping(value = EditContributionController.BASE_URL + CommonUrlParts.SAVED_EXTENSION, method = RequestMethod.GET)
     public String initFormAfterSave(@PathVariable int threadId, @PathVariable int contributionId,
             HttpServletRequest request, ModelMap model) {
         String view = this.initForm(threadId, contributionId, request, model);
@@ -73,7 +75,7 @@ public class EditContributionController extends AbstractNewEditContributionContr
         return view;
     }
 
-    @RequestMapping(value = EditContributionController.REQUEST_MAPPING_BASE_URL, method = RequestMethod.POST)
+    @RequestMapping(value = EditContributionController.BASE_URL, method = RequestMethod.POST)
     @Transactional
     public String processSubmittedForm(
             @ModelAttribute(EditContributionController.COMMAND) EditContribution command,
@@ -102,9 +104,10 @@ public class EditContributionController extends AbstractNewEditContributionContr
             status.setComplete();
 
             // Returns the form success view.
-            model.addAttribute(AbstractMetaController.REDIRECTION_ATTRIBUTE, String.format(
-                    "%s%d/prispevky/existujici/%d/ulozeno/", AbstractContributionController.BASE_URL,
-                    threadId, contributionId));
+            model.addAttribute(AbstractMetaController.REDIRECTION_ATTRIBUTE, String.format("%s%d/%s%d/%s",
+                    ContributionsUrlParts.BASE_URL, threadId,
+                    ContributionsUrlParts.CONTRIBUTIONS_EXISTING_EXTENSION, contributionId,
+                    CommonUrlParts.SAVED_EXTENSION));
             return AbstractMetaController.REDIRECTION_PAGE;
 
         } catch (DataAccessException e) {

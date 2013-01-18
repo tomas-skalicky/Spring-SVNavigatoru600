@@ -6,6 +6,7 @@ import org.springframework.context.MessageSource;
 
 import com.svnavigatoru600.domain.News;
 import com.svnavigatoru600.service.util.Localization;
+import com.svnavigatoru600.url.news.NewsUrlParts;
 import com.svnavigatoru600.viewmodel.SendNotification;
 
 /**
@@ -13,7 +14,6 @@ import com.svnavigatoru600.viewmodel.SendNotification;
  */
 public abstract class AbstractGoToFormResponse extends AbstractNewsResponse {
 
-    private static final String SECTION_URL = "/novinky/";
     /**
      * News which is to be visualised in the form.
      */
@@ -41,7 +41,7 @@ public abstract class AbstractGoToFormResponse extends AbstractNewsResponse {
     }
 
     protected void setFormAction(String formActionEnding, HttpServletRequest request) {
-        this.formAction = new StringBuffer(request.getContextPath()).append(SECTION_URL)
+        this.formAction = new StringBuffer(request.getContextPath()).append(NewsUrlParts.BASE_URL)
                 .append(formActionEnding).toString();
     }
 

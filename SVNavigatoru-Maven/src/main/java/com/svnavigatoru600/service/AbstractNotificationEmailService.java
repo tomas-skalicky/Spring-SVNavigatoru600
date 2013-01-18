@@ -9,9 +9,9 @@ import org.springframework.stereotype.Service;
 
 import com.svnavigatoru600.domain.users.NotificationType;
 import com.svnavigatoru600.domain.users.User;
-import com.svnavigatoru600.service.users.UserAccountUrlParts;
 import com.svnavigatoru600.service.util.HttpRequestUtils;
 import com.svnavigatoru600.service.util.Localization;
+import com.svnavigatoru600.url.users.UserAccountUrlParts;
 
 /**
  * Ancestor of all {@link Service Services} which provide sending of emails concerning notifications of new
@@ -39,9 +39,8 @@ public abstract class AbstractNotificationEmailService extends AbstractEmailServ
      */
     private String getLinkForUnsubscription(User user, HttpServletRequest request) {
         return String.format("%s%s%s/%s%d/", HttpRequestUtils.getContextHomeDirectory(request),
-                UserAccountUrlParts.BASE_URL, user.getUsername(),
-                UserAccountUrlParts.UNSUBSCRIBE_FROM_NOTIFICATIONS_URL_PART, this.getNotificationType()
-                        .ordinal());
+                UserAccountUrlParts.BASE_URL, user.getUsername(), UserAccountUrlParts.UNSUBSCRIBE_EXTENSION,
+                this.getNotificationType().ordinal());
     }
 
     /**
