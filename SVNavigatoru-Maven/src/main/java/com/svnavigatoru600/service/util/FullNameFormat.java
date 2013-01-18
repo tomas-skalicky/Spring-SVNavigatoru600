@@ -45,7 +45,7 @@ public enum FullNameFormat {
     /**
      * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
      */
-    @VisitorPattern(participants = { FullNameFormatVisitor.class, UserFullNameFormatter.class })
+    @VisitorPattern
     @Visitor
     public interface FullNameFormatVisitor<E> {
         E visitFirstLast();

@@ -9,16 +9,16 @@ import com.svnavigatoru600.service.util.FullNameFormat.FullNameFormatVisitor;
 /**
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
-@VisitorPattern(participants = { FullNameFormatVisitor.class, UserFullNameFormatter.class })
+@VisitorPattern
 @ConcreteVisitor
-public class UserFullNameFormatter implements FullNameFormatVisitor<String> {
+public class UserFullNameFormatterVisitor implements FullNameFormatVisitor<String> {
 
     /**
      * {@link User} whose full name will be formatted.
      */
     private final User user;
 
-    public UserFullNameFormatter(User user) {
+    public UserFullNameFormatterVisitor(User user) {
         this.user = user;
     }
 

@@ -16,7 +16,7 @@ import com.svnavigatoru600.service.users.UserService;
 import com.svnavigatoru600.service.util.AuthorityUtils;
 import com.svnavigatoru600.service.util.CheckboxUtils;
 import com.svnavigatoru600.service.util.FullNameFormat;
-import com.svnavigatoru600.service.util.UserFullNameFormatter;
+import com.svnavigatoru600.service.util.UserFullNameFormatterVisitor;
 
 /**
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
@@ -136,7 +136,7 @@ public class User implements UserDetails, Serializable {
      * Gets the full name of this {@link User} in the given {@link FullNameFormat}.
      */
     public String getFullName(FullNameFormat format) {
-        return format.accept(new UserFullNameFormatter(this));
+        return format.accept(new UserFullNameFormatterVisitor(this));
     }
 
     public String getEmail() {
