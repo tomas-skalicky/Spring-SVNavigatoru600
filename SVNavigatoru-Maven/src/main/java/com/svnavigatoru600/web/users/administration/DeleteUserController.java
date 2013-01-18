@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.svnavigatoru600.service.users.UserService;
+import com.svnavigatoru600.url.CommonUrlParts;
+import com.svnavigatoru600.url.users.UserAdministrationUrlParts;
 import com.svnavigatoru600.web.AbstractMetaController;
 
 /**
@@ -21,8 +23,6 @@ import com.svnavigatoru600.web.AbstractMetaController;
  */
 @Controller
 public class DeleteUserController extends AbstractUserController {
-
-    private static final String BASE_URL = "/administrace-uzivatelu/";
 
     /**
      * Constructor.
@@ -32,15 +32,16 @@ public class DeleteUserController extends AbstractUserController {
         super(userService, messageSource);
     }
 
-    @RequestMapping(value = DeleteUserController.BASE_URL + "existujici/{username}/smazat/", method = RequestMethod.GET)
+    @RequestMapping(value = UserAdministrationUrlParts.EXISTING_URL + "{username}/"
+            + CommonUrlParts.DELETE_EXTENSION, method = RequestMethod.GET)
     @Transactional
     public String delete(@PathVariable String username, HttpServletRequest request, ModelMap model) {
         try {
             this.getUserService().delete(username, request, this.getMessageSource());
 
             // Returns the form success view.
-            model.addAttribute(AbstractMetaController.REDIRECTION_ATTRIBUTE, DeleteUserController.BASE_URL
-                    + "smazano/");
+            model.addAttribute(AbstractMetaController.REDIRECTION_ATTRIBUTE,
+                    UserAdministrationUrlParts.DELETED_URL);
             return AbstractMetaController.REDIRECTION_PAGE;
 
         } catch (DataAccessException e) {

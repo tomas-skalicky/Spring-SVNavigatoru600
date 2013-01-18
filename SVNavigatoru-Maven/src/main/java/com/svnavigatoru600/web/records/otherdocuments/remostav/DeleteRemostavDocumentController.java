@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.svnavigatoru600.domain.records.OtherDocumentRecordType;
 import com.svnavigatoru600.service.records.OtherDocumentRecordService;
+import com.svnavigatoru600.url.CommonUrlParts;
+import com.svnavigatoru600.url.records.otherdocuments.RemostavDocumentsUrlParts;
 import com.svnavigatoru600.web.records.otherdocuments.AbstractDeleteDocumentController;
 
 /**
@@ -20,20 +22,19 @@ import com.svnavigatoru600.web.records.otherdocuments.AbstractDeleteDocumentCont
 @Controller
 public class DeleteRemostavDocumentController extends AbstractDeleteDocumentController {
 
-    private static final String BASE_URL = "/remostav/dokumentace/";
-
     /**
      * Constructor.
      */
     @Inject
     public DeleteRemostavDocumentController(OtherDocumentRecordService recordService,
             MessageSource messageSource) {
-        super(DeleteRemostavDocumentController.BASE_URL, new PageViews(), OtherDocumentRecordType.REMOSTAV,
+        super(RemostavDocumentsUrlParts.BASE_URL, new PageViews(), OtherDocumentRecordType.REMOSTAV,
                 recordService, messageSource);
     }
 
     @Override
-    @RequestMapping(value = DeleteRemostavDocumentController.BASE_URL + "existujici/{recordId}/smazat/", method = RequestMethod.GET)
+    @RequestMapping(value = RemostavDocumentsUrlParts.EXISTING_URL + "{recordId}/"
+            + CommonUrlParts.DELETE_EXTENSION, method = RequestMethod.GET)
     public String delete(@PathVariable int recordId, HttpServletRequest request, ModelMap model) {
         return super.delete(recordId, request, model);
     }

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.support.SessionStatus;
 
 import com.svnavigatoru600.service.records.OtherDocumentRecordService;
+import com.svnavigatoru600.url.records.otherdocuments.AllDocumentsUrlParts;
 import com.svnavigatoru600.viewmodel.records.otherdocuments.NewRecord;
 import com.svnavigatoru600.viewmodel.records.otherdocuments.validator.NewRecordValidator;
 import com.svnavigatoru600.web.SendNotificationNewModelFiller;
@@ -24,8 +25,6 @@ import com.svnavigatoru600.web.records.otherdocuments.AbstractNewDocumentControl
 @Controller
 public class NewAllDocumentController extends AbstractNewDocumentController {
 
-    private static final String BASE_URL = "/dalsi-dokumenty/";
-
     /**
      * Constructor.
      */
@@ -33,18 +32,18 @@ public class NewAllDocumentController extends AbstractNewDocumentController {
     public NewAllDocumentController(OtherDocumentRecordService recordService,
             SendNotificationNewModelFiller sendNotificationModelFiller, NewRecordValidator validator,
             MessageSource messageSource) {
-        super(NewAllDocumentController.BASE_URL, new PageViews(), recordService, sendNotificationModelFiller,
+        super(AllDocumentsUrlParts.BASE_URL, new PageViews(), recordService, sendNotificationModelFiller,
                 validator, messageSource);
     }
 
     @Override
-    @RequestMapping(value = NewAllDocumentController.BASE_URL + "novy/", method = RequestMethod.GET)
+    @RequestMapping(value = AllDocumentsUrlParts.NEW_URL, method = RequestMethod.GET)
     public String initForm(HttpServletRequest request, ModelMap model) {
         return super.initForm(request, model);
     }
 
     @Override
-    @RequestMapping(value = NewAllDocumentController.BASE_URL + "novy/", method = RequestMethod.POST)
+    @RequestMapping(value = AllDocumentsUrlParts.NEW_URL, method = RequestMethod.POST)
     public String processSubmittedForm(
             @ModelAttribute(AbstractNewDocumentController.COMMAND) NewRecord command, BindingResult result,
             SessionStatus status, HttpServletRequest request, ModelMap model) {

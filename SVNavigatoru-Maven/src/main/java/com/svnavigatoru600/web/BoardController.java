@@ -14,6 +14,7 @@ import org.springframework.web.bind.support.SessionStatus;
 import com.svnavigatoru600.domain.WysiwygSection;
 import com.svnavigatoru600.domain.WysiwygSectionName;
 import com.svnavigatoru600.service.WysiwygSectionService;
+import com.svnavigatoru600.url.BoardInfoUrlParts;
 
 /**
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
@@ -26,24 +27,24 @@ public class BoardController extends AbstractWysiwygSectionController {
      */
     @Inject
     public BoardController(WysiwygSectionService sectionService) {
-        super(sectionService, WysiwygSectionName.BOARD, "viewBoard", "editBoard", "/vybor/");
+        super(sectionService, WysiwygSectionName.BOARD, "viewBoard", "editBoard", BoardInfoUrlParts.BASE_URL);
     }
 
     @Override
-    @RequestMapping(value = "/vybor/", method = RequestMethod.GET)
+    @RequestMapping(value = BoardInfoUrlParts.BASE_URL, method = RequestMethod.GET)
     public String showViewPage(ModelMap model) {
         return super.showViewPage(model);
     }
 
     @Override
-    @RequestMapping(value = "/vybor/editace/", method = RequestMethod.GET)
+    @RequestMapping(value = BoardInfoUrlParts.EDIT_URL, method = RequestMethod.GET)
     @PreAuthorize("hasRole('ROLE_MEMBER_OF_BOARD')")
     public String showEditPage(ModelMap model) {
         return super.showEditPage(model);
     }
 
     @Override
-    @RequestMapping(value = "/vybor/editace/ulozit/", method = RequestMethod.POST)
+    @RequestMapping(value = BoardInfoUrlParts.SAVE_EDIT_URL, method = RequestMethod.POST)
     @PreAuthorize("hasRole('ROLE_MEMBER_OF_BOARD')")
     public String saveChanges(@ModelAttribute("wysiwygSectionEditCommand") WysiwygSection command,
             BindingResult result, SessionStatus status, ModelMap model) {
@@ -51,7 +52,7 @@ public class BoardController extends AbstractWysiwygSectionController {
     }
 
     @Override
-    @RequestMapping(value = "/vybor/editace/ulozit-a-skoncit/", method = RequestMethod.POST)
+    @RequestMapping(value = BoardInfoUrlParts.SAVE_EDIT_AND_EXIT_URL, method = RequestMethod.POST)
     @PreAuthorize("hasRole('ROLE_MEMBER_OF_BOARD')")
     public String saveChangesAndFinishEditing(
             @ModelAttribute("wysiwygSectionEditCommand") WysiwygSection command, BindingResult result,
@@ -60,7 +61,7 @@ public class BoardController extends AbstractWysiwygSectionController {
     }
 
     @Override
-    @RequestMapping(value = "/vybor/editace/neukladat-a-skoncit/", method = RequestMethod.POST)
+    @RequestMapping(value = BoardInfoUrlParts.DONT_SAVE_EDIT_AND_EXIT_URL, method = RequestMethod.POST)
     @PreAuthorize("hasRole('ROLE_MEMBER_OF_BOARD')")
     public String cancelChangesAndFinishEditing(ModelMap model) {
         return super.cancelChangesAndFinishEditing(model);

@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.svnavigatoru600.service.eventcalendar.CalendarEventService;
+import com.svnavigatoru600.url.CommonUrlParts;
+import com.svnavigatoru600.url.eventcalendar.EventsUrlParts;
 import com.svnavigatoru600.web.AbstractMetaController;
 
 /**
@@ -22,9 +24,6 @@ import com.svnavigatoru600.web.AbstractMetaController;
 @Controller
 public class DeleteEventController extends AbstractEventController {
 
-    private static final String REQUEST_MAPPING_BASE_URL = DeleteEventController.BASE_URL
-            + "existujici/{eventId}/smazat/";
-    private static final String SUCCESSFUL_DELETE_URL = DeleteEventController.BASE_URL + "smazano/";
     /**
      * Code of the database error message used when the {@link DataAccessException} is thrown.
      */
@@ -44,15 +43,14 @@ public class DeleteEventController extends AbstractEventController {
         super(eventService, messageSource);
     }
 
-    @RequestMapping(value = DeleteEventController.REQUEST_MAPPING_BASE_URL, method = RequestMethod.GET)
+    @RequestMapping(value = EventsUrlParts.EXISTING_URL + "{eventId}/" + CommonUrlParts.DELETE_EXTENSION, method = RequestMethod.GET)
     @Transactional
     public String delete(@PathVariable int eventId, HttpServletRequest request, ModelMap model) {
         try {
             this.getEventService().delete(eventId);
 
             // Returns the form success view.
-            model.addAttribute(AbstractMetaController.REDIRECTION_ATTRIBUTE,
-                    DeleteEventController.SUCCESSFUL_DELETE_URL);
+            model.addAttribute(AbstractMetaController.REDIRECTION_ATTRIBUTE, EventsUrlParts.DELETED_URL);
             return AbstractMetaController.REDIRECTION_PAGE;
 
         } catch (DataAccessException e) {

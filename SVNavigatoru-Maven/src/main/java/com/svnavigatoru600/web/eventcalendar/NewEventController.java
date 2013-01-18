@@ -19,6 +19,7 @@ import com.svnavigatoru600.domain.eventcalendar.CalendarEvent;
 import com.svnavigatoru600.domain.eventcalendar.PriorityType;
 import com.svnavigatoru600.service.eventcalendar.CalendarEventService;
 import com.svnavigatoru600.service.util.Localization;
+import com.svnavigatoru600.url.eventcalendar.EventsUrlParts;
 import com.svnavigatoru600.viewmodel.eventcalendar.NewEvent;
 import com.svnavigatoru600.viewmodel.eventcalendar.validator.NewEventValidator;
 import com.svnavigatoru600.web.AbstractMetaController;
@@ -30,7 +31,6 @@ import com.svnavigatoru600.web.SendNotificationNewModelFiller;
 @Controller
 public class NewEventController extends AbstractNewEditEventController {
 
-    private static final String REQUEST_MAPPING_BASE_URL = NewEventController.BASE_URL + "novy/";
     /**
      * Code of the error message used when the {@link DataAccessException} is thrown.
      */
@@ -49,7 +49,7 @@ public class NewEventController extends AbstractNewEditEventController {
     /**
      * Initializes the form.
      */
-    @RequestMapping(value = NewEventController.REQUEST_MAPPING_BASE_URL, method = RequestMethod.GET)
+    @RequestMapping(value = EventsUrlParts.NEW_URL, method = RequestMethod.GET)
     public String initForm(HttpServletRequest request, ModelMap model) {
 
         NewEvent command = new NewEvent();
@@ -74,7 +74,7 @@ public class NewEventController extends AbstractNewEditEventController {
      * 
      * @return The name of the view which is to be shown.
      */
-    @RequestMapping(value = NewEventController.REQUEST_MAPPING_BASE_URL, method = RequestMethod.POST)
+    @RequestMapping(value = EventsUrlParts.NEW_URL, method = RequestMethod.POST)
     @Transactional
     public String processSubmittedForm(@ModelAttribute(NewEventController.COMMAND) NewEvent command,
             BindingResult result, SessionStatus status, HttpServletRequest request, ModelMap model) {
@@ -102,8 +102,7 @@ public class NewEventController extends AbstractNewEditEventController {
             status.setComplete();
 
             // Returns the form success view.
-            model.addAttribute(AbstractMetaController.REDIRECTION_ATTRIBUTE,
-                    String.format("%svytvoreno/", AbstractEventController.BASE_URL));
+            model.addAttribute(AbstractMetaController.REDIRECTION_ATTRIBUTE, EventsUrlParts.CREATED_URL);
             return AbstractMetaController.REDIRECTION_PAGE;
 
         } catch (DataAccessException e) {

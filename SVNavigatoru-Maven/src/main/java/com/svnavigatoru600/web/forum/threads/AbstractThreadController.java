@@ -17,7 +17,6 @@ import com.svnavigatoru600.web.AbstractPrivateSectionMetaController;
 @PreAuthorize("hasRole('ROLE_MEMBER_OF_SV')")
 public abstract class AbstractThreadController extends AbstractPrivateSectionMetaController {
 
-    protected static final String BASE_URL = "/forum/temata/";
     private final ThreadService threadService;
     private final MessageSource messageSource;
 

@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.svnavigatoru600.domain.records.OtherDocumentRecordType;
 import com.svnavigatoru600.service.records.OtherDocumentRecordService;
+import com.svnavigatoru600.url.records.RecordsCommonUrlParts;
+import com.svnavigatoru600.url.records.otherdocuments.OthersUrlParts;
 import com.svnavigatoru600.web.records.otherdocuments.AbstractRetrieveDocumentController;
 
 /**
@@ -20,20 +22,19 @@ import com.svnavigatoru600.web.records.otherdocuments.AbstractRetrieveDocumentCo
 @Controller
 public class RetrieveOtherDocumentController extends AbstractRetrieveDocumentController {
 
-    private static final String BASE_URL = "/dalsi-dokumenty/ostatni/";
-
     /**
      * Constructor.
      */
     @Inject
     public RetrieveOtherDocumentController(OtherDocumentRecordService recordService,
             MessageSource messageSource) {
-        super(RetrieveOtherDocumentController.BASE_URL, new PageViews(), OtherDocumentRecordType.OTHER,
-                recordService, messageSource);
+        super(OthersUrlParts.BASE_URL, new PageViews(), OtherDocumentRecordType.OTHER, recordService,
+                messageSource);
     }
 
     @Override
-    @RequestMapping(value = RetrieveOtherDocumentController.BASE_URL + "existujici/{recordId}/stahnout/", method = RequestMethod.GET)
+    @RequestMapping(value = OthersUrlParts.EXISTING_URL + "{recordId}/"
+            + RecordsCommonUrlParts.DOWNLOAD_EXTENSION, method = RequestMethod.GET)
     public void retrieve(@PathVariable int recordId, HttpServletResponse response, ModelMap model) {
         super.retrieve(recordId, response, model);
     }

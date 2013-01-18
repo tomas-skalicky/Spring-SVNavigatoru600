@@ -12,6 +12,7 @@ import org.springframework.ui.ModelMap;
 
 import com.svnavigatoru600.domain.records.SessionRecordType;
 import com.svnavigatoru600.service.records.SessionRecordService;
+import com.svnavigatoru600.url.CommonUrlParts;
 import com.svnavigatoru600.web.AbstractMetaController;
 import com.svnavigatoru600.web.records.AbstractPageViews;
 
@@ -29,7 +30,6 @@ public abstract class AbstractDeleteRecordController extends AbstractSessionReco
      * Code of the database error message used when the {@link DataAccessException} is thrown.
      */
     public static final String DATABASE_ERROR_MESSAGE_CODE = "session-records.deletion-failed-due-to-database-error";
-    private static final String SUCCESSFUL_DELETE_URL_END = "smazano/";
     private final String successfulDeleteUrl;
 
     /**
@@ -40,8 +40,7 @@ public abstract class AbstractDeleteRecordController extends AbstractSessionReco
             SessionRecordService recordService, MessageSource messageSource) {
         // Note that allRecordTypes is set up during the creation of the parent.
         super(baseUrl, views, recordService, messageSource);
-        this.successfulDeleteUrl = this.getBaseUrl()
-                + AbstractDeleteRecordController.SUCCESSFUL_DELETE_URL_END;
+        this.successfulDeleteUrl = this.getBaseUrl() + CommonUrlParts.DELETED_EXTENSION;
     }
 
     /**
@@ -51,8 +50,7 @@ public abstract class AbstractDeleteRecordController extends AbstractSessionReco
     public AbstractDeleteRecordController(String baseUrl, AbstractPageViews views,
             SessionRecordType recordType, SessionRecordService recordService, MessageSource messageSource) {
         super(baseUrl, views, recordType, recordService, messageSource);
-        this.successfulDeleteUrl = this.getBaseUrl()
-                + AbstractDeleteRecordController.SUCCESSFUL_DELETE_URL_END;
+        this.successfulDeleteUrl = this.getBaseUrl() + CommonUrlParts.DELETED_EXTENSION;
     }
 
     @Transactional

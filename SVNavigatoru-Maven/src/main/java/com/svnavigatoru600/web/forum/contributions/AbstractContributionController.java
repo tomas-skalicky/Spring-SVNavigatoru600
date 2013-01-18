@@ -17,7 +17,6 @@ import com.svnavigatoru600.web.AbstractPrivateSectionMetaController;
 @PreAuthorize("hasRole('ROLE_MEMBER_OF_SV')")
 public abstract class AbstractContributionController extends AbstractPrivateSectionMetaController {
 
-    protected static final String BASE_URL = "/forum/temata/existujici/";
     private final ContributionService contributionService;
     private final MessageSource messageSource;
 

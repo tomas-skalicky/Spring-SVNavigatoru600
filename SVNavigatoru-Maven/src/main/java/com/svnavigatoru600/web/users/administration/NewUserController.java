@@ -19,6 +19,7 @@ import com.svnavigatoru600.domain.users.User;
 import com.svnavigatoru600.service.users.AuthorityService;
 import com.svnavigatoru600.service.users.UserService;
 import com.svnavigatoru600.service.util.AuthorityUtils;
+import com.svnavigatoru600.url.users.UserAdministrationUrlParts;
 import com.svnavigatoru600.viewmodel.users.AdministrateUserData;
 import com.svnavigatoru600.viewmodel.users.validator.NewUserValidator;
 import com.svnavigatoru600.web.AbstractMetaController;
@@ -31,8 +32,6 @@ import com.svnavigatoru600.web.AbstractMetaController;
 @Controller
 public class NewUserController extends AbstractNewEditUserController {
 
-    private static final String BASE_URL = "/administrace-uzivatelu/";
-
     /**
      * Constructor.
      */
@@ -44,7 +43,7 @@ public class NewUserController extends AbstractNewEditUserController {
     /**
      * Initializes the form.
      */
-    @RequestMapping(value = NewUserController.BASE_URL + "novy/", method = RequestMethod.GET)
+    @RequestMapping(value = UserAdministrationUrlParts.NEW_URL, method = RequestMethod.GET)
     public String initForm(HttpServletRequest request, ModelMap model) {
 
         AdministrateUserData command = new AdministrateUserData();
@@ -70,7 +69,7 @@ public class NewUserController extends AbstractNewEditUserController {
      * 
      * @return The name of the view which is to be shown.
      */
-    @RequestMapping(value = NewUserController.BASE_URL + "novy/", method = RequestMethod.POST)
+    @RequestMapping(value = UserAdministrationUrlParts.NEW_URL, method = RequestMethod.POST)
     @Transactional
     public String processSubmittedForm(
             @ModelAttribute(NewUserController.COMMAND) AdministrateUserData command, BindingResult result,
@@ -96,8 +95,8 @@ public class NewUserController extends AbstractNewEditUserController {
             status.setComplete();
 
             // Returns the form success view.
-            model.addAttribute(AbstractMetaController.REDIRECTION_ATTRIBUTE, NewUserController.BASE_URL
-                    + "vytvoreno/");
+            model.addAttribute(AbstractMetaController.REDIRECTION_ATTRIBUTE,
+                    UserAdministrationUrlParts.CREATED_URL);
             return AbstractMetaController.REDIRECTION_PAGE;
 
         } catch (DataAccessException e) {

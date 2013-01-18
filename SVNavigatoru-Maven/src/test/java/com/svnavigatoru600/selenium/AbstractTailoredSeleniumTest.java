@@ -3,6 +3,11 @@ package com.svnavigatoru600.selenium;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
+import com.svnavigatoru600.url.CommonUrlParts;
+import com.svnavigatoru600.url.LoginUrlParts;
+import com.svnavigatoru600.url.news.NewsUrlParts;
+import com.svnavigatoru600.url.users.UserAccountUrlParts;
+
 /**
  * Appends to the {@link AbstractSeleniumTest} class useful constants and methods which are
  * application-specific.
@@ -24,7 +29,7 @@ public abstract class AbstractTailoredSeleniumTest extends AbstractSeleniumTest 
     /**
      * The regular expression of URL of the login page.
      */
-    protected static final String LOGIN_PAGE_URL_REG_EXP = ".*/prihlaseni/";
+    protected static final String LOGIN_PAGE_URL_REG_EXP = ".*" + LoginUrlParts.BASE_URL;
     /**
      * The ID of the login/username element in the login page.
      */
@@ -41,7 +46,7 @@ public abstract class AbstractTailoredSeleniumTest extends AbstractSeleniumTest 
     /**
      * The regular expression of URL of the homepage.
      */
-    protected static final String HOMEPAGE_URL_REG_EXP = ".*/novinky/";
+    protected static final String HOMEPAGE_URL_REG_EXP = ".*" + NewsUrlParts.BASE_URL;
 
     /**
      * The text of the link to the user account page.
@@ -50,12 +55,13 @@ public abstract class AbstractTailoredSeleniumTest extends AbstractSeleniumTest 
     /**
      * The regular expression of URL of the user account page.
      */
-    protected static final String USER_ACCOUNT_PAGE_URL_REG_EXP = ".*/uzivatelsky-ucet/";
+    protected static final String USER_ACCOUNT_PAGE_URL_REG_EXP = ".*" + UserAccountUrlParts.BASE_URL;
     /**
      * The regular expression of URL of the page which is shown when changes of user account have been
      * successfully saved.
      */
-    protected static final String USER_ACCOUNT_CHANGED_URL_REG_EXP = ".*/uzivatelsky-ucet/ulozeno/";
+    protected static final String USER_ACCOUNT_CHANGED_URL_REG_EXP = USER_ACCOUNT_PAGE_URL_REG_EXP
+            + CommonUrlParts.SAVED_EXTENSION;
     /**
      * The ID of the email element in the user account page.
      */

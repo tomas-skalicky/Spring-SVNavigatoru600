@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.context.MessageSource;
 
 import com.svnavigatoru600.domain.News;
+import com.svnavigatoru600.url.CommonUrlParts;
 import com.svnavigatoru600.viewmodel.SendNotification;
 
 /**
@@ -12,7 +13,6 @@ import com.svnavigatoru600.viewmodel.SendNotification;
  */
 public class GoToEditFormResponse extends AbstractGoToFormResponse {
 
-    private static final String FORM_ACTION_MIDDLE = "existujici/";
     private static final String SUBMIT_BUTTON_TITLE_CODE = "edit.save-changes";
 
     public GoToEditFormResponse(News news, SendNotification sendNotification, MessageSource messageSource,
@@ -24,7 +24,7 @@ public class GoToEditFormResponse extends AbstractGoToFormResponse {
     }
 
     private void setFormAction(HttpServletRequest request) {
-        StringBuffer endingBuilder = new StringBuffer(FORM_ACTION_MIDDLE);
+        StringBuffer endingBuilder = new StringBuffer(CommonUrlParts.EXISTING_EXTENSION);
         endingBuilder.append(this.getNews().getId());
         endingBuilder.append("/");
         super.setFormAction(endingBuilder.toString(), request);

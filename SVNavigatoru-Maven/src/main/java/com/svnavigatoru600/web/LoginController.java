@@ -5,6 +5,8 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.svnavigatoru600.url.LoginUrlParts;
+
 /**
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
@@ -13,14 +15,14 @@ public class LoginController extends AbstractMetaController {
 
     private static final String PAGE_VIEW = "login";
 
-    @RequestMapping(value = "/prihlaseni/", method = RequestMethod.GET)
+    @RequestMapping(value = LoginUrlParts.BASE_URL, method = RequestMethod.GET)
     public String login() {
         return LoginController.PAGE_VIEW;
     }
 
-    @RequestMapping(value = "/prihlaseni/neuspech/", method = RequestMethod.GET)
+    @RequestMapping(value = LoginUrlParts.FAIL_URL, method = RequestMethod.GET)
     public String loginFailed(ModelMap model) {
-        model.addAttribute("error", "true");
+        model.addAttribute("error", Boolean.TRUE.toString());
         return LoginController.PAGE_VIEW;
     }
 }

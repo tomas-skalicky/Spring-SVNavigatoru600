@@ -20,6 +20,7 @@ import com.svnavigatoru600.domain.records.SessionRecord;
 import com.svnavigatoru600.domain.records.SessionRecordType;
 import com.svnavigatoru600.service.records.SessionRecordService;
 import com.svnavigatoru600.service.util.Localization;
+import com.svnavigatoru600.url.CommonUrlParts;
 import com.svnavigatoru600.viewmodel.records.session.EditSessionRecord;
 import com.svnavigatoru600.viewmodel.records.session.validator.EditSessionRecordValidator;
 import com.svnavigatoru600.web.AbstractMetaController;
@@ -126,7 +127,7 @@ public abstract class AbstractEditRecordController extends AbstractNewEditRecord
 
             // Returns the form success view.
             model.addAttribute(AbstractMetaController.REDIRECTION_ATTRIBUTE,
-                    String.format("%s%d/ulozeno/", this.getBaseUrl(), recordId));
+                    String.format("%s%d/%s", this.getBaseUrl(), recordId, CommonUrlParts.SAVED_EXTENSION));
             return AbstractMetaController.REDIRECTION_PAGE;
 
         } catch (IllegalStateException e) {

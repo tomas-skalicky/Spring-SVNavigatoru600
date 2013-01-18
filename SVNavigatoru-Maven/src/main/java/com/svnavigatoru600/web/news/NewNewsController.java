@@ -18,6 +18,7 @@ import org.springframework.web.bind.support.SessionStatus;
 
 import com.svnavigatoru600.domain.News;
 import com.svnavigatoru600.service.news.NewsService;
+import com.svnavigatoru600.url.news.NewsUrlParts;
 import com.svnavigatoru600.viewmodel.NewControllerSendNotification;
 import com.svnavigatoru600.viewmodel.SendNotification;
 import com.svnavigatoru600.viewmodel.news.NewNews;
@@ -29,7 +30,6 @@ import com.svnavigatoru600.viewmodel.news.validator.NewNewsValidator;
 @Controller
 public class NewNewsController extends AbstractNewEditNewsController {
 
-    private static final String REQUEST_MAPPING_BASE_URL = NewNewsController.BASE_URL + "novy/";
     /**
      * Code of the error message used when the {@link DataAccessException} is thrown.
      */
@@ -46,7 +46,7 @@ public class NewNewsController extends AbstractNewEditNewsController {
     /**
      * Initialises the form.
      */
-    @RequestMapping(value = NewNewsController.REQUEST_MAPPING_BASE_URL, method = RequestMethod.GET)
+    @RequestMapping(value = NewsUrlParts.NEW_URL, method = RequestMethod.GET)
     public @ResponseBody
     AbstractNewsResponse initForm(HttpServletRequest request, ModelMap model) {
 
@@ -68,7 +68,7 @@ public class NewNewsController extends AbstractNewEditNewsController {
      * 
      * @return Response in the JSON format
      */
-    @RequestMapping(value = NewNewsController.REQUEST_MAPPING_BASE_URL, method = RequestMethod.POST)
+    @RequestMapping(value = NewsUrlParts.NEW_URL, method = RequestMethod.POST)
     @Transactional
     public @ResponseBody
     AbstractNewsResponse processSubmittedForm(@ModelAttribute(NewNewsController.COMMAND) NewNews command,

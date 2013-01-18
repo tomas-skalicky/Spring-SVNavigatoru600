@@ -21,6 +21,7 @@ import org.springframework.web.bind.support.SessionStatus;
 
 import com.svnavigatoru600.domain.users.User;
 import com.svnavigatoru600.service.users.UserService;
+import com.svnavigatoru600.url.LoginUrlParts;
 import com.svnavigatoru600.viewmodel.users.SendNewPassword;
 import com.svnavigatoru600.viewmodel.users.validator.SendNewPasswordValidator;
 
@@ -59,7 +60,7 @@ public class ForgottenPasswordController extends AbstractMetaController {
     /**
      * Initializes the form.
      */
-    @RequestMapping(value = "/prihlaseni/zapomenute-heslo/", method = RequestMethod.GET)
+    @RequestMapping(value = LoginUrlParts.FORGOTTEN_PASSWORD_URL, method = RequestMethod.GET)
     public String initForm(ModelMap model) {
 
         SendNewPassword command = new SendNewPassword();
@@ -97,7 +98,7 @@ public class ForgottenPasswordController extends AbstractMetaController {
      * 
      * @return The name of the view which is to be shown.
      */
-    @RequestMapping(value = "/prihlaseni/poslat-nove-heslo/", method = RequestMethod.POST)
+    @RequestMapping(value = LoginUrlParts.SEND_NEW_PASSWORD_URL, method = RequestMethod.POST)
     public String processSubmittedForm(@ModelAttribute("sendNewPasswordCommand") SendNewPassword command,
             BindingResult result, SessionStatus status, HttpServletRequest request, ModelMap model) {
 
@@ -117,7 +118,7 @@ public class ForgottenPasswordController extends AbstractMetaController {
             status.setComplete();
 
             // Returns the form success view.
-            model.addAttribute(AbstractMetaController.REDIRECTION_ATTRIBUTE, "/prihlaseni/");
+            model.addAttribute(AbstractMetaController.REDIRECTION_ATTRIBUTE, LoginUrlParts.BASE_URL);
             // ATTENTION: The view name must be redirected. Otherwise, the user
             // would be able to "resend" the request and his password would be
             // reset once again. This is the counterpart to the following catch.

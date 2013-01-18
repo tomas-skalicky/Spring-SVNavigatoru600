@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.svnavigatoru600.domain.forum.Thread;
 import com.svnavigatoru600.service.forum.ThreadService;
+import com.svnavigatoru600.url.CommonUrlParts;
+import com.svnavigatoru600.url.forum.ThreadsUrlParts;
 import com.svnavigatoru600.web.AbstractMetaController;
 
 /**
@@ -23,9 +25,6 @@ import com.svnavigatoru600.web.AbstractMetaController;
 @Controller
 public class DeleteThreadController extends AbstractThreadController {
 
-    private static final String REQUEST_MAPPING_BASE_URL = DeleteThreadController.BASE_URL
-            + "existujici/{threadId}/smazat/";
-    private static final String SUCCESSFUL_DELETE_URL = DeleteThreadController.BASE_URL + "smazano/";
     /**
      * Code of the database error message used when the {@link DataAccessException} is thrown.
      */
@@ -46,7 +45,7 @@ public class DeleteThreadController extends AbstractThreadController {
         super(threadService, messageSource);
     }
 
-    @RequestMapping(value = DeleteThreadController.REQUEST_MAPPING_BASE_URL, method = RequestMethod.GET)
+    @RequestMapping(value = ThreadsUrlParts.EXISTING_URL + "{threadId}/" + CommonUrlParts.DELETE_EXTENSION, method = RequestMethod.GET)
     @Transactional
     public String delete(@PathVariable int threadId, HttpServletRequest request, ModelMap model) {
 
@@ -65,8 +64,7 @@ public class DeleteThreadController extends AbstractThreadController {
             threadService.delete(thread);
 
             // Returns the form success view.
-            model.addAttribute(AbstractMetaController.REDIRECTION_ATTRIBUTE,
-                    DeleteThreadController.SUCCESSFUL_DELETE_URL);
+            model.addAttribute(AbstractMetaController.REDIRECTION_ATTRIBUTE, ThreadsUrlParts.DELETED_URL);
             return AbstractMetaController.REDIRECTION_PAGE;
 
         } catch (DataAccessException e) {

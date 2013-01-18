@@ -24,6 +24,7 @@ import com.svnavigatoru600.domain.users.User;
 import com.svnavigatoru600.service.users.UserService;
 import com.svnavigatoru600.service.util.Localization;
 import com.svnavigatoru600.service.util.UserUtils;
+import com.svnavigatoru600.url.users.UserAccountUrlParts;
 import com.svnavigatoru600.viewmodel.users.UpdateUserData;
 import com.svnavigatoru600.viewmodel.users.validator.UpdateUserDataValidator;
 import com.svnavigatoru600.web.AbstractMetaController;
@@ -38,9 +39,6 @@ import com.svnavigatoru600.web.AbstractPrivateSectionMetaController;
 @Controller
 public class EditMyAccountController extends AbstractPrivateSectionMetaController {
 
-    public static final String BASE_URL = "/uzivatelsky-ucet/";
-    public static final String UNSUBSCRIBE_FROM_NOTIFICATIONS_URL_PART = "odhlasit-notifikace/";
-    public static final String NOTIFICATIONS_UNSUBSCRIBED_URL_PART = "odhlaseno/";
     private static final String COMMAND = "updateUserDataCommand";
     private static final String PAGE_VIEW = "editMyUserAccount";
 
@@ -63,7 +61,7 @@ public class EditMyAccountController extends AbstractPrivateSectionMetaControlle
     /**
      * Initializes the form.
      */
-    @RequestMapping(value = EditMyAccountController.BASE_URL, method = RequestMethod.GET)
+    @RequestMapping(value = UserAccountUrlParts.BASE_URL, method = RequestMethod.GET)
     @PreAuthorize("hasRole('ROLE_REGISTERED_USER')")
     public String initForm(HttpServletRequest request, ModelMap model) {
 
@@ -83,7 +81,7 @@ public class EditMyAccountController extends AbstractPrivateSectionMetaControlle
     /**
      * Initializes the form after the modified data were successfully saved to a repository.
      */
-    @RequestMapping(value = EditMyAccountController.BASE_URL + "ulozeno/", method = RequestMethod.GET)
+    @RequestMapping(value = UserAccountUrlParts.SAVED_URL, method = RequestMethod.GET)
     @PreAuthorize("hasRole('ROLE_REGISTERED_USER')")
     public String initFormAfterSave(HttpServletRequest request, ModelMap model) {
         String view = this.initForm(request, model);
@@ -97,7 +95,7 @@ public class EditMyAccountController extends AbstractPrivateSectionMetaControlle
      * 
      * @return The name of the view which is to be shown.
      */
-    @RequestMapping(value = EditMyAccountController.BASE_URL, method = RequestMethod.POST)
+    @RequestMapping(value = UserAccountUrlParts.BASE_URL, method = RequestMethod.POST)
     @PreAuthorize("hasRole('ROLE_REGISTERED_USER')")
     @Transactional
     public String processSubmittedForm(
@@ -128,8 +126,7 @@ public class EditMyAccountController extends AbstractPrivateSectionMetaControlle
             status.setComplete();
 
             // Returns the form success view.
-            model.addAttribute(AbstractMetaController.REDIRECTION_ATTRIBUTE, EditMyAccountController.BASE_URL
-                    + "ulozeno/");
+            model.addAttribute(AbstractMetaController.REDIRECTION_ATTRIBUTE, UserAccountUrlParts.SAVED_URL);
             return AbstractMetaController.REDIRECTION_PAGE;
 
         } catch (DataAccessException e) {
@@ -150,8 +147,8 @@ public class EditMyAccountController extends AbstractPrivateSectionMetaControlle
      * @param notificationType
      *            Ordinal of notifications' type which is to be deactivated by the user.
      */
-    @RequestMapping(value = EditMyAccountController.BASE_URL + "{username}/"
-            + EditMyAccountController.UNSUBSCRIBE_FROM_NOTIFICATIONS_URL_PART + "{notificationType}/", method = RequestMethod.GET)
+    @RequestMapping(value = UserAccountUrlParts.BASE_URL + "{username}/"
+            + UserAccountUrlParts.UNSUBSCRIBE_EXTENSION + "{notificationType}/", method = RequestMethod.GET)
     @PreAuthorize("hasRole('ROLE_REGISTERED_USER')")
     public String unsubscribeNotificationsAndRedirect(@PathVariable("username") String username,
             @PathVariable("notificationType") int notificationTypeOrdinal, HttpServletRequest request,
@@ -164,9 +161,9 @@ public class EditMyAccountController extends AbstractPrivateSectionMetaControlle
             notificationType.accept(new NotificationSubscriberVisitor(UserUtils.getLoggedUser(), false));
 
             // Returns the form success view.
-            model.addAttribute(AbstractMetaController.REDIRECTION_ATTRIBUTE, EditMyAccountController.BASE_URL
-                    + EditMyAccountController.UNSUBSCRIBE_FROM_NOTIFICATIONS_URL_PART + notificationTypeOrdinal
-                    + "/" + EditMyAccountController.NOTIFICATIONS_UNSUBSCRIBED_URL_PART);
+            model.addAttribute(AbstractMetaController.REDIRECTION_ATTRIBUTE,
+                    UserAccountUrlParts.UNSUBSCRIBE_URL + notificationTypeOrdinal + "/"
+                            + UserAccountUrlParts.UNSUBSCRIBED_EXTENSION);
             return AbstractMetaController.REDIRECTION_PAGE;
 
         } catch (DataAccessException e) {
@@ -182,9 +179,8 @@ public class EditMyAccountController extends AbstractPrivateSectionMetaControlle
      * Initializes the form after the given <code>notificationType</code> have been successfully unsubscribed
      * and these changes have been persisted.
      */
-    @RequestMapping(value = EditMyAccountController.BASE_URL
-            + EditMyAccountController.UNSUBSCRIBE_FROM_NOTIFICATIONS_URL_PART + "{notificationType}/"
-            + EditMyAccountController.NOTIFICATIONS_UNSUBSCRIBED_URL_PART, method = RequestMethod.GET)
+    @RequestMapping(value = UserAccountUrlParts.UNSUBSCRIBE_URL + "{notificationType}/"
+            + UserAccountUrlParts.UNSUBSCRIBED_EXTENSION, method = RequestMethod.GET)
     @PreAuthorize("hasRole('ROLE_REGISTERED_USER')")
     public String initFormAfterUnsubscription(@PathVariable("notificationType") int notificationType,
             HttpServletRequest request, ModelMap model) {

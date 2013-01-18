@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.svnavigatoru600.domain.records.OtherDocumentRecordType;
 import com.svnavigatoru600.service.records.OtherDocumentRecordService;
+import com.svnavigatoru600.url.records.otherdocuments.OthersUrlParts;
 import com.svnavigatoru600.web.records.otherdocuments.AbstractListDocumentsController;
 
 /**
@@ -19,31 +20,29 @@ import com.svnavigatoru600.web.records.otherdocuments.AbstractListDocumentsContr
 @Controller
 public class ListOtherDocumentsController extends AbstractListDocumentsController {
 
-    private static final String BASE_URL = "/dalsi-dokumenty/ostatni/";
-
     /**
      * Constructor.
      */
     @Inject
     public ListOtherDocumentsController(OtherDocumentRecordService recordService, MessageSource messageSource) {
-        super(ListOtherDocumentsController.BASE_URL, new PageViews(), OtherDocumentRecordType.OTHER,
-                recordService, messageSource);
+        super(OthersUrlParts.BASE_URL, new PageViews(), OtherDocumentRecordType.OTHER, recordService,
+                messageSource);
     }
 
     @Override
-    @RequestMapping(value = ListOtherDocumentsController.BASE_URL, method = RequestMethod.GET)
+    @RequestMapping(value = OthersUrlParts.BASE_URL, method = RequestMethod.GET)
     public String initPage(HttpServletRequest request, ModelMap model) {
         return super.initPage(request, model);
     }
 
     @Override
-    @RequestMapping(value = ListOtherDocumentsController.BASE_URL + "vytvoreno/", method = RequestMethod.GET)
+    @RequestMapping(value = OthersUrlParts.CREATED_URL, method = RequestMethod.GET)
     public String initPageAfterCreate(HttpServletRequest request, ModelMap model) {
         return super.initPageAfterCreate(request, model);
     }
 
     @Override
-    @RequestMapping(value = ListOtherDocumentsController.BASE_URL + "smazano/", method = RequestMethod.GET)
+    @RequestMapping(value = OthersUrlParts.DELETED_URL, method = RequestMethod.GET)
     public String initPageAfterDelete(HttpServletRequest request, ModelMap model) {
         return super.initPageAfterDelete(request, model);
     }

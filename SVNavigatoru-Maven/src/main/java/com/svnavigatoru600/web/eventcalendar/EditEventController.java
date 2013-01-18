@@ -20,6 +20,8 @@ import com.svnavigatoru600.domain.eventcalendar.CalendarEvent;
 import com.svnavigatoru600.domain.eventcalendar.PriorityType;
 import com.svnavigatoru600.service.eventcalendar.CalendarEventService;
 import com.svnavigatoru600.service.util.Localization;
+import com.svnavigatoru600.url.CommonUrlParts;
+import com.svnavigatoru600.url.eventcalendar.EventsUrlParts;
 import com.svnavigatoru600.viewmodel.eventcalendar.EditEvent;
 import com.svnavigatoru600.viewmodel.eventcalendar.validator.EditEventValidator;
 import com.svnavigatoru600.web.AbstractMetaController;
@@ -31,8 +33,6 @@ import com.svnavigatoru600.web.SendNotificationEditModelFiller;
 @Controller
 public class EditEventController extends AbstractNewEditEventController {
 
-    private static final String REQUEST_MAPPING_BASE_URL = EditEventController.BASE_URL
-            + "existujici/{eventId}/";
     /**
      * Code of the error message used when the {@link DataAccessException} is thrown.
      */
@@ -48,7 +48,7 @@ public class EditEventController extends AbstractNewEditEventController {
         super(eventService, sendNotificationModelFiller, validator, messageSource);
     }
 
-    @RequestMapping(value = EditEventController.REQUEST_MAPPING_BASE_URL, method = RequestMethod.GET)
+    @RequestMapping(value = EventsUrlParts.EXISTING_URL + "{eventId}/", method = RequestMethod.GET)
     public String initForm(@PathVariable int eventId, HttpServletRequest request, ModelMap model) {
 
         EditEvent command = new EditEvent();
@@ -67,7 +67,7 @@ public class EditEventController extends AbstractNewEditEventController {
         return PageViews.EDIT.getViewName();
     }
 
-    @RequestMapping(value = EditEventController.REQUEST_MAPPING_BASE_URL + "ulozeno/", method = RequestMethod.GET)
+    @RequestMapping(value = EventsUrlParts.EXISTING_URL + "{eventId}/" + CommonUrlParts.SAVED_EXTENSION, method = RequestMethod.GET)
     public String initFormAfterSave(@PathVariable int eventId, HttpServletRequest request, ModelMap model) {
         String view = this.initForm(eventId, request, model);
         ((EditEvent) model.get(AbstractNewEditEventController.COMMAND)).setDataSaved(true);
@@ -78,9 +78,8 @@ public class EditEventController extends AbstractNewEditEventController {
     /**
      * see http://stackoverflow.com/questions/13213061/springmvc-requestmapping-for-get-parameters
      */
-    // @RequestMapping(value = EditEventController.REQUEST_MAPPING_BASE_URL + "ulozeno/", params = {
-    // "eventId",
-    // "sendNotification" }, method = RequestMethod.GET)
+    // @RequestMapping(value = EditEventController.REQUEST_MAPPING_BASE_URL + CommonUrlParts.SAVED_EXTENSION,
+    // params = { "eventId", "sendNotification" }, method = RequestMethod.GET)
     // public String initFormAfterSave(@PathVariable("eventId") int eventId,
     // @PathVariable("sendNotification") boolean sendNotification, HttpServletRequest request,
     // ModelMap model) {
@@ -91,7 +90,7 @@ public class EditEventController extends AbstractNewEditEventController {
     // return view;
     // }
 
-    @RequestMapping(value = EditEventController.REQUEST_MAPPING_BASE_URL, method = RequestMethod.POST)
+    @RequestMapping(value = EventsUrlParts.EXISTING_URL + "{eventId}/", method = RequestMethod.POST)
     @Transactional
     public String processSubmittedForm(@ModelAttribute(EditEventController.COMMAND) EditEvent command,
             BindingResult result, SessionStatus status, @PathVariable int eventId,
@@ -119,11 +118,11 @@ public class EditEventController extends AbstractNewEditEventController {
             status.setComplete();
 
             // Returns the form success view.
-            model.addAttribute(AbstractMetaController.REDIRECTION_ATTRIBUTE,
-                    String.format("%sexistujici/%d/ulozeno/", AbstractEventController.BASE_URL, eventId));
+            model.addAttribute(AbstractMetaController.REDIRECTION_ATTRIBUTE, String.format("%s%d/%s",
+                    EventsUrlParts.EXISTING_URL, eventId, CommonUrlParts.SAVED_EXTENSION));
             // Does not work. I do not know why.
             // model.addAttribute(AbstractMetaController.REDIRECTION_ATTRIBUTE, String.format(
-            // "%sexistujici/%d/ulozeno/?%s=%b", AbstractEventController.BASE_URL, eventId,
+            // "%s%d/%s?%s=%b", EventsUrlParts.EXISTING_URL, eventId, CommonUrlParts.SAVED_EXTENSION,
             // SEND_NOTIFICATION_GET_PARAMETER, command.getSendNotification()));
             return AbstractMetaController.REDIRECTION_PAGE;
 

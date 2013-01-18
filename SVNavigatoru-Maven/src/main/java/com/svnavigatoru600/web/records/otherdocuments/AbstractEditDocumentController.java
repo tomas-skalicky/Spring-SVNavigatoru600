@@ -20,6 +20,7 @@ import com.svnavigatoru600.domain.records.OtherDocumentRecord;
 import com.svnavigatoru600.domain.records.OtherDocumentRecordType;
 import com.svnavigatoru600.service.records.OtherDocumentRecordService;
 import com.svnavigatoru600.service.util.OtherDocumentRecordUtils;
+import com.svnavigatoru600.url.CommonUrlParts;
 import com.svnavigatoru600.viewmodel.records.otherdocuments.EditRecord;
 import com.svnavigatoru600.viewmodel.records.otherdocuments.validator.EditRecordValidator;
 import com.svnavigatoru600.web.AbstractMetaController;
@@ -136,7 +137,7 @@ public abstract class AbstractEditDocumentController extends AbstractNewEditDocu
 
             // Returns the form success view.
             model.addAttribute(AbstractMetaController.REDIRECTION_ATTRIBUTE,
-                    String.format("%s%d/ulozeno/", this.getBaseUrl(), recordId));
+                    String.format("%s%d/%s", this.getBaseUrl(), recordId, CommonUrlParts.SAVED_EXTENSION));
             return AbstractMetaController.REDIRECTION_PAGE;
 
         } catch (IllegalStateException e) {
