@@ -24,7 +24,7 @@ public abstract class AbstractNotificationEmailService extends AbstractEmailServ
 
     private static final String ATTACHED_FILE_CODE = "attached-file";
     private static final String DO_DOWNLOAD_CODE = "notifications.email.record.do-download";
-    private static final String WHOLE_TEXT_CODE = "notifications.email.whole-text";
+    private static final String SHOW_WHOLE_TEXT_CODE = "notifications.email.show-whole-text";
     private static final String NOTIFICATIONS_EMAIL_TEXT_SIGNATURE_CODE = "notifications.email.text.signature";
     private static final String NOTIFICATIONS_EMAIL_TEXT_UNSUBSCRIPTION_LINK_TEXT_CODE = "notifications.email.text.unsubscription-link-text";
     private static final int TEXT_MAX_LENGTH = 100;
@@ -122,7 +122,7 @@ public abstract class AbstractNotificationEmailService extends AbstractEmailServ
         String croppedText = StringUtils.substring(text, 0, AbstractNotificationEmailService.TEXT_MAX_LENGTH);
         if (!croppedText.equals(text)) {
             return String.format("%s... <a href=\"%s\">%s</a>", croppedText, wholeTextUrl,
-                    this.getLocalizedWholeText(request, messageSource));
+                    this.getLocalizedShowWholeText(request, messageSource));
         } else {
             return text;
         }
@@ -147,8 +147,8 @@ public abstract class AbstractNotificationEmailService extends AbstractEmailServ
     /**
      * Trivial localization
      */
-    protected String getLocalizedWholeText(HttpServletRequest request, MessageSource messageSource) {
+    protected String getLocalizedShowWholeText(HttpServletRequest request, MessageSource messageSource) {
         return Localization.findLocaleMessage(messageSource, request,
-                AbstractNotificationEmailService.WHOLE_TEXT_CODE);
+                AbstractNotificationEmailService.SHOW_WHOLE_TEXT_CODE);
     }
 }
