@@ -33,17 +33,6 @@ public abstract class AbstractNotificationEmailService extends AbstractEmailServ
     protected abstract NotificationType getNotificationType();
 
     /**
-     * Gets URL which unsubscribes the currently logged user from receiving notifications of this
-     * {@link #getNotificationType() type} if the user clicks on it. Moreover, controller associated with the
-     * URL redirects the user to the settings page of the user account.
-     */
-    private String getLinkForUnsubscription(User user, HttpServletRequest request) {
-        return String.format("%s%s%s/%s%d/", HttpRequestUtils.getContextHomeDirectory(request),
-                UserAccountUrlParts.BASE_URL, user.getUsername(), UserAccountUrlParts.UNSUBSCRIBE_EXTENSION,
-                this.getNotificationType().ordinal());
-    }
-
-    /**
      * Gets a localized signature of emails which serve as notifications of news and changes.
      * 
      * @param user
