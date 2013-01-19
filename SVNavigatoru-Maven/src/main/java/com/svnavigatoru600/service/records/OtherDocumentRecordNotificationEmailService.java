@@ -14,6 +14,7 @@ import com.svnavigatoru600.service.AbstractNotificationEmailService;
 import com.svnavigatoru600.service.util.Email;
 import com.svnavigatoru600.service.util.Localization;
 import com.svnavigatoru600.service.util.Url;
+import com.svnavigatoru600.url.records.otherdocuments.OtherDocumentsCommonUrlParts;
 
 /**
  * Provide sending of emails concerning notifications of new {@link OtherDocumentRecord other document
@@ -75,12 +76,16 @@ public class OtherDocumentRecordNotificationEmailService extends AbstractNotific
         String localizedDocumentDescriptionLabel = this.getLocalizedDocumentDescriptionLabel(request,
                 messageSource);
         String documentDescription = Url.convertImageRelativeUrlsToAbsolute(record.getDescription(), request);
+        String localizedAttachedFileLabel = this.getLocalizedAttachedFile(request, messageSource);
+        String fileUrl = this.getAttachedFileUrlHtml(
+                OtherDocumentsCommonUrlParts.getAttachedFileUrl(record, request), request, messageSource);
 
         for (User user : usersToNotify) {
             String addressing = this.getLocalizedRecipientAddressing(user, request, messageSource);
             String signature = this.getLocalizedNotificationSignature(user, request, messageSource);
             Object[] messageParams = new Object[] { addressing, localizedDocumentNameLabel, documentName,
-                    localizedDocumentDescriptionLabel, documentDescription, signature };
+                    localizedDocumentDescriptionLabel, documentDescription, localizedAttachedFileLabel,
+                    fileUrl, signature };
             String messageText = Localization.findLocaleMessage(messageSource, request, textLocalizationCode,
                     messageParams);
 
