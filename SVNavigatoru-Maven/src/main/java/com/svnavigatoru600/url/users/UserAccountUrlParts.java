@@ -20,6 +20,8 @@ public final class UserAccountUrlParts {
     public static final String UNSUBSCRIBE_URL = UserAccountUrlParts.BASE_URL
             + UserAccountUrlParts.UNSUBSCRIBE_EXTENSION;
     public static final String UNSUBSCRIBED_EXTENSION = "odhlaseno/";
+    public static final String UNSUBSCRIBE_FAILED_FOREIGN_ACCOUNT_URL = UserAccountUrlParts.UNSUBSCRIBE_URL
+            + CommonUrlParts.FAIL_EXTENSION + "cizi-ucet/";
 
     private UserAccountUrlParts() {
     }
