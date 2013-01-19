@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com</groupId>
@@ -12,8 +13,8 @@
 	<url>http://svnavigatoru600.com</url>
 
 
-	<!-- Jenkins's plugin called Multi SCMs contains a bug. As a result, the plugin cannot be used with 
-		multiple Git repositories, -->
+	<!-- Jenkins's plugin called Multi SCMs contains a bug. As a result, the plugin cannot be used with multiple Git 
+		repositories, -->
 	<!-- hence the configuration of the my.distribution-management project is copied here. -->
 	<!-- (see https://issues.jenkins-ci.org/browse/JENKINS-13634?page=com.atlassian.jira.plugin.system.issuetabpanels:all-tabpanel -->
 	<!-- <parent> -->
@@ -52,8 +53,8 @@
 
 		<jdk.version>1.6</jdk.version>
 
-		<!-- Unless we set up an encoding, we would receive a warning during the compilation of this project 
-			via a "mvn" command. This warning is noticeable in Jenkins. -->
+		<!-- Unless we set up an encoding, we would receive a warning during the compilation of this project via a "mvn" 
+			command. This warning is noticeable in Jenkins. -->
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
 		<!-- Versions of plugins and dependencies which are used more than once. -->
@@ -137,8 +138,8 @@
 
 		<pluginManagement>
 			<plugins>
-				<!-- Plugin related to the m2e eclipse plugin. It helps to ignore warnings about a missing mapping 
-					of lifecycle phases. -->
+				<!-- Plugin related to the m2e eclipse plugin. It helps to ignore warnings about a missing mapping of lifecycle 
+					phases. -->
 				<plugin>
 					<groupId>org.eclipse.m2e</groupId>
 					<artifactId>lifecycle-mapping</artifactId>
@@ -205,8 +206,8 @@
 					<version>2.12.4</version>
 					<dependencies>
 						<dependency>
-							<!-- Necessary dependency. Otherwise, groups element does not work. The problem should be fixed 
-								in the version 2.13 of maven-surefire-plugin. -->
+							<!-- Necessary dependency. Otherwise, groups element does not work. The problem should be fixed in the version 
+								2.13 of maven-surefire-plugin. -->
 							<!-- (see http://stackoverflow.com/questions/4970196/running-all-tests-from-a-category-using-maven) -->
 							<groupId>org.apache.maven.surefire</groupId>
 							<artifactId>surefire-junit47</artifactId>

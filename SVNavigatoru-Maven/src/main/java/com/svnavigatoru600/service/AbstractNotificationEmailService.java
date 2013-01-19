@@ -105,9 +105,9 @@ public abstract class AbstractNotificationEmailService extends AbstractEmailServ
      * by the {@link #TEXT_MAX_LENGTH} constant. If the text is cropped, adds an link at the end of the text
      * with the <code>wholeTextUrl</code>. If the text is not too long, adds nothing.
      * <p>
-     * If the text is an HTML code, the cropping is done carefully in order to prevent breaking of
-     * well-formed-ness of the code (all tags correctly closed). Values of attributes are not count to the
-     * length of the text which decide whether to crop it, or not.
+     * If the text is an HTML code, the cropping is done carefully in order to prevent breaking code
+     * well-formed-ness (all tags correctly closed). Values of attributes are not count to the length of the
+     * text which decide whether to crop it, or not.
      * 
      * @param text
      *            Either a plain text or an HTML code.
