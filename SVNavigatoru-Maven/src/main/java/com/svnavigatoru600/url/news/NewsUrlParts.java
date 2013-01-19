@@ -1,5 +1,9 @@
 package com.svnavigatoru600.url.news;
 
+import javax.servlet.http.HttpServletRequest;
+
+import com.svnavigatoru600.domain.News;
+import com.svnavigatoru600.service.util.HttpRequestUtils;
 import com.svnavigatoru600.url.CommonUrlParts;
 
 /**
@@ -17,5 +21,13 @@ public final class NewsUrlParts {
     public static final String DELETED_URL = NewsUrlParts.BASE_URL + CommonUrlParts.DELETED_EXTENSION;
 
     private NewsUrlParts() {
+    }
+
+    /**
+     * Composes an absolute URL which holds details about the given {@link News}.
+     */
+    public static String getNewsUrl(News news, HttpServletRequest request) {
+        return String
+                .format("%s%s", HttpRequestUtils.getContextHomeDirectory(request), NewsUrlParts.BASE_URL);
     }
 }
