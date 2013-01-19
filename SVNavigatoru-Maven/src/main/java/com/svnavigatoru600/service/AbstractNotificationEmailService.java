@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
 
@@ -22,9 +23,11 @@ import com.svnavigatoru600.url.users.UserAccountUrlParts;
 public abstract class AbstractNotificationEmailService extends AbstractEmailService {
 
     private static final String ATTACHED_FILE_CODE = "attached-file";
-    private static final String LINK_TO_DOWNLOAD_PAGE_CODE = "notifications.email.record.link-to-download-page";
+    private static final String DO_DOWNLOAD_CODE = "notifications.email.record.do-download";
+    private static final String WHOLE_TEXT_CODE = "notifications.email.whole-text";
     private static final String NOTIFICATIONS_EMAIL_TEXT_SIGNATURE_CODE = "notifications.email.text.signature";
     private static final String NOTIFICATIONS_EMAIL_TEXT_UNSUBSCRIPTION_LINK_TEXT_CODE = "notifications.email.text.unsubscription-link-text";
+    private static final int TEXT_MAX_LENGTH = 100;
 
     /**
      * Trivial getter
@@ -79,6 +82,53 @@ public abstract class AbstractNotificationEmailService extends AbstractEmailServ
             HttpServletRequest request, MessageSource messageSource);
 
     /**
+     * Composes an HTML code which provides the user with the given <code>fileUrl</code> (i.e. the locator of
+     * the desired file) when he clicks on the localized {@link #DO_DOWNLOAD_CODE}.
+     */
+    protected String getAttachedFileUrlHtml(String fileUrl, HttpServletRequest request,
+            MessageSource messageSource) {
+        String linkText = this.getLocalizedDoDownload(request, messageSource);
+        return this.getFileUrlHtml(fileUrl, linkText, request, messageSource);
+    }
+
+    /**
+     * Composes an HTML code which provides the user with the given <code>fileUrl</code> (i.e. the locator of
+     * the desired file) when he clicks on the given <code>linkText</code>.
+     */
+    protected String getFileUrlHtml(String fileUrl, String linkText, HttpServletRequest request,
+            MessageSource messageSource) {
+        return String.format("<a href\"%s\">%s</a>", fileUrl, linkText);
+    }
+
+    /**
+     * Crops the given <code>text</code> in a way that the new length is not beyond the upper bound determined
+     * by the {@link #TEXT_MAX_LENGTH} constant. If the text is cropped, adds an link at the end of the text
+     * with the <code>wholeTextUrl</code>. If the text is not too long, adds nothing.
+     * <p>
+     * If the text is an HTML code, the cropping is done carefully in order to prevent breaking of
+     * well-formed-ness of the code (all tags correctly closed). Values of attributes are not count to the
+     * length of the text which decide whether to crop it, or not.
+     * 
+     * @param text
+     *            Either a plain text or an HTML code.
+     * @param wholeTextUrl
+     *            URL which represents a web page with the whole <code>text</code>
+     * @return Cropped <code>text</code> with a link to the whole contents if necessary; otherwise the
+     *         original <code>text</code>.
+     */
+    protected String cropTooLongTextAndAddLink(String text, String wholeTextUrl, HttpServletRequest request,
+            MessageSource messageSource) {
+        //TODO
+        String croppedText = StringUtils.substring(text, 0, AbstractNotificationEmailService.TEXT_MAX_LENGTH);
+        if (!croppedText.equals(text)) {
+            return String.format("%s... <a href=\"%s\">%s</a>", croppedText, wholeTextUrl,
+                    this.getLocalizedWholeText(request, messageSource));
+        } else {
+            return text;
+        }
+    }
+
+    /**
      * Trivial localization
      */
     protected String getLocalizedAttachedFile(HttpServletRequest request, MessageSource messageSource) {
@@ -89,28 +139,16 @@ public abstract class AbstractNotificationEmailService extends AbstractEmailServ
     /**
      * Trivial localization
      */
-    protected String getLocalizedLinkToDownloadPage(HttpServletRequest request, MessageSource messageSource) {
+    protected String getLocalizedDoDownload(HttpServletRequest request, MessageSource messageSource) {
         return Localization.findLocaleMessage(messageSource, request,
-                AbstractNotificationEmailService.LINK_TO_DOWNLOAD_PAGE_CODE);
+                AbstractNotificationEmailService.DO_DOWNLOAD_CODE);
     }
 
     /**
-     * Composes an HTML code which provides the user with the given <code>fileUrl</code> (i.e. the locator
-     * where the user can download a file) when he clicks on the localized {@link #LINK_TO_DOWNLOAD_PAGE_CODE}
-     * .
+     * Trivial localization
      */
-    protected String getAttachedFileUrlHtml(String fileUrl, HttpServletRequest request,
-            MessageSource messageSource) {
-        String linkText = this.getLocalizedLinkToDownloadPage(request, messageSource);
-        return this.getFileUrlHtml(fileUrl, linkText, request, messageSource);
-    }
-
-    /**
-     * Composes an HTML code which provides the user with the given <code>fileUrl</code> (i.e. the locator
-     * where the user can download a file) when he clicks on the given <code>linkText</code>.
-     */
-    protected String getFileUrlHtml(String fileUrl, String linkText, HttpServletRequest request,
-            MessageSource messageSource) {
-        return String.format("<a href\"%s\">%s</a>", fileUrl, linkText);
+    protected String getLocalizedWholeText(HttpServletRequest request, MessageSource messageSource) {
+        return Localization.findLocaleMessage(messageSource, request,
+                AbstractNotificationEmailService.WHOLE_TEXT_CODE);
     }
 }

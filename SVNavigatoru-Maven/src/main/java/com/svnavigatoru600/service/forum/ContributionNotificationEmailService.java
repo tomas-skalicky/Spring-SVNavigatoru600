@@ -14,6 +14,7 @@ import com.svnavigatoru600.service.AbstractNotificationEmailService;
 import com.svnavigatoru600.service.util.Email;
 import com.svnavigatoru600.service.util.Localization;
 import com.svnavigatoru600.service.util.Url;
+import com.svnavigatoru600.url.forum.ContributionsUrlParts;
 
 /**
  * Provide sending of emails concerning notifications of new {@link Contribution contributions} and updated
@@ -75,13 +76,17 @@ public class ContributionNotificationEmailService extends AbstractNotificationEm
         String authorFullName = contribution.getAuthor().getFullName();
         String localizedContributionTextLabel = this
                 .getLocalizedContributionTextLabel(request, messageSource);
-        String contributionText = Url.convertImageRelativeUrlsToAbsolute(contribution.getText(), request);
+        String textWithConvertedUrls = Url
+                .convertImageRelativeUrlsToAbsolute(contribution.getText(), request);
+        String wholeTextUrl = ContributionsUrlParts.getContributionUrl(contribution, request);
+        String croppedText = this.cropTooLongTextAndAddLink(textWithConvertedUrls, wholeTextUrl, request,
+                messageSource);
 
         for (User user : usersToNotify) {
             String addressing = this.getLocalizedRecipientAddressing(user, request, messageSource);
             String signature = this.getLocalizedNotificationSignature(user, request, messageSource);
             Object[] messageParams = new Object[] { addressing, threadName, localizedAuthorLabel,
-                    authorFullName, localizedContributionTextLabel, contributionText, signature };
+                    authorFullName, localizedContributionTextLabel, croppedText, signature };
             String messageText = Localization.findLocaleMessage(messageSource, request, textLocalizationCode,
                     messageParams);
 

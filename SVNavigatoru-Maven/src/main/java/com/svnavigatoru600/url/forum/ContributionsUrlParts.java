@@ -1,5 +1,9 @@
 package com.svnavigatoru600.url.forum;
 
+import javax.servlet.http.HttpServletRequest;
+
+import com.svnavigatoru600.domain.forum.Contribution;
+import com.svnavigatoru600.service.util.HttpRequestUtils;
 import com.svnavigatoru600.url.CommonUrlParts;
 
 /**
@@ -22,5 +26,14 @@ public final class ContributionsUrlParts {
             + CommonUrlParts.DELETED_EXTENSION;
 
     private ContributionsUrlParts() {
+    }
+
+    /**
+     * Composes an absolute URL which holds details about the given {@link Contribution}.
+     */
+    public static String getContributionUrl(Contribution contribution, HttpServletRequest request) {
+        return String.format("%s%s%d/%s", HttpRequestUtils.getContextHomeDirectory(request),
+                ContributionsUrlParts.BASE_URL, contribution.getThread().getId(),
+                ContributionsUrlParts.CONTRIBUTIONS_EXTENSION);
     }
 }

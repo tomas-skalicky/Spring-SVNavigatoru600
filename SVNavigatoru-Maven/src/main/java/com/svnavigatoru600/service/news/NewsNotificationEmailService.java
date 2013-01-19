@@ -14,6 +14,7 @@ import com.svnavigatoru600.service.AbstractNotificationEmailService;
 import com.svnavigatoru600.service.util.Email;
 import com.svnavigatoru600.service.util.Localization;
 import com.svnavigatoru600.service.util.Url;
+import com.svnavigatoru600.url.news.NewsUrlParts;
 
 /**
  * Provide sending of emails concerning notifications of new {@link News news} and updated ones.
@@ -62,12 +63,15 @@ public class NewsNotificationEmailService extends AbstractNotificationEmailServi
         String subject = this.getSubject(subjectLocalizationCode, news, request, messageSource);
 
         String newsTitle = news.getTitle();
-        String newsText = Url.convertImageRelativeUrlsToAbsolute(news.getText(), request);
+        String textWithConvertedUrls = Url.convertImageRelativeUrlsToAbsolute(news.getText(), request);
+        String wholeTextUrl = NewsUrlParts.getNewsUrl(news, request);
+        String croppedText = this.cropTooLongTextAndAddLink(textWithConvertedUrls, wholeTextUrl,
+                request, messageSource);
 
         for (User user : usersToNotify) {
             String addressing = this.getLocalizedRecipientAddressing(user, request, messageSource);
             String signature = this.getLocalizedNotificationSignature(user, request, messageSource);
-            Object[] messageParams = new Object[] { addressing, newsTitle, newsText, signature };
+            Object[] messageParams = new Object[] { addressing, newsTitle, croppedText, signature };
             String messageText = Localization.findLocaleMessage(messageSource, request, textLocalizationCode,
                     messageParams);
 
