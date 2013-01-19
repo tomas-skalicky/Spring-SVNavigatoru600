@@ -16,6 +16,7 @@ import com.svnavigatoru600.service.util.DateUtils;
 import com.svnavigatoru600.service.util.Email;
 import com.svnavigatoru600.service.util.Localization;
 import com.svnavigatoru600.service.util.Url;
+import com.svnavigatoru600.url.records.session.SessionsCommonUrlParts;
 
 /**
  * Provide sending of emails concerning notifications of new {@link SessionRecord session records} and updated
@@ -79,13 +80,17 @@ public class SessionRecordNotificationEmailService extends AbstractNotificationE
         String localizedSessionDate = this.getLocalizedSessionDate(record, request);
         String localizedDiscussedTopicsLabel = this.getLocalizedDiscussedTopicsLabel(request, messageSource);
         String discussedTopics = Url.convertImageRelativeUrlsToAbsolute(record.getDiscussedTopics(), request);
+        String localizedAttachedFileLabel = this.getLocalizedAttachedFile(request, messageSource);
+        String fileUrl = this.getAttachedFileUrlHtml(
+                SessionsCommonUrlParts.getAttachedFileUrl(record, request), request, messageSource);
 
         for (User user : usersToNotify) {
             String addressing = this.getLocalizedRecipientAddressing(user, request, messageSource);
             String signature = this.getLocalizedNotificationSignature(user, request, messageSource);
             Object[] messageParams = new Object[] { addressing, localizedSessionTypeLabel,
                     localizedSessionType, localizedSessionDateLabel, localizedSessionDate,
-                    localizedDiscussedTopicsLabel, discussedTopics, signature };
+                    localizedDiscussedTopicsLabel, discussedTopics, localizedAttachedFileLabel, fileUrl,
+                    signature };
             String messageText = Localization.findLocaleMessage(messageSource, request, textLocalizationCode,
                     messageParams);
 
