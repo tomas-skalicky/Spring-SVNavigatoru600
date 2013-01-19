@@ -13,6 +13,7 @@ public final class CommonUrlParts {
     public static final String SAVED_EXTENSION = "ulozeno/";
     public static final String DELETE_EXTENSION = "smazat/";
     public static final String DELETED_EXTENSION = "smazano/";
+    public static final String FAIL_EXTENSION = "neuspech/";
 
     private CommonUrlParts() {
     }

@@ -13,6 +13,11 @@
 		<spring:message code="notifications.notifications-successfully-unsubscribed" arguments="${updateUserDataCommand.localizedUnsubscribedNotificationTitle}" />
 	</p>
 </c:if>
+<c:if test="${updateUserDataCommand.foreignAccountDuringUnsubscription}">
+	<p class="error">
+		<spring:message code="notifications.unsubscription-fail.foreign-account" arguments="${updateUserDataCommand.foreignAccountUsername}" />
+	</p>
+</c:if>
 
 <form:form action="IS_FILLED_BY_JAVASCRIPT" commandName="updateUserDataCommand" method="POST">
 	<form:errors path="*" cssClass="error" element="p" />

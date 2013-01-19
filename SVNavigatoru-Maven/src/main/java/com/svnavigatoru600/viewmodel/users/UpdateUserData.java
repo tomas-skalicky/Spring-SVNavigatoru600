@@ -25,6 +25,8 @@ public class UpdateUserData {
     private boolean dataSaved = false;
     private boolean notificationsUnsubscribed = false;
     private String localizedUnsubscribedNotificationTitle = null;
+    private boolean foreignAccountDuringUnsubscription = false;
+    private String foreignAccountUsername = null;
 
     public User getUser() {
         return this.user;
@@ -80,5 +82,35 @@ public class UpdateUserData {
 
     public void setLocalizedUnsubscribedNotificationTitle(String localizedUnsubscribedNotificationTitle) {
         this.localizedUnsubscribedNotificationTitle = localizedUnsubscribedNotificationTitle;
+    }
+
+    public boolean isForeignAccountDuringUnsubscription() {
+        return this.foreignAccountDuringUnsubscription;
+    }
+
+    public void setForeignAccountDuringUnsubscription(boolean foreignAccountDuringUnsubscription) {
+        this.foreignAccountDuringUnsubscription = foreignAccountDuringUnsubscription;
+    }
+
+    public String getForeignAccountUsername() {
+        return this.foreignAccountUsername;
+    }
+
+    public void setForeignAccountUsername(String foreignAccountUsername) {
+        this.foreignAccountUsername = foreignAccountUsername;
+    }
+
+    @Override
+    public String toString() {
+        return new StringBuilder("[user=").append(this.user).append(", newPassword=")
+                .append(this.newPassword).append(", newPasswordConfirmation=")
+                .append(this.newPasswordConfirmation).append(", localizedNotificationCheckboxTitles=")
+                .append(this.localizedNotificationCheckboxTitles).append(", dataSaved=")
+                .append(this.dataSaved).append(", notificationsUnsubscribed=")
+                .append(this.notificationsUnsubscribed).append(", localizedUnsubscribedNotificationTitle=")
+                .append(this.localizedUnsubscribedNotificationTitle)
+                .append(", foreignAccountDuringUnsubscription=")
+                .append(this.foreignAccountDuringUnsubscription).append(", foreignAccountUsername=")
+                .append(this.foreignAccountUsername).append("]").toString();
     }
 }

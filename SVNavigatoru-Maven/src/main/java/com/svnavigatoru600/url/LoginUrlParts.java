@@ -8,7 +8,7 @@ package com.svnavigatoru600.url;
 public final class LoginUrlParts {
 
     public static final String BASE_URL = "/prihlaseni/";
-    public static final String FAIL_URL = LoginUrlParts.BASE_URL + "neuspech/";
+    public static final String FAIL_URL = LoginUrlParts.BASE_URL + CommonUrlParts.FAIL_EXTENSION;
     public static final String FORGOTTEN_PASSWORD_URL = LoginUrlParts.BASE_URL + "zapomenute-heslo/";
     public static final String SEND_NEW_PASSWORD_URL = LoginUrlParts.BASE_URL + "poslat-nove-heslo/";
 

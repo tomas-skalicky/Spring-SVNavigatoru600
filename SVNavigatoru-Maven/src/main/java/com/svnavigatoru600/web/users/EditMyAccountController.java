@@ -153,12 +153,19 @@ public class EditMyAccountController extends AbstractPrivateSectionMetaControlle
     public String unsubscribeNotificationsAndRedirect(@PathVariable("username") String username,
             @PathVariable("notificationType") int notificationTypeOrdinal, HttpServletRequest request,
             ModelMap model) {
+        User loggedUser = UserUtils.getLoggedUser();
+        if (!loggedUser.getUsername().equals(username)) {
+            model.addAttribute(AbstractMetaController.REDIRECTION_ATTRIBUTE,
+                    UserAccountUrlParts.UNSUBSCRIBE_FAILED_FOREIGN_ACCOUNT_URL + username + "/");
+            return AbstractMetaController.REDIRECTION_PAGE;
+        }
+
         NotificationType notificationType = NotificationType.values()[notificationTypeOrdinal];
         try {
             this.userService.unsubscribeFromNotifications(username, notificationType);
 
             // It is necessary to update the instance which is in the session.
-            notificationType.accept(new NotificationSubscriberVisitor(UserUtils.getLoggedUser(), false));
+            notificationType.accept(new NotificationSubscriberVisitor(loggedUser, false));
 
             // Returns the form success view.
             model.addAttribute(AbstractMetaController.REDIRECTION_ATTRIBUTE,
@@ -192,6 +199,25 @@ public class EditMyAccountController extends AbstractPrivateSectionMetaControlle
         String localizationCode = NotificationType.values()[notificationType].getTitleLocalizationCode();
         String localizedTitle = Localization.findLocaleMessage(this.messageSource, request, localizationCode);
         command.setLocalizedUnsubscribedNotificationTitle(localizedTitle);
+        return view;
+    }
+
+    /**
+     * Initializes the form after a fail of unsubscription due to a sign-in in a different account than in
+     * that which stands in a notification email. Shows an error message.
+     * <p>
+     * It looks like that the currently logged user has either an access to more than one account or has an
+     * access to an email inbox of foreign account.
+     */
+    @RequestMapping(value = UserAccountUrlParts.UNSUBSCRIBE_FAILED_FOREIGN_ACCOUNT_URL + "{username}/", method = RequestMethod.GET)
+    @PreAuthorize("hasRole('ROLE_REGISTERED_USER')")
+    public String initFormAfterUnsubscriptionFail(@PathVariable("username") String username,
+            HttpServletRequest request, ModelMap model) {
+        String view = this.initForm(request, model);
+
+        UpdateUserData command = (UpdateUserData) model.get(EditMyAccountController.COMMAND);
+        command.setForeignAccountDuringUnsubscription(true);
+        command.setForeignAccountUsername(username);
         return view;
     }
 }
