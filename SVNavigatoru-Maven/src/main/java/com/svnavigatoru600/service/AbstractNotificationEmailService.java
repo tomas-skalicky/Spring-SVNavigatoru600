@@ -4,12 +4,12 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
 
 import com.svnavigatoru600.domain.users.NotificationType;
 import com.svnavigatoru600.domain.users.User;
+import com.svnavigatoru600.service.util.HtmlUtils;
 import com.svnavigatoru600.service.util.Localization;
 import com.svnavigatoru600.url.users.UserAccountUrlParts;
 
@@ -118,8 +118,7 @@ public abstract class AbstractNotificationEmailService extends AbstractEmailServ
      */
     protected String cropTooLongTextAndAddLink(String text, String wholeTextUrl, HttpServletRequest request,
             MessageSource messageSource) {
-        //TODO
-        String croppedText = StringUtils.substring(text, 0, AbstractNotificationEmailService.TEXT_MAX_LENGTH);
+        String croppedText = HtmlUtils.cropEscaped(text, AbstractNotificationEmailService.TEXT_MAX_LENGTH);
         if (!croppedText.equals(text)) {
             return String.format("%s... <a href=\"%s\">%s</a>", croppedText, wholeTextUrl,
                     this.getLocalizedShowWholeText(request, messageSource));
@@ -150,5 +149,14 @@ public abstract class AbstractNotificationEmailService extends AbstractEmailServ
     protected String getLocalizedShowWholeText(HttpServletRequest request, MessageSource messageSource) {
         return Localization.findLocaleMessage(messageSource, request,
                 AbstractNotificationEmailService.SHOW_WHOLE_TEXT_CODE);
+    }
+
+    /**
+     * Trivial getter
+     * 
+     * @return the TEXT_MAX_LENGTH
+     */
+    public static int getTextMaxLength() {
+        return AbstractNotificationEmailService.TEXT_MAX_LENGTH;
     }
 }
