@@ -21,6 +21,10 @@ public final class Configuration {
      * MB.</small>
      */
     public static final long MAX_UPLOAD_SIZE = 2097152;
+    /**
+     * Default encoding for everything.
+     */
+    public static final String DEFAULT_ENCODING = "UTF-8";
 
     private Configuration() {
     }

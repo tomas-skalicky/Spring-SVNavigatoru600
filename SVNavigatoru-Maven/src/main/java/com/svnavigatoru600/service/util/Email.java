@@ -14,6 +14,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import com.svnavigatoru600.service.Configuration;
+
 /**
  * Provides a set of common static functions related to emails. The implementation borrowed from <a href=
  * "http://www.mkyong.com/java/javamail-api-sending-email-via-gmail-smtp-example/" >Mkyong</a>.
@@ -179,7 +181,7 @@ public final class Email {
         message.setFrom(new InternetAddress(Email.SENDER));
         message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(recipient));
         message.setSubject(subject);
-        message.setContent(messageText, "text/html; charset=\"UTF-8\"");
+        message.setContent(messageText, "text/html; charset=\"" + Configuration.DEFAULT_ENCODING + "\"");
         // Option without the charset specification:
         // message.setText(messageText);
 
