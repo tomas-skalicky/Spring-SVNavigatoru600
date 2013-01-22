@@ -98,7 +98,8 @@ public class OtherDocumentRecordNotificationEmailService extends AbstractNotific
      */
     private String getSubject(String subjectLocalizationCode, HttpServletRequest request,
             MessageSource messageSource) {
-        return Localization.findLocaleMessage(messageSource, request, subjectLocalizationCode);
+        String localized = Localization.findLocaleMessage(messageSource, request, subjectLocalizationCode);
+        return Localization.stripCzechDiacritics(localized);
     }
 
     /**

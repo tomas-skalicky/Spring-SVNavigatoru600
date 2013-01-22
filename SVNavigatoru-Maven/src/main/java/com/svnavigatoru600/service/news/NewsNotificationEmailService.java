@@ -65,8 +65,8 @@ public class NewsNotificationEmailService extends AbstractNotificationEmailServi
         String newsTitle = news.getTitle();
         String textWithConvertedUrls = Url.convertImageRelativeUrlsToAbsolute(news.getText(), request);
         String wholeTextUrl = NewsUrlParts.getNewsUrl(news, request);
-        String croppedText = this.cropTooLongTextAndAddLink(textWithConvertedUrls, wholeTextUrl,
-                request, messageSource);
+        String croppedText = this.cropTooLongTextAndAddLink(textWithConvertedUrls, wholeTextUrl, request,
+                messageSource);
 
         for (User user : usersToNotify) {
             String addressing = this.getLocalizedRecipientAddressing(user, request, messageSource);
@@ -87,7 +87,8 @@ public class NewsNotificationEmailService extends AbstractNotificationEmailServi
      */
     private String getSubject(String subjectLocalizationCode, News news, HttpServletRequest request,
             MessageSource messageSource) {
-        return Localization.findLocaleMessage(messageSource, request, subjectLocalizationCode,
+        String localized = Localization.findLocaleMessage(messageSource, request, subjectLocalizationCode,
                 news.getTitle());
+        return Localization.stripCzechDiacritics(localized);
     }
 }

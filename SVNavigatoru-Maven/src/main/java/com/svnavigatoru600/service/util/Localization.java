@@ -134,4 +134,17 @@ public final class Localization {
         }
         return localizedCodes;
     }
+
+    /**
+     * Strips the Czech diacritics in the given <code>text</code>.
+     * <p>
+     * It replaces for instance 'č' by 'c'.
+     * 
+     * @return Text without Czech diacritics
+     */
+    public static String stripCzechDiacritics(String text) {
+        return text.replace('á', 'a').replace('č', 'c').replace('ď', 'd').replace('é', 'e').replace('ě', 'e')
+                .replace('í', 'i').replace('ň', 'n').replace('ó', 'o').replace('ř', 'r').replace('š', 's')
+                .replace('ť', 't').replace('ú', 'u').replace('ů', 'u').replace('ý', 'y').replace('ž', 'z');
+    }
 }
