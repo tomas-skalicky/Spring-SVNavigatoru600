@@ -11,6 +11,7 @@
 		<param-name>webAppRootKey</param-name>
 		<param-value>svnavigatoru600</param-value>
 	</context-param>
+	
 
 	<!-- Location of XML files that define the root application context. Applied by ContextLoaderListener. -->
 	<context-param>
@@ -25,7 +26,13 @@
 		<param-name>log4jConfigLocation</param-name>
 		<param-value>/WEB-INF/classes/log4j.properties</param-value>
 	</context-param>
-
+	
+	
+	<!-- Prevents from memory leaks. -->
+	<!-- see http://static.springsource.org/spring/docs/3.2.x/javadoc-api/org/springframework/web/util/IntrospectorCleanupListener.html -->
+	<listener>
+		<listener-class>org.springframework.web.util.IntrospectorCleanupListener</listener-class>
+	</listener>
 
 	<listener>
 		<listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
