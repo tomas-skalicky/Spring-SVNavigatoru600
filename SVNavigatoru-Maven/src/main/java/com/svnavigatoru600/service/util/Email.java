@@ -4,11 +4,14 @@ import java.util.Properties;
 
 import javax.mail.Message;
 import javax.mail.MessagingException;
+import javax.mail.Multipart;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
@@ -181,12 +184,25 @@ public final class Email {
         message.setFrom(new InternetAddress(Email.SENDER));
         message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(recipient));
         message.setSubject(subject);
-        message.setContent(messageText, "text/html; charset=\"" + Configuration.DEFAULT_ENCODING + "\"");
-        // Option without the charset specification:
-        // message.setText(messageText);
+        message.setContent(Email.getMessageBody(messageText));
 
         Transport.send(message);
 
         Email.LOGGER.info(String.format("Email '%s' has been sent to '%s'.", subject, recipient));
+    }
+
+    /**
+     * Creates an email body which contents the given <code>messageText</code>. The MIME subtype is
+     * <code>html</code>.
+     */
+    private static Multipart getMessageBody(String messageText) throws MessagingException {
+        MimeBodyPart messageBodyPart = new MimeBodyPart();
+
+        // Fills the message
+        messageBodyPart.setText(messageText, Configuration.DEFAULT_ENCODING, "html");
+
+        Multipart multipart = new MimeMultipart();
+        multipart.addBodyPart(messageBodyPart);
+        return multipart;
     }
 }

@@ -22,13 +22,14 @@ public final class HttpRequestUtils {
      * @returns For instance <code>localhost:9980</code> or <code>www.svnavigatoru600.com:80</code>.
      */
     public static String getServerNameAndPort(HttpServletRequest request) {
+        String schema = request.getScheme();
         String serverName = request.getServerName();
         int serverPort = request.getServerPort();
 
         if (serverPort == HttpRequestUtils.DEFAULT_HTTP_PORT) {
-            return serverName;
+            return String.format("%s://%s", schema, serverName);
         } else {
-            return String.format("%s:%d", serverName, serverPort);
+            return String.format("%s://%s:%d", schema, serverName, serverPort);
         }
     }
 
