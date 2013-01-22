@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServletRequest;
  */
 public final class HttpRequestUtils {
 
+    private static final int DEFAULT_HTTP_PORT = 80;
+
     private HttpRequestUtils() {
     }
 
@@ -20,7 +22,14 @@ public final class HttpRequestUtils {
      * @returns For instance <code>localhost:9980</code> or <code>www.svnavigatoru600.com:80</code>.
      */
     public static String getServerNameAndPort(HttpServletRequest request) {
-        return String.format("%s:%d", request.getServerName(), request.getServerPort());
+        String serverName = request.getServerName();
+        int serverPort = request.getServerPort();
+
+        if (serverPort == HttpRequestUtils.DEFAULT_HTTP_PORT) {
+            return serverName;
+        } else {
+            return String.format("%s:%d", serverName, serverPort);
+        }
     }
 
     /**
