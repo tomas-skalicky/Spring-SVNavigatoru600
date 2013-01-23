@@ -97,7 +97,7 @@ public abstract class AbstractNotificationEmailService extends AbstractEmailServ
      */
     protected String getFileUrlHtml(String fileUrl, String linkText, HttpServletRequest request,
             MessageSource messageSource) {
-        return String.format("<a href\"%s\">%s</a>", fileUrl, linkText);
+        return String.format("<a href=\"%s\">%s</a>", fileUrl, linkText);
     }
 
     /**
