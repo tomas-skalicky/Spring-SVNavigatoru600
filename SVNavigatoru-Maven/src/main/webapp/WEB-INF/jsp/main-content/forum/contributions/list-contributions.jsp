@@ -47,8 +47,9 @@ User loggedUser = UserUtils.getLoggedUser();
 String homeUrl = request.getContextPath();
 Locale locale = Localization.getLocale(request);
 for (Contribution contribution : contributions) {
+	int contributionId = contribution.getId();
 %>
-	<li class="comment">
+	<li class="comment" id="contribution_<%=contributionId%>">
 		<div class="comment-mask">
 			<div class="comment-main">
 				<div class="comment-wrap1">
@@ -74,7 +75,6 @@ for (Contribution contribution : contributions) {
 							<%
 								boolean loggedUserIsAuthor = (contributionAuthor != null) && loggedUser.getUsername().equals(contributionAuthor.getUsername());
 								if (loggedUserIsAuthor) {
-									int contributionId = contribution.getId();
 								%>
 							<p class="controls">
 								<%-- Edit icon --%>

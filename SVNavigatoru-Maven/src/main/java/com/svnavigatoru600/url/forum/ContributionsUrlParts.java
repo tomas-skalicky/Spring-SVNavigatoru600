@@ -32,8 +32,8 @@ public final class ContributionsUrlParts {
      * Composes an absolute URL which holds details about the given {@link Contribution}.
      */
     public static String getContributionUrl(Contribution contribution, HttpServletRequest request) {
-        return String.format("%s%s%d/%s", HttpRequestUtils.getContextHomeDirectory(request),
+        return String.format("%s%s%d/%s#contribution_%d", HttpRequestUtils.getContextHomeDirectory(request),
                 ContributionsUrlParts.BASE_URL, contribution.getThread().getId(),
-                ContributionsUrlParts.CONTRIBUTIONS_EXTENSION);
+                ContributionsUrlParts.CONTRIBUTIONS_EXTENSION, contribution.getId());
     }
 }

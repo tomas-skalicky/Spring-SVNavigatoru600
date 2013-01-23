@@ -53,7 +53,7 @@ ShowAllNews command = (ShowAllNews) request.getAttribute(ListNewsController.COMM
 List<News> newss = command.getNews();
 for (News news : newss) {
 %>
-<div id="post_<%=news.getId()%>" class="post">
+<article id="post_<%=news.getId()%>" class="post">
 	<div class="post-header">
 		<h3><%=news.getTitle()%></h3>
 		<p class="post-date">
@@ -91,7 +91,7 @@ for (News news : newss) {
 
 	</div>
 	<div class="post-content clearfix"><%=news.getText()%></div>
-</div>
+</article>
 <%}%>
 </div><%-- /newsList --%>
 

@@ -27,7 +27,7 @@ public final class NewsUrlParts {
      * Composes an absolute URL which holds details about the given {@link News}.
      */
     public static String getNewsUrl(News news, HttpServletRequest request) {
-        return String
-                .format("%s%s", HttpRequestUtils.getContextHomeDirectory(request), NewsUrlParts.BASE_URL);
+        return String.format("%s%s#post_%d", HttpRequestUtils.getContextHomeDirectory(request),
+                NewsUrlParts.BASE_URL, news.getId());
     }
 }
