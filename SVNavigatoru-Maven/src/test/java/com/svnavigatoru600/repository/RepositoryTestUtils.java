@@ -21,6 +21,7 @@ import com.svnavigatoru600.domain.records.SessionRecordType;
 import com.svnavigatoru600.domain.users.Authority;
 import com.svnavigatoru600.domain.users.AuthorityType;
 import com.svnavigatoru600.domain.users.User;
+import com.svnavigatoru600.domain.users.UserBuilder;
 import com.svnavigatoru600.repository.forum.ContributionDao;
 import com.svnavigatoru600.repository.forum.ThreadDao;
 import com.svnavigatoru600.repository.records.SessionRecordDao;
@@ -294,13 +295,23 @@ public final class RepositoryTestUtils {
     }
 
     /**
+     * Creates {@link UserBuilder} thereof {@link User} is a default one.
+     */
+    public UserBuilder createDefaultUserBuilder() {
+        return UserBuilder.anUser().withUsername(USER_DEFAULT_USERNAME).withPassword(USER_DEFAULT_PASSWORD)
+                .enabled(USER_DEFAULT_ENABLED).withFirstName(USER_DEFAULT_FIRST_NAME)
+                .withLastName(USER_DEFAULT_LAST_NAME).withEmail(USER_DEFAULT_EMAIL)
+                .withPhone(USER_DEFAULT_PHONE).forTestPurposes(USER_DEFAULT_IS_TEST_USER)
+                .withAuthorities(USER_DEFAULT_AUTHORITIES);
+    }
+
+    /**
      * Creates and saves the first default test user.
      * 
      * @return Newly created user
      */
     User createDefaultTestUser() {
-        return this
-                .createDefaultTestUser(USER_DEFAULT_USERNAME, USER_DEFAULT_EMAIL, USER_DEFAULT_AUTHORITIES);
+        return this.saveTestUser(this.createDefaultUserBuilder());
     }
 
     /**
@@ -309,8 +320,8 @@ public final class RepositoryTestUtils {
      * @return Newly created user
      */
     User createSecondDefaultTestUser() {
-        return this.createDefaultTestUser(SECOND_USER_DEFAULT_USERNAME, SECOND_USER_DEFAULT_EMAIL,
-                SECOND_USER_DEFAULT_AUTHORITIES);
+        return this.saveTestUser(this.createDefaultUserBuilder().withUsername(SECOND_USER_DEFAULT_USERNAME)
+                .withEmail(SECOND_USER_DEFAULT_EMAIL).withAuthorities(SECOND_USER_DEFAULT_AUTHORITIES));
     }
 
     /**
@@ -318,20 +329,10 @@ public final class RepositoryTestUtils {
      * 
      * @return Newly created user
      */
-    User createDefaultTestUser(String username, String email, Set<GrantedAuthority> authorities) {
-        this.createTestUser(username, USER_DEFAULT_PASSWORD, USER_DEFAULT_ENABLED, USER_DEFAULT_FIRST_NAME,
-                USER_DEFAULT_LAST_NAME, email, USER_DEFAULT_PHONE, USER_DEFAULT_IS_TEST_USER, authorities);
-        return this.getUserDao().findByUsername(username);
-    }
-
-    /**
-     * Creates and saves a test user.
-     */
-    void createTestUser(String username, String password, boolean enabled, String firstName, String lastName,
-            String email, String phone, boolean isTestUser, Set<GrantedAuthority> authorities) {
-        User user = new User(username, password, enabled, firstName, lastName, email, phone, isTestUser,
-                authorities);
+    User saveTestUser(UserBuilder userBuilder) {
+        User user = userBuilder.build();
         this.getUserDao().save(user);
+        return this.getUserDao().findByUsername(user.getUsername());
     }
 
     /**

@@ -238,8 +238,9 @@ public class UserDaoTest extends AbstractRepositoryTest {
      * @return Newly created user
      */
     private User createThirdDefaultTestUser() {
-        return TEST_UTILS.createDefaultTestUser(THIRD_USER_DEFAULT_USERNAME, THIRD_USER_DEFAULT_EMAIL,
-                THIRD_USER_DEFAULT_AUTHORITIES);
+        return TEST_UTILS.saveTestUser(TEST_UTILS.createDefaultUserBuilder()
+                .withUsername(THIRD_USER_DEFAULT_USERNAME).withEmail(THIRD_USER_DEFAULT_EMAIL)
+                .withAuthorities(THIRD_USER_DEFAULT_AUTHORITIES));
     }
 
     /**
