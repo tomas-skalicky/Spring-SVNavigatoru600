@@ -29,6 +29,7 @@
 	</context:component-scan>
 
 	<!-- Registers the default AutowiredAnnotationBeanPostProcessor which handles @Autowired and other annotations. -->
+    <!-- http://www.infoq.com/articles/spring-2.5-part-1 -->
 	<context:annotation-config />
 	<!-- /ATTENTION -->
 
