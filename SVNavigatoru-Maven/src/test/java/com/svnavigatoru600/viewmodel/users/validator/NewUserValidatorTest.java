@@ -1,10 +1,15 @@
 package com.svnavigatoru600.viewmodel.users.validator;
 
-import junit.framework.Assert;
+import java.util.Arrays;
 
+import org.apache.commons.lang3.StringUtils;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+import org.junit.runners.Parameterized.Parameters;
 import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.Errors;
 
@@ -15,7 +20,14 @@ import com.svnavigatoru600.viewmodel.users.AdministrateUserData;
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
 @Category(FastTests.class)
+@RunWith(Parameterized.class)
 public class NewUserValidatorTest {
+
+    @Parameters(name = "checkNewFirstName: Run #{index}: firstName={0} => errorCount={1}")
+    public static Iterable<Object[]> data() {
+        return Arrays.asList(new Object[][] { { null, 1 }, { StringUtils.EMPTY, 1 }, { "A", 1 }, { "A!", 1 },
+                { "AB", 0 } });
+    }
 
     /**
      * Object of a class which is tested.
@@ -26,6 +38,14 @@ public class NewUserValidatorTest {
      */
     private Errors errors;
 
+    private final String firstName;
+    private final int errorCount;
+
+    public NewUserValidatorTest(final String firstName, final int errorCount) {
+        this.firstName = firstName;
+        this.errorCount = errorCount;
+    }
+
     @Before
     public void initializeValidatorObject() {
         this.validator = new NewUserValidator();
@@ -33,32 +53,8 @@ public class NewUserValidatorTest {
     }
 
     @Test
-    public void testCheckNewFirstNameWithNull() throws Exception {
-        this.validator.checkNewFirstName(null, this.errors);
-        Assert.assertEquals(1, this.errors.getErrorCount());
-    }
-
-    @Test
-    public void testCheckNewFirstNameWithLengthZero() throws Exception {
-        this.validator.checkNewFirstName("", this.errors);
-        Assert.assertEquals(1, this.errors.getErrorCount());
-    }
-
-    @Test
-    public void testCheckNewFirstNameWithLengthOne() throws Exception {
-        this.validator.checkNewFirstName("A", this.errors);
-        Assert.assertEquals(1, this.errors.getErrorCount());
-    }
-
-    @Test
-    public void testCheckNewFirstNameWithSpecialChar() throws Exception {
-        this.validator.checkNewFirstName("A!", this.errors);
-        Assert.assertEquals(1, this.errors.getErrorCount());
-    }
-
-    @Test
-    public void testCheckNewFirstNameWithCorrectValue() throws Exception {
-        this.validator.checkNewFirstName("AB", this.errors);
-        Assert.assertEquals(0, this.errors.getErrorCount());
+    public void testCheckNewFirstName() throws Exception {
+        this.validator.checkNewFirstName(this.firstName, this.errors);
+        Assert.assertEquals(this.errorCount, this.errors.getErrorCount());
     }
 }
