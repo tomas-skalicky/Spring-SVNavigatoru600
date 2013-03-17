@@ -79,7 +79,7 @@ public abstract class AbstractTailoredSeleniumTest extends AbstractSeleniumTest 
      *            The password which is going to be used for sign-in
      */
     protected void logIn(String login, String password) {
-        WebDriver browserDriver = this.getBrowserDriver();
+        WebDriver browserDriver = getBrowserDriver();
         browserDriver.findElement(By.id(LOGIN_ELEMENT_ID)).sendKeys(login);
         browserDriver.findElement(By.id(PASSWORD_ELEMENT_ID)).sendKeys(password);
         browserDriver.findElement(By.cssSelector(SUBMIT_SELECTOR)).click();

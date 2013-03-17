@@ -10,7 +10,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.security.core.GrantedAuthority;
 
@@ -62,8 +61,8 @@ public class UserDaoTest extends AbstractRepositoryTest {
 
     @Before
     public void createTestUsers() {
-        this.firstUser = this.createFirstTestUser();
-        this.secondUser = this.createSecondTestUser();
+        this.firstUser = createFirstTestUser();
+        this.secondUser = createSecondTestUser();
     }
 
     @Test
@@ -164,7 +163,7 @@ public class UserDaoTest extends AbstractRepositoryTest {
         this.secondUser.addAuthority(authorityType);
         this.secondUser.setSubscribedToOtherDocuments(true);
         userDao.update(this.secondUser);
-        User thirdUser = this.createThirdDefaultTestUser();
+        User thirdUser = createThirdDefaultTestUser();
         thirdUser.addAuthority(AuthorityType.ROLE_USER_ADMINISTRATOR);
         thirdUser.setSubscribedToOtherDocuments(true);
         userDao.update(thirdUser);
@@ -195,7 +194,7 @@ public class UserDaoTest extends AbstractRepositoryTest {
         List<User> foundUsers = userDao.findAllByAuthorityAndSubscription(authorityType.name(),
                 notificationType);
         int expectedFoundUserCount = 2;
-        List<String> usernames = this.getUsernames(foundUsers);
+        List<String> usernames = getUsernames(foundUsers);
         Assert.assertEquals(expectedFoundUserCount, usernames.size());
         Assert.assertTrue(usernames.contains(this.firstUser.getUsername()));
         Assert.assertTrue(usernames.contains(this.secondUser.getUsername()));
@@ -208,7 +207,7 @@ public class UserDaoTest extends AbstractRepositoryTest {
      */
     private User createFirstTestUser() {
         User user = TEST_UTILS.createDefaultTestUser();
-        this.updateTestUser(user, FIRST_USER_DEFAULT_AUTHORITIES);
+        updateTestUser(user, FIRST_USER_DEFAULT_AUTHORITIES);
         return user;
     }
 
@@ -219,7 +218,7 @@ public class UserDaoTest extends AbstractRepositoryTest {
      */
     private User createSecondTestUser() {
         User user = TEST_UTILS.createSecondDefaultTestUser();
-        this.updateTestUser(user, SECOND_USER_DEFAULT_AUTHORITIES);
+        updateTestUser(user, SECOND_USER_DEFAULT_AUTHORITIES);
         return user;
     }
 

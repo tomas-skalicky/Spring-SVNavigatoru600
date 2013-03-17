@@ -46,18 +46,18 @@ public class CalendarEventNotificationEmailService extends AbstractNotificationE
             MessageSource messageSource) {
         CalendarEvent event = (CalendarEvent) newEvent;
 
-        String subject = this.getSubject(CalendarEventNotificationEmailService.EVENT_CREATED_SUBJECT_CODE,
-                event, request, messageSource);
+        String subject = getSubject(CalendarEventNotificationEmailService.EVENT_CREATED_SUBJECT_CODE, event,
+                request, messageSource);
 
         String eventName = event.getName();
-        String localizedDateLabel = this.getLocalizedDateLabel(request, messageSource);
-        String localizedEventDate = this.getLocalizedDate(event, request);
-        String localizedDescriptionLabel = this.getLocalizedDescriptionLabel(request, messageSource);
+        String localizedDateLabel = getLocalizedDateLabel(request, messageSource);
+        String localizedEventDate = getLocalizedDate(event, request);
+        String localizedDescriptionLabel = getLocalizedDescriptionLabel(request, messageSource);
         String eventDescription = Url.convertImageRelativeUrlsToAbsolute(event.getDescription(), request);
 
         for (User user : usersToNotify) {
-            String addressing = this.getLocalizedRecipientAddressing(user, request, messageSource);
-            String signature = this.getLocalizedNotificationSignature(user, request, messageSource);
+            String addressing = getLocalizedRecipientAddressing(user, request, messageSource);
+            String signature = getLocalizedNotificationSignature(user, request, messageSource);
             Object[] messageParams = new Object[] { addressing, eventName, localizedDateLabel,
                     localizedEventDate, localizedDescriptionLabel, eventDescription, signature };
             String messageText = Localization.findLocaleMessage(messageSource, request,
@@ -72,17 +72,17 @@ public class CalendarEventNotificationEmailService extends AbstractNotificationE
             MessageSource messageSource) {
         CalendarEvent event = (CalendarEvent) updatedEvent;
 
-        String subject = this.getSubject(CalendarEventNotificationEmailService.EVENT_UPDATED_SUBJECT_CODE,
-                event, request, messageSource);
+        String subject = getSubject(CalendarEventNotificationEmailService.EVENT_UPDATED_SUBJECT_CODE, event,
+                request, messageSource);
 
         String eventName = event.getName();
-        String localizedEventDate = this.getLocalizedDate(event, request);
-        String localizedDescriptionLabel = this.getLocalizedDescriptionLabel(request, messageSource);
+        String localizedEventDate = getLocalizedDate(event, request);
+        String localizedDescriptionLabel = getLocalizedDescriptionLabel(request, messageSource);
         String eventDescription = Url.convertImageRelativeUrlsToAbsolute(event.getDescription(), request);
 
         for (User user : usersToNotify) {
-            String addressing = this.getLocalizedRecipientAddressing(user, request, messageSource);
-            String signature = this.getLocalizedNotificationSignature(user, request, messageSource);
+            String addressing = getLocalizedRecipientAddressing(user, request, messageSource);
+            String signature = getLocalizedNotificationSignature(user, request, messageSource);
             Object[] messageParams = new Object[] { addressing, eventName, localizedEventDate,
                     localizedDescriptionLabel, eventDescription, signature };
             String messageText = Localization.findLocaleMessage(messageSource, request,
@@ -100,7 +100,7 @@ public class CalendarEventNotificationEmailService extends AbstractNotificationE
      */
     private String getSubject(String subjectLocalizationCode, CalendarEvent event,
             HttpServletRequest request, MessageSource messageSource) {
-        Object[] messageParams = new Object[] { event.getName(), this.getLocalizedDate(event, request) };
+        Object[] messageParams = new Object[] { event.getName(), getLocalizedDate(event, request) };
 
         String localized = Localization.findLocaleMessage(messageSource, request, subjectLocalizationCode,
                 messageParams);

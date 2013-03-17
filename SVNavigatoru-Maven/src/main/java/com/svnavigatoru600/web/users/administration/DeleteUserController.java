@@ -37,7 +37,7 @@ public class DeleteUserController extends AbstractUserController {
     @Transactional
     public String delete(@PathVariable String username, HttpServletRequest request, ModelMap model) {
         try {
-            this.getUserService().delete(username, request, this.getMessageSource());
+            getUserService().delete(username, request, getMessageSource());
 
             // Returns the form success view.
             model.addAttribute(AbstractMetaController.REDIRECTION_ATTRIBUTE,

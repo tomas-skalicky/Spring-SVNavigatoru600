@@ -50,7 +50,7 @@ public class DocumentRecordDaoImpl extends NamedParameterJdbcDaoSupport {
 
         // this.getSimpleJdbcTemplate() cannot be used here since the dataSource
         // is not set (i.e. equals null).
-        (new NamedParameterJdbcTemplate(dataSource)).update(query, this.getNamedParameters(record));
+        (new NamedParameterJdbcTemplate(dataSource)).update(query, getNamedParameters(record));
     }
 
     public int save(AbstractDocumentRecord record, DataSource dataSource) {
@@ -60,7 +60,7 @@ public class DocumentRecordDaoImpl extends NamedParameterJdbcDaoSupport {
                 .usingColumns(DocumentRecordField.fileName.getColumnName(),
                         DocumentRecordField.file.getColumnName());
 
-        return insert.executeAndReturnKey(this.getNamedParameters(record)).intValue();
+        return insert.executeAndReturnKey(getNamedParameters(record)).intValue();
     }
 
     public void delete(AbstractDocumentRecord record, DataSource dataSource) {

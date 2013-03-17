@@ -24,15 +24,15 @@ public class LogInTest extends AbstractTailoredSeleniumTest {
      */
     @Test
     public void testLogInLogOut() throws Exception {
-        WebDriver browserDriver = this.getBrowserDriver();
+        WebDriver browserDriver = getBrowserDriver();
 
         TestUser user = (TestUser) APPLICATION_CONTEXT.getBean("testUser");
-        this.logIn(user.getUsername(), user.getPassword());
+        logIn(user.getUsername(), user.getPassword());
         Assert.assertTrue(AssertUtils.getActualUrlReport(browserDriver),
-                this.waitForPageUrl(browserDriver, USER_ACCOUNT_PAGE_URL_REG_EXP));
+                waitForPageUrl(browserDriver, USER_ACCOUNT_PAGE_URL_REG_EXP));
 
         browserDriver.findElement(By.linkText(LOGOUT_LINK_TEXT)).click();
         Assert.assertTrue(AssertUtils.getActualUrlReport(browserDriver),
-                this.waitForPageUrl(browserDriver, LOGIN_PAGE_URL_REG_EXP));
+                waitForPageUrl(browserDriver, LOGIN_PAGE_URL_REG_EXP));
     }
 }

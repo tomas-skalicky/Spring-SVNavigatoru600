@@ -43,7 +43,7 @@ public class ThreadDaoTest extends AbstractRepositoryTest {
         ThreadDao threadDao = TEST_UTILS.getThreadDao();
 
         // INSERT
-        int threadId = this.createDefaultTestThread();
+        int threadId = createDefaultTestThread();
 
         // SELECT ONE
         Thread thread = threadDao.findById(threadId);
@@ -61,7 +61,7 @@ public class ThreadDaoTest extends AbstractRepositoryTest {
         ThreadDao threadDao = TEST_UTILS.getThreadDao();
 
         // INSERT
-        int threadId = this.createDefaultTestThreadWithContribution();
+        int threadId = createDefaultTestThreadWithContribution();
 
         // SELECT ONE
         Thread thread = threadDao.findById(threadId);
@@ -77,8 +77,8 @@ public class ThreadDaoTest extends AbstractRepositoryTest {
         ThreadDao threadDao = TEST_UTILS.getThreadDao();
 
         // TWO INSERTS
-        int firstThreadId = this.createDefaultTestThread();
-        int secondThreadId = this.createDefaultTestThread();
+        int firstThreadId = createDefaultTestThread();
+        int secondThreadId = createDefaultTestThread();
 
         // SELECT ALL
         List<Thread> foundThreads = threadDao.loadAll();
@@ -93,7 +93,7 @@ public class ThreadDaoTest extends AbstractRepositoryTest {
         ThreadDao threadDao = TEST_UTILS.getThreadDao();
 
         // INSERT
-        int threadId = this.createDefaultTestThreadWithContribution();
+        int threadId = createDefaultTestThreadWithContribution();
 
         // SELECT ALL
         List<Thread> foundThreads = threadDao.loadAll();
@@ -109,7 +109,7 @@ public class ThreadDaoTest extends AbstractRepositoryTest {
         ThreadDao threadDao = TEST_UTILS.getThreadDao();
 
         // INSERT & SELECT ONE
-        int threadId = this.createDefaultTestThread();
+        int threadId = createDefaultTestThread();
         Thread thread = threadDao.findById(threadId);
 
         // UPDATE
@@ -130,7 +130,7 @@ public class ThreadDaoTest extends AbstractRepositoryTest {
         ThreadDao threadDao = TEST_UTILS.getThreadDao();
 
         // INSERT & SELECT ONE
-        int threadId = this.createDefaultTestThreadWithContribution();
+        int threadId = createDefaultTestThreadWithContribution();
         Thread thread = threadDao.findById(threadId);
 
         // DELETE
@@ -167,7 +167,7 @@ public class ThreadDaoTest extends AbstractRepositoryTest {
      * @return ID of the newly created thread
      */
     private int createDefaultTestThreadWithContribution() {
-        Contribution contribution = this.getDefaultTestContribution();
+        Contribution contribution = getDefaultTestContribution();
         return TEST_UTILS.createTestThread(RepositoryTestUtils.THREAD_DEFAULT_NAME, this.defaultAuthor,
                 Arrays.asList(contribution));
     }

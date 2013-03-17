@@ -26,26 +26,26 @@ public class EmailTest extends AbstractTailoredSeleniumTest {
      */
     @Test
     public void testEditEmail() throws Exception {
-        WebDriver browserDriver = this.getBrowserDriver();
+        WebDriver browserDriver = getBrowserDriver();
 
         String password = "password";
         String originalEmail = "vaclavas@ramacz.aa";
-        this.logIn(originalEmail, password);
-        this.waitForPageUrl(browserDriver, HOMEPAGE_URL_REG_EXP);
+        logIn(originalEmail, password);
+        waitForPageUrl(browserDriver, HOMEPAGE_URL_REG_EXP);
 
         String newEmail = "vaclavas@rama-cz.aa";
-        this.changeEmail(newEmail, browserDriver);
+        changeEmail(newEmail, browserDriver);
 
         browserDriver.findElement(By.linkText(LOGOUT_LINK_TEXT)).click();
-        this.waitForPageUrl(browserDriver, LOGIN_PAGE_URL_REG_EXP);
+        waitForPageUrl(browserDriver, LOGIN_PAGE_URL_REG_EXP);
 
-        this.logIn(newEmail, password);
-        this.waitForPageUrl(browserDriver, HOMEPAGE_URL_REG_EXP);
+        logIn(newEmail, password);
+        waitForPageUrl(browserDriver, HOMEPAGE_URL_REG_EXP);
 
-        this.changeEmail(originalEmail, browserDriver);
+        changeEmail(originalEmail, browserDriver);
 
         browserDriver.findElement(By.linkText(LOGOUT_LINK_TEXT)).click();
-        this.waitForPageUrl(browserDriver, LOGIN_PAGE_URL_REG_EXP);
+        waitForPageUrl(browserDriver, LOGIN_PAGE_URL_REG_EXP);
     }
 
     /**
@@ -60,7 +60,7 @@ public class EmailTest extends AbstractTailoredSeleniumTest {
 
         // Goes to the user account page.
         browserDriver.findElement(By.linkText(USER_ACCOUNT_LINK_TEXT)).click();
-        this.waitForPageUrl(browserDriver, USER_ACCOUNT_PAGE_URL_REG_EXP);
+        waitForPageUrl(browserDriver, USER_ACCOUNT_PAGE_URL_REG_EXP);
 
         // Performs the change.
         WebElement userEmailElement = browserDriver.findElement(By.id(EMAIL_ELEMENT_ID));
@@ -69,6 +69,6 @@ public class EmailTest extends AbstractTailoredSeleniumTest {
 
         // Confirms the change.
         browserDriver.findElement(By.cssSelector(SUBMIT_SELECTOR)).click();
-        this.waitForPageUrl(browserDriver, USER_ACCOUNT_CHANGED_URL_REG_EXP);
+        waitForPageUrl(browserDriver, USER_ACCOUNT_CHANGED_URL_REG_EXP);
     }
 }

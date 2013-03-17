@@ -38,7 +38,7 @@ public class UserDaoImpl extends HibernateDaoSupport implements UserDao {
     @Override
     public User findByUsername(String username) {
         this.logger.info(String.format("Load an user with the username '%s'", username));
-        return this.getHibernateTemplate().load(User.class, username);
+        return getHibernateTemplate().load(User.class, username);
     }
 
     @Override
@@ -55,7 +55,7 @@ public class UserDaoImpl extends HibernateDaoSupport implements UserDao {
         criteria.add(Restrictions.eq(UserField.email.name(), lowerCasedEmail));
 
         @SuppressWarnings("unchecked")
-        List<User> users = (List<User>) this.getHibernateTemplate().findByCriteria(criteria);
+        List<User> users = (List<User>) getHibernateTemplate().findByCriteria(criteria);
         if (users.size() > 1) {
             throw new DataIntegrityViolationException("Email should be unique.");
         } else if (users.isEmpty()) {
@@ -75,7 +75,7 @@ public class UserDaoImpl extends HibernateDaoSupport implements UserDao {
         String query = String.format("SELECT u FROM %s u INNER JOIN u.%s a WHERE a.%s = ?",
                 PersistedClass.User.name(), UserField.authorities.name(),
                 AuthorityField.authority.getFieldChain());
-        return (List<User>) this.getHibernateTemplate().find(query, authority);
+        return (List<User>) getHibernateTemplate().find(query, authority);
     }
 
     @SuppressWarnings("unchecked")
@@ -91,7 +91,7 @@ public class UserDaoImpl extends HibernateDaoSupport implements UserDao {
         String query = String.format("SELECT u FROM %s u INNER JOIN u.%s a WHERE a.%s = ? AND u.%s = ?",
                 PersistedClass.User.name(), UserField.authorities.name(),
                 AuthorityField.authority.getFieldChain(), subscriptionColumn);
-        return (List<User>) this.getHibernateTemplate().find(query, authority, Boolean.TRUE.toString());
+        return (List<User>) getHibernateTemplate().find(query, authority, Boolean.TRUE.toString());
     }
 
     @Override
@@ -101,7 +101,7 @@ public class UserDaoImpl extends HibernateDaoSupport implements UserDao {
         String query = String.format("FROM %s u WHERE u.%s = ? ORDER BY u.%s, u.%s %s",
                 PersistedClass.User.name(), UserField.isTestUser.name(), UserField.lastName.name(),
                 UserField.firstName.name(), order.getDatabaseCode());
-        return (List<User>) this.getHibernateTemplate().find(query, testUsers);
+        return (List<User>) getHibernateTemplate().find(query, testUsers);
     }
 
     @Override
@@ -112,7 +112,7 @@ public class UserDaoImpl extends HibernateDaoSupport implements UserDao {
     @Override
     public void update(User user, boolean persistAuthorities) {
         this.logger.info("Update an user " + user);
-        this.getHibernateTemplate().update(user);
+        getHibernateTemplate().update(user);
 
         if (persistAuthorities) {
             // Updates authorities.
@@ -124,19 +124,19 @@ public class UserDaoImpl extends HibernateDaoSupport implements UserDao {
     @Override
     public void save(User user) {
         this.logger.info("Save a new user " + user);
-        this.getHibernateTemplate().save(user);
+        getHibernateTemplate().save(user);
 
         // Not necessary to save authorities explicitly. The command above has already done it.
     }
 
     @Override
     public void delete(User user) {
-        this.getHibernateTemplate().delete(user);
+        getHibernateTemplate().delete(user);
     }
 
     @Override
     public void delete(String username) {
-        User user = this.findByUsername(username);
+        User user = findByUsername(username);
         if (user != null) {
             this.delete(user);
         }

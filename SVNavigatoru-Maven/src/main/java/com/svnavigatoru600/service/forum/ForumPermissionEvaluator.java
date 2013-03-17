@@ -35,10 +35,10 @@ public class ForumPermissionEvaluator implements PermissionEvaluator {
     public boolean hasPermission(Authentication authentication, Object targetDomainObject, Object permission) {
         if (targetDomainObject instanceof Contribution) {
             Contribution contribution = (Contribution) targetDomainObject;
-            return this.hasUserPermission(authentication, contribution.getAuthor(), permission);
+            return hasUserPermission(authentication, contribution.getAuthor(), permission);
         } else if (targetDomainObject instanceof Contribution) {
             Thread thread = (Thread) targetDomainObject;
-            return this.hasUserPermission(authentication, thread.getAuthor(), permission);
+            return hasUserPermission(authentication, thread.getAuthor(), permission);
         } else {
             throw new RuntimeException("Unsupported type of target domain object.");
         }
@@ -49,10 +49,10 @@ public class ForumPermissionEvaluator implements PermissionEvaluator {
             Object permission) {
         if (Contribution.class.getName().equals(targetType)) {
             Contribution contribution = this.contributionService.findById((Integer) targetId);
-            return this.hasUserPermission(authentication, contribution.getAuthor(), permission);
+            return hasUserPermission(authentication, contribution.getAuthor(), permission);
         } else if (Thread.class.getName().equals(targetType)) {
             Thread thread = this.threadService.findById((Integer) targetId);
-            return this.hasUserPermission(authentication, thread.getAuthor(), permission);
+            return hasUserPermission(authentication, thread.getAuthor(), permission);
         } else {
             throw new RuntimeException("Unsupported type of target domain object.");
         }

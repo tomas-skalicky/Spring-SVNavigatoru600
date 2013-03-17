@@ -27,9 +27,9 @@ public class UpdateUserDataValidator implements Validator {
     @Override
     public void validate(Object target, Errors errors) {
         UpdateUserData command = (UpdateUserData) target;
-        this.checkNewPassword(command.getNewPassword(), command.getNewPasswordConfirmation(), errors);
-        this.checkNewEmail(command.getUser().getEmail(), errors);
-        this.checkNewPhone(command.getUser().getPhone(), errors);
+        checkNewPassword(command.getNewPassword(), command.getNewPasswordConfirmation(), errors);
+        checkNewEmail(command.getUser().getEmail(), errors);
+        checkNewPhone(command.getUser().getPhone(), errors);
     }
 
     /**

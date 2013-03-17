@@ -42,30 +42,30 @@ public class NewsTest extends AbstractTailoredSeleniumTest {
     // @Test
     public void testAddEditDelete() throws Exception {
         this.logIn();
-        this.createNewNews();
-        this.editNewNews();
-        this.deleteNewNews();
-        this.logOut();
+        createNewNews();
+        editNewNews();
+        deleteNewNews();
+        logOut();
     }
 
     /**
      * Signs in the application. It checks the remember-me checkbox.
      */
     private void logIn() {
-        WebDriver browserDriver = this.getBrowserDriver();
+        WebDriver browserDriver = getBrowserDriver();
 
         browserDriver.findElement(By.id(LOGIN_ELEMENT_ID)).sendKeys("skalicky.tomas@gmail.com");
         browserDriver.findElement(By.id(PASSWORD_ELEMENT_ID)).sendKeys("t");
         browserDriver.findElement(By.id("rememberMe")).click();
         browserDriver.findElement(By.cssSelector(SUBMIT_SELECTOR)).click();
-        this.waitForPageUrl(browserDriver, HOMEPAGE_URL_REG_EXP);
+        waitForPageUrl(browserDriver, HOMEPAGE_URL_REG_EXP);
     }
 
     /**
      * Creates an entirely new news.
      */
     private void createNewNews() {
-        WebDriver browserDriver = this.getBrowserDriver();
+        WebDriver browserDriver = getBrowserDriver();
 
         // HINT: Use a Firefox extension called "XPath Checker" to find out a xpath of a certain element.
         browserDriver.findElement(By.xpath(XPATH_NEW_NEWS_LINK)).click();
@@ -103,7 +103,7 @@ public class NewsTest extends AbstractTailoredSeleniumTest {
      * the {@link #createNewNews() createNewNews} method.
      */
     private void editNewNews() {
-        WebDriver browserDriver = this.getBrowserDriver();
+        WebDriver browserDriver = getBrowserDriver();
 
         browserDriver.findElement(By.xpath(XPATH_FIRST_NEWS_EDIT)).click();
         Assert.isTrue((new WebDriverWait(browserDriver, DEFAULT_TIMEOUT_IN_SECONDS,
@@ -134,7 +134,7 @@ public class NewsTest extends AbstractTailoredSeleniumTest {
         }));
 
         browserDriver.findElement(By.xpath(XPATH_NEWS_SECTION)).click();
-        this.waitForPageUrl(browserDriver, HOMEPAGE_URL_REG_EXP);
+        waitForPageUrl(browserDriver, HOMEPAGE_URL_REG_EXP);
     }
 
     /**
@@ -142,7 +142,7 @@ public class NewsTest extends AbstractTailoredSeleniumTest {
      * {@link #createNewNews() createNewNews} method.
      */
     private void deleteNewNews() {
-        WebDriver browserDriver = this.getBrowserDriver();
+        WebDriver browserDriver = getBrowserDriver();
 
         browserDriver.findElement(By.xpath(XPATH_FIRST_NEWS_DELETE)).click();
         // browserDriver.waitForCondition("selenium.isConfirmationPresent()", MAX_WAIT_TIME_IN_MS);
@@ -155,9 +155,9 @@ public class NewsTest extends AbstractTailoredSeleniumTest {
      * Logs out from the application.
      */
     private void logOut() {
-        WebDriver browserDriver = this.getBrowserDriver();
+        WebDriver browserDriver = getBrowserDriver();
 
         browserDriver.findElement(By.linkText(LOGOUT_LINK_TEXT)).click();
-        this.waitForPageUrl(browserDriver, LOGIN_PAGE_URL_REG_EXP);
+        waitForPageUrl(browserDriver, LOGIN_PAGE_URL_REG_EXP);
     }
 }

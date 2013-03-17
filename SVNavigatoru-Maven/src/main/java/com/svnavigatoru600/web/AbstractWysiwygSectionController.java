@@ -81,7 +81,7 @@ public abstract class AbstractWysiwygSectionController extends AbstractPrivateSe
             SessionStatus status, ModelMap model) {
         // No validation necessary.
 
-        this.saveChanges(command, result, status, model);
+        saveChanges(command, result, status, model);
         if (result.hasErrors()) {
             return this.editPageView;
         } else {

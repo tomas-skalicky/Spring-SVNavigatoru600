@@ -84,7 +84,7 @@ public class EditMyAccountController extends AbstractPrivateSectionMetaControlle
     @RequestMapping(value = UserAccountUrlParts.SAVED_URL, method = RequestMethod.GET)
     @PreAuthorize("hasRole('ROLE_REGISTERED_USER')")
     public String initFormAfterSave(HttpServletRequest request, ModelMap model) {
-        String view = this.initForm(request, model);
+        String view = initForm(request, model);
         ((UpdateUserData) model.get(EditMyAccountController.COMMAND)).setDataSaved(true);
         return view;
     }
@@ -191,7 +191,7 @@ public class EditMyAccountController extends AbstractPrivateSectionMetaControlle
     @PreAuthorize("hasRole('ROLE_REGISTERED_USER')")
     public String initFormAfterUnsubscription(@PathVariable("notificationType") int notificationType,
             HttpServletRequest request, ModelMap model) {
-        String view = this.initForm(request, model);
+        String view = initForm(request, model);
 
         UpdateUserData command = (UpdateUserData) model.get(EditMyAccountController.COMMAND);
         command.setNotificationsUnsubscribed(true);
@@ -213,7 +213,7 @@ public class EditMyAccountController extends AbstractPrivateSectionMetaControlle
     @PreAuthorize("hasRole('ROLE_REGISTERED_USER')")
     public String initFormAfterUnsubscriptionFail(@PathVariable("username") String username,
             HttpServletRequest request, ModelMap model) {
-        String view = this.initForm(request, model);
+        String view = initForm(request, model);
 
         UpdateUserData command = (UpdateUserData) model.get(EditMyAccountController.COMMAND);
         command.setForeignAccountDuringUnsubscription(true);

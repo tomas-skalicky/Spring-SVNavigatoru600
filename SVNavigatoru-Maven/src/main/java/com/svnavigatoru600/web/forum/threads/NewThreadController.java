@@ -68,7 +68,7 @@ public class NewThreadController extends AbstractNewEditThreadController impleme
         command.setContribution(contribution);
 
         this.sendNotificationModelFiller.populateSendNotificationInInitForm(command, request,
-                this.getMessageSource());
+                getMessageSource());
 
         model.addAttribute(AbstractNewEditThreadController.COMMAND, command);
         return PageViews.NEW.getViewName();
@@ -85,11 +85,11 @@ public class NewThreadController extends AbstractNewEditThreadController impleme
     public String processSubmittedForm(@ModelAttribute(NewThreadController.COMMAND) NewThread command,
             BindingResult result, SessionStatus status, HttpServletRequest request, ModelMap model) {
 
-        MessageSource messageSource = this.getMessageSource();
+        MessageSource messageSource = getMessageSource();
         this.sendNotificationModelFiller
                 .populateSendNotificationInSubmitForm(command, request, messageSource);
 
-        this.getValidator().validate(command, result);
+        getValidator().validate(command, result);
         if (result.hasErrors()) {
             return PageViews.NEW.getViewName();
         }
@@ -108,7 +108,7 @@ public class NewThreadController extends AbstractNewEditThreadController impleme
 
         try {
             // Stores both the thread and the contribution to the repository.
-            this.getThreadService().saveAndNotifyUsers(newThread, command.getSendNotification().isStatus(),
+            getThreadService().saveAndNotifyUsers(newThread, command.getSendNotification().isStatus(),
                     request, messageSource);
 
             // Clears the command object from the session.

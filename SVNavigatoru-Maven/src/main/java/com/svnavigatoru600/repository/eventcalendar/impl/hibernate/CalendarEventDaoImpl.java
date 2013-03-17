@@ -18,7 +18,7 @@ public class CalendarEventDaoImpl extends HibernateDaoSupport implements Calenda
 
     @Override
     public CalendarEvent findById(int eventId) {
-        return this.getHibernateTemplate().load(CalendarEvent.class, eventId);
+        return getHibernateTemplate().load(CalendarEvent.class, eventId);
     }
 
     @Override
@@ -27,21 +27,21 @@ public class CalendarEventDaoImpl extends HibernateDaoSupport implements Calenda
         String query = String.format("FROM %s e WHERE e.%s >= ? ORDER BY e.%s %s",
                 PersistedClass.CalendarEvent.name(), CalendarEventField.date.name(),
                 CalendarEventField.date.name(), sortDirection.getDatabaseCode());
-        return (List<CalendarEvent>) this.getHibernateTemplate().find(query, earliestDate);
+        return (List<CalendarEvent>) getHibernateTemplate().find(query, earliestDate);
     }
 
     @Override
     public void update(CalendarEvent event) {
-        this.getHibernateTemplate().update(event);
+        getHibernateTemplate().update(event);
     }
 
     @Override
     public int save(CalendarEvent event) {
-        return (Integer) this.getHibernateTemplate().save(event);
+        return (Integer) getHibernateTemplate().save(event);
     }
 
     @Override
     public void delete(CalendarEvent event) {
-        this.getHibernateTemplate().delete(event);
+        getHibernateTemplate().delete(event);
     }
 }

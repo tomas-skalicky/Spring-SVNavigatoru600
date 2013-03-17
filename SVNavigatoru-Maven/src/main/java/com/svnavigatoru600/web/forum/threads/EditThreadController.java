@@ -46,7 +46,7 @@ public class EditThreadController extends AbstractNewEditThreadController {
     @RequestMapping(value = CommonUrlParts.EXISTING_EXTENSION + "{threadId}/", method = RequestMethod.GET)
     public String initForm(@PathVariable int threadId, HttpServletRequest request, ModelMap model) {
 
-        ThreadService threadService = this.getThreadService();
+        ThreadService threadService = getThreadService();
         threadService.canEdit(threadId);
 
         EditThread command = new EditThread();
@@ -61,7 +61,7 @@ public class EditThreadController extends AbstractNewEditThreadController {
     @RequestMapping(value = CommonUrlParts.EXISTING_EXTENSION + "{threadId}/"
             + CommonUrlParts.SAVED_EXTENSION, method = RequestMethod.GET)
     public String initFormAfterSave(@PathVariable int threadId, HttpServletRequest request, ModelMap model) {
-        String view = this.initForm(threadId, request, model);
+        String view = initForm(threadId, request, model);
         ((EditThread) model.get(AbstractNewEditThreadController.COMMAND)).setDataSaved(true);
         return view;
     }
@@ -72,10 +72,10 @@ public class EditThreadController extends AbstractNewEditThreadController {
             BindingResult result, SessionStatus status, @PathVariable int threadId,
             HttpServletRequest request, ModelMap model) {
 
-        ThreadService threadService = this.getThreadService();
+        ThreadService threadService = getThreadService();
         threadService.canEdit(threadId);
 
-        this.getValidator().validate(command, result);
+        getValidator().validate(command, result);
         if (result.hasErrors()) {
             return PageViews.EDIT.getViewName();
         }

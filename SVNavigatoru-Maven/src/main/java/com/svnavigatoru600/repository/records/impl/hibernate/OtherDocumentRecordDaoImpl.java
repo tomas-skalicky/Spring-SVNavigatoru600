@@ -31,7 +31,7 @@ public class OtherDocumentRecordDaoImpl extends HibernateDaoSupport implements O
 
     @Override
     public OtherDocumentRecord findById(int recordId) {
-        return this.getHibernateTemplate().load(OtherDocumentRecord.class, recordId);
+        return getHibernateTemplate().load(OtherDocumentRecord.class, recordId);
     }
 
     @Override
@@ -45,7 +45,7 @@ public class OtherDocumentRecordDaoImpl extends HibernateDaoSupport implements O
     public List<OtherDocumentRecord> findAllOrdered(OrderType order) {
         String query = String.format("FROM %s r ORDER BY r.%s %s", PersistedClass.OtherDocumentRecord.name(),
                 OtherDocumentRecordField.creationTime.name(), order.getDatabaseCode());
-        return (List<OtherDocumentRecord>) this.getHibernateTemplate().find(query);
+        return (List<OtherDocumentRecord>) getHibernateTemplate().find(query);
     }
 
     @Override
@@ -56,14 +56,14 @@ public class OtherDocumentRecordDaoImpl extends HibernateDaoSupport implements O
                 PersistedClass.OtherDocumentRecord.name(),
                 OtherDocumentRecordTypeRelationField.type.getFieldChain(),
                 OtherDocumentRecordField.creationTime.name(), order.getDatabaseCode());
-        return (List<OtherDocumentRecord>) this.getHibernateTemplate().find(query, type.name());
+        return (List<OtherDocumentRecord>) getHibernateTemplate().find(query, type.name());
     }
 
     @Override
     public void update(OtherDocumentRecord record) {
         Date now = new Date();
         record.setLastSaveTime(now);
-        this.getHibernateTemplate().update(record);
+        getHibernateTemplate().update(record);
 
         // Updates types.
         this.typeDao.delete(record.getId());
@@ -75,7 +75,7 @@ public class OtherDocumentRecordDaoImpl extends HibernateDaoSupport implements O
         Date now = new Date();
         record.setCreationTime(now);
         record.setLastSaveTime(now);
-        return (Integer) this.getHibernateTemplate().save(record);
+        return (Integer) getHibernateTemplate().save(record);
 
         // Not necessary to save types explicitly. The command above has already
         // done it.
@@ -83,6 +83,6 @@ public class OtherDocumentRecordDaoImpl extends HibernateDaoSupport implements O
 
     @Override
     public void delete(AbstractDocumentRecord record) {
-        this.getHibernateTemplate().delete(record);
+        getHibernateTemplate().delete(record);
     }
 }

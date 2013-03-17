@@ -35,20 +35,20 @@ public class NewNewsResponse extends AbstractNewEditNewsResponse {
 
     public void setSuccess(MessageSource messageSource, HttpServletRequest request) {
         super.setSuccess();
-        this.initVariables(messageSource, request);
+        initVariables(messageSource, request);
     }
 
     void initVariables(MessageSource messageSource, HttpServletRequest request) {
-        this.initDateVariables(request);
-        this.initUserVariables();
-        this.initMessageVariables(messageSource, request);
-        this.initEditUrlVariables(request);
+        initDateVariables(request);
+        initUserVariables();
+        initMessageVariables(messageSource, request);
+        initEditUrlVariables(request);
     }
 
     private void initDateVariables(HttpServletRequest request) {
         Locale locale = Localization.getLocale(request);
 
-        News news = this.getCommand().getNews();
+        News news = getCommand().getNews();
         Date creationTime = news.getCreationTime();
         this.localizedMonth = DateUtils
                 .format(creationTime, DateUtils.LONG_MONTH_FORMATS.get(locale), locale);
@@ -60,7 +60,7 @@ public class NewNewsResponse extends AbstractNewEditNewsResponse {
     }
 
     private void initMessageVariables(MessageSource messageSource, HttpServletRequest request) {
-        News news = this.getCommand().getNews();
+        News news = getCommand().getNews();
         this.localizedDeleteQuestion = NewsService.getLocalizedDeleteQuestion(news, messageSource, request);
     }
 

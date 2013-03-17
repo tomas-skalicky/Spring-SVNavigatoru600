@@ -53,15 +53,14 @@ public class EditEventController extends AbstractNewEditEventController {
 
         EditEvent command = new EditEvent();
 
-        CalendarEvent calendarEvent = this.getEventService().findById(eventId);
+        CalendarEvent calendarEvent = getEventService().findById(eventId);
         command.setEvent(calendarEvent);
 
-        MessageSource messageSource = this.getMessageSource();
+        MessageSource messageSource = getMessageSource();
         command.setNewPriority(Localization.findLocaleMessage(messageSource, request, calendarEvent
                 .getTypedPriority().getLocalizationCode()));
 
-        this.getSendNotificationModelFiller().populateSendNotificationInInitForm(command, request,
-                messageSource);
+        getSendNotificationModelFiller().populateSendNotificationInInitForm(command, request, messageSource);
 
         model.addAttribute(AbstractNewEditEventController.COMMAND, command);
         return PageViews.EDIT.getViewName();
@@ -69,7 +68,7 @@ public class EditEventController extends AbstractNewEditEventController {
 
     @RequestMapping(value = EventsUrlParts.EXISTING_URL + "{eventId}/" + CommonUrlParts.SAVED_EXTENSION, method = RequestMethod.GET)
     public String initFormAfterSave(@PathVariable int eventId, HttpServletRequest request, ModelMap model) {
-        String view = this.initForm(eventId, request, model);
+        String view = initForm(eventId, request, model);
         ((EditEvent) model.get(AbstractNewEditEventController.COMMAND)).setDataSaved(true);
         return view;
     }
@@ -96,16 +95,16 @@ public class EditEventController extends AbstractNewEditEventController {
             BindingResult result, SessionStatus status, @PathVariable int eventId,
             HttpServletRequest request, ModelMap model) {
 
-        MessageSource messageSource = this.getMessageSource();
-        this.getSendNotificationModelFiller().populateSendNotificationInSubmitForm(command, request,
-                messageSource);
+        MessageSource messageSource = getMessageSource();
+        getSendNotificationModelFiller()
+                .populateSendNotificationInSubmitForm(command, request, messageSource);
 
-        this.getValidator().validate(command, result);
+        getValidator().validate(command, result);
         if (result.hasErrors()) {
             return PageViews.EDIT.getViewName();
         }
 
-        CalendarEventService eventService = this.getEventService();
+        CalendarEventService eventService = getEventService();
         CalendarEvent originalEvent = null;
         try {
             originalEvent = eventService.findById(eventId);

@@ -86,8 +86,7 @@ public class AuthorityService {
      * Gets a {@link Map} which for each constant of the {@link AuthorityType} enumeration contains a pair of
      * its {@link AuthorityType#getOrdinal() ordinal} and its localized title.
      */
-    public static Map<Long, String> getLocalizedRoleTitles(HttpServletRequest request,
-            MessageSource messageSource) {
+    public Map<Long, String> getLocalizedRoleTitles(HttpServletRequest request, MessageSource messageSource) {
         Map<Long, String> ordinalTitleMap = new HashMap<Long, String>();
 
         for (AuthorityType type : AuthorityType.values()) {

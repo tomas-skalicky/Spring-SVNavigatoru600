@@ -57,12 +57,11 @@ public class NewEventController extends AbstractNewEditEventController {
         CalendarEvent calendarEvent = new CalendarEvent();
         command.setEvent(calendarEvent);
 
-        MessageSource messageSource = this.getMessageSource();
+        MessageSource messageSource = getMessageSource();
         command.setNewPriority(Localization.findLocaleMessage(messageSource, request,
                 PriorityType.NORMAL.getLocalizationCode()));
 
-        this.getSendNotificationModelFiller().populateSendNotificationInInitForm(command, request,
-                messageSource);
+        getSendNotificationModelFiller().populateSendNotificationInInitForm(command, request, messageSource);
 
         model.addAttribute(AbstractNewEditEventController.COMMAND, command);
         return PageViews.NEW.getViewName();
@@ -79,11 +78,11 @@ public class NewEventController extends AbstractNewEditEventController {
     public String processSubmittedForm(@ModelAttribute(NewEventController.COMMAND) NewEvent command,
             BindingResult result, SessionStatus status, HttpServletRequest request, ModelMap model) {
 
-        MessageSource messageSource = this.getMessageSource();
-        this.getSendNotificationModelFiller().populateSendNotificationInSubmitForm(command, request,
-                messageSource);
+        MessageSource messageSource = getMessageSource();
+        getSendNotificationModelFiller()
+                .populateSendNotificationInSubmitForm(command, request, messageSource);
 
-        this.getValidator().validate(command, result);
+        getValidator().validate(command, result);
         if (result.hasErrors()) {
             return PageViews.NEW.getViewName();
         }
@@ -95,8 +94,8 @@ public class NewEventController extends AbstractNewEditEventController {
 
         try {
             // Saves the event to the repository.
-            this.getEventService().saveAndNotifyUsers(newEvent, command.getSendNotification().isStatus(),
-                    request, messageSource);
+            getEventService().saveAndNotifyUsers(newEvent, command.getSendNotification().isStatus(), request,
+                    messageSource);
 
             // Clears the command object from the session.
             status.setComplete();

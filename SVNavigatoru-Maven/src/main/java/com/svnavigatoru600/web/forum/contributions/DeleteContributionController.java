@@ -51,10 +51,10 @@ public class DeleteContributionController extends AbstractContributionController
             HttpServletRequest request, ModelMap model) {
 
         // Checks permission.
-        this.getContributionService().canDelete(contributionId);
+        getContributionService().canDelete(contributionId);
 
         try {
-            this.getContributionService().delete(contributionId);
+            getContributionService().delete(contributionId);
 
             // Returns the form success view.
             model.addAttribute(AbstractMetaController.REDIRECTION_ATTRIBUTE, String.format("%s%d/%s",

@@ -61,7 +61,7 @@ public enum NotificationType {
      * @return The same value as {@link #ordinal()}.
      */
     public long getOrdinal() {
-        return this.ordinal();
+        return ordinal();
     }
 
     public abstract void accept(NotificationTypeVisitor visitor);

@@ -47,13 +47,13 @@ public class ListContributionsController extends AbstractContributionController 
 
         ShowAllContributions command = new ShowAllContributions();
 
-        List<Contribution> contributions = this.getContributionService().findAllOrdered(threadId);
+        List<Contribution> contributions = getContributionService().findAllOrdered(threadId);
         command.setContributions(contributions);
         command.setThread(this.threadService.findById(threadId));
 
         // Sets up all auxiliary (but necessary) maps.
         command.setLocalizedDeleteQuestions(ContributionService.getLocalizedDeleteQuestions(contributions,
-                request, this.getMessageSource()));
+                request, getMessageSource()));
 
         model.addAttribute(ListContributionsController.COMMAND, command);
         return PageViews.LIST.getViewName();
@@ -62,7 +62,7 @@ public class ListContributionsController extends AbstractContributionController 
     @RequestMapping(value = ListContributionsController.BASE_URL
             + ContributionsUrlParts.CONTRIBUTIONS_CREATED_EXTENSION, method = RequestMethod.GET)
     public String initPageAfterCreate(@PathVariable int threadId, HttpServletRequest request, ModelMap model) {
-        String view = this.initPage(threadId, request, model);
+        String view = initPage(threadId, request, model);
         ((ShowAllContributions) model.get(ListContributionsController.COMMAND)).setContributionCreated(true);
         return view;
     }
@@ -70,7 +70,7 @@ public class ListContributionsController extends AbstractContributionController 
     @RequestMapping(value = ListContributionsController.BASE_URL
             + ContributionsUrlParts.CONTRIBUTIONS_DELETED_EXTENSION, method = RequestMethod.GET)
     public String initPageAfterDelete(@PathVariable int threadId, HttpServletRequest request, ModelMap model) {
-        String view = this.initPage(threadId, request, model);
+        String view = initPage(threadId, request, model);
         ((ShowAllContributions) model.get(ListContributionsController.COMMAND)).setContributionDeleted(true);
         return view;
     }

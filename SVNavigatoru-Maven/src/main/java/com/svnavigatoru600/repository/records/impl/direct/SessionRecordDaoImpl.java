@@ -72,7 +72,7 @@ public class SessionRecordDaoImpl extends NamedParameterJdbcDaoSupport implement
 
         Map<String, Integer> args = Collections.singletonMap(idColumn, recordId);
 
-        return this.getNamedParameterJdbcTemplate().queryForObject(query, args,
+        return getNamedParameterJdbcTemplate().queryForObject(query, args,
                 new SessionRecordRowMapper(loadFile));
     }
 
@@ -82,7 +82,7 @@ public class SessionRecordDaoImpl extends NamedParameterJdbcDaoSupport implement
                 SessionRecordDaoImpl.SELECT_FROM_CLAUSE_WITHOUT_FILE,
                 SessionRecordField.sessionDate.getColumnName(), order.getDatabaseCode());
 
-        return this.getJdbcTemplate().query(query, new SessionRecordRowMapper(false));
+        return getJdbcTemplate().query(query, new SessionRecordRowMapper(false));
     }
 
     @Override
@@ -94,7 +94,7 @@ public class SessionRecordDaoImpl extends NamedParameterJdbcDaoSupport implement
 
         Map<String, String> args = Collections.singletonMap(typeColumn, type.name());
 
-        return this.getNamedParameterJdbcTemplate().query(query, args, new SessionRecordRowMapper(false));
+        return getNamedParameterJdbcTemplate().query(query, args, new SessionRecordRowMapper(false));
     }
 
     /**
@@ -113,7 +113,7 @@ public class SessionRecordDaoImpl extends NamedParameterJdbcDaoSupport implement
     public void update(SessionRecord record) {
         // NOTE: updates the record in both tables 'document_records' and
         // 'session_records'.
-        this.documentRecordDao.update(record, this.getDataSource());
+        this.documentRecordDao.update(record, getDataSource());
 
         String idColumn = SessionRecordField.id.getColumnName();
         String typeColumn = SessionRecordField.type.getColumnName();
@@ -123,21 +123,21 @@ public class SessionRecordDaoImpl extends NamedParameterJdbcDaoSupport implement
                 SessionRecordDaoImpl.TABLE_NAME, typeColumn, typeColumn, sessionDateColumn,
                 sessionDateColumn, discussedTopicsColumn, discussedTopicsColumn, idColumn, idColumn);
 
-        this.getNamedParameterJdbcTemplate().update(query, this.getNamedParameters(record));
+        getNamedParameterJdbcTemplate().update(query, getNamedParameters(record));
     }
 
     @Override
     public int save(SessionRecord record) {
         // NOTE: inserts the new record into two tables: 'document_records' and
         // 'session_records'.
-        int recordId = this.documentRecordDao.save(record, this.getDataSource());
+        int recordId = this.documentRecordDao.save(record, getDataSource());
 
-        SimpleJdbcInsert insert = new SimpleJdbcInsert(this.getDataSource()).withTableName(
+        SimpleJdbcInsert insert = new SimpleJdbcInsert(getDataSource()).withTableName(
                 SessionRecordDaoImpl.TABLE_NAME).usingColumns(SessionRecordField.id.getColumnName(),
                 SessionRecordField.type.getColumnName(), SessionRecordField.sessionDate.getColumnName(),
                 SessionRecordField.discussedTopics.getColumnName());
 
-        Map<String, Object> parameters = this.getNamedParameters(record);
+        Map<String, Object> parameters = getNamedParameters(record);
         parameters.put(SessionRecordField.id.getColumnName(), recordId);
         insert.execute(parameters);
 
@@ -147,6 +147,6 @@ public class SessionRecordDaoImpl extends NamedParameterJdbcDaoSupport implement
     @Override
     public void delete(AbstractDocumentRecord record) {
         // The 'ON DELETE CASCADE' clause is used.
-        this.documentRecordDao.delete(record, this.getDataSource());
+        this.documentRecordDao.delete(record, getDataSource());
     }
 }

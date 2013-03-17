@@ -45,15 +45,14 @@ public class DeleteNewsController extends AbstractNewsController {
         DeleteNewsResponse response = new DeleteNewsResponse();
 
         try {
-            this.getNewsService().delete(newsId);
+            getNewsService().delete(newsId);
 
             response.setSuccess();
 
         } catch (DataAccessException e) {
             // We encountered a database problem.
             LogFactory.getLog(this.getClass()).error(e);
-            response.setFail(DeleteNewsController.DATABASE_ERROR_MESSAGE_CODE, this.getMessageSource(),
-                    request);
+            response.setFail(DeleteNewsController.DATABASE_ERROR_MESSAGE_CODE, getMessageSource(), request);
         }
         return response;
     }
