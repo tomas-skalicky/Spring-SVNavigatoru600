@@ -51,28 +51,28 @@ public abstract class AbstractListDocumentsController extends AbstractOtherDocum
 
         ShowAllRecords command = new ShowAllRecords();
 
-        List<OtherDocumentRecord> records = this.getRecordService().findAllOrdered(this.isAllRecordTypes(),
-                this.getRecordType());
+        List<OtherDocumentRecord> records = getRecordService().findAllOrdered(isAllRecordTypes(),
+                getRecordType());
         command.setRecords(records);
 
         // Sets up all auxiliary (but necessary) maps.
         command.setLocalizedDeleteQuestions(OtherDocumentRecordService.getLocalizedDeleteQuestions(records,
-                request, this.getMessageSource()));
+                request, getMessageSource()));
 
         model.addAttribute(AbstractListDocumentsController.COMMAND, command);
-        return this.getViews().getList();
+        return getViews().getList();
     }
 
     @PreAuthorize("hasRole('ROLE_MEMBER_OF_BOARD')")
     public String initPageAfterCreate(HttpServletRequest request, ModelMap model) {
-        String view = this.initPage(request, model);
+        String view = initPage(request, model);
         ((ShowAllRecords) model.get(AbstractListDocumentsController.COMMAND)).setRecordCreated(true);
         return view;
     }
 
     @PreAuthorize("hasRole('ROLE_MEMBER_OF_BOARD')")
     public String initPageAfterDelete(HttpServletRequest request, ModelMap model) {
-        String view = this.initPage(request, model);
+        String view = initPage(request, model);
         ((ShowAllRecords) model.get(AbstractListDocumentsController.COMMAND)).setRecordDeleted(true);
         return view;
     }

@@ -52,14 +52,14 @@ public class UserEmailService extends AbstractEmailService {
         String subject = Localization.findLocaleMessage(messageSource, request,
                 UserEmailService.EMAIL_SUBJECT_NEW_USER_CODE);
 
-        String addressing = this.getLocalizedRecipientAddressing(newUser, request, messageSource);
+        String addressing = getLocalizedRecipientAddressing(newUser, request, messageSource);
         String usernameLabel = Localization.findLocaleMessage(messageSource, request,
                 UserEmailService.USER_ACCOUNT_TITLE_CODE);
         String emailLabel = Localization.findLocaleMessage(messageSource, request,
                 UserEmailService.EMAIL_CODE);
         String passwordLabel = Localization.findLocaleMessage(messageSource, request,
                 UserEmailService.PASSWORD_CODE);
-        String signature = this.getLocalizedAdminSignature(request, messageSource);
+        String signature = getLocalizedAdminSignature(request, messageSource);
         Object[] messageParams = new Object[] { addressing, Configuration.DOMAIN, usernameLabel,
                 newUser.getUsername(), emailLabel, email, passwordLabel, newPassword, signature };
         String messageText = Localization.findLocaleMessage(messageSource, request,
@@ -83,8 +83,8 @@ public class UserEmailService extends AbstractEmailService {
         String subject = Localization.findLocaleMessage(messageSource, request,
                 UserEmailService.EMAIL_SUBJECT_PASSWORD_RESET_CODE);
 
-        String addressing = this.getLocalizedRecipientAddressing(user, request, messageSource);
-        String signature = this.getLocalizedAdminSignature(request, messageSource);
+        String addressing = getLocalizedRecipientAddressing(user, request, messageSource);
+        String signature = getLocalizedAdminSignature(request, messageSource);
         Object[] messageParams = new Object[] { addressing, Configuration.DOMAIN, newPassword, signature };
         String messageText = Localization.findLocaleMessage(messageSource, request,
                 UserEmailService.EMAIL_TEXT_PASSWORD_RESET_CODE, messageParams);
@@ -103,8 +103,8 @@ public class UserEmailService extends AbstractEmailService {
         String subject = Localization.findLocaleMessage(messageSource, request,
                 UserEmailService.EMAIL_SUBJECT_PASSWORD_CHANGED_CODE);
 
-        String addressing = this.getLocalizedRecipientAddressing(user, request, messageSource);
-        String signature = this.getLocalizedAdminSignature(request, messageSource);
+        String addressing = getLocalizedRecipientAddressing(user, request, messageSource);
+        String signature = getLocalizedAdminSignature(request, messageSource);
         Object[] messageParams = new Object[] { addressing, Configuration.DOMAIN, newPassword, signature };
         String messageText = Localization.findLocaleMessage(messageSource, request,
                 UserEmailService.EMAIL_TEXT_PASSWORD_CHANGED_CODE, messageParams);
@@ -157,9 +157,9 @@ public class UserEmailService extends AbstractEmailService {
         String subject = Localization.findLocaleMessage(messageSource, request,
                 UserEmailService.EMAIL_SUBJECT_AUTHORITIES_CHANGED_CODE);
 
-        String addressing = this.getLocalizedRecipientAddressing(user, request, messageSource);
-        String newAuthorities = this.convertAuthoritiesForEmail(user, request, messageSource);
-        String signature = this.getLocalizedAdminSignature(request, messageSource);
+        String addressing = getLocalizedRecipientAddressing(user, request, messageSource);
+        String newAuthorities = convertAuthoritiesForEmail(user, request, messageSource);
+        String signature = getLocalizedAdminSignature(request, messageSource);
         Object[] messageParams = new Object[] { addressing, Configuration.DOMAIN, newAuthorities, signature };
         String messageText = Localization.findLocaleMessage(messageSource, request,
                 UserEmailService.EMAIL_TEXT_AUTHORITIES_CHANGED_CODE, messageParams);
@@ -179,8 +179,8 @@ public class UserEmailService extends AbstractEmailService {
         String subject = Localization.findLocaleMessage(messageSource, request,
                 UserEmailService.EMAIL_SUBJECT_USER_DELETED_CODE);
 
-        String addressing = this.getLocalizedRecipientAddressing(user, request, messageSource);
-        String signature = this.getLocalizedAdminSignature(request, messageSource);
+        String addressing = getLocalizedRecipientAddressing(user, request, messageSource);
+        String signature = getLocalizedAdminSignature(request, messageSource);
         Object[] messageParams = new Object[] { addressing, user.getUsername(), signature };
         String messageText = Localization.findLocaleMessage(messageSource, request,
                 UserEmailService.EMAIL_TEXT_USER_DELETED_CODE, messageParams);

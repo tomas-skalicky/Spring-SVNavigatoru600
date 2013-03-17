@@ -49,7 +49,7 @@ public class DeleteThreadController extends AbstractThreadController {
     @Transactional
     public String delete(@PathVariable int threadId, HttpServletRequest request, ModelMap model) {
 
-        ThreadService threadService = this.getThreadService();
+        ThreadService threadService = getThreadService();
         threadService.canDelete(threadId);
 
         try {

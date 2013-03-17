@@ -19,6 +19,6 @@ public class EditContributionValidator extends AbstractContributionValidator {
     @Override
     public void validate(Object target, Errors errors) {
         EditContribution command = (EditContribution) target;
-        this.checkNewText(command.getContribution().getText(), errors);
+        checkNewText(command.getContribution().getText(), errors);
     }
 }

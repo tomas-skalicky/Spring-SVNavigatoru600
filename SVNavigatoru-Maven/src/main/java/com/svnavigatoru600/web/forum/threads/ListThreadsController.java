@@ -48,7 +48,7 @@ public class ListThreadsController extends AbstractThreadController {
 
         ShowAllThreads command = new ShowAllThreads();
 
-        ThreadService threadService = this.getThreadService();
+        ThreadService threadService = getThreadService();
         List<Thread> threads = threadService.loadAll();
         // Sorts in the descending order according to the last saved
         // contributions of the threads.
@@ -58,7 +58,7 @@ public class ListThreadsController extends AbstractThreadController {
         // Sets up all auxiliary (but necessary) maps.
         command.setLastSavedContributions(Thread.getLastSavedContributions(threads));
         command.setLocalizedDeleteQuestions(ThreadService.getLocalizedDeleteQuestions(threads, request,
-                this.getMessageSource()));
+                getMessageSource()));
 
         // Gets more information about authors of the last saved contributions.
         this.userService.loadAuthorsOfLastSavedContributions(command.getLastSavedContributions());
@@ -69,14 +69,14 @@ public class ListThreadsController extends AbstractThreadController {
 
     @RequestMapping(value = ThreadsUrlParts.CREATED_URL, method = RequestMethod.GET)
     public String initPageAfterCreate(HttpServletRequest request, ModelMap model) {
-        String view = this.initPage(request, model);
+        String view = initPage(request, model);
         ((ShowAllThreads) model.get(ListThreadsController.COMMAND)).setThreadCreated(true);
         return view;
     }
 
     @RequestMapping(value = ThreadsUrlParts.DELETED_URL, method = RequestMethod.GET)
     public String initPageAfterDelete(HttpServletRequest request, ModelMap model) {
-        String view = this.initPage(request, model);
+        String view = initPage(request, model);
         ((ShowAllThreads) model.get(ListThreadsController.COMMAND)).setThreadDeleted(true);
         return view;
     }

@@ -32,7 +32,7 @@ public abstract class AbstractGoToFormResponse extends AbstractNewsResponse {
     private String localizedTitleOfSubmit = null;
 
     public AbstractGoToFormResponse(News news) {
-        this.setSuccess();
+        setSuccess();
         this.news = news;
     }
 

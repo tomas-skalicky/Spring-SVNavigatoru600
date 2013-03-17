@@ -39,14 +39,14 @@ public class NewsNotificationEmailService extends AbstractNotificationEmailServi
     @Override
     public void sendEmailOnCreation(Object newNews, List<User> usersToNotify, HttpServletRequest request,
             MessageSource messageSource) {
-        this.sendEmail((News) newNews, NewsNotificationEmailService.NEWS_CREATED_SUBJECT_CODE,
+        sendEmail((News) newNews, NewsNotificationEmailService.NEWS_CREATED_SUBJECT_CODE,
                 NewsNotificationEmailService.NEWS_CREATED_TEXT_CODE, usersToNotify, request, messageSource);
     }
 
     @Override
     public void sendEmailOnUpdate(Object updatedNews, List<User> usersToNotify, HttpServletRequest request,
             MessageSource messageSource) {
-        this.sendEmail((News) updatedNews, NewsNotificationEmailService.NEWS_UPDATED_SUBJECT_CODE,
+        sendEmail((News) updatedNews, NewsNotificationEmailService.NEWS_UPDATED_SUBJECT_CODE,
                 NewsNotificationEmailService.NEWS_UPDATED_TEXT_CODE, usersToNotify, request, messageSource);
     }
 
@@ -60,17 +60,17 @@ public class NewsNotificationEmailService extends AbstractNotificationEmailServi
     private void sendEmail(News news, String subjectLocalizationCode, String textLocalizationCode,
             List<User> usersToNotify, HttpServletRequest request, MessageSource messageSource) {
 
-        String subject = this.getSubject(subjectLocalizationCode, news, request, messageSource);
+        String subject = getSubject(subjectLocalizationCode, news, request, messageSource);
 
         String newsTitle = news.getTitle();
         String textWithConvertedUrls = Url.convertImageRelativeUrlsToAbsolute(news.getText(), request);
         String wholeTextUrl = NewsUrlParts.getNewsUrl(news, request);
-        String croppedText = this.cropTooLongTextAndAddLink(textWithConvertedUrls, wholeTextUrl, request,
+        String croppedText = cropTooLongTextAndAddLink(textWithConvertedUrls, wholeTextUrl, request,
                 messageSource);
 
         for (User user : usersToNotify) {
-            String addressing = this.getLocalizedRecipientAddressing(user, request, messageSource);
-            String signature = this.getLocalizedNotificationSignature(user, request, messageSource);
+            String addressing = getLocalizedRecipientAddressing(user, request, messageSource);
+            String signature = getLocalizedNotificationSignature(user, request, messageSource);
             Object[] messageParams = new Object[] { addressing, newsTitle, croppedText, signature };
             String messageText = Localization.findLocaleMessage(messageSource, request, textLocalizationCode,
                     messageParams);

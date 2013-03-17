@@ -72,15 +72,14 @@ public abstract class AbstractNewRecordController extends AbstractNewEditRecordC
         SessionRecord record = new SessionRecord();
         command.setRecord(record);
 
-        MessageSource messageSource = this.getMessageSource();
+        MessageSource messageSource = getMessageSource();
         command.setNewType(Localization.findLocaleMessage(messageSource, request,
                 recordType.getLocalizationCode()));
 
-        this.getSendNotificationModelFiller().populateSendNotificationInInitForm(command, request,
-                messageSource);
+        getSendNotificationModelFiller().populateSendNotificationInInitForm(command, request, messageSource);
 
         model.addAttribute(AbstractNewEditRecordController.COMMAND, command);
-        return this.getViews().getNeww();
+        return getViews().getNeww();
     }
 
     /**
@@ -93,18 +92,18 @@ public abstract class AbstractNewRecordController extends AbstractNewEditRecordC
     public String processSubmittedForm(NewSessionRecord command, BindingResult result, SessionStatus status,
             HttpServletRequest request, ModelMap model) {
 
-        MessageSource messageSource = this.getMessageSource();
-        this.getSendNotificationModelFiller().populateSendNotificationInSubmitForm(command, request,
-                messageSource);
+        MessageSource messageSource = getMessageSource();
+        getSendNotificationModelFiller()
+                .populateSendNotificationInSubmitForm(command, request, messageSource);
 
-        this.getValidator().validate(command, result);
+        getValidator().validate(command, result);
         if (result.hasErrors()) {
-            return this.getViews().getNeww();
+            return getViews().getNeww();
         }
 
         SessionRecord newRecord = command.getRecord();
         try {
-            this.getRecordService().saveAndNotifyUsers(newRecord, command.getNewType(), command.getNewFile(),
+            getRecordService().saveAndNotifyUsers(newRecord, command.getNewType(), command.getNewFile(),
                     command.getSendNotification().isStatus(), request, messageSource);
 
             // Clears the command object from the session.
@@ -112,7 +111,7 @@ public abstract class AbstractNewRecordController extends AbstractNewEditRecordC
 
             // Returns the form success view.
             model.addAttribute(AbstractMetaController.REDIRECTION_ATTRIBUTE,
-                    String.format("%s%s", this.getBaseUrl(), CommonUrlParts.CREATED_EXTENSION));
+                    String.format("%s%s", getBaseUrl(), CommonUrlParts.CREATED_EXTENSION));
             return AbstractMetaController.REDIRECTION_PAGE;
 
         } catch (IllegalStateException e) {
@@ -132,6 +131,6 @@ public abstract class AbstractNewRecordController extends AbstractNewEditRecordC
             this.logger.error(newRecord, e);
             result.reject(AbstractNewRecordController.DATABASE_ERROR_MESSAGE_CODE);
         }
-        return this.getViews().getNeww();
+        return getViews().getNeww();
     }
 }

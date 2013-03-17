@@ -42,7 +42,7 @@ public class OtherDocumentRecordRowMapper extends AbstractDocumentRecordRowMappe
         record.setId(rs.getInt(OtherDocumentRecordField.id.getColumnName()));
         record.setFileName(rs.getString(DocumentRecordField.fileName.getColumnName()));
 
-        if (this.isLoadFile()) {
+        if (isLoadFile()) {
             record.setFile(rs.getBlob(DocumentRecordField.file.getColumnName()));
         } else {
             record.setFile(null);

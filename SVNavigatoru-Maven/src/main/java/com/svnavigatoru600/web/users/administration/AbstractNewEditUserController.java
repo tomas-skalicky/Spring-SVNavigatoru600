@@ -1,9 +1,12 @@
 package com.svnavigatoru600.web.users.administration;
 
+import javax.inject.Inject;
+
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.Validator;
 
+import com.svnavigatoru600.service.users.AuthorityService;
 import com.svnavigatoru600.service.users.UserService;
 import com.svnavigatoru600.viewmodel.users.validator.AbstractUserDataValidator;
 
@@ -19,6 +22,9 @@ public abstract class AbstractNewEditUserController extends AbstractUserControll
 
     private final Validator validator;
 
+    @Inject
+    private AuthorityService authorityService;
+
     /**
      * Constructor.
      */
@@ -33,5 +39,9 @@ public abstract class AbstractNewEditUserController extends AbstractUserControll
      */
     protected Validator getValidator() {
         return this.validator;
+    }
+
+    protected AuthorityService getAuthorityService() {
+        return this.authorityService;
     }
 }

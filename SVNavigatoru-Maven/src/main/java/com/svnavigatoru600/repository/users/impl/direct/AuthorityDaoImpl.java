@@ -35,7 +35,7 @@ public class AuthorityDaoImpl extends NamedParameterJdbcDaoSupport implements Au
 
         Map<String, String> args = Collections.singletonMap(usernameColumn, username);
 
-        return this.getNamedParameterJdbcTemplate().query(query, args, new AuthorityRowMapper());
+        return getNamedParameterJdbcTemplate().query(query, args, new AuthorityRowMapper());
     }
 
     /**
@@ -51,11 +51,11 @@ public class AuthorityDaoImpl extends NamedParameterJdbcDaoSupport implements Au
 
     @Override
     public void save(Authority authority) {
-        SimpleJdbcInsert insert = new SimpleJdbcInsert(this.getDataSource()).withTableName(
+        SimpleJdbcInsert insert = new SimpleJdbcInsert(getDataSource()).withTableName(
                 AuthorityDaoImpl.TABLE_NAME).usingColumns(AuthorityField.username.getColumnName(),
                 AuthorityField.authority.getColumnName());
 
-        insert.execute(this.getNamedParameters(authority));
+        insert.execute(getNamedParameters(authority));
     }
 
     @Override
@@ -73,7 +73,7 @@ public class AuthorityDaoImpl extends NamedParameterJdbcDaoSupport implements Au
 
         Map<String, String> args = Collections.singletonMap(usernameColumn, username);
 
-        this.getNamedParameterJdbcTemplate().update(query, args);
+        getNamedParameterJdbcTemplate().update(query, args);
     }
 
     @Override
@@ -87,6 +87,6 @@ public class AuthorityDaoImpl extends NamedParameterJdbcDaoSupport implements Au
         args.put(usernameColumn, username);
         args.put(typeColumn, authorityType.name());
 
-        this.getNamedParameterJdbcTemplate().update(query, args);
+        getNamedParameterJdbcTemplate().update(query, args);
     }
 }

@@ -74,7 +74,7 @@ public abstract class AbstractEditDocumentController extends AbstractNewEditDocu
 
         EditRecord command = new EditRecord();
 
-        OtherDocumentRecord record = this.getRecordService().findByIdWithoutFile(recordId);
+        OtherDocumentRecord record = getRecordService().findByIdWithoutFile(recordId);
         command.setRecord(record);
 
         // Collection of types is converted to a map.
@@ -82,15 +82,14 @@ public abstract class AbstractEditDocumentController extends AbstractNewEditDocu
 
         // Sets up all auxiliary (but necessary) maps.
         command.setTypeCheckboxId(OtherDocumentRecordService.getTypeCheckboxId());
-        MessageSource messageSource = this.getMessageSource();
+        MessageSource messageSource = getMessageSource();
         command.setLocalizedTypeCheckboxTitles(OtherDocumentRecordService.getLocalizedTypeTitles(request,
                 messageSource));
 
-        this.getSendNotificationModelFiller().populateSendNotificationInInitForm(command, request,
-                messageSource);
+        getSendNotificationModelFiller().populateSendNotificationInInitForm(command, request, messageSource);
 
         model.addAttribute(AbstractNewEditDocumentController.COMMAND, command);
-        return this.getViews().getEdit();
+        return getViews().getEdit();
     }
 
     /**
@@ -98,7 +97,7 @@ public abstract class AbstractEditDocumentController extends AbstractNewEditDocu
      * (if it exists) was uploaded.
      */
     public String initFormAfterSave(int recordId, HttpServletRequest request, ModelMap model) {
-        String view = this.initForm(recordId, request, model);
+        String view = initForm(recordId, request, model);
         ((EditRecord) model.get(AbstractNewEditDocumentController.COMMAND)).setDataSaved(true);
         return view;
     }
@@ -115,29 +114,29 @@ public abstract class AbstractEditDocumentController extends AbstractNewEditDocu
 
         // Sets up all auxiliary (but necessary) maps.
         command.setTypeCheckboxId(OtherDocumentRecordService.getTypeCheckboxId());
-        MessageSource messageSource = this.getMessageSource();
+        MessageSource messageSource = getMessageSource();
         command.setLocalizedTypeCheckboxTitles(OtherDocumentRecordService.getLocalizedTypeTitles(request,
                 messageSource));
-        this.getSendNotificationModelFiller().populateSendNotificationInSubmitForm(command, request,
-                messageSource);
+        getSendNotificationModelFiller()
+                .populateSendNotificationInSubmitForm(command, request, messageSource);
 
-        this.getValidator().validate(command, result);
+        getValidator().validate(command, result);
         if (result.hasErrors()) {
             command.setFileChanged(false);
-            return this.getViews().getEdit();
+            return getViews().getEdit();
         }
 
         try {
-            this.getRecordService().updateAndNotifyUsers(recordId, command.getRecord(),
-                    command.getNewTypes(), command.isFileChanged(), command.getNewFile(),
-                    command.getSendNotification().isStatus(), request, messageSource);
+            getRecordService().updateAndNotifyUsers(recordId, command.getRecord(), command.getNewTypes(),
+                    command.isFileChanged(), command.getNewFile(), command.getSendNotification().isStatus(),
+                    request, messageSource);
 
             // Clears the command object from the session.
             status.setComplete();
 
             // Returns the form success view.
             model.addAttribute(AbstractMetaController.REDIRECTION_ATTRIBUTE,
-                    String.format("%s%d/%s", this.getBaseUrl(), recordId, CommonUrlParts.SAVED_EXTENSION));
+                    String.format("%s%d/%s", getBaseUrl(), recordId, CommonUrlParts.SAVED_EXTENSION));
             return AbstractMetaController.REDIRECTION_PAGE;
 
         } catch (IllegalStateException e) {
@@ -157,6 +156,6 @@ public abstract class AbstractEditDocumentController extends AbstractNewEditDocu
             this.logger.error(command, e);
             result.reject(AbstractEditDocumentController.DATABASE_ERROR_MESSAGE_CODE);
         }
-        return this.getViews().getEdit();
+        return getViews().getEdit();
     }
 }

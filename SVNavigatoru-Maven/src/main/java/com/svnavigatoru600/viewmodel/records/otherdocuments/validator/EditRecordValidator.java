@@ -19,10 +19,10 @@ public class EditRecordValidator extends AbstractOtherDocumentRecordValidator {
     @Override
     public void validate(Object target, Errors errors) {
         EditRecord command = (EditRecord) target;
-        this.checkNewName(command.getRecord().getName(), errors);
+        checkNewName(command.getRecord().getName(), errors);
         if (command.isFileChanged()) {
-            this.checkNewFile(command.getNewFile(), errors);
+            checkNewFile(command.getNewFile(), errors);
         }
-        this.checkNewTypes(command.getNewTypes(), errors);
+        checkNewTypes(command.getNewTypes(), errors);
     }
 }

@@ -48,7 +48,7 @@ public class UserCopyMethodsTest extends AbstractUserTest {
 
     @Test
     public void testCopyEmailPhoneSubscriptions() {
-        User destinationUser = this.getDefaultUser();
+        User destinationUser = getDefaultUser();
         destinationUser.copyEmailPhoneSubscriptions(this.sourceUser);
 
         Assert.assertEquals(DEFAULT_USERNAME, destinationUser.getUsername());
@@ -69,7 +69,7 @@ public class UserCopyMethodsTest extends AbstractUserTest {
 
     @Test
     public void testCopySubscriptions() {
-        User destinationUser = this.getDefaultUser();
+        User destinationUser = getDefaultUser();
         destinationUser.copySubscriptions(this.sourceUser);
 
         Assert.assertEquals(DEFAULT_USERNAME, destinationUser.getUsername());

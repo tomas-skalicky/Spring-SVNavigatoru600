@@ -40,12 +40,12 @@ public class ListEventsController extends AbstractEventController {
 
         ShowAllEvents command = new ShowAllEvents();
 
-        List<CalendarEvent> events = this.getEventService().findAllFutureEventsOrdered();
+        List<CalendarEvent> events = getEventService().findAllFutureEventsOrdered();
         command.setEvents(events);
 
         // Sets up all auxiliary (but necessary) maps.
         command.setLocalizedDeleteQuestions(CalendarEventService.getLocalizedDeleteQuestions(events, request,
-                this.getMessageSource()));
+                getMessageSource()));
 
         model.addAttribute(ListEventsController.COMMAND, command);
         return PageViews.LIST.getViewName();
@@ -53,14 +53,14 @@ public class ListEventsController extends AbstractEventController {
 
     @RequestMapping(value = EventsUrlParts.CREATED_URL, method = RequestMethod.GET)
     public String initPageAfterCreate(HttpServletRequest request, ModelMap model) {
-        String view = this.initPage(request, model);
+        String view = initPage(request, model);
         ((ShowAllEvents) model.get(ListEventsController.COMMAND)).setEventCreated(true);
         return view;
     }
 
     @RequestMapping(value = EventsUrlParts.DELETED_URL, method = RequestMethod.GET)
     public String initPageAfterDelete(HttpServletRequest request, ModelMap model) {
-        String view = this.initPage(request, model);
+        String view = initPage(request, model);
         ((ShowAllEvents) model.get(ListEventsController.COMMAND)).setEventDeleted(true);
         return view;
     }

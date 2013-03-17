@@ -21,8 +21,8 @@ public class EditEventValidator extends AbstractEventValidator {
     public void validate(Object target, Errors errors) {
         EditEvent command = (EditEvent) target;
         CalendarEvent event = command.getEvent();
-        this.checkNewName(event.getName(), errors);
-        this.checkNewDate(event.getDate(), errors);
-        this.checkNewPriority(command.getNewPriority(), errors);
+        checkNewName(event.getName(), errors);
+        checkNewDate(event.getDate(), errors);
+        checkNewPriority(command.getNewPriority(), errors);
     }
 }

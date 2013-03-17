@@ -51,8 +51,8 @@ public class EditNewsController extends AbstractNewEditNewsController {
     public @ResponseBody
     AbstractNewsResponse initForm(@PathVariable int newsId, HttpServletRequest request) {
 
-        News news = this.getNewsService().findById(newsId);
-        MessageSource messageSource = this.getMessageSource();
+        News news = getNewsService().findById(newsId);
+        MessageSource messageSource = getMessageSource();
         SendNotification sendNotification = new EditControllerSendNotification(request, messageSource);
         return new GoToEditFormResponse(news, sendNotification, messageSource, request);
     }
@@ -65,15 +65,15 @@ public class EditNewsController extends AbstractNewEditNewsController {
 
         EditNewsResponse response = new EditNewsResponse(command);
 
-        this.getValidator().validate(command, result);
-        MessageSource messageSource = this.getMessageSource();
+        getValidator().validate(command, result);
+        MessageSource messageSource = getMessageSource();
         if (result.hasErrors()) {
             response.setFail(result, messageSource, request);
             return response;
         }
 
         News newNews = command.getNews();
-        NewsService newsService = this.getNewsService();
+        NewsService newsService = getNewsService();
         News originalNews = null;
         try {
             originalNews = newsService.findById(newsId);

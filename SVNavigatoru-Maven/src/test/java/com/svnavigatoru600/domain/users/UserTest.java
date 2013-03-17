@@ -22,12 +22,12 @@ public class UserTest extends AbstractUserTest {
 
     @After
     public void emptyAuthorities() {
-        this.getDefaultUser().getAuthorities().clear();
+        getDefaultUser().getAuthorities().clear();
     }
 
     @Test
     public void testAddAuthority() {
-        User user = this.getDefaultUser();
+        User user = getDefaultUser();
 
         // Adds
         AuthorityType newAuthority = AuthorityType.ROLE_MEMBER_OF_BOARD;
@@ -39,7 +39,7 @@ public class UserTest extends AbstractUserTest {
 
     @Test
     public void testAddAuthorityMoreTimes() {
-        User user = this.getDefaultUser();
+        User user = getDefaultUser();
 
         // Adds more times.
         AuthorityType newAuthority = AuthorityType.ROLE_MEMBER_OF_BOARD;
@@ -53,7 +53,7 @@ public class UserTest extends AbstractUserTest {
 
     @Test
     public void testRemoveAuthority() {
-        User user = this.getDefaultUser();
+        User user = getDefaultUser();
 
         // Adds two authorities.
         user.addAuthority(AuthorityType.ROLE_MEMBER_OF_BOARD);
@@ -72,7 +72,7 @@ public class UserTest extends AbstractUserTest {
 
     @Test
     public void testRemoveAuthorityMoreTimes() {
-        User user = this.getDefaultUser();
+        User user = getDefaultUser();
 
         // Adds
         AuthorityType newAuthority = AuthorityType.ROLE_MEMBER_OF_BOARD;

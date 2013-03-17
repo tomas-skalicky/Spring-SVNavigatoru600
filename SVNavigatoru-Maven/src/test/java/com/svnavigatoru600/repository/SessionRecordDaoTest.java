@@ -45,7 +45,7 @@ public class SessionRecordDaoTest extends AbstractRepositoryTest {
 
         // SELECT ONE
         SessionRecord record = recordDao.findById(recordId);
-        this.doAssertAfterFindById(record, recordId);
+        doAssertAfterFindById(record, recordId);
         Assert.assertEquals(RepositoryTestUtils.DOCUMENT_RECORD_DEFAULT_FILE.length(), record.getFile()
                 .length());
     }
@@ -59,7 +59,7 @@ public class SessionRecordDaoTest extends AbstractRepositoryTest {
 
         // SELECT ONE
         SessionRecord record = recordDao.findById(recordId, false);
-        this.doAssertAfterFindById(record, recordId);
+        doAssertAfterFindById(record, recordId);
         Assert.assertNull(record.getFile());
     }
 

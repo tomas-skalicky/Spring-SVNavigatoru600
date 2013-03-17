@@ -16,17 +16,17 @@ public class ThreadDaoImpl extends HibernateDaoSupport implements ThreadDao {
 
     @Override
     public Thread findById(int threadId) {
-        return this.getHibernateTemplate().load(Thread.class, threadId);
+        return getHibernateTemplate().load(Thread.class, threadId);
     }
 
     @Override
     public List<Thread> loadAll() {
-        return (List<Thread>) this.getHibernateTemplate().loadAll(Thread.class);
+        return (List<Thread>) getHibernateTemplate().loadAll(Thread.class);
     }
 
     @Override
     public void update(Thread thread) {
-        this.getHibernateTemplate().update(thread);
+        getHibernateTemplate().update(thread);
     }
 
     @Override
@@ -39,11 +39,11 @@ public class ThreadDaoImpl extends HibernateDaoSupport implements ThreadDao {
             contribution.setLastSaveTime(now);
         }
 
-        return (Integer) this.getHibernateTemplate().save(thread);
+        return (Integer) getHibernateTemplate().save(thread);
     }
 
     @Override
     public void delete(Thread thread) {
-        this.getHibernateTemplate().delete(thread);
+        getHibernateTemplate().delete(thread);
     }
 }

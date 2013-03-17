@@ -86,6 +86,6 @@ public abstract class AbstractNewEditRecordController extends AbstractSessionRec
      */
     @ModelAttribute("sessionRecordTypeList")
     public List<String> populateSessionRecordTypeList(HttpServletRequest request) {
-        return SessionRecordService.getLocalizedTypes(request, this.getMessageSource());
+        return SessionRecordService.getLocalizedTypes(request, getMessageSource());
     }
 }

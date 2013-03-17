@@ -27,11 +27,11 @@ public abstract class AbstractUserDataValidator implements Validator {
     @Override
     public void validate(Object target, Errors errors) {
         AdministrateUserData command = (AdministrateUserData) target;
-        this.checkNewPassword(command.getNewPassword(), errors);
+        checkNewPassword(command.getNewPassword(), errors);
         User user = command.getUser();
-        this.checkNewFirstName(user.getFirstName(), errors);
-        this.checkNewLastName(user.getLastName(), errors);
-        this.checkNewAuthorities(command.getNewAuthorities(), errors);
+        checkNewFirstName(user.getFirstName(), errors);
+        checkNewLastName(user.getLastName(), errors);
+        checkNewAuthorities(command.getNewAuthorities(), errors);
     }
 
     /**

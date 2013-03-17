@@ -79,7 +79,7 @@ public class UserDaoImpl extends NamedParameterJdbcDaoSupport implements UserDao
 
         Map<String, String> args = Collections.singletonMap(usernameColumn, username);
 
-        User user = this.getNamedParameterJdbcTemplate().queryForObject(query, args, new UserRowMapper());
+        User user = getNamedParameterJdbcTemplate().queryForObject(query, args, new UserRowMapper());
         if (user == null) {
             throw new DataRetrievalFailureException(String.format("No user with the username '%s' exists.",
                     username));
@@ -106,7 +106,7 @@ public class UserDaoImpl extends NamedParameterJdbcDaoSupport implements UserDao
 
         Map<String, String> args = Collections.singletonMap(emailColumn, lowerCasedEmail);
 
-        User user = this.getNamedParameterJdbcTemplate().queryForObject(query, args, new UserRowMapper());
+        User user = getNamedParameterJdbcTemplate().queryForObject(query, args, new UserRowMapper());
         if (user == null) {
             throw new DataRetrievalFailureException(String.format("No user with the email '%s' exists.",
                     lowerCasedEmail));
@@ -128,7 +128,7 @@ public class UserDaoImpl extends NamedParameterJdbcDaoSupport implements UserDao
 
         Map<String, String> args = Collections.singletonMap(authorityColumn, authority);
 
-        List<User> users = this.getNamedParameterJdbcTemplate().query(query, args, new UserRowMapper());
+        List<User> users = getNamedParameterJdbcTemplate().query(query, args, new UserRowMapper());
 
         this.populateAuthorities(users);
         return users;
@@ -151,7 +151,7 @@ public class UserDaoImpl extends NamedParameterJdbcDaoSupport implements UserDao
         args.put(authorityColumn, authority);
         args.put(subscriptionColumn, Boolean.TRUE);
 
-        return this.getNamedParameterJdbcTemplate().query(query, args, new UserRowMapper());
+        return getNamedParameterJdbcTemplate().query(query, args, new UserRowMapper());
     }
 
     @Override
@@ -166,7 +166,7 @@ public class UserDaoImpl extends NamedParameterJdbcDaoSupport implements UserDao
 
         Map<String, Boolean> args = Collections.singletonMap(isTestUserColumn, testUsers);
 
-        List<User> users = this.getNamedParameterJdbcTemplate().query(query, args, new UserRowMapper());
+        List<User> users = getNamedParameterJdbcTemplate().query(query, args, new UserRowMapper());
 
         this.populateAuthorities(users);
         return users;
@@ -229,7 +229,7 @@ public class UserDaoImpl extends NamedParameterJdbcDaoSupport implements UserDao
                 subscribedToOtherSectionsColumn, subscribedToOtherSectionsColumn, usernameColumn,
                 usernameColumn);
 
-        this.getNamedParameterJdbcTemplate().update(query, this.getNamedParameters(user));
+        getNamedParameterJdbcTemplate().update(query, getNamedParameters(user));
 
         if (persistAuthorities) {
             // Updates authorities.
@@ -242,17 +242,18 @@ public class UserDaoImpl extends NamedParameterJdbcDaoSupport implements UserDao
     public void save(User user) {
         this.logger.info("Save a new user " + user);
 
-        SimpleJdbcInsert insert = new SimpleJdbcInsert(this.getDataSource()).withTableName(
-                UserDaoImpl.TABLE_NAME).usingColumns(UserField.username.getColumnName(),
-                UserField.password.getColumnName(), UserField.enabled.getColumnName(),
-                UserField.firstName.getColumnName(), UserField.lastName.getColumnName(),
-                UserField.email.getColumnName(), UserField.phone.getColumnName(),
-                UserField.isTestUser.getColumnName(), UserField.subscribedToNews.getColumnName(),
-                UserField.subscribedToEvents.getColumnName(), UserField.subscribedToForum.getColumnName(),
-                UserField.subscribedToOtherDocuments.getColumnName(),
-                UserField.subscribedToOtherSections.getColumnName());
+        SimpleJdbcInsert insert = new SimpleJdbcInsert(getDataSource()).withTableName(UserDaoImpl.TABLE_NAME)
+                .usingColumns(UserField.username.getColumnName(), UserField.password.getColumnName(),
+                        UserField.enabled.getColumnName(), UserField.firstName.getColumnName(),
+                        UserField.lastName.getColumnName(), UserField.email.getColumnName(),
+                        UserField.phone.getColumnName(), UserField.isTestUser.getColumnName(),
+                        UserField.subscribedToNews.getColumnName(),
+                        UserField.subscribedToEvents.getColumnName(),
+                        UserField.subscribedToForum.getColumnName(),
+                        UserField.subscribedToOtherDocuments.getColumnName(),
+                        UserField.subscribedToOtherSections.getColumnName());
 
-        insert.execute(this.getNamedParameters(user));
+        insert.execute(getNamedParameters(user));
 
         // NOTE: explicit save of the user's authorities.
         this.authorityDao.save(user.getAuthorities());
@@ -271,6 +272,6 @@ public class UserDaoImpl extends NamedParameterJdbcDaoSupport implements UserDao
 
         Map<String, String> args = Collections.singletonMap(usernameColumn, username);
 
-        this.getNamedParameterJdbcTemplate().update(query, args);
+        getNamedParameterJdbcTemplate().update(query, args);
     }
 }

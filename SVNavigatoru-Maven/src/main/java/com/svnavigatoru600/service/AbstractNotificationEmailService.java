@@ -45,12 +45,12 @@ public abstract class AbstractNotificationEmailService extends AbstractEmailServ
     protected String getLocalizedNotificationSignature(User user, HttpServletRequest request,
             MessageSource messageSource) {
 
-        String sectionWhichIsToBeUnsubscribed = Localization.findLocaleMessage(messageSource, request, this
-                .getNotificationType().getTitleLocalizationCode());
+        String sectionWhichIsToBeUnsubscribed = Localization.findLocaleMessage(messageSource, request,
+                getNotificationType().getTitleLocalizationCode());
         String linkText = Localization.findLocaleMessage(messageSource, request,
                 AbstractNotificationEmailService.NOTIFICATIONS_EMAIL_TEXT_UNSUBSCRIPTION_LINK_TEXT_CODE);
-        String unsubscriptionUrl = UserAccountUrlParts.getUrlForUnsubscription(user,
-                this.getNotificationType(), request);
+        String unsubscriptionUrl = UserAccountUrlParts.getUrlForUnsubscription(user, getNotificationType(),
+                request);
         String hereClickToUnsubscribe = String.format("<a href='%s'>%s</a>", unsubscriptionUrl, linkText);
 
         Object[] messageParams = new Object[] { Configuration.DOMAIN, sectionWhichIsToBeUnsubscribed,
@@ -87,8 +87,8 @@ public abstract class AbstractNotificationEmailService extends AbstractEmailServ
      */
     protected String getAttachedFileUrlHtml(String fileUrl, HttpServletRequest request,
             MessageSource messageSource) {
-        String linkText = this.getLocalizedDoDownload(request, messageSource);
-        return this.getFileUrlHtml(fileUrl, linkText, request, messageSource);
+        String linkText = getLocalizedDoDownload(request, messageSource);
+        return getFileUrlHtml(fileUrl, linkText, request, messageSource);
     }
 
     /**
@@ -121,7 +121,7 @@ public abstract class AbstractNotificationEmailService extends AbstractEmailServ
         String croppedText = HtmlUtils.cropEscaped(text, AbstractNotificationEmailService.TEXT_MAX_LENGTH);
         if (!croppedText.equals(text)) {
             return String.format("%s... <a href=\"%s\">%s</a>", croppedText, wholeTextUrl,
-                    this.getLocalizedShowWholeText(request, messageSource));
+                    getLocalizedShowWholeText(request, messageSource));
         } else {
             return text;
         }

@@ -161,7 +161,7 @@ public class ContributionService implements SubjectOfNotificationService {
         this.update(contributionToUpdate, newContribution);
 
         if (sendNotification) {
-            this.notifyUsersOfUpdate(contributionToUpdate, request, messageSource);
+            notifyUsersOfUpdate(contributionToUpdate, request, messageSource);
         }
     }
 
@@ -174,8 +174,7 @@ public class ContributionService implements SubjectOfNotificationService {
     @Override
     public void notifyUsersOfUpdate(Object updatedContribution, HttpServletRequest request,
             MessageSource messageSource) {
-        this.emailService.sendEmailOnUpdate(updatedContribution, this.gainUsersToNotify(), request,
-                messageSource);
+        this.emailService.sendEmailOnUpdate(updatedContribution, gainUsersToNotify(), request, messageSource);
     }
 
     /**
@@ -199,18 +198,17 @@ public class ContributionService implements SubjectOfNotificationService {
      */
     public void saveAndNotifyUsers(Contribution newContribution, boolean sendNotification,
             HttpServletRequest request, MessageSource messageSource) {
-        this.save(newContribution);
+        save(newContribution);
 
         if (sendNotification) {
-            this.notifyUsersOfCreation(newContribution, request, messageSource);
+            notifyUsersOfCreation(newContribution, request, messageSource);
         }
     }
 
     @Override
     public void notifyUsersOfCreation(Object newContribution, HttpServletRequest request,
             MessageSource messageSource) {
-        this.emailService.sendEmailOnCreation(newContribution, this.gainUsersToNotify(), request,
-                messageSource);
+        this.emailService.sendEmailOnCreation(newContribution, gainUsersToNotify(), request, messageSource);
     }
 
     /**
@@ -227,7 +225,7 @@ public class ContributionService implements SubjectOfNotificationService {
      *            ID of the contribution
      */
     public void delete(int contributionId) {
-        Contribution contribution = this.findById(contributionId);
+        Contribution contribution = findById(contributionId);
         this.contributionDao.delete(contribution);
     }
 

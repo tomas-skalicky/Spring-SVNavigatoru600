@@ -104,7 +104,7 @@ public class OtherDocumentRecordDaoImpl extends NamedParameterJdbcDaoSupport imp
 
         Map<String, Integer> args = Collections.singletonMap(idColumn, recordId);
 
-        OtherDocumentRecord record = this.getNamedParameterJdbcTemplate().queryForObject(query, args,
+        OtherDocumentRecord record = getNamedParameterJdbcTemplate().queryForObject(query, args,
                 new OtherDocumentRecordRowMapper(loadFile));
         if (record == null) {
             throw new DataRetrievalFailureException(String.format("No record with the ID '%s' exists.",
@@ -121,7 +121,7 @@ public class OtherDocumentRecordDaoImpl extends NamedParameterJdbcDaoSupport imp
                 OtherDocumentRecordDaoImpl.SELECT_FROM_CLAUSE_WITHOUT_FILE,
                 OtherDocumentRecordField.creationTime.getColumnName(), order.getDatabaseCode());
 
-        List<OtherDocumentRecord> records = this.getJdbcTemplate().query(query,
+        List<OtherDocumentRecord> records = getJdbcTemplate().query(query,
                 new OtherDocumentRecordRowMapper(false));
 
         this.populateTypes(records);
@@ -140,7 +140,7 @@ public class OtherDocumentRecordDaoImpl extends NamedParameterJdbcDaoSupport imp
 
         Map<String, String> args = Collections.singletonMap(typeColumn, type.name());
 
-        List<OtherDocumentRecord> records = this.getNamedParameterJdbcTemplate().query(query, args,
+        List<OtherDocumentRecord> records = getNamedParameterJdbcTemplate().query(query, args,
                 new OtherDocumentRecordRowMapper(false));
 
         this.populateTypes(records);
@@ -168,7 +168,7 @@ public class OtherDocumentRecordDaoImpl extends NamedParameterJdbcDaoSupport imp
 
         // NOTE: updates the record in both tables 'document_records' and
         // 'other_document_records'.
-        this.documentRecordDao.update(record, this.getDataSource());
+        this.documentRecordDao.update(record, getDataSource());
 
         String idColumn = OtherDocumentRecordField.id.getColumnName();
         String nameColumn = OtherDocumentRecordField.name.getColumnName();
@@ -178,7 +178,7 @@ public class OtherDocumentRecordDaoImpl extends NamedParameterJdbcDaoSupport imp
                 OtherDocumentRecordDaoImpl.TABLE_NAME, nameColumn, nameColumn, descriptionColumn,
                 descriptionColumn, lastSaveTimeColumn, lastSaveTimeColumn, idColumn, idColumn);
 
-        this.getNamedParameterJdbcTemplate().update(query, this.getNamedParameters(record));
+        getNamedParameterJdbcTemplate().update(query, getNamedParameters(record));
 
         // Updates types.
         this.typeDao.delete(record.getId());
@@ -193,16 +193,16 @@ public class OtherDocumentRecordDaoImpl extends NamedParameterJdbcDaoSupport imp
 
         // NOTE: inserts the new record into two tables: 'document_records' and
         // 'other_document_records'.
-        int recordId = this.documentRecordDao.save(record, this.getDataSource());
+        int recordId = this.documentRecordDao.save(record, getDataSource());
 
-        SimpleJdbcInsert insert = new SimpleJdbcInsert(this.getDataSource()).withTableName(
+        SimpleJdbcInsert insert = new SimpleJdbcInsert(getDataSource()).withTableName(
                 OtherDocumentRecordDaoImpl.TABLE_NAME).usingColumns(
                 OtherDocumentRecordField.id.getColumnName(), OtherDocumentRecordField.name.getColumnName(),
                 OtherDocumentRecordField.description.getColumnName(),
                 OtherDocumentRecordField.creationTime.getColumnName(),
                 OtherDocumentRecordField.lastSaveTime.getColumnName());
 
-        Map<String, Object> parameters = this.getNamedParameters(record);
+        Map<String, Object> parameters = getNamedParameters(record);
         parameters.put(OtherDocumentRecordField.id.getColumnName(), recordId);
         insert.execute(parameters);
 
@@ -222,6 +222,6 @@ public class OtherDocumentRecordDaoImpl extends NamedParameterJdbcDaoSupport imp
     @Override
     public void delete(AbstractDocumentRecord record) {
         // The 'ON DELETE CASCADE' clause is used.
-        this.documentRecordDao.delete(record, this.getDataSource());
+        this.documentRecordDao.delete(record, getDataSource());
     }
 }

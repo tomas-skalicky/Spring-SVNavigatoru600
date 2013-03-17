@@ -41,7 +41,7 @@ public class ContributionDaoTest extends AbstractRepositoryTest {
     @Before
     public void createDefaultAuthorAndThread() {
         this.defaultAuthor = TEST_UTILS.createDefaultTestUser();
-        this.defaultThread = this.createDefaultTestThread();
+        this.defaultThread = createDefaultTestThread();
     }
 
     @Test
@@ -49,7 +49,7 @@ public class ContributionDaoTest extends AbstractRepositoryTest {
         ContributionDao contributionDao = TEST_UTILS.getContributionDao();
 
         // INSERT
-        int contributionId = this.createDefaultTestContribution();
+        int contributionId = createDefaultTestContribution();
 
         // SELECT ONE
         Contribution contribution = contributionDao.findById(contributionId);
@@ -68,10 +68,10 @@ public class ContributionDaoTest extends AbstractRepositoryTest {
         ContributionDao contributionDao = TEST_UTILS.getContributionDao();
 
         // THREE INSERTS
-        int firstContributionId = this.createDefaultTestContribution();
-        int secondContributionId = this.createDefaultTestContribution();
+        int firstContributionId = createDefaultTestContribution();
+        int secondContributionId = createDefaultTestContribution();
         @SuppressWarnings("unused")
-        int thirdContributionId = TEST_UTILS.createTestContribution(this.createDefaultTestThread(),
+        int thirdContributionId = TEST_UTILS.createTestContribution(createDefaultTestThread(),
                 RepositoryTestUtils.CONTRIBUTION_DEFAULT_TEXT, this.defaultAuthor);
 
         // SELECT ALL
@@ -88,9 +88,9 @@ public class ContributionDaoTest extends AbstractRepositoryTest {
 
         // THREE INSERTS
         @SuppressWarnings("unused")
-        int firstContributionId = this.createDefaultTestContribution();
-        int secondContributionId = this.createDefaultTestContribution();
-        int thirdContributionId = TEST_UTILS.createTestContribution(this.createDefaultTestThread(),
+        int firstContributionId = createDefaultTestContribution();
+        int secondContributionId = createDefaultTestContribution();
+        int thirdContributionId = TEST_UTILS.createTestContribution(createDefaultTestThread(),
                 RepositoryTestUtils.CONTRIBUTION_DEFAULT_TEXT, this.defaultAuthor);
 
         // SELECT ALL
@@ -107,11 +107,11 @@ public class ContributionDaoTest extends AbstractRepositoryTest {
         ContributionDao contributionDao = TEST_UTILS.getContributionDao();
 
         // THREE INSERTS
-        int firstContributionId = this.createDefaultTestContribution();
+        int firstContributionId = createDefaultTestContribution();
         @SuppressWarnings("unused")
-        int secondContributionId = TEST_UTILS.createTestContribution(this.createDefaultTestThread(),
+        int secondContributionId = TEST_UTILS.createTestContribution(createDefaultTestThread(),
                 RepositoryTestUtils.CONTRIBUTION_DEFAULT_TEXT, this.defaultAuthor);
-        int thirdContributionId = this.createDefaultTestContribution();
+        int thirdContributionId = createDefaultTestContribution();
 
         // SELECT ALL
         List<Contribution> foundContributions = contributionDao.findAllOrdered(this.defaultThread.getId(),
@@ -127,11 +127,11 @@ public class ContributionDaoTest extends AbstractRepositoryTest {
         ContributionDao contributionDao = TEST_UTILS.getContributionDao();
 
         // INSERT & SELECT ONE
-        int contributionId = this.createDefaultTestContribution();
+        int contributionId = createDefaultTestContribution();
         Contribution contribution = contributionDao.findById(contributionId);
 
         // UPDATE
-        contribution.setThread(this.createDefaultTestThread());
+        contribution.setThread(createDefaultTestThread());
         contribution.setText(EDITED_CONTRIBUTION_TEXT);
         contributionDao.update(contribution);
 
@@ -148,7 +148,7 @@ public class ContributionDaoTest extends AbstractRepositoryTest {
         ContributionDao contributionDao = TEST_UTILS.getContributionDao();
 
         // INSERT & SELECT ONE
-        int contributionId = this.createDefaultTestContribution();
+        int contributionId = createDefaultTestContribution();
         Contribution contribution = contributionDao.findById(contributionId);
 
         // DELETE
@@ -175,7 +175,7 @@ public class ContributionDaoTest extends AbstractRepositoryTest {
      * @return Newly created thread
      */
     Thread createDefaultTestThread() {
-        int threadId = this.createDefaultTestThreadAndGetId();
+        int threadId = createDefaultTestThreadAndGetId();
         return TEST_UTILS.getThreadDao().findById(threadId);
     }
 

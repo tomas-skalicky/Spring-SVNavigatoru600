@@ -13,7 +13,7 @@ public class ListNewsResponse extends AbstractNewsResponse {
     private ShowAllNews command = null;
 
     public ListNewsResponse(ShowAllNews command) {
-        this.setSuccess();
+        setSuccess();
         this.command = command;
     }
 
