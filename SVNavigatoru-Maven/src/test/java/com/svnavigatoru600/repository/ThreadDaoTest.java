@@ -125,7 +125,7 @@ public class ThreadDaoTest extends AbstractRepositoryTest {
         Assert.assertEquals(EDITED_THREAD_NAME, thread.getName());
     }
 
-    @Test
+    @Test(expected = EmptyResultDataAccessException.class)
     public void testDelete() throws Exception {
         ThreadDao threadDao = TEST_UTILS.getThreadDao();
 
@@ -146,14 +146,9 @@ public class ThreadDaoTest extends AbstractRepositoryTest {
         }
 
         // SELECT ONE
-        try {
-            int contributionId = thread.getContributions().get(0).getId();
-            TEST_UTILS.getContributionDao().findById(contributionId);
-            Assert.fail("The contribution has been found");
-        } catch (EmptyResultDataAccessException ex) {
-            // OK since the contribution cannot have been found.
-            ;
-        }
+        // Throws an exception since the contribution cannot be found.
+        int contributionId = thread.getContributions().get(0).getId();
+        TEST_UTILS.getContributionDao().findById(contributionId);
     }
 
     /**

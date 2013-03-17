@@ -87,7 +87,7 @@ public class NewsDaoTest extends AbstractRepositoryTest {
         Assert.assertTrue(news.getLastSaveTime().after(news.getCreationTime()));
     }
 
-    @Test
+    @Test(expected = EmptyResultDataAccessException.class)
     public void testDelete() throws Exception {
         NewsDao newsDao = TEST_UTILS.getNewsDao();
 
@@ -99,12 +99,7 @@ public class NewsDaoTest extends AbstractRepositoryTest {
         newsDao.delete(news);
 
         // SELECT ONE
-        try {
-            newsDao.findById(news.getId());
-            Assert.fail("The news has been found");
-        } catch (EmptyResultDataAccessException ex) {
-            // OK since the news cannot have been found.
-            ;
-        }
+        // Throws an exception since the news cannot be found.
+        newsDao.findById(news.getId());
     }
 }
