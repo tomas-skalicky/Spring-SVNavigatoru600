@@ -1,7 +1,6 @@
 package com.svnavigatoru600.service.util;
 
-import junit.framework.Assert;
-
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
