@@ -99,7 +99,7 @@ public class CalendarEventDaoTest extends AbstractRepositoryTest {
         Assert.assertEquals(EDITED_EVENT_PRIORITY.name(), event.getPriority());
     }
 
-    @Test
+    @Test(expected = EmptyResultDataAccessException.class)
     public void testDelete() throws Exception {
         CalendarEventDao eventDao = TEST_UTILS.getEventDao();
 
@@ -111,12 +111,7 @@ public class CalendarEventDaoTest extends AbstractRepositoryTest {
         eventDao.delete(event);
 
         // SELECT ONE
-        try {
-            eventDao.findById(event.getId());
-            Assert.fail("The event has been found");
-        } catch (EmptyResultDataAccessException ex) {
-            // OK since the event cannot have been found.
-            ;
-        }
+        // Throws an exception since the event cannot be found.
+        eventDao.findById(event.getId());
     }
 }

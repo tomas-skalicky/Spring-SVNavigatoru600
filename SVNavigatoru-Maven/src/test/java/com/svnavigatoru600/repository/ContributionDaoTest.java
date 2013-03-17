@@ -143,7 +143,7 @@ public class ContributionDaoTest extends AbstractRepositoryTest {
         Assert.assertTrue(contribution.getLastSaveTime().after(contribution.getCreationTime()));
     }
 
-    @Test
+    @Test(expected = EmptyResultDataAccessException.class)
     public void testDelete() throws Exception {
         ContributionDao contributionDao = TEST_UTILS.getContributionDao();
 
@@ -155,13 +155,8 @@ public class ContributionDaoTest extends AbstractRepositoryTest {
         contributionDao.delete(contribution);
 
         // SELECT ONE
-        try {
-            contributionDao.findById(contribution.getId());
-            Assert.fail("The contribution has been found");
-        } catch (EmptyResultDataAccessException ex) {
-            // OK since the contribution cannot have been found.
-            ;
-        }
+        // Throws an exception since the contribution cannot be found.
+        contributionDao.findById(contribution.getId());
     }
 
     /**

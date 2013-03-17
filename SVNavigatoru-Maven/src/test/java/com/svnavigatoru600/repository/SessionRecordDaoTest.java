@@ -141,7 +141,7 @@ public class SessionRecordDaoTest extends AbstractRepositoryTest {
         Assert.assertEquals(EDITED_SESSION_RECORD_DISCUSSED_TOPICS, record.getDiscussedTopics());
     }
 
-    @Test
+    @Test(expected = EmptyResultDataAccessException.class)
     public void testDelete() throws Exception {
         SessionRecordDao recordDao = TEST_UTILS.getSessionRecordDao();
 
@@ -153,12 +153,7 @@ public class SessionRecordDaoTest extends AbstractRepositoryTest {
         recordDao.delete(record);
 
         // SELECT ONE
-        try {
-            recordDao.findById(record.getId());
-            Assert.fail("The record has been found");
-        } catch (EmptyResultDataAccessException ex) {
-            // OK since the record cannot have been found.
-            ;
-        }
+        // Throws an exception since the record cannot be found.
+        recordDao.findById(record.getId());
     }
 }

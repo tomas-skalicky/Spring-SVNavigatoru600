@@ -11,6 +11,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.springframework.dao.DataRetrievalFailureException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.security.core.GrantedAuthority;
 
 import com.svnavigatoru600.domain.users.Authority;
@@ -81,18 +82,13 @@ public class UserDaoTest extends AbstractRepositoryTest {
         Assert.assertTrue(actualAuthorityTypes.contains(SECOND_USER_DEFAULT_AUTHORITIES[0].name()));
     }
 
-    @Test
+    @Test(expected = EmptyResultDataAccessException.class)
     public void testFindByNotExistingUsername() throws Exception {
         UserDao userDao = TEST_UTILS.getUserDao();
 
         // SELECT ONE
-        try {
-            userDao.findByUsername("not-existing username");
-            Assert.fail("User with not-existing username should not have been found");
-        } catch (DataRetrievalFailureException e) {
-            // OK since such an user does not exist.
-            ;
-        }
+        // Throws an exception since such an user does not exist.
+        userDao.findByUsername("not-existing username");
     }
 
     @Test
@@ -112,18 +108,13 @@ public class UserDaoTest extends AbstractRepositoryTest {
         Assert.assertTrue(actualAuthorityTypes.contains(FIRST_USER_DEFAULT_AUTHORITIES[1].name()));
     }
 
-    @Test
+    @Test(expected = EmptyResultDataAccessException.class)
     public void testFindByNotExistingEmail() throws Exception {
         UserDao userDao = TEST_UTILS.getUserDao();
 
         // SELECT ONE
-        try {
-            userDao.findByEmail("not-existing email@host.com");
-            Assert.fail("User with not-existing email should not have been found");
-        } catch (DataRetrievalFailureException e) {
-            // OK since such an user does not exist.
-            ;
-        }
+        // Throws an exception since such an user does not exist.
+        userDao.findByEmail("not-existing email@host.com");
     }
 
     @Test
