@@ -4,12 +4,14 @@ import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.factory.annotation.Required;
 import org.springframework.context.MessageSource;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,13 +36,15 @@ import com.svnavigatoru600.web.AbstractMetaController;
 @Controller
 public class EditUserController extends AbstractNewEditUserController {
 
+    private Validator validator;
+
     /**
-     * Constructor.
+     * Trivial setter
      */
     @Inject
-    public EditUserController(UserService userService, AdministrateUserDataValidator validator,
-            MessageSource messageSource) {
-        super(userService, validator, messageSource);
+    @Required
+    public void setValidator(AdministrateUserDataValidator validator) {
+        this.validator = validator;
     }
 
     /**
@@ -62,7 +66,7 @@ public class EditUserController extends AbstractNewEditUserController {
 
         // Sets up all auxiliary (but necessary) maps.
         command.setRoleCheckboxId(AuthorityService.getRoleCheckboxId());
-        command.setLocalizedRoleCheckboxTitles(getAuthorityService().getLocalizedRoleTitles(request,
+        command.setLocalizedRoleCheckboxTitles(AuthorityService.getLocalizedRoleTitles(request,
                 getMessageSource()));
 
         model.addAttribute(AbstractNewEditUserController.COMMAND, command);
@@ -96,10 +100,10 @@ public class EditUserController extends AbstractNewEditUserController {
         // Sets up all auxiliary (but necessary) maps.
         command.setRoleCheckboxId(AuthorityService.getRoleCheckboxId());
         MessageSource messageSource = getMessageSource();
-        command.setLocalizedRoleCheckboxTitles(getAuthorityService().getLocalizedRoleTitles(request,
-                messageSource));
+        command.setLocalizedRoleCheckboxTitles(AuthorityService
+                .getLocalizedRoleTitles(request, messageSource));
 
-        getValidator().validate(command, result);
+        this.validator.validate(command, result);
         if (result.hasErrors()) {
             return PageViews.EDIT.getViewName();
         }
