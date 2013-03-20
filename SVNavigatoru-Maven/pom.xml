@@ -352,6 +352,11 @@
 			<artifactId>jpatterns</artifactId>
 		</dependency>
 
+		<dependency>
+			<groupId>org.jsoup</groupId>
+			<artifactId>jsoup</artifactId>
+		</dependency>
+
 		<!-- The commented two dependencies do not work on the MochaHost server. -->
 		<!-- <dependency> -->
 		<!-- <groupId>org.glassfish.web</groupId> -->
@@ -554,6 +559,13 @@
 				<groupId>org.jpatterns</groupId>
 				<artifactId>jpatterns</artifactId>
 				<version>0.0.1</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.jsoup</groupId>
+				<artifactId>jsoup</artifactId>
+				<version>1.7.1</version>
+				<scope>test</scope>
 			</dependency>
 
 			<!-- <dependency> -->
