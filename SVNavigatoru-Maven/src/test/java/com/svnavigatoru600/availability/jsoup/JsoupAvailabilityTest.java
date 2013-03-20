@@ -28,6 +28,6 @@ public final class JsoupAvailabilityTest {
         Document loginPageHtml = Jsoup.connect(LOGIN_PAGE).get();
 
         Assert.assertEquals("Získat zapomenuté heslo",
-                loginPageHtml.select("a[href~=/prihlaseni/zapomenute-heslo/]").get(0).val());
+                loginPageHtml.select("a[href~=/prihlaseni/zapomenute-heslo/]").get(0).text());
     }
 }
