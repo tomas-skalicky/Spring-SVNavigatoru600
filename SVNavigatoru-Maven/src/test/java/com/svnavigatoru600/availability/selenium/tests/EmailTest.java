@@ -1,4 +1,4 @@
-package com.svnavigatoru600.selenium.tests;
+package com.svnavigatoru600.availability.selenium.tests;
 
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -6,7 +6,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-import com.svnavigatoru600.selenium.AbstractTailoredSeleniumTest;
+import com.svnavigatoru600.availability.selenium.AbstractTailoredSeleniumTest;
 import com.svnavigatoru600.test.category.SeleniumTests;
 
 /**
@@ -18,7 +18,7 @@ import com.svnavigatoru600.test.category.SeleniumTests;
  * @see http://maven.apache.org/plugins/maven-surefire-plugin/test-mojo.html#groups
  */
 @Category(SeleniumTests.class)
-public class EmailTest extends AbstractTailoredSeleniumTest {
+public final class EmailTest extends AbstractTailoredSeleniumTest {
 
     /**
      * @throws Exception

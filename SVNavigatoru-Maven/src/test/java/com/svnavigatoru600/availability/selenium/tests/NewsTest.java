@@ -1,5 +1,8 @@
-package com.svnavigatoru600.selenium.tests;
+package com.svnavigatoru600.availability.selenium.tests;
 
+import org.junit.Ignore;
+import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -7,15 +10,16 @@ import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.util.Assert;
 
-import com.svnavigatoru600.selenium.AbstractTailoredSeleniumTest;
+import com.svnavigatoru600.availability.selenium.AbstractTailoredSeleniumTest;
+import com.svnavigatoru600.test.category.SeleniumTests;
 
 /**
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  * @see EmailTest
  */
-// @Category(SeleniumTests.class)
+@Category(SeleniumTests.class)
 // There are bugs.
-public class NewsTest extends AbstractTailoredSeleniumTest {
+public final class NewsTest extends AbstractTailoredSeleniumTest {
 
     private static final String XPATH_NEWS_SECTION = "//*[@id='nav']/li[1]/a[1]";
 
@@ -39,7 +43,8 @@ public class NewsTest extends AbstractTailoredSeleniumTest {
      * @throws Exception
      *             If anything goes wrong.
      */
-    // @Test
+    @Ignore
+    @Test
     public void testAddEditDelete() throws Exception {
         this.logIn();
         createNewNews();

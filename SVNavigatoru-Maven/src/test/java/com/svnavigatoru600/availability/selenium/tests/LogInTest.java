@@ -1,4 +1,4 @@
-package com.svnavigatoru600.selenium.tests;
+package com.svnavigatoru600.availability.selenium.tests;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -6,9 +6,9 @@ import org.junit.experimental.categories.Category;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
-import com.svnavigatoru600.selenium.AbstractTailoredSeleniumTest;
-import com.svnavigatoru600.selenium.AssertUtils;
-import com.svnavigatoru600.selenium.TestUser;
+import com.svnavigatoru600.availability.selenium.AbstractTailoredSeleniumTest;
+import com.svnavigatoru600.availability.selenium.AssertUtils;
+import com.svnavigatoru600.availability.selenium.TestUser;
 import com.svnavigatoru600.test.category.SeleniumTests;
 
 /**
@@ -16,7 +16,7 @@ import com.svnavigatoru600.test.category.SeleniumTests;
  * @see EmailTest
  */
 @Category(SeleniumTests.class)
-public class LogInTest extends AbstractTailoredSeleniumTest {
+public final class LogInTest extends AbstractTailoredSeleniumTest {
 
     /**
      * @throws Exception
