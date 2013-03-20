@@ -4,14 +4,14 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
-import com.svnavigatoru600.test.category.FastTests;
+import com.svnavigatoru600.test.category.UnitTests;
 
 /**
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
- * @see com.svnavigatoru600.selenium.tests.EmailTest EmailTest
+ * @see com.svnavigatoru600.availability.selenium.tests.EmailTest EmailTest
  */
-@Category(FastTests.class)
-public class HasherTest {
+@Category(UnitTests.class)
+public final class HasherTest {
 
     /**
      * Tests whether the {@link Hash#doSha1Hashing(String) doSha1Hashing} utility function works properly.

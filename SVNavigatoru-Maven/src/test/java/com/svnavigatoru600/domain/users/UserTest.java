@@ -9,7 +9,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
-import com.svnavigatoru600.test.category.FastTests;
+import com.svnavigatoru600.test.category.UnitTests;
 
 /**
  * Tests the rest of methods of the {@link User} class which are not tested in the {@link UserCopyMethodsTest}
@@ -17,8 +17,8 @@ import com.svnavigatoru600.test.category.FastTests;
  * 
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
-@Category(FastTests.class)
-public class UserTest extends AbstractUserTest {
+@Category(UnitTests.class)
+public final class UserTest extends AbstractUserTest {
 
     @After
     public void emptyAuthorities() {

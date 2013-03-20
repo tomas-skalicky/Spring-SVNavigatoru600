@@ -20,7 +20,7 @@ import com.svnavigatoru600.test.category.PersistenceTests;
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
 @Category(PersistenceTests.class)
-public class CalendarEventDaoTest extends AbstractRepositoryTest {
+public final class CalendarEventDaoTest extends AbstractRepositoryTest {
 
     /**
      * Name of the edited test event.

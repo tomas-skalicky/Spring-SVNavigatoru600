@@ -20,7 +20,7 @@ import com.svnavigatoru600.test.category.PersistenceTests;
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
 @Category(PersistenceTests.class)
-public class NewsDaoTest extends AbstractRepositoryTest {
+public final class NewsDaoTest extends AbstractRepositoryTest {
 
     /**
      * Title of the edited test news.

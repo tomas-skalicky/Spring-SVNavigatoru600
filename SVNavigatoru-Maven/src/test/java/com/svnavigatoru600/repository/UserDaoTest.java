@@ -27,7 +27,7 @@ import com.svnavigatoru600.test.category.PersistenceTests;
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
 @Category(PersistenceTests.class)
-public class UserDaoTest extends AbstractRepositoryTest {
+public final class UserDaoTest extends AbstractRepositoryTest {
 
     /**
      * Default rights of the first test user.

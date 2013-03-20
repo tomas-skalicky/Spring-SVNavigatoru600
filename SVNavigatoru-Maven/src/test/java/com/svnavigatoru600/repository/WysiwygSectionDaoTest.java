@@ -16,7 +16,7 @@ import com.svnavigatoru600.test.category.PersistenceTests;
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
 @Category(PersistenceTests.class)
-public class WysiwygSectionDaoTest extends AbstractRepositoryTest {
+public final class WysiwygSectionDaoTest extends AbstractRepositoryTest {
 
     /**
      * Name of a test section.
