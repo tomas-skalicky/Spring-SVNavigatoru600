@@ -1,4 +1,4 @@
-package com.svnavigatoru600.selenium;
+package com.svnavigatoru600.availability.selenium;
 
 import java.net.URL;
 import java.util.concurrent.TimeUnit;

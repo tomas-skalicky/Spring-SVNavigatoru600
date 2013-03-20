@@ -1,9 +1,9 @@
 package com.svnavigatoru600.test.category;
 
 /**
- * Implemented by tests of which evaluation is fast (<code>&lt;= 1 sec</code>).
+ * Implemented by all Jsoup tests of this project.
  * 
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
-public interface FastTests {
+public interface JsoupTests {
 }

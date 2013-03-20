@@ -5,17 +5,17 @@ import org.junit.experimental.categories.Categories.IncludeCategory;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite.SuiteClasses;
 
-import com.svnavigatoru600.test.category.FastTests;
+import com.svnavigatoru600.test.category.JsoupTests;
 
 /**
- * Contains all tests which belong to the {@link FastTests} category.
+ * Contains all tests which belong to the {@link JsoupTests} category.
  * 
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  * @see <a
  *      href="http://stackoverflow.com/questions/6226026/how-to-run-all-junit-tests-in-a-category-suite-with-ant">How-to-run-all-JUnit-tests-in-a-category</a>
  */
 @RunWith(Categories.class)
-@IncludeCategory(FastTests.class)
+@IncludeCategory(JsoupTests.class)
 @SuiteClasses(AllTests.class)
-public final class FastTestSuite {
+public final class JsoupTestSuite {
 }

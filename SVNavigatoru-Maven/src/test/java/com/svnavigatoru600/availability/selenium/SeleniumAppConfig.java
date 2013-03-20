@@ -1,4 +1,4 @@
-package com.svnavigatoru600.selenium;
+package com.svnavigatoru600.availability.selenium;
 
 import javax.inject.Inject;
 
