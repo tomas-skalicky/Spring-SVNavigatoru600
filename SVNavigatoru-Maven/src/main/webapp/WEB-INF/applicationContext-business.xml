@@ -5,9 +5,9 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:p="http://www.springframework.org/schema/p"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans
-						http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+						http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
 						http://www.springframework.org/schema/context
-						http://www.springframework.org/schema/context/spring-context-3.1.xsd">
+						http://www.springframework.org/schema/context/spring-context-3.2.xsd
 
 	<!-- Database Configuration -->
 	<import resource="dataSource.xml" />
@@ -20,10 +20,8 @@
 
 
 
-	<!-- ATTENTION: @Autowired annotation is not used anywhere. Therefore, this two tags are not necessary 
-		now. -->
 	<!-- Loads everything except @Controllers. They are loaded in the dispatcher-servlet.xml file. -->
-	<context:component-scan base-package="com.svnavigatoru600">
+	<context:component-scan base-package="com.svnavigatoru600" annotation-config="true">
 		<context:exclude-filter expression="org.springframework.stereotype.Controller"
 			type="annotation" />
 	</context:component-scan>
@@ -31,7 +29,6 @@
 	<!-- Registers the default AutowiredAnnotationBeanPostProcessor which handles @Autowired and other annotations. -->
     <!-- http://www.infoq.com/articles/spring-2.5-part-1 -->
 	<context:annotation-config />
-	<!-- /ATTENTION -->
 
 
 
