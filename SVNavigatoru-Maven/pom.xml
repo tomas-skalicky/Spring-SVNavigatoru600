@@ -321,6 +321,10 @@
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-core</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-validator</artifactId>
+		</dependency>
 
 		<dependency>
 			<groupId>org.hsqldb</groupId>
@@ -448,6 +452,11 @@
 		</dependency>
 
 		<dependency>
+			<groupId>javax.validation</groupId>
+			<artifactId>validation-api</artifactId>
+		</dependency>
+
+		<dependency>
 			<groupId>xom</groupId>
 			<artifactId>xom</artifactId>
 		</dependency>
@@ -520,6 +529,11 @@
 						<groupId>org.slf4j</groupId>
 					</exclusion>
 				</exclusions>
+			</dependency>
+			<dependency>
+				<groupId>org.hibernate</groupId>
+				<artifactId>hibernate-validator</artifactId>
+				<version>5.0.0.CR2</version>
 			</dependency>
 
 			<dependency>
@@ -734,6 +748,12 @@
 				<version>7.0.33</version>
 				<!-- (see http://maven.apache.org/guides/introduction/introduction-to-dependency-mechanism.html#Dependency_Scope) -->
 				<scope>provided</scope>
+			</dependency>
+
+			<dependency>
+				<groupId>javax.validation</groupId>
+				<artifactId>validation-api</artifactId>
+				<version>1.1.0.CR1</version>
 			</dependency>
 
 			<dependency>

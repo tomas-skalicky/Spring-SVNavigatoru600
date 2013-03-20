@@ -1,10 +1,8 @@
 package com.svnavigatoru600.web.users.administration;
 
-import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.logging.LogFactory;
-import org.springframework.context.MessageSource;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,7 +11,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.svnavigatoru600.service.users.UserService;
 import com.svnavigatoru600.url.CommonUrlParts;
 import com.svnavigatoru600.url.users.UserAdministrationUrlParts;
 import com.svnavigatoru600.web.AbstractMetaController;
@@ -23,14 +20,6 @@ import com.svnavigatoru600.web.AbstractMetaController;
  */
 @Controller
 public class DeleteUserController extends AbstractUserController {
-
-    /**
-     * Constructor.
-     */
-    @Inject
-    public DeleteUserController(UserService userService, MessageSource messageSource) {
-        super(userService, messageSource);
-    }
 
     @RequestMapping(value = UserAdministrationUrlParts.EXISTING_URL + "{username}/"
             + CommonUrlParts.DELETE_EXTENSION, method = RequestMethod.GET)
