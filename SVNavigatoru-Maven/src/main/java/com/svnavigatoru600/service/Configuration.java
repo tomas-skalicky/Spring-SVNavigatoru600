@@ -12,6 +12,10 @@ public final class Configuration {
      */
     public static final String DOMAIN = "www.svnavigatoru600.com";
     /**
+     * The default protocol used during browsing on the web page.
+     */
+    public static final String DEFAULT_PROTOCOL = "http://";
+    /**
      * The directory where all files of all {@link com.svnavigatoru600.domain.records.AbstractDocumentRecord
      * AbstractDocumentRecord} are stored.
      */
