@@ -24,7 +24,7 @@ import com.svnavigatoru600.test.category.PersistenceTests;
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
 @Category(PersistenceTests.class)
-public class AuthorityDaoTest extends AbstractRepositoryTest {
+public final class AuthorityDaoTest extends AbstractRepositoryTest {
 
     /**
      * Default test author of threads and contributions.

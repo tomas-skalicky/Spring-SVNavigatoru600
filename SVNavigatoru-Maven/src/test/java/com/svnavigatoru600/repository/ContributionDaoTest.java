@@ -23,7 +23,7 @@ import com.svnavigatoru600.test.category.PersistenceTests;
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
 @Category(PersistenceTests.class)
-public class ContributionDaoTest extends AbstractRepositoryTest {
+public final class ContributionDaoTest extends AbstractRepositoryTest {
 
     /**
      * Text of the edited test contribution.

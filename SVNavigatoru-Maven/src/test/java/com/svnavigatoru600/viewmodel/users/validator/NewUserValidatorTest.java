@@ -13,17 +13,17 @@ import org.junit.runners.Parameterized.Parameters;
 import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.Errors;
 
-import com.svnavigatoru600.test.category.FastTests;
+import com.svnavigatoru600.test.category.UnitTests;
 import com.svnavigatoru600.viewmodel.users.AdministrateUserData;
 
 /**
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
-@Category(FastTests.class)
+@Category(UnitTests.class)
 @RunWith(Parameterized.class)
-public class NewUserValidatorTest {
+public final class NewUserValidatorTest {
 
-    @Parameters(name = "checkNewFirstName: Run #{index}: firstName={0} => errorCount={1}")
+    @Parameters(name = "Run #{index}: firstName={0} => errorCount={1}")
     public static Iterable<Object[]> data() {
         return Arrays.asList(new Object[][] { { null, 1 }, { StringUtils.EMPTY, 1 }, { "A", 1 }, { "A!", 1 },
                 { "AB", 0 } });

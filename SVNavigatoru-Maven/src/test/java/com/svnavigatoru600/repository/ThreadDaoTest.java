@@ -22,7 +22,7 @@ import com.svnavigatoru600.test.category.PersistenceTests;
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
 @Category(PersistenceTests.class)
-public class ThreadDaoTest extends AbstractRepositoryTest {
+public final class ThreadDaoTest extends AbstractRepositoryTest {
 
     /**
      * Name of the edited test thread.

@@ -4,12 +4,12 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
-import com.svnavigatoru600.test.category.FastTests;
+import com.svnavigatoru600.test.category.UnitTests;
 
 /**
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
-@Category(FastTests.class)
+@Category(UnitTests.class)
 public class UrlTest {
 
     @Test
