@@ -23,25 +23,22 @@
 
 
 
-<spring:eval expression="T(com.svnavigatoru600.service.util.UserUtils).loggedUser.canEditNews()" var="canLoggedUserEditNews" />
-
 <c:set var="sectionUrl" value="novinky" />
-<c:if test="${canLoggedUserEditNews}">
+<my:loggedUser checkIfCanEditNews="true">
 	<p id="newNewsLink">
 		<a href="<c:url value="/${sectionUrl}/novy/" />" onclick="goToNewNewsForm(); return false;">
-			<strong><spring:message code="news.add-new-news" /></strong>
-		</a>
+			<strong><spring:message code="news.add-new-news" /></strong></a>
 	</p>
 	<%@ include file="/WEB-INF/jsp/main-content/news/new-edit-news.jsp"%>
-</c:if>
+</my:loggedUser>
 
 
 
 <div id="newsList">
-<c:if test="${canLoggedUserEditNews}">
+<my:loggedUser checkIfCanEditNews="true">
 	<%-- For visualization of the new news via AJAX --%>
 	<%@ include file="/WEB-INF/jsp/main-content/news/list-news-template.jsp"%>
-</c:if>
+</my:loggedUser>
 
 
 
@@ -67,8 +64,8 @@ for (News news : newss) {
 		<p class="post-author"></p>
 
 
-		<%-- Administration of events --%>
-		<c:if test="${canLoggedUserEditNews}">
+		<%-- Administration of news --%>
+		<my:loggedUser checkIfCanEditNews="true">
 		<%
 			int newsId = news.getId();
 			%>
@@ -87,7 +84,7 @@ for (News news : newss) {
 						'<c:out value="${urlBeginning}" />'); return false;"></a>
 			</p>
 			<div class="clearfix"></div>
-		</c:if>
+		</my:loggedUser>
 
 	</div>
 	<div class="post-content clearfix"><%=news.getText()%></div>

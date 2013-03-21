@@ -13,8 +13,8 @@
 		<p class="post-author"></p>
 
 
-		<%-- Administration of events --%>
-		<c:if test="${canLoggedUserEditNews}">
+		<%-- Administration of news --%>
+		<my:loggedUser checkIfCanEditNews="true">
 			<p class="controls">
 				<%-- Edit icon --%>
 				<a id="edit[${newsId}]" href="#" title="<spring:message code="news.modify-news" />" class="edit" onclick=""></a>
@@ -23,7 +23,7 @@
 				<a id="delete[${newsId}]" href="#" title="<spring:message code="news.delete-news" />" class="delete" onclick=""></a>
 			</p>
 			<div class="clearfix"></div>
-		</c:if>
+		</my:loggedUser>
 
 	</div>
 	<div class="post-content clearfix"></div>

@@ -24,25 +24,18 @@
 	</p>
 </c:if>
 
+<my:loggedUser checkIfCanEditSessionRecords="true">
+	<p>
+		<strong><a href="<c:url value="/${sectionUrl}/novy/" />"><spring:message
+					code="session-records.add-new-record" /></a></strong>
+	</p>
+	
+	<h5><spring:message code="session-records.existing-records" /></h5>
+</my:loggedUser>
+
+
+
 <%
-    User loggedUser = UserUtils.getLoggedUser();
-if (loggedUser.canEditNews()) {
-%>
-<p>
-	<strong><a href="<c:url value="/${sectionUrl}/novy/" />"><spring:message
-				code="session-records.add-new-record" />
-	</a>
-	</strong>
-</p>
-
-<h5>
-	<spring:message code="session-records.existing-records" />
-</h5>
-<%
-    }
-
-
-
 // Gets the command from the ModelMap.
 ShowAllSessionRecords command = (ShowAllSessionRecords) request.getAttribute(AbstractListRecordsController.COMMAND);
 List<SessionRecord> records = command.getRecords();
@@ -61,10 +54,10 @@ if (records.size() > 0) {
 		<th></th>
 
 		<%-- Administration of records --%>
-		<%if (loggedUser.canEditNews()) {%>
-		<th></th>
-		<th></th>
-		<%}%>
+		<my:loggedUser checkIfCanEditSessionRecords="true">
+			<th></th>
+			<th></th>
+		</my:loggedUser>
 	</tr>
 	<%}
 
@@ -91,21 +84,20 @@ for (SessionRecord record : records) {
 		</td>
 
 		<%-- Administration of records --%>
-		<%if (loggedUser.canEditNews()) {
-			%>
-		<%-- Edit icon --%>
-		<td><a href="<%=homeUrl%>/<c:out value="${sectionUrl}" />/existujici/<%=recordId%>/"
-			title="<spring:message code="session-records.modify-record" />" class="edit"></a>
-		</td>
-
-		<%-- Delete icon --%>
-		<td><a id="delete[<%=recordId%>]" href="#" title="<spring:message code="session-records.delete-record" />"
-			class="delete"
-			onclick="if (confirm('<%=command.getLocalizedDeleteQuestions().get(record)%>')) {
-							document.getElementById('delete[<%=recordId%>]').setAttribute('href', '<%=homeUrl
-								%>/<c:out value="${sectionUrl}" />/existujici/<%=recordId%>/smazat/'); }"></a>
-		</td>
-		<%}%>
+		<my:loggedUser checkIfCanEditSessionRecords="true">
+			<%-- Edit icon --%>
+			<td><a href="<%=homeUrl%>/<c:out value="${sectionUrl}" />/existujici/<%=recordId%>/"
+				title="<spring:message code="session-records.modify-record" />" class="edit"></a>
+			</td>
+	
+			<%-- Delete icon --%>
+			<td><a id="delete[<%=recordId%>]" href="#" title="<spring:message code="session-records.delete-record" />"
+				class="delete"
+				onclick="if (confirm('<%=command.getLocalizedDeleteQuestions().get(record)%>')) {
+								document.getElementById('delete[<%=recordId%>]').setAttribute('href', '<%=homeUrl
+									%>/<c:out value="${sectionUrl}" />/existujici/<%=recordId%>/smazat/'); }"></a>
+			</td>
+		</my:loggedUser>
 	</tr>
 	<%}
 

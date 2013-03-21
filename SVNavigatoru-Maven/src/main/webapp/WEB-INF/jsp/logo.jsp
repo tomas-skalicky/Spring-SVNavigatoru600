@@ -9,9 +9,11 @@
 
 <%
     // Sets the homepage according to the fact whether the user is logged in and according to his authorities.
-String homepage;
+String homepage = null;
+%>
 
-if (UserUtils.isLogged()) {
+<my:currentUser checkIfLogged="true">
+	<%
 	User user = UserUtils.getLoggedUser();
 
 	if (user.canSeeNews()) {
@@ -22,10 +24,10 @@ if (UserUtils.isLogged()) {
 		homepage = UserAccountUrlParts.BASE_URL;
 	} else {
 		homepage = ErrorsUrlParts.ERROR_403;
-	}
-} else {
-	homepage = "/";
-}
-%>
+	}%>
+</my:currentUser>
+<my:currentUser checkIfNotLogged="true">
+	<% homepage = "/"; %>
+</my:currentUser>
 
 <a href="<c:url value="<%=homepage%>" />"><spring:message code="application.title" /> </a>
