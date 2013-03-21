@@ -1,14 +1,14 @@
 <%@ page pageEncoding="UTF-8"%>
 <%@ include file="include-preceding-html.jsp"%>
 
-<%
-if (!UserUtils.isLogged()) {
-	out.println(JspCodeGenerator.getMainNavigationItem("prihlaseni", "login.title", request));
-} else {
-
-	// The user is logged in; hence shows the navigation.
-	User user = UserUtils.getLoggedUser();
-	if (user.canSeeNews()) {
+<my:currentUser checkIfNotLogged="true">
+	<%=JspCodeGenerator.getMainNavigationItem("prihlaseni", "login.title", request)%>
+</my:currentUser>
+<my:currentUser checkIfLogged="true">
+	<%-- The user is logged in; hence shows the navigation. --%>
+	
+	<my:loggedUser checkIfCanSeeHomepage="true">
+		<%
 		out.println(JspCodeGenerator.getMainNavigationItem("novinky", "news.title", request));
 		out.println(JspCodeGenerator.getMainNavigationItem("kalendar-akci", "event-calendar.title", request));
 		out.println(JspCodeGenerator.getMainNavigationItem("forum/temata", "forum.title", request));
@@ -36,12 +36,10 @@ if (!UserUtils.isLogged()) {
 		};
 		out.println(JspCodeGenerator.getMainNavigationItem("remostav/kontakt", "remostav", "remostav.title", request, subItems));
 		
-		out.println(JspCodeGenerator.getMainNavigationItem("vybor", "board.title", request));
-	}
+		out.println(JspCodeGenerator.getMainNavigationItem("vybor", "board.title", request));%>
+	</my:loggedUser>
 
-	if (user.canSeeUsers()) {
-		out.println(JspCodeGenerator.getMainNavigationItem("administrace-uzivatelu",
-				"user-administration.title", request));
-	}
-}
-%>
+	<my:loggedUser checkIfCanSeeUserAdministration="true">
+		<%=JspCodeGenerator.getMainNavigationItem("administrace-uzivatelu", "user-administration.title", request)%>
+	</my:loggedUser>
+</my:currentUser>

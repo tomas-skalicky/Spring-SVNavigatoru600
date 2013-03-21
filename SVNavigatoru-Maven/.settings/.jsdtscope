@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry excluding="src/main/webapp/arclite/js/jquery.js|src/main/webapp/lib/js/jquery-1.7.1.js|src/main/webapp/tinymce/|target/" kind="src" path=""/>
+	<classpathentry excluding="src/main/webapp/arclite/js/|src/main/webapp/lib/js/jquery-1.7.1.js|src/main/webapp/tinymce/jscripts/|target/" kind="src" path=""/>
 	<classpathentry kind="con" path="org.eclipse.wst.jsdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="output" path=""/>
 </classpath>

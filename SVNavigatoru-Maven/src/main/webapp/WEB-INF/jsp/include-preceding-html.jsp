@@ -10,6 +10,8 @@
 
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
 
+<%@ taglib prefix="my" uri="/WEB-INF/tld/my.tld"%>
+
 
 <%@ page import="java.util.Date"%>
 <%@ page import="java.util.HashMap"%>
