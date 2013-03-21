@@ -7,27 +7,24 @@
 <%@page import="com.svnavigatoru600.url.users.UserAdministrationUrlParts"%>
 
 
-<%
-    // Sets the homepage according to the fact whether the user is logged in and according to his authorities.
-String homepage = null;
-%>
+<c:set var="homepage" value="<%=ErrorsUrlParts.ERROR_403%>" />
 
 <my:currentUser checkIfLogged="true">
-	<%
-	User user = UserUtils.getLoggedUser();
-
-	if (user.canSeeNews()) {
-		homepage = NewsUrlParts.BASE_URL;
-	} else if (user.canSeeUsers()) {
-		homepage = UserAdministrationUrlParts.BASE_URL;
-	} else if (user.canSeeHisAccount()) {
-		homepage = UserAccountUrlParts.BASE_URL;
-	} else {
-		homepage = ErrorsUrlParts.ERROR_403;
-	}%>
+	<%-- If the user fulfills more of these conditions, the last one wins. --%>
+	
+	<my:loggedUser checkIfCanSeeHisAccount="true">
+		<c:set var="homepage" value="<%=UserAccountUrlParts.BASE_URL%>" />
+	</my:loggedUser>
+	<my:loggedUser checkIfCanSeeUserAdministration="true">
+		<c:set var="homepage" value="<%=UserAdministrationUrlParts.BASE_URL%>" />
+	</my:loggedUser>
+	<my:loggedUser checkIfCanSeeNews="true">
+		<c:set var="homepage" value="<%=NewsUrlParts.BASE_URL%>" />
+	</my:loggedUser>
+	
 </my:currentUser>
 <my:currentUser checkIfNotLogged="true">
-	<% homepage = "/"; %>
+	<c:set var="homepage" value="/" />
 </my:currentUser>
 
-<a href="<c:url value="<%=homepage%>" />"><spring:message code="application.title" /> </a>
+<a href="<c:url value="${homepage}" />"><spring:message code="application.title" /> </a>
