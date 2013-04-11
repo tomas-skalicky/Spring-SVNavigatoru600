@@ -19,8 +19,8 @@ public class NewRecordValidator extends AbstractOtherDocumentRecordValidator {
     @Override
     public void validate(Object target, Errors errors) {
         NewRecord command = (NewRecord) target;
-        this.checkNewName(command.getRecord().getName(), errors);
-        this.checkNewFile(command.getNewFile(), errors);
-        this.checkNewTypes(command.getNewTypes(), errors);
+        checkNewName(command.getRecord().getName(), errors);
+        checkNewFile(command.getNewFile(), errors);
+        checkNewTypes(command.getNewTypes(), errors);
     }
 }

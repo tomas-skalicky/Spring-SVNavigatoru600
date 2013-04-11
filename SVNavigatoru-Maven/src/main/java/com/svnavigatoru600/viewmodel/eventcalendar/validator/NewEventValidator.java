@@ -21,8 +21,8 @@ public class NewEventValidator extends AbstractEventValidator {
     public void validate(Object target, Errors errors) {
         NewEvent command = (NewEvent) target;
         CalendarEvent event = command.getEvent();
-        this.checkNewName(event.getName(), errors);
-        this.checkNewDate(event.getDate(), errors);
-        this.checkNewPriority(command.getNewPriority(), errors);
+        checkNewName(event.getName(), errors);
+        checkNewDate(event.getDate(), errors);
+        checkNewPriority(command.getNewPriority(), errors);
     }
 }

@@ -19,6 +19,6 @@ public class EditThreadValidator extends AbstractThreadValidator {
     @Override
     public void validate(Object target, Errors errors) {
         EditThread command = (EditThread) target;
-        this.checkNewName(command.getThread().getName(), errors);
+        checkNewName(command.getThread().getName(), errors);
     }
 }

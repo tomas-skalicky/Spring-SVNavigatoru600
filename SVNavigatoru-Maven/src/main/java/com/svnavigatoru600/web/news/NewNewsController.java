@@ -54,7 +54,7 @@ public class NewNewsController extends AbstractNewEditNewsController {
 
         News news = new News();
         command.setNews(news);
-        MessageSource messageSource = this.getMessageSource();
+        MessageSource messageSource = getMessageSource();
         SendNotification sendNotification = new NewControllerSendNotification(request, messageSource);
         command.setSendNotification(sendNotification);
 
@@ -76,8 +76,8 @@ public class NewNewsController extends AbstractNewEditNewsController {
 
         NewNewsResponse response = new NewNewsResponse(command);
 
-        this.getValidator().validate(command, result);
-        MessageSource messageSource = this.getMessageSource();
+        getValidator().validate(command, result);
+        MessageSource messageSource = getMessageSource();
         if (result.hasErrors()) {
             response.setFail(result, messageSource, request);
             return response;
@@ -88,8 +88,8 @@ public class NewNewsController extends AbstractNewEditNewsController {
 
         try {
             // Saves the news to the repository.
-            this.getNewsService().saveAndNotifyUsers(newNews, command.getSendNotification().isStatus(),
-                    request, messageSource);
+            getNewsService().saveAndNotifyUsers(newNews, command.getSendNotification().isStatus(), request,
+                    messageSource);
 
             // Clears the command object from the session.
             status.setComplete();

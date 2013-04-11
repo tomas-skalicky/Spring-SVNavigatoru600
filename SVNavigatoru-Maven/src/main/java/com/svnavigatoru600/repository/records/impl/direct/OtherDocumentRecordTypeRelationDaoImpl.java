@@ -35,7 +35,7 @@ public class OtherDocumentRecordTypeRelationDaoImpl extends NamedParameterJdbcDa
 
         Map<String, Integer> args = Collections.singletonMap(recordIdColumn, recordId);
 
-        return this.getNamedParameterJdbcTemplate().query(query, args,
+        return getNamedParameterJdbcTemplate().query(query, args,
                 new OtherDocumentRecordTypeRelationRowMapper());
     }
 
@@ -55,12 +55,12 @@ public class OtherDocumentRecordTypeRelationDaoImpl extends NamedParameterJdbcDa
      * Saves the given {@link OtherDocumentRecordTypeRelation typeRelation} to the repository.
      */
     public void save(OtherDocumentRecordTypeRelation typeRelation) {
-        SimpleJdbcInsert insert = new SimpleJdbcInsert(this.getDataSource()).withTableName(
+        SimpleJdbcInsert insert = new SimpleJdbcInsert(getDataSource()).withTableName(
                 OtherDocumentRecordTypeRelationDaoImpl.TABLE_NAME).usingColumns(
                 OtherDocumentRecordTypeRelationField.recordId.getColumnName(),
                 OtherDocumentRecordTypeRelationField.type.getColumnName());
 
-        insert.execute(this.getNamedParameters(typeRelation));
+        insert.execute(getNamedParameters(typeRelation));
     }
 
     @Override
@@ -78,6 +78,6 @@ public class OtherDocumentRecordTypeRelationDaoImpl extends NamedParameterJdbcDa
 
         Map<String, Integer> args = Collections.singletonMap(idColumn, recordId);
 
-        this.getNamedParameterJdbcTemplate().update(query, args);
+        getNamedParameterJdbcTemplate().update(query, args);
     }
 }

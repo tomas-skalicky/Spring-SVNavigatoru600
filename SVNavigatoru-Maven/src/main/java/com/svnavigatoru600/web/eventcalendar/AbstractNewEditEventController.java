@@ -69,8 +69,8 @@ public abstract class AbstractNewEditEventController extends AbstractEventContro
 
         for (PriorityType type : PriorityType.values()) {
             String localizationCode = type.getLocalizationCode();
-            priorityTypeList.add(Localization.findLocaleMessage(this.getMessageSource(), request,
-                    localizationCode));
+            priorityTypeList.add(Localization
+                    .findLocaleMessage(getMessageSource(), request, localizationCode));
         }
         return priorityTypeList;
     }

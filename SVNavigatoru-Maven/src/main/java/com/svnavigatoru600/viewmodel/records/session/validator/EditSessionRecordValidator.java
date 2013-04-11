@@ -19,11 +19,11 @@ public class EditSessionRecordValidator extends AbstractSessionRecordValidator {
     @Override
     public void validate(Object target, Errors errors) {
         EditSessionRecord command = (EditSessionRecord) target;
-        this.checkNewType(command.getNewType(), errors);
-        this.checkNewSessionDate(command.getRecord().getSessionDate(), errors);
-        this.checkNewDiscussedTopics(command.getRecord().getDiscussedTopics(), errors);
+        checkNewType(command.getNewType(), errors);
+        checkNewSessionDate(command.getRecord().getSessionDate(), errors);
+        checkNewDiscussedTopics(command.getRecord().getDiscussedTopics(), errors);
         if (command.isFileChanged()) {
-            this.checkNewFile(command.getNewFile(), errors);
+            checkNewFile(command.getNewFile(), errors);
         }
     }
 }

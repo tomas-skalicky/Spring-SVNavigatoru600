@@ -50,15 +50,14 @@ public abstract class AbstractListRecordsController extends AbstractSessionRecor
     public String initPage(HttpServletRequest request, ModelMap model) {
 
         ShowAllSessionRecords command = new ShowAllSessionRecords();
-        boolean allRecordTypes = this.isAllRecordTypes();
+        boolean allRecordTypes = isAllRecordTypes();
         command.setAllRecordTypes(allRecordTypes);
 
-        List<SessionRecord> records = this.getRecordService().findAllOrdered(allRecordTypes,
-                this.getRecordType());
+        List<SessionRecord> records = getRecordService().findAllOrdered(allRecordTypes, getRecordType());
         command.setRecords(records);
 
         // Sets up all auxiliary (but necessary) maps.
-        MessageSource messageSource = this.getMessageSource();
+        MessageSource messageSource = getMessageSource();
         if (allRecordTypes) {
             command.setLocalizedTypeTitles(SessionRecordService.getLocalizedTypeTitles(records, request,
                     messageSource));
@@ -70,19 +69,19 @@ public abstract class AbstractListRecordsController extends AbstractSessionRecor
                 request, sessionDates, messageSource));
 
         model.addAttribute(AbstractListRecordsController.COMMAND, command);
-        return this.getViews().getList();
+        return getViews().getList();
     }
 
     @PreAuthorize("hasRole('ROLE_MEMBER_OF_BOARD')")
     public String initPageAfterCreate(HttpServletRequest request, ModelMap model) {
-        String view = this.initPage(request, model);
+        String view = initPage(request, model);
         ((ShowAllSessionRecords) model.get(AbstractListRecordsController.COMMAND)).setRecordCreated(true);
         return view;
     }
 
     @PreAuthorize("hasRole('ROLE_MEMBER_OF_BOARD')")
     public String initPageAfterDelete(HttpServletRequest request, ModelMap model) {
-        String view = this.initPage(request, model);
+        String view = initPage(request, model);
         ((ShowAllSessionRecords) model.get(AbstractListRecordsController.COMMAND)).setRecordDeleted(true);
         return view;
     }

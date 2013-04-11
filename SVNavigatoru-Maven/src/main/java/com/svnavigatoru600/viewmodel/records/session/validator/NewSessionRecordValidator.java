@@ -19,9 +19,9 @@ public class NewSessionRecordValidator extends AbstractSessionRecordValidator {
     @Override
     public void validate(Object target, Errors errors) {
         NewSessionRecord command = (NewSessionRecord) target;
-        this.checkNewType(command.getNewType(), errors);
-        this.checkNewSessionDate(command.getRecord().getSessionDate(), errors);
-        this.checkNewDiscussedTopics(command.getRecord().getDiscussedTopics(), errors);
-        this.checkNewFile(command.getNewFile(), errors);
+        checkNewType(command.getNewType(), errors);
+        checkNewSessionDate(command.getRecord().getSessionDate(), errors);
+        checkNewDiscussedTopics(command.getRecord().getDiscussedTopics(), errors);
+        checkNewFile(command.getNewFile(), errors);
     }
 }

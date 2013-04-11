@@ -120,7 +120,7 @@ public class NewsService implements SubjectOfNotificationService {
         this.update(newsToUpdate, newNews);
 
         if (sendNotification) {
-            this.notifyUsersOfUpdate(newsToUpdate, request, messageSource);
+            notifyUsersOfUpdate(newsToUpdate, request, messageSource);
         }
     }
 
@@ -133,7 +133,7 @@ public class NewsService implements SubjectOfNotificationService {
     @Override
     public void notifyUsersOfUpdate(Object updatedNews, HttpServletRequest request,
             MessageSource messageSource) {
-        this.emailService.sendEmailOnUpdate(updatedNews, this.gainUsersToNotify(), request, messageSource);
+        this.emailService.sendEmailOnUpdate(updatedNews, gainUsersToNotify(), request, messageSource);
     }
 
     /**
@@ -157,16 +157,16 @@ public class NewsService implements SubjectOfNotificationService {
      */
     public void saveAndNotifyUsers(News newNews, boolean sendNotification, HttpServletRequest request,
             MessageSource messageSource) {
-        this.save(newNews);
+        save(newNews);
 
         if (sendNotification) {
-            this.notifyUsersOfCreation(newNews, request, messageSource);
+            notifyUsersOfCreation(newNews, request, messageSource);
         }
     }
 
     @Override
     public void notifyUsersOfCreation(Object newNews, HttpServletRequest request, MessageSource messageSource) {
-        this.emailService.sendEmailOnCreation(newNews, this.gainUsersToNotify(), request, messageSource);
+        this.emailService.sendEmailOnCreation(newNews, gainUsersToNotify(), request, messageSource);
     }
 
     /**
@@ -183,7 +183,7 @@ public class NewsService implements SubjectOfNotificationService {
      *            The ID of the news
      */
     public void delete(int newsId) {
-        News news = this.findById(newsId);
+        News news = findById(newsId);
         this.newsDao.delete(news);
     }
 

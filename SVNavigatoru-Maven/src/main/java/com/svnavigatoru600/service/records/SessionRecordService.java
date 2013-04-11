@@ -136,13 +136,13 @@ public class SessionRecordService extends AbstractDocumentRecordService {
     public void update(int recordToUpdateId, SessionRecord newRecord, String newType, boolean isFileReplaced,
             MultipartFile newAttachedFile, HttpServletRequest request, MessageSource messageSource)
             throws SQLException, IOException {
-        SessionRecord recordToUpdate = this.findByIdWithoutFile(recordToUpdateId);
+        SessionRecord recordToUpdate = findByIdWithoutFile(recordToUpdateId);
         recordToUpdate.setSessionDate(newRecord.getSessionDate());
         recordToUpdate.setDiscussedTopics(newRecord.getDiscussedTopics());
         recordToUpdate.setType(SessionRecordType
                 .valueOfAccordingLocalization(newType, messageSource, request));
 
-        this.updateRecordWithSaveFileToDatabase(recordToUpdate, isFileReplaced, newAttachedFile);
+        updateRecordWithSaveFileToDatabase(recordToUpdate, isFileReplaced, newAttachedFile);
     }
 
     /**
@@ -239,20 +239,20 @@ public class SessionRecordService extends AbstractDocumentRecordService {
                 messageSource);
 
         if (sendNotification) {
-            this.notifyUsersOfUpdate(this.findByIdWithoutFile(recordToUpdateId), request, messageSource);
+            notifyUsersOfUpdate(findByIdWithoutFile(recordToUpdateId), request, messageSource);
         }
     }
 
     @Override
     public List<User> gainUsersToNotify() {
-        return this.getUserService().findAllWithEmailByAuthorityAndSubscription(
-                AuthorityType.ROLE_MEMBER_OF_SV, this.emailService.getNotificationType());
+        return getUserService().findAllWithEmailByAuthorityAndSubscription(AuthorityType.ROLE_MEMBER_OF_SV,
+                this.emailService.getNotificationType());
     }
 
     @Override
     public void notifyUsersOfUpdate(Object updatedRecord, HttpServletRequest request,
             MessageSource messageSource) {
-        this.emailService.sendEmailOnUpdate(updatedRecord, this.gainUsersToNotify(), request, messageSource);
+        this.emailService.sendEmailOnUpdate(updatedRecord, gainUsersToNotify(), request, messageSource);
     }
 
     /**
@@ -288,7 +288,7 @@ public class SessionRecordService extends AbstractDocumentRecordService {
             HttpServletRequest request, MessageSource messageSource) throws SQLException, IOException {
         newRecord.setType(SessionRecordType.valueOfAccordingLocalization(recordType, messageSource, request));
 
-        this.prepareForSaveFileToDatabase(newRecord, attachedFile);
+        prepareForSaveFileToDatabase(newRecord, attachedFile);
         this.save(newRecord);
     }
 
@@ -357,14 +357,14 @@ public class SessionRecordService extends AbstractDocumentRecordService {
         this.save(newRecord, recordType, attachedFile, request, messageSource);
 
         if (sendNotification) {
-            this.notifyUsersOfCreation(newRecord, request, messageSource);
+            notifyUsersOfCreation(newRecord, request, messageSource);
         }
     }
 
     @Override
     public void notifyUsersOfCreation(Object newRecord, HttpServletRequest request,
             MessageSource messageSource) {
-        this.emailService.sendEmailOnCreation(newRecord, this.gainUsersToNotify(), request, messageSource);
+        this.emailService.sendEmailOnCreation(newRecord, gainUsersToNotify(), request, messageSource);
     }
 
     /**
@@ -375,7 +375,7 @@ public class SessionRecordService extends AbstractDocumentRecordService {
      *            ID of the session record
      */
     public void delete(int recordId) {
-        SessionRecord record = this.findByIdWithoutFile(recordId);
+        SessionRecord record = findByIdWithoutFile(recordId);
         this.delete(record);
     }
 

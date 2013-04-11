@@ -20,7 +20,7 @@ public class ContributionDaoImpl extends HibernateDaoSupport implements Contribu
 
     @Override
     public Contribution findById(int contributionId) {
-        return this.getHibernateTemplate().load(Contribution.class, contributionId);
+        return getHibernateTemplate().load(Contribution.class, contributionId);
     }
 
     @Override
@@ -29,7 +29,7 @@ public class ContributionDaoImpl extends HibernateDaoSupport implements Contribu
         DetachedCriteria criteria = DetachedCriteria.forClass(Contribution.class);
         criteria.add(Restrictions.eq(ContributionField.threadId.getFieldChain(), threadId));
 
-        return (List<Contribution>) this.getHibernateTemplate().findByCriteria(criteria);
+        return (List<Contribution>) getHibernateTemplate().findByCriteria(criteria);
     }
 
     @Override
@@ -38,7 +38,7 @@ public class ContributionDaoImpl extends HibernateDaoSupport implements Contribu
             int maxResultSize) {
         String query = String.format("FROM %s c ORDER BY c.%s %s", PersistedClass.Contribution.name(),
                 sortField.name(), sortDirection.getDatabaseCode());
-        List<Contribution> contributionsFromDb = (List<Contribution>) this.getHibernateTemplate().find(query);
+        List<Contribution> contributionsFromDb = (List<Contribution>) getHibernateTemplate().find(query);
         return contributionsFromDb.subList(0, Math.min(contributionsFromDb.size(), maxResultSize));
     }
 
@@ -49,14 +49,14 @@ public class ContributionDaoImpl extends HibernateDaoSupport implements Contribu
         String query = String.format("FROM %s c WHERE c.%s = ? ORDER BY c.%s %s",
                 PersistedClass.Contribution.name(), ContributionField.threadId.getFieldChain(),
                 sortField.name(), sortDirection.getDatabaseCode());
-        return (List<Contribution>) this.getHibernateTemplate().find(query, threadId);
+        return (List<Contribution>) getHibernateTemplate().find(query, threadId);
     }
 
     @Override
     public void update(Contribution contribution) {
         Date now = new Date();
         contribution.setLastSaveTime(now);
-        this.getHibernateTemplate().update(contribution);
+        getHibernateTemplate().update(contribution);
     }
 
     @Override
@@ -64,11 +64,11 @@ public class ContributionDaoImpl extends HibernateDaoSupport implements Contribu
         Date now = new Date();
         contribution.setCreationTime(now);
         contribution.setLastSaveTime(now);
-        return (Integer) this.getHibernateTemplate().save(contribution);
+        return (Integer) getHibernateTemplate().save(contribution);
     }
 
     @Override
     public void delete(Contribution contribution) {
-        this.getHibernateTemplate().delete(contribution);
+        getHibernateTemplate().delete(contribution);
     }
 }

@@ -46,7 +46,7 @@ public class SessionRecordNotificationEmailService extends AbstractNotificationE
     @Override
     public void sendEmailOnCreation(Object newRecord, List<User> usersToNotify, HttpServletRequest request,
             MessageSource messageSource) {
-        this.sendEmail((SessionRecord) newRecord,
+        sendEmail((SessionRecord) newRecord,
                 SessionRecordNotificationEmailService.RECORD_CREATED_SUBJECT_CODE,
                 SessionRecordNotificationEmailService.RECORD_CREATED_TEXT_CODE, usersToNotify, request,
                 messageSource);
@@ -55,7 +55,7 @@ public class SessionRecordNotificationEmailService extends AbstractNotificationE
     @Override
     public void sendEmailOnUpdate(Object updatedRecord, List<User> usersToNotify, HttpServletRequest request,
             MessageSource messageSource) {
-        this.sendEmail((SessionRecord) updatedRecord,
+        sendEmail((SessionRecord) updatedRecord,
                 SessionRecordNotificationEmailService.RECORD_UPDATED_SUBJECT_CODE,
                 SessionRecordNotificationEmailService.RECORD_UPDATED_TEXT_CODE, usersToNotify, request,
                 messageSource);
@@ -71,22 +71,22 @@ public class SessionRecordNotificationEmailService extends AbstractNotificationE
     private void sendEmail(SessionRecord record, String subjectLocalizationCode, String textLocalizationCode,
             List<User> usersToNotify, HttpServletRequest request, MessageSource messageSource) {
 
-        String subject = this.getSubject(subjectLocalizationCode, request, messageSource);
+        String subject = getSubject(subjectLocalizationCode, request, messageSource);
 
-        String localizedSessionTypeLabel = this.getLocalizedSessionTypeLabel(request, messageSource);
+        String localizedSessionTypeLabel = getLocalizedSessionTypeLabel(request, messageSource);
         String localizedSessionType = Localization.findLocaleMessage(messageSource, request, record
                 .getTypedType().getLocalizationCode());
-        String localizedSessionDateLabel = this.getLocalizedSessionDateLabel(request, messageSource);
-        String localizedSessionDate = this.getLocalizedSessionDate(record, request);
-        String localizedDiscussedTopicsLabel = this.getLocalizedDiscussedTopicsLabel(request, messageSource);
+        String localizedSessionDateLabel = getLocalizedSessionDateLabel(request, messageSource);
+        String localizedSessionDate = getLocalizedSessionDate(record, request);
+        String localizedDiscussedTopicsLabel = getLocalizedDiscussedTopicsLabel(request, messageSource);
         String discussedTopics = Url.convertImageRelativeUrlsToAbsolute(record.getDiscussedTopics(), request);
-        String localizedAttachedFileLabel = this.getLocalizedAttachedFile(request, messageSource);
-        String fileUrl = this.getAttachedFileUrlHtml(
-                SessionsCommonUrlParts.getAttachedFileUrl(record, request), request, messageSource);
+        String localizedAttachedFileLabel = getLocalizedAttachedFile(request, messageSource);
+        String fileUrl = getAttachedFileUrlHtml(SessionsCommonUrlParts.getAttachedFileUrl(record, request),
+                request, messageSource);
 
         for (User user : usersToNotify) {
-            String addressing = this.getLocalizedRecipientAddressing(user, request, messageSource);
-            String signature = this.getLocalizedNotificationSignature(user, request, messageSource);
+            String addressing = getLocalizedRecipientAddressing(user, request, messageSource);
+            String signature = getLocalizedNotificationSignature(user, request, messageSource);
             Object[] messageParams = new Object[] { addressing, localizedSessionTypeLabel,
                     localizedSessionType, localizedSessionDateLabel, localizedSessionDate,
                     localizedDiscussedTopicsLabel, discussedTopics, localizedAttachedFileLabel, fileUrl,

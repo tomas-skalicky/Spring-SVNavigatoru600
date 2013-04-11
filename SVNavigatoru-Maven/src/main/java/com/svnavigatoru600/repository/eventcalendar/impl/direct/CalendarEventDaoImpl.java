@@ -35,7 +35,7 @@ public class CalendarEventDaoImpl extends NamedParameterJdbcDaoSupport implement
 
         Map<String, Integer> args = Collections.singletonMap(idColumn, eventId);
 
-        return this.getNamedParameterJdbcTemplate().queryForObject(query, args, new CalendarEventRowMapper());
+        return getNamedParameterJdbcTemplate().queryForObject(query, args, new CalendarEventRowMapper());
     }
 
     @Override
@@ -47,7 +47,7 @@ public class CalendarEventDaoImpl extends NamedParameterJdbcDaoSupport implement
 
         Map<String, Date> args = Collections.singletonMap(dateColumn, earliestDate);
 
-        return this.getNamedParameterJdbcTemplate().query(query, args, new CalendarEventRowMapper());
+        return getNamedParameterJdbcTemplate().query(query, args, new CalendarEventRowMapper());
     }
 
     /**
@@ -74,12 +74,12 @@ public class CalendarEventDaoImpl extends NamedParameterJdbcDaoSupport implement
                 CalendarEventDaoImpl.TABLE_NAME, nameColumn, nameColumn, dateColumn, dateColumn,
                 descriptionColumn, descriptionColumn, priorityColumn, priorityColumn, idColumn, idColumn);
 
-        this.getNamedParameterJdbcTemplate().update(query, this.getNamedParameters(event));
+        getNamedParameterJdbcTemplate().update(query, getNamedParameters(event));
     }
 
     @Override
     public int save(CalendarEvent event) {
-        SimpleJdbcInsert insert = new SimpleJdbcInsert(this.getDataSource())
+        SimpleJdbcInsert insert = new SimpleJdbcInsert(getDataSource())
                 .withTableName(CalendarEventDaoImpl.TABLE_NAME)
                 .usingGeneratedKeyColumns(CalendarEventField.id.getColumnName())
                 .usingColumns(CalendarEventField.name.getColumnName(),
@@ -87,7 +87,7 @@ public class CalendarEventDaoImpl extends NamedParameterJdbcDaoSupport implement
                         CalendarEventField.description.getColumnName(),
                         CalendarEventField.priority.getColumnName());
 
-        return insert.executeAndReturnKey(this.getNamedParameters(event)).intValue();
+        return insert.executeAndReturnKey(getNamedParameters(event)).intValue();
     }
 
     @Override
@@ -98,6 +98,6 @@ public class CalendarEventDaoImpl extends NamedParameterJdbcDaoSupport implement
 
         Map<String, Integer> args = Collections.singletonMap(idColumn, event.getId());
 
-        this.getNamedParameterJdbcTemplate().update(query, args);
+        getNamedParameterJdbcTemplate().update(query, args);
     }
 }

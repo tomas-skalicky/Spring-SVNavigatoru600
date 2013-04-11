@@ -67,8 +67,8 @@ public class NewContributionController extends AbstractNewEditContributionContro
         command.setContribution(contribution);
         command.setThreadId(threadId);
 
-        this.getSendNotificationModelFiller().populateSendNotificationInInitForm(command, request,
-                this.getMessageSource());
+        getSendNotificationModelFiller().populateSendNotificationInInitForm(command, request,
+                getMessageSource());
 
         model.addAttribute(AbstractNewEditContributionController.COMMAND, command);
         return PageViews.NEW.getViewName();
@@ -86,11 +86,11 @@ public class NewContributionController extends AbstractNewEditContributionContro
             @ModelAttribute(NewContributionController.COMMAND) NewContribution command, BindingResult result,
             SessionStatus status, @PathVariable int threadId, HttpServletRequest request, ModelMap model) {
 
-        MessageSource messageSource = this.getMessageSource();
-        this.getSendNotificationModelFiller().populateSendNotificationInSubmitForm(command, request,
-                messageSource);
+        MessageSource messageSource = getMessageSource();
+        getSendNotificationModelFiller()
+                .populateSendNotificationInSubmitForm(command, request, messageSource);
 
-        this.getValidator().validate(command, result);
+        getValidator().validate(command, result);
         if (result.hasErrors()) {
             return PageViews.NEW.getViewName();
         }
@@ -103,7 +103,7 @@ public class NewContributionController extends AbstractNewEditContributionContro
             newContribution.setThread(this.threadService.findById(threadId));
 
             // Saves the contribution to the repository.
-            this.getContributionService().saveAndNotifyUsers(newContribution,
+            getContributionService().saveAndNotifyUsers(newContribution,
                     command.getSendNotification().isStatus(), request, messageSource);
 
             // Clears the command object from the session.

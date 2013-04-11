@@ -136,13 +136,13 @@ public class OtherDocumentRecordService extends AbstractDocumentRecordService {
     public void update(int recordToUpdateId, OtherDocumentRecord newRecord, boolean[] newTypes,
             boolean isFileReplaced, MultipartFile newAttachedFile, HttpServletRequest request,
             MessageSource messageSource) throws SQLException, IOException {
-        OtherDocumentRecord recordToUpdate = this.findByIdWithoutFile(recordToUpdateId);
+        OtherDocumentRecord recordToUpdate = findByIdWithoutFile(recordToUpdateId);
         recordToUpdate.setName(newRecord.getName());
         recordToUpdate.setDescription(newRecord.getDescription());
         recordToUpdate.setTypes(OtherDocumentRecordUtils.convertIndicatorsToRelations(newTypes,
                 recordToUpdateId));
 
-        this.updateRecordWithSaveFileToDatabase(recordToUpdate, isFileReplaced, newAttachedFile);
+        updateRecordWithSaveFileToDatabase(recordToUpdate, isFileReplaced, newAttachedFile);
     }
 
     /**
@@ -240,20 +240,20 @@ public class OtherDocumentRecordService extends AbstractDocumentRecordService {
                 messageSource);
 
         if (sendNotification) {
-            this.notifyUsersOfUpdate(this.findByIdWithoutFile(recordToUpdateId), request, messageSource);
+            notifyUsersOfUpdate(findByIdWithoutFile(recordToUpdateId), request, messageSource);
         }
     }
 
     @Override
     public List<User> gainUsersToNotify() {
-        return this.getUserService().findAllWithEmailByAuthorityAndSubscription(
-                AuthorityType.ROLE_MEMBER_OF_SV, this.emailService.getNotificationType());
+        return getUserService().findAllWithEmailByAuthorityAndSubscription(AuthorityType.ROLE_MEMBER_OF_SV,
+                this.emailService.getNotificationType());
     }
 
     @Override
     public void notifyUsersOfUpdate(Object updatedRecord, HttpServletRequest request,
             MessageSource messageSource) {
-        this.emailService.sendEmailOnUpdate(updatedRecord, this.gainUsersToNotify(), request, messageSource);
+        this.emailService.sendEmailOnUpdate(updatedRecord, gainUsersToNotify(), request, messageSource);
     }
 
     /**
@@ -293,7 +293,7 @@ public class OtherDocumentRecordService extends AbstractDocumentRecordService {
      */
     public void save(OtherDocumentRecord newRecord, boolean[] recordTypes, MultipartFile attachedFile,
             HttpServletRequest request, MessageSource messageSource) throws SQLException, IOException {
-        String fileName = this.prepareForSaveFileToDatabase(newRecord, attachedFile);
+        String fileName = prepareForSaveFileToDatabase(newRecord, attachedFile);
 
         int recordId = this.save(newRecord);
         LogFactory.getLog(this.getClass()).info(
@@ -372,14 +372,14 @@ public class OtherDocumentRecordService extends AbstractDocumentRecordService {
         this.save(newRecord, recordTypes, attachedFile, request, messageSource);
 
         if (sendNotification) {
-            this.notifyUsersOfCreation(newRecord, request, messageSource);
+            notifyUsersOfCreation(newRecord, request, messageSource);
         }
     }
 
     @Override
     public void notifyUsersOfCreation(Object newRecord, HttpServletRequest request,
             MessageSource messageSource) {
-        this.emailService.sendEmailOnCreation(newRecord, this.gainUsersToNotify(), request, messageSource);
+        this.emailService.sendEmailOnCreation(newRecord, gainUsersToNotify(), request, messageSource);
     }
 
     /**
@@ -390,7 +390,7 @@ public class OtherDocumentRecordService extends AbstractDocumentRecordService {
      *            ID of the document record
      */
     public void delete(int recordId) {
-        OtherDocumentRecord record = this.findByIdWithoutFile(recordId);
+        OtherDocumentRecord record = findByIdWithoutFile(recordId);
         this.delete(record);
     }
 

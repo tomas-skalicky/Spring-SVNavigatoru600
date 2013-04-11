@@ -73,18 +73,17 @@ public abstract class AbstractEditRecordController extends AbstractNewEditRecord
 
         EditSessionRecord command = new EditSessionRecord();
 
-        SessionRecord record = this.getRecordService().findByIdWithoutFile(recordId);
+        SessionRecord record = getRecordService().findByIdWithoutFile(recordId);
         command.setRecord(record);
 
-        MessageSource messageSource = this.getMessageSource();
+        MessageSource messageSource = getMessageSource();
         command.setNewType(Localization.findLocaleMessage(messageSource, request, record.getTypedType()
                 .getLocalizationCode()));
 
-        this.getSendNotificationModelFiller().populateSendNotificationInInitForm(command, request,
-                messageSource);
+        getSendNotificationModelFiller().populateSendNotificationInInitForm(command, request, messageSource);
 
         model.addAttribute(AbstractNewEditRecordController.COMMAND, command);
-        return this.getViews().getEdit();
+        return getViews().getEdit();
     }
 
     /**
@@ -92,7 +91,7 @@ public abstract class AbstractEditRecordController extends AbstractNewEditRecord
      * (if it exists) was uploaded.
      */
     public String initFormAfterSave(int recordId, HttpServletRequest request, ModelMap model) {
-        String view = this.initForm(recordId, request, model);
+        String view = initForm(recordId, request, model);
         ((EditSessionRecord) model.get(AbstractNewEditRecordController.COMMAND)).setDataSaved(true);
         return view;
     }
@@ -107,18 +106,18 @@ public abstract class AbstractEditRecordController extends AbstractNewEditRecord
     public String processSubmittedForm(EditSessionRecord command, BindingResult result, SessionStatus status,
             int recordId, HttpServletRequest request, ModelMap model) {
 
-        MessageSource messageSource = this.getMessageSource();
-        this.getSendNotificationModelFiller().populateSendNotificationInSubmitForm(command, request,
-                messageSource);
+        MessageSource messageSource = getMessageSource();
+        getSendNotificationModelFiller()
+                .populateSendNotificationInSubmitForm(command, request, messageSource);
 
-        this.getValidator().validate(command, result);
+        getValidator().validate(command, result);
         if (result.hasErrors()) {
             command.setFileChanged(false);
-            return this.getViews().getEdit();
+            return getViews().getEdit();
         }
 
         try {
-            this.getRecordService().updateAndNotifyUsers(recordId, command.getRecord(), command.getNewType(),
+            getRecordService().updateAndNotifyUsers(recordId, command.getRecord(), command.getNewType(),
                     command.isFileChanged(), command.getNewFile(), command.getSendNotification().isStatus(),
                     request, messageSource);
 
@@ -127,7 +126,7 @@ public abstract class AbstractEditRecordController extends AbstractNewEditRecord
 
             // Returns the form success view.
             model.addAttribute(AbstractMetaController.REDIRECTION_ATTRIBUTE,
-                    String.format("%s%d/%s", this.getBaseUrl(), recordId, CommonUrlParts.SAVED_EXTENSION));
+                    String.format("%s%d/%s", getBaseUrl(), recordId, CommonUrlParts.SAVED_EXTENSION));
             return AbstractMetaController.REDIRECTION_PAGE;
 
         } catch (IllegalStateException e) {
@@ -147,6 +146,6 @@ public abstract class AbstractEditRecordController extends AbstractNewEditRecord
             this.logger.error(command, e);
             result.reject(AbstractEditRecordController.DATABASE_ERROR_MESSAGE_CODE);
         }
-        return this.getViews().getEdit();
+        return getViews().getEdit();
     }
 }

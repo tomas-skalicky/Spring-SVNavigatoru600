@@ -78,22 +78,21 @@ public abstract class AbstractNewDocumentController extends AbstractNewEditDocum
         // considers only one special type of records, checkbox of this type
         // is pre-checked.
         boolean[] newTypes = OtherDocumentRecordUtils.getDefaultArrayOfCheckIndicators();
-        if (!this.isAllRecordTypes()) {
-            newTypes[this.getRecordType().ordinal()] = true;
+        if (!isAllRecordTypes()) {
+            newTypes[getRecordType().ordinal()] = true;
         }
         command.setNewTypes(newTypes);
 
         // Sets up all auxiliary (but necessary) maps.
         command.setTypeCheckboxId(OtherDocumentRecordService.getTypeCheckboxId());
-        MessageSource messageSource = this.getMessageSource();
+        MessageSource messageSource = getMessageSource();
         command.setLocalizedTypeCheckboxTitles(OtherDocumentRecordService.getLocalizedTypeTitles(request,
                 messageSource));
 
-        this.getSendNotificationModelFiller().populateSendNotificationInInitForm(command, request,
-                messageSource);
+        getSendNotificationModelFiller().populateSendNotificationInInitForm(command, request, messageSource);
 
         model.addAttribute(AbstractNewEditDocumentController.COMMAND, command);
-        return this.getViews().getNeww();
+        return getViews().getNeww();
     }
 
     public static void displayIt(java.io.File node) {
@@ -121,28 +120,28 @@ public abstract class AbstractNewDocumentController extends AbstractNewEditDocum
 
         // Sets up all auxiliary (but necessary) maps.
         command.setTypeCheckboxId(OtherDocumentRecordService.getTypeCheckboxId());
-        MessageSource messageSource = this.getMessageSource();
+        MessageSource messageSource = getMessageSource();
         command.setLocalizedTypeCheckboxTitles(OtherDocumentRecordService.getLocalizedTypeTitles(request,
                 messageSource));
-        this.getSendNotificationModelFiller().populateSendNotificationInSubmitForm(command, request,
-                messageSource);
+        getSendNotificationModelFiller()
+                .populateSendNotificationInSubmitForm(command, request, messageSource);
 
-        this.getValidator().validate(command, result);
+        getValidator().validate(command, result);
         if (result.hasErrors()) {
-            return this.getViews().getNeww();
+            return getViews().getNeww();
         }
 
         OtherDocumentRecord newRecord = command.getRecord();
         try {
-            this.getRecordService().saveAndNotifyUsers(newRecord, command.getNewTypes(),
-                    command.getNewFile(), command.getSendNotification().isStatus(), request, messageSource);
+            getRecordService().saveAndNotifyUsers(newRecord, command.getNewTypes(), command.getNewFile(),
+                    command.getSendNotification().isStatus(), request, messageSource);
 
             // Clears the command object from the session.
             status.setComplete();
 
             // Returns the form success view.
             model.addAttribute(AbstractMetaController.REDIRECTION_ATTRIBUTE,
-                    String.format("%s%s", this.getBaseUrl(), CommonUrlParts.CREATED_EXTENSION));
+                    String.format("%s%s", getBaseUrl(), CommonUrlParts.CREATED_EXTENSION));
             return AbstractMetaController.REDIRECTION_PAGE;
 
         } catch (IllegalStateException e) {
@@ -162,6 +161,6 @@ public abstract class AbstractNewDocumentController extends AbstractNewEditDocum
             this.logger.error(newRecord, e);
             result.reject(AbstractNewDocumentController.DATABASE_ERROR_MESSAGE_CODE);
         }
-        return this.getViews().getNeww();
+        return getViews().getNeww();
     }
 }

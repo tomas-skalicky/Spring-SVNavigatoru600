@@ -43,7 +43,7 @@ public class ContributionNotificationEmailService extends AbstractNotificationEm
     @Override
     public void sendEmailOnCreation(Object newContribution, List<User> usersToNotify,
             HttpServletRequest request, MessageSource messageSource) {
-        this.sendEmail((Contribution) newContribution,
+        sendEmail((Contribution) newContribution,
                 ContributionNotificationEmailService.CONTRIBUTION_CREATED_SUBJECT_CODE,
                 ContributionNotificationEmailService.CONTRIBUTION_CREATED_TEXT_CODE, usersToNotify, request,
                 messageSource);
@@ -52,7 +52,7 @@ public class ContributionNotificationEmailService extends AbstractNotificationEm
     @Override
     public void sendEmailOnUpdate(Object updatedContribution, List<User> usersToNotify,
             HttpServletRequest request, MessageSource messageSource) {
-        this.sendEmail((Contribution) updatedContribution,
+        sendEmail((Contribution) updatedContribution,
                 ContributionNotificationEmailService.CONTRIBUTION_UPDATED_SUBJECT_CODE,
                 ContributionNotificationEmailService.CONTRIBUTION_UPDATED_TEXT_CODE, usersToNotify, request,
                 messageSource);
@@ -69,22 +69,21 @@ public class ContributionNotificationEmailService extends AbstractNotificationEm
             String textLocalizationCode, List<User> usersToNotify, HttpServletRequest request,
             MessageSource messageSource) {
 
-        String subject = this.getSubject(subjectLocalizationCode, contribution, request, messageSource);
+        String subject = getSubject(subjectLocalizationCode, contribution, request, messageSource);
 
         String threadName = contribution.getThread().getName();
-        String localizedAuthorLabel = this.getLocalizedContributionAuthorLabel(request, messageSource);
+        String localizedAuthorLabel = getLocalizedContributionAuthorLabel(request, messageSource);
         String authorFullName = contribution.getAuthor().getFullName();
-        String localizedContributionTextLabel = this
-                .getLocalizedContributionTextLabel(request, messageSource);
+        String localizedContributionTextLabel = getLocalizedContributionTextLabel(request, messageSource);
         String textWithConvertedUrls = Url
                 .convertImageRelativeUrlsToAbsolute(contribution.getText(), request);
         String wholeTextUrl = ContributionsUrlParts.getContributionUrl(contribution, request);
-        String croppedText = this.cropTooLongTextAndAddLink(textWithConvertedUrls, wholeTextUrl, request,
+        String croppedText = cropTooLongTextAndAddLink(textWithConvertedUrls, wholeTextUrl, request,
                 messageSource);
 
         for (User user : usersToNotify) {
-            String addressing = this.getLocalizedRecipientAddressing(user, request, messageSource);
-            String signature = this.getLocalizedNotificationSignature(user, request, messageSource);
+            String addressing = getLocalizedRecipientAddressing(user, request, messageSource);
+            String signature = getLocalizedNotificationSignature(user, request, messageSource);
             Object[] messageParams = new Object[] { addressing, threadName, localizedAuthorLabel,
                     authorFullName, localizedContributionTextLabel, croppedText, signature };
             String messageText = Localization.findLocaleMessage(messageSource, request, textLocalizationCode,

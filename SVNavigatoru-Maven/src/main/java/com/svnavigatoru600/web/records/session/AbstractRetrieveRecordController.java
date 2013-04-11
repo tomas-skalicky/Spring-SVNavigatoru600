@@ -52,7 +52,7 @@ public abstract class AbstractRetrieveRecordController extends AbstractSessionRe
 
     public void retrieve(int recordId, HttpServletResponse response, ModelMap model) {
         try {
-            this.getRecordService().retrieve(recordId, response);
+            getRecordService().retrieve(recordId, response);
 
             // NOTE: nothing is returned.
 

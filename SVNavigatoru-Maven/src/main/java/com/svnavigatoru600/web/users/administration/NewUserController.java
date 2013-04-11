@@ -58,7 +58,7 @@ public class NewUserController extends AbstractNewEditUserController {
         // Sets up all (but necessary) maps.
         command.setRoleCheckboxId(AuthorityService.getRoleCheckboxId());
         command.setLocalizedRoleCheckboxTitles(AuthorityService.getLocalizedRoleTitles(request,
-                this.getMessageSource()));
+                getMessageSource()));
 
         model.addAttribute(AbstractNewEditUserController.COMMAND, command);
         return PageViews.NEW.getViewName();
@@ -77,18 +77,18 @@ public class NewUserController extends AbstractNewEditUserController {
 
         // Sets up all (but necessary) maps.
         command.setRoleCheckboxId(AuthorityService.getRoleCheckboxId());
-        MessageSource messageSource = this.getMessageSource();
+        MessageSource messageSource = getMessageSource();
         command.setLocalizedRoleCheckboxTitles(AuthorityService
                 .getLocalizedRoleTitles(request, messageSource));
 
-        this.getValidator().validate(command, result);
+        this.validator.validate(command, result);
         if (result.hasErrors()) {
             return PageViews.NEW.getViewName();
         }
 
         User newUser = command.getUser();
         try {
-            this.getUserService().saveAndNotifyUser(newUser, command.getNewPassword(),
+            getUserService().saveAndNotifyUser(newUser, command.getNewPassword(),
                     command.getNewAuthorities(), request, messageSource);
 
             // Clears the command object from the session.
