@@ -17,7 +17,7 @@ public class NewsDaoImpl extends HibernateDaoSupport implements NewsDao {
 
     @Override
     public News findById(int newsId) {
-        return this.getHibernateTemplate().load(News.class, newsId);
+        return getHibernateTemplate().load(News.class, newsId);
     }
 
     @Override
@@ -25,7 +25,7 @@ public class NewsDaoImpl extends HibernateDaoSupport implements NewsDao {
     public List<News> findAllOrdered(FindAllOrderedArguments arguments) {
         String query = String.format("FROM %s n ORDER BY %s %s", PersistedClass.News.name(), arguments
                 .getSortField().name(), arguments.getSortDirection().getDatabaseCode());
-        return (List<News>) this.getHibernateTemplate().find(query);
+        return (List<News>) getHibernateTemplate().find(query);
     }
 
     @Override
@@ -33,7 +33,7 @@ public class NewsDaoImpl extends HibernateDaoSupport implements NewsDao {
         Date now = new Date();
         news.setLastSaveTime(now);
 
-        this.getHibernateTemplate().update(news);
+        getHibernateTemplate().update(news);
     }
 
     @Override
@@ -42,13 +42,13 @@ public class NewsDaoImpl extends HibernateDaoSupport implements NewsDao {
         news.setCreationTime(now);
         news.setLastSaveTime(now);
 
-        int newId = (Integer) this.getHibernateTemplate().save(news);
+        int newId = (Integer) getHibernateTemplate().save(news);
         news.setId(newId);
         return newId;
     }
 
     @Override
     public void delete(News news) {
-        this.getHibernateTemplate().delete(news);
+        getHibernateTemplate().delete(news);
     }
 }

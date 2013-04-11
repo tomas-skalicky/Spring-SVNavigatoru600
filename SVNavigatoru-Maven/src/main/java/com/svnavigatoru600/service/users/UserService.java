@@ -96,7 +96,7 @@ public class UserService {
      * populated.
      */
     public List<User> findAllAdministrators() {
-        return this.findAllByAuthority(AuthorityType.ROLE_USER_ADMINISTRATOR);
+        return findAllByAuthority(AuthorityType.ROLE_USER_ADMINISTRATOR);
     }
 
     /**
@@ -283,7 +283,7 @@ public class UserService {
         // Sets user's email to null if the email is blank. The reason is the UNIQUE DB constraint.
         newUser.setEmailToNullIfBlank();
 
-        this.save(newUser);
+        save(newUser);
 
         if (!StringUtils.isBlank(newUser.getEmail())) {
             this.emailService.sendEmailOnUserCreation(newUser, newPassword, request, messageSource);
@@ -308,7 +308,7 @@ public class UserService {
      *            Username (=login) of the user which is to be deleted
      */
     public void delete(String username, HttpServletRequest request, MessageSource messageSource) {
-        User user = this.findByUsername(username);
+        User user = findByUsername(username);
         this.userDao.delete(user);
 
         this.emailService.sendEmailOnUserDeletion(user, request, messageSource);
@@ -335,7 +335,7 @@ public class UserService {
      */
     public boolean isUsernameOccupied(String username) {
         try {
-            this.findByUsername(username);
+            findByUsername(username);
             return true;
         } catch (DataRetrievalFailureException e) {
             return false;
@@ -350,7 +350,7 @@ public class UserService {
      */
     public boolean isEmailOccupied(String emailAddress) {
         try {
-            this.findByEmail(emailAddress);
+            findByEmail(emailAddress);
             return true;
         } catch (DataRetrievalFailureException e) {
             return false;
@@ -366,7 +366,7 @@ public class UserService {
      */
     public void resetPasswordAndNotifyUser(String email, HttpServletRequest request,
             MessageSource messageSource) {
-        User user = this.findByEmail(email);
+        User user = findByEmail(email);
 
         String newPassword = Password.generateNew();
         user.setPassword(Hash.doSha1Hashing(newPassword));
@@ -387,7 +387,7 @@ public class UserService {
             }
 
             String authorUsername = contribution.getAuthor().getUsername();
-            contribution.setAuthor(this.findByUsername(authorUsername));
+            contribution.setAuthor(findByUsername(authorUsername));
         }
     }
 

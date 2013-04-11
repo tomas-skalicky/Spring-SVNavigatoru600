@@ -138,17 +138,17 @@ public class ThreadService implements SubjectOfNotificationService {
      */
     public void saveAndNotifyUsers(Thread newThread, boolean sendNotification, HttpServletRequest request,
             MessageSource messageSource) {
-        this.save(newThread);
+        save(newThread);
 
         if (sendNotification) {
-            this.notifyUsersOfCreation(newThread, request, messageSource);
+            notifyUsersOfCreation(newThread, request, messageSource);
         }
     }
 
     @Override
     public void notifyUsersOfCreation(Object newThread, HttpServletRequest request,
             MessageSource messageSource) {
-        this.emailService.sendEmailOnCreation(newThread, this.gainUsersToNotify(), request, messageSource);
+        this.emailService.sendEmailOnCreation(newThread, gainUsersToNotify(), request, messageSource);
     }
 
     /**

@@ -54,7 +54,7 @@ public class EditUserController extends AbstractNewEditUserController {
 
         AdministrateUserData command = new AdministrateUserData();
 
-        User user = this.getUserService().findByUsername(username);
+        User user = getUserService().findByUsername(username);
         command.setUser(user);
 
         // Collection of authorities is converted to a map.
@@ -63,7 +63,7 @@ public class EditUserController extends AbstractNewEditUserController {
         // Sets up all auxiliary (but necessary) maps.
         command.setRoleCheckboxId(AuthorityService.getRoleCheckboxId());
         command.setLocalizedRoleCheckboxTitles(AuthorityService.getLocalizedRoleTitles(request,
-                this.getMessageSource()));
+                getMessageSource()));
 
         model.addAttribute(AbstractNewEditUserController.COMMAND, command);
         return PageViews.EDIT.getViewName();
@@ -75,7 +75,7 @@ public class EditUserController extends AbstractNewEditUserController {
     @RequestMapping(value = UserAdministrationUrlParts.EXISTING_URL + "{username}/"
             + CommonUrlParts.SAVED_EXTENSION, method = RequestMethod.GET)
     public String initFormAfterSave(@PathVariable String username, HttpServletRequest request, ModelMap model) {
-        String view = this.initForm(username, request, model);
+        String view = initForm(username, request, model);
         ((AdministrateUserData) model.get(AbstractNewEditUserController.COMMAND)).setDataSaved(true);
         return view;
     }
@@ -95,16 +95,16 @@ public class EditUserController extends AbstractNewEditUserController {
 
         // Sets up all auxiliary (but necessary) maps.
         command.setRoleCheckboxId(AuthorityService.getRoleCheckboxId());
-        MessageSource messageSource = this.getMessageSource();
+        MessageSource messageSource = getMessageSource();
         command.setLocalizedRoleCheckboxTitles(AuthorityService
                 .getLocalizedRoleTitles(request, messageSource));
 
-        this.getValidator().validate(command, result);
+        this.validator.validate(command, result);
         if (result.hasErrors()) {
             return PageViews.EDIT.getViewName();
         }
 
-        UserService userService = this.getUserService();
+        UserService userService = getUserService();
         User originalUser = null;
         try {
             originalUser = userService.findByUsername(username);

@@ -14,7 +14,6 @@ import com.svnavigatoru600.domain.forum.Contribution;
 import com.svnavigatoru600.domain.users.User;
 import com.svnavigatoru600.service.eventcalendar.CalendarEventService;
 import com.svnavigatoru600.service.forum.ContributionService;
-import com.svnavigatoru600.service.util.UserUtils;
 import com.svnavigatoru600.viewmodel.eventcalendar.EventWrapper;
 import com.svnavigatoru600.viewmodel.forum.contributions.ContributionWrapper;
 
@@ -51,7 +50,7 @@ public abstract class AbstractPrivateSectionMetaController extends AbstractMetaC
 
     @ModelAttribute("loggedUser")
     public User populateLoggedUser() {
-        return UserUtils.getLoggedUser();
+        return this.userService.getLoggerUser();
     }
 
     @ModelAttribute("futureEvents")

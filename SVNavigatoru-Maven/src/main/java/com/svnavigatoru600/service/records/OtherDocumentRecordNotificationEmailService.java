@@ -43,7 +43,7 @@ public class OtherDocumentRecordNotificationEmailService extends AbstractNotific
     @Override
     public void sendEmailOnCreation(Object newRecord, List<User> usersToNotify, HttpServletRequest request,
             MessageSource messageSource) {
-        this.sendEmail((OtherDocumentRecord) newRecord,
+        sendEmail((OtherDocumentRecord) newRecord,
                 OtherDocumentRecordNotificationEmailService.RECORD_CREATED_SUBJECT_CODE,
                 OtherDocumentRecordNotificationEmailService.RECORD_CREATED_TEXT_CODE, usersToNotify, request,
                 messageSource);
@@ -52,7 +52,7 @@ public class OtherDocumentRecordNotificationEmailService extends AbstractNotific
     @Override
     public void sendEmailOnUpdate(Object updatedRecord, List<User> usersToNotify, HttpServletRequest request,
             MessageSource messageSource) {
-        this.sendEmail((OtherDocumentRecord) updatedRecord,
+        sendEmail((OtherDocumentRecord) updatedRecord,
                 OtherDocumentRecordNotificationEmailService.RECORD_UPDATED_SUBJECT_CODE,
                 OtherDocumentRecordNotificationEmailService.RECORD_UPDATED_TEXT_CODE, usersToNotify, request,
                 messageSource);
@@ -69,20 +69,20 @@ public class OtherDocumentRecordNotificationEmailService extends AbstractNotific
             String textLocalizationCode, List<User> usersToNotify, HttpServletRequest request,
             MessageSource messageSource) {
 
-        String subject = this.getSubject(subjectLocalizationCode, request, messageSource);
+        String subject = getSubject(subjectLocalizationCode, request, messageSource);
 
-        String localizedDocumentNameLabel = this.getLocalizedDocumentNameLabel(request, messageSource);
+        String localizedDocumentNameLabel = getLocalizedDocumentNameLabel(request, messageSource);
         String documentName = record.getName();
-        String localizedDocumentDescriptionLabel = this.getLocalizedDocumentDescriptionLabel(request,
+        String localizedDocumentDescriptionLabel = getLocalizedDocumentDescriptionLabel(request,
                 messageSource);
         String documentDescription = Url.convertImageRelativeUrlsToAbsolute(record.getDescription(), request);
-        String localizedAttachedFileLabel = this.getLocalizedAttachedFile(request, messageSource);
-        String fileUrl = this.getAttachedFileUrlHtml(
+        String localizedAttachedFileLabel = getLocalizedAttachedFile(request, messageSource);
+        String fileUrl = getAttachedFileUrlHtml(
                 OtherDocumentsCommonUrlParts.getAttachedFileUrl(record, request), request, messageSource);
 
         for (User user : usersToNotify) {
-            String addressing = this.getLocalizedRecipientAddressing(user, request, messageSource);
-            String signature = this.getLocalizedNotificationSignature(user, request, messageSource);
+            String addressing = getLocalizedRecipientAddressing(user, request, messageSource);
+            String signature = getLocalizedNotificationSignature(user, request, messageSource);
             Object[] messageParams = new Object[] { addressing, localizedDocumentNameLabel, documentName,
                     localizedDocumentDescriptionLabel, documentDescription, localizedAttachedFileLabel,
                     fileUrl, signature };

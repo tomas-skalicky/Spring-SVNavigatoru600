@@ -25,7 +25,7 @@ public abstract class AbstractDocumentRecordValidator implements Validator {
         String field = "newFile";
 
         int oldErrorCount = errors.getAllErrors().size();
-        this.checkNewFileName(file.getOriginalFilename(), errors, field);
+        checkNewFileName(file.getOriginalFilename(), errors, field);
         int newErrorCount = errors.getAllErrors().size();
         if (newErrorCount != oldErrorCount) {
             // The filename is bad.

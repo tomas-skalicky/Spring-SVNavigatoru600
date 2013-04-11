@@ -29,7 +29,7 @@ public class NewThreadValidator extends AbstractThreadValidator {
     @Override
     public void validate(Object target, Errors errors) {
         NewThread command = (NewThread) target;
-        this.checkNewName(command.getThread().getName(), errors);
+        checkNewName(command.getThread().getName(), errors);
         this.validator.checkNewText(command.getContribution().getText(), errors);
     }
 }

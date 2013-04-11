@@ -237,7 +237,7 @@ public class User implements UserDetails, Serializable {
      */
     private GrantedAuthority getAuthority(AuthorityType authorityType) {
         String typeName = authorityType.name();
-        Collection<GrantedAuthority> ownedAuthorities = this.getAuthorities();
+        Collection<GrantedAuthority> ownedAuthorities = getAuthorities();
 
         for (GrantedAuthority ownedAuthority : ownedAuthorities) {
             if (ownedAuthority.getAuthority().equals(typeName)) {
@@ -251,35 +251,35 @@ public class User implements UserDetails, Serializable {
      * Indicates whether this {@link User} has the given authority.
      */
     public boolean hasAuthority(AuthorityType authority) {
-        return this.getAuthority(authority) != null;
+        return getAuthority(authority) != null;
     }
 
     /**
      * Indicates whether this {@link User} can see published news.
      */
     public boolean canSeeNews() {
-        return this.hasAuthority(AuthorityType.ROLE_MEMBER_OF_SV);
+        return hasAuthority(AuthorityType.ROLE_MEMBER_OF_SV);
     }
 
     /**
      * Indicates whether this {@link User} can edit published news.
      */
     public boolean canEditNews() {
-        return this.hasAuthority(AuthorityType.ROLE_MEMBER_OF_BOARD);
+        return hasAuthority(AuthorityType.ROLE_MEMBER_OF_BOARD);
     }
 
     /**
      * Indicates whether this {@link User} can see all users of the application.
      */
     public boolean canSeeUsers() {
-        return this.hasAuthority(AuthorityType.ROLE_USER_ADMINISTRATOR);
+        return hasAuthority(AuthorityType.ROLE_USER_ADMINISTRATOR);
     }
 
     /**
      * Indicates whether this {@link User} can see his user account.
      */
     public boolean canSeeHisAccount() {
-        return this.hasAuthority(AuthorityType.ROLE_REGISTERED_USER);
+        return hasAuthority(AuthorityType.ROLE_REGISTERED_USER);
     }
 
     @Override
@@ -320,14 +320,14 @@ public class User implements UserDetails, Serializable {
         checkedAuthorities.add(new Authority(this.username, AuthorityType.ROLE_REGISTERED_USER));
 
         boolean authoritiesChanged = true;
-        Collection<GrantedAuthority> currentAuthorities = this.getAuthorities();
+        Collection<GrantedAuthority> currentAuthorities = getAuthorities();
         if (currentAuthorities != null) {
             authoritiesChanged = !CheckboxUtils.areSame(
                     AuthorityUtils.getArrayOfCheckIndicators(checkedAuthorities),
                     AuthorityUtils.getArrayOfCheckIndicators(currentAuthorities));
         }
 
-        this.setAuthorities(checkedAuthorities);
+        setAuthorities(checkedAuthorities);
         return authoritiesChanged;
     }
 
@@ -354,7 +354,7 @@ public class User implements UserDetails, Serializable {
     public void copyEmailPhoneSubscriptions(User sourceUser) {
         this.email = sourceUser.email;
         this.phone = sourceUser.phone;
-        this.copySubscriptions(sourceUser);
+        copySubscriptions(sourceUser);
     }
 
     /**
@@ -379,8 +379,8 @@ public class User implements UserDetails, Serializable {
      *            Type of the authority which is to be added to this user.
      */
     public void addAuthority(AuthorityType type) {
-        if (!this.hasAuthority(type)) {
-            this.getAuthorities().add(new Authority(this.username, type));
+        if (!hasAuthority(type)) {
+            getAuthorities().add(new Authority(this.username, type));
         }
     }
 
@@ -392,9 +392,9 @@ public class User implements UserDetails, Serializable {
      *            Type of the authority which is to be taken away from this user.
      */
     public void removeAuthority(AuthorityType type) {
-        GrantedAuthority authority = this.getAuthority(type);
+        GrantedAuthority authority = getAuthority(type);
         if (authority != null) {
-            this.getAuthorities().remove(authority);
+            getAuthorities().remove(authority);
         }
     }
 

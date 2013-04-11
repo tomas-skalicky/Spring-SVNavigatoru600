@@ -96,8 +96,7 @@ public class ThreadDaoImpl extends NamedParameterJdbcDaoSupport implements Threa
 
         Map<String, Integer> args = Collections.singletonMap(idColumn, threadId);
 
-        Thread thread = this.getNamedParameterJdbcTemplate().queryForObject(query, args,
-                new ThreadRowMapper());
+        Thread thread = getNamedParameterJdbcTemplate().queryForObject(query, args, new ThreadRowMapper());
 
         if (!lazy) {
             this.populateContributions(thread);
@@ -110,7 +109,7 @@ public class ThreadDaoImpl extends NamedParameterJdbcDaoSupport implements Threa
     public List<Thread> loadAll() {
         String query = String.format("SELECT * FROM %s t", ThreadDaoImpl.TABLE_NAME);
 
-        List<Thread> threads = this.getJdbcTemplate().query(query, new ThreadRowMapper());
+        List<Thread> threads = getJdbcTemplate().query(query, new ThreadRowMapper());
 
         this.populateContributions(threads);
         this.populateAuthor(threads);
@@ -138,12 +137,12 @@ public class ThreadDaoImpl extends NamedParameterJdbcDaoSupport implements Threa
                 ThreadDaoImpl.TABLE_NAME, nameColumn, nameColumn, authorUsernameColumn, authorUsernameColumn,
                 idColumn, idColumn);
 
-        this.getNamedParameterJdbcTemplate().update(query, this.getNamedParameters(thread));
+        getNamedParameterJdbcTemplate().update(query, getNamedParameters(thread));
     }
 
     @Override
     public int save(Thread thread) {
-        SimpleJdbcInsert insert = new SimpleJdbcInsert(this.getDataSource())
+        SimpleJdbcInsert insert = new SimpleJdbcInsert(getDataSource())
                 .withTableName(ThreadDaoImpl.TABLE_NAME)
                 .usingGeneratedKeyColumns(ThreadField.id.getColumnName())
                 .usingColumns(ThreadField.name.getColumnName(), ThreadField.creationTime.getColumnName(),
@@ -151,7 +150,7 @@ public class ThreadDaoImpl extends NamedParameterJdbcDaoSupport implements Threa
 
         Date now = new Date();
         thread.setCreationTime(now);
-        int threadId = insert.executeAndReturnKey(this.getNamedParameters(thread)).intValue();
+        int threadId = insert.executeAndReturnKey(getNamedParameters(thread)).intValue();
         thread.setId(threadId);
 
         // NOTE: explicit save of the thread's contributions.
@@ -173,6 +172,6 @@ public class ThreadDaoImpl extends NamedParameterJdbcDaoSupport implements Threa
 
         Map<String, Integer> args = Collections.singletonMap(idColumn, thread.getId());
 
-        this.getNamedParameterJdbcTemplate().update(query, args);
+        getNamedParameterJdbcTemplate().update(query, args);
     }
 }

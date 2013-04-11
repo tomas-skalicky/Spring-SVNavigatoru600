@@ -47,12 +47,12 @@ public class ListNewsController extends AbstractNewsController {
 
         ShowAllNews command = new ShowAllNews();
 
-        List<News> news = this.getNewsService().findAllOrdered();
+        List<News> news = getNewsService().findAllOrdered();
         command.setNews(news);
 
         // Sets up all auxiliary (but necessary) maps.
         command.setLocalizedDeleteQuestions(NewsService.getLocalizedDeleteQuestions(news, request,
-                this.getMessageSource()));
+                getMessageSource()));
 
         model.addAttribute(ListNewsController.COMMAND, command);
 

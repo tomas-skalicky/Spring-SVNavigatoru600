@@ -41,20 +41,19 @@ public class ThreadNotificationEmailService extends AbstractNotificationEmailSer
             MessageSource messageSource) {
         Thread thread = (Thread) newThread;
 
-        String subject = this.getSubject(ThreadNotificationEmailService.THREAD_CREATED_SUBJECT_CODE, thread,
+        String subject = getSubject(ThreadNotificationEmailService.THREAD_CREATED_SUBJECT_CODE, thread,
                 request, messageSource);
 
         String threadName = thread.getName();
-        String localizedAuthorLabel = this.getLocalizedContributionAuthorLabel(request, messageSource);
+        String localizedAuthorLabel = getLocalizedContributionAuthorLabel(request, messageSource);
         String authorFullName = thread.getAuthor().getFullName();
-        String localizedContributionTextLabel = this.getLocalizedFirstContributionLabel(request,
-                messageSource);
+        String localizedContributionTextLabel = getLocalizedFirstContributionLabel(request, messageSource);
         String contributionText = Url.convertImageRelativeUrlsToAbsolute(thread.getContributions().get(0)
                 .getText(), request);
 
         for (User user : usersToNotify) {
-            String addressing = this.getLocalizedRecipientAddressing(user, request, messageSource);
-            String signature = this.getLocalizedNotificationSignature(user, request, messageSource);
+            String addressing = getLocalizedRecipientAddressing(user, request, messageSource);
+            String signature = getLocalizedNotificationSignature(user, request, messageSource);
             Object[] messageParams = new Object[] { addressing, threadName, localizedAuthorLabel,
                     authorFullName, localizedContributionTextLabel, contributionText, signature };
             String messageText = Localization.findLocaleMessage(messageSource, request,

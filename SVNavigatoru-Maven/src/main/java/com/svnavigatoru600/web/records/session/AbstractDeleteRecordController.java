@@ -40,7 +40,7 @@ public abstract class AbstractDeleteRecordController extends AbstractSessionReco
             SessionRecordService recordService, MessageSource messageSource) {
         // Note that allRecordTypes is set up during the creation of the parent.
         super(baseUrl, views, recordService, messageSource);
-        this.successfulDeleteUrl = this.getBaseUrl() + CommonUrlParts.DELETED_EXTENSION;
+        this.successfulDeleteUrl = getBaseUrl() + CommonUrlParts.DELETED_EXTENSION;
     }
 
     /**
@@ -50,13 +50,13 @@ public abstract class AbstractDeleteRecordController extends AbstractSessionReco
     public AbstractDeleteRecordController(String baseUrl, AbstractPageViews views,
             SessionRecordType recordType, SessionRecordService recordService, MessageSource messageSource) {
         super(baseUrl, views, recordType, recordService, messageSource);
-        this.successfulDeleteUrl = this.getBaseUrl() + CommonUrlParts.DELETED_EXTENSION;
+        this.successfulDeleteUrl = getBaseUrl() + CommonUrlParts.DELETED_EXTENSION;
     }
 
     @Transactional
     public String delete(int recordId, HttpServletRequest request, ModelMap model) {
         try {
-            this.getRecordService().delete(recordId);
+            getRecordService().delete(recordId);
 
             // Returns the form success view.
             model.addAttribute(AbstractMetaController.REDIRECTION_ATTRIBUTE, this.successfulDeleteUrl);
@@ -66,7 +66,7 @@ public abstract class AbstractDeleteRecordController extends AbstractSessionReco
             // We encountered a database problem.
             LogFactory.getLog(this.getClass()).error(e);
             model.addAttribute("error", AbstractDeleteRecordController.DATABASE_ERROR_MESSAGE_CODE);
-            return this.getViews().getList();
+            return getViews().getList();
         }
     }
 }

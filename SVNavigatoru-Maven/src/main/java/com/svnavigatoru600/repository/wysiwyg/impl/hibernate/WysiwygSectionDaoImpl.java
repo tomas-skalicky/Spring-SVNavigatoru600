@@ -20,7 +20,7 @@ public class WysiwygSectionDaoImpl extends HibernateDaoSupport implements Wysiwy
     @Override
     public WysiwygSection findByName(WysiwygSectionName name) {
         this.logger.info(String.format("Load a section (name '%s')", name.name()));
-        return this.getHibernateTemplate().load(WysiwygSection.class, name.name());
+        return getHibernateTemplate().load(WysiwygSection.class, name.name());
     }
 
     @Override
@@ -29,6 +29,6 @@ public class WysiwygSectionDaoImpl extends HibernateDaoSupport implements Wysiwy
         section.setLastSaveTime(now);
         this.logger.info(String.format("Update a section (name '%s', lastSaveTime '%s')", section.getName(),
                 section.getLastSaveTime().toString()));
-        this.getHibernateTemplate().update(section);
+        getHibernateTemplate().update(section);
     }
 }

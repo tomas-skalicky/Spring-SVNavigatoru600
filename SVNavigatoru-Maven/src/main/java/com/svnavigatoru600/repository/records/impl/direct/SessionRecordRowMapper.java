@@ -39,7 +39,7 @@ public class SessionRecordRowMapper extends AbstractDocumentRecordRowMapper impl
         record.setId(rs.getInt(SessionRecordField.id.getColumnName()));
         record.setFileName(rs.getString(DocumentRecordField.fileName.getColumnName()));
 
-        if (this.isLoadFile()) {
+        if (isLoadFile()) {
             record.setFile(rs.getBlob(DocumentRecordField.file.getColumnName()));
         } else {
             record.setFile(null);

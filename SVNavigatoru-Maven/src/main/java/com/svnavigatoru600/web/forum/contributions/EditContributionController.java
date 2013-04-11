@@ -52,16 +52,16 @@ public class EditContributionController extends AbstractNewEditContributionContr
     public String initForm(@PathVariable int threadId, @PathVariable int contributionId,
             HttpServletRequest request, ModelMap model) {
 
-        this.getContributionService().canEdit(contributionId);
+        getContributionService().canEdit(contributionId);
 
         EditContribution command = new EditContribution();
 
-        Contribution contribution = this.getContributionService().findById(contributionId);
+        Contribution contribution = getContributionService().findById(contributionId);
         command.setContribution(contribution);
         command.setThreadId(threadId);
 
-        this.getSendNotificationModelFiller().populateSendNotificationInInitForm(command, request,
-                this.getMessageSource());
+        getSendNotificationModelFiller().populateSendNotificationInInitForm(command, request,
+                getMessageSource());
 
         model.addAttribute(AbstractNewEditContributionController.COMMAND, command);
         return PageViews.EDIT.getViewName();
@@ -70,7 +70,7 @@ public class EditContributionController extends AbstractNewEditContributionContr
     @RequestMapping(value = EditContributionController.BASE_URL + CommonUrlParts.SAVED_EXTENSION, method = RequestMethod.GET)
     public String initFormAfterSave(@PathVariable int threadId, @PathVariable int contributionId,
             HttpServletRequest request, ModelMap model) {
-        String view = this.initForm(threadId, contributionId, request, model);
+        String view = initForm(threadId, contributionId, request, model);
         ((EditContribution) model.get(AbstractNewEditContributionController.COMMAND)).setDataSaved(true);
         return view;
     }
@@ -82,18 +82,18 @@ public class EditContributionController extends AbstractNewEditContributionContr
             BindingResult result, SessionStatus status, @PathVariable int threadId,
             @PathVariable int contributionId, HttpServletRequest request, ModelMap model) {
 
-        this.getContributionService().canEdit(contributionId);
+        getContributionService().canEdit(contributionId);
 
-        MessageSource messageSource = this.getMessageSource();
-        this.getSendNotificationModelFiller().populateSendNotificationInSubmitForm(command, request,
-                messageSource);
+        MessageSource messageSource = getMessageSource();
+        getSendNotificationModelFiller()
+                .populateSendNotificationInSubmitForm(command, request, messageSource);
 
-        this.getValidator().validate(command, result);
+        getValidator().validate(command, result);
         if (result.hasErrors()) {
             return PageViews.EDIT.getViewName();
         }
 
-        ContributionService contributionService = this.getContributionService();
+        ContributionService contributionService = getContributionService();
         Contribution originalContribution = null;
         try {
             originalContribution = contributionService.findById(contributionId);

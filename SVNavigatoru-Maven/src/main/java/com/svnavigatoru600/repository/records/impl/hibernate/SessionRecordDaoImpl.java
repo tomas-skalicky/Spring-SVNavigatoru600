@@ -19,7 +19,7 @@ public class SessionRecordDaoImpl extends HibernateDaoSupport implements Session
 
     @Override
     public SessionRecord findById(int recordId) {
-        return this.getHibernateTemplate().load(SessionRecord.class, recordId);
+        return getHibernateTemplate().load(SessionRecord.class, recordId);
     }
 
     @Override
@@ -33,7 +33,7 @@ public class SessionRecordDaoImpl extends HibernateDaoSupport implements Session
     public List<SessionRecord> findAllOrdered(OrderType order) {
         String query = String.format("FROM %s r ORDER BY r.%s %s", PersistedClass.SessionRecord.name(),
                 SessionRecordField.sessionDate.name(), order.getDatabaseCode());
-        return (List<SessionRecord>) this.getHibernateTemplate().find(query);
+        return (List<SessionRecord>) getHibernateTemplate().find(query);
     }
 
     @Override
@@ -42,21 +42,21 @@ public class SessionRecordDaoImpl extends HibernateDaoSupport implements Session
         String query = String.format("FROM %s r WHERE r.type = ? ORDER BY r.%s %s",
                 PersistedClass.SessionRecord.name(), SessionRecordField.sessionDate.name(),
                 order.getDatabaseCode());
-        return (List<SessionRecord>) this.getHibernateTemplate().find(query, type.name());
+        return (List<SessionRecord>) getHibernateTemplate().find(query, type.name());
     }
 
     @Override
     public void update(SessionRecord record) {
-        this.getHibernateTemplate().update(record);
+        getHibernateTemplate().update(record);
     }
 
     @Override
     public int save(SessionRecord record) {
-        return (Integer) this.getHibernateTemplate().save(record);
+        return (Integer) getHibernateTemplate().save(record);
     }
 
     @Override
     public void delete(AbstractDocumentRecord record) {
-        this.getHibernateTemplate().delete(record);
+        getHibernateTemplate().delete(record);
     }
 }

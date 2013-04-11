@@ -128,7 +128,7 @@ public class CalendarEventService implements SubjectOfNotificationService {
         this.update(eventToUpdate, newEvent, newPriority);
 
         if (sendNotification) {
-            this.notifyUsersOfUpdate(eventToUpdate, request, messageSource);
+            notifyUsersOfUpdate(eventToUpdate, request, messageSource);
         }
     }
 
@@ -141,7 +141,7 @@ public class CalendarEventService implements SubjectOfNotificationService {
     @Override
     public void notifyUsersOfUpdate(Object updatedEvent, HttpServletRequest request,
             MessageSource messageSource) {
-        this.emailService.sendEmailOnUpdate(updatedEvent, this.gainUsersToNotify(), request, messageSource);
+        this.emailService.sendEmailOnUpdate(updatedEvent, gainUsersToNotify(), request, messageSource);
     }
 
     /**
@@ -164,16 +164,16 @@ public class CalendarEventService implements SubjectOfNotificationService {
      */
     public void saveAndNotifyUsers(CalendarEvent newEvent, boolean sendNotification,
             HttpServletRequest request, MessageSource messageSource) {
-        this.save(newEvent);
+        save(newEvent);
 
         if (sendNotification) {
-            this.notifyUsersOfCreation(newEvent, request, messageSource);
+            notifyUsersOfCreation(newEvent, request, messageSource);
         }
     }
 
     @Override
     public void notifyUsersOfCreation(Object newEvent, HttpServletRequest request, MessageSource messageSource) {
-        this.emailService.sendEmailOnCreation(newEvent, this.gainUsersToNotify(), request, messageSource);
+        this.emailService.sendEmailOnCreation(newEvent, gainUsersToNotify(), request, messageSource);
     }
 
     /**
@@ -190,7 +190,7 @@ public class CalendarEventService implements SubjectOfNotificationService {
      *            ID of the event
      */
     public void delete(int eventId) {
-        CalendarEvent event = this.findById(eventId);
+        CalendarEvent event = findById(eventId);
         this.eventDao.delete(event);
     }
 

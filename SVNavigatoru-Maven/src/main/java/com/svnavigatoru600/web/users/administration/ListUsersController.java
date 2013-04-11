@@ -43,12 +43,12 @@ public class ListUsersController extends AbstractUserController {
 
         ShowAllUsers command = new ShowAllUsers();
 
-        List<User> users = this.getUserService().findAllOrdered();
+        List<User> users = getUserService().findAllOrdered();
         command.setUsers(users);
 
         // Sets up all (but necessary) maps.
         command.setLocalizedDeleteQuestions(UserService.getLocalizedDeleteQuestions(users, request,
-                this.getMessageSource()));
+                getMessageSource()));
 
         model.addAttribute(ListUsersController.COMMAND, command);
         return PageViews.LIST.getViewName();
@@ -60,7 +60,7 @@ public class ListUsersController extends AbstractUserController {
      */
     @RequestMapping(value = UserAdministrationUrlParts.CREATED_URL, method = RequestMethod.GET)
     public String initPageAfterCreate(HttpServletRequest request, ModelMap model) {
-        String view = this.initPage(request, model);
+        String view = initPage(request, model);
         ((ShowAllUsers) model.get(ListUsersController.COMMAND)).setUserCreated(true);
         return view;
     }
@@ -71,7 +71,7 @@ public class ListUsersController extends AbstractUserController {
      */
     @RequestMapping(value = UserAdministrationUrlParts.DELETED_URL, method = RequestMethod.GET)
     public String initPageAfterDelete(HttpServletRequest request, ModelMap model) {
-        String view = this.initPage(request, model);
+        String view = initPage(request, model);
         ((ShowAllUsers) model.get(ListUsersController.COMMAND)).setUserDeleted(true);
         return view;
     }

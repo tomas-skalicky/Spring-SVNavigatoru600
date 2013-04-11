@@ -47,7 +47,7 @@ public class DeleteEventController extends AbstractEventController {
     @Transactional
     public String delete(@PathVariable int eventId, HttpServletRequest request, ModelMap model) {
         try {
-            this.getEventService().delete(eventId);
+            getEventService().delete(eventId);
 
             // Returns the form success view.
             model.addAttribute(AbstractMetaController.REDIRECTION_ATTRIBUTE, EventsUrlParts.DELETED_URL);

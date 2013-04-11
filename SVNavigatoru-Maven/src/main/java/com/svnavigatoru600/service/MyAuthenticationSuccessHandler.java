@@ -35,7 +35,7 @@ public class MyAuthenticationSuccessHandler extends SavedRequestAwareAuthenticat
 
         // The following line copied from the implementation of
         // the SavedRequestAwareAuthenticationSuccessHandler class.
-        this.clearAuthenticationAttributes(request);
+        clearAuthenticationAttributes(request);
 
         String targetUrl;
         if (user.canSeeUsers()) {
@@ -46,6 +46,6 @@ public class MyAuthenticationSuccessHandler extends SavedRequestAwareAuthenticat
             targetUrl = ErrorsUrlParts.ERROR_403;
         }
         LogFactory.getLog(this.getClass()).debug("Redirecting to the URL: " + targetUrl);
-        this.getRedirectStrategy().sendRedirect(request, response, targetUrl);
+        getRedirectStrategy().sendRedirect(request, response, targetUrl);
     }
 }

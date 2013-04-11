@@ -31,8 +31,7 @@ public class WysiwygSectionDaoImpl extends NamedParameterJdbcDaoSupport implemen
 
         Map<String, String> args = Collections.singletonMap(nameColumn, name.name());
 
-        return this.getNamedParameterJdbcTemplate()
-                .queryForObject(query, args, new WysiwygSectionRowMapper());
+        return getNamedParameterJdbcTemplate().queryForObject(query, args, new WysiwygSectionRowMapper());
     }
 
     /**
@@ -58,6 +57,6 @@ public class WysiwygSectionDaoImpl extends NamedParameterJdbcDaoSupport implemen
                 WysiwygSectionDaoImpl.TABLE_NAME, lastSaveTimeColumn, lastSaveTimeColumn, sourceCodeColumn,
                 sourceCodeColumn, nameColumn, nameColumn);
 
-        this.getNamedParameterJdbcTemplate().update(query, this.getNamedParameters(section));
+        getNamedParameterJdbcTemplate().update(query, getNamedParameters(section));
     }
 }

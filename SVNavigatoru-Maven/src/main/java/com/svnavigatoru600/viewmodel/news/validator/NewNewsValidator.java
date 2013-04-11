@@ -21,7 +21,7 @@ public class NewNewsValidator extends AbstractNewsValidator {
     public void validate(Object target, Errors errors) {
         NewNews command = (NewNews) target;
         News news = command.getNews();
-        this.checkNewTitle(news.getTitle(), errors);
-        this.checkNewText(news.getText(), errors);
+        checkNewTitle(news.getTitle(), errors);
+        checkNewText(news.getText(), errors);
     }
 }

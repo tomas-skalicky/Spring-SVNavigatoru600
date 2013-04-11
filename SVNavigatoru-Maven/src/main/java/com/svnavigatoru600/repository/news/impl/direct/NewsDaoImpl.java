@@ -33,7 +33,7 @@ public class NewsDaoImpl extends NamedParameterJdbcDaoSupport implements NewsDao
 
         Map<String, Integer> args = Collections.singletonMap(idColumn, newsId);
 
-        return this.getNamedParameterJdbcTemplate().queryForObject(query, args, new NewsRowMapper());
+        return getNamedParameterJdbcTemplate().queryForObject(query, args, new NewsRowMapper());
     }
 
     @Override
@@ -41,7 +41,7 @@ public class NewsDaoImpl extends NamedParameterJdbcDaoSupport implements NewsDao
         String query = String.format("SELECT * FROM %s n ORDER BY %s %s", NewsDaoImpl.TABLE_NAME, arguments
                 .getSortField().getColumnName(), arguments.getSortDirection().getDatabaseCode());
 
-        return this.getJdbcTemplate().query(query, new NewsRowMapper());
+        return getJdbcTemplate().query(query, new NewsRowMapper());
     }
 
     /**
@@ -69,12 +69,12 @@ public class NewsDaoImpl extends NamedParameterJdbcDaoSupport implements NewsDao
 
         Date now = new Date();
         news.setLastSaveTime(now);
-        this.getNamedParameterJdbcTemplate().update(query, this.getNamedParameters(news));
+        getNamedParameterJdbcTemplate().update(query, getNamedParameters(news));
     }
 
     @Override
     public int save(News news) {
-        SimpleJdbcInsert insert = new SimpleJdbcInsert(this.getDataSource())
+        SimpleJdbcInsert insert = new SimpleJdbcInsert(getDataSource())
                 .withTableName(NewsDaoImpl.TABLE_NAME)
                 .usingGeneratedKeyColumns(NewsField.id.getColumnName())
                 .usingColumns(NewsField.title.getColumnName(), NewsField.text.getColumnName(),
@@ -83,7 +83,7 @@ public class NewsDaoImpl extends NamedParameterJdbcDaoSupport implements NewsDao
         Date now = new Date();
         news.setCreationTime(now);
         news.setLastSaveTime(now);
-        int newId = insert.executeAndReturnKey(this.getNamedParameters(news)).intValue();
+        int newId = insert.executeAndReturnKey(getNamedParameters(news)).intValue();
         news.setId(newId);
         return newId;
     }
@@ -96,6 +96,6 @@ public class NewsDaoImpl extends NamedParameterJdbcDaoSupport implements NewsDao
 
         Map<String, Integer> args = Collections.singletonMap(idColumn, news.getId());
 
-        this.getNamedParameterJdbcTemplate().update(query, args);
+        getNamedParameterJdbcTemplate().update(query, args);
     }
 }

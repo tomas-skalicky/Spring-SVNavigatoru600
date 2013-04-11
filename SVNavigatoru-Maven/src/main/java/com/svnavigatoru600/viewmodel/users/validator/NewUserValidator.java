@@ -31,9 +31,9 @@ public class NewUserValidator extends AbstractUserDataValidator {
     @Override
     public void validate(Object target, Errors errors) {
         AdministrateUserData command = (AdministrateUserData) target;
-        this.checkNewUsername(command.getUser().getUsername(), errors);
+        checkNewUsername(command.getUser().getUsername(), errors);
         super.validate(target, errors);
-        this.checkNewEmail(command.getUser().getEmail(), errors);
+        checkNewEmail(command.getUser().getEmail(), errors);
     }
 
     /**
