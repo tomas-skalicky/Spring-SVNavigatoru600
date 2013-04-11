@@ -24,25 +24,18 @@
 	</p>
 </c:if>
 
+<my:loggedUser checkIfCanEditOtherDocumentRecords="true">
+	<p>
+		<strong><a href="<c:url value="/${sectionUrl}/novy/" />"><spring:message
+					code="other-documents.add-new-document" /></a></strong>
+	</p>
+	
+	<h5><spring:message code="other-documents.existing-documents" /></h5>
+</my:loggedUser>
+
+
+
 <%
-    User loggedUser = UserUtils.getLoggedUser();
-if (loggedUser.canEditNews()) {
-%>
-<p>
-	<strong><a href="<c:url value="/${sectionUrl}/novy/" />"><spring:message
-				code="other-documents.add-new-document" />
-	</a>
-	</strong>
-</p>
-
-<h5>
-	<spring:message code="other-documents.existing-documents" />
-</h5>
-<%
-    }
-
-
-
 // Gets the command from the ModelMap.
 ShowAllRecords command = (ShowAllRecords) request.getAttribute(AbstractListDocumentsController.COMMAND);
 List<OtherDocumentRecord> records = command.getRecords();
@@ -59,10 +52,10 @@ if (records.size() > 0) {
 		</th>
 
 		<%-- Administration of records --%>
-		<%if (loggedUser.canEditNews()) {%>
-		<th></th>
-		<th></th>
-		<%}%>
+		<my:loggedUser checkIfCanEditOtherDocumentRecords="true">
+			<th></th>
+			<th></th>
+		</my:loggedUser>
 	</tr>
 	<%}
 
@@ -92,21 +85,20 @@ for (OtherDocumentRecord record : records) {
 		</td>
 
 		<%-- Administration of records --%>
-		<%if (loggedUser.canEditNews()) {
-			%>
-		<%-- Edit icon --%>
-		<td><a href="<%=homeUrl%>/<c:out value="${sectionUrl}" />/existujici/<%=recordId%>/"
-			title="<spring:message code="other-documents.modify-document" />" class="edit"></a>
-		</td>
-
-		<%-- Delete icon --%>
-		<td><a id="delete[<%=recordId%>]" href="#" title="<spring:message code="other-documents.delete-document" />"
-			class="delete"
-			onclick="if (confirm('<%=command.getLocalizedDeleteQuestions().get(record)%>')) {
-							document.getElementById('delete[<%=recordId%>]').setAttribute('href', '<%=homeUrl
-								%>/<c:out value="${sectionUrl}" />/existujici/<%=recordId%>/smazat/'); }"></a>
-		</td>
-		<%}%>
+		<my:loggedUser checkIfCanEditOtherDocumentRecords="true">
+			<%-- Edit icon --%>
+			<td><a href="<%=homeUrl%>/<c:out value="${sectionUrl}" />/existujici/<%=recordId%>/"
+				title="<spring:message code="other-documents.modify-document" />" class="edit"></a>
+			</td>
+	
+			<%-- Delete icon --%>
+			<td><a id="delete[<%=recordId%>]" href="#" title="<spring:message code="other-documents.delete-document" />"
+				class="delete"
+				onclick="if (confirm('<%=command.getLocalizedDeleteQuestions().get(record)%>')) {
+								document.getElementById('delete[<%=recordId%>]').setAttribute('href', '<%=homeUrl
+									%>/<c:out value="${sectionUrl}" />/existujici/<%=recordId%>/smazat/'); }"></a>
+			</td>
+		</my:loggedUser>
 	</tr>
 	<%}
 

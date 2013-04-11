@@ -17,9 +17,10 @@
 			<%-- 		<spring:eval expression="section.lastSaveTime" /> --%> </em> </small>
 </p>
 
-<%if (UserUtils.isLogged() && UserUtils.getLoggedUser().canEditNews()) {%>
-<p>
-	<a href="<c:url value="/${viewAddress}/editace/#editor" />"><spring:message code="edit.edit" />
-	</a>
-</p>
-<%}%>
+<my:currentUser checkIfLogged="true">
+	<my:loggedUser checkIfCanEditWysiwygSites="true">
+		<p>
+			<a href="<c:url value="/${viewAddress}/editace/#editor" />"><spring:message code="edit.edit" /></a>
+		</p>
+	</my:loggedUser>
+</my:currentUser>

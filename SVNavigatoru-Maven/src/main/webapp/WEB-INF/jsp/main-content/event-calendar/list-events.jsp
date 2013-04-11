@@ -23,19 +23,16 @@
 </c:if>
 
 <c:set var="sectionUrl" value="kalendar-akci" />
+<my:loggedUser checkIfCanEditEvents="true">
+	<p>
+		<strong><a href="<c:url value="/${sectionUrl}/novy/" />"><spring:message
+					code="event-calendar.add-new-event" /></a></strong>
+	</p>
+</my:loggedUser>
+
+
+
 <%
-User loggedUser = UserUtils.getLoggedUser();
-if (loggedUser.canEditNews()) {%>
-<p>
-	<strong><a href="<c:url value="/${sectionUrl}/novy/" />"><spring:message
-				code="event-calendar.add-new-event" />
-	</a>
-	</strong>
-</p>
-<%}
-
-
-
 // Gets the command from the ModelMap.
 ShowAllEvents command = (ShowAllEvents) request.getAttribute(ListEventsController.COMMAND);
 List<CalendarEvent> events = command.getEvents();
@@ -53,30 +50,26 @@ for (CalendarEvent event : events) {
 			<div class="titlewrap">
 				<% String formattedDate = DateUtils.format(event.getDate(), DateUtils.MIDDLE_DATE_FORMATS.get(locale), locale); %>
 				<h4>
-					<span><%=event.getName()%> <small><em><%=formattedDate%></em>
-					</small>
-					</span>
+					<span><%=event.getName()%> <small><em><%=formattedDate%></em></small></span>
 				</h4>
 
 
 				<%-- Administration of events --%>
-				<%
-					if (loggedUser.canEditNews()) {
-						int eventId = event.getId();
-					%>
-				<p class="controls">
-					<%-- Edit icon --%>
-					<a href="<c:out value="${homeUrl}" />/<c:out value="${sectionUrl}" />/existujici/<%=eventId%>/"
-						title="<spring:message code="event-calendar.modify-event" />" class="edit"></a>
-
-					<%-- Delete icon --%>
-					<a id="delete[<%=eventId%>]" href="#" title="<spring:message code="event-calendar.delete-event" />" class="delete"
-						onclick="if (confirm('<%=command.getLocalizedDeleteQuestions().get(event)%>')) {
-										document.getElementById('delete[<%=eventId%>]').setAttribute('href', '<%=homeUrl
-											%>/<c:out value="${sectionUrl}" />/existujici/<%=eventId%>/smazat/'); }"></a>
-				</p>
-				<div class="clearfix"></div>
-				<%}%>
+				<my:loggedUser checkIfCanEditEvents="true">
+					<p class="controls">
+						<% int eventId = event.getId(); %>
+						<%-- Edit icon --%>
+						<a href="<c:out value="${homeUrl}" />/<c:out value="${sectionUrl}" />/existujici/<%=eventId%>/"
+							title="<spring:message code="event-calendar.modify-event" />" class="edit"></a>
+	
+						<%-- Delete icon --%>
+						<a id="delete[<%=eventId%>]" href="#" title="<spring:message code="event-calendar.delete-event" />" class="delete"
+							onclick="if (confirm('<%=command.getLocalizedDeleteQuestions().get(event)%>')) {
+											document.getElementById('delete[<%=eventId%>]').setAttribute('href', '<%=homeUrl
+												%>/<c:out value="${sectionUrl}" />/existujici/<%=eventId%>/smazat/'); }"></a>
+					</p>
+					<div class="clearfix"></div>
+				</my:loggedUser>
 			</div>
 
 

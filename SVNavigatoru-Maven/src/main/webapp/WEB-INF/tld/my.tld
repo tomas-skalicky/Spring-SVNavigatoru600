@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<taglib xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-jsptaglibrary_2_0.xsd"
+	version="2.0">
+
+	<description>svnavigatoru600.com Tag Library for all purposes</description>
+	<tlib-version>1.0</tlib-version>
+	<short-name>my</short-name>
+	<uri>http://www.svnavigatoru600.com</uri>
+
+	<tag>
+		<description>Provides a testing of rights of the logger user.</description>
+		<name>loggedUser</name>
+		<tag-class>com.svnavigatoru600.web.users.LoggedUserTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<description>Checks whether the logger user can edit news. Default attribute value is "false".</description>
+			<name>checkIfCanEditNews</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>Checks whether the logger user can edit events. Default attribute value is "false".</description>
+			<name>checkIfCanEditEvents</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>Checks whether the logger user can edit other-document records. Default attribute value is "false".</description>
+			<name>checkIfCanEditOtherDocumentRecords</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>Checks whether the logger user can edit session records. Default attribute value is "false".</description>
+			<name>checkIfCanEditSessionRecords</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>Checks whether the logger user can edit content of pure wysiwyg sites. Default attribute value is "false".</description>
+			<name>checkIfCanEditWysiwygSites</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>Checks whether the logger user can see planned events. Default attribute value is "false".</description>
+			<name>checkIfCanSeeEvents</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>Checks whether the logger user can see forum contributions. Default attribute value is "false".</description>
+			<name>checkIfCanSeeContributions</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>Checks whether the logger user can see the homepage in the private section. Default attribute value is "false".</description>
+			<name>checkIfCanSeeHomepage</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>Checks whether the logger user can see news. Default attribute value is "false".</description>
+			<name>checkIfCanSeeNews</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>Checks whether the logger user can see administration of users. Default attribute value is "false".</description>
+			<name>checkIfCanSeeUserAdministration</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>Checks whether the logger user can see his own account. Default attribute value is "false".</description>
+			<name>checkIfCanSeeHisAccount</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	
+	<tag>
+		<description>Provides a investigation of state of the current user.</description>
+		<name>currentUser</name>
+		<tag-class>com.svnavigatoru600.web.users.CurrentUserTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<description>Checks whether the current user is logged in the application.</description>
+			<name>checkIfLogged</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>Checks whether the current user is not logged in the application.</description>
+			<name>checkIfNotLogged</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+</taglib>
