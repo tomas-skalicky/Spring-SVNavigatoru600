@@ -61,7 +61,7 @@
 
 		<!-- Versions of plugins and dependencies which are used more than once. -->
 		<plugin.properties-maven-plugin.version>1.0-alpha-2</plugin.properties-maven-plugin.version>
-		<dependency.spring.version>3.2.0.RELEASE</dependency.spring.version>
+		<dependency.spring.version>3.2.2.RELEASE</dependency.spring.version>
 		<dependency.spring-security.version>3.1.3.RELEASE</dependency.spring-security.version>
 
 		<checkstyle.configLocation>D:/Documents/Private/SW/Eclipse/checkstyle.xml</checkstyle.configLocation>
