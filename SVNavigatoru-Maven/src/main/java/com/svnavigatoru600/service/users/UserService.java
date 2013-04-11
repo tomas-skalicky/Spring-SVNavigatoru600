@@ -423,4 +423,8 @@ public class UserService {
         }
         return ordinalTitleMap;
     }
+
+    public User getLoggerUser() {
+        return UserUtils.getLoggedUser();
+    }
 }

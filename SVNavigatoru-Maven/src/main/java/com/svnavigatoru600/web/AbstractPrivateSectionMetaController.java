@@ -6,6 +6,7 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.beans.factory.annotation.Required;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
@@ -14,6 +15,7 @@ import com.svnavigatoru600.domain.forum.Contribution;
 import com.svnavigatoru600.domain.users.User;
 import com.svnavigatoru600.service.eventcalendar.CalendarEventService;
 import com.svnavigatoru600.service.forum.ContributionService;
+import com.svnavigatoru600.service.users.UserService;
 import com.svnavigatoru600.viewmodel.eventcalendar.EventWrapper;
 import com.svnavigatoru600.viewmodel.forum.contributions.ContributionWrapper;
 
@@ -37,6 +39,7 @@ public abstract class AbstractPrivateSectionMetaController extends AbstractMetaC
 
     private CalendarEventService eventService;
     private ContributionService contributionService;
+    private UserService userService;
 
     @Inject
     public void setCalendarEventService(CalendarEventService eventService) {
@@ -77,5 +80,21 @@ public abstract class AbstractPrivateSectionMetaController extends AbstractMetaC
             lastSavedContributions.add(new ContributionWrapper(contributions.get(contributionNum), request));
         }
         return lastSavedContributions;
+    }
+
+    /**
+     * Trivial getter
+     */
+    protected UserService getUserService() {
+        return this.userService;
+    }
+
+    /**
+     * Trivial setter
+     */
+    @Inject
+    @Required
+    public void setUserService(UserService userService) {
+        this.userService = userService;
     }
 }

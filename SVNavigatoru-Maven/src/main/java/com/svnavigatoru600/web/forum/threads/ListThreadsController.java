@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.svnavigatoru600.domain.forum.Thread;
 import com.svnavigatoru600.service.forum.ThreadService;
-import com.svnavigatoru600.service.users.UserService;
 import com.svnavigatoru600.url.forum.ThreadsUrlParts;
 import com.svnavigatoru600.viewmodel.forum.threads.ShowAllThreads;
 
@@ -28,12 +27,6 @@ public class ListThreadsController extends AbstractThreadController {
      * Command used in /main-content/forum/threads/list-threads.jsp.
      */
     public static final String COMMAND = "showAllThreadsCommand";
-    private UserService userService;
-
-    @Inject
-    public void setUserService(UserService userService) {
-        this.userService = userService;
-    }
 
     /**
      * Constructor.

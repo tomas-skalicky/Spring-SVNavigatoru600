@@ -28,8 +28,8 @@ public abstract class AbstractDatabaseLoader {
      * default data.
      */
     public void loadDatabase(DataSource dataSource) throws SQLException, IOException {
-        SqlExecutor.executeSqlFile(dataSource, this.getCreateSchemaFile(dataSource));
-        SqlExecutor.executeSqlFile(dataSource, this.getImportDataFile(dataSource));
+        SqlExecutor.executeSqlFile(dataSource, getCreateSchemaFile(dataSource));
+        SqlExecutor.executeSqlFile(dataSource, getImportDataFile(dataSource));
     }
 
     /**
@@ -37,7 +37,7 @@ public abstract class AbstractDatabaseLoader {
      * default data.
      */
     public void emptyDatabase(DataSource dataSource) throws SQLException, IOException {
-        SqlExecutor.executeSqlFile(dataSource, this.getDropSchemaFile(dataSource));
+        SqlExecutor.executeSqlFile(dataSource, getDropSchemaFile(dataSource));
     }
 
     /**

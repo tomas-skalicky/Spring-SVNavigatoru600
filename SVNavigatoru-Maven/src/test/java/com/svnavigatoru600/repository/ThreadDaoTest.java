@@ -22,7 +22,7 @@ import com.svnavigatoru600.test.category.PersistenceTests;
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
 @Category(PersistenceTests.class)
-public class ThreadDaoTest extends AbstractRepositoryTest {
+public final class ThreadDaoTest extends AbstractRepositoryTest {
 
     /**
      * Name of the edited test thread.
@@ -43,7 +43,7 @@ public class ThreadDaoTest extends AbstractRepositoryTest {
         ThreadDao threadDao = TEST_UTILS.getThreadDao();
 
         // INSERT
-        int threadId = this.createDefaultTestThread();
+        int threadId = createDefaultTestThread();
 
         // SELECT ONE
         Thread thread = threadDao.findById(threadId);
@@ -61,7 +61,7 @@ public class ThreadDaoTest extends AbstractRepositoryTest {
         ThreadDao threadDao = TEST_UTILS.getThreadDao();
 
         // INSERT
-        int threadId = this.createDefaultTestThreadWithContribution();
+        int threadId = createDefaultTestThreadWithContribution();
 
         // SELECT ONE
         Thread thread = threadDao.findById(threadId);
@@ -77,8 +77,8 @@ public class ThreadDaoTest extends AbstractRepositoryTest {
         ThreadDao threadDao = TEST_UTILS.getThreadDao();
 
         // TWO INSERTS
-        int firstThreadId = this.createDefaultTestThread();
-        int secondThreadId = this.createDefaultTestThread();
+        int firstThreadId = createDefaultTestThread();
+        int secondThreadId = createDefaultTestThread();
 
         // SELECT ALL
         List<Thread> foundThreads = threadDao.loadAll();
@@ -93,7 +93,7 @@ public class ThreadDaoTest extends AbstractRepositoryTest {
         ThreadDao threadDao = TEST_UTILS.getThreadDao();
 
         // INSERT
-        int threadId = this.createDefaultTestThreadWithContribution();
+        int threadId = createDefaultTestThreadWithContribution();
 
         // SELECT ALL
         List<Thread> foundThreads = threadDao.loadAll();
@@ -109,7 +109,7 @@ public class ThreadDaoTest extends AbstractRepositoryTest {
         ThreadDao threadDao = TEST_UTILS.getThreadDao();
 
         // INSERT & SELECT ONE
-        int threadId = this.createDefaultTestThread();
+        int threadId = createDefaultTestThread();
         Thread thread = threadDao.findById(threadId);
 
         // UPDATE
@@ -125,12 +125,12 @@ public class ThreadDaoTest extends AbstractRepositoryTest {
         Assert.assertEquals(EDITED_THREAD_NAME, thread.getName());
     }
 
-    @Test
+    @Test(expected = EmptyResultDataAccessException.class)
     public void testDelete() throws Exception {
         ThreadDao threadDao = TEST_UTILS.getThreadDao();
 
         // INSERT & SELECT ONE
-        int threadId = this.createDefaultTestThreadWithContribution();
+        int threadId = createDefaultTestThreadWithContribution();
         Thread thread = threadDao.findById(threadId);
 
         // DELETE
@@ -146,14 +146,9 @@ public class ThreadDaoTest extends AbstractRepositoryTest {
         }
 
         // SELECT ONE
-        try {
-            int contributionId = thread.getContributions().get(0).getId();
-            TEST_UTILS.getContributionDao().findById(contributionId);
-            Assert.fail("The contribution has been found");
-        } catch (EmptyResultDataAccessException ex) {
-            // OK since the contribution cannot have been found.
-            ;
-        }
+        // Throws an exception since the contribution cannot be found.
+        int contributionId = thread.getContributions().get(0).getId();
+        TEST_UTILS.getContributionDao().findById(contributionId);
     }
 
     /**
@@ -172,7 +167,7 @@ public class ThreadDaoTest extends AbstractRepositoryTest {
      * @return ID of the newly created thread
      */
     private int createDefaultTestThreadWithContribution() {
-        Contribution contribution = this.getDefaultTestContribution();
+        Contribution contribution = getDefaultTestContribution();
         return TEST_UTILS.createTestThread(RepositoryTestUtils.THREAD_DEFAULT_NAME, this.defaultAuthor,
                 Arrays.asList(contribution));
     }

@@ -8,7 +8,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-import org.springframework.dao.DataAccessException;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.security.core.GrantedAuthority;
 
 import com.svnavigatoru600.domain.users.Authority;
@@ -24,7 +24,7 @@ import com.svnavigatoru600.test.category.PersistenceTests;
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
 @Category(PersistenceTests.class)
-public class AuthorityDaoTest extends AbstractRepositoryTest {
+public final class AuthorityDaoTest extends AbstractRepositoryTest {
 
     /**
      * Default test author of threads and contributions.
@@ -70,18 +70,13 @@ public class AuthorityDaoTest extends AbstractRepositoryTest {
         Assert.assertEquals(expectedFoundAuthorityCount, authorities.size());
     }
 
-    @Test
+    @Test(expected = DuplicateKeyException.class)
     public void testSaveFindAllWithSameAuthorities() throws Exception {
         // TWO INSERT
         String username = this.defaultAuthor.getUsername();
         TEST_UTILS.createDefaultTestAuthority(username);
-        try {
-            TEST_UTILS.createDefaultTestAuthority(username);
-            Assert.fail("The identical authority exists already");
-        } catch (DataAccessException ex) {
-            // OK since duplications in authorities are not allowed.
-            ;
-        }
+        // Throws an exception since duplications in authorities are not allowed.
+        TEST_UTILS.createDefaultTestAuthority(username);
     }
 
     @Test
