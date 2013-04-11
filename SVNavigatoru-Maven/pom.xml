@@ -327,12 +327,6 @@
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-validator</artifactId>
-			<exclusions>
-				<exclusion>
-					<artifactId>javax.el</artifactId>
-					<groupId>org.glassfish.web</groupId>
-				</exclusion>
-			</exclusions>
 		</dependency>
 
 		<dependency>
@@ -547,6 +541,12 @@
 				<groupId>org.hibernate</groupId>
 				<artifactId>hibernate-validator</artifactId>
 				<version>5.0.0.CR2</version>
+				<exclusions>
+					<exclusion>
+						<artifactId>javax.el</artifactId>
+						<groupId>org.glassfish.web</groupId>
+					</exclusion>
+				</exclusions>
 			</dependency>
 
 			<dependency>
