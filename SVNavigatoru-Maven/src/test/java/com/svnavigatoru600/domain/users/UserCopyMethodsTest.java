@@ -2,22 +2,21 @@ package com.svnavigatoru600.domain.users;
 
 import java.util.Set;
 
-import junit.framework.Assert;
-
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.springframework.security.core.GrantedAuthority;
 
-import com.svnavigatoru600.test.category.FastTests;
+import com.svnavigatoru600.test.category.UnitTests;
 
 /**
  * Tests only copy*** methods of the {@link User} class.
  * 
  * @author <a href="mailto:tomas.skalicky@gfk.com">Tomas Skalicky</a>
  */
-@Category(FastTests.class)
-public class UserCopyMethodsTest extends AbstractUserTest {
+@Category(UnitTests.class)
+public final class UserCopyMethodsTest extends AbstractUserTest {
 
     private static final String NEW_USERNAME = "username 2";
     private static final String NEW_PASSWORD = "password 2";
@@ -49,7 +48,7 @@ public class UserCopyMethodsTest extends AbstractUserTest {
 
     @Test
     public void testCopyEmailPhoneSubscriptions() {
-        User destinationUser = this.getDefaultUser();
+        User destinationUser = getDefaultUser();
         destinationUser.copyEmailPhoneSubscriptions(this.sourceUser);
 
         Assert.assertEquals(DEFAULT_USERNAME, destinationUser.getUsername());
@@ -70,7 +69,7 @@ public class UserCopyMethodsTest extends AbstractUserTest {
 
     @Test
     public void testCopySubscriptions() {
-        User destinationUser = this.getDefaultUser();
+        User destinationUser = getDefaultUser();
         destinationUser.copySubscriptions(this.sourceUser);
 
         Assert.assertEquals(DEFAULT_USERNAME, destinationUser.getUsername());

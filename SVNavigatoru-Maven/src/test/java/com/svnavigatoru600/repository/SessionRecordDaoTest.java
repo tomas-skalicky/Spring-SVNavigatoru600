@@ -21,7 +21,7 @@ import com.svnavigatoru600.test.category.PersistenceTests;
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
 @Category(PersistenceTests.class)
-public class SessionRecordDaoTest extends AbstractRepositoryTest {
+public final class SessionRecordDaoTest extends AbstractRepositoryTest {
 
     /**
      * Type of the edited test session record.
@@ -45,7 +45,7 @@ public class SessionRecordDaoTest extends AbstractRepositoryTest {
 
         // SELECT ONE
         SessionRecord record = recordDao.findById(recordId);
-        this.doAssertAfterFindById(record, recordId);
+        doAssertAfterFindById(record, recordId);
         Assert.assertEquals(RepositoryTestUtils.DOCUMENT_RECORD_DEFAULT_FILE.length(), record.getFile()
                 .length());
     }
@@ -59,7 +59,7 @@ public class SessionRecordDaoTest extends AbstractRepositoryTest {
 
         // SELECT ONE
         SessionRecord record = recordDao.findById(recordId, false);
-        this.doAssertAfterFindById(record, recordId);
+        doAssertAfterFindById(record, recordId);
         Assert.assertNull(record.getFile());
     }
 
@@ -141,7 +141,7 @@ public class SessionRecordDaoTest extends AbstractRepositoryTest {
         Assert.assertEquals(EDITED_SESSION_RECORD_DISCUSSED_TOPICS, record.getDiscussedTopics());
     }
 
-    @Test
+    @Test(expected = EmptyResultDataAccessException.class)
     public void testDelete() throws Exception {
         SessionRecordDao recordDao = TEST_UTILS.getSessionRecordDao();
 
@@ -153,12 +153,7 @@ public class SessionRecordDaoTest extends AbstractRepositoryTest {
         recordDao.delete(record);
 
         // SELECT ONE
-        try {
-            recordDao.findById(record.getId());
-            Assert.fail("The record has been found");
-        } catch (EmptyResultDataAccessException ex) {
-            // OK since the record cannot have been found.
-            ;
-        }
+        // Throws an exception since the record cannot be found.
+        recordDao.findById(record.getId());
     }
 }

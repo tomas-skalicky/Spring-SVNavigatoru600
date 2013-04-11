@@ -21,6 +21,7 @@ import com.svnavigatoru600.domain.records.SessionRecordType;
 import com.svnavigatoru600.domain.users.Authority;
 import com.svnavigatoru600.domain.users.AuthorityType;
 import com.svnavigatoru600.domain.users.User;
+import com.svnavigatoru600.domain.users.UserBuilder;
 import com.svnavigatoru600.repository.forum.ContributionDao;
 import com.svnavigatoru600.repository.forum.ThreadDao;
 import com.svnavigatoru600.repository.records.SessionRecordDao;
@@ -199,8 +200,7 @@ public final class RepositoryTestUtils {
      * @return ID of the newly created event
      */
     int createDefaultTestEvent(Date date) {
-        return this.createTestEvent(EVENT_DEFAULT_NAME, date, EVENT_DEFAULT_DESCRIPTION,
-                EVENT_DEFAULT_PRIORITY);
+        return createTestEvent(EVENT_DEFAULT_NAME, date, EVENT_DEFAULT_DESCRIPTION, EVENT_DEFAULT_PRIORITY);
     }
 
     /**
@@ -210,7 +210,7 @@ public final class RepositoryTestUtils {
      */
     int createTestEvent(String name, Date date, String description, PriorityType priority) {
         CalendarEvent event = new CalendarEvent(name, date, description, priority);
-        return this.getEventDao().save(event);
+        return getEventDao().save(event);
     }
 
     /**
@@ -226,7 +226,7 @@ public final class RepositoryTestUtils {
      * @return ID of the newly created news
      */
     int createDefaultTestNews() {
-        return this.createTestNews(NEWS_DEFAULT_TITLE, NEWS_DEFAULT_TEXT);
+        return createTestNews(NEWS_DEFAULT_TITLE, NEWS_DEFAULT_TEXT);
     }
 
     /**
@@ -236,7 +236,7 @@ public final class RepositoryTestUtils {
      */
     int createTestNews(String title, String text) {
         News news = new News(title, text);
-        return this.getNewsDao().save(news);
+        return getNewsDao().save(news);
     }
 
     /**
@@ -260,7 +260,7 @@ public final class RepositoryTestUtils {
      */
     int createTestContribution(Thread thread, String text, User author) {
         Contribution contribution = new Contribution(thread, text, author);
-        return this.getContributionDao().save(contribution);
+        return getContributionDao().save(contribution);
     }
 
     /**
@@ -283,7 +283,7 @@ public final class RepositoryTestUtils {
         for (Contribution contribution : contributions) {
             contribution.setThread(thread);
         }
-        return this.getThreadDao().save(thread);
+        return getThreadDao().save(thread);
     }
 
     /**
@@ -294,13 +294,23 @@ public final class RepositoryTestUtils {
     }
 
     /**
+     * Creates {@link UserBuilder} thereof {@link User} is a default one.
+     */
+    public UserBuilder createDefaultUserBuilder() {
+        return UserBuilder.anUser().withUsername(USER_DEFAULT_USERNAME).withPassword(USER_DEFAULT_PASSWORD)
+                .enabled(USER_DEFAULT_ENABLED).withFirstName(USER_DEFAULT_FIRST_NAME)
+                .withLastName(USER_DEFAULT_LAST_NAME).withEmail(USER_DEFAULT_EMAIL)
+                .withPhone(USER_DEFAULT_PHONE).forTestPurposes(USER_DEFAULT_IS_TEST_USER)
+                .withAuthorities(USER_DEFAULT_AUTHORITIES);
+    }
+
+    /**
      * Creates and saves the first default test user.
      * 
      * @return Newly created user
      */
     User createDefaultTestUser() {
-        return this
-                .createDefaultTestUser(USER_DEFAULT_USERNAME, USER_DEFAULT_EMAIL, USER_DEFAULT_AUTHORITIES);
+        return saveTestUser(createDefaultUserBuilder());
     }
 
     /**
@@ -309,8 +319,8 @@ public final class RepositoryTestUtils {
      * @return Newly created user
      */
     User createSecondDefaultTestUser() {
-        return this.createDefaultTestUser(SECOND_USER_DEFAULT_USERNAME, SECOND_USER_DEFAULT_EMAIL,
-                SECOND_USER_DEFAULT_AUTHORITIES);
+        return saveTestUser(createDefaultUserBuilder().withUsername(SECOND_USER_DEFAULT_USERNAME)
+                .withEmail(SECOND_USER_DEFAULT_EMAIL).withAuthorities(SECOND_USER_DEFAULT_AUTHORITIES));
     }
 
     /**
@@ -318,20 +328,10 @@ public final class RepositoryTestUtils {
      * 
      * @return Newly created user
      */
-    User createDefaultTestUser(String username, String email, Set<GrantedAuthority> authorities) {
-        this.createTestUser(username, USER_DEFAULT_PASSWORD, USER_DEFAULT_ENABLED, USER_DEFAULT_FIRST_NAME,
-                USER_DEFAULT_LAST_NAME, email, USER_DEFAULT_PHONE, USER_DEFAULT_IS_TEST_USER, authorities);
-        return this.getUserDao().findByUsername(username);
-    }
-
-    /**
-     * Creates and saves a test user.
-     */
-    void createTestUser(String username, String password, boolean enabled, String firstName, String lastName,
-            String email, String phone, boolean isTestUser, Set<GrantedAuthority> authorities) {
-        User user = new User(username, password, enabled, firstName, lastName, email, phone, isTestUser,
-                authorities);
-        this.getUserDao().save(user);
+    User saveTestUser(UserBuilder userBuilder) {
+        User user = userBuilder.build();
+        getUserDao().save(user);
+        return getUserDao().findByUsername(user.getUsername());
     }
 
     /**
@@ -345,14 +345,14 @@ public final class RepositoryTestUtils {
      * Creates and saves a default test authority.
      */
     void createDefaultTestAuthority(String username) {
-        this.createTestAuthority(username, AUTHORITY_DEFAULT_TYPE);
+        createTestAuthority(username, AUTHORITY_DEFAULT_TYPE);
     }
 
     /**
      * Creates and saves the second default test authority.
      */
     void createSecondDefaultTestAuthority(String username) {
-        this.createTestAuthority(username, SECOND_AUTHORITY_DEFAULT_TYPE);
+        createTestAuthority(username, SECOND_AUTHORITY_DEFAULT_TYPE);
     }
 
     /**
@@ -360,7 +360,7 @@ public final class RepositoryTestUtils {
      */
     void createTestAuthority(String username, AuthorityType authorityType) {
         Authority authority = new Authority(username, authorityType);
-        this.getAuthorityDao().save(authority);
+        getAuthorityDao().save(authority);
     }
 
     /**
@@ -416,8 +416,8 @@ public final class RepositoryTestUtils {
      * @return ID of the newly created record
      */
     int createDefaultTestSessionRecord(SessionRecordType type, Date sessionDate) {
-        return this.createTestSessionRecord(DOCUMENT_RECORD_DEFAULT_FILE_NAME, DOCUMENT_RECORD_DEFAULT_FILE,
-                type, sessionDate, SESSION_RECORD_DEFAULT_DISCUSSED_TOPICS);
+        return createTestSessionRecord(DOCUMENT_RECORD_DEFAULT_FILE_NAME, DOCUMENT_RECORD_DEFAULT_FILE, type,
+                sessionDate, SESSION_RECORD_DEFAULT_DISCUSSED_TOPICS);
     }
 
     /**
@@ -428,6 +428,6 @@ public final class RepositoryTestUtils {
     int createTestSessionRecord(String fileName, Blob file, SessionRecordType type, Date sessionDate,
             String discussedTopics) {
         SessionRecord record = new SessionRecord(fileName, file, type, sessionDate, discussedTopics);
-        return this.getSessionRecordDao().save(record);
+        return getSessionRecordDao().save(record);
     }
 }

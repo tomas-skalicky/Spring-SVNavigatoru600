@@ -10,7 +10,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-import org.springframework.dao.DataRetrievalFailureException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.security.core.GrantedAuthority;
 
 import com.svnavigatoru600.domain.users.Authority;
@@ -27,7 +27,7 @@ import com.svnavigatoru600.test.category.PersistenceTests;
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
 @Category(PersistenceTests.class)
-public class UserDaoTest extends AbstractRepositoryTest {
+public final class UserDaoTest extends AbstractRepositoryTest {
 
     /**
      * Default rights of the first test user.
@@ -61,8 +61,8 @@ public class UserDaoTest extends AbstractRepositoryTest {
 
     @Before
     public void createTestUsers() {
-        this.firstUser = this.createFirstTestUser();
-        this.secondUser = this.createSecondTestUser();
+        this.firstUser = createFirstTestUser();
+        this.secondUser = createSecondTestUser();
     }
 
     @Test
@@ -81,18 +81,13 @@ public class UserDaoTest extends AbstractRepositoryTest {
         Assert.assertTrue(actualAuthorityTypes.contains(SECOND_USER_DEFAULT_AUTHORITIES[0].name()));
     }
 
-    @Test
+    @Test(expected = EmptyResultDataAccessException.class)
     public void testFindByNotExistingUsername() throws Exception {
         UserDao userDao = TEST_UTILS.getUserDao();
 
         // SELECT ONE
-        try {
-            userDao.findByUsername("not-existing username");
-            Assert.fail("User with not-existing username should not have been found");
-        } catch (DataRetrievalFailureException e) {
-            // OK since such an user does not exist.
-            ;
-        }
+        // Throws an exception since such an user does not exist.
+        userDao.findByUsername("not-existing username");
     }
 
     @Test
@@ -112,18 +107,13 @@ public class UserDaoTest extends AbstractRepositoryTest {
         Assert.assertTrue(actualAuthorityTypes.contains(FIRST_USER_DEFAULT_AUTHORITIES[1].name()));
     }
 
-    @Test
+    @Test(expected = EmptyResultDataAccessException.class)
     public void testFindByNotExistingEmail() throws Exception {
         UserDao userDao = TEST_UTILS.getUserDao();
 
         // SELECT ONE
-        try {
-            userDao.findByEmail("not-existing email@host.com");
-            Assert.fail("User with not-existing email should not have been found");
-        } catch (DataRetrievalFailureException e) {
-            // OK since such an user does not exist.
-            ;
-        }
+        // Throws an exception since such an user does not exist.
+        userDao.findByEmail("not-existing email@host.com");
     }
 
     @Test
@@ -173,7 +163,7 @@ public class UserDaoTest extends AbstractRepositoryTest {
         this.secondUser.addAuthority(authorityType);
         this.secondUser.setSubscribedToOtherDocuments(true);
         userDao.update(this.secondUser);
-        User thirdUser = this.createThirdDefaultTestUser();
+        User thirdUser = createThirdDefaultTestUser();
         thirdUser.addAuthority(AuthorityType.ROLE_USER_ADMINISTRATOR);
         thirdUser.setSubscribedToOtherDocuments(true);
         userDao.update(thirdUser);
@@ -204,7 +194,7 @@ public class UserDaoTest extends AbstractRepositoryTest {
         List<User> foundUsers = userDao.findAllByAuthorityAndSubscription(authorityType.name(),
                 notificationType);
         int expectedFoundUserCount = 2;
-        List<String> usernames = this.getUsernames(foundUsers);
+        List<String> usernames = getUsernames(foundUsers);
         Assert.assertEquals(expectedFoundUserCount, usernames.size());
         Assert.assertTrue(usernames.contains(this.firstUser.getUsername()));
         Assert.assertTrue(usernames.contains(this.secondUser.getUsername()));
@@ -217,7 +207,7 @@ public class UserDaoTest extends AbstractRepositoryTest {
      */
     private User createFirstTestUser() {
         User user = TEST_UTILS.createDefaultTestUser();
-        this.updateTestUser(user, FIRST_USER_DEFAULT_AUTHORITIES);
+        updateTestUser(user, FIRST_USER_DEFAULT_AUTHORITIES);
         return user;
     }
 
@@ -228,7 +218,7 @@ public class UserDaoTest extends AbstractRepositoryTest {
      */
     private User createSecondTestUser() {
         User user = TEST_UTILS.createSecondDefaultTestUser();
-        this.updateTestUser(user, SECOND_USER_DEFAULT_AUTHORITIES);
+        updateTestUser(user, SECOND_USER_DEFAULT_AUTHORITIES);
         return user;
     }
 
@@ -238,8 +228,9 @@ public class UserDaoTest extends AbstractRepositoryTest {
      * @return Newly created user
      */
     private User createThirdDefaultTestUser() {
-        return TEST_UTILS.createDefaultTestUser(THIRD_USER_DEFAULT_USERNAME, THIRD_USER_DEFAULT_EMAIL,
-                THIRD_USER_DEFAULT_AUTHORITIES);
+        return TEST_UTILS.saveTestUser(TEST_UTILS.createDefaultUserBuilder()
+                .withUsername(THIRD_USER_DEFAULT_USERNAME).withEmail(THIRD_USER_DEFAULT_EMAIL)
+                .withAuthorities(THIRD_USER_DEFAULT_AUTHORITIES));
     }
 
     /**

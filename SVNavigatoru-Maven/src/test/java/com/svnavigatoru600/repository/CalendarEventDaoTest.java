@@ -20,7 +20,7 @@ import com.svnavigatoru600.test.category.PersistenceTests;
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
 @Category(PersistenceTests.class)
-public class CalendarEventDaoTest extends AbstractRepositoryTest {
+public final class CalendarEventDaoTest extends AbstractRepositoryTest {
 
     /**
      * Name of the edited test event.
@@ -99,7 +99,7 @@ public class CalendarEventDaoTest extends AbstractRepositoryTest {
         Assert.assertEquals(EDITED_EVENT_PRIORITY.name(), event.getPriority());
     }
 
-    @Test
+    @Test(expected = EmptyResultDataAccessException.class)
     public void testDelete() throws Exception {
         CalendarEventDao eventDao = TEST_UTILS.getEventDao();
 
@@ -111,12 +111,7 @@ public class CalendarEventDaoTest extends AbstractRepositoryTest {
         eventDao.delete(event);
 
         // SELECT ONE
-        try {
-            eventDao.findById(event.getId());
-            Assert.fail("The event has been found");
-        } catch (EmptyResultDataAccessException ex) {
-            // OK since the event cannot have been found.
-            ;
-        }
+        // Throws an exception since the event cannot be found.
+        eventDao.findById(event.getId());
     }
 }
