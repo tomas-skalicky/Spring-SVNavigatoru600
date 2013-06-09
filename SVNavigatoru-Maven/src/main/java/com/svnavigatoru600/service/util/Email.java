@@ -79,9 +79,10 @@ public final class Email {
             return;
         }
 
-        Email.sendMailWithoutSSL(recipient, subject, messageText);
-        // Email.sendMailViaSSL(recipient, subject, messageText);
-        // Email.sendMailViaTLS(recipient, subject, messageText);
+        String subjectWithDiacritics = Localization.stripCzechDiacritics(subject);
+        Email.sendMailWithoutSSL(recipient, subjectWithDiacritics, messageText);
+        // Email.sendMailViaSSL(recipient, subjectWithDiacritics, messageText);
+        // Email.sendMailViaTLS(recipient, subjectWithDiacritics, messageText);
     }
 
     /**

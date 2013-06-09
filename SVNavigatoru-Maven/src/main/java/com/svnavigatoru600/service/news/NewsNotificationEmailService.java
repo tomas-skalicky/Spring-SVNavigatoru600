@@ -87,8 +87,7 @@ public class NewsNotificationEmailService extends AbstractNotificationEmailServi
      */
     private String getSubject(String subjectLocalizationCode, News news, HttpServletRequest request,
             MessageSource messageSource) {
-        String localized = Localization.findLocaleMessage(messageSource, request, subjectLocalizationCode,
+        return Localization.findLocaleMessage(messageSource, request, subjectLocalizationCode,
                 news.getTitle());
-        return Localization.stripCzechDiacritics(localized);
     }
 }
