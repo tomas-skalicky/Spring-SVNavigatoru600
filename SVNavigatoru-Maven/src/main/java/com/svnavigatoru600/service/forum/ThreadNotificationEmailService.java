@@ -77,9 +77,8 @@ public class ThreadNotificationEmailService extends AbstractNotificationEmailSer
      */
     private String getSubject(String subjectLocalizationCode, Thread thread, HttpServletRequest request,
             MessageSource messageSource) {
-        String localized = Localization.findLocaleMessage(messageSource, request, subjectLocalizationCode,
+        return Localization.findLocaleMessage(messageSource, request, subjectLocalizationCode,
                 thread.getName());
-        return Localization.stripCzechDiacritics(localized);
     }
 
     /**

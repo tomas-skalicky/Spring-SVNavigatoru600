@@ -101,9 +101,8 @@ public class ContributionNotificationEmailService extends AbstractNotificationEm
      */
     private String getSubject(String subjectLocalizationCode, Contribution contribution,
             HttpServletRequest request, MessageSource messageSource) {
-        String localized = Localization.findLocaleMessage(messageSource, request, subjectLocalizationCode,
-                contribution.getThread().getName());
-        return Localization.stripCzechDiacritics(localized);
+        return Localization.findLocaleMessage(messageSource, request, subjectLocalizationCode, contribution
+                .getThread().getName());
     }
 
     /**

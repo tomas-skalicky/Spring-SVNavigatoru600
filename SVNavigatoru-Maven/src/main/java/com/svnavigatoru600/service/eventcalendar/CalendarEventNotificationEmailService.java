@@ -102,9 +102,7 @@ public class CalendarEventNotificationEmailService extends AbstractNotificationE
             HttpServletRequest request, MessageSource messageSource) {
         Object[] messageParams = new Object[] { event.getName(), getLocalizedDate(event, request) };
 
-        String localized = Localization.findLocaleMessage(messageSource, request, subjectLocalizationCode,
-                messageParams);
-        return Localization.stripCzechDiacritics(localized);
+        return Localization.findLocaleMessage(messageSource, request, subjectLocalizationCode, messageParams);
     }
 
     /**
