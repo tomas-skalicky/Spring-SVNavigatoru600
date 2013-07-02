@@ -8,6 +8,7 @@ import java.util.Map;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
+import lombok.Setter;
 import org.springframework.context.MessageSource;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Service;
@@ -28,14 +29,14 @@ public class AuthorityService {
     /**
      * The object which provides a persistence.
      */
-    private final AuthorityDao authorityDao;
+    @Inject
+    @Setter
+    private AuthorityDao authorityDao;
 
     /**
      * Constructor.
      */
-    @Inject
-    public AuthorityService(AuthorityDao authorityDao) {
-        this.authorityDao = authorityDao;
+    public AuthorityService() {
     }
 
     /**
