@@ -20,6 +20,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import com.svnavigatoru600.service.eventcalendar.CalendarEventService;
 import com.svnavigatoru600.service.forum.ContributionService;
+import com.svnavigatoru600.service.users.AuthorityService;
 import com.svnavigatoru600.service.users.UserService;
 import com.svnavigatoru600.test.category.ControllerIntegrationTests;
 import com.svnavigatoru600.url.users.UserAdministrationUrlParts;
@@ -63,6 +64,8 @@ public final class NewUserControllerTest {
     private MessageSource messageSource;
     @Mock
     private NewUserValidator validator;
+    @Mock
+    private AuthorityService authorityService;
 
     private void initMocks() {
         MockitoAnnotations.initMocks(this);
@@ -71,6 +74,7 @@ public final class NewUserControllerTest {
         this.controller.setUserService(this.userService);
         this.controller.setMessageSource(this.messageSource);
         this.controller.setValidator(this.validator);
+        this.controller.setAuthorityService(this.authorityService);
     }
 
     @Test
