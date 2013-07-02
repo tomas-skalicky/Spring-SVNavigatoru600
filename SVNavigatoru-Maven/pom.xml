@@ -1,786 +1,858 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-	<modelVersion>4.0.0</modelVersion>
-
-	<groupId>com</groupId>
-	<artifactId>svnavigatoru600</artifactId>
-	<packaging>war</packaging>
-	<version>1.0.4-SNAPSHOT</version>
-
-	<name>The SVNavigatoru600 web app</name>
-	<url>http://svnavigatoru600.com</url>
-
-
-	<!-- Jenkins's plugin called Multi SCMs contains a bug. As a result, the 
-		plugin cannot be used with multiple Git repositories, -->
-	<!-- hence the configuration of the my.distribution-management project is 
-		copied here. -->
-	<!-- (see https://issues.jenkins-ci.org/browse/JENKINS-13634?page=com.atlassian.jira.plugin.system.issuetabpanels:all-tabpanel -->
-	<!-- <parent> -->
-	<!-- <groupId>my</groupId> -->
-	<!-- <artifactId>distribution-management</artifactId> -->
-	<!-- <version>0.0.1-SNAPSHOT</version> -->
-	<!-- <relativePath>../../distribution-management/distribution-management/pom.xml</relativePath> -->
-	<!-- </parent> -->
-	<distributionManagement>
-		<repository>
-			<id>nexus-deployment</id>
-			<name>Nexus Releases</name>
-			<!--<url>dav:http://localhost:9080/nexus/content/repositories/releases</url>-->
-			<url>dav:http://localhost:9180/content/repositories/releases</url>
-		</repository>
-		<snapshotRepository>
-			<id>nexus-deployment</id>
-			<name>Nexus Snapshots</name>
-			<!--<url>dav:http://localhost:9080/nexus/content/repositories/snapshots</url>-->
-			<url>dav:http://localhost:9180/content/repositories/snapshots</url>
-		</snapshotRepository>
-	</distributionManagement>
-
-
-	<scm>
-		<!-- The URI has to end up with a slash (see http://maven.40175.n5.nabble.com/scm-connection-in-parent-pom-td3224641.html) -->
-		<connection>scm:git:git://github.com/tomas-skalicky/Spring-SVNavigatoru600.git</connection>
-		<developerConnection>scm:git:[fetch=]https://github.com/tomas-skalicky/Spring-SVNavigatoru600.git[push=]git@github.com:tomas-skalicky/Spring-SVNavigatoru600.git</developerConnection>
-		<url>https://github.com/tomas-skalicky/Spring-SVNavigatoru600</url>
-		<tag>HEAD</tag>
-	</scm>
-
-
-	<properties>
-		<!-- Bound with the maven.build.timestamp variable -->
-		<!-- (see http://maven.apache.org/guides/introduction/introduction-to-the-pom.html#Available_Variables) -->
-		<maven.build.timestamp.format>yyyy-MM-dd HH:mm:ss</maven.build.timestamp.format>
-
-		<jdk.version>1.6</jdk.version>
-
-		<!-- Unless we set up an encoding, we would receive a warning during the 
-			compilation of this project via a "mvn" command. This warning is noticeable 
-			in Jenkins. -->
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-
-		<!-- Versions of plugins and dependencies which are used more than once. -->
-		<plugin.properties-maven-plugin.version>1.0-alpha-2</plugin.properties-maven-plugin.version>
-		<dependency.spring.version>3.2.2.RELEASE</dependency.spring.version>
-		<dependency.spring-security.version>3.1.3.RELEASE</dependency.spring-security.version>
-
-		<checkstyle.configLocation>D:/Documents/Private/SW/Eclipse/checkstyle.xml</checkstyle.configLocation>
-	</properties>
-
-
-	<build>
-		<finalName>${project.artifactId}</finalName>
-		<testResources>
-			<testResource>
-				<directory>src/test/resources</directory>
-			</testResource>
-			<testResource>
-				<directory>src/main/webapp/WEB-INF</directory>
-				<includes>
-					<include>**/*.xml</include>
-				</includes>
-			</testResource>
-		</testResources>
-
-
-		<!-- Copies from the repository-management project. -->
-		<extensions>
-			<extension>
-				<!-- Necessary for a deployment to Nexus -->
-				<!-- Added since (unlike the Maven 2.x,) the Maven 3 does not support 
-					the dav protocol by default. -->
-				<groupId>org.apache.maven.wagon</groupId>
-				<artifactId>wagon-webdav-jackrabbit</artifactId>
-				<version>1.0-beta-7</version>
-			</extension>
-		</extensions>
-
-
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-checkstyle-plugin</artifactId>
-			</plugin>
-
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-			</plugin>
-
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-deploy-plugin</artifactId>
-			</plugin>
-
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-release-plugin</artifactId>
-			</plugin>
-
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-surefire-plugin</artifactId>
-			</plugin>
-
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-war-plugin</artifactId>
-			</plugin>
-
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>properties-maven-plugin</artifactId>
-			</plugin>
-
-			<plugin>
-				<groupId>org.apache.tomcat.maven</groupId>
-				<artifactId>tomcat7-maven-plugin</artifactId>
-			</plugin>
-		</plugins>
-
-
-		<pluginManagement>
-			<plugins>
-				<!-- Plugin related to the m2e eclipse plugin. It helps to ignore warnings 
-					about a missing mapping of lifecycle phases. -->
-				<plugin>
-					<groupId>org.eclipse.m2e</groupId>
-					<artifactId>lifecycle-mapping</artifactId>
-					<version>1.0.0</version>
-					<configuration>
-						<lifecycleMappingMetadata>
-							<pluginExecutions>
-								<pluginExecution>
-									<pluginExecutionFilter>
-										<groupId>org.codehaus.mojo</groupId>
-										<artifactId>properties-maven-plugin</artifactId>
-										<versionRange>[${plugin.properties-maven-plugin.version}]</versionRange>
-										<goals>
-											<goal>read-project-properties</goal>
-										</goals>
-									</pluginExecutionFilter>
-									<action>
-										<ignore />
-									</action>
-								</pluginExecution>
-							</pluginExecutions>
-						</lifecycleMappingMetadata>
-					</configuration>
-				</plugin>
-
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-checkstyle-plugin</artifactId>
-					<version>2.9.1</version>
-					<configuration>
-						<configLocation>${checkstyle.configLocation}</configLocation>
-						<includeTestSourceDirectory>true</includeTestSourceDirectory>
-					</configuration>
-				</plugin>
-
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-compiler-plugin</artifactId>
-					<version>3.1</version>
-					<configuration>
-						<source>${jdk.version}</source>
-						<target>${jdk.version}</target>
-						<encoding>${project.build.sourceEncoding}</encoding>
-					</configuration>
-				</plugin>
-
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-deploy-plugin</artifactId>
-					<version>2.7</version>
-				</plugin>
-
-				<!-- Plugin which makes the new version of a particular application. -->
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-release-plugin</artifactId>
-					<version>2.3.2</version>
-				</plugin>
-
-				<!-- (see http://maven.apache.org/plugins/maven-surefire-plugin/examples/junit.html) -->
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-surefire-plugin</artifactId>
-					<version>2.12.4</version>
-					<dependencies>
-						<dependency>
-							<!-- Necessary dependency. Otherwise, groups element does not work. 
-								The problem should be fixed in the version 2.13 of maven-surefire-plugin. -->
-							<!-- (see http://stackoverflow.com/questions/4970196/running-all-tests-from-a-category-using-maven) -->
-							<groupId>org.apache.maven.surefire</groupId>
-							<artifactId>surefire-junit47</artifactId>
-							<version>2.12.4</version>
-						</dependency>
-					</dependencies>
-					<configuration>
-						<!-- Example of usage (on the command line): -->
-						<!-- mvn test -Dtests.category="com.svnavigatoru600.test.category.FastTests" -->
-						<groups>${tests.category}</groups>
-					</configuration>
-				</plugin>
-
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-war-plugin</artifactId>
-					<version>2.2</version>
-					<configuration>
-						<archive>
-							<manifestEntries>
-								<Implementation-Title>${project.name}</Implementation-Title>
-								<Implementation-Version>${project.version}</Implementation-Version>
-								<Built-Date>${maven.build.timestamp}</Built-Date>
-								<Root-Package>${project.groupId}.${project.artifactId}</Root-Package>
-							</manifestEntries>
-						</archive>
-					</configuration>
-				</plugin>
-
-				<!-- Plugin which reads property files. -->
-				<plugin>
-					<groupId>org.codehaus.mojo</groupId>
-					<artifactId>properties-maven-plugin</artifactId>
-					<version>${plugin.properties-maven-plugin.version}</version>
-					<executions>
-						<execution>
-							<!-- This phase is OK. It is a problem of the m2e eclipse plugin. -->
-							<phase>initialize</phase>
-							<goals>
-								<goal>read-project-properties</goal>
-							</goals>
-							<configuration>
-								<!-- There is used no property file till now. -->
-								<files />
-							</configuration>
-						</execution>
-					</executions>
-				</plugin>
-
-				<!-- (see http://tomcat.apache.org/maven-plugin-2.0/tomcat7-maven-plugin/index.html) -->
-				<plugin>
-					<groupId>org.apache.tomcat.maven</groupId>
-					<artifactId>tomcat7-maven-plugin</artifactId>
-					<version>2.0</version>
-					<configuration>
-						<!-- (see http://tomcat.apache.org/tomcat-7.0-doc/manager-howto.html#Supported_Manager_Commands) -->
-						<url>http://localhost:9080/manager/text</url>
-						<path>/${project.build.finalName}</path>
-						<charset>${project.build.sourceEncoding}</charset>
-						<server>local_tomcat</server>
-						<update>true</update>
-					</configuration>
-				</plugin>
-			</plugins>
-		</pluginManagement>
-	</build>
-
-
-	<dependencies>
-		<dependency>
-			<groupId>org.aspectj</groupId>
-			<artifactId>aspectjrt</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>org.aspectj</groupId>
-			<artifactId>aspectjweaver</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>c3p0</groupId>
-			<artifactId>c3p0</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>cglib</groupId>
-			<artifactId>cglib</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>commons-fileupload</groupId>
-			<artifactId>commons-fileupload</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>commons-io</groupId>
-			<artifactId>commons-io</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>org.apache.commons</groupId>
-			<artifactId>commons-lang3</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>org.junit.extensions</groupId>
-			<artifactId>cpsuite</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-core</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-validator</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>org.hsqldb</groupId>
-			<artifactId>hsqldb</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>org.codehaus.jackson</groupId>
-			<artifactId>jackson-jaxrs</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>javax.inject</groupId>
-			<artifactId>javax.inject</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>jcl-over-slf4j</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>joda-time</groupId>
-			<artifactId>joda-time</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>org.jpatterns</groupId>
-			<artifactId>jpatterns</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>org.jsoup</groupId>
-			<artifactId>jsoup</artifactId>
-		</dependency>
-
-		<!-- The commented two dependencies do not work on the MochaHost server. -->
-		<!-- <dependency> -->
-		<!-- <groupId>org.glassfish.web</groupId> -->
-		<!-- <artifactId>javax.servlet.jsp.jstl</artifactId> -->
-		<!-- </dependency> -->
-		<!-- <dependency> -->
-		<!-- <groupId>javax.servlet.jsp.jstl</groupId> -->
-		<!-- <artifactId>javax.servlet.jsp.jstl-api</artifactId> -->
-		<!-- </dependency> -->
-		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>jstl</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>javax.mail</groupId>
-			<artifactId>mail</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>org.mockito</groupId>
-			<artifactId>mockito-all</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>org.mybatis</groupId>
-			<artifactId>mybatis-spring</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>mysql</groupId>
-			<artifactId>mysql-connector-java</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>org.seleniumhq.selenium</groupId>
-			<artifactId>selenium-server</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-log4j12</artifactId>
-		</dependency>
-
-		<!-- Spring -->
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-context</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-jdbc</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-orm</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.security</groupId>
-			<artifactId>spring-security-config</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.security</groupId>
-			<artifactId>spring-security-web</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-test</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-webmvc</artifactId>
-		</dependency>
-		<!-- /Spring -->
-
-		<dependency>
-			<groupId>org.apache.tiles</groupId>
-			<artifactId>tiles-jsp</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>org.apache.tomcat</groupId>
-			<artifactId>tomcat-jsp-api</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.tomcat</groupId>
-			<artifactId>tomcat-servlet-api</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>javax.validation</groupId>
-			<artifactId>validation-api</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>xom</groupId>
-			<artifactId>xom</artifactId>
-		</dependency>
-	</dependencies>
-
-
-	<dependencyManagement>
-		<dependencies>
-			<dependency>
-				<groupId>org.aspectj</groupId>
-				<artifactId>aspectjrt</artifactId>
-				<version>1.6.12</version>
-			</dependency>
-
-			<dependency>
-				<groupId>org.aspectj</groupId>
-				<artifactId>aspectjweaver</artifactId>
-				<version>1.6.12</version>
-			</dependency>
-
-			<dependency>
-				<groupId>c3p0</groupId>
-				<artifactId>c3p0</artifactId>
-				<version>0.9.1.2</version>
-			</dependency>
-
-			<dependency>
-				<groupId>cglib</groupId>
-				<artifactId>cglib</artifactId>
-				<version>2.2.2</version>
-			</dependency>
-
-			<dependency>
-				<groupId>commons-collections</groupId>
-				<artifactId>commons-collections</artifactId>
-				<version>3.2.1</version>
-			</dependency>
-
-			<dependency>
-				<groupId>commons-fileupload</groupId>
-				<artifactId>commons-fileupload</artifactId>
-				<version>1.2.2</version>
-			</dependency>
-
-			<dependency>
-				<groupId>commons-io</groupId>
-				<artifactId>commons-io</artifactId>
-				<version>2.1</version>
-			</dependency>
-
-			<dependency>
-				<groupId>org.apache.commons</groupId>
-				<artifactId>commons-lang3</artifactId>
-				<version>3.1</version>
-			</dependency>
-
-			<dependency>
-				<groupId>org.junit.extensions</groupId>
-				<artifactId>cpsuite</artifactId>
-				<version>1.2.6</version>
-			</dependency>
-
-			<dependency>
-				<groupId>org.hibernate</groupId>
-				<artifactId>hibernate-core</artifactId>
-				<version>3.3.2.GA</version>
-				<exclusions>
-					<exclusion>
-						<artifactId>slf4j-api</artifactId>
-						<groupId>org.slf4j</groupId>
-					</exclusion>
-				</exclusions>
-			</dependency>
-			<dependency>
-				<groupId>org.hibernate</groupId>
-				<artifactId>hibernate-validator</artifactId>
-				<version>5.0.0.CR2</version>
-				<exclusions>
-					<exclusion>
-						<artifactId>javax.el</artifactId>
-						<groupId>org.glassfish.web</groupId>
-					</exclusion>
-				</exclusions>
-			</dependency>
-
-			<dependency>
-				<groupId>org.hsqldb</groupId>
-				<artifactId>hsqldb</artifactId>
-				<version>2.2.8</version>
-				<scope>test</scope>
-			</dependency>
-
-			<dependency>
-				<groupId>org.codehaus.jackson</groupId>
-				<artifactId>jackson-jaxrs</artifactId>
-				<version>1.6.3</version>
-				<type>jar</type>
-				<scope>compile</scope>
-			</dependency>
-
-			<dependency>
-				<groupId>javax.inject</groupId>
-				<artifactId>javax.inject</artifactId>
-				<version>1</version>
-			</dependency>
-
-			<dependency>
-				<groupId>org.slf4j</groupId>
-				<artifactId>jcl-over-slf4j</artifactId>
-				<version>1.6.4</version>
-			</dependency>
-
-			<dependency>
-				<groupId>joda-time</groupId>
-				<artifactId>joda-time</artifactId>
-				<version>2.0</version>
-			</dependency>
-
-			<dependency>
-				<groupId>org.jpatterns</groupId>
-				<artifactId>jpatterns</artifactId>
-				<version>0.0.1</version>
-			</dependency>
-
-			<dependency>
-				<groupId>org.jsoup</groupId>
-				<artifactId>jsoup</artifactId>
-				<version>1.7.1</version>
-				<scope>test</scope>
-			</dependency>
-
-			<!-- <dependency> -->
-			<!-- <groupId>org.glassfish.web</groupId> -->
-			<!-- <artifactId>javax.servlet.jsp.jstl</artifactId> -->
-			<!-- <version>1.2.1</version> -->
-			<!-- </dependency> -->
-			<!-- <dependency> -->
-			<!-- <groupId>javax.servlet.jsp.jstl</groupId> -->
-			<!-- <artifactId>javax.servlet.jsp.jstl-api</artifactId> -->
-			<!-- <version>1.2.1</version> -->
-			<!-- </dependency> -->
-			<dependency>
-				<groupId>javax.servlet</groupId>
-				<artifactId>jstl</artifactId>
-				<version>1.2</version>
-			</dependency>
-
-			<dependency>
-				<groupId>junit</groupId>
-				<artifactId>junit</artifactId>
-				<version>4.11</version>
-				<scope>test</scope>
-			</dependency>
-
-			<dependency>
-				<groupId>javax.mail</groupId>
-				<artifactId>mail</artifactId>
-				<version>1.4.4</version>
-			</dependency>
-
-			<dependency>
-				<groupId>org.mockito</groupId>
-				<artifactId>mockito-all</artifactId>
-				<version>1.9.5</version>
-				<scope>test</scope>
-			</dependency>
-
-			<!-- MyBatis -->
-			<dependency>
-				<groupId>org.mybatis</groupId>
-				<artifactId>mybatis</artifactId>
-				<version>3.1.1</version>
-				<scope>compile</scope>
-			</dependency>
-			<dependency>
-				<groupId>org.mybatis</groupId>
-				<artifactId>mybatis-spring</artifactId>
-				<version>1.1.1</version>
-			</dependency>
-			<!-- /MyBatis -->
-
-			<dependency>
-				<groupId>mysql</groupId>
-				<artifactId>mysql-connector-java</artifactId>
-				<version>5.1.18</version>
-			</dependency>
-
-			<dependency>
-				<groupId>org.seleniumhq.selenium</groupId>
-				<artifactId>selenium-server</artifactId>
-				<version>2.26.0</version>
-				<scope>test</scope>
-				<exclusions>
-					<exclusion>
-						<groupId>org.mortbay.jetty</groupId>
-						<artifactId>servlet-api-2.5</artifactId>
-					</exclusion>
-				</exclusions>
-			</dependency>
-
-			<dependency>
-				<groupId>org.slf4j</groupId>
-				<artifactId>slf4j-log4j12</artifactId>
-				<version>1.6.4</version>
-			</dependency>
-
-			<!-- Spring -->
-			<dependency>
-				<groupId>org.springframework</groupId>
-				<artifactId>spring-aop</artifactId>
-				<version>${dependency.spring.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.springframework</groupId>
-				<artifactId>spring-beans</artifactId>
-				<version>${dependency.spring.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.springframework</groupId>
-				<artifactId>spring-context</artifactId>
-				<version>${dependency.spring.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.springframework</groupId>
-				<artifactId>spring-core</artifactId>
-				<version>${dependency.spring.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.springframework</groupId>
-				<artifactId>spring-expression</artifactId>
-				<version>${dependency.spring.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.springframework</groupId>
-				<artifactId>spring-jdbc</artifactId>
-				<version>${dependency.spring.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.springframework</groupId>
-				<artifactId>spring-orm</artifactId>
-				<version>${dependency.spring.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.springframework.security</groupId>
-				<artifactId>spring-security-config</artifactId>
-				<version>${dependency.spring-security.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.springframework.security</groupId>
-				<artifactId>spring-security-web</artifactId>
-				<version>${dependency.spring-security.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.springframework</groupId>
-				<artifactId>spring-test</artifactId>
-				<version>${dependency.spring.version}</version>
-				<scope>test</scope>
-			</dependency>
-			<dependency>
-				<groupId>org.springframework</groupId>
-				<artifactId>spring-tx</artifactId>
-				<version>${dependency.spring.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.springframework</groupId>
-				<artifactId>spring-web</artifactId>
-				<version>${dependency.spring.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.springframework</groupId>
-				<artifactId>spring-webmvc</artifactId>
-				<version>${dependency.spring.version}</version>
-			</dependency>
-			<!-- /Spring -->
-
-			<dependency>
-				<groupId>org.apache.tiles</groupId>
-				<artifactId>tiles-jsp</artifactId>
-				<version>2.2.2</version>
-				<exclusions>
-					<exclusion>
-						<artifactId>slf4j-api</artifactId>
-						<groupId>org.slf4j</groupId>
-					</exclusion>
-					<exclusion>
-						<artifactId>jcl-over-slf4j</artifactId>
-						<groupId>org.slf4j</groupId>
-					</exclusion>
-				</exclusions>
-			</dependency>
-
-			<dependency>
-				<groupId>org.apache.tomcat</groupId>
-				<artifactId>tomcat-jsp-api</artifactId>
-				<version>7.0.40</version>
-				<scope>provided</scope>
-			</dependency>
-			<dependency>
-				<groupId>org.apache.tomcat</groupId>
-				<artifactId>tomcat-servlet-api</artifactId>
-				<version>7.0.40</version>
-				<!-- (see http://maven.apache.org/guides/introduction/introduction-to-dependency-mechanism.html#Dependency_Scope) -->
-				<scope>provided</scope>
-			</dependency>
-
-			<dependency>
-				<groupId>javax.validation</groupId>
-				<artifactId>validation-api</artifactId>
-				<version>1.1.0.CR1</version>
-			</dependency>
-
-			<dependency>
-				<groupId>xom</groupId>
-				<artifactId>xom</artifactId>
-				<version>1.2.5</version>
-			</dependency>
-		</dependencies>
-	</dependencyManagement>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com</groupId>
+    <artifactId>svnavigatoru600</artifactId>
+    <packaging>war</packaging>
+    <version>1.0.4-SNAPSHOT</version>
+
+    <name>The SVNavigatoru600 web app</name>
+    <url>http://svnavigatoru600.com</url>
+
+
+    <!-- Jenkins's plugin called Multi SCMs contains a bug. As a result, the plugin cannot be used with multiple 
+        Git repositories, -->
+    <!-- hence the configuration of the my.distribution-management project is copied here. -->
+    <!-- (see https://issues.jenkins-ci.org/browse/JENKINS-13634?page=com.atlassian.jira.plugin.system.issuetabpanels:all-tabpanel -->
+    <!-- <parent> -->
+    <!-- <groupId>my</groupId> -->
+    <!-- <artifactId>distribution-management</artifactId> -->
+    <!-- <version>0.0.1-SNAPSHOT</version> -->
+    <!-- <relativePath>../../distribution-management/distribution-management/pom.xml</relativePath> -->
+    <!-- </parent> -->
+    <distributionManagement>
+        <repository>
+            <id>nexus-deployment</id>
+            <name>Nexus Releases</name>
+            <!--<url>dav:http://localhost:9080/nexus/content/repositories/releases</url> -->
+            <url>dav:http://localhost:9180/content/repositories/releases</url>
+        </repository>
+        <snapshotRepository>
+            <id>nexus-deployment</id>
+            <name>Nexus Snapshots</name>
+            <!--<url>dav:http://localhost:9080/nexus/content/repositories/snapshots</url> -->
+            <url>dav:http://localhost:9180/content/repositories/snapshots</url>
+        </snapshotRepository>
+    </distributionManagement>
+
+
+    <scm>
+        <!-- The URI has to end up with a slash (see http://maven.40175.n5.nabble.com/scm-connection-in-parent-pom-td3224641.html) -->
+        <connection>scm:git:git://github.com/tomas-skalicky/Spring-SVNavigatoru600.git</connection>
+        <developerConnection>scm:git:[fetch=]https://github.com/tomas-skalicky/Spring-SVNavigatoru600.git[push=]git@github.com:tomas-skalicky/Spring-SVNavigatoru600.git</developerConnection>
+        <url>https://github.com/tomas-skalicky/Spring-SVNavigatoru600</url>
+        <tag>HEAD</tag>
+    </scm>
+
+
+    <properties>
+        <!-- Bound with the maven.build.timestamp variable -->
+        <!-- (see http://maven.apache.org/guides/introduction/introduction-to-the-pom.html#Available_Variables) -->
+        <maven.build.timestamp.format>yyyy-MM-dd HH:mm:ss</maven.build.timestamp.format>
+
+        <jdk.version>1.6</jdk.version>
+
+        <!-- Unless we set up an encoding, we would receive a warning during the compilation of this project via 
+            a "mvn" command. This warning is noticeable in Jenkins. -->
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <!-- Versions of plugins and dependencies which are used more than once. -->
+        <plugin.properties-maven-plugin.version>1.0-alpha-2</plugin.properties-maven-plugin.version>
+        <dependency.spring.version>3.2.2.RELEASE</dependency.spring.version>
+        <dependency.spring-security.version>3.1.3.RELEASE</dependency.spring-security.version>
+        <powermock.version>1.5.1</powermock.version>
+
+        <checkstyle.configLocation>D:/Documents/Private/SW/Eclipse/checkstyle.xml</checkstyle.configLocation>
+    </properties>
+
+
+    <build>
+        <finalName>${project.artifactId}</finalName>
+        <testResources>
+            <testResource>
+                <directory>src/test/resources</directory>
+            </testResource>
+            <testResource>
+                <directory>src/main/webapp/WEB-INF</directory>
+                <includes>
+                    <include>**/*.xml</include>
+                </includes>
+            </testResource>
+        </testResources>
+
+
+        <!-- Copies from the repository-management project. -->
+        <extensions>
+            <extension>
+                <!-- Necessary for a deployment to Nexus -->
+                <!-- Added since (unlike the Maven 2.x,) the Maven 3 does not support the dav protocol by default. -->
+                <groupId>org.apache.maven.wagon</groupId>
+                <artifactId>wagon-webdav-jackrabbit</artifactId>
+                <version>1.0-beta-7</version>
+            </extension>
+        </extensions>
+
+
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-deploy-plugin</artifactId>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-release-plugin</artifactId>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+            </plugin>
+
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>properties-maven-plugin</artifactId>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.tomcat.maven</groupId>
+                <artifactId>tomcat7-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+
+
+        <pluginManagement>
+            <plugins>
+                <!-- Plugin related to the m2e eclipse plugin. It helps to ignore warnings about a missing mapping 
+                    of lifecycle phases. -->
+                <plugin>
+                    <groupId>org.eclipse.m2e</groupId>
+                    <artifactId>lifecycle-mapping</artifactId>
+                    <version>1.0.0</version>
+                    <configuration>
+                        <lifecycleMappingMetadata>
+                            <pluginExecutions>
+                                <pluginExecution>
+                                    <pluginExecutionFilter>
+                                        <groupId>org.codehaus.mojo</groupId>
+                                        <artifactId>properties-maven-plugin</artifactId>
+                                        <versionRange>[${plugin.properties-maven-plugin.version}]</versionRange>
+                                        <goals>
+                                            <goal>read-project-properties</goal>
+                                        </goals>
+                                    </pluginExecutionFilter>
+                                    <action>
+                                        <ignore />
+                                    </action>
+                                </pluginExecution>
+                            </pluginExecutions>
+                        </lifecycleMappingMetadata>
+                    </configuration>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-checkstyle-plugin</artifactId>
+                    <version>2.9.1</version>
+                    <configuration>
+                        <configLocation>${checkstyle.configLocation}</configLocation>
+                        <includeTestSourceDirectory>true</includeTestSourceDirectory>
+                    </configuration>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>3.1</version>
+                    <configuration>
+                        <source>${jdk.version}</source>
+                        <target>${jdk.version}</target>
+                        <encoding>${project.build.sourceEncoding}</encoding>
+                    </configuration>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-deploy-plugin</artifactId>
+                    <version>2.7</version>
+                </plugin>
+
+                <!-- Plugin which makes the new version of a particular application. -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-release-plugin</artifactId>
+                    <version>2.3.2</version>
+                </plugin>
+
+                <!-- (see http://maven.apache.org/plugins/maven-surefire-plugin/examples/junit.html) -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>2.12.4</version>
+                    <dependencies>
+                        <dependency>
+                            <!-- Necessary dependency. Otherwise, groups element does not work. The problem should 
+                                be fixed in the version 2.13 of maven-surefire-plugin. -->
+                            <!-- (see http://stackoverflow.com/questions/4970196/running-all-tests-from-a-category-using-maven) -->
+                            <groupId>org.apache.maven.surefire</groupId>
+                            <artifactId>surefire-junit47</artifactId>
+                            <version>2.12.4</version>
+                        </dependency>
+                    </dependencies>
+                    <configuration>
+                        <!-- Example of usage (on the command line): -->
+                        <!-- mvn test -Dtests.category="com.svnavigatoru600.test.category.FastTests" -->
+                        <groups>${tests.category}</groups>
+                    </configuration>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-war-plugin</artifactId>
+                    <version>2.2</version>
+                    <configuration>
+                        <archive>
+                            <manifestEntries>
+                                <Implementation-Title>${project.name}</Implementation-Title>
+                                <Implementation-Version>${project.version}</Implementation-Version>
+                                <Built-Date>${maven.build.timestamp}</Built-Date>
+                                <Root-Package>${project.groupId}.${project.artifactId}</Root-Package>
+                            </manifestEntries>
+                        </archive>
+                    </configuration>
+                </plugin>
+
+                <!-- Plugin which reads property files. -->
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>properties-maven-plugin</artifactId>
+                    <version>${plugin.properties-maven-plugin.version}</version>
+                    <executions>
+                        <execution>
+                            <!-- This phase is OK. It is a problem of the m2e eclipse plugin. -->
+                            <phase>initialize</phase>
+                            <goals>
+                                <goal>read-project-properties</goal>
+                            </goals>
+                            <configuration>
+                                <!-- There is used no property file till now. -->
+                                <files />
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+
+                <!-- (see http://tomcat.apache.org/maven-plugin-2.0/tomcat7-maven-plugin/index.html) -->
+                <plugin>
+                    <groupId>org.apache.tomcat.maven</groupId>
+                    <artifactId>tomcat7-maven-plugin</artifactId>
+                    <version>2.0</version>
+                    <configuration>
+                        <!-- (see http://tomcat.apache.org/tomcat-7.0-doc/manager-howto.html#Supported_Manager_Commands) -->
+                        <url>http://localhost:9080/manager/text</url>
+                        <path>/${project.build.finalName}</path>
+                        <charset>${project.build.sourceEncoding}</charset>
+                        <server>local_tomcat</server>
+                        <update>true</update>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+
+
+    <dependencies>
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjrt</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjweaver</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>c3p0</groupId>
+            <artifactId>c3p0</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>cglib</groupId>
+            <artifactId>cglib</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>commons-fileupload</groupId>
+            <artifactId>commons-fileupload</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.junit.extensions</groupId>
+            <artifactId>cpsuite</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>net.sf.ehcache</groupId>
+            <artifactId>ehcache</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-validator</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.hsqldb</groupId>
+            <artifactId>hsqldb</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.codehaus.jackson</groupId>
+            <artifactId>jackson-jaxrs</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>javax.inject</groupId>
+            <artifactId>javax.inject</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>jcl-over-slf4j</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>joda-time</groupId>
+            <artifactId>joda-time</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jpatterns</groupId>
+            <artifactId>jpatterns</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jsoup</groupId>
+            <artifactId>jsoup</artifactId>
+        </dependency>
+
+        <!-- The commented two dependencies do not work on the MochaHost server. -->
+        <!-- <dependency> -->
+        <!-- <groupId>org.glassfish.web</groupId> -->
+        <!-- <artifactId>javax.servlet.jsp.jstl</artifactId> -->
+        <!-- </dependency> -->
+        <!-- <dependency> -->
+        <!-- <groupId>javax.servlet.jsp.jstl</groupId> -->
+        <!-- <artifactId>javax.servlet.jsp.jstl-api</artifactId> -->
+        <!-- </dependency> -->
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>jstl</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>javax.mail</groupId>
+            <artifactId>mail</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-all</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis-spring</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.powermock</groupId>
+            <artifactId>powermock-api-mockito</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.powermock</groupId>
+            <artifactId>powermock-module-junit4</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.powermock</groupId>
+            <artifactId>powermock-module-junit4-rule</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.powermock</groupId>
+            <artifactId>powermock-classloading-xstream</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-server</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+        </dependency>
+
+        <!-- Spring -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context-support</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-jdbc</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-orm</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-config</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webmvc</artifactId>
+        </dependency>
+        <!-- /Spring -->
+
+        <dependency>
+            <groupId>org.apache.tiles</groupId>
+            <artifactId>tiles-jsp</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.tomcat</groupId>
+            <artifactId>tomcat-jsp-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.tomcat</groupId>
+            <artifactId>tomcat-servlet-api</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>javax.validation</groupId>
+            <artifactId>validation-api</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>xom</groupId>
+            <artifactId>xom</artifactId>
+        </dependency>
+    </dependencies>
+
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.aspectj</groupId>
+                <artifactId>aspectjrt</artifactId>
+                <version>1.6.12</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.aspectj</groupId>
+                <artifactId>aspectjweaver</artifactId>
+                <version>1.6.12</version>
+            </dependency>
+
+            <dependency>
+                <groupId>c3p0</groupId>
+                <artifactId>c3p0</artifactId>
+                <version>0.9.1.2</version>
+            </dependency>
+
+            <dependency>
+                <groupId>cglib</groupId>
+                <artifactId>cglib</artifactId>
+                <version>2.2.2</version>
+            </dependency>
+
+            <dependency>
+                <groupId>commons-collections</groupId>
+                <artifactId>commons-collections</artifactId>
+                <version>3.2.1</version>
+            </dependency>
+
+            <dependency>
+                <groupId>commons-fileupload</groupId>
+                <artifactId>commons-fileupload</artifactId>
+                <version>1.2.2</version>
+            </dependency>
+
+            <dependency>
+                <groupId>commons-io</groupId>
+                <artifactId>commons-io</artifactId>
+                <version>2.1</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>3.1</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.junit.extensions</groupId>
+                <artifactId>cpsuite</artifactId>
+                <version>1.2.6</version>
+            </dependency>
+
+            <dependency>
+                <groupId>net.sf.ehcache</groupId>
+                <artifactId>ehcache</artifactId>
+                <version>2.7.0</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.hibernate</groupId>
+                <artifactId>hibernate-core</artifactId>
+                <version>3.3.2.GA</version>
+                <exclusions>
+                    <exclusion>
+                        <artifactId>slf4j-api</artifactId>
+                        <groupId>org.slf4j</groupId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+            <dependency>
+                <groupId>org.hibernate</groupId>
+                <artifactId>hibernate-validator</artifactId>
+                <version>5.0.0.CR2</version>
+                <exclusions>
+                    <exclusion>
+                        <artifactId>javax.el</artifactId>
+                        <groupId>org.glassfish.web</groupId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+
+            <dependency>
+                <groupId>org.hsqldb</groupId>
+                <artifactId>hsqldb</artifactId>
+                <version>2.2.8</version>
+                <scope>test</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.codehaus.jackson</groupId>
+                <artifactId>jackson-jaxrs</artifactId>
+                <version>1.6.3</version>
+                <type>jar</type>
+                <scope>compile</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>javax.inject</groupId>
+                <artifactId>javax.inject</artifactId>
+                <version>1</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>jcl-over-slf4j</artifactId>
+                <version>1.6.4</version>
+            </dependency>
+
+            <dependency>
+                <groupId>joda-time</groupId>
+                <artifactId>joda-time</artifactId>
+                <version>2.0</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.jpatterns</groupId>
+                <artifactId>jpatterns</artifactId>
+                <version>0.0.1</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.jsoup</groupId>
+                <artifactId>jsoup</artifactId>
+                <version>1.7.1</version>
+                <scope>test</scope>
+            </dependency>
+
+            <!-- <dependency> -->
+            <!-- <groupId>org.glassfish.web</groupId> -->
+            <!-- <artifactId>javax.servlet.jsp.jstl</artifactId> -->
+            <!-- <version>1.2.1</version> -->
+            <!-- </dependency> -->
+            <!-- <dependency> -->
+            <!-- <groupId>javax.servlet.jsp.jstl</groupId> -->
+            <!-- <artifactId>javax.servlet.jsp.jstl-api</artifactId> -->
+            <!-- <version>1.2.1</version> -->
+            <!-- </dependency> -->
+            <dependency>
+                <groupId>javax.servlet</groupId>
+                <artifactId>jstl</artifactId>
+                <version>1.2</version>
+            </dependency>
+
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>4.11</version>
+                <scope>test</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>0.11.8</version>
+            </dependency>
+
+            <dependency>
+                <groupId>javax.mail</groupId>
+                <artifactId>mail</artifactId>
+                <version>1.4.4</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.mockito</groupId>
+                <artifactId>mockito-all</artifactId>
+                <version>1.9.5</version>
+                <scope>test</scope>
+            </dependency>
+
+            <!-- MyBatis -->
+            <dependency>
+                <groupId>org.mybatis</groupId>
+                <artifactId>mybatis</artifactId>
+                <version>3.1.1</version>
+                <scope>compile</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.mybatis</groupId>
+                <artifactId>mybatis-spring</artifactId>
+                <version>1.1.1</version>
+            </dependency>
+            <!-- /MyBatis -->
+
+            <dependency>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <version>5.1.18</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.powermock</groupId>
+                <artifactId>powermock-api-mockito</artifactId>
+                <version>${powermock.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.powermock</groupId>
+                <artifactId>powermock-module-junit4</artifactId>
+                <version>${powermock.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.powermock</groupId>
+                <artifactId>powermock-module-junit4-rule</artifactId>
+                <version>${powermock.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.powermock</groupId>
+                <artifactId>powermock-classloading-xstream</artifactId>
+                <version>${powermock.version}</version>
+                <scope>test</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.seleniumhq.selenium</groupId>
+                <artifactId>selenium-server</artifactId>
+                <version>2.26.0</version>
+                <scope>test</scope>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.mortbay.jetty</groupId>
+                        <artifactId>servlet-api-2.5</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-log4j12</artifactId>
+                <version>1.6.4</version>
+            </dependency>
+
+            <!-- Spring -->
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-aop</artifactId>
+                <version>${dependency.spring.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-beans</artifactId>
+                <version>${dependency.spring.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-context</artifactId>
+                <version>${dependency.spring.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-context-support</artifactId>
+                <version>${dependency.spring.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-core</artifactId>
+                <version>${dependency.spring.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-expression</artifactId>
+                <version>${dependency.spring.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-jdbc</artifactId>
+                <version>${dependency.spring.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-orm</artifactId>
+                <version>${dependency.spring.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.security</groupId>
+                <artifactId>spring-security-config</artifactId>
+                <version>${dependency.spring-security.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.security</groupId>
+                <artifactId>spring-security-web</artifactId>
+                <version>${dependency.spring-security.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-test</artifactId>
+                <version>${dependency.spring.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-tx</artifactId>
+                <version>${dependency.spring.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-web</artifactId>
+                <version>${dependency.spring.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-webmvc</artifactId>
+                <version>${dependency.spring.version}</version>
+            </dependency>
+            <!-- /Spring -->
+
+            <dependency>
+                <groupId>org.apache.tiles</groupId>
+                <artifactId>tiles-jsp</artifactId>
+                <version>2.2.2</version>
+                <exclusions>
+                    <exclusion>
+                        <artifactId>slf4j-api</artifactId>
+                        <groupId>org.slf4j</groupId>
+                    </exclusion>
+                    <exclusion>
+                        <artifactId>jcl-over-slf4j</artifactId>
+                        <groupId>org.slf4j</groupId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.tomcat</groupId>
+                <artifactId>tomcat-jsp-api</artifactId>
+                <version>7.0.40</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.tomcat</groupId>
+                <artifactId>tomcat-servlet-api</artifactId>
+                <version>7.0.40</version>
+                <!-- (see http://maven.apache.org/guides/introduction/introduction-to-dependency-mechanism.html#Dependency_Scope) -->
+                <scope>provided</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>javax.validation</groupId>
+                <artifactId>validation-api</artifactId>
+                <version>1.1.0.CR1</version>
+            </dependency>
+
+            <dependency>
+                <groupId>xom</groupId>
+                <artifactId>xom</artifactId>
+                <version>1.2.5</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 </project>
