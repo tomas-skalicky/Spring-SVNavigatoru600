@@ -8,7 +8,7 @@ import java.util.Map;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
-import lombok.Setter;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.MessageSource;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Service;
@@ -30,7 +30,6 @@ public class AuthorityService {
      * The object which provides a persistence.
      */
     @Inject
-    @Setter
     private AuthorityDao authorityDao;
 
     /**
@@ -87,8 +86,8 @@ public class AuthorityService {
      * Gets a {@link Map} which for each constant of the {@link AuthorityType} enumeration contains a pair of
      * its {@link AuthorityType#getOrdinal() ordinal} and its localized title.
      */
-    public static Map<Long, String> getLocalizedRoleTitles(HttpServletRequest request,
-            MessageSource messageSource) {
+    @Cacheable("localizedRoleTitles")
+    public Map<Long, String> getLocalizedRoleTitles(HttpServletRequest request, MessageSource messageSource) {
         Map<Long, String> ordinalTitleMap = new HashMap<Long, String>();
 
         for (AuthorityType type : AuthorityType.values()) {

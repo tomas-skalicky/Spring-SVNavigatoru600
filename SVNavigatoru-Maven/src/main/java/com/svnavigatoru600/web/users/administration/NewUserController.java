@@ -33,7 +33,14 @@ import com.svnavigatoru600.web.AbstractMetaController;
 @Controller
 public class NewUserController extends AbstractNewEditUserController {
 
+    @Inject
+    private AuthorityService authorityService;
+
     private Validator validator;
+
+    public void setAuthorityService(AuthorityService authorityService) {
+        this.authorityService = authorityService;
+    }
 
     /**
      * Trivial setter
@@ -61,7 +68,7 @@ public class NewUserController extends AbstractNewEditUserController {
 
         // Sets up all (but necessary) maps.
         command.setRoleCheckboxId(AuthorityService.getRoleCheckboxId());
-        command.setLocalizedRoleCheckboxTitles(AuthorityService.getLocalizedRoleTitles(request,
+        command.setLocalizedRoleCheckboxTitles(this.authorityService.getLocalizedRoleTitles(request,
                 getMessageSource()));
 
         model.addAttribute(AbstractNewEditUserController.COMMAND, command);
@@ -82,8 +89,8 @@ public class NewUserController extends AbstractNewEditUserController {
         // Sets up all (but necessary) maps.
         command.setRoleCheckboxId(AuthorityService.getRoleCheckboxId());
         MessageSource messageSource = getMessageSource();
-        command.setLocalizedRoleCheckboxTitles(AuthorityService
-                .getLocalizedRoleTitles(request, messageSource));
+        command.setLocalizedRoleCheckboxTitles(this.authorityService.getLocalizedRoleTitles(request,
+                messageSource));
 
         this.validator.validate(command, result);
         if (result.hasErrors()) {
