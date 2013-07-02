@@ -143,8 +143,11 @@ public final class Localization {
      * @return Text without Czech diacritics
      */
     public static String stripCzechDiacritics(String text) {
-        return text.replace('á', 'a').replace('č', 'c').replace('ď', 'd').replace('é', 'e').replace('ě', 'e')
-                .replace('í', 'i').replace('ň', 'n').replace('ó', 'o').replace('ř', 'r').replace('š', 's')
-                .replace('ť', 't').replace('ú', 'u').replace('ů', 'u').replace('ý', 'y').replace('ž', 'z');
+        return text.replace('á', 'a').replace('Á', 'A').replace('č', 'c').replace('Č', 'C').replace('ď', 'd')
+                .replace('Ď', 'D').replace('é', 'e').replace('É', 'E').replace('ě', 'e').replace('Ě', 'E')
+                .replace('í', 'i').replace('Í', 'I').replace('ň', 'n').replace('Ň', 'N').replace('ó', 'o')
+                .replace('Ó', 'O').replace('ř', 'r').replace('Ř', 'R').replace('š', 's').replace('Š', 'S')
+                .replace('ť', 't').replace('Ť', 'T').replace('ú', 'u').replace('Ú', 'U').replace('ů', 'u')
+                .replace('Ů', 'U').replace('ý', 'y').replace('Ý', 'Y').replace('ž', 'z').replace('Ž', 'Z');
     }
 }
