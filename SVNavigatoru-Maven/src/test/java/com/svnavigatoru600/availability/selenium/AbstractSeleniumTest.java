@@ -15,6 +15,7 @@ import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.support.AbstractApplicationContext;
 
 /**
  * Ancestor of all Selenium tests of the Viewer project.
@@ -26,8 +27,13 @@ public abstract class AbstractSeleniumTest {
     /**
      * Context which provide us with the access to Beans of servers, test user and so on.
      */
-    protected static final ApplicationContext APPLICATION_CONTEXT = new AnnotationConfigApplicationContext(
-            SeleniumAppConfig.class);
+    protected static final ApplicationContext APPLICATION_CONTEXT = getApplicationContext();
+
+    static ApplicationContext getApplicationContext() {
+        AbstractApplicationContext context = new AnnotationConfigApplicationContext(SeleniumAppConfig.class);
+        context.registerShutdownHook();
+        return context;
+    }
 
     /**
      * Time in seconds how long in total the browser may wait at most. If the given expectations are fulfilled
