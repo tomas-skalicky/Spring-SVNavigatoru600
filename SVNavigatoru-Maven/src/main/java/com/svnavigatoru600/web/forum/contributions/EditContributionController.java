@@ -58,7 +58,6 @@ public class EditContributionController extends AbstractNewEditContributionContr
 
         Contribution contribution = getContributionService().findById(contributionId);
         command.setContribution(contribution);
-        command.setThreadId(threadId);
 
         getSendNotificationModelFiller().populateSendNotificationInInitForm(command, request,
                 getMessageSource());

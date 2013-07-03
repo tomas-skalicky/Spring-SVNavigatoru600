@@ -77,7 +77,7 @@ public class ContributionNotificationEmailService extends AbstractNotificationEm
         String localizedContributionTextLabel = getLocalizedContributionTextLabel(request, messageSource);
         String textWithConvertedUrls = Url
                 .convertImageRelativeUrlsToAbsolute(contribution.getText(), request);
-        String wholeTextUrl = ContributionsUrlParts.getContributionUrl(contribution, request);
+        String wholeTextUrl = ContributionsUrlParts.getAbsoluteContributionUrl(contribution, request);
         String croppedText = cropTooLongTextAndAddLink(textWithConvertedUrls, wholeTextUrl, request,
                 messageSource);
 

@@ -5,14 +5,20 @@
 
 <%@ page import="com.svnavigatoru600.web.forum.contributions.AbstractNewEditContributionController"%>
 
-<c:set var="baseUrl" value="/forum/temata/existujici/${newEditContributionCommand.threadId}/prispevky/" />
+<h5>
+    <spring:message code="forum.threads.thread" />
+    : <em><c:out value="${newEditContributionCommand.contribution.thread.name}" />
+    </em>
+</h5>
+
+<c:set var="baseUrl" value="/forum/temata/existujici/${newEditContributionCommand.contribution.thread.id}/prispevky/" />
 <a href="<c:url value="${baseUrl}" />">&laquo; <spring:message
 		code="forum.contributions.go-back-to-list-of-contributions" />
 </a>
 
 <form:form action="IS_FILLED_BY_JAVASCRIPT" commandName="newEditContributionCommand" method="POST">
 	<form:errors path="*" cssClass="error" element="p" />
-	<form:hidden path="threadId" />
+	<form:hidden path="contribution.thread.id" />
 	<form:hidden path="contribution.id" />
 	<form:hidden path="contribution.creationTime" />
 
