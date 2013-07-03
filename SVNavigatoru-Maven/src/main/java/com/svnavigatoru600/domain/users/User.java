@@ -372,6 +372,17 @@ public class User implements UserDetails, Serializable {
     }
 
     /**
+     * Sets all subscription properties of this {@link User} to {@code true}.
+     */
+    public void subscribeToEverything() {
+        this.subscribedToNews = true;
+        this.subscribedToEvents = true;
+        this.subscribedToForum = true;
+        this.subscribedToOtherDocuments = true;
+        this.subscribedToOtherSections = true;
+    }
+
+    /**
      * Adds the specified {@link Authority} to this {@link User} if he has not this authority now. Otherwise,
      * does nothing.
      * 

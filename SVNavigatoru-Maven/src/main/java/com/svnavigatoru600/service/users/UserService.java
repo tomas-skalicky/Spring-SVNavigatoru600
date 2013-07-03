@@ -279,6 +279,7 @@ public class UserService {
         newUser.setPassword(Hash.doSha1Hashing(newPassword));
 
         newUser.updateAuthorities(indicatorsOfNewAuthorities);
+        newUser.subscribeToEverything();
 
         // Sets user's email to null if the email is blank. The reason is the UNIQUE DB constraint.
         newUser.setEmailToNullIfBlank();
