@@ -23,9 +23,6 @@
 </c:if>
 
 
-<strong><a href="<c:url value="/forum/temata/novy/" />"><spring:message code="forum.threads.add-new-thread" />
-</a>
-</strong>
 
 <h5>
 	<spring:message code="forum.threads.thread" />
@@ -33,6 +30,11 @@
 	</em>
 </h5>
 <c:set var="sectionUrl" value="forum/temata/existujici/${showAllContributionsCommand.thread.id}/prispevky" />
+<strong><a href="<c:url value="/${sectionUrl}/novy/" />"><spring:message
+            code="forum.contributions.add-new-contribution" />
+</a>
+</strong>
+
 
 <%
 // Gets the command from the ModelMap.

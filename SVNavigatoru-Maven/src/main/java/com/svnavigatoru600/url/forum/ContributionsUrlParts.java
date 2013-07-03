@@ -31,9 +31,18 @@ public final class ContributionsUrlParts {
     /**
      * Composes an absolute URL which holds details about the given {@link Contribution}.
      */
-    public static String getContributionUrl(Contribution contribution, HttpServletRequest request) {
+    public static String getAbsoluteContributionUrl(Contribution contribution, HttpServletRequest request) {
         return String.format("%s%s%d/%s#contribution_%d", HttpRequestUtils.getContextHomeDirectory(request),
                 ContributionsUrlParts.BASE_URL, contribution.getThread().getId(),
                 ContributionsUrlParts.CONTRIBUTIONS_EXTENSION, contribution.getId());
+    }
+
+    /**
+     * Composes a relative URL which holds details about the newly added {@link Contribution}.
+     */
+    public static String getRelativeContributionUrlAfterCreation(Contribution newContribution) {
+        return String.format("%s%d/%s#contribution_%d", ContributionsUrlParts.BASE_URL, newContribution
+                .getThread().getId(), ContributionsUrlParts.CONTRIBUTIONS_CREATED_EXTENSION, newContribution
+                .getId());
     }
 }

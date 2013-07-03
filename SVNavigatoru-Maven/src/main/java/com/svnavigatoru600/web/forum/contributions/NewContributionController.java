@@ -64,8 +64,8 @@ public class NewContributionController extends AbstractNewEditContributionContro
         NewContribution command = new NewContribution();
 
         Contribution contribution = new Contribution();
+        contribution.setThread(this.threadService.findById(threadId));
         command.setContribution(contribution);
-        command.setThreadId(threadId);
 
         getSendNotificationModelFiller().populateSendNotificationInInitForm(command, request,
                 getMessageSource());
@@ -110,9 +110,8 @@ public class NewContributionController extends AbstractNewEditContributionContro
             status.setComplete();
 
             // Returns the form success view.
-            model.addAttribute(AbstractMetaController.REDIRECTION_ATTRIBUTE, String.format("%s%d/%s",
-                    ContributionsUrlParts.BASE_URL, threadId,
-                    ContributionsUrlParts.CONTRIBUTIONS_CREATED_EXTENSION));
+            model.addAttribute(AbstractMetaController.REDIRECTION_ATTRIBUTE,
+                    ContributionsUrlParts.getRelativeContributionUrlAfterCreation(newContribution));
             return AbstractMetaController.REDIRECTION_PAGE;
 
         } catch (DataAccessException e) {
