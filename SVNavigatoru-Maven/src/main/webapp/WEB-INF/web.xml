@@ -95,10 +95,6 @@
 
 
 	<!-- Special pages -->
-	<welcome-file-list>
-		<welcome-file>index.jsp</welcome-file>
-	</welcome-file-list>
-
 	<error-page>
 		<error-code>404</error-code>
 		<location>/chyby/404/</location>
