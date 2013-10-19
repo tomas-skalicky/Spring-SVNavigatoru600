@@ -82,7 +82,7 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-checkstyle-plugin</artifactId>
-					<version>2.9.1</version>
+					<version>2.10</version>
 					<configuration>
 						<configLocation>${checkstyle.configLocation}</configLocation>
 						<includeTestSourceDirectory>true</includeTestSourceDirectory>
@@ -92,7 +92,7 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-compiler-plugin</artifactId>
-					<version>2.5.1</version>
+					<version>3.1</version>
 					<configuration>
 						<source>${jdk.version}</source>
 						<target>${jdk.version}</target>
@@ -180,7 +180,7 @@
 			<dependency>
 				<groupId>org.junit.extensions</groupId>
 				<artifactId>cpsuite</artifactId>
-				<version>1.2.5</version>
+				<version>1.2.6</version>
 			</dependency>
 
 			<dependency>
