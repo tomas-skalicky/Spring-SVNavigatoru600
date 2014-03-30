@@ -1,5 +1,6 @@
 package com.svnavigatoru600.viewmodel.records.validator;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.Errors;
@@ -33,7 +34,9 @@ public abstract class AbstractDocumentRecordValidator implements Validator {
         }
 
         if (file.getSize() > Configuration.MAX_UPLOAD_SIZE) {
-            errors.rejectValue(field, "file.is-too-large");
+            String humanReadableLimit = FileUtils.byteCountToDisplaySize(Configuration.MAX_UPLOAD_SIZE);
+            errors.rejectValue(field, "file.is-too-large", new Object[] { humanReadableLimit },
+                    "The file is too large. Maximal allowed file size is " + humanReadableLimit + ".");
         }
     }
 
