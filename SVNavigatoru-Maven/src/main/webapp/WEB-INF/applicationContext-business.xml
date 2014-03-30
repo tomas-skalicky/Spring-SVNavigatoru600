@@ -38,7 +38,7 @@
 
     <!-- Document Upload -->
     <!-- maxUploadSize - The maximal size of a file which can be uploaded [in bytes]. This property is just a safety 
-        break since the current size is checked in validators (see com.svnavigatoru600.web.Configuration). -->
+        break since the current size is checked in validators (see com.svnavigatoru600.service.Configuration). -->
     <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"
         p:maxUploadSize="100000000" />
     <!-- /Document Upload -->
