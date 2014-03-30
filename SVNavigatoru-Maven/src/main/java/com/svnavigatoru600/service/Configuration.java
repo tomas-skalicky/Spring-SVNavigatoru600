@@ -21,10 +21,10 @@ public final class Configuration {
      */
     public static final String FILE_STORAGE = "uploaded-files/";
     /**
-     * The maximal size of a file which can be uploaded [in bytes]. <small>The current value equals 2
+     * The maximal size of a file which can be uploaded [in bytes]. <small>The current value equals 4
      * MB.</small>
      */
-    public static final long MAX_UPLOAD_SIZE = 2097152;
+    public static final long MAX_UPLOAD_SIZE = 4194304;
     /**
      * Default encoding for everything.
      */
