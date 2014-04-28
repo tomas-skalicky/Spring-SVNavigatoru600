@@ -18,3 +18,10 @@ Servers/
 # IntelliJ
 #####
 .idea/
+
+
+
+#####
+# Spring
+#####
+.springBeans
