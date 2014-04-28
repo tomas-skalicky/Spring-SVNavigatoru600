@@ -11,3 +11,10 @@ target/
 #####
 .metadata/
 Servers/
+
+
+
+#####
+# IntelliJ
+#####
+.idea/
