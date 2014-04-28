@@ -28,6 +28,7 @@ public abstract class AbstractUserTest {
     static final boolean DEFAULT_SUBSCRIBED_TO_OTHER_DOCUMENTS = false;
     static final boolean DEFAULT_SUBSCRIBED_TO_OTHER_SECTIONS = false;
     static final Set<GrantedAuthority> DEFAULT_AUTHORITIES = new HashSet<GrantedAuthority>();
+    static final int DEFAULT_SMTP_PORT = 2525;
 
     private User defaultUser = null;
 
@@ -40,6 +41,7 @@ public abstract class AbstractUserTest {
         this.defaultUser.setSubscribedToForum(DEFAULT_SUBSCRIBED_TO_FORUM);
         this.defaultUser.setSubscribedToOtherDocuments(DEFAULT_SUBSCRIBED_TO_OTHER_DOCUMENTS);
         this.defaultUser.setSubscribedToOtherSections(DEFAULT_SUBSCRIBED_TO_OTHER_SECTIONS);
+        this.defaultUser.setSmtpPort(DEFAULT_SMTP_PORT);
     }
 
     /**

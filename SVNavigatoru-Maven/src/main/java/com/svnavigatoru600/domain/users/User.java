@@ -56,6 +56,7 @@ public class User implements UserDetails, Serializable {
     private boolean subscribedToForum;
     private boolean subscribedToOtherDocuments;
     private boolean subscribedToOtherSections;
+    private int smtpPort;
     private Set<GrantedAuthority> authorities;
 
     /**
@@ -282,6 +283,14 @@ public class User implements UserDetails, Serializable {
         return hasAuthority(AuthorityType.ROLE_REGISTERED_USER);
     }
 
+    public int getSmtpPort() {
+        return this.smtpPort;
+    }
+
+    public void setSmtpPort(int smtpPort) {
+        this.smtpPort = smtpPort;
+    }
+
     @Override
     public boolean isAccountNonExpired() {
         return true;
@@ -347,6 +356,7 @@ public class User implements UserDetails, Serializable {
                 .append(", subscribedToForum=").append(this.subscribedToForum)
                 .append(", subscribedToOtherDocuments=").append(this.subscribedToOtherDocuments)
                 .append(", subscribedToOtherSections=").append(this.subscribedToOtherSections)
+                .append(", smtpPort=").append(this.smtpPort)
                 .append(", authorities=").append(this.authorities).append("]").toString();
         // @formatter:on
     }

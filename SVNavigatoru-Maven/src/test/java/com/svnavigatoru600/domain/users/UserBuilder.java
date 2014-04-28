@@ -60,6 +60,11 @@ public final class UserBuilder {
         return this;
     }
 
+    public UserBuilder withSmtpPort(int smtpPort) {
+        this.user.setSmtpPort(smtpPort);
+        return this;
+    }
+
     public UserBuilder forTestPurposes(boolean isTestUser) {
         this.user.setTestUser(isTestUser);
         return this;

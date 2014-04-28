@@ -9,13 +9,23 @@ import com.svnavigatoru600.domain.users.NotificationType;
  */
 public enum UserField {
 
-    username(UserColumn.username), password(UserColumn.password), enabled(UserColumn.enabled), firstName(
-            UserColumn.first_name), lastName(UserColumn.last_name), email(UserColumn.email), phone(
-            UserColumn.phone), isTestUser(UserColumn.is_test_user), authorities(null), subscribedToNews(
-            UserColumn.news_notifications), subscribedToEvents(UserColumn.event_notifications), subscribedToForum(
-            UserColumn.forum_notifications), subscribedToOtherDocuments(
-            UserColumn.other_document_notifications), subscribedToOtherSections(
-            UserColumn.other_section_notifications);
+    // @formatter:off
+    username(UserColumn.username),
+    password(UserColumn.password),
+    enabled(UserColumn.enabled),
+    firstName(UserColumn.first_name),
+    lastName(UserColumn.last_name),
+    email(UserColumn.email),
+    phone(UserColumn.phone),
+    isTestUser(UserColumn.is_test_user),
+    authorities(null),
+    subscribedToNews(UserColumn.news_notifications),
+    subscribedToEvents(UserColumn.event_notifications),
+    subscribedToForum(UserColumn.forum_notifications),
+    subscribedToOtherDocuments(UserColumn.other_document_notifications),
+    subscribedToOtherSections(UserColumn.other_section_notifications),
+    smtpPort(UserColumn.smtp_port);
+    // @formatter:on
 
     /**
      * The name of a corresponding database column.
@@ -36,7 +46,7 @@ public enum UserField {
      */
     private enum UserColumn {
 
-        username, password, enabled, first_name, last_name, email, phone, is_test_user, news_notifications, event_notifications, forum_notifications, other_document_notifications, other_section_notifications
+        username, password, enabled, first_name, last_name, email, phone, is_test_user, news_notifications, event_notifications, forum_notifications, other_document_notifications, other_section_notifications, smtp_port
     }
 
     /**
