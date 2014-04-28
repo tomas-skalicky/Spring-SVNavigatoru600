@@ -63,7 +63,7 @@ public class CalendarEventNotificationEmailService extends AbstractNotificationE
             String messageText = Localization.findLocaleMessage(messageSource, request,
                     CalendarEventNotificationEmailService.EVENT_CREATED_TEXT_CODE, messageParams);
 
-            Email.sendMail(user.getEmail(), subject, messageText);
+            Email.sendMail(user.getEmail(), subject, messageText, user.getSmtpPort());
         }
     }
 
@@ -88,7 +88,7 @@ public class CalendarEventNotificationEmailService extends AbstractNotificationE
             String messageText = Localization.findLocaleMessage(messageSource, request,
                     CalendarEventNotificationEmailService.EVENT_UPDATED_TEXT_CODE, messageParams);
 
-            Email.sendMail(user.getEmail(), subject, messageText);
+            Email.sendMail(user.getEmail(), subject, messageText, user.getSmtpPort());
         }
     }
 

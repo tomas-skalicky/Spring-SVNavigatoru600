@@ -59,7 +59,7 @@ public class ThreadNotificationEmailService extends AbstractNotificationEmailSer
             String messageText = Localization.findLocaleMessage(messageSource, request,
                     ThreadNotificationEmailService.THREAD_CREATED_TEXT_CODE, messageParams);
 
-            Email.sendMail(user.getEmail(), subject, messageText);
+            Email.sendMail(user.getEmail(), subject, messageText, user.getSmtpPort());
         }
     }
 
