@@ -37,7 +37,6 @@ public final class Email {
     private static final String USERNAME = "admin@svnavigatoru600.com";
     private static final String PASSWORD = "bx0477280577";
     private static final String HOST = "mail.svnavigatoru600.com";
-    private static final int STANDARD_PORT = 2525;
     private static final int SSL_PORT = 465;
     private static final int TLS_PORT = 587;
     private static final String PROTOCOL = "smtp";
@@ -73,14 +72,16 @@ public final class Email {
      * 
      * @param recipient
      *            Recipient's email address
+     * @param smtpPort
+     *            25 or 2525
      */
-    public static void sendMail(String recipient, String subject, String messageText) {
+    public static void sendMail(String recipient, String subject, String messageText, int smtpPort) {
         if (!Email.isSpecified(recipient)) {
             return;
         }
 
         String subjectWithDiacritics = Localization.stripCzechDiacritics(subject);
-        Email.sendMailWithoutSSL(recipient, subjectWithDiacritics, messageText);
+        Email.sendMailWithoutSSL(recipient, subjectWithDiacritics, messageText, smtpPort);
         // Email.sendMailViaSSL(recipient, subjectWithDiacritics, messageText);
         // Email.sendMailViaTLS(recipient, subjectWithDiacritics, messageText);
     }
@@ -91,11 +92,13 @@ public final class Email {
      * 
      * @param recipient
      *            Recipient's email address
+     * @param smtpPort
+     *            25 or 2525
      */
-    private static void sendMailWithoutSSL(String recipient, String subject, String messageText) {
+    private static void sendMailWithoutSSL(String recipient, String subject, String messageText, int smtpPort) {
         Properties props = new Properties();
         props.put(MAIL_SMTP_HOST, Email.HOST);
-        props.put(MAIL_SMTP_PORT, Email.STANDARD_PORT);
+        props.put(MAIL_SMTP_PORT, smtpPort);
         props.put(MAIL_SMTP_AUTH, Boolean.TRUE);
 
         Session session = Session.getDefaultInstance(props, new javax.mail.Authenticator() {

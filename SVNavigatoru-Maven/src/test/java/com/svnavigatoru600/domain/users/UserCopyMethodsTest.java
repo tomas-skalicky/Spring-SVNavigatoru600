@@ -65,6 +65,7 @@ public final class UserCopyMethodsTest extends AbstractUserTest {
         Assert.assertEquals(NEW_SUBSCRIBED_TO_OTHER_DOCUMENTS, destinationUser.isSubscribedToOtherDocuments());
         Assert.assertEquals(NEW_SUBSCRIBED_TO_OTHER_SECTIONS, destinationUser.isSubscribedToOtherSections());
         Assert.assertEquals(DEFAULT_AUTHORITIES, destinationUser.getAuthorities());
+        Assert.assertEquals(DEFAULT_SMTP_PORT, destinationUser.getSmtpPort());
     }
 
     @Test

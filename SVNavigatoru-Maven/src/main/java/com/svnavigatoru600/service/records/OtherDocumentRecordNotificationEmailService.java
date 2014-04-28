@@ -89,7 +89,7 @@ public class OtherDocumentRecordNotificationEmailService extends AbstractNotific
             String messageText = Localization.findLocaleMessage(messageSource, request, textLocalizationCode,
                     messageParams);
 
-            Email.sendMail(user.getEmail(), subject, messageText);
+            Email.sendMail(user.getEmail(), subject, messageText, user.getSmtpPort());
         }
     }
 

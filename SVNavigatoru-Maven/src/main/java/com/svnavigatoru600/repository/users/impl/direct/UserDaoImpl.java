@@ -192,6 +192,7 @@ public class UserDaoImpl extends NamedParameterJdbcDaoSupport implements UserDao
                 user.isSubscribedToOtherDocuments());
         parameters.put(UserField.subscribedToOtherSections.getColumnName(),
                 user.isSubscribedToOtherSections());
+        parameters.put(UserField.smtpPort.getColumnName(), user.getSmtpPort());
         return parameters;
     }
 

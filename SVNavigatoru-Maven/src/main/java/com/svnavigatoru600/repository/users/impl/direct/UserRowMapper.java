@@ -33,6 +33,7 @@ public class UserRowMapper implements RowMapper<User> {
         user.setSubscribedToForum(rs.getBoolean(UserField.subscribedToForum.getColumnName()));
         user.setSubscribedToOtherDocuments(rs.getBoolean(UserField.subscribedToOtherDocuments.getColumnName()));
         user.setSubscribedToOtherSections(rs.getBoolean(UserField.subscribedToOtherSections.getColumnName()));
+        user.setSmtpPort(rs.getInt(UserField.smtpPort.getColumnName()));
         return user;
     }
 }
