@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+						http://www.springframework.org/schema/beans/spring-beans.xsd
+						http://www.springframework.org/schema/mvc
+						http://www.springframework.org/schema/mvc/spring-mvc.xsd
+						http://www.springframework.org/schema/context
+						http://www.springframework.org/schema/context/spring-context.xsd">
+
+	<!-- the application context definition for the "dispatcher" DispatcherServlet -->
+
+	<!-- Localization -->
+	<!-- declares the MessageSource bean -->
+	<bean id="messageSource"
+		class="org.springframework.context.support.ReloadableResourceBundleMessageSource"
+		p:cacheSeconds="3600"
+		p:defaultEncoding="UTF-8"
+		p:basename="classpath:locale/messages" />
+
+	<!-- declare the interceptor -->
+	<bean id="localeChangeInterceptor"
+		class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor"
+		p:paramName="lang" />
+
+	<!-- declare the resolver -->
+	<bean id="localeResolver"
+		class="org.springframework.web.servlet.i18n.CookieLocaleResolver"
+		p:defaultLocale="cs_CZ" />
+	<!-- /Localization -->
+
+
+
+	<!-- Loads @Controllers only. The rest is loaded in the applicationContext-business.xml file. -->
+	<context:component-scan base-package="com.svnavigatoru600" use-default-filters="false">
+		<context:include-filter expression="org.springframework.stereotype.Controller"
+			type="annotation" />
+	</context:component-scan>
+
+
+
+	<!-- Addresses of files - which match the following mappings and which are in the specified locations 
+		- will NOT be processed by this dispatcher, but these addresses will be considered as STATICAL ones. -->
+	<mvc:resources mapping="/arclite/**" location="/arclite/" />
+	<mvc:resources mapping="/favicon.ico" location="/favicon.ico" />
+	<mvc:resources mapping="/img/**" location="/img/" />
+	<mvc:resources mapping="/lib/**" location="/lib/" />
+	<mvc:resources mapping="/tigra_calendar/**" location="/tigra_calendar/" />
+	<mvc:resources mapping="/tinymce/**" location="/tinymce/" />
+	<mvc:resources mapping="/uploaded-files/**" location="/uploaded-files/" />
+	<!-- The following tag is necessary due to mvc:resources. Otherwise, it does not work. -->
+	<mvc:annotation-driven />
+
+
+
+	<!-- View Resolvers: First, we try to match the view name with names of definitions in the tiles-defs.xml 
+		file. If the name matches with some definition, this definition is followed, i.e. the tiles resolver 
+		is used. Otherwise, the internal resolver is used. -->
+	<bean id="tilesViewResolver"
+		class="org.springframework.web.servlet.view.tiles2.TilesViewResolver"
+		p:order="0"
+		p:viewClass="org.springframework.web.servlet.view.tiles2.TilesView" />
+
+	<!-- Configurer is bound to the tile resolver. -->
+	<bean id="tilesConfigurer"
+		class="org.springframework.web.servlet.view.tiles2.TilesConfigurer"
+		p:definitions="/WEB-INF/tiles-defs.xml" />
+
+	<bean id="jstlViewResolver"
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver"
+		p:order="1"
+		p:viewClass="org.springframework.web.servlet.view.JstlView"
+		p:prefix="/WEB-INF/jsp/"
+		p:suffix=".jsp" />
+	<!-- /View Resolvers -->
+
+</beans>
