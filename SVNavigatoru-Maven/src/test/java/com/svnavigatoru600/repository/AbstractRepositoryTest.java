@@ -24,7 +24,7 @@ public abstract class AbstractRepositoryTest {
      * Application context which contains necessary beans.
      */
     protected static final ApplicationContext APPLICATION_CONTEXT = new FileSystemXmlApplicationContext(
-            "classpath:applicationContext-business.xml");
+            "classpath:spring/applicationContext-business.xml");
     /**
      * Utility functions for retrieving DAO objects or creation default representants of persisted classes.
      */

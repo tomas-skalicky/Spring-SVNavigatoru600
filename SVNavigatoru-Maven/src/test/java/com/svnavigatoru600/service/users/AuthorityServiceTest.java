@@ -33,7 +33,7 @@ import com.svnavigatoru600.test.category.UnitTests;
 @RunWith(PowerMockRunner.class)
 @PrepareForTest(Localization.class)
 @PowerMockIgnore(value = "javax.management.*")
-@ContextConfiguration(locations = { "classpath:applicationContext-business.xml" })
+@ContextConfiguration(locations = { "classpath:spring/applicationContext-business.xml" })
 public class AuthorityServiceTest {
 
     private TestContextManager testContextManager;
