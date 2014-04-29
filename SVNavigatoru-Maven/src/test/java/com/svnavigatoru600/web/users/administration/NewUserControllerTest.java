@@ -31,7 +31,7 @@ import com.svnavigatoru600.viewmodel.users.validator.NewUserValidator;
  */
 @Category(ControllerIntegrationTests.class)
 @WebAppConfiguration
-@ContextConfiguration(locations = { "classpath:applicationContext-business.xml" })
+@ContextConfiguration(locations = { "classpath:spring/applicationContext-business.xml" })
 public final class NewUserControllerTest {
 
     private TestContextManager testContextManager;
