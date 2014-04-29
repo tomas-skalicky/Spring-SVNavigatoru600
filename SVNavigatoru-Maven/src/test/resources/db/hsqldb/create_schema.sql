@@ -23,7 +23,7 @@ CREATE TABLE users (
 	forum_notifications BOOLEAN DEFAULT 1 NOT NULL,
 	other_document_notifications BOOLEAN DEFAULT 1 NOT NULL,
 	other_section_notifications BOOLEAN DEFAULT 1 NOT NULL,
-	smtp_port INT(11) DEFAULT 2525 NOT NULL,
+	smtp_port INTEGER DEFAULT 2525 NOT NULL,
 	CONSTRAINT email_validator CHECK (email LIKE '_%@_%._%')
 );
 
