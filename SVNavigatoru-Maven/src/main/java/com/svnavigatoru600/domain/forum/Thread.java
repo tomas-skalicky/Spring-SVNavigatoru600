@@ -145,4 +145,60 @@ public class Thread implements Serializable, Comparable<Thread> {
                 .append(", creationTime=").append(this.creationTime).append(", author=").append(this.author)
                 .append("]").toString();
     }
+
+    private Thread(Builder builder) {
+        this.threadService = builder.threadService;
+        this.id = builder.id;
+        this.name = builder.name;
+        this.creationTime = builder.creationTime;
+        this.author = builder.author;
+        this.contributions = builder.contributions;
+    }
+
+    /**
+     * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
+     */
+    public static class Builder {
+
+        private ThreadService threadService;
+        private int id;
+        private String name;
+        private Date creationTime;
+        private User author;
+        private List<Contribution> contributions;
+
+        public Builder withThreadService(ThreadService threadService) {
+            this.threadService = threadService;
+            return this;
+        }
+
+        public Builder withId(int id) {
+            this.id = id;
+            return this;
+        }
+
+        public Builder withName(String name) {
+            this.name = name;
+            return this;
+        }
+
+        public Builder withCreationTime(Date creationTime) {
+            this.creationTime = creationTime;
+            return this;
+        }
+
+        public Builder withAuthor(User author) {
+            this.author = author;
+            return this;
+        }
+
+        public Builder withContributions(List<Contribution> contributions) {
+            this.contributions = contributions;
+            return this;
+        }
+
+        public Thread build() {
+            return new Thread(this);
+        }
+    }
 }
