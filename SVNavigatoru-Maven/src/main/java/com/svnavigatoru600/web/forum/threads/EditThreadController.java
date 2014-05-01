@@ -19,6 +19,7 @@ import org.springframework.web.bind.support.SessionStatus;
 import com.svnavigatoru600.domain.forum.Thread;
 import com.svnavigatoru600.service.forum.ThreadService;
 import com.svnavigatoru600.url.CommonUrlParts;
+import com.svnavigatoru600.url.forum.ThreadsUrlParts;
 import com.svnavigatoru600.viewmodel.forum.threads.EditThread;
 import com.svnavigatoru600.viewmodel.forum.threads.validator.EditThreadValidator;
 import com.svnavigatoru600.web.AbstractMetaController;
@@ -43,7 +44,7 @@ public class EditThreadController extends AbstractNewEditThreadController {
         super(threadService, validator, messageSource);
     }
 
-    @RequestMapping(value = CommonUrlParts.EXISTING_EXTENSION + "{threadId}/", method = RequestMethod.GET)
+    @RequestMapping(value = ThreadsUrlParts.EXISTING_URL + "{threadId}/", method = RequestMethod.GET)
     public String initForm(@PathVariable int threadId, HttpServletRequest request, ModelMap model) {
 
         ThreadService threadService = getThreadService();
@@ -58,15 +59,14 @@ public class EditThreadController extends AbstractNewEditThreadController {
         return PageViews.EDIT.getViewName();
     }
 
-    @RequestMapping(value = CommonUrlParts.EXISTING_EXTENSION + "{threadId}/"
-            + CommonUrlParts.SAVED_EXTENSION, method = RequestMethod.GET)
+    @RequestMapping(value = ThreadsUrlParts.EXISTING_URL + "{threadId}/" + CommonUrlParts.SAVED_EXTENSION, method = RequestMethod.GET)
     public String initFormAfterSave(@PathVariable int threadId, HttpServletRequest request, ModelMap model) {
         String view = initForm(threadId, request, model);
         ((EditThread) model.get(AbstractNewEditThreadController.COMMAND)).setDataSaved(true);
         return view;
     }
 
-    @RequestMapping(value = CommonUrlParts.EXISTING_EXTENSION + "{threadId}/", method = RequestMethod.POST)
+    @RequestMapping(value = ThreadsUrlParts.EXISTING_URL + "{threadId}/", method = RequestMethod.POST)
     @Transactional
     public String processSubmittedForm(@ModelAttribute(EditThreadController.COMMAND) EditThread command,
             BindingResult result, SessionStatus status, @PathVariable int threadId,
