@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
+import javax.sql.DataSource;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -14,6 +15,7 @@ import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcDaoSupport;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.stereotype.Repository;
 
 import com.svnavigatoru600.domain.users.Authority;
 import com.svnavigatoru600.domain.users.NotificationType;
@@ -28,6 +30,7 @@ import com.svnavigatoru600.service.util.OrderType;
 /**
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
+@Repository("userDao")
 public class UserDaoImpl extends NamedParameterJdbcDaoSupport implements UserDao {
 
     private final Log logger = LogFactory.getLog(this.getClass());
@@ -36,11 +39,17 @@ public class UserDaoImpl extends NamedParameterJdbcDaoSupport implements UserDao
      * Database table which provides a persistence of {@link User Users}.
      */
     private static final String TABLE_NAME = PersistedClass.User.getTableName();
-    private AuthorityDao authorityDao;
 
     @Inject
-    public void setAuthorityDao(AuthorityDao authorityDao) {
-        this.authorityDao = authorityDao;
+    private AuthorityDao authorityDao;
+
+    /**
+     * NOTE: Added because of the final setter.
+     */
+    @Inject
+    public UserDaoImpl(DataSource dataSource) {
+        super();
+        setDataSource(dataSource);
     }
 
     /**

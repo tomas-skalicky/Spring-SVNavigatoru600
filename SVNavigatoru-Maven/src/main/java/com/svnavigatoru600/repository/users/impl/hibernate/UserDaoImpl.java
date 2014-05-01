@@ -6,11 +6,13 @@ import javax.inject.Inject;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.hibernate.SessionFactory;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
+import org.springframework.stereotype.Repository;
 
 import com.svnavigatoru600.domain.users.NotificationType;
 import com.svnavigatoru600.domain.users.User;
@@ -24,15 +26,21 @@ import com.svnavigatoru600.service.util.OrderType;
 /**
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
+@Repository("userDao")
 public class UserDaoImpl extends HibernateDaoSupport implements UserDao {
 
     private final Log logger = LogFactory.getLog(this.getClass());
 
+    @Inject
     private AuthorityDao authorityDao;
 
+    /**
+     * NOTE: Added because of the final setter.
+     */
     @Inject
-    public void setAuthorityDao(AuthorityDao authorityDao) {
-        this.authorityDao = authorityDao;
+    public UserDaoImpl(SessionFactory sessionFactory) {
+        super();
+        setSessionFactory(sessionFactory);
     }
 
     @Override

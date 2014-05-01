@@ -3,7 +3,11 @@ package com.svnavigatoru600.repository.eventcalendar.impl.hibernate;
 import java.util.Date;
 import java.util.List;
 
+import javax.inject.Inject;
+
+import org.hibernate.SessionFactory;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
+import org.springframework.stereotype.Repository;
 
 import com.svnavigatoru600.domain.eventcalendar.CalendarEvent;
 import com.svnavigatoru600.repository.CalendarEventDao;
@@ -14,7 +18,17 @@ import com.svnavigatoru600.service.util.OrderType;
 /**
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
+@Repository("calendarEventDao")
 public class CalendarEventDaoImpl extends HibernateDaoSupport implements CalendarEventDao {
+
+    /**
+     * NOTE: Added because of the final setter.
+     */
+    @Inject
+    public CalendarEventDaoImpl(SessionFactory sessionFactory) {
+        super();
+        setSessionFactory(sessionFactory);
+    }
 
     @Override
     public CalendarEvent findById(int eventId) {

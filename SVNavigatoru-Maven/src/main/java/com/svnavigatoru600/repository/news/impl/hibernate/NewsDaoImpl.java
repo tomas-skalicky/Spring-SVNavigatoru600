@@ -3,7 +3,11 @@ package com.svnavigatoru600.repository.news.impl.hibernate;
 import java.util.Date;
 import java.util.List;
 
+import javax.inject.Inject;
+
+import org.hibernate.SessionFactory;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
+import org.springframework.stereotype.Repository;
 
 import com.svnavigatoru600.domain.News;
 import com.svnavigatoru600.repository.NewsDao;
@@ -13,7 +17,17 @@ import com.svnavigatoru600.repository.news.impl.FindAllOrderedArguments;
 /**
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
+@Repository("newsDao")
 public class NewsDaoImpl extends HibernateDaoSupport implements NewsDao {
+
+    /**
+     * NOTE: Added because of the final setter.
+     */
+    @Inject
+    public NewsDaoImpl(SessionFactory sessionFactory) {
+        super();
+        setSessionFactory(sessionFactory);
+    }
 
     @Override
     public News findById(int newsId) {

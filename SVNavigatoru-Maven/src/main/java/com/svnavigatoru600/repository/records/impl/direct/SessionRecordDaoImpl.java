@@ -5,8 +5,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.inject.Inject;
+import javax.sql.DataSource;
+
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcDaoSupport;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
+import org.springframework.stereotype.Repository;
 
 import com.svnavigatoru600.domain.records.AbstractDocumentRecord;
 import com.svnavigatoru600.domain.records.SessionRecord;
@@ -20,6 +24,7 @@ import com.svnavigatoru600.service.util.OrderType;
 /**
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
+@Repository("sessionRecordDao")
 public class SessionRecordDaoImpl extends NamedParameterJdbcDaoSupport implements SessionRecordDao {
 
     /**
@@ -51,7 +56,17 @@ public class SessionRecordDaoImpl extends NamedParameterJdbcDaoSupport implement
             PersistedClass.AbstractDocumentRecord.getTableName(), DocumentRecordField.id.getColumnName(),
             SessionRecordField.id.getColumnName());
 
-    private final DocumentRecordDaoImpl documentRecordDao = new DocumentRecordDaoImpl();
+    @Inject
+    private DocumentRecordDaoImpl documentRecordDao;
+
+    /**
+     * NOTE: Added because of the final setter.
+     */
+    @Inject
+    public SessionRecordDaoImpl(DataSource dataSource) {
+        super();
+        setDataSource(dataSource);
+    }
 
     @Override
     public SessionRecord findById(int recordId) {

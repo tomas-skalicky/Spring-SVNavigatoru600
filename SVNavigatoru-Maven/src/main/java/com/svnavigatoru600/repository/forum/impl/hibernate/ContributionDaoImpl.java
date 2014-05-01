@@ -3,9 +3,13 @@ package com.svnavigatoru600.repository.forum.impl.hibernate;
 import java.util.Date;
 import java.util.List;
 
+import javax.inject.Inject;
+
+import org.hibernate.SessionFactory;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
+import org.springframework.stereotype.Repository;
 
 import com.svnavigatoru600.domain.forum.Contribution;
 import com.svnavigatoru600.repository.forum.ContributionDao;
@@ -16,7 +20,17 @@ import com.svnavigatoru600.service.util.OrderType;
 /**
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
+@Repository("contributionDao")
 public class ContributionDaoImpl extends HibernateDaoSupport implements ContributionDao {
+
+    /**
+     * NOTE: Added because of the final setter.
+     */
+    @Inject
+    public ContributionDaoImpl(SessionFactory sessionFactory) {
+        super();
+        setSessionFactory(sessionFactory);
+    }
 
     @Override
     public Contribution findById(int contributionId) {

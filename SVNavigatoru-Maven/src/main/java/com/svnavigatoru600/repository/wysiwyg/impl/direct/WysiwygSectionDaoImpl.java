@@ -5,7 +5,11 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.inject.Inject;
+import javax.sql.DataSource;
+
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcDaoSupport;
+import org.springframework.stereotype.Repository;
 
 import com.svnavigatoru600.domain.WysiwygSection;
 import com.svnavigatoru600.domain.WysiwygSectionName;
@@ -16,12 +20,22 @@ import com.svnavigatoru600.repository.wysiwyg.impl.WysiwygSectionField;
 /**
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
+@Repository("wysiwygSectionDao")
 public class WysiwygSectionDaoImpl extends NamedParameterJdbcDaoSupport implements WysiwygSectionDao {
 
     /**
      * Database table which provides a persistence of {@link WysiwygSection WysiwygSections}.
      */
     private static final String TABLE_NAME = PersistedClass.WysiwygSection.getTableName();
+
+    /**
+     * NOTE: Added because of the final setter.
+     */
+    @Inject
+    public WysiwygSectionDaoImpl(DataSource dataSource) {
+        super();
+        setDataSource(dataSource);
+    }
 
     @Override
     public WysiwygSection findByName(WysiwygSectionName name) {
