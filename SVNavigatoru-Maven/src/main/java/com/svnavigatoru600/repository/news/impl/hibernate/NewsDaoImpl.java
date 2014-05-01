@@ -39,7 +39,7 @@ public class NewsDaoImpl extends HibernateDaoSupport implements NewsDao {
     public List<News> findAllOrdered(FindAllOrderedArguments arguments) {
         String query = String.format("FROM %s n ORDER BY %s %s", PersistedClass.News.name(), arguments
                 .getSortField().name(), arguments.getSortDirection().getDatabaseCode());
-        return (List<News>) getHibernateTemplate().find(query);
+        return getHibernateTemplate().find(query);
     }
 
     @Override

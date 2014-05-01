@@ -37,7 +37,7 @@ public class OtherDocumentRecordTypeRelationDaoImpl extends HibernateDaoSupport 
         DetachedCriteria criteria = DetachedCriteria.forClass(OtherDocumentRecordTypeRelation.class);
         criteria.add(Restrictions.eq(OtherDocumentRecordTypeRelationField.recordId.getFieldChain(), recordId));
 
-        return (List<OtherDocumentRecordTypeRelation>) getHibernateTemplate().findByCriteria(criteria);
+        return getHibernateTemplate().findByCriteria(criteria);
     }
 
     @Override
@@ -53,7 +53,6 @@ public class OtherDocumentRecordTypeRelationDaoImpl extends HibernateDaoSupport 
         DetachedCriteria criteria = DetachedCriteria.forClass(OtherDocumentRecordTypeRelation.class);
         criteria.add(Restrictions.eq(OtherDocumentRecordTypeRelationField.recordId.getFieldChain(), recordId));
 
-        getHibernateTemplate().deleteAll(
-                (List<OtherDocumentRecordTypeRelation>) getHibernateTemplate().findByCriteria(criteria));
+        getHibernateTemplate().deleteAll(getHibernateTemplate().findByCriteria(criteria));
     }
 }

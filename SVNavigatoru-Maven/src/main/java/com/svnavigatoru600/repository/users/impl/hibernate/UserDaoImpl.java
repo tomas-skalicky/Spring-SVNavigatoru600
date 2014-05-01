@@ -63,7 +63,7 @@ public class UserDaoImpl extends HibernateDaoSupport implements UserDao {
         criteria.add(Restrictions.eq(UserField.email.name(), lowerCasedEmail));
 
         @SuppressWarnings("unchecked")
-        List<User> users = (List<User>) getHibernateTemplate().findByCriteria(criteria);
+        List<User> users = getHibernateTemplate().findByCriteria(criteria);
         if (users.size() > 1) {
             throw new DataIntegrityViolationException("Email should be unique.");
         } else if (users.isEmpty()) {
@@ -83,7 +83,7 @@ public class UserDaoImpl extends HibernateDaoSupport implements UserDao {
         String query = String.format("SELECT u FROM %s u INNER JOIN u.%s a WHERE a.%s = ?",
                 PersistedClass.User.name(), UserField.authorities.name(),
                 AuthorityField.authority.getFieldChain());
-        return (List<User>) getHibernateTemplate().find(query, authority);
+        return getHibernateTemplate().find(query, authority);
     }
 
     @SuppressWarnings("unchecked")
@@ -99,7 +99,7 @@ public class UserDaoImpl extends HibernateDaoSupport implements UserDao {
         String query = String.format("SELECT u FROM %s u INNER JOIN u.%s a WHERE a.%s = ? AND u.%s = ?",
                 PersistedClass.User.name(), UserField.authorities.name(),
                 AuthorityField.authority.getFieldChain(), subscriptionColumn);
-        return (List<User>) getHibernateTemplate().find(query, authority, Boolean.TRUE.toString());
+        return getHibernateTemplate().find(query, authority, Boolean.TRUE.toString());
     }
 
     @Override
@@ -109,7 +109,7 @@ public class UserDaoImpl extends HibernateDaoSupport implements UserDao {
         String query = String.format("FROM %s u WHERE u.%s = ? ORDER BY u.%s, u.%s %s",
                 PersistedClass.User.name(), UserField.isTestUser.name(), UserField.lastName.name(),
                 UserField.firstName.name(), order.getDatabaseCode());
-        return (List<User>) getHibernateTemplate().find(query, testUsers);
+        return getHibernateTemplate().find(query, testUsers);
     }
 
     @Override

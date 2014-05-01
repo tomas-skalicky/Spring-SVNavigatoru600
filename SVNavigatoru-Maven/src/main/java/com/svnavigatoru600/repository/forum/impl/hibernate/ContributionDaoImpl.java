@@ -43,7 +43,7 @@ public class ContributionDaoImpl extends HibernateDaoSupport implements Contribu
         DetachedCriteria criteria = DetachedCriteria.forClass(Contribution.class);
         criteria.add(Restrictions.eq(ContributionField.threadId.getFieldChain(), threadId));
 
-        return (List<Contribution>) getHibernateTemplate().findByCriteria(criteria);
+        return getHibernateTemplate().findByCriteria(criteria);
     }
 
     @Override
@@ -52,7 +52,7 @@ public class ContributionDaoImpl extends HibernateDaoSupport implements Contribu
             int maxResultSize) {
         String query = String.format("FROM %s c ORDER BY c.%s %s", PersistedClass.Contribution.name(),
                 sortField.name(), sortDirection.getDatabaseCode());
-        List<Contribution> contributionsFromDb = (List<Contribution>) getHibernateTemplate().find(query);
+        List<Contribution> contributionsFromDb = getHibernateTemplate().find(query);
         return contributionsFromDb.subList(0, Math.min(contributionsFromDb.size(), maxResultSize));
     }
 
@@ -63,7 +63,7 @@ public class ContributionDaoImpl extends HibernateDaoSupport implements Contribu
         String query = String.format("FROM %s c WHERE c.%s = ? ORDER BY c.%s %s",
                 PersistedClass.Contribution.name(), ContributionField.threadId.getFieldChain(),
                 sortField.name(), sortDirection.getDatabaseCode());
-        return (List<Contribution>) getHibernateTemplate().find(query, threadId);
+        return getHibernateTemplate().find(query, threadId);
     }
 
     @Override

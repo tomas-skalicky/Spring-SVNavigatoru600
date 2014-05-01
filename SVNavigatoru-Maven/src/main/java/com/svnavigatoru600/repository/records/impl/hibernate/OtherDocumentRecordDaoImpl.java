@@ -53,7 +53,7 @@ public class OtherDocumentRecordDaoImpl extends HibernateDaoSupport implements O
     public List<OtherDocumentRecord> findAllOrdered(OrderType order) {
         String query = String.format("FROM %s r ORDER BY r.%s %s", PersistedClass.OtherDocumentRecord.name(),
                 OtherDocumentRecordField.creationTime.name(), order.getDatabaseCode());
-        return (List<OtherDocumentRecord>) getHibernateTemplate().find(query);
+        return getHibernateTemplate().find(query);
     }
 
     @Override
@@ -64,7 +64,7 @@ public class OtherDocumentRecordDaoImpl extends HibernateDaoSupport implements O
                 PersistedClass.OtherDocumentRecord.name(),
                 OtherDocumentRecordTypeRelationField.type.getFieldChain(),
                 OtherDocumentRecordField.creationTime.name(), order.getDatabaseCode());
-        return (List<OtherDocumentRecord>) getHibernateTemplate().find(query, type.name());
+        return getHibernateTemplate().find(query, type.name());
     }
 
     @Override
