@@ -22,14 +22,18 @@
 		</layout>
 	</appender>
 
+    <logger name="com.svnavigatoru600" additivity="true">
+        <level value="info" />
+    </logger>
+
 	<logger name="org.springframework.security" additivity="true">
 		<level value="info" />
-		<appender-ref ref="logfile" />
 	</logger>
 
 	<root>
 		<priority value="warn" />
 		<appender-ref ref="stdout" />
+        <appender-ref ref="logfile"/>
 	</root>
 
 </log4j:configuration>

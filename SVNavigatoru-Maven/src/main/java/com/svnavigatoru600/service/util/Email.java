@@ -81,6 +81,8 @@ public final class Email {
         }
 
         String subjectWithDiacritics = Localization.stripCzechDiacritics(subject);
+        LOGGER.info(String.format("Sending email to %s, smtpPort=%d, subject='%s', messageText='%s'",
+                recipient, smtpPort, subjectWithDiacritics, messageText));
         Email.sendMailWithoutSSL(recipient, subjectWithDiacritics, messageText, smtpPort);
         // Email.sendMailViaSSL(recipient, subjectWithDiacritics, messageText);
         // Email.sendMailViaTLS(recipient, subjectWithDiacritics, messageText);
