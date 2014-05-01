@@ -27,14 +27,16 @@
         <repository>
             <id>nexus-deployment</id>
             <name>Nexus Releases</name>
-            <!--<url>dav:http://localhost:9080/nexus/content/repositories/releases</url> -->
-            <url>dav:http://localhost:9180/content/repositories/releases</url>
+            <!--<url>dav:http://localhost:9080/nexus/content/repositories/releases</url>-->
+            <!--<url>dav:http://localhost:9180/content/repositories/releases</url>-->
+            <url>dav:http://192.241.179.41:9180/content/repositories/releases</url>
         </repository>
         <snapshotRepository>
             <id>nexus-deployment</id>
             <name>Nexus Snapshots</name>
-            <!--<url>dav:http://localhost:9080/nexus/content/repositories/snapshots</url> -->
-            <url>dav:http://localhost:9180/content/repositories/snapshots</url>
+            <!--<url>dav:http://localhost:9080/nexus/content/repositories/snapshots</url>-->
+            <!--<url>dav:http://localhost:9180/content/repositories/snapshots</url>-->
+            <url>dav:http://192.241.179.41:9180/content/repositories/snapshots</url>
         </snapshotRepository>
     </distributionManagement>
 
