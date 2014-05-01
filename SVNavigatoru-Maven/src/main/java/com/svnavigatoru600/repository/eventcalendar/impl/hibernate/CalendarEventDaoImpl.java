@@ -41,7 +41,7 @@ public class CalendarEventDaoImpl extends HibernateDaoSupport implements Calenda
         String query = String.format("FROM %s e WHERE e.%s >= ? ORDER BY e.%s %s",
                 PersistedClass.CalendarEvent.name(), CalendarEventField.date.name(),
                 CalendarEventField.date.name(), sortDirection.getDatabaseCode());
-        return (List<CalendarEvent>) getHibernateTemplate().find(query, earliestDate);
+        return getHibernateTemplate().find(query, earliestDate);
     }
 
     @Override

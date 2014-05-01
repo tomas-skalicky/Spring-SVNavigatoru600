@@ -35,7 +35,7 @@ public class ThreadDaoImpl extends HibernateDaoSupport implements ThreadDao {
 
     @Override
     public List<Thread> loadAll() {
-        return (List<Thread>) getHibernateTemplate().loadAll(Thread.class);
+        return getHibernateTemplate().loadAll(Thread.class);
     }
 
     @Override

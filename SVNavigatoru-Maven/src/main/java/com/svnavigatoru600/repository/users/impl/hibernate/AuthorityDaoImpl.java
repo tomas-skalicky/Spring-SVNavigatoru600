@@ -38,7 +38,7 @@ public class AuthorityDaoImpl extends HibernateDaoSupport implements AuthorityDa
         DetachedCriteria criteria = DetachedCriteria.forClass(Authority.class);
         criteria.add(Restrictions.eq(AuthorityField.username.getFieldChain(), username));
 
-        return (List<Authority>) getHibernateTemplate().findByCriteria(criteria);
+        return getHibernateTemplate().findByCriteria(criteria);
     }
 
     @Override
@@ -59,7 +59,7 @@ public class AuthorityDaoImpl extends HibernateDaoSupport implements AuthorityDa
         DetachedCriteria criteria = DetachedCriteria.forClass(Authority.class);
         criteria.add(Restrictions.eq(AuthorityField.username.getFieldChain(), username));
 
-        getHibernateTemplate().deleteAll((List<Authority>) getHibernateTemplate().findByCriteria(criteria));
+        getHibernateTemplate().deleteAll(getHibernateTemplate().findByCriteria(criteria));
     }
 
     @Override
@@ -69,6 +69,6 @@ public class AuthorityDaoImpl extends HibernateDaoSupport implements AuthorityDa
         criteria.add(Restrictions.eq(AuthorityField.username.getFieldChain(), username));
         criteria.add(Restrictions.eq(AuthorityField.authority.getFieldChain(), authorityType.name()));
 
-        getHibernateTemplate().deleteAll((List<Authority>) getHibernateTemplate().findByCriteria(criteria));
+        getHibernateTemplate().deleteAll(getHibernateTemplate().findByCriteria(criteria));
     }
 }
