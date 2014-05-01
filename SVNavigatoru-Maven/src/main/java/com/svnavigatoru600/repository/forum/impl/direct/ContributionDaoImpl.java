@@ -7,9 +7,11 @@ import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
+import javax.sql.DataSource;
 
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcDaoSupport;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
+import org.springframework.stereotype.Repository;
 
 import com.svnavigatoru600.domain.forum.Contribution;
 import com.svnavigatoru600.repository.forum.ContributionDao;
@@ -23,23 +25,27 @@ import com.svnavigatoru600.service.util.OrderType;
 /**
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
+@Repository("contributionDao")
 public class ContributionDaoImpl extends NamedParameterJdbcDaoSupport implements ContributionDao {
 
     /**
      * Database table which provides a persistence of {@link Contribution Contributions}.
      */
     private static final String TABLE_NAME = PersistedClass.Contribution.getTableName();
+
+    @Inject
     private ThreadDao threadDao;
+
+    @Inject
     private UserDao userDao;
 
+    /**
+     * NOTE: Added because of the final setter.
+     */
     @Inject
-    public void setThreadDao(ThreadDao threadDao) {
-        this.threadDao = threadDao;
-    }
-
-    @Inject
-    public void setUserDao(UserDao userDao) {
-        this.userDao = userDao;
+    public ContributionDaoImpl(DataSource dataSource) {
+        super();
+        setDataSource(dataSource);
     }
 
     /**

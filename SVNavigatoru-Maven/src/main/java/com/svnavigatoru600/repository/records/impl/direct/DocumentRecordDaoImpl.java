@@ -4,11 +4,13 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.inject.Inject;
 import javax.sql.DataSource;
 
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcDaoSupport;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
+import org.springframework.stereotype.Repository;
 
 import com.svnavigatoru600.domain.records.AbstractDocumentRecord;
 import com.svnavigatoru600.repository.impl.PersistedClass;
@@ -17,12 +19,22 @@ import com.svnavigatoru600.repository.records.impl.DocumentRecordField;
 /**
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
+@Repository("documentRecordDao")
 public class DocumentRecordDaoImpl extends NamedParameterJdbcDaoSupport {
 
     /**
      * Database table which provides a persistence of {@link AbstractDocumentRecord AbstractDocumentRecords}.
      */
     private static final String TABLE_NAME = PersistedClass.AbstractDocumentRecord.getTableName();
+
+    /**
+     * NOTE: Added because of the final setter.
+     */
+    @Inject
+    public DocumentRecordDaoImpl(DataSource dataSource) {
+        super();
+        setDataSource(dataSource);
+    }
 
     /**
      * Maps properties of the given {@link AbstractDocumentRecord} to names of the corresponding database

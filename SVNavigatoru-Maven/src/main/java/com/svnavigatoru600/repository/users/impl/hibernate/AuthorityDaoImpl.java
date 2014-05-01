@@ -3,10 +3,14 @@ package com.svnavigatoru600.repository.users.impl.hibernate;
 import java.util.Collection;
 import java.util.List;
 
+import javax.inject.Inject;
+
+import org.hibernate.SessionFactory;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.stereotype.Repository;
 
 import com.svnavigatoru600.domain.users.Authority;
 import com.svnavigatoru600.domain.users.AuthorityType;
@@ -16,7 +20,17 @@ import com.svnavigatoru600.repository.users.impl.AuthorityField;
 /**
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
+@Repository("authorityDao")
 public class AuthorityDaoImpl extends HibernateDaoSupport implements AuthorityDao {
+
+    /**
+     * NOTE: Added because of the final setter.
+     */
+    @Inject
+    public AuthorityDaoImpl(SessionFactory sessionFactory) {
+        super();
+        setSessionFactory(sessionFactory);
+    }
 
     @Override
     @SuppressWarnings("unchecked")

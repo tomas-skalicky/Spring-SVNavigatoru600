@@ -5,7 +5,9 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import org.hibernate.SessionFactory;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
+import org.springframework.stereotype.Repository;
 
 import com.svnavigatoru600.domain.records.AbstractDocumentRecord;
 import com.svnavigatoru600.domain.records.OtherDocumentRecord;
@@ -20,13 +22,19 @@ import com.svnavigatoru600.service.util.OrderType;
 /**
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
+@Repository("otherDocumentRecordDao")
 public class OtherDocumentRecordDaoImpl extends HibernateDaoSupport implements OtherDocumentRecordDao {
 
+    @Inject
     private OtherDocumentRecordTypeRelationDao typeDao;
 
+    /**
+     * NOTE: Added because of the final setter.
+     */
     @Inject
-    public void setOtherDocumentRecordTypeRelationDao(OtherDocumentRecordTypeRelationDao typeDao) {
-        this.typeDao = typeDao;
+    public OtherDocumentRecordDaoImpl(SessionFactory sessionFactory) {
+        super();
+        setSessionFactory(sessionFactory);
     }
 
     @Override

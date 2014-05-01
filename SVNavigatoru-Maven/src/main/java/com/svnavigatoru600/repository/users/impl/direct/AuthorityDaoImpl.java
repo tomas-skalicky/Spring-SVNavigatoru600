@@ -6,9 +6,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.inject.Inject;
+import javax.sql.DataSource;
+
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcDaoSupport;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.stereotype.Repository;
 
 import com.svnavigatoru600.domain.users.Authority;
 import com.svnavigatoru600.domain.users.AuthorityId;
@@ -20,12 +24,22 @@ import com.svnavigatoru600.repository.users.impl.AuthorityField;
 /**
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
+@Repository("authorityDao")
 public class AuthorityDaoImpl extends NamedParameterJdbcDaoSupport implements AuthorityDao {
 
     /**
      * Database table which provides a persistence of {@link Authority Authorities}.
      */
     private static final String TABLE_NAME = PersistedClass.Authority.getTableName();
+
+    /**
+     * NOTE: Added because of the final setter.
+     */
+    @Inject
+    public AuthorityDaoImpl(DataSource dataSource) {
+        super();
+        setDataSource(dataSource);
+    }
 
     @Override
     public List<Authority> findAll(String username) {

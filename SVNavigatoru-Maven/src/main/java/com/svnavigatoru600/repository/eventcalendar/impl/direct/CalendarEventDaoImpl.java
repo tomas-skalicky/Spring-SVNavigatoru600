@@ -6,8 +6,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.inject.Inject;
+import javax.sql.DataSource;
+
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcDaoSupport;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
+import org.springframework.stereotype.Repository;
 
 import com.svnavigatoru600.domain.eventcalendar.CalendarEvent;
 import com.svnavigatoru600.repository.CalendarEventDao;
@@ -16,16 +20,24 @@ import com.svnavigatoru600.repository.impl.PersistedClass;
 import com.svnavigatoru600.service.util.OrderType;
 
 /**
- * The "@Repository" annotation cannot be used. Otherwise, the XML descriptor
- * model-beans/event-calendar/CalendarEvent-direct.xml is not used and the dataSource attribute is not set up.
- * If we want to use the annotation, we cannot use the XML descriptor at all for a particular bean.
+ * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
+@Repository("calendarEventDao")
 public class CalendarEventDaoImpl extends NamedParameterJdbcDaoSupport implements CalendarEventDao {
 
     /**
      * Database table which provides a persistence of {@link CalendarEvent CalendarEvents}.
      */
     private static final String TABLE_NAME = PersistedClass.CalendarEvent.getTableName();
+
+    /**
+     * NOTE: Added because of the final setter.
+     */
+    @Inject
+    public CalendarEventDaoImpl(DataSource dataSource) {
+        super();
+        setDataSource(dataSource);
+    }
 
     @Override
     public CalendarEvent findById(int eventId) {

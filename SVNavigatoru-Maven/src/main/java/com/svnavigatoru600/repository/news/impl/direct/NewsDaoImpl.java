@@ -6,8 +6,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.inject.Inject;
+import javax.sql.DataSource;
+
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcDaoSupport;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
+import org.springframework.stereotype.Repository;
 
 import com.svnavigatoru600.domain.News;
 import com.svnavigatoru600.repository.NewsDao;
@@ -18,12 +22,22 @@ import com.svnavigatoru600.repository.news.impl.NewsField;
 /**
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
+@Repository("newsDao")
 public class NewsDaoImpl extends NamedParameterJdbcDaoSupport implements NewsDao {
 
     /**
      * Database table which provides a persistence of {@link News}.
      */
     private static final String TABLE_NAME = PersistedClass.News.getTableName();
+
+    /**
+     * NOTE: Added because of the final setter.
+     */
+    @Inject
+    public NewsDaoImpl(DataSource dataSource) {
+        super();
+        setDataSource(dataSource);
+    }
 
     @Override
     public News findById(int newsId) {

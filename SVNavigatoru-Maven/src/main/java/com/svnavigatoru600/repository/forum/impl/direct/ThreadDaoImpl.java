@@ -7,9 +7,11 @@ import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
+import javax.sql.DataSource;
 
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcDaoSupport;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
+import org.springframework.stereotype.Repository;
 
 import com.svnavigatoru600.domain.forum.Contribution;
 import com.svnavigatoru600.domain.forum.Thread;
@@ -23,23 +25,27 @@ import com.svnavigatoru600.repository.users.impl.direct.UserDaoImpl;
 /**
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
+@Repository("threadDao")
 public class ThreadDaoImpl extends NamedParameterJdbcDaoSupport implements ThreadDao {
 
     /**
      * Database table which provides a persistence of {@link Thread Threads}.
      */
     private static final String TABLE_NAME = PersistedClass.Thread.getTableName();
+
+    @Inject
     private ContributionDao contributionDao;
+
+    @Inject
     private UserDao userDao;
 
+    /**
+     * NOTE: Added because of the final setter.
+     */
     @Inject
-    public void setContributionDao(ContributionDao contributionDao) {
-        this.contributionDao = contributionDao;
-    }
-
-    @Inject
-    public void setUserDao(UserDao userDao) {
-        this.userDao = userDao;
+    public ThreadDaoImpl(DataSource dataSource) {
+        super();
+        setDataSource(dataSource);
     }
 
     @Override

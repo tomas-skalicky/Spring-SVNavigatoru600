@@ -9,10 +9,12 @@ import java.util.Map;
 import java.util.Set;
 
 import javax.inject.Inject;
+import javax.sql.DataSource;
 
 import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcDaoSupport;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
+import org.springframework.stereotype.Repository;
 
 import com.svnavigatoru600.domain.records.AbstractDocumentRecord;
 import com.svnavigatoru600.domain.records.OtherDocumentRecord;
@@ -29,6 +31,7 @@ import com.svnavigatoru600.service.util.OrderType;
 /**
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
+@Repository("otherDocumentRecordDao")
 public class OtherDocumentRecordDaoImpl extends NamedParameterJdbcDaoSupport implements
         OtherDocumentRecordDao {
 
@@ -60,12 +63,19 @@ public class OtherDocumentRecordDaoImpl extends NamedParameterJdbcDaoSupport imp
             PersistedClass.AbstractDocumentRecord.getTableName(), DocumentRecordField.id.getColumnName(),
             OtherDocumentRecordField.id.getColumnName());
 
-    private final DocumentRecordDaoImpl documentRecordDao = new DocumentRecordDaoImpl();
-    private OtherDocumentRecordTypeRelationDao typeDao;
+    @Inject
+    private DocumentRecordDaoImpl documentRecordDao;
 
     @Inject
-    public void setOtherDocumentRecordTypeRelationDao(OtherDocumentRecordTypeRelationDao typeDao) {
-        this.typeDao = typeDao;
+    private OtherDocumentRecordTypeRelationDao typeDao;
+
+    /**
+     * NOTE: Added because of the final setter.
+     */
+    @Inject
+    public OtherDocumentRecordDaoImpl(DataSource dataSource) {
+        super();
+        setDataSource(dataSource);
     }
 
     /**

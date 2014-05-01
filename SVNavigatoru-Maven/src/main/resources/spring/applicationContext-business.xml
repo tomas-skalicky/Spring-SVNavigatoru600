@@ -16,8 +16,6 @@
 
     <!-- Beans Declaration -->
     <!-- <import resource="mybatis.xml" /> -->
-    <import resource="model-beans/model-beans-direct.xml" />
-    <!-- <import resource="model-beans/model-beans-hibernate.xml"/> -->
 
 
 
@@ -25,6 +23,8 @@
     <context:component-scan base-package="com.svnavigatoru600" annotation-config="true">
         <context:exclude-filter expression="org.springframework.stereotype.Controller"
             type="annotation" />
+        <!-- Persistence is provided by DAOs without Hibernate. -->
+        <context:exclude-filter type="regex" expression=".*\.hibernate\..*"/>
     </context:component-scan>
 
     <!-- Registers the default AutowiredAnnotationBeanPostProcessor which handles @Autowired and other annotations. -->

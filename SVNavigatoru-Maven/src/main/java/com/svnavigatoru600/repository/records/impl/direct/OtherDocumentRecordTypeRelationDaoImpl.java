@@ -6,8 +6,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.inject.Inject;
+import javax.sql.DataSource;
+
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcDaoSupport;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
+import org.springframework.stereotype.Repository;
 
 import com.svnavigatoru600.domain.records.OtherDocumentRecordTypeRelation;
 import com.svnavigatoru600.domain.records.OtherDocumentRecordTypeRelationId;
@@ -18,6 +22,7 @@ import com.svnavigatoru600.repository.records.impl.OtherDocumentRecordTypeRelati
 /**
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
+@Repository("otherDocumentRecordTypeRelationDao")
 public class OtherDocumentRecordTypeRelationDaoImpl extends NamedParameterJdbcDaoSupport implements
         OtherDocumentRecordTypeRelationDao {
 
@@ -26,6 +31,15 @@ public class OtherDocumentRecordTypeRelationDaoImpl extends NamedParameterJdbcDa
      * OtherDocumentRecordTypeRelations}.
      */
     private static final String TABLE_NAME = PersistedClass.OtherDocumentRecordTypeRelation.getTableName();
+
+    /**
+     * NOTE: Added because of the final setter.
+     */
+    @Inject
+    public OtherDocumentRecordTypeRelationDaoImpl(DataSource dataSource) {
+        super();
+        setDataSource(dataSource);
+    }
 
     @Override
     public List<OtherDocumentRecordTypeRelation> findAll(int recordId) {

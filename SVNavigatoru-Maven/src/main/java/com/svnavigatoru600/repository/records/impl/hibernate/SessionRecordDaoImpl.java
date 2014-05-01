@@ -2,7 +2,11 @@ package com.svnavigatoru600.repository.records.impl.hibernate;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
+import org.hibernate.SessionFactory;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
+import org.springframework.stereotype.Repository;
 
 import com.svnavigatoru600.domain.records.AbstractDocumentRecord;
 import com.svnavigatoru600.domain.records.SessionRecord;
@@ -15,7 +19,17 @@ import com.svnavigatoru600.service.util.OrderType;
 /**
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
+@Repository("sessionRecordDao")
 public class SessionRecordDaoImpl extends HibernateDaoSupport implements SessionRecordDao {
+
+    /**
+     * NOTE: Added because of the final setter.
+     */
+    @Inject
+    public SessionRecordDaoImpl(SessionFactory sessionFactory) {
+        super();
+        setSessionFactory(sessionFactory);
+    }
 
     @Override
     public SessionRecord findById(int recordId) {
