@@ -1,5 +1,6 @@
 package com.svnavigatoru600.web.forum.threads;
 
+import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
@@ -110,5 +111,30 @@ public final class EditThreadControllerTest {
         // Verifies mocked calls
         verify(this.threadService).canEdit(threadId);
         verify(this.threadService).findById(threadId);
+    }
+
+    @Test
+    public void testProcessSubmittedForm() throws Exception {
+        final int threadId = 9393931;
+
+        // Mocks calls to business logic
+        doNothing().when(this.threadService).canEdit(threadId);
+        when(this.threadService.findById(threadId)).thenReturn(new Thread.Builder().withId(threadId).build());
+        doNothing().when(this.threadService).update(any(Thread.class), any(Thread.class));
+
+        // @formatter:off
+        this.mockMvc.perform(post(ThreadsUrlParts.EXISTING_URL + threadId + "/")
+                .accept(MediaType.TEXT_HTML))
+                .andExpect(status().isOk())
+                .andExpect(forwardedUrl("page-for-redirection"))
+                .andExpect(model().errorCount(0))
+                .andExpect(model().attribute("redirectTo", "/forum/temata/existujici/9393931/ulozeno/"))
+                .andDo(print());
+        // @formatter:on
+
+        // Verifies mocked calls
+        verify(this.threadService).canEdit(threadId);
+        verify(this.threadService).findById(threadId);
+        verify(this.threadService).update(any(Thread.class), any(Thread.class));
     }
 }

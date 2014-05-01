@@ -90,7 +90,7 @@ public class EditThreadController extends AbstractNewEditThreadController {
 
             // Returns the form success view.
             model.addAttribute(AbstractMetaController.REDIRECTION_ATTRIBUTE, String.format("%s%d/%s",
-                    CommonUrlParts.EXISTING_EXTENSION, threadId, CommonUrlParts.SAVED_EXTENSION));
+                    ThreadsUrlParts.EXISTING_URL, threadId, CommonUrlParts.SAVED_EXTENSION));
             return AbstractMetaController.REDIRECTION_PAGE;
 
         } catch (DataAccessException e) {
