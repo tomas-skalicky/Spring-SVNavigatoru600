@@ -7,6 +7,19 @@
 # author: Tomas Skalicky
 #######
 
+# JDK 8 starts a javadoc check which fails -> we need JDK 6 or JDK 7
+JAVA_HOME_BACKUP="$JAVA_HOME"
+
+if [ -n "$JDK7_HOME" ]; then
+	JAVA_HOME="$JDK7_HOME"
+else
+	echo -e "\nERROR: you have to set JDK7_HOME environment variable.\n"
+	exit -1
+fi
+echo "INFO: Current JAVA_HOME is $JAVA_HOME"
+
+
+
 PROJECT_HOME=".."
 cd -P $PROJECT_HOME
 PROJECT_HOME=`pwd`

@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # JDK 8 starts a javadoc check which fails -> we need JDK 6 or JDK 7
 JAVA_HOME_BACKUP="$JAVA_HOME"
 
