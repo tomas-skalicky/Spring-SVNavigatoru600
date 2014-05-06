@@ -22,7 +22,7 @@
 		</layout>
 	</appender>
 
-    <logger name="com.svnavigatoru600" additivity="true">
+    <logger name="com.svnavigatoru600.service.util.Email" additivity="true">
         <level value="info" />
     </logger>
 
