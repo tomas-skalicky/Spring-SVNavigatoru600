@@ -32,11 +32,11 @@ public final class Email {
     // DO NOT FORGET to change the implementation of the sendMail function if
     // you change these constants.
     // private static final String USERNAME = "";
-    // private static final String PASSWORD = "";
-    // private static final String HOST = "smtp.gmail.com";
+    private static final String PASSWORD = "Wa=az2chepHaH+q";
+    private static final String HOST = "smtp.gmail.com";
     private static final String USERNAME = "admin@svnavigatoru600.com";
-    private static final String PASSWORD = "bx0477280577";
-    private static final String HOST = "mail.svnavigatoru600.com";
+    // private static final String PASSWORD = "bx0477280577";
+    // private static final String HOST = "mail.svnavigatoru600.com";
     private static final int SSL_PORT = 465;
     private static final int TLS_PORT = 587;
     private static final String PROTOCOL = "smtp";
@@ -83,8 +83,8 @@ public final class Email {
         String subjectWithDiacritics = Localization.stripCzechDiacritics(subject);
         LOGGER.info(String.format("Sending email to %s, smtpPort=%d, subject='%s', messageText='%s'",
                 recipient, smtpPort, subjectWithDiacritics, messageText));
-        Email.sendMailWithoutSSL(recipient, subjectWithDiacritics, messageText, smtpPort);
-        // Email.sendMailViaSSL(recipient, subjectWithDiacritics, messageText);
+        // Email.sendMailWithoutSSL(recipient, subjectWithDiacritics, messageText, smtpPort);
+        Email.sendMailViaSSL(recipient, subjectWithDiacritics, messageText);
         // Email.sendMailViaTLS(recipient, subjectWithDiacritics, messageText);
     }
 
