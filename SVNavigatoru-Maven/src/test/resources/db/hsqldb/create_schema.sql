@@ -26,6 +26,8 @@ CREATE TABLE users (
 	smtp_port INTEGER DEFAULT 2525 NOT NULL,
 	CONSTRAINT email_validator CHECK (email LIKE '_%@_%._%')
 );
+ALTER TABLE users ADD COLUMN redirect_email VARCHAR(100) UNIQUE;
+ALTER TABLE users ADD CONSTRAINT redirect_email_validator CHECK (email LIKE '_%@_%._%');
 
 CREATE TABLE authorities (
 	username VARCHAR(50) NOT NULL,
