@@ -313,6 +313,18 @@
                         <update>true</update>
                     </configuration>
                 </plugin>
+
+                <plugin>
+                    <groupId>org.flywaydb</groupId>
+                    <artifactId>flyway-maven-plugin</artifactId>
+                    <version>3.0</version>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.tomcat.maven</groupId>
+                    <artifactId>maven-resources-plugin</artifactId>
+                    <version>2.6</version>
+                </plugin>
             </plugins>
         </pluginManagement>
     </build>
@@ -897,6 +909,55 @@
 	
 	
 	<profiles>
+        <!-- For local run with exploded WAR file -->
+        <profile>
+            <id>local</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-resources-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>copy-resources</id>
+                                <!-- here the phase you need -->
+                                <phase>validate</phase>
+                                <goals>
+                                    <goal>copy-resources</goal>
+                                </goals>
+                                <configuration>
+                                    <outputDirectory>${basedir}/src/main/webapp/WEB-INF/classes</outputDirectory>
+                                    <resources>
+                                        <resource>
+                                            <directory>src/main/resources</directory>
+                                        </resource>
+                                    </resources>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.flywaydb</groupId>
+                        <artifactId>flyway-maven-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>during-compilation</id>
+                                <phase>compile</phase>
+                                <goals>
+                                    <goal>migrate</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <url>jdbc:mysql://localhost:3306/skalicky_sv_navigatoru</url>
+                            <user>root</user>
+                            <password>password</password>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
 		<!--
 			This profile is used to launch integration tests with the failsafe plugin
 

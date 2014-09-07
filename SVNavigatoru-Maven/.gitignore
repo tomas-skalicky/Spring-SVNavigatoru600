@@ -3,6 +3,8 @@
 #####
 *.class
 target/
+# It's there due to run with exploaded WAR file
+src/main/webapp/WEB-INF/classes/
 
 
 
