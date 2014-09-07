@@ -932,25 +932,6 @@
                         </configuration>
                     </plugin>
                     <plugin>
-                        <groupId>org.codehaus.mojo</groupId>
-                        <artifactId>properties-maven-plugin</artifactId>
-                        <version>${plugin.properties-maven-plugin.version}</version>
-                        <executions>
-                            <execution>
-                                <!-- This phase is OK. It is a problem of the m2e eclipse plugin. -->
-                                <phase>initialize</phase>
-                                <goals>
-                                    <goal>read-project-properties</goal>
-                                </goals>
-                                <configuration>
-                                    <files>
-                                        <file>src/main/resources/jdbc.properties</file>
-                                    </files>
-                                </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
-                    <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-resources-plugin</artifactId>
                         <executions>
@@ -968,6 +949,34 @@
                                             <directory>src/main/resources</directory>
                                         </resource>
                                     </resources>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <!-- Can be used locally and in Jenkins (if the latter is configured), but definitely NOT in production -->
+        <profile>
+            <id>flyway</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>properties-maven-plugin</artifactId>
+                        <version>${plugin.properties-maven-plugin.version}</version>
+                        <executions>
+                            <execution>
+                                <!-- This phase is OK. It is a problem of the m2e eclipse plugin. -->
+                                <phase>initialize</phase>
+                                <goals>
+                                    <goal>read-project-properties</goal>
+                                </goals>
+                                <configuration>
+                                    <files>
+                                        <file>src/main/resources/jdbc.properties</file>
+                                    </files>
                                 </configuration>
                             </execution>
                         </executions>
