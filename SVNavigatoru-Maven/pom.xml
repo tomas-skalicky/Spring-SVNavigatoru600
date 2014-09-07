@@ -555,6 +555,11 @@
             <groupId>xom</groupId>
             <artifactId>xom</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis</artifactId>
+        </dependency>
     </dependencies>
 
 
@@ -729,6 +734,13 @@
                 <artifactId>mockito-all</artifactId>
                 <version>1.9.5</version>
                 <scope>test</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.mybatis</groupId>
+                <artifactId>mybatis</artifactId>
+                <version>3.1.1</version>
+                <scope>compile</scope>
             </dependency>
 
             <dependency>
