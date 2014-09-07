@@ -7,12 +7,10 @@ import org.springframework.security.core.GrantedAuthority;
 
 import com.svnavigatoru600.domain.users.Authority;
 import com.svnavigatoru600.domain.users.AuthorityType;
-import com.svnavigatoru600.repository.MapperInterface;
 
 /**
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
-@MapperInterface
 public interface AuthorityDao {
 
     /**
