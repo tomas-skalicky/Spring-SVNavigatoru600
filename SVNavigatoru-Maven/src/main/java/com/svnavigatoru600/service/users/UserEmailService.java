@@ -47,7 +47,7 @@ public class UserEmailService extends AbstractEmailService {
      */
     public void sendEmailOnUserCreation(User newUser, String newPassword, HttpServletRequest request,
             MessageSource messageSource) {
-        String email = newUser.getEmail();
+        final String email = newUser.getEmail();
 
         String subject = Localization.findLocaleMessage(messageSource, request,
                 UserEmailService.EMAIL_SUBJECT_NEW_USER_CODE);
@@ -65,7 +65,7 @@ public class UserEmailService extends AbstractEmailService {
         String messageText = Localization.findLocaleMessage(messageSource, request,
                 UserEmailService.EMAIL_TEXT_NEW_USER_CODE, messageParams);
 
-        Email.sendMail(email, subject, messageText, newUser.getSmtpPort());
+        Email.sendMail(newUser, subject, messageText);
     }
 
     /**
@@ -89,7 +89,7 @@ public class UserEmailService extends AbstractEmailService {
         String messageText = Localization.findLocaleMessage(messageSource, request,
                 UserEmailService.EMAIL_TEXT_PASSWORD_RESET_CODE, messageParams);
 
-        Email.sendMail(user.getEmail(), subject, messageText, user.getSmtpPort());
+        Email.sendMail(user, subject, messageText);
     }
 
     /**
@@ -109,7 +109,7 @@ public class UserEmailService extends AbstractEmailService {
         String messageText = Localization.findLocaleMessage(messageSource, request,
                 UserEmailService.EMAIL_TEXT_PASSWORD_CHANGED_CODE, messageParams);
 
-        Email.sendMail(user.getEmail(), subject, messageText, user.getSmtpPort());
+        Email.sendMail(user, subject, messageText);
     }
 
     /**
@@ -164,7 +164,7 @@ public class UserEmailService extends AbstractEmailService {
         String messageText = Localization.findLocaleMessage(messageSource, request,
                 UserEmailService.EMAIL_TEXT_AUTHORITIES_CHANGED_CODE, messageParams);
 
-        Email.sendMail(user.getEmail(), subject, messageText, user.getSmtpPort());
+        Email.sendMail(user, subject, messageText);
     }
 
     /**
@@ -185,6 +185,6 @@ public class UserEmailService extends AbstractEmailService {
         String messageText = Localization.findLocaleMessage(messageSource, request,
                 UserEmailService.EMAIL_TEXT_USER_DELETED_CODE, messageParams);
 
-        Email.sendMail(user.getEmail(), subject, messageText, user.getSmtpPort());
+        Email.sendMail(user, subject, messageText);
     }
 }

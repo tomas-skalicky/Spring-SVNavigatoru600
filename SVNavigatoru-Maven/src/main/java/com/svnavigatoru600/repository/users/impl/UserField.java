@@ -24,7 +24,8 @@ public enum UserField {
     subscribedToForum(UserColumn.forum_notifications),
     subscribedToOtherDocuments(UserColumn.other_document_notifications),
     subscribedToOtherSections(UserColumn.other_section_notifications),
-    smtpPort(UserColumn.smtp_port);
+    smtpPort(UserColumn.smtp_port),
+    redirectEmail(UserColumn.redirect_email);
     // @formatter:on
 
     /**
@@ -46,7 +47,23 @@ public enum UserField {
      */
     private enum UserColumn {
 
-        username, password, enabled, first_name, last_name, email, phone, is_test_user, news_notifications, event_notifications, forum_notifications, other_document_notifications, other_section_notifications, smtp_port
+        // @formatter:off
+        username,
+        password,
+        enabled,
+        first_name,
+        last_name,
+        email,
+        phone,
+        is_test_user,
+        news_notifications,
+        event_notifications,
+        forum_notifications,
+        other_document_notifications,
+        other_section_notifications,
+        smtp_port,
+        redirect_email
+        // @formatter:on
     }
 
     /**

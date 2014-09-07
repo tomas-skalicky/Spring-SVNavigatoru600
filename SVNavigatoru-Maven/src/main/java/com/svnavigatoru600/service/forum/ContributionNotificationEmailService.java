@@ -89,7 +89,7 @@ public class ContributionNotificationEmailService extends AbstractNotificationEm
             String messageText = Localization.findLocaleMessage(messageSource, request, textLocalizationCode,
                     messageParams);
 
-            Email.sendMail(user.getEmail(), subject, messageText, user.getSmtpPort());
+            Email.sendMail(user, subject, messageText);
         }
     }
 

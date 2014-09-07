@@ -13,6 +13,7 @@ import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 
+import com.svnavigatoru600.domain.users.User;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -65,6 +66,20 @@ public final class Email {
 		return !StringUtils.isBlank(email);
 	}
 
+    /**
+     * Sends an email to the recipient.
+     */
+    public static void sendMail(User recipient, String subject, String messageText) {
+        final String email;
+        if (StringUtils.isNotEmpty(recipient.getRedirectEmail())) {
+            email = recipient.getRedirectEmail();
+        } else {
+            email = recipient.getEmail();
+        }
+
+        sendMail(email, subject, messageText, recipient.getSmtpPort());
+    }
+
 	/**
 	 * Sends an email with the given arguments; no matter which way of sending (i.e. SSL, TLS, or something
 	 * else) is used. <b>Precondition:</b> The function assumes that the given <code>recipient</code>
@@ -75,7 +90,7 @@ public final class Email {
 	 * @param smtpPort
 	 *            25 or 2525
 	 */
-	public static void sendMail(String recipient, String subject, String messageText, int smtpPort) {
+	private static void sendMail(String recipient, String subject, String messageText, int smtpPort) {
 		if (!Email.isSpecified(recipient)) {
 			return;
 		}

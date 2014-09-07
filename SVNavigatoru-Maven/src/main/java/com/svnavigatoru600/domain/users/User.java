@@ -45,6 +45,12 @@ public class User implements UserDetails, Serializable {
     private String firstName;
     private String lastName;
     private String email;
+    /**
+     * If the server of recipient (=of this {@link User}) blocks emails from MochaHost,
+     * these emails are first sent to recipient's Gmail address (created by admin) and
+     * then this Gmail redirects automatically all emails to the recipient {@link User#email}.
+     */
+    private String redirectEmail;
     private String phone;
     private boolean isTestUser;
     /**
@@ -154,6 +160,14 @@ public class User implements UserDetails, Serializable {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getRedirectEmail() {
+        return redirectEmail;
+    }
+
+    public void setRedirectEmail(String redirectEmail) {
+        this.redirectEmail = redirectEmail;
     }
 
     public String getPhone() {

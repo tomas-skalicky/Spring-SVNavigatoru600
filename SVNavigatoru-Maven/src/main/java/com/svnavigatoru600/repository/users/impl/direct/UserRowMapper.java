@@ -34,6 +34,7 @@ public class UserRowMapper implements RowMapper<User> {
         user.setSubscribedToOtherDocuments(rs.getBoolean(UserField.subscribedToOtherDocuments.getColumnName()));
         user.setSubscribedToOtherSections(rs.getBoolean(UserField.subscribedToOtherSections.getColumnName()));
         user.setSmtpPort(rs.getInt(UserField.smtpPort.getColumnName()));
+        user.setRedirectEmail(rs.getString(UserField.redirectEmail.getColumnName()));
         return user;
     }
 }
