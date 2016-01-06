@@ -68,8 +68,8 @@
         <checkstyle.configLocation>D:/Documents/Private/SW/Eclipse/checkstyle.xml</checkstyle.configLocation>
 		
 		
-		<maven-surefire-plugin.version>2.17</maven-surefire-plugin.version>
-		<maven-failsafe-plugin.version>2.17</maven-failsafe-plugin.version>
+		<maven-surefire-plugin.version>2.19.1</maven-surefire-plugin.version>
+		<maven-failsafe-plugin.version>2.19.1</maven-failsafe-plugin.version>
 		<jacoco-maven-plugin.version>0.7.0.201403182114</jacoco-maven-plugin.version>
 
 		<!-- Sonar -->
@@ -255,7 +255,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-surefire-plugin</artifactId>
-                    <version>2.12.4</version>
+                    <version>${maven-surefire-plugin.version}</version>
                     <dependencies>
                         <dependency>
                             <!-- Necessary dependency. Otherwise, groups element does not work. The problem should 
