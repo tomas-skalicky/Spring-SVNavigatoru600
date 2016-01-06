@@ -33,7 +33,7 @@ cd "$BUILD_HOME"
 # Renames the package to the target name.
 MAVEN_PACKAGE_NAME=svnavigatoru600*.war
 TARGET_PACKAGE_NAME=ROOT.war
-mv "$MAVEN_PACKAGE_NAME" "$TARGET_PACKAGE_NAME"
+mv --verbose $MAVEN_PACKAGE_NAME "$TARGET_PACKAGE_NAME"
 
 
 # Unpacks the output package of the maven.
@@ -46,9 +46,9 @@ jar xf ../"$TARGET_PACKAGE_NAME"
 PATH_TO_JDBC_CONFIG=WEB-INF/classes
 ACTIVE_JDBC_CONFIG=$PATH_TO_JDBC_CONFIG/jdbc.properties
 PRODUCTION_JDBC_CONFIG=$PATH_TO_JDBC_CONFIG/jdbc-production.properties
-mv "$PRODUCTION_JDBC_CONFIG" "$ACTIVE_JDBC_CONFIG"
+mv --verbose "$PRODUCTION_JDBC_CONFIG" "$ACTIVE_JDBC_CONFIG"
 
 # Packs all files to create the desired output WAR file.
 jar cf "$TARGET_PACKAGE_NAME" *
-mv "$TARGET_PACKAGE_NAME" "$BUILD_HOME"/
+mv --verbose "$TARGET_PACKAGE_NAME" "$BUILD_HOME"/
 
