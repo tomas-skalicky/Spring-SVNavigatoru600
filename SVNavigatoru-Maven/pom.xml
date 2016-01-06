@@ -6,7 +6,7 @@
     <groupId>com</groupId>
     <artifactId>svnavigatoru600</artifactId>
     <packaging>war</packaging>
-    <version>1.0.7-SNAPSHOT</version>
+    <version>1.0.8-SNAPSHOT</version>
 
     <name>The SVNavigatoru600 web app</name>
     <url>http://svnavigatoru600.com</url>
