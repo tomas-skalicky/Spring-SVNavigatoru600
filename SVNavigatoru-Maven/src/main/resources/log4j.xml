@@ -4,36 +4,36 @@
 
 <log4j:configuration>
 
-	<appender name="stdout" class="org.apache.log4j.ConsoleAppender">
-		<!-- Target param determines which console stream to print messages to, System.out or System.err. -->
+    <appender name="stdout" class="org.apache.log4j.ConsoleAppender">
+        <!-- Target param determines which console stream to print messages to, System.out or System.err. -->
 
-		<layout class="org.apache.log4j.PatternLayout">
-			<param name="ConversionPattern" value="%d[%p,%c{1}] %m%n" />
-		</layout>
-	</appender>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d[%p,%c{1}] %m%n" />
+        </layout>
+    </appender>
 
-	<appender name="logfile" class="org.apache.log4j.RollingFileAppender">
-		<param name="File" value="${catalina.home}/logs/svnavigatoru600.log" />
-		<param name="MaxFileSize" value="10MB" />
-		<param name="MaxBackupIndex" value="10" />
+    <appender name="logfile" class="org.apache.log4j.RollingFileAppender">
+        <param name="File" value="${catalina.home}/logs/svnavigatoru600.log" />
+        <param name="MaxFileSize" value="10MB" />
+        <param name="MaxBackupIndex" value="10" />
 
-		<layout class="org.apache.log4j.PatternLayout">
-			<param name="ConversionPattern" value="%d{ABSOLUTE} %5p %c{1},%t:%L - %m%n" />
-		</layout>
-	</appender>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d{ABSOLUTE} %5p %c{1},%t:%L - %m%n" />
+        </layout>
+    </appender>
 
     <logger name="com.svnavigatoru600.service.util.Email" additivity="true">
         <level value="info" />
     </logger>
 
-	<logger name="org.springframework.security" additivity="true">
-		<level value="info" />
-	</logger>
+    <logger name="org.springframework.security" additivity="true">
+        <level value="info" />
+    </logger>
 
-	<root>
-		<priority value="warn" />
-		<appender-ref ref="stdout" />
+    <root>
+        <priority value="warn" />
+        <appender-ref ref="stdout" />
         <appender-ref ref="logfile"/>
-	</root>
+    </root>
 
 </log4j:configuration>
