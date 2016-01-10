@@ -1,0 +1,8 @@
+# 11:13:45,486 DEBUG C3P0PooledConnectionPool,com.mchange.v2.async.ThreadPoolAsynchronousRunner$PoolThread-#2:319 - There is a message...
+# %date %priority %categoryName,%threadName:%lineNumber - %logMessage
+SVNAVIGATORU_TOMCATLOG %{SVNAVIGATORU_ABSOLUTE_TIME:timestamp}[ ]+%{LOGLEVEL:logLevel} %{JAVACLASSNAME:categoryName},%{SVNAVIGATORU_THREADNAME:threadName}:%{NUMBER:lineNumber} - %{JAVALOGMESSAGE:logMessage}
+
+SVNAVIGATORU_ABSOLUTE_TIME %{HOUR}:?%{MINUTE}(?::?%{SECOND})
+SVNAVIGATORU_THREADNAME [a-zA-Z$_0-9\-\#\.\ \(\)]+
+JAVACLASSNAME [A-Za-z0-9$]+
+
