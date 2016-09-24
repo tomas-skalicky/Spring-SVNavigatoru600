@@ -11,7 +11,10 @@ src/main/webapp/WEB-INF/classes/
 #####
 # Some of the eclipse folders and files
 #####
+.classpath
 .metadata/
+.project
+.settings/
 Servers/
 
 
