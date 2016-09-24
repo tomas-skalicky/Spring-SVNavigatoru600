@@ -1,5 +1,5 @@
 This docker-elk is based on https://github.com/deviantony/docker-elk
-To get the updates, do git pull to ~/Documents/development/logging/source_files/docker-elk
+To get the updates, do git pull to ~/Documents/Dropbox/sw/logging/source_files/docker-elk
 and then copy desired updates to this folder.
 
 Logstash-forwarder
