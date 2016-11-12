@@ -3,16 +3,16 @@ package com.svnavigatoru600.repository.news.impl;
 import com.svnavigatoru600.service.util.OrderType;
 
 /**
- * Encapsulates arguments of the {@link com.svnavigatoru600.repository.NewsDao#findOrdered findOrdered} method
- * in order to pass just one argument to the method. It is the requirement of MyBatis.
- * 
+ * Encapsulates arguments of the {@link com.svnavigatoru600.repository.NewsDao#findAllOrdered findAllOrdered} method in
+ * order to pass just one argument to the method. It is the requirement of MyBatis.
+ *
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
 public class FindAllOrderedArguments {
 
     /**
-     * The field of the {@link com.svnavigatoru600.domain.News News} class according which the result records
-     * will be sorted.
+     * The field of the {@link com.svnavigatoru600.domain.News News} class according which the result records will be
+     * sorted.
      */
     private final NewsField sortField;
     /**
@@ -26,10 +26,11 @@ public class FindAllOrderedArguments {
     }
 
     public NewsField getSortField() {
-        return this.sortField;
+        return sortField;
     }
 
     public OrderType getSortDirection() {
-        return this.sortDirection;
+        return sortDirection;
     }
+
 }
