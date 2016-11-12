@@ -336,7 +336,7 @@
                      scripts/do_release.bash -->
                 <plugin>
                     <groupId>org.apache.tomcat.maven</groupId>
-                    <artifactId>maven-resources-plugin</artifactId>
+                    <artifactId>maven-javadoc-plugin</artifactId>
                     <version>2.10.4</version>
                 </plugin>
 
@@ -344,7 +344,7 @@
                      scripts/do_release.bash -->
                 <plugin>
                     <groupId>org.apache.tomcat.maven</groupId>
-                    <artifactId>maven-resources-plugin</artifactId>
+                    <artifactId>maven-source-plugin</artifactId>
                     <version>3.0.1</version>
                 </plugin>
             </plugins>
