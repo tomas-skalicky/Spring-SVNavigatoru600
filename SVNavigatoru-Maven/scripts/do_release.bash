@@ -2,8 +2,6 @@
 
 set -e
 
-echo "INFO: Current JAVA_HOME is $JAVA_HOME"
-
 # Tests whether all unit and integration tests are satisfied (except availability and Selenium tests)
 # If so, it performs release.
 (cd ../ \
