@@ -1,0 +1,22 @@
+1) Start the Sonatype Nexus
+   - Go to /home/tom/Documents/Dropbox/private/scripts/docker/sonatype_nexus
+   - Execute ./start_nexus.bash
+
+2) Start the Jenkins
+   - Go to /home/tom/Documents/Dropbox/private/scripts/docker/jenkins
+   - Execute ./start_jenkins_master.bash
+
+3) Execute tests on the command line (all should be successful):
+   - mvn verify -P coverage,run-integration-tests --debug -Dtests.category=com.svnavigatoru600.test.category.UnitTests
+   - mvn verify -P coverage,run-integration-tests --debug -Dtests.category=com.svnavigatoru600.test.category.PersistenceTests
+   - mvn verify -P coverage,run-integration-tests --debug -Dtests.category=com.svnavigatoru600.test.category.ControllerIntegrationTests
+
+4) Trigger a Jenkins job http://localhost:8080/job/svnavigatoru--unit-and-integration-tests/ which should be successful.
+
+5) Start the Tomcat locally by ./tomcat_debug.sh
+   - Prove it works by going on http://localhost:9080/svnavigatoru600
+
+6) Type mysql-workbench to start a database client
+
+7) Execute tail -F /home/tom/Documents/development/Java/SourceFiles/Spring/SVNavigatoru/SVNavigatoru-Maven/target/tomcat/logs/svnavigatoru600.log
+   to observe a log file.
