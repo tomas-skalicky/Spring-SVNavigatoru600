@@ -103,7 +103,9 @@
 
 		<!-- Filled by jacoco-maven-plugin -->
 		<jacoco.agent.ut.arg />
-		<jacoco.agent.it.arg />
+        <jacoco.agent.it.arg />
+
+        <maven.tomcat.port>9080</maven.tomcat.port>
     </properties>
 
 
@@ -316,7 +318,8 @@
                     <version>2.2</version>
                     <configuration>
                         <!-- (see http://tomcat.apache.org/tomcat-7.0-doc/manager-howto.html#Supported_Manager_Commands) -->
-                        <url>http://localhost:9080/manager/text</url>
+                        <url>http://localhost:${maven.tomcat.port}/manager/text</url>
+                        <port>${maven.tomcat.port}</port>
                         <path>/${project.build.finalName}</path>
                         <charset>${project.build.sourceEncoding}</charset>
                         <server>local_tomcat</server>
