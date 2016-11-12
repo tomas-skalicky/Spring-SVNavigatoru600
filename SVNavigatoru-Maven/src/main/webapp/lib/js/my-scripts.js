@@ -6,7 +6,7 @@
  * @param special
  *            If <code>true</code>, the special characters can be used in the
  *            resulting password. The parameter is optional.
- * @returns The generated password.
+ * @return The generated password.
  * @see The implementation comes from the URI
  *      http://jquery-howto.blogspot.com/2009/10/javascript-jquery-password-generator.html
  */

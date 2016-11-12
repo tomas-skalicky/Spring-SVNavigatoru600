@@ -4,7 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * Provides a set of static functions related to {@link HttpServletRequest HttpServletRequests}.
- * 
+ *
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
 public final class HttpRequestUtils {
@@ -18,8 +18,8 @@ public final class HttpRequestUtils {
      * Extracts the server name and port from the given {@link HttpServletRequest request}.
      * <p>
      * NOTE: Both of these parts (name and port) are always present.
-     * 
-     * @returns For instance <code>localhost:9980</code> or <code>www.svnavigatoru600.com:80</code>.
+     *
+     * @return For instance <code>localhost:9980</code> or <code>www.svnavigatoru600.com:80</code>.
      */
     public static String getServerNameAndPort(HttpServletRequest request) {
         String schema = request.getScheme();

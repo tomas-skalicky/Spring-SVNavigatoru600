@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com</groupId>
@@ -12,8 +13,7 @@
     <url>http://svnavigatoru600.com</url>
 
 
-    <!-- Jenkins's plugin called Multi SCMs contains a bug. As a result, the plugin cannot be used with multiple 
-        Git repositories, -->
+    <!-- Jenkins's plugin called Multi SCMs contains a bug. As a result, the plugin cannot be used with multiple Git repositories, -->
     <!-- hence the configuration of the my.distribution-management project is copied here. -->
     <!-- (see https://issues.jenkins-ci.org/browse/JENKINS-13634?page=com.atlassian.jira.plugin.system.issuetabpanels:all-tabpanel -->
     <!-- <parent> -->
@@ -28,13 +28,13 @@
             <name>Nexus Releases</name>
             <!-- Do NOT FORGET to start Nexus Sonatype locally -->
             <url>dav:http://localhost:9180/content/repositories/releases</url>
-            <!--<url>dav:http://192.241.179.41:9180/content/repositories/releases</url>-->
+            <!--<url>dav:http://192.241.179.41:9180/content/repositories/releases</url> -->
         </repository>
         <snapshotRepository>
             <id>nexus-deployment</id>
             <name>Nexus Snapshots</name>
             <url>dav:http://localhost:9180/content/repositories/snapshots</url>
-            <!--<url>dav:http://192.241.179.41:9180/content/repositories/snapshots</url>-->
+            <!--<url>dav:http://192.241.179.41:9180/content/repositories/snapshots</url> -->
         </snapshotRepository>
     </distributionManagement>
 
@@ -55,8 +55,8 @@
 
         <jdk.version>1.6</jdk.version>
 
-        <!-- Unless we set up an encoding, we would receive a warning during the compilation of this project via 
-            a "mvn" command. This warning is noticeable in Jenkins. -->
+        <!-- Unless we set up an encoding, we would receive a warning during the compilation of this project via a "mvn" 
+            command. This warning is noticeable in Jenkins. -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
         <!-- Versions of plugins and dependencies which are used more than once. -->
@@ -66,31 +66,25 @@
         <powermock.version>1.6.5</powermock.version>
 
         <checkstyle.configLocation>D:/Documents/Private/SW/Eclipse/checkstyle.xml</checkstyle.configLocation>
-        
-        
+
+
         <maven-surefire-plugin.version>2.19.1</maven-surefire-plugin.version>
         <maven-failsafe-plugin.version>2.19.1</maven-failsafe-plugin.version>
         <jacoco-maven-plugin.version>0.7.7.201606060606</jacoco-maven-plugin.version>
 
         <!-- Sonar -->
-        <!-- Sonar/Jacoco integration. Note that these properties need to be defined outside the "coverage" profile
-             because we want to be to able to execute mvn sonar:sonar without passing a profile -->
+        <!-- Sonar/Jacoco integration. Note that these properties need to be defined outside the "coverage" profile because 
+            we want to be to able to execute mvn sonar:sonar without passing a profile -->
         <!-- Tells Sonar to use jacoco for coverage results -->
         <sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
         <!-- The Sonar Jacoco Listener for JUnit to extract coverage details per test -->
         <sonar-jacoco-listeners.version>1.4</sonar-jacoco-listeners.version>
         <!-- Don't let Sonar execute tests. We will ask it to Maven -->
         <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
-        <!-- The system property jacoco.outputDir needs to be override on the command line
-            with an absolute path if you want to merge results from all modules.
-            Example in a Jenkisn build where ${WORKSPACE} is defined and your project in the root directory of the workspace :
-            mvn clean install -Prun-its,coverage -Djacoco.outputDir=${WORKSPACE}/target
-            Note that unfortunately using the following does not work because of
-
-            http://jira.codehaus.org/browse/SONAR-3427:
-
-            <jacoco.outputDir>${session.executionRootDirectory}/target/</jacoco.outputDir>
-        -->
+        <!-- The system property jacoco.outputDir needs to be override on the command line with an absolute path if you want 
+            to merge results from all modules. Example in a Jenkisn build where ${WORKSPACE} is defined and your project in the root 
+            directory of the workspace : mvn clean install -Prun-its,coverage -Djacoco.outputDir=${WORKSPACE}/target Note that unfortunately 
+            using the following does not work because of http://jira.codehaus.org/browse/SONAR-3427: <jacoco.outputDir>${session.executionRootDirectory}/target/</jacoco.outputDir> -->
         <jacoco.outputDir>${project.build.directory}/coverage-reports</jacoco.outputDir>
         <!-- Jacoco output file for UTs -->
         <jacoco.out.ut.file>jacoco-ut.exec</jacoco.out.ut.file>
@@ -260,8 +254,8 @@
                     <version>${maven-surefire-plugin.version}</version>
                     <dependencies>
                         <dependency>
-                            <!-- Necessary dependency. Otherwise, groups element does not work. The problem should 
-                                be fixed in the version 2.13 of maven-surefire-plugin. -->
+                            <!-- Necessary dependency. Otherwise, groups element does not work. The problem should be fixed 
+                                in the version 2.13 of maven-surefire-plugin. -->
                             <!-- (see http://stackoverflow.com/questions/4970196/running-all-tests-from-a-category-using-maven) -->
                             <groupId>org.apache.maven.surefire</groupId>
                             <artifactId>surefire-junit47</artifactId>
@@ -642,12 +636,12 @@
                 <groupId>org.hibernate</groupId>
                 <artifactId>hibernate-validator</artifactId>
                 <version>5.0.0.CR2</version>
-        <exclusions>
-            <exclusion>
-                <artifactId>javax.el</artifactId>
-                <groupId>org.glassfish.web</groupId>
-            </exclusion>
-        </exclusions>
+                <exclusions>
+                    <exclusion>
+                        <artifactId>javax.el</artifactId>
+                        <groupId>org.glassfish.web</groupId>
+                    </exclusion>
+                </exclusions>
             </dependency>
 
             <dependency>
@@ -1005,11 +999,7 @@
             </build>
         </profile>
 
-        <!--
-            This profile is used to launch integration tests with the failsafe plugin
-
-            http://maven.apache.org/plugins/maven-failsafe-plugin/
-        -->
+        <!-- This profile is used to launch integration tests with the failsafe plugin http://maven.apache.org/plugins/maven-failsafe-plugin/ -->
         <profile>
             <id>run-integration-tests</id>
             <build>
@@ -1031,10 +1021,7 @@
                         <artifactId>maven-failsafe-plugin</artifactId>
                         <version>${maven-failsafe-plugin.version}</version>
                         <executions>
-                            <!--
-                                Ensures that both integration-test and verify goals of the Failsafe Maven
-                                plugin are executed.
-                            -->
+                            <!-- Ensures that both integration-test and verify goals of the Failsafe Maven plugin are executed. -->
                             <execution>
                                 <id>integration-tests</id>
                                 <goals>
@@ -1046,7 +1033,8 @@
                         <configuration>
                             <argLine>${jacoco.agent.it.arg}</argLine>
 
-                            <!-- Let's put failsafe reports with surefire to have access to tests failures/success reports in sonar -->
+                            <!-- Let's put failsafe reports with surefire to have access to tests failures/success reports 
+                                in sonar -->
                             <reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory>
 
                             <includes>
@@ -1067,10 +1055,8 @@
                         <artifactId>jacoco-maven-plugin</artifactId>
                         <version>${jacoco-maven-plugin.version}</version>
                         <executions>
-                            <!--
-                               Prepares the property, jacoco.agent.ut.arg, pointing to the JaCoCo runtime agent which
-                               is passed as VM argument when Maven the Surefire plugin is executed.
-                            -->
+                            <!-- Prepares the property, jacoco.agent.ut.arg, pointing to the JaCoCo runtime agent which is 
+                                passed as VM argument when Maven the Surefire plugin is executed. -->
                             <execution>
                                 <id>pre-unit-test</id>
                                 <phase>process-test-classes</phase>
@@ -1080,18 +1066,13 @@
                                 <configuration>
                                     <!-- Sets the path to the file which contains the execution data. -->
                                     <destFile>${sonar.jacoco.reportPath}</destFile>
-                                    <!--
-                                       Sets the name of the property containing the settings
-                                       for JaCoCo runtime agent.
-                                    -->
-                                    <!--<propertyName>jacoco.agent.ut.arg</propertyName>-->
+                                    <!-- Sets the name of the property containing the settings for JaCoCo runtime agent. -->
+                                    <!--<propertyName>jacoco.agent.ut.arg</propertyName> -->
                                     <append>true</append>
                                 </configuration>
                             </execution>
-                            <!--
-                               Ensures that the code coverage report for unit tests is created after
-                               unit tests have been run.
-                            -->
+                            <!-- Ensures that the code coverage report for unit tests is created after unit tests have been 
+                                run. -->
                             <execution>
                                 <id>post-unit-test</id>
                                 <phase>test</phase>
@@ -1105,10 +1086,8 @@
                                     <outputDirectory>${project.reporting.outputDirectory}/jacoco-ut</outputDirectory>
                                 </configuration>
                             </execution>
-                            <!--
-                               Prepares the property pointing to the JaCoCo runtime agent which
-                               is passed as VM argument when Maven the Failsafe plugin is executed.
-                            -->
+                            <!-- Prepares the property pointing to the JaCoCo runtime agent which is passed as VM argument 
+                                when Maven the Failsafe plugin is executed. -->
                             <execution>
                                 <id>pre-integration-test</id>
                                 <phase>pre-integration-test</phase>
@@ -1118,18 +1097,13 @@
                                 <configuration>
                                     <!-- Sets the path to the file which contains the execution data. -->
                                     <destFile>${sonar.jacoco.itReportPath}</destFile>
-                                    <!--
-                                       Sets the name of the property containing the settings
-                                       for JaCoCo runtime agent.
-                                    -->
-                                    <!--<propertyName>jacoco.agent.it.arg</propertyName>-->
+                                    <!-- Sets the name of the property containing the settings for JaCoCo runtime agent. -->
+                                    <!--<propertyName>jacoco.agent.it.arg</propertyName> -->
                                     <append>true</append>
                                 </configuration>
                             </execution>
-                            <!--
-                               Ensures that the code coverage report for integration tests after
-                               integration tests have been run.
-                           -->
+                            <!-- Ensures that the code coverage report for integration tests after integration tests have 
+                                been run. -->
                             <execution>
                                 <id>post-integration-test</id>
                                 <phase>post-integration-test</phase>

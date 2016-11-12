@@ -17,9 +17,9 @@ import com.svnavigatoru600.web.SendNotificationModelFiller;
 import com.svnavigatoru600.web.records.AbstractPageViews;
 
 /**
- * Parent of all controllers which create and edit the
- * {@link com.svnavigatoru600.domain.records.SessionRecord SessionRecords}.
- * 
+ * Parent of all controllers which create and edit the {@link com.svnavigatoru600.domain.records.SessionRecord
+ * SessionRecords}.
+ *
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
 @Controller
@@ -56,8 +56,8 @@ public abstract class AbstractNewEditRecordController extends AbstractSessionRec
      */
     public AbstractNewEditRecordController(String baseUrl, AbstractPageViews views,
             SessionRecordType recordType, SessionRecordService recordService,
-            SendNotificationModelFiller sendNotificationModelFiller,
-            AbstractSessionRecordValidator validator, MessageSource messageSource) {
+            SendNotificationModelFiller sendNotificationModelFiller, AbstractSessionRecordValidator validator,
+            MessageSource messageSource) {
         super(baseUrl, views, recordType, recordService, messageSource);
         this.validator = validator;
         this.sendNotificationModelFiller = sendNotificationModelFiller;
@@ -67,18 +67,18 @@ public abstract class AbstractNewEditRecordController extends AbstractSessionRec
      * Trivial getter
      */
     protected Validator getValidator() {
-        return this.validator;
+        return validator;
     }
 
     /**
      * Trivial getter
      */
     protected SendNotificationModelFiller getSendNotificationModelFiller() {
-        return this.sendNotificationModelFiller;
+        return sendNotificationModelFiller;
     }
 
     /**
-     * Creates a {@list List} of localized names of {@link SessionRecordType SessionRecordTypes}. The forms
+     * Creates a {@link List} of localized names of {@link SessionRecordType SessionRecordTypes}. The forms
      * which use this controller can access the resulting list.
      * <p>
      * This method is used for filling up the tag <em>radiobuttons</em> and the value of the selected

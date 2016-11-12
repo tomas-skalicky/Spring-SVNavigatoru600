@@ -31,9 +31,9 @@ import com.svnavigatoru600.web.AbstractMetaController;
 import com.svnavigatoru600.web.AbstractPrivateSectionMetaController;
 
 /**
- * The controller bound to the <i>user-account.jsp</i> and <i>user-administration.jsp</i> form. For more
- * details about the concepts used here, see the <i>ForgottenPasswordController</i> controller.
- * 
+ * The controller bound to the <i>user-account.jsp</i> and <i>user-administration.jsp</i> form. For more details about
+ * the concepts used here, see the <i>ForgottenPasswordController</i> controller.
+ *
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
 @Controller
@@ -71,8 +71,8 @@ public class EditMyAccountController extends AbstractPrivateSectionMetaControlle
         command.setUser(user);
 
         // Sets up all auxiliary (but necessary) maps.
-        command.setLocalizedNotificationCheckboxTitles(UserService.getLocalizedNotificationTitles(request,
-                this.messageSource));
+        command.setLocalizedNotificationCheckboxTitles(
+                UserService.getLocalizedNotificationTitles(request, messageSource));
 
         model.addAttribute(EditMyAccountController.COMMAND, command);
         return EditMyAccountController.PAGE_VIEW;
@@ -90,25 +90,23 @@ public class EditMyAccountController extends AbstractPrivateSectionMetaControlle
     }
 
     /**
-     * If values in the form are OK, update date of the current {@link User}. Otherwise, returns back to the
-     * form.
-     * 
+     * If values in the form are OK, update date of the current {@link User}. Otherwise, returns back to the form.
+     *
      * @return The name of the view which is to be shown.
      */
     @RequestMapping(value = UserAccountUrlParts.BASE_URL, method = RequestMethod.POST)
     @PreAuthorize("hasRole('ROLE_REGISTERED_USER')")
     @Transactional
-    public String processSubmittedForm(
-            @ModelAttribute(EditMyAccountController.COMMAND) UpdateUserData command, BindingResult result,
-            SessionStatus status, HttpServletRequest request, ModelMap model) {
+    public String processSubmittedForm(@ModelAttribute(EditMyAccountController.COMMAND) UpdateUserData command,
+            BindingResult result, SessionStatus status, HttpServletRequest request, ModelMap model) {
 
         // Sets up all auxiliary (but necessary) maps.
         // It is necessary to do it again since they are not push as a part of the command back. They have
         // been set to null.
-        command.setLocalizedNotificationCheckboxTitles(UserService.getLocalizedNotificationTitles(request,
-                this.messageSource));
+        command.setLocalizedNotificationCheckboxTitles(
+                UserService.getLocalizedNotificationTitles(request, messageSource));
 
-        this.validator.validate(command, result);
+        validator.validate(command, result);
         if (result.hasErrors()) {
             return EditMyAccountController.PAGE_VIEW;
         }
@@ -119,8 +117,8 @@ public class EditMyAccountController extends AbstractPrivateSectionMetaControlle
             // if the new user's data (e.g. email) were not valid, e.g. because of the occupied email,
             // the old valid user's logging data would be available anymore. They were removed by the new
             // invalid data.
-            originalUser = this.userService.findByUsername(UserUtils.getLoggedUser().getUsername());
-            this.userService.update(originalUser, command.getUser(), command.getNewPassword());
+            originalUser = userService.findByUsername(UserUtils.getLoggedUser().getUsername());
+            userService.update(originalUser, command.getUser(), command.getNewPassword());
 
             // Clears the command object from the session.
             status.setComplete();
@@ -138,21 +136,20 @@ public class EditMyAccountController extends AbstractPrivateSectionMetaControlle
     }
 
     /**
-     * Unsubscribes notifications of the given <code>notificationType</code> and redirects processing in order
-     * to avoid re-submitting.
-     * 
+     * Unsubscribes notifications of the given <code>notificationType</code> and redirects processing in order to avoid
+     * re-submitting.
+     *
      * @param username
      *            Username (= login) of the user who is to be unsubscribed from receiving notifications of the
      *            <code>notificationType</code>.
-     * @param notificationType
+     * @param notificationTypeOrdinal
      *            Ordinal of notifications' type which is to be deactivated by the user.
      */
-    @RequestMapping(value = UserAccountUrlParts.BASE_URL + "{username}/"
-            + UserAccountUrlParts.UNSUBSCRIBE_EXTENSION + "{notificationType}/", method = RequestMethod.GET)
+    @RequestMapping(value = UserAccountUrlParts.BASE_URL + "{username}/" + UserAccountUrlParts.UNSUBSCRIBE_EXTENSION
+            + "{notificationType}/", method = RequestMethod.GET)
     @PreAuthorize("hasRole('ROLE_REGISTERED_USER')")
     public String unsubscribeNotificationsAndRedirect(@PathVariable("username") String username,
-            @PathVariable("notificationType") int notificationTypeOrdinal, HttpServletRequest request,
-            ModelMap model) {
+            @PathVariable("notificationType") int notificationTypeOrdinal, HttpServletRequest request, ModelMap model) {
         User loggedUser = UserUtils.getLoggedUser();
         if (!loggedUser.getUsername().equals(username)) {
             model.addAttribute(AbstractMetaController.REDIRECTION_ATTRIBUTE,
@@ -162,29 +159,27 @@ public class EditMyAccountController extends AbstractPrivateSectionMetaControlle
 
         NotificationType notificationType = NotificationType.values()[notificationTypeOrdinal];
         try {
-            this.userService.unsubscribeFromNotifications(username, notificationType);
+            userService.unsubscribeFromNotifications(username, notificationType);
 
             // It is necessary to update the instance which is in the session.
             notificationType.accept(new NotificationSubscriberVisitor(loggedUser, false));
 
             // Returns the form success view.
-            model.addAttribute(AbstractMetaController.REDIRECTION_ATTRIBUTE,
-                    UserAccountUrlParts.UNSUBSCRIBE_URL + notificationTypeOrdinal + "/"
-                            + UserAccountUrlParts.UNSUBSCRIBED_EXTENSION);
+            model.addAttribute(AbstractMetaController.REDIRECTION_ATTRIBUTE, UserAccountUrlParts.UNSUBSCRIBE_URL
+                    + notificationTypeOrdinal + "/" + UserAccountUrlParts.UNSUBSCRIBED_EXTENSION);
             return AbstractMetaController.REDIRECTION_PAGE;
 
         } catch (DataAccessException e) {
             // We encountered a database problem.
-            LogFactory.getLog(this.getClass()).error(
-                    String.format("DB error: username=%s, notificationType=%d", username, notificationType),
-                    e);
+            LogFactory.getLog(this.getClass())
+                    .error(String.format("DB error: username=%s, notificationType=%d", username, notificationType), e);
             return EditMyAccountController.PAGE_VIEW;
         }
     }
 
     /**
-     * Initializes the form after the given <code>notificationType</code> have been successfully unsubscribed
-     * and these changes have been persisted.
+     * Initializes the form after the given <code>notificationType</code> have been successfully unsubscribed and these
+     * changes have been persisted.
      */
     @RequestMapping(value = UserAccountUrlParts.UNSUBSCRIBE_URL + "{notificationType}/"
             + UserAccountUrlParts.UNSUBSCRIBED_EXTENSION, method = RequestMethod.GET)
@@ -197,22 +192,23 @@ public class EditMyAccountController extends AbstractPrivateSectionMetaControlle
         command.setNotificationsUnsubscribed(true);
 
         String localizationCode = NotificationType.values()[notificationType].getTitleLocalizationCode();
-        String localizedTitle = Localization.findLocaleMessage(this.messageSource, request, localizationCode);
+        String localizedTitle = Localization.findLocaleMessage(messageSource, request, localizationCode);
         command.setLocalizedUnsubscribedNotificationTitle(localizedTitle);
         return view;
     }
 
     /**
-     * Initializes the form after a fail of unsubscription due to a sign-in in a different account than in
-     * that which stands in a notification email. Shows an error message.
+     * Initializes the form after a fail of unsubscription due to a sign-in in a different account than in that which
+     * stands in a notification email. Shows an error message.
      * <p>
-     * It looks like that the currently logged user has either an access to more than one account or has an
-     * access to an email inbox of foreign account.
+     * It looks like that the currently logged user has either an access to more than one account or has an access to an
+     * email inbox of foreign account.
      */
-    @RequestMapping(value = UserAccountUrlParts.UNSUBSCRIBE_FAILED_FOREIGN_ACCOUNT_URL + "{username}/", method = RequestMethod.GET)
+    @RequestMapping(value = UserAccountUrlParts.UNSUBSCRIBE_FAILED_FOREIGN_ACCOUNT_URL
+            + "{username}/", method = RequestMethod.GET)
     @PreAuthorize("hasRole('ROLE_REGISTERED_USER')")
-    public String initFormAfterUnsubscriptionFail(@PathVariable("username") String username,
-            HttpServletRequest request, ModelMap model) {
+    public String initFormAfterUnsubscriptionFail(@PathVariable("username") String username, HttpServletRequest request,
+            ModelMap model) {
         String view = initForm(request, model);
 
         UpdateUserData command = (UpdateUserData) model.get(EditMyAccountController.COMMAND);

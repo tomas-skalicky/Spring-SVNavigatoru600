@@ -18,14 +18,14 @@ import com.svnavigatoru600.web.SendNotificationController;
 import com.svnavigatoru600.web.SendNotificationModelFiller;
 
 /**
- * Parent of controllers which create and edit the
- * {@link com.svnavigatoru600.domain.eventcalendar.CalendarEvent CalendarEvents}.
- * 
+ * Parent of controllers which create and edit the {@link com.svnavigatoru600.domain.eventcalendar.CalendarEvent
+ * CalendarEvents}.
+ *
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
 @Controller
-public abstract class AbstractNewEditEventController extends AbstractEventController implements
-        SendNotificationController {
+public abstract class AbstractNewEditEventController extends AbstractEventController
+        implements SendNotificationController {
 
     /**
      * Command used in /main-content/event-calendar/new-edit-event.jsp.
@@ -46,22 +46,22 @@ public abstract class AbstractNewEditEventController extends AbstractEventContro
      * Trivial getter
      */
     protected Validator getValidator() {
-        return this.validator;
+        return validator;
     }
 
     /**
      * Trivial getter
      */
     protected SendNotificationModelFiller getSendNotificationModelFiller() {
-        return this.sendNotificationModelFiller;
+        return sendNotificationModelFiller;
     }
 
     /**
-     * Creates a {@list List} of localized names of {@link PriorityType PriorityTypes}. The forms which use
-     * this controller can access the resulting list.
+     * Creates a {@link List} of localized names of {@link PriorityType PriorityTypes}. The forms which use this
+     * controller can access the resulting list.
      * <p>
-     * This method is used for filling up the tag <em>radiobuttons</em> and the value of the selected
-     * radiobutton is stored to <code>NewEditEvent.newPriority</code>.
+     * This method is used for filling up the tag <em>radiobuttons</em> and the value of the selected radiobutton is
+     * stored to <code>NewEditEvent.newPriority</code>.
      */
     @ModelAttribute("priorityTypeList")
     public List<String> populatePriorityTypeList(HttpServletRequest request) {
@@ -69,8 +69,7 @@ public abstract class AbstractNewEditEventController extends AbstractEventContro
 
         for (PriorityType type : PriorityType.values()) {
             String localizationCode = type.getLocalizationCode();
-            priorityTypeList.add(Localization
-                    .findLocaleMessage(getMessageSource(), request, localizationCode));
+            priorityTypeList.add(Localization.findLocaleMessage(getMessageSource(), request, localizationCode));
         }
         return priorityTypeList;
     }

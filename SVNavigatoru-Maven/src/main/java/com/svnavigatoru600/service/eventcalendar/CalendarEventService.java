@@ -23,7 +23,7 @@ import com.svnavigatoru600.service.util.OrderType;
 
 /**
  * Provides convenient methods to work with {@link CalendarEvent} objects.
- * 
+ *
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
 @Service
@@ -64,37 +64,36 @@ public class CalendarEventService implements SubjectOfNotificationService {
      * Returns a {@link CalendarEvent} stored in the repository which has the given ID.
      */
     public CalendarEvent findById(int eventId) {
-        return this.eventDao.findById(eventId);
+        return eventDao.findById(eventId);
     }
 
     /**
      * Returns all {@link CalendarEvent CalendarEvents} stored in the repository arranged according to their
      * {@link CalendarEvent#getDate() date} ascending.
      * <p>
-     * Moreover, only {@link CalendarEvent CalendarEvents} which will take place are returned, the passed ones
-     * are not.
+     * Moreover, only {@link CalendarEvent CalendarEvents} which will take place are returned, the passed ones are not.
      */
     public List<CalendarEvent> findAllFutureEventsOrdered() {
-        return this.eventDao.findAllFutureEventsOrdered(DateUtils.getToday(), OrderType.ASCENDING);
+        return eventDao.findAllFutureEventsOrdered(DateUtils.getToday(), OrderType.ASCENDING);
     }
 
     /**
-     * Updates the given {@link CalendarEvent} in the repository. The old version of this event should be
-     * already stored there.
+     * Updates the given {@link CalendarEvent} in the repository. The old version of this event should be already stored
+     * there.
      */
     public void update(CalendarEvent event) {
-        this.eventDao.update(event);
+        eventDao.update(event);
     }
 
     /**
-     * Updates properties of the given <code>eventToUpdate</code> and persists this {@link CalendarEvent} into
-     * the repository. The old version of this event should be already stored there.
-     * 
+     * Updates properties of the given <code>eventToUpdate</code> and persists this {@link CalendarEvent} into the
+     * repository. The old version of this event should be already stored there.
+     *
      * @param eventToUpdate
      *            Persisted {@link CalendarEvent}
      * @param newEvent
-     *            {@link CalendarEvent} which contains new values of properties of <code>eventToUpdate</code>.
-     *            These values are copied to the persisted event.
+     *            {@link CalendarEvent} which contains new values of properties of <code>eventToUpdate</code>. These
+     *            values are copied to the persisted event.
      * @param newPriority
      *            Priority which is to be the new one of the <code>eventToUpdate</code>
      */
@@ -107,24 +106,23 @@ public class CalendarEventService implements SubjectOfNotificationService {
     }
 
     /**
-     * Updates properties of the given <code>eventToUpdate</code> and persists this {@link CalendarEvent} into
-     * the repository. The old version of this event should be already stored there.
+     * Updates properties of the given <code>eventToUpdate</code> and persists this {@link CalendarEvent} into the
+     * repository. The old version of this event should be already stored there.
      * <p>
      * Finally, notifies all users which have corresponding rights by email about changes in the event.
-     * 
+     *
      * @param eventToUpdate
      *            Persisted {@link CalendarEvent}
      * @param newEvent
-     *            {@link CalendarEvent} which contains new values of properties of <code>eventToUpdate</code>.
-     *            These values are copied to the persisted event.
+     *            {@link CalendarEvent} which contains new values of properties of <code>eventToUpdate</code>. These
+     *            values are copied to the persisted event.
      * @param newPriority
      *            Priority which is to be the new one of the <code>eventToUpdate</code>
      * @param sendNotification
      *            If <code>true</code>, the notification is sent; otherwise not.
      */
-    public void updateAndNotifyUsers(CalendarEvent eventToUpdate, CalendarEvent newEvent,
-            PriorityType newPriority, boolean sendNotification, HttpServletRequest request,
-            MessageSource messageSource) {
+    public void updateAndNotifyUsers(CalendarEvent eventToUpdate, CalendarEvent newEvent, PriorityType newPriority,
+            boolean sendNotification, HttpServletRequest request, MessageSource messageSource) {
         this.update(eventToUpdate, newEvent, newPriority);
 
         if (sendNotification) {
@@ -134,36 +132,35 @@ public class CalendarEventService implements SubjectOfNotificationService {
 
     @Override
     public List<User> gainUsersToNotify() {
-        return this.userService.findAllWithEmailByAuthorityAndSubscription(AuthorityType.ROLE_MEMBER_OF_SV,
-                this.emailService.getNotificationType());
+        return userService.findAllWithEmailByAuthorityAndSubscription(AuthorityType.ROLE_MEMBER_OF_SV,
+                emailService.getNotificationType());
     }
 
     @Override
-    public void notifyUsersOfUpdate(Object updatedEvent, HttpServletRequest request,
-            MessageSource messageSource) {
-        this.emailService.sendEmailOnUpdate(updatedEvent, gainUsersToNotify(), request, messageSource);
+    public void notifyUsersOfUpdate(Object updatedEvent, HttpServletRequest request, MessageSource messageSource) {
+        emailService.sendEmailOnUpdate(updatedEvent, gainUsersToNotify(), request, messageSource);
     }
 
     /**
      * Stores the given {@link CalendarEvent} to the repository.
-     * 
+     *
      * @return New ID of the given {@link CalendarEvent} generated by the repository
      */
     public int save(CalendarEvent event) {
-        return this.eventDao.save(event);
+        return eventDao.save(event);
     }
 
     /**
-     * Updates corresponding {@link java.util.Date Date} fields of the given new {@link CalendarEvent} (if
-     * there are any appropriate) and stores the event to the repository.
+     * Updates corresponding {@link java.util.Date Date} fields of the given new {@link CalendarEvent} (if there are any
+     * appropriate) and stores the event to the repository.
      * <p>
      * Finally, notifies all users which have corresponding rights by email about a creation of the event.
-     * 
+     *
      * @param sendNotification
      *            If <code>true</code>, the notification is sent; otherwise not.
      */
-    public void saveAndNotifyUsers(CalendarEvent newEvent, boolean sendNotification,
-            HttpServletRequest request, MessageSource messageSource) {
+    public void saveAndNotifyUsers(CalendarEvent newEvent, boolean sendNotification, HttpServletRequest request,
+            MessageSource messageSource) {
         save(newEvent);
 
         if (sendNotification) {
@@ -173,30 +170,30 @@ public class CalendarEventService implements SubjectOfNotificationService {
 
     @Override
     public void notifyUsersOfCreation(Object newEvent, HttpServletRequest request, MessageSource messageSource) {
-        this.emailService.sendEmailOnCreation(newEvent, gainUsersToNotify(), request, messageSource);
+        emailService.sendEmailOnCreation(newEvent, gainUsersToNotify(), request, messageSource);
     }
 
     /**
      * Deletes the given {@link CalendarEvent} from the repository.
      */
     public void delete(CalendarEvent event) {
-        this.eventDao.delete(event);
+        eventDao.delete(event);
     }
 
     /**
      * Deletes the specified {@link CalendarEvent} from the repository.
-     * 
+     *
      * @param eventId
      *            ID of the event
      */
     public void delete(int eventId) {
         CalendarEvent event = findById(eventId);
-        this.eventDao.delete(event);
+        eventDao.delete(event);
     }
 
     /**
-     * Gets a {@link Map} which for each input {@link CalendarEvent} contains a corresponding localized delete
-     * question which is asked before deletion of that event.
+     * Gets a {@link Map} which for each input {@link CalendarEvent} contains a corresponding localized delete question
+     * which is asked before deletion of that event.
      */
     public static Map<CalendarEvent, String> getLocalizedDeleteQuestions(List<CalendarEvent> events,
             HttpServletRequest request, MessageSource messageSource) {
@@ -205,8 +202,7 @@ public class CalendarEventService implements SubjectOfNotificationService {
 
         for (CalendarEvent event : events) {
             Object[] messageParams = new Object[] { event.getName() };
-            questions.put(event,
-                    Localization.findLocaleMessage(messageSource, request, messageCode, messageParams));
+            questions.put(event, Localization.findLocaleMessage(messageSource, request, messageCode, messageParams));
         }
         return questions;
     }
