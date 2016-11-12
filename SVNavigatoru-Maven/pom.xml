@@ -66,43 +66,43 @@
         <powermock.version>1.5.1</powermock.version>
 
         <checkstyle.configLocation>D:/Documents/Private/SW/Eclipse/checkstyle.xml</checkstyle.configLocation>
-		
-		
-		<maven-surefire-plugin.version>2.19.1</maven-surefire-plugin.version>
-		<maven-failsafe-plugin.version>2.19.1</maven-failsafe-plugin.version>
-		<jacoco-maven-plugin.version>0.7.0.201403182114</jacoco-maven-plugin.version>
+        
+        
+        <maven-surefire-plugin.version>2.19.1</maven-surefire-plugin.version>
+        <maven-failsafe-plugin.version>2.19.1</maven-failsafe-plugin.version>
+        <jacoco-maven-plugin.version>0.7.0.201403182114</jacoco-maven-plugin.version>
 
-		<!-- Sonar -->
-		<!-- Sonar/Jacoco integration. Note that these properties need to be defined outside the "coverage" profile
-			 because we want to be to able to execute mvn sonar:sonar without passing a profile -->
-		<!-- Tells Sonar to use jacoco for coverage results -->
-		<sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
-		<!-- The Sonar Jacoco Listener for JUnit to extract coverage details per test -->
-		<sonar-jacoco-listeners.version>1.4</sonar-jacoco-listeners.version>
-		<!-- Don't let Sonar execute tests. We will ask it to Maven -->
-		<sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
-		<!-- The system property jacoco.outputDir needs to be override on the command line
-			with an absolute path if you want to merge results from all modules.
-			Example in a Jenkisn build where ${WORKSPACE} is defined and your project in the root directory of the workspace :
-			mvn clean install -Prun-its,coverage -Djacoco.outputDir=${WORKSPACE}/target
-			Note that unfortunately using the following does not work because of
+        <!-- Sonar -->
+        <!-- Sonar/Jacoco integration. Note that these properties need to be defined outside the "coverage" profile
+             because we want to be to able to execute mvn sonar:sonar without passing a profile -->
+        <!-- Tells Sonar to use jacoco for coverage results -->
+        <sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
+        <!-- The Sonar Jacoco Listener for JUnit to extract coverage details per test -->
+        <sonar-jacoco-listeners.version>1.4</sonar-jacoco-listeners.version>
+        <!-- Don't let Sonar execute tests. We will ask it to Maven -->
+        <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
+        <!-- The system property jacoco.outputDir needs to be override on the command line
+            with an absolute path if you want to merge results from all modules.
+            Example in a Jenkisn build where ${WORKSPACE} is defined and your project in the root directory of the workspace :
+            mvn clean install -Prun-its,coverage -Djacoco.outputDir=${WORKSPACE}/target
+            Note that unfortunately using the following does not work because of
 
-			http://jira.codehaus.org/browse/SONAR-3427:
+            http://jira.codehaus.org/browse/SONAR-3427:
 
-			<jacoco.outputDir>${session.executionRootDirectory}/target/</jacoco.outputDir>
-		-->
-		<jacoco.outputDir>${project.build.directory}/coverage-reports</jacoco.outputDir>
-		<!-- Jacoco output file for UTs -->
-		<jacoco.out.ut.file>jacoco-ut.exec</jacoco.out.ut.file>
-		<!-- Tells Sonar where the Jacoco coverage result file is located for Unit Tests -->
-		<sonar.jacoco.reportPath>${jacoco.outputDir}/${jacoco.out.ut.file}</sonar.jacoco.reportPath>
-		<!-- Jacoco output file for ITs -->
-		<jacoco.out.it.file>jacoco-it.exec</jacoco.out.it.file>
-		<!-- Tells Sonar where the Jacoco coverage result file is located for Integration Tests -->
-		<sonar.jacoco.itReportPath>${jacoco.outputDir}/${jacoco.out.it.file}</sonar.jacoco.itReportPath>
+            <jacoco.outputDir>${session.executionRootDirectory}/target/</jacoco.outputDir>
+        -->
+        <jacoco.outputDir>${project.build.directory}/coverage-reports</jacoco.outputDir>
+        <!-- Jacoco output file for UTs -->
+        <jacoco.out.ut.file>jacoco-ut.exec</jacoco.out.ut.file>
+        <!-- Tells Sonar where the Jacoco coverage result file is located for Unit Tests -->
+        <sonar.jacoco.reportPath>${jacoco.outputDir}/${jacoco.out.ut.file}</sonar.jacoco.reportPath>
+        <!-- Jacoco output file for ITs -->
+        <jacoco.out.it.file>jacoco-it.exec</jacoco.out.it.file>
+        <!-- Tells Sonar where the Jacoco coverage result file is located for Integration Tests -->
+        <sonar.jacoco.itReportPath>${jacoco.outputDir}/${jacoco.out.it.file}</sonar.jacoco.itReportPath>
 
-		<!-- Filled by jacoco-maven-plugin -->
-		<jacoco.agent.ut.arg />
+        <!-- Filled by jacoco-maven-plugin -->
+        <jacoco.agent.ut.arg />
         <jacoco.agent.it.arg />
 
         <maven.tomcat.port>9080</maven.tomcat.port>
@@ -642,12 +642,12 @@
                 <groupId>org.hibernate</groupId>
                 <artifactId>hibernate-validator</artifactId>
                 <version>5.0.0.CR2</version>
-		<exclusions>
-		    <exclusion>
-		        <artifactId>javax.el</artifactId>
-		        <groupId>org.glassfish.web</groupId>
-		    </exclusion>
-		</exclusions>
+        <exclusions>
+            <exclusion>
+                <artifactId>javax.el</artifactId>
+                <groupId>org.glassfish.web</groupId>
+            </exclusion>
+        </exclusions>
             </dependency>
 
             <dependency>
@@ -912,9 +912,9 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
-	
-	
-	<profiles>
+
+
+    <profiles>
         <!-- For local run with exploded WAR file -->
         <profile>
             <id>local</id>
@@ -1005,224 +1005,224 @@
             </build>
         </profile>
 
-		<!--
-			This profile is used to launch integration tests with the failsafe plugin
+        <!--
+            This profile is used to launch integration tests with the failsafe plugin
 
-			http://maven.apache.org/plugins/maven-failsafe-plugin/
-		-->
-		<profile>
-			<id>run-integration-tests</id>
-			<build>
-				<plugins>
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-surefire-plugin</artifactId>
-						<version>${maven-surefire-plugin.version}</version>
-						<configuration>
-							<!-- Excludes integration tests when unit tests are run. -->
-							<excludes>
-								<exclude>**/*IntegrationTest.java</exclude>
-							</excludes>
-						</configuration>
-					</plugin>
+            http://maven.apache.org/plugins/maven-failsafe-plugin/
+        -->
+        <profile>
+            <id>run-integration-tests</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <version>${maven-surefire-plugin.version}</version>
+                        <configuration>
+                            <!-- Excludes integration tests when unit tests are run. -->
+                            <excludes>
+                                <exclude>**/*IntegrationTest.java</exclude>
+                            </excludes>
+                        </configuration>
+                    </plugin>
 
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-failsafe-plugin</artifactId>
-						<version>${maven-failsafe-plugin.version}</version>
-						<executions>
-							<!--
-								Ensures that both integration-test and verify goals of the Failsafe Maven
-								plugin are executed.
-							-->
-							<execution>
-								<id>integration-tests</id>
-								<goals>
-									<goal>integration-test</goal>
-									<goal>verify</goal>
-								</goals>
-							</execution>
-						</executions>
-						<configuration>
-							<argLine>${jacoco.agent.it.arg}</argLine>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-failsafe-plugin</artifactId>
+                        <version>${maven-failsafe-plugin.version}</version>
+                        <executions>
+                            <!--
+                                Ensures that both integration-test and verify goals of the Failsafe Maven
+                                plugin are executed.
+                            -->
+                            <execution>
+                                <id>integration-tests</id>
+                                <goals>
+                                    <goal>integration-test</goal>
+                                    <goal>verify</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <argLine>${jacoco.agent.it.arg}</argLine>
 
-							<!-- Let's put failsafe reports with surefire to have access to tests failures/success reports in sonar -->
-							<reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory>
+                            <!-- Let's put failsafe reports with surefire to have access to tests failures/success reports in sonar -->
+                            <reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory>
 
-							<includes>
-								<include>**/*IntegrationTest.java</include>
-							</includes>
-						</configuration>
-					</plugin>
-				</plugins>
-			</build>
-		</profile>
+                            <includes>
+                                <include>**/*IntegrationTest.java</include>
+                            </includes>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
 
-		<profile>
-			<id>coverage</id>
-			<build>
-				<plugins>
-					<plugin>
-						<groupId>org.jacoco</groupId>
-						<artifactId>jacoco-maven-plugin</artifactId>
-						<version>${jacoco-maven-plugin.version}</version>
-						<executions>
-							<!--
-							   Prepares the property, jacoco.agent.ut.arg, pointing to the JaCoCo runtime agent which
-							   is passed as VM argument when Maven the Surefire plugin is executed.
-							-->
-							<execution>
-								<id>pre-unit-test</id>
-								<phase>process-test-classes</phase>
-								<goals>
-									<goal>prepare-agent</goal>
-								</goals>
-								<configuration>
-									<!-- Sets the path to the file which contains the execution data. -->
-									<destFile>${sonar.jacoco.reportPath}</destFile>
-									<!--
-									   Sets the name of the property containing the settings
-									   for JaCoCo runtime agent.
-									-->
-									<!--<propertyName>jacoco.agent.ut.arg</propertyName>-->
-									<append>true</append>
-								</configuration>
-							</execution>
-							<!--
-							   Ensures that the code coverage report for unit tests is created after
-							   unit tests have been run.
-							-->
-							<execution>
-								<id>post-unit-test</id>
-								<phase>test</phase>
-								<goals>
-									<goal>report</goal>
-								</goals>
-								<configuration>
-									<!-- Sets the path to the file which contains the execution data. -->
-									<dataFile>${sonar.jacoco.reportPath}</dataFile>
-									<!-- Sets the output directory for the code coverage report. -->
-									<outputDirectory>${project.reporting.outputDirectory}/jacoco-ut</outputDirectory>
-								</configuration>
-							</execution>
-							<!--
-							   Prepares the property pointing to the JaCoCo runtime agent which
-							   is passed as VM argument when Maven the Failsafe plugin is executed.
-							-->
-							<execution>
-								<id>pre-integration-test</id>
-								<phase>pre-integration-test</phase>
-								<goals>
-									<goal>prepare-agent</goal>
-								</goals>
-								<configuration>
-									<!-- Sets the path to the file which contains the execution data. -->
-									<destFile>${sonar.jacoco.itReportPath}</destFile>
-									<!--
-									   Sets the name of the property containing the settings
-									   for JaCoCo runtime agent.
-									-->
-									<!--<propertyName>jacoco.agent.it.arg</propertyName>-->
-									<append>true</append>
-								</configuration>
-							</execution>
-							<!--
-							   Ensures that the code coverage report for integration tests after
-							   integration tests have been run.
-						   -->
-							<execution>
-								<id>post-integration-test</id>
-								<phase>post-integration-test</phase>
-								<goals>
-									<goal>report</goal>
-								</goals>
-								<configuration>
-									<!-- Sets the path to the file which contains the execution data. -->
-									<dataFile>${sonar.jacoco.itReportPath}</dataFile>
-									<!-- Sets the output directory for the code coverage report. -->
-									<outputDirectory>${project.reporting.outputDirectory}/jacoco-it</outputDirectory>
-								</configuration>
-							</execution>
-						</executions>
-					</plugin>
+        <profile>
+            <id>coverage</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.jacoco</groupId>
+                        <artifactId>jacoco-maven-plugin</artifactId>
+                        <version>${jacoco-maven-plugin.version}</version>
+                        <executions>
+                            <!--
+                               Prepares the property, jacoco.agent.ut.arg, pointing to the JaCoCo runtime agent which
+                               is passed as VM argument when Maven the Surefire plugin is executed.
+                            -->
+                            <execution>
+                                <id>pre-unit-test</id>
+                                <phase>process-test-classes</phase>
+                                <goals>
+                                    <goal>prepare-agent</goal>
+                                </goals>
+                                <configuration>
+                                    <!-- Sets the path to the file which contains the execution data. -->
+                                    <destFile>${sonar.jacoco.reportPath}</destFile>
+                                    <!--
+                                       Sets the name of the property containing the settings
+                                       for JaCoCo runtime agent.
+                                    -->
+                                    <!--<propertyName>jacoco.agent.ut.arg</propertyName>-->
+                                    <append>true</append>
+                                </configuration>
+                            </execution>
+                            <!--
+                               Ensures that the code coverage report for unit tests is created after
+                               unit tests have been run.
+                            -->
+                            <execution>
+                                <id>post-unit-test</id>
+                                <phase>test</phase>
+                                <goals>
+                                    <goal>report</goal>
+                                </goals>
+                                <configuration>
+                                    <!-- Sets the path to the file which contains the execution data. -->
+                                    <dataFile>${sonar.jacoco.reportPath}</dataFile>
+                                    <!-- Sets the output directory for the code coverage report. -->
+                                    <outputDirectory>${project.reporting.outputDirectory}/jacoco-ut</outputDirectory>
+                                </configuration>
+                            </execution>
+                            <!--
+                               Prepares the property pointing to the JaCoCo runtime agent which
+                               is passed as VM argument when Maven the Failsafe plugin is executed.
+                            -->
+                            <execution>
+                                <id>pre-integration-test</id>
+                                <phase>pre-integration-test</phase>
+                                <goals>
+                                    <goal>prepare-agent</goal>
+                                </goals>
+                                <configuration>
+                                    <!-- Sets the path to the file which contains the execution data. -->
+                                    <destFile>${sonar.jacoco.itReportPath}</destFile>
+                                    <!--
+                                       Sets the name of the property containing the settings
+                                       for JaCoCo runtime agent.
+                                    -->
+                                    <!--<propertyName>jacoco.agent.it.arg</propertyName>-->
+                                    <append>true</append>
+                                </configuration>
+                            </execution>
+                            <!--
+                               Ensures that the code coverage report for integration tests after
+                               integration tests have been run.
+                           -->
+                            <execution>
+                                <id>post-integration-test</id>
+                                <phase>post-integration-test</phase>
+                                <goals>
+                                    <goal>report</goal>
+                                </goals>
+                                <configuration>
+                                    <!-- Sets the path to the file which contains the execution data. -->
+                                    <dataFile>${sonar.jacoco.itReportPath}</dataFile>
+                                    <!-- Sets the output directory for the code coverage report. -->
+                                    <outputDirectory>${project.reporting.outputDirectory}/jacoco-it</outputDirectory>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
 
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-surefire-plugin</artifactId>
-						<version>${maven-surefire-plugin.version}</version>
-						<configuration>
-							<!-- Sets the VM argument line used when unit tests are run. -->
-							<argLine>${jacoco.agent.ut.arg}</argLine>
-						</configuration>
-					</plugin>
-				</plugins>
-			</build>
-		</profile>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <version>${maven-surefire-plugin.version}</version>
+                        <configuration>
+                            <!-- Sets the VM argument line used when unit tests are run. -->
+                            <argLine>${jacoco.agent.ut.arg}</argLine>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
 
-		<profile>
-			<id>pre-sonar</id>
+        <profile>
+            <id>pre-sonar</id>
 
-			<properties>
-				<sonar.jdbc.url>
-					jdbc:mysql://localhost:3306/sonar?useUnicode=true&amp;characterEncoding=utf8
-				</sonar.jdbc.url>
-				<sonar.jdbc.username>sonar</sonar.jdbc.username>
-				<sonar.jdbc.password>sonarpassword</sonar.jdbc.password>
+            <properties>
+                <sonar.jdbc.url>
+                    jdbc:mysql://localhost:3306/sonar?useUnicode=true&amp;characterEncoding=utf8
+                </sonar.jdbc.url>
+                <sonar.jdbc.username>sonar</sonar.jdbc.username>
+                <sonar.jdbc.password>sonarpassword</sonar.jdbc.password>
 
-				<!-- Optional URL to server. Default value is http://localhost:9000 -->
-				<sonar.host.url>http://localhost:9000</sonar.host.url>
-			</properties>
+                <!-- Optional URL to server. Default value is http://localhost:9000 -->
+                <sonar.host.url>http://localhost:9000</sonar.host.url>
+            </properties>
 
-			<build>
-				<plugins>
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-surefire-plugin</artifactId>
-						<version>${maven-surefire-plugin.version}</version>
-						<configuration>
-							<!-- Specific to generate mapping between tests and covered code -->
-							<properties>
-								<property>
-									<name>listener</name>
-									<value>org.sonar.java.jacoco.JUnitListener</value>
-								</property>
-							</properties>
-						</configuration>
-					</plugin>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <version>${maven-surefire-plugin.version}</version>
+                        <configuration>
+                            <!-- Specific to generate mapping between tests and covered code -->
+                            <properties>
+                                <property>
+                                    <name>listener</name>
+                                    <value>org.sonar.java.jacoco.JUnitListener</value>
+                                </property>
+                            </properties>
+                        </configuration>
+                    </plugin>
 
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-failsafe-plugin</artifactId>
-						<version>${maven-failsafe-plugin.version}</version>
-						<configuration>
-							<!-- Specific to generate mapping between tests and covered code -->
-							<properties>
-								<property>
-									<name>listener</name>
-									<value>org.sonar.java.jacoco.JUnitListener</value>
-								</property>
-							</properties>
-						</configuration>
-					</plugin>
-				</plugins>
-			</build>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-failsafe-plugin</artifactId>
+                        <version>${maven-failsafe-plugin.version}</version>
+                        <configuration>
+                            <!-- Specific to generate mapping between tests and covered code -->
+                            <properties>
+                                <property>
+                                    <name>listener</name>
+                                    <value>org.sonar.java.jacoco.JUnitListener</value>
+                                </property>
+                            </properties>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
 
-			<dependencies>
+            <dependencies>
 
-				<!-- Sonar/Jacoco integration -->
-				<dependency>
-					<groupId>org.codehaus.sonar-plugins.java</groupId>
-					<artifactId>sonar-jacoco-listeners</artifactId>
-					<version>${sonar-jacoco-listeners.version}</version>
-					<scope>test</scope>
-				</dependency>
-				
-				<dependency>
-					<groupId>junit</groupId>
-					<artifactId>junit</artifactId>
-					<scope>test</scope>
-				</dependency>
-			</dependencies>
-		</profile>
-	</profiles>
+                <!-- Sonar/Jacoco integration -->
+                <dependency>
+                    <groupId>org.codehaus.sonar-plugins.java</groupId>
+                    <artifactId>sonar-jacoco-listeners</artifactId>
+                    <version>${sonar-jacoco-listeners.version}</version>
+                    <scope>test</scope>
+                </dependency>
+
+                <dependency>
+                    <groupId>junit</groupId>
+                    <artifactId>junit</artifactId>
+                    <scope>test</scope>
+                </dependency>
+            </dependencies>
+        </profile>
+    </profiles>
 </project>
