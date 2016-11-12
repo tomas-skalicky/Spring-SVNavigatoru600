@@ -16,7 +16,9 @@
 5) Start the Tomcat locally by ./tomcat_debug.sh
    - Prove it works by going on http://localhost:9080/svnavigatoru600
 
-6) Type mysql-workbench to start a database client
+6) Database
+   - Either use mysql-workbench command to start a database client or
+   - Go to the scripts folder and execute ./connect_to_test_database.bash
 
 7) Execute tail -F /home/tom/Documents/development/Java/SourceFiles/Spring/SVNavigatoru/SVNavigatoru-Maven/target/tomcat/logs/svnavigatoru600.log
    to observe a log file.
