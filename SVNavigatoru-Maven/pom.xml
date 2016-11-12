@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com</groupId>
     <artifactId>svnavigatoru600</artifactId>
     <packaging>war</packaging>
-    <version>1.0.12-SNAPSHOT</version>
+    <version>1.0.13-SNAPSHOT</version>
 
     <name>The SVNavigatoru600 web app</name>
     <url>http://svnavigatoru600.com</url>
@@ -174,13 +175,25 @@
                 <groupId>org.apache.tomcat.maven</groupId>
                 <artifactId>tomcat7-maven-plugin</artifactId>
             </plugin>
+
+            <!-- Added due to warning during an exection of scripts/do_release.bash -->
+            <plugin>
+                <groupId>org.apache.tomcat.maven</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+            </plugin>
+
+            <!-- Added due to warning during an exection of scripts/do_release.bash -->
+            <plugin>
+                <groupId>org.apache.tomcat.maven</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+            </plugin>
         </plugins>
 
 
         <pluginManagement>
             <plugins>
-                <!-- Plugin related to the m2e eclipse plugin. It helps to ignore warnings about a missing mapping 
-                    of lifecycle phases. -->
+                <!-- Plugin related to the m2e eclipse plugin. It helps to ignore warnings about a missing mapping of lifecycle 
+                    phases. -->
                 <plugin>
                     <groupId>org.eclipse.m2e</groupId>
                     <artifactId>lifecycle-mapping</artifactId>
@@ -332,16 +345,14 @@
                     <version>2.6</version>
                 </plugin>
 
-                <!-- Added due to warning during an exection of
-                     scripts/do_release.bash -->
+                <!-- Added due to warning during an exection of scripts/do_release.bash -->
                 <plugin>
                     <groupId>org.apache.tomcat.maven</groupId>
                     <artifactId>maven-javadoc-plugin</artifactId>
                     <version>2.10.4</version>
                 </plugin>
 
-                <!-- Added due to warning during an exection of
-                     scripts/do_release.bash -->
+                <!-- Added due to warning during an exection of scripts/do_release.bash -->
                 <plugin>
                     <groupId>org.apache.tomcat.maven</groupId>
                     <artifactId>maven-source-plugin</artifactId>
