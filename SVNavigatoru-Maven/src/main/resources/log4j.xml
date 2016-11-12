@@ -8,7 +8,7 @@
         <!-- Target param determines which console stream to print messages to, System.out or System.err. -->
 
         <layout class="org.apache.log4j.PatternLayout">
-            <param name="ConversionPattern" value="%d[%p,%c{1}] %m%n" />
+            <param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:ss,SSS} %-5p [%-25t] :%-4L - %m%n" />
         </layout>
     </appender>
 
@@ -18,7 +18,7 @@
         <param name="MaxBackupIndex" value="10" />
 
         <layout class="org.apache.log4j.PatternLayout">
-            <param name="ConversionPattern" value="%d{ABSOLUTE} %5p %c{1},%t:%L - %m%n" />
+            <param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:ss,SSS} %-5p [%-25t] :%-4L - %m%n" />
         </layout>
     </appender>
 
