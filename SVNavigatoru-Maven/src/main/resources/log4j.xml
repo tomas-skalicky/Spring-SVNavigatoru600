@@ -31,8 +31,8 @@
     </logger>
 
     <root>
-        <priority value="warn" />
-        <appender-ref ref="stdout" />
+        <priority value="info" />
+<!--         <appender-ref ref="stdout" /> -->
         <appender-ref ref="logfile"/>
     </root>
 
