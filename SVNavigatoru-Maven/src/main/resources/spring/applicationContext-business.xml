@@ -12,7 +12,6 @@
 
     <!-- Database Configuration -->
     <import resource="dataSource.xml" />
-    <!-- <import resource="hibernate.xml" /> -->
 
 
 
