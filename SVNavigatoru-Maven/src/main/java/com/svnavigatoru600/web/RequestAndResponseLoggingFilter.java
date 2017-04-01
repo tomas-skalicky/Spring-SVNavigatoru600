@@ -4,9 +4,11 @@ import static com.svnavigatoru600.common.constants.CommonConstants.NEW_LINE;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.Collections;
 import java.util.Enumeration;
@@ -17,11 +19,14 @@ import java.util.regex.Pattern;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.ServletInputStream;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpServletResponseWrapper;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.io.output.TeeOutputStream;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -200,6 +205,90 @@ public class RequestAndResponseLoggingFilter extends OncePerRequestFilter {
         }
     }
 
+    /*
+     * Copyright 2002-2012 the original author or authors.
+     *
+     * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance
+     * with the License. You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed
+     * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for
+     * the specific language governing permissions and limitations under the License.
+     */
+    /**
+     * Delegating implementation of {@link javax.servlet.ServletOutputStream}.
+     *
+     * <p>
+     * Used by MockHttpServletResponse; typically not directly used for testing application controllers.
+     *
+     * @author Juergen Hoeller
+     * @since 1.0.2
+     */
+    public class DelegatingServletOutputStream extends ServletOutputStream {
+
+        private final OutputStream targetStream;
+
+        /**
+         * Create a DelegatingServletOutputStream for the given target stream.
+         *
+         * @param targetStream
+         *            the target stream (never {@code null})
+         */
+        public DelegatingServletOutputStream(final OutputStream targetStream) {
+            Assert.notNull(targetStream, "Target OutputStream must not be null");
+            this.targetStream = targetStream;
+        }
+
+        /**
+         * Return the underlying target stream (never {@code null}).
+         */
+        public final OutputStream getTargetStream() {
+            return targetStream;
+        }
+
+        @Override
+        public void write(final int b) throws IOException {
+            targetStream.write(b);
+        }
+
+        @Override
+        public void flush() throws IOException {
+            super.flush();
+            targetStream.flush();
+        }
+
+        @Override
+        public void close() throws IOException {
+            super.close();
+            targetStream.close();
+        }
+
+    }
+
+    /**
+     * Helps to write the response payload to both the default and one other output stream at the same time.
+     */
+    private class ResponseWrapper extends HttpServletResponseWrapper {
+
+        private final ByteArrayOutputStream responsePayloadOutputStream = new ByteArrayOutputStream();
+
+        private ResponseWrapper(final HttpServletResponse response) {
+            super(response);
+        }
+
+        @Override
+        public ServletOutputStream getOutputStream() throws IOException {
+            return new DelegatingServletOutputStream(
+                    new TeeOutputStream(super.getOutputStream(), responsePayloadOutputStream));
+        }
+
+        private boolean isJson() {
+            return getContentType() != null && getContentType().contains(MediaType.APPLICATION_JSON_VALUE);
+        }
+    }
+
     private static final String REQUEST_PREFIX = " >> ";
     private static final String RESPONSE_PREFIX = " << ";
 
@@ -222,10 +311,11 @@ public class RequestAndResponseLoggingFilter extends OncePerRequestFilter {
         final RequestWrapper requestWrapper = new RequestWrapper(request);
         beforeRequest(requestWrapper);
 
+        final ResponseWrapper responseWrapper = new ResponseWrapper(response);
         try {
-            filterChain.doFilter(requestWrapper, response);
+            filterChain.doFilter(requestWrapper, responseWrapper);
         } finally {
-            afterRequest(requestWrapper, response);
+            afterRequest(requestWrapper, responseWrapper);
         }
     }
 
@@ -240,7 +330,8 @@ public class RequestAndResponseLoggingFilter extends OncePerRequestFilter {
         logger.info(message);
     }
 
-    private void afterRequest(final RequestWrapper request, final HttpServletResponse response) {
+    private void afterRequest(final RequestWrapper request, final ResponseWrapper response) {
+
         final String message = buildAfterMessage(request, response);
 
         final HttpStatus httpStatus = HttpStatus.valueOf(response.getStatus());
@@ -298,12 +389,15 @@ public class RequestAndResponseLoggingFilter extends OncePerRequestFilter {
     /**
      * Constructs a message to write to the log after the request has been processed.
      */
-    private String buildAfterMessage(final HttpServletRequest request, final HttpServletResponse response) {
+    private String buildAfterMessage(final HttpServletRequest request, final ResponseWrapper response) {
         final StringBuilder message = new StringBuilder(NEW_LINE);
         appendToResponseMessage(message, buildRequestIdentificationString(request));
         appendToResponseMessage(message, "status", Integer.valueOf(response.getStatus()).toString());
 
-        // FIXME Tomas payload is missing
+        if (response.isJson()) {
+            message.append(NEW_LINE);
+            appendToResponseMessage(message, "payload", new String(response.responsePayloadOutputStream.toByteArray()));
+        }
 
         return message.toString();
     }
