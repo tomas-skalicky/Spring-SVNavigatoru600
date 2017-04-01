@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 /**
  * @author Tomas Skalicky
- * @date 01.04.2017
+ * @since 01.04.2017
  */
 @ControllerAdvice
 public class ExceptionControllerAdvice {
