@@ -6,13 +6,14 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.context.MessageSource;
 import org.springframework.dao.DataAccessException;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.support.SessionStatus;
 
@@ -39,23 +40,23 @@ public class NewNewsController extends AbstractNewEditNewsController {
      * Constructor.
      */
     @Inject
-    public NewNewsController(NewsService newsService, NewNewsValidator validator, MessageSource messageSource) {
+    public NewNewsController(final NewsService newsService, final NewNewsValidator validator,
+            final MessageSource messageSource) {
         super(newsService, validator, messageSource);
     }
 
     /**
      * Initialises the form.
      */
-    @RequestMapping(value = NewsUrlParts.NEW_URL, method = RequestMethod.GET)
-    public @ResponseBody
-    AbstractNewsResponse initForm(HttpServletRequest request, ModelMap model) {
+    @GetMapping(value = NewsUrlParts.NEW_URL, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public @ResponseBody AbstractNewsResponse initForm(final HttpServletRequest request, final ModelMap model) {
 
-        NewNews command = new NewNews();
+        final NewNews command = new NewNews();
 
-        News news = new News();
+        final News news = new News();
         command.setNews(news);
-        MessageSource messageSource = getMessageSource();
-        SendNotification sendNotification = new NewControllerSendNotification(request, messageSource);
+        final MessageSource messageSource = getMessageSource();
+        final SendNotification sendNotification = new NewControllerSendNotification(request, messageSource);
         command.setSendNotification(sendNotification);
 
         model.addAttribute(AbstractNewEditNewsController.COMMAND, command);
@@ -63,28 +64,27 @@ public class NewNewsController extends AbstractNewEditNewsController {
     }
 
     /**
-     * If values in the form are OK, the new news is stored to the repository. Otherwise, returns back to the
-     * form.
-     * 
+     * If values in the form are OK, the new news is stored to the repository. Otherwise, returns back to the form.
+     *
      * @return Response in the JSON format
      */
-    @RequestMapping(value = NewsUrlParts.NEW_URL, method = RequestMethod.POST)
+    @PostMapping(value = NewsUrlParts.NEW_URL, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @Transactional
-    public @ResponseBody
-    AbstractNewsResponse processSubmittedForm(@ModelAttribute(NewNewsController.COMMAND) NewNews command,
-            BindingResult result, SessionStatus status, HttpServletRequest request) {
+    public @ResponseBody AbstractNewsResponse processSubmittedForm(
+            @ModelAttribute(NewNewsController.COMMAND) final NewNews command, final BindingResult result,
+            final SessionStatus status, final HttpServletRequest request) {
 
-        NewNewsResponse response = new NewNewsResponse(command);
+        final NewNewsResponse response = new NewNewsResponse(command);
 
         getValidator().validate(command, result);
-        MessageSource messageSource = getMessageSource();
+        final MessageSource messageSource = getMessageSource();
         if (result.hasErrors()) {
             response.setFail(result, messageSource, request);
             return response;
         }
 
         // Updates the data of the new news.
-        News newNews = command.getNews();
+        final News newNews = command.getNews();
 
         try {
             // Saves the news to the repository.
@@ -97,7 +97,7 @@ public class NewNewsController extends AbstractNewEditNewsController {
             response.setSuccess(messageSource, request);
             return response;
 
-        } catch (DataAccessException e) {
+        } catch (final DataAccessException e) {
             // We encountered a database problem.
             LogFactory.getLog(this.getClass()).error(newNews, e);
             result.reject(NewNewsController.DATABASE_ERROR_MESSAGE_CODE);

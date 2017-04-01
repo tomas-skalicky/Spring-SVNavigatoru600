@@ -8,8 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import com.svnavigatoru600.domain.News;
 import com.svnavigatoru600.service.news.NewsService;
@@ -30,33 +29,32 @@ public class ListNewsController extends AbstractNewsController {
     private NewNewsController newNewsController;
 
     @Inject
-    public void setNewNewsController(NewNewsController controller) {
-        this.newNewsController = controller;
+    public void setNewNewsController(final NewNewsController controller) {
+        newNewsController = controller;
     }
 
     /**
      * Constructor.
      */
     @Inject
-    public ListNewsController(NewsService newsService, MessageSource messageSource) {
+    public ListNewsController(final NewsService newsService, final MessageSource messageSource) {
         super(newsService, messageSource);
     }
 
-    @RequestMapping(value = NewsUrlParts.BASE_URL, method = RequestMethod.GET)
-    public String initPage(HttpServletRequest request, ModelMap model) {
+    @GetMapping(value = NewsUrlParts.BASE_URL)
+    public String initPage(final HttpServletRequest request, final ModelMap model) {
 
-        ShowAllNews command = new ShowAllNews();
+        final ShowAllNews command = new ShowAllNews();
 
-        List<News> news = getNewsService().findAllOrdered();
+        final List<News> news = getNewsService().findAllOrdered();
         command.setNews(news);
 
         // Sets up all auxiliary (but necessary) maps.
-        command.setLocalizedDeleteQuestions(NewsService.getLocalizedDeleteQuestions(news, request,
-                getMessageSource()));
+        command.setLocalizedDeleteQuestions(NewsService.getLocalizedDeleteQuestions(news, request, getMessageSource()));
 
         model.addAttribute(ListNewsController.COMMAND, command);
 
-        this.newNewsController.initForm(request, model);
+        newNewsController.initForm(request, model);
 
         return PageViews.LIST.getViewName();
     }

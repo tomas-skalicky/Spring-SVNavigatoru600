@@ -55,7 +55,8 @@ public class EditNewsController extends AbstractNewEditNewsController {
     /**
      * Initialises the form.
      */
-    @GetMapping(value = NewsUrlParts.EXISTING_URL + "{" + Vars.NEWS_ID + "}/")
+    @GetMapping(value = NewsUrlParts.EXISTING_URL + "{" + Vars.NEWS_ID
+            + "}/", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public @ResponseBody AbstractNewsResponse initForm(@PathVariable(Vars.NEWS_ID) final int newsId,
             final HttpServletRequest request) {
 

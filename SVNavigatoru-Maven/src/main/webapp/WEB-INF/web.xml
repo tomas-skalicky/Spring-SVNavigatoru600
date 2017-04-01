@@ -1,52 +1,52 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <web-app id="svnavigatoru600" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
-         				http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
-	version="3.0">
+    xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+                         http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+    version="3.0">
 
-	<display-name>SV Navigatoru 600-3</display-name>
+    <display-name>SV Navigatoru 600-3</display-name>
 
-	<context-param>
-		<param-name>webAppRootKey</param-name>
-		<param-value>svnavigatoru600</param-value>
-	</context-param>
-	
-
-	<!-- Location of XML files that define the root application context. Applied by ContextLoaderListener. -->
-	<context-param>
-		<param-name>contextConfigLocation</param-name>
-		<param-value>
-			/WEB-INF/classes/spring/applicationContext-business.xml,
-			/WEB-INF/classes/spring/applicationContext-security.xml
-		</param-value>
-	</context-param>
-
-	<context-param>
-		<param-name>log4jConfigLocation</param-name>
-		<param-value>/WEB-INF/classes/log4j.xml</param-value>
-	</context-param>
-	
-	
-	<!-- Prevents from memory leaks. -->
-	<!-- see http://static.springsource.org/spring/docs/3.2.x/javadoc-api/org/springframework/web/util/IntrospectorCleanupListener.html -->
-	<listener>
-		<listener-class>org.springframework.web.util.IntrospectorCleanupListener</listener-class>
-	</listener>
-
-	<listener>
-		<listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
-	</listener>
-
-	<!-- Loads the Spring's root application context of this web app at startup. The application context 
-		is then available via WebApplicationContextUtils.getWebApplicationContext(servletContext). -->
-	<listener>
-		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
-	</listener>
+    <context-param>
+        <param-name>webAppRootKey</param-name>
+        <param-value>svnavigatoru600</param-value>
+    </context-param>
 
 
+    <!-- Location of XML files that define the root application context. Applied by ContextLoaderListener. -->
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>
+            /WEB-INF/classes/spring/applicationContext-business.xml,
+            /WEB-INF/classes/spring/applicationContext-security.xml
+        </param-value>
+    </context-param>
 
-    
+    <context-param>
+        <param-name>log4jConfigLocation</param-name>
+        <param-value>/WEB-INF/classes/log4j.xml</param-value>
+    </context-param>
+
+
+    <!-- Prevents from memory leaks. -->
+    <!-- see http://static.springsource.org/spring/docs/3.2.x/javadoc-api/org/springframework/web/util/IntrospectorCleanupListener.html -->
+    <listener>
+        <listener-class>org.springframework.web.util.IntrospectorCleanupListener</listener-class>
+    </listener>
+
+    <listener>
+        <listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
+    </listener>
+
+    <!-- Loads the Spring's root application context of this web app at startup. The application context 
+        is then available via WebApplicationContextUtils.getWebApplicationContext(servletContext). -->
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
+
+
+
+
     <filter>
         <filter-name>requestAndResponseLoggingFilter</filter-name>
         <filter-class>com.svnavigatoru600.web.RequestAndResponseLoggingFilter</filter-class>
@@ -56,92 +56,92 @@
         <url-pattern>/*</url-pattern>
     </filter-mapping>
 
-	<filter>
-		<filter-name>springSecurityFilterChain</filter-name>
-		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
-	</filter>
-	<filter-mapping>
-		<filter-name>springSecurityFilterChain</filter-name>
-		<url-pattern>/*</url-pattern>
-	</filter-mapping>
+    <filter>
+        <filter-name>springSecurityFilterChain</filter-name>
+        <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>springSecurityFilterChain</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
 
-	<filter>
-		<filter-name>characterEncodingFilter</filter-name>
-		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
-		<init-param>
-			<param-name>encoding</param-name>
-			<param-value>UTF-8</param-value>
-		</init-param>
-	</filter>
-	<filter-mapping>
-		<filter-name>characterEncodingFilter</filter-name>
-		<url-pattern>/*</url-pattern>
-	</filter-mapping>
-
-
-
-
-	<!-- Dispatcher -->
-	<servlet>
-		<servlet-name>dispatcher</servlet-name>
-		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
-		<load-on-startup>1</load-on-startup>
-	</servlet>
-
-	<servlet-mapping>
-		<servlet-name>dispatcher</servlet-name>
-		<url-pattern>/</url-pattern>
-	</servlet-mapping>
-	<!-- /Dispatcher -->
+    <filter>
+        <filter-name>characterEncodingFilter</filter-name>
+        <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+        <init-param>
+            <param-name>encoding</param-name>
+            <param-value>UTF-8</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>characterEncodingFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
 
 
 
-	<!-- Special pages -->
-	<error-page>
-		<error-code>404</error-code>
-		<location>/chyby/404/</location>
-	</error-page>
 
-	<error-page>
-		<exception-type>java.lang.Exception</exception-type>
-		<location>/chyby/404/</location>
-	</error-page>
-	<!-- /Special pages -->
+    <!-- Dispatcher -->
+    <servlet>
+        <servlet-name>dispatcher</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>dispatcher</servlet-name>
+        <url-pattern>/</url-pattern>
+    </servlet-mapping>
+    <!-- /Dispatcher -->
 
 
 
-	<!-- TLD - enumerated in order to improve the startup time and the JSP compilation time. Otherwise, 
-		I would get: "At least one JAR was scanned for TLDs yet contained no TLDs. Enable debug logging for this 
-		logger for a complete list of JARs that were scanned but no TLDs were found in them. Skipping unneeded 
-		JARs during scanning can improve startup time and JSP compilation time." -->
-	<jsp-config>
-		<taglib>
-			<taglib-uri>http://java.sun.com/jsp/jstl/core</taglib-uri>
-			<taglib-location>/WEB-INF/tld/c.tld</taglib-location>
-		</taglib>
-		<taglib>
-			<taglib-uri>http://java.sun.com/jsp/jstl/fmt</taglib-uri>
-			<taglib-location>/WEB-INF/tld/fmt.tld</taglib-location>
-		</taglib>
-		<taglib>
-			<taglib-uri>http://java.sun.com/jsp/jstl/functions</taglib-uri>
-			<taglib-location>/WEB-INF/tld/fn.tld</taglib-location>
-		</taglib>
+    <!-- Special pages -->
+    <error-page>
+        <error-code>404</error-code>
+        <location>/chyby/404/</location>
+    </error-page>
 
-		<taglib>
-			<taglib-uri>http://www.springframework.org/tags</taglib-uri>
-			<taglib-location>/WEB-INF/tld/spring.tld</taglib-location>
-		</taglib>
-		<taglib>
-			<taglib-uri>http://www.springframework.org/tags/form</taglib-uri>
-			<taglib-location>/WEB-INF/tld/spring-form.tld</taglib-location>
-		</taglib>
+    <error-page>
+        <exception-type>java.lang.Exception</exception-type>
+        <location>/chyby/404/</location>
+    </error-page>
+    <!-- /Special pages -->
 
-		<taglib>
-			<taglib-uri>http://tiles.apache.org/tags-tiles</taglib-uri>
-			<taglib-location>/WEB-INF/tld/tiles-jsp.tld</taglib-location>
-		</taglib>
-	</jsp-config>
-	<!-- /TLD -->
+
+
+    <!-- TLD - enumerated in order to improve the startup time and the JSP compilation time. Otherwise, 
+        I would get: "At least one JAR was scanned for TLDs yet contained no TLDs. Enable debug logging for this 
+        logger for a complete list of JARs that were scanned but no TLDs were found in them. Skipping unneeded 
+        JARs during scanning can improve startup time and JSP compilation time." -->
+    <jsp-config>
+        <taglib>
+            <taglib-uri>http://java.sun.com/jsp/jstl/core</taglib-uri>
+            <taglib-location>/WEB-INF/tld/c.tld</taglib-location>
+        </taglib>
+        <taglib>
+            <taglib-uri>http://java.sun.com/jsp/jstl/fmt</taglib-uri>
+            <taglib-location>/WEB-INF/tld/fmt.tld</taglib-location>
+        </taglib>
+        <taglib>
+            <taglib-uri>http://java.sun.com/jsp/jstl/functions</taglib-uri>
+            <taglib-location>/WEB-INF/tld/fn.tld</taglib-location>
+        </taglib>
+
+        <taglib>
+            <taglib-uri>http://www.springframework.org/tags</taglib-uri>
+            <taglib-location>/WEB-INF/tld/spring.tld</taglib-location>
+        </taglib>
+        <taglib>
+            <taglib-uri>http://www.springframework.org/tags/form</taglib-uri>
+            <taglib-location>/WEB-INF/tld/spring-form.tld</taglib-location>
+        </taglib>
+
+        <taglib>
+            <taglib-uri>http://tiles.apache.org/tags-tiles</taglib-uri>
+            <taglib-location>/WEB-INF/tld/tiles-jsp.tld</taglib-location>
+        </taglib>
+    </jsp-config>
+    <!-- /TLD -->
 
 </web-app>
