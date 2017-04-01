@@ -665,10 +665,12 @@
                 <version>2.7.0</version>
             </dependency>
 
+            <!-- Before you update, be sure the version is compatible with
+                 target JDK version -->
             <dependency>
                 <groupId>com.google.guava</groupId>
                 <artifactId>guava</artifactId>
-                <version>21.0</version>
+                <version>20.0</version>
             </dependency>
 
             <dependency>
