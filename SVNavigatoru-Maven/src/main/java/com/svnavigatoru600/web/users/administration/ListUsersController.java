@@ -15,8 +15,8 @@ import com.svnavigatoru600.url.users.UserAdministrationUrlParts;
 import com.svnavigatoru600.viewmodel.users.ShowAllUsers;
 
 /**
- * The controller bound mainly to the <i>users/administration/list.jsp</i> page. For more details about the
- * concepts used here, see the <i>ForgottenPasswordController</i> controller.
+ * The controller bound mainly to the <i>users/administration/list.jsp</i> page. For more details about the concepts
+ * used here, see the <i>ForgottenPasswordController</i> controller.
  * 
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
@@ -37,16 +37,16 @@ public class ListUsersController extends AbstractUserController {
         command.setUsers(users);
 
         // Sets up all (but necessary) maps.
-        command.setLocalizedDeleteQuestions(UserService.getLocalizedDeleteQuestions(users, request,
-                getMessageSource()));
+        command.setLocalizedDeleteQuestions(
+                UserService.getLocalizedDeleteQuestions(users, request, getMessageSource()));
 
         model.addAttribute(ListUsersController.COMMAND, command);
         return PageViews.LIST.getViewName();
     }
 
     /**
-     * Initializes the page with all available users including the one which has been successfully added to
-     * the repository recently.
+     * Initializes the page with all available users including the one which has been successfully added to the
+     * repository recently.
      */
     @RequestMapping(value = UserAdministrationUrlParts.CREATED_URL, method = RequestMethod.GET)
     public String initPageAfterCreate(HttpServletRequest request, ModelMap model) {
@@ -56,8 +56,8 @@ public class ListUsersController extends AbstractUserController {
     }
 
     /**
-     * Initializes the page with all available users and notifies that one other user has been successfully
-     * deleted from the repository.
+     * Initializes the page with all available users and notifies that one other user has been successfully deleted from
+     * the repository.
      */
     @RequestMapping(value = UserAdministrationUrlParts.DELETED_URL, method = RequestMethod.GET)
     public String initPageAfterDelete(HttpServletRequest request, ModelMap model) {

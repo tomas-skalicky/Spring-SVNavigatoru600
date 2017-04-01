@@ -31,8 +31,7 @@ public abstract class AbstractDocumentRecordService implements SubjectOfNotifica
      */
     private final DocumentRecordDao recordDao;
     /**
-     * Does the work which concerns mainly notification of {@link com.svnavigatoru600.domain.users.User users}
-     * .
+     * Does the work which concerns mainly notification of {@link com.svnavigatoru600.domain.users.User users} .
      */
     private UserService userService;
 
@@ -77,8 +76,8 @@ public abstract class AbstractDocumentRecordService implements SubjectOfNotifica
     public abstract AbstractDocumentRecord findByIdWithoutFile(int recordId);
 
     /**
-     * Deletes the given {@link AbstractDocumentRecord} together with all its types from the repository.
-     * Moreover, deletes the associated {@link java.io.File file}.
+     * Deletes the given {@link AbstractDocumentRecord} together with all its types from the repository. Moreover,
+     * deletes the associated {@link java.io.File file}.
      */
     public void delete(AbstractDocumentRecord record) {
         this.recordDao.delete(record);
@@ -99,8 +98,7 @@ public abstract class AbstractDocumentRecordService implements SubjectOfNotifica
         // Sets the type of the response.
         String fileName = record.getFileName();
         String fileExtension = fileName.substring(
-                fileName.lastIndexOf(AbstractDocumentRecordService.EXTENSION_DELIMITER) + 1,
-                fileName.length()).trim();
+                fileName.lastIndexOf(AbstractDocumentRecordService.EXTENSION_DELIMITER) + 1, fileName.length()).trim();
         HttpResponseUtils.sendFile(response, bytes, fileName, fileExtension);
     }
 }

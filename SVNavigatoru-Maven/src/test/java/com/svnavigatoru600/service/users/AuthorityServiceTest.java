@@ -1,8 +1,9 @@
 package com.svnavigatoru600.service.users;
 
-import static org.junit.Assert.*;
-import static org.mockito.Matchers.*;
-import static org.mockito.Mockito.*;
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.when;
 
 import java.util.Map;
 
@@ -58,9 +59,8 @@ public class AuthorityServiceTest {
         PowerMockito.mockStatic(Localization.class);
 
         for (AuthorityType type : AuthorityType.values()) {
-            when(
-                    Localization.findLocaleMessage(any(MessageSource.class), any(HttpServletRequest.class),
-                            eq(type.getTitleLocalizationCode()))).thenReturn(type.getTitleLocalizationCode());
+            when(Localization.findLocaleMessage(any(MessageSource.class), any(HttpServletRequest.class),
+                    eq(type.getTitleLocalizationCode()))).thenReturn(type.getTitleLocalizationCode());
         }
 
         // Calls the tested method the first time.
@@ -69,8 +69,7 @@ public class AuthorityServiceTest {
                 localizedRoleTitles.get(AuthorityType.ROLE_MEMBER_OF_BOARD.getOrdinal()));
 
         // Calls the same method the second time.
-        Map<Long, String> cachedLocalizedRoleTitles = this.authorityService
-                .getLocalizedRoleTitles(null, null);
+        Map<Long, String> cachedLocalizedRoleTitles = this.authorityService.getLocalizedRoleTitles(null, null);
 
         // Checks the cache instance.
         assertEquals(localizedRoleTitles, cachedLocalizedRoleTitles);

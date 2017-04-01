@@ -17,8 +17,8 @@ import com.svnavigatoru600.service.records.SessionRecordService;
 import com.svnavigatoru600.web.records.AbstractPageViews;
 
 /**
- * Parent of all controllers which provide retrieving of stored
- * {@link com.svnavigatoru600.domain.records.SessionRecord SessionRecords}.
+ * Parent of all controllers which provide retrieving of stored {@link com.svnavigatoru600.domain.records.SessionRecord
+ * SessionRecords}.
  * 
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
@@ -35,8 +35,8 @@ public abstract class AbstractRetrieveRecordController extends AbstractSessionRe
      * Constructs a controller which considers all {@link com.svnavigatoru600.domain.records.SessionRecord
      * SessionRecords} of all {@link SessionRecordType SessionRecordTypes}.
      */
-    public AbstractRetrieveRecordController(String baseUrl, AbstractPageViews views,
-            SessionRecordService recordService, MessageSource messageSource) {
+    public AbstractRetrieveRecordController(String baseUrl, AbstractPageViews views, SessionRecordService recordService,
+            MessageSource messageSource) {
         // Note that allRecordTypes is set up during the creation of the parent.
         super(baseUrl, views, recordService, messageSource);
     }
@@ -45,8 +45,8 @@ public abstract class AbstractRetrieveRecordController extends AbstractSessionRe
      * Constructs a controller which considers all {@link com.svnavigatoru600.domain.records.SessionRecord
      * SessionRecords} of the given <code>recordType</code>.
      */
-    public AbstractRetrieveRecordController(String baseUrl, AbstractPageViews views,
-            SessionRecordType recordType, SessionRecordService recordService, MessageSource messageSource) {
+    public AbstractRetrieveRecordController(String baseUrl, AbstractPageViews views, SessionRecordType recordType,
+            SessionRecordService recordService, MessageSource messageSource) {
         super(baseUrl, views, recordType, recordService, messageSource);
     }
 

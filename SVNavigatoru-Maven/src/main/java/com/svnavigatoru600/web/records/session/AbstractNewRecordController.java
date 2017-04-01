@@ -42,12 +42,12 @@ public abstract class AbstractNewRecordController extends AbstractNewEditRecordC
     private final Log logger = LogFactory.getLog(this.getClass());
 
     /**
-     * Constructs a controller which considers all {@link SessionRecord SessionRecords} of all
-     * {@link SessionRecordType SessionRecordTypes}.
+     * Constructs a controller which considers all {@link SessionRecord SessionRecords} of all {@link SessionRecordType
+     * SessionRecordTypes}.
      */
-    public AbstractNewRecordController(String baseUrl, AbstractPageViews views,
-            SessionRecordService recordService, SendNotificationModelFiller sendNotificationModelFiller,
-            NewSessionRecordValidator validator, MessageSource messageSource) {
+    public AbstractNewRecordController(String baseUrl, AbstractPageViews views, SessionRecordService recordService,
+            SendNotificationModelFiller sendNotificationModelFiller, NewSessionRecordValidator validator,
+            MessageSource messageSource) {
         super(baseUrl, views, recordService, sendNotificationModelFiller, validator, messageSource);
     }
 
@@ -58,8 +58,7 @@ public abstract class AbstractNewRecordController extends AbstractNewEditRecordC
     public AbstractNewRecordController(String baseUrl, AbstractPageViews views, SessionRecordType recordType,
             SessionRecordService recordService, SendNotificationModelFiller sendNotificationModelFiller,
             NewSessionRecordValidator validator, MessageSource messageSource) {
-        super(baseUrl, views, recordType, recordService, sendNotificationModelFiller, validator,
-                messageSource);
+        super(baseUrl, views, recordType, recordService, sendNotificationModelFiller, validator, messageSource);
     }
 
     /**
@@ -73,8 +72,7 @@ public abstract class AbstractNewRecordController extends AbstractNewEditRecordC
         command.setRecord(record);
 
         MessageSource messageSource = getMessageSource();
-        command.setNewType(Localization.findLocaleMessage(messageSource, request,
-                recordType.getLocalizationCode()));
+        command.setNewType(Localization.findLocaleMessage(messageSource, request, recordType.getLocalizationCode()));
 
         getSendNotificationModelFiller().populateSendNotificationInInitForm(command, request, messageSource);
 
@@ -83,8 +81,7 @@ public abstract class AbstractNewRecordController extends AbstractNewEditRecordC
     }
 
     /**
-     * If values in the form are OK, the new record is stored to the repository. Otherwise, returns back to
-     * the form.
+     * If values in the form are OK, the new record is stored to the repository. Otherwise, returns back to the form.
      * 
      * @return The name of the view which is to be shown.
      */
@@ -93,8 +90,7 @@ public abstract class AbstractNewRecordController extends AbstractNewEditRecordC
             HttpServletRequest request, ModelMap model) {
 
         MessageSource messageSource = getMessageSource();
-        getSendNotificationModelFiller()
-                .populateSendNotificationInSubmitForm(command, request, messageSource);
+        getSendNotificationModelFiller().populateSendNotificationInSubmitForm(command, request, messageSource);
 
         getValidator().validate(command, result);
         if (result.hasErrors()) {

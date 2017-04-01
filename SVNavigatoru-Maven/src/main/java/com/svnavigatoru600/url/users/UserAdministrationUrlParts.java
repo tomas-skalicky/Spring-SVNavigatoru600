@@ -11,12 +11,9 @@ public final class UserAdministrationUrlParts {
 
     public static final String BASE_URL = "/administrace-uzivatelu/";
     public static final String NEW_URL = UserAdministrationUrlParts.BASE_URL + CommonUrlParts.NEW_EXTENSION;
-    public static final String EXISTING_URL = UserAdministrationUrlParts.BASE_URL
-            + CommonUrlParts.EXISTING_EXTENSION;
-    public static final String CREATED_URL = UserAdministrationUrlParts.BASE_URL
-            + CommonUrlParts.CREATED_EXTENSION;
-    public static final String DELETED_URL = UserAdministrationUrlParts.BASE_URL
-            + CommonUrlParts.DELETED_EXTENSION;
+    public static final String EXISTING_URL = UserAdministrationUrlParts.BASE_URL + CommonUrlParts.EXISTING_EXTENSION;
+    public static final String CREATED_URL = UserAdministrationUrlParts.BASE_URL + CommonUrlParts.CREATED_EXTENSION;
+    public static final String DELETED_URL = UserAdministrationUrlParts.BASE_URL + CommonUrlParts.DELETED_EXTENSION;
 
     private UserAdministrationUrlParts() {
     }

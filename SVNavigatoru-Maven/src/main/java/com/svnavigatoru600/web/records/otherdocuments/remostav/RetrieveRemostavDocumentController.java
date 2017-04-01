@@ -26,10 +26,9 @@ public class RetrieveRemostavDocumentController extends AbstractRetrieveDocument
      * Constructor.
      */
     @Inject
-    public RetrieveRemostavDocumentController(OtherDocumentRecordService recordService,
-            MessageSource messageSource) {
-        super(RemostavDocumentsUrlParts.BASE_URL, new PageViews(), OtherDocumentRecordType.REMOSTAV,
-                recordService, messageSource);
+    public RetrieveRemostavDocumentController(OtherDocumentRecordService recordService, MessageSource messageSource) {
+        super(RemostavDocumentsUrlParts.BASE_URL, new PageViews(), OtherDocumentRecordType.REMOSTAV, recordService,
+                messageSource);
     }
 
     @Override

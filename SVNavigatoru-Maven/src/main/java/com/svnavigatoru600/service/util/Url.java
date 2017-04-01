@@ -23,8 +23,8 @@ public final class Url {
     }
 
     /**
-     * Converts all occurrences of relative URLs of images in the given <code>text</code> to corresponding
-     * absolute URLs.
+     * Converts all occurrences of relative URLs of images in the given <code>text</code> to corresponding absolute
+     * URLs.
      * <p>
      * Sample:
      * 
@@ -53,8 +53,8 @@ public final class Url {
     }
 
     /**
-     * Converts all occurrences of relative URLs of images in the given <code>text</code> to corresponding
-     * absolute URLs.
+     * Converts all occurrences of relative URLs of images in the given <code>text</code> to corresponding absolute
+     * URLs.
      * <p>
      * Sample:
      * 

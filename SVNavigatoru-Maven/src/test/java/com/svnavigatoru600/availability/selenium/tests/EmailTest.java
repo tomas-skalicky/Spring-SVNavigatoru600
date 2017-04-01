@@ -10,9 +10,9 @@ import com.svnavigatoru600.availability.selenium.AbstractTailoredSeleniumTest;
 import com.svnavigatoru600.test.category.SeleniumTests;
 
 /**
- * <code>Category</code> annotation is applicable both for classes and for methods. However,
- * <code>groups</code> of the <code>maven-surefire-plugin</code> plugin takes only those annotations into
- * account which are by <i>definitions of classes</i>, at least in the version 2.12.
+ * <code>Category</code> annotation is applicable both for classes and for methods. However, <code>groups</code> of the
+ * <code>maven-surefire-plugin</code> plugin takes only those annotations into account which are by <i>definitions of
+ * classes</i>, at least in the version 2.12.
  * 
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  * @see http://maven.apache.org/plugins/maven-surefire-plugin/test-mojo.html#groups

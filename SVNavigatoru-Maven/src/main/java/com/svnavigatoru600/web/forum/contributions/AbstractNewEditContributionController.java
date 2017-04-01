@@ -10,14 +10,13 @@ import com.svnavigatoru600.web.SendNotificationController;
 import com.svnavigatoru600.web.SendNotificationModelFiller;
 
 /**
- * Parent of controllers which create and edit the {@link com.svnavigatoru600.domain.forum.Contribution
- * Contributions}.
+ * Parent of controllers which create and edit the {@link com.svnavigatoru600.domain.forum.Contribution Contributions}.
  * 
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
 @Controller
-public abstract class AbstractNewEditContributionController extends AbstractContributionController implements
-        SendNotificationController {
+public abstract class AbstractNewEditContributionController extends AbstractContributionController
+        implements SendNotificationController {
 
     /**
      * Command used in /main-content/forum/contributions/new-edit-contribution.jsp.

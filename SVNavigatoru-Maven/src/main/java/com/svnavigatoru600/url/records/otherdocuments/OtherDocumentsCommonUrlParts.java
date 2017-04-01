@@ -23,7 +23,6 @@ public final class OtherDocumentsCommonUrlParts {
      * {@link OtherDocumentRecord record} is available for download.
      */
     public static String getAttachedFileUrl(OtherDocumentRecord record, HttpServletRequest request) {
-        return RecordsCommonUrlParts.getAttachedFileUrl(record, OtherDocumentsCommonUrlParts.BASE_URL,
-                request);
+        return RecordsCommonUrlParts.getAttachedFileUrl(record, OtherDocumentsCommonUrlParts.BASE_URL, request);
     }
 }

@@ -22,8 +22,8 @@ public class EventWrapper {
     public EventWrapper(CalendarEvent event, HttpServletRequest request) {
         this.event = event;
         Locale locale = Localization.getLocale(request);
-        this.middleDateFormattedDate = DateUtils.format(event.getDate(),
-                DateUtils.MIDDLE_DATE_FORMATS.get(locale), locale);
+        this.middleDateFormattedDate = DateUtils.format(event.getDate(), DateUtils.MIDDLE_DATE_FORMATS.get(locale),
+                locale);
     }
 
     public CalendarEvent getEvent() {

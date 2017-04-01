@@ -24,8 +24,8 @@ public enum ThreadField {
     }
 
     /**
-     * Names of the columns of the database table which contains
-     * {@link com.svnavigatoru600.domain.forum.Thread threads}.
+     * Names of the columns of the database table which contains {@link com.svnavigatoru600.domain.forum.Thread
+     * threads}.
      */
     private enum ThreadColumn {
 

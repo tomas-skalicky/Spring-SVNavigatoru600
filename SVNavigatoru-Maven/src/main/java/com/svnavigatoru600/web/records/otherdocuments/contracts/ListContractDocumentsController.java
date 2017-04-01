@@ -24,8 +24,7 @@ public class ListContractDocumentsController extends AbstractListDocumentsContro
      * Constructor.
      */
     @Inject
-    public ListContractDocumentsController(OtherDocumentRecordService recordService,
-            MessageSource messageSource) {
+    public ListContractDocumentsController(OtherDocumentRecordService recordService, MessageSource messageSource) {
         super(ContractsUrlParts.BASE_URL, new PageViews(), OtherDocumentRecordType.CONTRACT, recordService,
                 messageSource);
     }

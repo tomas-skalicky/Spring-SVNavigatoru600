@@ -16,8 +16,8 @@ public final class HtmlUtilsTest {
     private static final int TEXT_MAX_LENGTH = AbstractNotificationEmailService.getTextMaxLength();
 
     /**
-     * The returned string should be identical to the original one (except the wrapping <code>div</code>
-     * element and white characters). There are many texts in attributes, but not outside them.
+     * The returned string should be identical to the original one (except the wrapping <code>div</code> element and
+     * white characters). There are many texts in attributes, but not outside them.
      */
     @Test
     public void testCropEscapedWithWellFormed() {

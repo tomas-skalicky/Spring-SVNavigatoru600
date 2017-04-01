@@ -93,8 +93,8 @@ public class ForgottenPasswordController extends AbstractMetaController {
     }
 
     /**
-     * If values in the form are OK, generates a new password, stores it to a repository and sends it to the
-     * provided email address. If something is wrong, returns back to the form.
+     * If values in the form are OK, generates a new password, stores it to a repository and sends it to the provided
+     * email address. If something is wrong, returns back to the form.
      * 
      * @return The name of the view which is to be shown.
      */
@@ -111,8 +111,7 @@ public class ForgottenPasswordController extends AbstractMetaController {
         }
 
         try {
-            this.userService.resetPasswordAndNotifyUser(command.getUser().getEmail(), request,
-                    this.messageSource);
+            this.userService.resetPasswordAndNotifyUser(command.getUser().getEmail(), request, this.messageSource);
 
             // Clears the command object from the session.
             status.setComplete();

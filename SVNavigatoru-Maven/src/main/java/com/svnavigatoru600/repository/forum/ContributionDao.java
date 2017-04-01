@@ -14,8 +14,8 @@ public interface ContributionDao {
     /**
      * Returns a {@link Contribution} stored in the repository which has the given ID.
      * <p>
-     * The returned contribution has its {@link Contribution#getThread() thread} and
-     * {@link Contribution#getAuthor() author} populated.
+     * The returned contribution has its {@link Contribution#getThread() thread} and {@link Contribution#getAuthor()
+     * author} populated.
      */
     Contribution findById(int contributionId);
 
@@ -37,8 +37,8 @@ public interface ContributionDao {
      * <p>
      * It returns only the first <code>maxResultSize</code> {@link Contribution Contributions}.
      * <p>
-     * Returned contributions have their {@link Contribution#getThread() threads} and
-     * {@link Contribution#getAuthor() authors} populated.
+     * Returned contributions have their {@link Contribution#getThread() threads} and {@link Contribution#getAuthor()
+     * authors} populated.
      */
     List<Contribution> findAllOrdered(ContributionField sortField, OrderType sortDirection, int maxResultSize);
 
@@ -49,8 +49,8 @@ public interface ContributionDao {
      * Moreover, the resulting {@link Contribution Contributions} are only those which belong to the specified
      * {@link com.svnavigatoru600.domain.forum.Thread Thread}.
      * <p>
-     * Returned contributions have their {@link Contribution#getThread() threads} and
-     * {@link Contribution#getAuthor() authors} populated.
+     * Returned contributions have their {@link Contribution#getThread() threads} and {@link Contribution#getAuthor()
+     * authors} populated.
      *
      * @param threadId
      *            The ID of the thread
@@ -58,8 +58,8 @@ public interface ContributionDao {
     List<Contribution> findAllOrdered(int threadId, ContributionField sortField, OrderType sortDirection);
 
     /**
-     * Updates the given {@link Contribution} in the repository. The old version of this contribution should
-     * be already stored there.
+     * Updates the given {@link Contribution} in the repository. The old version of this contribution should be already
+     * stored there.
      * <p>
      * <b>Preconditions:</b> The new <code>contribution</code>'s {@link Contribution#getThread() thread} and
      * {@link Contribution#getAuthor() author} must have already been persisted in the repository.

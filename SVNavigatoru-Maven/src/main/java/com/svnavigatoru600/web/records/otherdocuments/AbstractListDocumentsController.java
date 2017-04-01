@@ -38,12 +38,11 @@ public abstract class AbstractListDocumentsController extends AbstractOtherDocum
     }
 
     /**
-     * Constructs a controller which considers all {@link OtherDocumentRecord OtherDocumentRecords} of the
-     * given <code>recordType</code>.
+     * Constructs a controller which considers all {@link OtherDocumentRecord OtherDocumentRecords} of the given
+     * <code>recordType</code>.
      */
-    public AbstractListDocumentsController(String baseUrl, AbstractPageViews views,
-            OtherDocumentRecordType recordType, OtherDocumentRecordService recordService,
-            MessageSource messageSource) {
+    public AbstractListDocumentsController(String baseUrl, AbstractPageViews views, OtherDocumentRecordType recordType,
+            OtherDocumentRecordService recordService, MessageSource messageSource) {
         super(baseUrl, views, recordType, recordService, messageSource);
     }
 
@@ -51,13 +50,12 @@ public abstract class AbstractListDocumentsController extends AbstractOtherDocum
 
         ShowAllRecords command = new ShowAllRecords();
 
-        List<OtherDocumentRecord> records = getRecordService().findAllOrdered(isAllRecordTypes(),
-                getRecordType());
+        List<OtherDocumentRecord> records = getRecordService().findAllOrdered(isAllRecordTypes(), getRecordType());
         command.setRecords(records);
 
         // Sets up all auxiliary (but necessary) maps.
-        command.setLocalizedDeleteQuestions(OtherDocumentRecordService.getLocalizedDeleteQuestions(records,
-                request, getMessageSource()));
+        command.setLocalizedDeleteQuestions(
+                OtherDocumentRecordService.getLocalizedDeleteQuestions(records, request, getMessageSource()));
 
         model.addAttribute(AbstractListDocumentsController.COMMAND, command);
         return getViews().getList();

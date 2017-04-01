@@ -33,8 +33,8 @@ public class EditBoardSessionRecordController extends AbstractEditRecordControll
      */
     @Inject
     public EditBoardSessionRecordController(SessionRecordService recordService,
-            SendNotificationEditModelFiller sendNotificationModelFiller,
-            EditSessionRecordValidator validator, MessageSource messageSource) {
+            SendNotificationEditModelFiller sendNotificationModelFiller, EditSessionRecordValidator validator,
+            MessageSource messageSource) {
         super(BoardSessionsUrlParts.EXISTING_URL, new PageViews(), SessionRecordType.SESSION_RECORD_OF_BOARD,
                 recordService, sendNotificationModelFiller, validator, messageSource);
     }
@@ -54,10 +54,9 @@ public class EditBoardSessionRecordController extends AbstractEditRecordControll
 
     @Override
     @RequestMapping(value = BoardSessionsUrlParts.EXISTING_URL + "{recordId}/", method = RequestMethod.POST)
-    public String processSubmittedForm(
-            @ModelAttribute(AbstractEditRecordController.COMMAND) EditSessionRecord command,
-            BindingResult result, SessionStatus status, @PathVariable int recordId,
-            HttpServletRequest request, ModelMap model) {
+    public String processSubmittedForm(@ModelAttribute(AbstractEditRecordController.COMMAND) EditSessionRecord command,
+            BindingResult result, SessionStatus status, @PathVariable int recordId, HttpServletRequest request,
+            ModelMap model) {
         return super.processSubmittedForm(command, result, status, recordId, request, model);
     }
 }

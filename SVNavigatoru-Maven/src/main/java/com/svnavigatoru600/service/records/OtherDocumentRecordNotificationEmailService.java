@@ -17,8 +17,8 @@ import com.svnavigatoru600.service.util.Url;
 import com.svnavigatoru600.url.records.otherdocuments.OtherDocumentsCommonUrlParts;
 
 /**
- * Provide sending of emails concerning notifications of new {@link OtherDocumentRecord other document
- * records} and updated ones.
+ * Provide sending of emails concerning notifications of new {@link OtherDocumentRecord other document records} and
+ * updated ones.
  * 
  * @author <a href="mailto:tomas.skalicky@gfk.com">Tomas Skalicky</a>
  */
@@ -65,27 +65,25 @@ public class OtherDocumentRecordNotificationEmailService extends AbstractNotific
      * @param record
      *            Newly posted or updated {@link OtherDocumentRecord}
      */
-    private void sendEmail(OtherDocumentRecord record, String subjectLocalizationCode,
-            String textLocalizationCode, List<User> usersToNotify, HttpServletRequest request,
-            MessageSource messageSource) {
+    private void sendEmail(OtherDocumentRecord record, String subjectLocalizationCode, String textLocalizationCode,
+            List<User> usersToNotify, HttpServletRequest request, MessageSource messageSource) {
 
         String subject = getSubject(subjectLocalizationCode, request, messageSource);
 
         String localizedDocumentNameLabel = getLocalizedDocumentNameLabel(request, messageSource);
         String documentName = record.getName();
-        String localizedDocumentDescriptionLabel = getLocalizedDocumentDescriptionLabel(request,
-                messageSource);
+        String localizedDocumentDescriptionLabel = getLocalizedDocumentDescriptionLabel(request, messageSource);
         String documentDescription = Url.convertImageRelativeUrlsToAbsolute(record.getDescription(), request);
         String localizedAttachedFileLabel = getLocalizedAttachedFile(request, messageSource);
-        String fileUrl = getAttachedFileUrlHtml(
-                OtherDocumentsCommonUrlParts.getAttachedFileUrl(record, request), request, messageSource);
+        String fileUrl = getAttachedFileUrlHtml(OtherDocumentsCommonUrlParts.getAttachedFileUrl(record, request),
+                request, messageSource);
 
         for (User user : usersToNotify) {
             String addressing = getLocalizedRecipientAddressing(user, request, messageSource);
             String signature = getLocalizedNotificationSignature(user, request, messageSource);
             Object[] messageParams = new Object[] { addressing, localizedDocumentNameLabel, documentName,
-                    localizedDocumentDescriptionLabel, documentDescription, localizedAttachedFileLabel,
-                    fileUrl, signature };
+                    localizedDocumentDescriptionLabel, documentDescription, localizedAttachedFileLabel, fileUrl,
+                    signature };
             String messageText = Localization.findLocaleMessage(messageSource, request, textLocalizationCode,
                     messageParams);
 
@@ -96,8 +94,7 @@ public class OtherDocumentRecordNotificationEmailService extends AbstractNotific
     /**
      * Gets a localized subject of notification emails.
      */
-    private String getSubject(String subjectLocalizationCode, HttpServletRequest request,
-            MessageSource messageSource) {
+    private String getSubject(String subjectLocalizationCode, HttpServletRequest request, MessageSource messageSource) {
         return Localization.findLocaleMessage(messageSource, request, subjectLocalizationCode);
     }
 
@@ -112,8 +109,7 @@ public class OtherDocumentRecordNotificationEmailService extends AbstractNotific
     /**
      * Trivial localization
      */
-    private String getLocalizedDocumentDescriptionLabel(HttpServletRequest request,
-            MessageSource messageSource) {
+    private String getLocalizedDocumentDescriptionLabel(HttpServletRequest request, MessageSource messageSource) {
         return Localization.findLocaleMessage(messageSource, request,
                 OtherDocumentRecordNotificationEmailService.DOCUMENT_DESCRIPTION_CODE);
     }

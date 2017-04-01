@@ -51,9 +51,8 @@ public abstract class AbstractRepositoryTest {
     }
 
     /**
-     * NOTE: All {@link After} methods are guaranteed to run even if {@link Before} or {@link org.junit.Test
-     * Test} method throws an exception (see
-     * http://stackoverflow.com/questions/9490569/does-teardown-get-called-if-test
+     * NOTE: All {@link After} methods are guaranteed to run even if {@link Before} or {@link org.junit.Test Test}
+     * method throws an exception (see http://stackoverflow.com/questions/9490569/does-teardown-get-called-if-test
      * -case-throws-exception-junit).
      */
     @After
@@ -88,8 +87,8 @@ public abstract class AbstractRepositoryTest {
                 throw new IllegalArgumentException("Not supported driver class: " + driverClass);
             }
         } else {
-            throw new IllegalArgumentException("Not supported implementation of javax.sql.DataSource: "
-                    + dataSource.getClass());
+            throw new IllegalArgumentException(
+                    "Not supported implementation of javax.sql.DataSource: " + dataSource.getClass());
         }
     }
 }

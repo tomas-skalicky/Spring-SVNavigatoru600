@@ -41,21 +41,21 @@ public class ThreadNotificationEmailService extends AbstractNotificationEmailSer
             MessageSource messageSource) {
         Thread thread = (Thread) newThread;
 
-        String subject = getSubject(ThreadNotificationEmailService.THREAD_CREATED_SUBJECT_CODE, thread,
-                request, messageSource);
+        String subject = getSubject(ThreadNotificationEmailService.THREAD_CREATED_SUBJECT_CODE, thread, request,
+                messageSource);
 
         String threadName = thread.getName();
         String localizedAuthorLabel = getLocalizedContributionAuthorLabel(request, messageSource);
         String authorFullName = thread.getAuthor().getFullName();
         String localizedContributionTextLabel = getLocalizedFirstContributionLabel(request, messageSource);
-        String contributionText = Url.convertImageRelativeUrlsToAbsolute(thread.getContributions().get(0)
-                .getText(), request);
+        String contributionText = Url.convertImageRelativeUrlsToAbsolute(thread.getContributions().get(0).getText(),
+                request);
 
         for (User user : usersToNotify) {
             String addressing = getLocalizedRecipientAddressing(user, request, messageSource);
             String signature = getLocalizedNotificationSignature(user, request, messageSource);
-            Object[] messageParams = new Object[] { addressing, threadName, localizedAuthorLabel,
-                    authorFullName, localizedContributionTextLabel, contributionText, signature };
+            Object[] messageParams = new Object[] { addressing, threadName, localizedAuthorLabel, authorFullName,
+                    localizedContributionTextLabel, contributionText, signature };
             String messageText = Localization.findLocaleMessage(messageSource, request,
                     ThreadNotificationEmailService.THREAD_CREATED_TEXT_CODE, messageParams);
 
@@ -77,8 +77,7 @@ public class ThreadNotificationEmailService extends AbstractNotificationEmailSer
      */
     private String getSubject(String subjectLocalizationCode, Thread thread, HttpServletRequest request,
             MessageSource messageSource) {
-        return Localization.findLocaleMessage(messageSource, request, subjectLocalizationCode,
-                thread.getName());
+        return Localization.findLocaleMessage(messageSource, request, subjectLocalizationCode, thread.getName());
     }
 
     /**

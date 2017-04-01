@@ -37,8 +37,8 @@ public final class UserCopyMethodsTest extends AbstractUserTest {
 
     @Before
     public void setUpNewUser() throws Exception {
-        this.sourceUser = new User(NEW_USERNAME, NEW_PASSWORD, NEW_ENABLED, NEW_FIRST_NAME, NEW_LAST_NAME,
-                NEW_EMAIL, NEW_PHONE, NEW_IS_TEST_USER, NEW_AUTHORITIES);
+        this.sourceUser = new User(NEW_USERNAME, NEW_PASSWORD, NEW_ENABLED, NEW_FIRST_NAME, NEW_LAST_NAME, NEW_EMAIL,
+                NEW_PHONE, NEW_IS_TEST_USER, NEW_AUTHORITIES);
         this.sourceUser.setSubscribedToNews(NEW_SUBSCRIBED_TO_NEWS);
         this.sourceUser.setSubscribedToEvents(NEW_SUBSCRIBED_TO_EVENTS);
         this.sourceUser.setSubscribedToForum(NEW_SUBSCRIBED_TO_FORUM);

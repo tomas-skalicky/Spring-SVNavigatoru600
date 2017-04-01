@@ -92,13 +92,13 @@ public class ThreadDaoImpl extends NamedParameterJdbcDaoSupport implements Threa
 
     /**
      * @param lazy
-     *            If <code>true</code>, {@link Contribution contributions} of the desired {@link Thread} will
-     *            not be populated.
+     *            If <code>true</code>, {@link Contribution contributions} of the desired {@link Thread} will not be
+     *            populated.
      */
     public Thread findById(int threadId, boolean lazy) {
         String idColumn = ThreadField.id.getColumnName();
-        String query = String.format("SELECT * FROM %s t WHERE t.%s = :%s", ThreadDaoImpl.TABLE_NAME,
-                idColumn, idColumn);
+        String query = String.format("SELECT * FROM %s t WHERE t.%s = :%s", ThreadDaoImpl.TABLE_NAME, idColumn,
+                idColumn);
 
         Map<String, Integer> args = Collections.singletonMap(idColumn, threadId);
 
@@ -139,20 +139,17 @@ public class ThreadDaoImpl extends NamedParameterJdbcDaoSupport implements Threa
         String idColumn = ThreadField.id.getColumnName();
         String nameColumn = ThreadField.name.getColumnName();
         String authorUsernameColumn = ThreadField.authorUsername.getColumnName();
-        String query = String.format("UPDATE %s SET %s = :%s, %s = :%s WHERE %s = :%s",
-                ThreadDaoImpl.TABLE_NAME, nameColumn, nameColumn, authorUsernameColumn, authorUsernameColumn,
-                idColumn, idColumn);
+        String query = String.format("UPDATE %s SET %s = :%s, %s = :%s WHERE %s = :%s", ThreadDaoImpl.TABLE_NAME,
+                nameColumn, nameColumn, authorUsernameColumn, authorUsernameColumn, idColumn, idColumn);
 
         getNamedParameterJdbcTemplate().update(query, getNamedParameters(thread));
     }
 
     @Override
     public int save(Thread thread) {
-        SimpleJdbcInsert insert = new SimpleJdbcInsert(getDataSource())
-                .withTableName(ThreadDaoImpl.TABLE_NAME)
-                .usingGeneratedKeyColumns(ThreadField.id.getColumnName())
-                .usingColumns(ThreadField.name.getColumnName(), ThreadField.creationTime.getColumnName(),
-                        ThreadField.authorUsername.getColumnName());
+        SimpleJdbcInsert insert = new SimpleJdbcInsert(getDataSource()).withTableName(ThreadDaoImpl.TABLE_NAME)
+                .usingGeneratedKeyColumns(ThreadField.id.getColumnName()).usingColumns(ThreadField.name.getColumnName(),
+                        ThreadField.creationTime.getColumnName(), ThreadField.authorUsername.getColumnName());
 
         Date now = new Date();
         thread.setCreationTime(now);
@@ -173,8 +170,7 @@ public class ThreadDaoImpl extends NamedParameterJdbcDaoSupport implements Threa
     @Override
     public void delete(Thread thread) {
         String idColumn = ThreadField.id.getColumnName();
-        String query = String.format("DELETE FROM %s WHERE %s = :%s", ThreadDaoImpl.TABLE_NAME, idColumn,
-                idColumn);
+        String query = String.format("DELETE FROM %s WHERE %s = :%s", ThreadDaoImpl.TABLE_NAME, idColumn, idColumn);
 
         Map<String, Integer> args = Collections.singletonMap(idColumn, thread.getId());
 

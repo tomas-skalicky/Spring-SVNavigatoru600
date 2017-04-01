@@ -11,8 +11,8 @@ import com.svnavigatoru600.service.Configuration;
 import com.svnavigatoru600.service.util.File;
 
 /**
- * {@link Validator} common for all sub-types of
- * {@link com.svnavigatoru600.domain.records.AbstractDocumentRecord AbstractDocumentRecords}.
+ * {@link Validator} common for all sub-types of {@link com.svnavigatoru600.domain.records.AbstractDocumentRecord
+ * AbstractDocumentRecords}.
  * 
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */

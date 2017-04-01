@@ -95,8 +95,8 @@ public final class ContributionDaoTest extends AbstractRepositoryTest {
 
         // SELECT ALL
         int maxResultSize = 2;
-        List<Contribution> foundContributions = contributionDao.findAllOrdered(
-                ContributionField.creationTime, OrderType.DESCENDING, maxResultSize);
+        List<Contribution> foundContributions = contributionDao.findAllOrdered(ContributionField.creationTime,
+                OrderType.DESCENDING, maxResultSize);
         Assert.assertEquals(maxResultSize, foundContributions.size());
         Assert.assertEquals(thirdContributionId, foundContributions.get(0).getId());
         Assert.assertEquals(secondContributionId, foundContributions.get(1).getId());
@@ -165,8 +165,8 @@ public final class ContributionDaoTest extends AbstractRepositoryTest {
      * @return ID of the newly created contribution
      */
     private int createDefaultTestContribution() {
-        return TEST_UTILS.createTestContribution(this.defaultThread,
-                RepositoryTestUtils.CONTRIBUTION_DEFAULT_TEXT, this.defaultAuthor);
+        return TEST_UTILS.createTestContribution(this.defaultThread, RepositoryTestUtils.CONTRIBUTION_DEFAULT_TEXT,
+                this.defaultAuthor);
     }
 
     /**

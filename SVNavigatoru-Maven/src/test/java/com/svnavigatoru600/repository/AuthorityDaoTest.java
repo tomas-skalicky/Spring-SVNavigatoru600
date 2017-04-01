@@ -149,8 +149,7 @@ public final class AuthorityDaoTest extends AbstractRepositoryTest {
         int expectedFoundAuthorityCount = 1;
         Assert.assertEquals(expectedFoundAuthorityCount, foundAuthorities.size());
         Collection<String> foundAuthorityTypes = TEST_UTILS.extractAuthorityTypes(foundAuthorities);
-        Assert.assertTrue(foundAuthorityTypes.contains(RepositoryTestUtils.SECOND_AUTHORITY_DEFAULT_TYPE
-                .name()));
+        Assert.assertTrue(foundAuthorityTypes.contains(RepositoryTestUtils.SECOND_AUTHORITY_DEFAULT_TYPE.name()));
     }
 
     @Test

@@ -57,8 +57,8 @@ public class EditEventController extends AbstractNewEditEventController {
         command.setEvent(calendarEvent);
 
         MessageSource messageSource = getMessageSource();
-        command.setNewPriority(Localization.findLocaleMessage(messageSource, request, calendarEvent
-                .getTypedPriority().getLocalizationCode()));
+        command.setNewPriority(Localization.findLocaleMessage(messageSource, request,
+                calendarEvent.getTypedPriority().getLocalizationCode()));
 
         getSendNotificationModelFiller().populateSendNotificationInInitForm(command, request, messageSource);
 
@@ -66,7 +66,8 @@ public class EditEventController extends AbstractNewEditEventController {
         return PageViews.EDIT.getViewName();
     }
 
-    @RequestMapping(value = EventsUrlParts.EXISTING_URL + "{eventId}/" + CommonUrlParts.SAVED_EXTENSION, method = RequestMethod.GET)
+    @RequestMapping(value = EventsUrlParts.EXISTING_URL + "{eventId}/"
+            + CommonUrlParts.SAVED_EXTENSION, method = RequestMethod.GET)
     public String initFormAfterSave(@PathVariable int eventId, HttpServletRequest request, ModelMap model) {
         String view = initForm(eventId, request, model);
         ((EditEvent) model.get(AbstractNewEditEventController.COMMAND)).setDataSaved(true);
@@ -92,12 +93,11 @@ public class EditEventController extends AbstractNewEditEventController {
     @RequestMapping(value = EventsUrlParts.EXISTING_URL + "{eventId}/", method = RequestMethod.POST)
     @Transactional
     public String processSubmittedForm(@ModelAttribute(EditEventController.COMMAND) EditEvent command,
-            BindingResult result, SessionStatus status, @PathVariable int eventId,
-            HttpServletRequest request, ModelMap model) {
+            BindingResult result, SessionStatus status, @PathVariable int eventId, HttpServletRequest request,
+            ModelMap model) {
 
         MessageSource messageSource = getMessageSource();
-        getSendNotificationModelFiller()
-                .populateSendNotificationInSubmitForm(command, request, messageSource);
+        getSendNotificationModelFiller().populateSendNotificationInSubmitForm(command, request, messageSource);
 
         getValidator().validate(command, result);
         if (result.hasErrors()) {
@@ -110,15 +110,15 @@ public class EditEventController extends AbstractNewEditEventController {
             originalEvent = eventService.findById(eventId);
             PriorityType newPriority = PriorityType.valueOfAccordingLocalization(command.getNewPriority(),
                     messageSource, request);
-            eventService.updateAndNotifyUsers(originalEvent, command.getEvent(), newPriority, command
-                    .getSendNotification().isStatus(), request, messageSource);
+            eventService.updateAndNotifyUsers(originalEvent, command.getEvent(), newPriority,
+                    command.getSendNotification().isStatus(), request, messageSource);
 
             // Clears the command object from the session.
             status.setComplete();
 
             // Returns the form success view.
-            model.addAttribute(AbstractMetaController.REDIRECTION_ATTRIBUTE, String.format("%s%d/%s",
-                    EventsUrlParts.EXISTING_URL, eventId, CommonUrlParts.SAVED_EXTENSION));
+            model.addAttribute(AbstractMetaController.REDIRECTION_ATTRIBUTE,
+                    String.format("%s%d/%s", EventsUrlParts.EXISTING_URL, eventId, CommonUrlParts.SAVED_EXTENSION));
             // Does not work. I do not know why.
             // model.addAttribute(AbstractMetaController.REDIRECTION_ATTRIBUTE, String.format(
             // "%s%d/%s?%s=%b", EventsUrlParts.EXISTING_URL, eventId, CommonUrlParts.SAVED_EXTENSION,

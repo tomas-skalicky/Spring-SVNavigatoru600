@@ -12,8 +12,7 @@ import org.junit.experimental.categories.Category;
 import com.svnavigatoru600.test.category.UnitTests;
 
 /**
- * Tests the rest of methods of the {@link User} class which are not tested in the {@link UserCopyMethodsTest}
- * class.
+ * Tests the rest of methods of the {@link User} class which are not tested in the {@link UserCopyMethodsTest} class.
  * 
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
@@ -95,8 +94,8 @@ public final class UserTest extends AbstractUserTest {
     }
 
     /**
-     * Checks that the given {@link User user} has exactly the given <code>ownedAuthorities</code>, i.e. he
-     * has all of them and no other.
+     * Checks that the given {@link User user} has exactly the given <code>ownedAuthorities</code>, i.e. he has all of
+     * them and no other.
      */
     private void checkAuthorities(User user, List<AuthorityType> ownedAuthorities) {
         for (AuthorityType authority : AuthorityType.values()) {

@@ -9,8 +9,7 @@ import com.svnavigatoru600.url.news.NewsUrlParts;
 import com.svnavigatoru600.url.users.UserAccountUrlParts;
 
 /**
- * Appends to the {@link AbstractSeleniumTest} class useful constants and methods which are
- * application-specific.
+ * Appends to the {@link AbstractSeleniumTest} class useful constants and methods which are application-specific.
  * 
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
@@ -57,8 +56,8 @@ public abstract class AbstractTailoredSeleniumTest extends AbstractSeleniumTest 
      */
     protected static final String USER_ACCOUNT_PAGE_URL_REG_EXP = ".*" + UserAccountUrlParts.BASE_URL;
     /**
-     * The regular expression of URL of the page which is shown when changes of user account have been
-     * successfully saved.
+     * The regular expression of URL of the page which is shown when changes of user account have been successfully
+     * saved.
      */
     protected static final String USER_ACCOUNT_CHANGED_URL_REG_EXP = USER_ACCOUNT_PAGE_URL_REG_EXP
             + CommonUrlParts.SAVED_EXTENSION;
@@ -68,8 +67,8 @@ public abstract class AbstractTailoredSeleniumTest extends AbstractSeleniumTest 
     protected static final String EMAIL_ELEMENT_ID = "user.email";
 
     /**
-     * Signs in to the application with the given credentials. It does not check the "remember me" checkbox.
-     * It does not test, whether the login ended up with a success, or not.
+     * Signs in to the application with the given credentials. It does not check the "remember me" checkbox. It does not
+     * test, whether the login ended up with a success, or not.
      * <p>
      * <b>PRECONDITION:</b> The current location is the login page of the application.
      * 

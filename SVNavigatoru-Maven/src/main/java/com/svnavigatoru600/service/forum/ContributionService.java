@@ -22,11 +22,10 @@ import com.svnavigatoru600.service.util.Localization;
 import com.svnavigatoru600.service.util.OrderType;
 
 /**
- * Provides convenient methods to work with {@link com.svnavigatoru600.domain.forum.Contribution Contribution}
- * objects.
+ * Provides convenient methods to work with {@link com.svnavigatoru600.domain.forum.Contribution Contribution} objects.
  * <p>
- * For instance: There are methods which determine whether the currently logged-in user has rights to
- * manipulate with a particular {@link com.svnavigatoru600.domain.forum.Contribution Contribution}.
+ * For instance: There are methods which determine whether the currently logged-in user has rights to manipulate with a
+ * particular {@link com.svnavigatoru600.domain.forum.Contribution Contribution}.
  * 
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
@@ -94,12 +93,10 @@ public class ContributionService implements SubjectOfNotificationService {
      * Returns all {@link Contribution Contributions} stored in the repository arranged according to their
      * {@link Contribution#getLastSaveTime() last save times} descending.
      * <p>
-     * NOT IMPLEMENTED YET: It returns only the first <code>maxResultSize</code> {@link Contribution
-     * Contributions}.
+     * NOT IMPLEMENTED YET: It returns only the first <code>maxResultSize</code> {@link Contribution Contributions}.
      */
     public List<Contribution> findLimitedNumberOrdered(int maxResultSize) {
-        return this.contributionDao.findAllOrdered(ContributionField.lastSaveTime, OrderType.DESCENDING,
-                maxResultSize);
+        return this.contributionDao.findAllOrdered(ContributionField.lastSaveTime, OrderType.DESCENDING, maxResultSize);
     }
 
     /**
@@ -113,28 +110,26 @@ public class ContributionService implements SubjectOfNotificationService {
      *            ID of the thread
      */
     public List<Contribution> findAllOrdered(int threadId) {
-        return this.contributionDao.findAllOrdered(threadId, ContributionField.creationTime,
-                OrderType.ASCENDING);
+        return this.contributionDao.findAllOrdered(threadId, ContributionField.creationTime, OrderType.ASCENDING);
     }
 
     /**
-     * Updates the given {@link Contribution} in the repository. The old version of this contribution should
-     * be already stored there.
+     * Updates the given {@link Contribution} in the repository. The old version of this contribution should be already
+     * stored there.
      */
     public void update(Contribution contribution) {
         this.contributionDao.update(contribution);
     }
 
     /**
-     * Updates properties of the given <code>contributionToUpdate</code> and persists this
-     * {@link Contribution} into the repository. The old version of this contribution should be already stored
-     * there.
+     * Updates properties of the given <code>contributionToUpdate</code> and persists this {@link Contribution} into the
+     * repository. The old version of this contribution should be already stored there.
      * 
      * @param contributionToUpdate
      *            Persisted {@link Contribution}
      * @param newContribution
-     *            {@link Contribution} which contains new values of properties of
-     *            <code>contributionToUpdate</code>. These values are copied to the persisted contribution.
+     *            {@link Contribution} which contains new values of properties of <code>contributionToUpdate</code>.
+     *            These values are copied to the persisted contribution.
      */
     public void update(Contribution contributionToUpdate, Contribution newContribution) {
         contributionToUpdate.setText(newContribution.getText());
@@ -142,17 +137,16 @@ public class ContributionService implements SubjectOfNotificationService {
     }
 
     /**
-     * Updates properties of the given <code>contributionToUpdate</code> and persists this
-     * {@link Contribution} into the repository. The old version of this contribution should be already stored
-     * there.
+     * Updates properties of the given <code>contributionToUpdate</code> and persists this {@link Contribution} into the
+     * repository. The old version of this contribution should be already stored there.
      * <p>
      * Finally, notifies all users which have corresponding rights by email about changes in the contribution.
      * 
      * @param contributionToUpdate
      *            Persisted {@link Contribution}
      * @param newContribution
-     *            {@link Contribution} which contains new values of properties of
-     *            <code>contributionToUpdate</code>. These values are copied to the persisted contribution.
+     *            {@link Contribution} which contains new values of properties of <code>contributionToUpdate</code>.
+     *            These values are copied to the persisted contribution.
      * @param sendNotification
      *            If <code>true</code>, the notification is sent; otherwise not.
      */
@@ -188,17 +182,16 @@ public class ContributionService implements SubjectOfNotificationService {
     }
 
     /**
-     * Updates corresponding {@link java.util.Date Date} fields of the given new {@link Contribution} (if
-     * there are any appropriate) and stores the contribution to the repository.
+     * Updates corresponding {@link java.util.Date Date} fields of the given new {@link Contribution} (if there are any
+     * appropriate) and stores the contribution to the repository.
      * <p>
-     * Finally, notifies all users which have corresponding rights by email about a creation of the
-     * contribution.
+     * Finally, notifies all users which have corresponding rights by email about a creation of the contribution.
      * 
      * @param sendNotification
      *            If <code>true</code>, the notification is sent; otherwise not.
      */
-    public void saveAndNotifyUsers(Contribution newContribution, boolean sendNotification,
-            HttpServletRequest request, MessageSource messageSource) {
+    public void saveAndNotifyUsers(Contribution newContribution, boolean sendNotification, HttpServletRequest request,
+            MessageSource messageSource) {
         save(newContribution);
 
         if (sendNotification) {
@@ -207,8 +200,7 @@ public class ContributionService implements SubjectOfNotificationService {
     }
 
     @Override
-    public void notifyUsersOfCreation(Object newContribution, HttpServletRequest request,
-            MessageSource messageSource) {
+    public void notifyUsersOfCreation(Object newContribution, HttpServletRequest request, MessageSource messageSource) {
         this.emailService.sendEmailOnCreation(newContribution, gainUsersToNotify(), request, messageSource);
     }
 
@@ -231,8 +223,8 @@ public class ContributionService implements SubjectOfNotificationService {
     }
 
     /**
-     * Gets a {@link Map} which for each input {@link Contribution} contains a corresponding localized delete
-     * question which is asked before deletion of that contribution.
+     * Gets a {@link Map} which for each input {@link Contribution} contains a corresponding localized delete question
+     * which is asked before deletion of that contribution.
      */
     public static Map<Contribution, String> getLocalizedDeleteQuestions(List<Contribution> contributions,
             HttpServletRequest request, MessageSource messageSource) {

@@ -16,14 +16,13 @@ public interface NewsDao {
     News findById(int newsId);
 
     /**
-     * Returns all {@link News} stored in the repository arranged according to the given
-     * {@link FindAllOrderedArguments arguments}.
+     * Returns all {@link News} stored in the repository arranged according to the given {@link FindAllOrderedArguments
+     * arguments}.
      */
     List<News> findAllOrdered(FindAllOrderedArguments arguments);
 
     /**
-     * Updates the given {@link News} in the repository. The old version of this news should be already stored
-     * there.
+     * Updates the given {@link News} in the repository. The old version of this news should be already stored there.
      */
     void update(News news);
 

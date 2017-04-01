@@ -34,8 +34,7 @@ import com.svnavigatoru600.web.SendNotificationNewModelFiller;
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
 @Controller
-public class NewThreadController extends AbstractNewEditThreadController implements
-        SendNotificationController {
+public class NewThreadController extends AbstractNewEditThreadController implements SendNotificationController {
 
     /**
      * Code of the error message used when the {@link DataAccessException} is thrown.
@@ -47,9 +46,8 @@ public class NewThreadController extends AbstractNewEditThreadController impleme
      * Constructor.
      */
     @Inject
-    public NewThreadController(ThreadService threadService,
-            SendNotificationNewModelFiller sendNotificationModelFiller, NewThreadValidator validator,
-            MessageSource messageSource) {
+    public NewThreadController(ThreadService threadService, SendNotificationNewModelFiller sendNotificationModelFiller,
+            NewThreadValidator validator, MessageSource messageSource) {
         super(threadService, validator, messageSource);
         this.sendNotificationModelFiller = sendNotificationModelFiller;
     }
@@ -67,16 +65,14 @@ public class NewThreadController extends AbstractNewEditThreadController impleme
         Contribution contribution = new Contribution();
         command.setContribution(contribution);
 
-        this.sendNotificationModelFiller.populateSendNotificationInInitForm(command, request,
-                getMessageSource());
+        this.sendNotificationModelFiller.populateSendNotificationInInitForm(command, request, getMessageSource());
 
         model.addAttribute(AbstractNewEditThreadController.COMMAND, command);
         return PageViews.NEW.getViewName();
     }
 
     /**
-     * If values in the form are OK, the new thread is stored to the repository. Otherwise, returns back to
-     * the form.
+     * If values in the form are OK, the new thread is stored to the repository. Otherwise, returns back to the form.
      * 
      * @return The name of the view which is to be shown.
      */
@@ -86,8 +82,7 @@ public class NewThreadController extends AbstractNewEditThreadController impleme
             BindingResult result, SessionStatus status, HttpServletRequest request, ModelMap model) {
 
         MessageSource messageSource = getMessageSource();
-        this.sendNotificationModelFiller
-                .populateSendNotificationInSubmitForm(command, request, messageSource);
+        this.sendNotificationModelFiller.populateSendNotificationInSubmitForm(command, request, messageSource);
 
         getValidator().validate(command, result);
         if (result.hasErrors()) {
@@ -108,8 +103,8 @@ public class NewThreadController extends AbstractNewEditThreadController impleme
 
         try {
             // Stores both the thread and the contribution to the repository.
-            getThreadService().saveAndNotifyUsers(newThread, command.getSendNotification().isStatus(),
-                    request, messageSource);
+            getThreadService().saveAndNotifyUsers(newThread, command.getSendNotification().isStatus(), request,
+                    messageSource);
 
             // Clears the command object from the session.
             status.setComplete();

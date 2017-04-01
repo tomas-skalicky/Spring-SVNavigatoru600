@@ -46,22 +46,19 @@ public abstract class AbstractNewDocumentController extends AbstractNewEditDocum
      * {@link OtherDocumentRecordType OtherDocumentRecordTypes}.
      */
     public AbstractNewDocumentController(String baseUrl, AbstractPageViews views,
-            OtherDocumentRecordService recordService,
-            SendNotificationModelFiller sendNotificationModelFiller, NewRecordValidator validator,
-            MessageSource messageSource) {
+            OtherDocumentRecordService recordService, SendNotificationModelFiller sendNotificationModelFiller,
+            NewRecordValidator validator, MessageSource messageSource) {
         super(baseUrl, views, recordService, sendNotificationModelFiller, validator, messageSource);
     }
 
     /**
-     * Constructs a controller which considers all {@link OtherDocumentRecord OtherDocumentRecords} of the
-     * given <code>recordType</code>.
+     * Constructs a controller which considers all {@link OtherDocumentRecord OtherDocumentRecords} of the given
+     * <code>recordType</code>.
      */
-    public AbstractNewDocumentController(String baseUrl, AbstractPageViews views,
-            OtherDocumentRecordType recordType, OtherDocumentRecordService recordService,
-            SendNotificationModelFiller sendNotificationModelFiller, NewRecordValidator validator,
-            MessageSource messageSource) {
-        super(baseUrl, views, recordType, recordService, sendNotificationModelFiller, validator,
-                messageSource);
+    public AbstractNewDocumentController(String baseUrl, AbstractPageViews views, OtherDocumentRecordType recordType,
+            OtherDocumentRecordService recordService, SendNotificationModelFiller sendNotificationModelFiller,
+            NewRecordValidator validator, MessageSource messageSource) {
+        super(baseUrl, views, recordType, recordService, sendNotificationModelFiller, validator, messageSource);
     }
 
     /**
@@ -86,8 +83,8 @@ public abstract class AbstractNewDocumentController extends AbstractNewEditDocum
         // Sets up all auxiliary (but necessary) maps.
         command.setTypeCheckboxId(OtherDocumentRecordService.getTypeCheckboxId());
         MessageSource messageSource = getMessageSource();
-        command.setLocalizedTypeCheckboxTitles(OtherDocumentRecordService.getLocalizedTypeTitles(request,
-                messageSource));
+        command.setLocalizedTypeCheckboxTitles(
+                OtherDocumentRecordService.getLocalizedTypeTitles(request, messageSource));
 
         getSendNotificationModelFiller().populateSendNotificationInInitForm(command, request, messageSource);
 
@@ -109,8 +106,7 @@ public abstract class AbstractNewDocumentController extends AbstractNewEditDocum
     }
 
     /**
-     * If values in the form are OK, the new record is stored to the repository. Otherwise, returns back to
-     * the form.
+     * If values in the form are OK, the new record is stored to the repository. Otherwise, returns back to the form.
      * 
      * @return The name of the view which is to be shown.
      */
@@ -121,10 +117,9 @@ public abstract class AbstractNewDocumentController extends AbstractNewEditDocum
         // Sets up all auxiliary (but necessary) maps.
         command.setTypeCheckboxId(OtherDocumentRecordService.getTypeCheckboxId());
         MessageSource messageSource = getMessageSource();
-        command.setLocalizedTypeCheckboxTitles(OtherDocumentRecordService.getLocalizedTypeTitles(request,
-                messageSource));
-        getSendNotificationModelFiller()
-                .populateSendNotificationInSubmitForm(command, request, messageSource);
+        command.setLocalizedTypeCheckboxTitles(
+                OtherDocumentRecordService.getLocalizedTypeTitles(request, messageSource));
+        getSendNotificationModelFiller().populateSendNotificationInSubmitForm(command, request, messageSource);
 
         getValidator().validate(command, result);
         if (result.hasErrors()) {

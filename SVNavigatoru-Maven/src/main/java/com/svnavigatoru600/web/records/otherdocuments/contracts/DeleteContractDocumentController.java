@@ -26,14 +26,14 @@ public class DeleteContractDocumentController extends AbstractDeleteDocumentCont
      * Constructor.
      */
     @Inject
-    public DeleteContractDocumentController(OtherDocumentRecordService recordService,
-            MessageSource messageSource) {
+    public DeleteContractDocumentController(OtherDocumentRecordService recordService, MessageSource messageSource) {
         super(ContractsUrlParts.BASE_URL, new PageViews(), OtherDocumentRecordType.CONTRACT, recordService,
                 messageSource);
     }
 
     @Override
-    @RequestMapping(value = ContractsUrlParts.EXISTING_URL + "{recordId}/" + CommonUrlParts.DELETE_EXTENSION, method = RequestMethod.GET)
+    @RequestMapping(value = ContractsUrlParts.EXISTING_URL + "{recordId}/"
+            + CommonUrlParts.DELETE_EXTENSION, method = RequestMethod.GET)
     public String delete(@PathVariable int recordId, HttpServletRequest request, ModelMap model) {
         return super.delete(recordId, request, model);
     }

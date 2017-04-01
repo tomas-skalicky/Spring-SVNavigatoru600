@@ -30,11 +30,11 @@ public abstract class AbstractListRecordsController extends AbstractSessionRecor
     public static final String COMMAND = "showAllRecordsCommand";
 
     /**
-     * Constructs a controller which considers all {@link SessionRecord SessionRecords} of all
-     * {@link SessionRecordType SessionRecordTypes}.
+     * Constructs a controller which considers all {@link SessionRecord SessionRecords} of all {@link SessionRecordType
+     * SessionRecordTypes}.
      */
-    public AbstractListRecordsController(String baseUrl, AbstractPageViews views,
-            SessionRecordService recordService, MessageSource messageSource) {
+    public AbstractListRecordsController(String baseUrl, AbstractPageViews views, SessionRecordService recordService,
+            MessageSource messageSource) {
         super(baseUrl, views, recordService, messageSource);
     }
 
@@ -42,8 +42,8 @@ public abstract class AbstractListRecordsController extends AbstractSessionRecor
      * Constructs a controller which considers all {@link SessionRecord SessionRecords} of the given
      * <code>recordType</code>.
      */
-    public AbstractListRecordsController(String baseUrl, AbstractPageViews views,
-            SessionRecordType recordType, SessionRecordService recordService, MessageSource messageSource) {
+    public AbstractListRecordsController(String baseUrl, AbstractPageViews views, SessionRecordType recordType,
+            SessionRecordService recordService, MessageSource messageSource) {
         super(baseUrl, views, recordType, recordService, messageSource);
     }
 
@@ -59,14 +59,13 @@ public abstract class AbstractListRecordsController extends AbstractSessionRecor
         // Sets up all auxiliary (but necessary) maps.
         MessageSource messageSource = getMessageSource();
         if (allRecordTypes) {
-            command.setLocalizedTypeTitles(SessionRecordService.getLocalizedTypeTitles(records, request,
-                    messageSource));
+            command.setLocalizedTypeTitles(
+                    SessionRecordService.getLocalizedTypeTitles(records, request, messageSource));
         }
-        Map<SessionRecord, String> sessionDates = SessionRecordService.getLocalizedSessionDates(records,
-                request);
+        Map<SessionRecord, String> sessionDates = SessionRecordService.getLocalizedSessionDates(records, request);
         command.setLocalizedSessionDates(sessionDates);
-        command.setLocalizedDeleteQuestions(SessionRecordService.getLocalizedDeleteQuestions(records,
-                request, sessionDates, messageSource));
+        command.setLocalizedDeleteQuestions(
+                SessionRecordService.getLocalizedDeleteQuestions(records, request, sessionDates, messageSource));
 
         model.addAttribute(AbstractListRecordsController.COMMAND, command);
         return getViews().getList();

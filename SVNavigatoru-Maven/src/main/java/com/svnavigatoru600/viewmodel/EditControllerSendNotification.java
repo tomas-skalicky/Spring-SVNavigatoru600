@@ -7,8 +7,8 @@ import org.springframework.context.MessageSource;
 import com.svnavigatoru600.service.util.Localization;
 
 /**
- * {@link SendNotification} view model which contains standard settings for controllers which handle
- * <em>edit</em> operations.
+ * {@link SendNotification} view model which contains standard settings for controllers which handle <em>edit</em>
+ * operations.
  * 
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
@@ -27,8 +27,7 @@ public class EditControllerSendNotification extends SendNotification {
      */
     public static String getCheckboxTitle(HttpServletRequest request, MessageSource messageSource) {
         if (checkboxTitle == null) {
-            checkboxTitle = Localization.findLocaleMessage(messageSource, request,
-                    CHECKBOX_TITLE_LOCALIZATION_CODE);
+            checkboxTitle = Localization.findLocaleMessage(messageSource, request, CHECKBOX_TITLE_LOCALIZATION_CODE);
         }
         return checkboxTitle;
     }

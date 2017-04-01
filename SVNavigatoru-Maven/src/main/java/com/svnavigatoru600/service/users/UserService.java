@@ -67,8 +67,8 @@ public class UserService {
     }
 
     /**
-     * Returns an {@link User} stored in the repository which has the given <code>email</code> address. If
-     * such an {@link User} is not found, an exception is thrown.
+     * Returns an {@link User} stored in the repository which has the given <code>email</code> address. If such an
+     * {@link User} is not found, an exception is thrown.
      * <p>
      * The returned user has its {@link User#getAuthorities() authorities} populated.
      * 
@@ -80,8 +80,7 @@ public class UserService {
     }
 
     /**
-     * Returns all {@link User Users} stored in the repository which have the given {@link AuthorityType
-     * authority}.
+     * Returns all {@link User Users} stored in the repository which have the given {@link AuthorityType authority}.
      * <p>
      * {@link com.svnavigatoru600.domain.users.Authority Authorities} of the returned users are populated.
      */
@@ -92,28 +91,25 @@ public class UserService {
     /**
      * Returns all {@link User administrators} stored in the repository.
      * <p>
-     * {@link com.svnavigatoru600.domain.users.Authority Authorities} of the returned administrators are
-     * populated.
+     * {@link com.svnavigatoru600.domain.users.Authority Authorities} of the returned administrators are populated.
      */
     public List<User> findAllAdministrators() {
         return findAllByAuthority(AuthorityType.ROLE_USER_ADMINISTRATOR);
     }
 
     /**
-     * Returns all {@link User Users} stored in the repository which have the given {@link AuthorityType
-     * authority} and which are subscribed to the given {@link NotificationType notifications}.
+     * Returns all {@link User Users} stored in the repository which have the given {@link AuthorityType authority} and
+     * which are subscribed to the given {@link NotificationType notifications}.
      * <p>
      * {@link com.svnavigatoru600.domain.users.Authority Authorities} of the returned users are NOT populated.
      */
-    public List<User> findAllByAuthorityAndSubscription(AuthorityType authority,
-            NotificationType notificationType) {
+    public List<User> findAllByAuthorityAndSubscription(AuthorityType authority, NotificationType notificationType) {
         return this.userDao.findAllByAuthorityAndSubscription(authority.name(), notificationType);
     }
 
     /**
-     * Returns all {@link User Users} with email stored in the repository which have the given
-     * {@link AuthorityType authority} and which are subscribed to the given {@link NotificationType
-     * notifications}.
+     * Returns all {@link User Users} with email stored in the repository which have the given {@link AuthorityType
+     * authority} and which are subscribed to the given {@link NotificationType notifications}.
      * <p>
      * {@link com.svnavigatoru600.domain.users.Authority Authorities} of the returned users are NOT populated.
      */
@@ -130,25 +126,22 @@ public class UserService {
     }
 
     /**
-     * Returns all {@link User Users} stored in the repository arranged according to their
-     * {@link User#getLastName() last names} and {@link User#getFirstName() first names} in the given
-     * {@link OrderType order}.
+     * Returns all {@link User Users} stored in the repository arranged according to their {@link User#getLastName()
+     * last names} and {@link User#getFirstName() first names} in the given {@link OrderType order}.
      * <p>
      * {@link com.svnavigatoru600.domain.users.Authority Authorities} of the returned users are populated.
      * 
      * @param testUsers
-     *            If <code>true</code>, the method returns only test users. Otherwise, it returns only
-     *            non-test users. Test users are those which are not accessible to the business user (=
-     *            customer).
+     *            If <code>true</code>, the method returns only test users. Otherwise, it returns only non-test users.
+     *            Test users are those which are not accessible to the business user (= customer).
      */
     public List<User> findAllOrdered(OrderType order, boolean testUsers) {
         return this.userDao.findAllOrdered(order, testUsers);
     }
 
     /**
-     * Returns all {@link User Users} stored in the repository arranged according to their
-     * {@link User#getLastName() last names} and {@link User#getFirstName() first names} ascending. Considers
-     * only not-test users.
+     * Returns all {@link User Users} stored in the repository arranged according to their {@link User#getLastName()
+     * last names} and {@link User#getFirstName() first names} ascending. Considers only not-test users.
      * <p>
      * {@link com.svnavigatoru600.domain.users.Authority Authorities} of the returned users are populated.
      */
@@ -157,26 +150,24 @@ public class UserService {
     }
 
     /**
-     * Updates the given {@link User} in the repository. The old version of this user should be already stored
-     * there.
+     * Updates the given {@link User} in the repository. The old version of this user should be already stored there.
      */
     public void update(User user) {
         this.userDao.update(user);
     }
 
     /**
-     * Updates properties of the given <code>userToUpdate</code> and persists this {@link User} into the
-     * repository. The old version of this user should be already stored there. His updated
+     * Updates properties of the given <code>userToUpdate</code> and persists this {@link User} into the repository. The
+     * old version of this user should be already stored there. His updated
      * {@link com.svnavigatoru600.domain.users.Authority authorities} are persisted as well.
      * <p>
-     * Finally, updates properties of the {@link User} object of the user which is currently logged to this
-     * web app.
+     * Finally, updates properties of the {@link User} object of the user which is currently logged to this web app.
      * 
      * @param userToUpdate
      *            Persisted {@link User}
      * @param newUser
-     *            {@link User} which contains new values of properties of <code>userToUpdate</code>. These
-     *            values are copied to the persisted user.
+     *            {@link User} which contains new values of properties of <code>userToUpdate</code>. These values are
+     *            copied to the persisted user.
      * @param newPassword
      *            New not-hashed password of the persisted user
      */
@@ -202,9 +193,9 @@ public class UserService {
     }
 
     /**
-     * Hashes the given <code>newPassword</code> and assigns it to the given {@link User userToUpdate}. Then,
-     * updates other properties of the given <code>userToUpdate</code> and persists this {@link User} into the
-     * repository. The old version of this user should be already stored there. His updated
+     * Hashes the given <code>newPassword</code> and assigns it to the given {@link User userToUpdate}. Then, updates
+     * other properties of the given <code>userToUpdate</code> and persists this {@link User} into the repository. The
+     * old version of this user should be already stored there. His updated
      * {@link com.svnavigatoru600.domain.users.Authority authorities} are persisted as well.
      * <p>
      * Finally, notifies the <code>userToUpdate</code> by email about changes in his existing account.
@@ -212,14 +203,14 @@ public class UserService {
      * @param userToUpdate
      *            Persisted {@link User}
      * @param newUser
-     *            {@link User} which contains new values of properties of <code>userToUpdate</code>. These
-     *            values are copied to the persisted user.
+     *            {@link User} which contains new values of properties of <code>userToUpdate</code>. These values are
+     *            copied to the persisted user.
      * @param newPassword
      *            New not-hashed password of the persisted user
      * @param indicatorsOfNewAuthorities
      *            <code>true</code> in the index <code>x</code> in the array means that the authority with the
-     *            {@link AuthorityType#ordinal() ordinal}<code> == x</code> has been selected as one of the
-     *            new authorities of the persisted user; and vice versa.
+     *            {@link AuthorityType#ordinal() ordinal}<code> == x</code> has been selected as one of the new
+     *            authorities of the persisted user; and vice versa.
      */
     public void updateAndNotifyUser(User userToUpdate, User newUser, String newPassword,
             boolean[] indicatorsOfNewAuthorities, HttpServletRequest request, MessageSource messageSource) {
@@ -258,10 +249,10 @@ public class UserService {
     }
 
     /**
-     * Hashes the given <code>newPassword</code> and assigns it to the given {@link User newUser}. Then,
-     * stores this user to the repository. If there is already a {@link User} with the same
-     * {@link User#getUsername() username} or {@link User#getEmail() email}, throws an exception.
-     * {@link com.svnavigatoru600.domain.users.Authority Authorities} of the user are persisted as well.
+     * Hashes the given <code>newPassword</code> and assigns it to the given {@link User newUser}. Then, stores this
+     * user to the repository. If there is already a {@link User} with the same {@link User#getUsername() username} or
+     * {@link User#getEmail() email}, throws an exception. {@link com.svnavigatoru600.domain.users.Authority
+     * Authorities} of the user are persisted as well.
      * <p>
      * Finally, notifies the user by email about his new account.
      * 
@@ -271,8 +262,8 @@ public class UserService {
      *            New not-hashed password of the new user
      * @param indicatorsOfNewAuthorities
      *            <code>true</code> in the index <code>x</code> in the array means that the authority with the
-     *            {@link AuthorityType#ordinal() ordinal}<code> == x</code> has been selected as one of the
-     *            new authorities of the persisted user; and vice versa.
+     *            {@link AuthorityType#ordinal() ordinal}<code> == x</code> has been selected as one of the new
+     *            authorities of the persisted user; and vice versa.
      */
     public void saveAndNotifyUser(User newUser, String newPassword, boolean[] indicatorsOfNewAuthorities,
             HttpServletRequest request, MessageSource messageSource) {
@@ -300,8 +291,8 @@ public class UserService {
     }
 
     /**
-     * Deletes the specified {@link User} together with all his
-     * {@link com.svnavigatoru600.domain.users.Authority Authorities} from the repository.
+     * Deletes the specified {@link User} together with all his {@link com.svnavigatoru600.domain.users.Authority
+     * Authorities} from the repository.
      * <p>
      * Finally, notifies the user about the deletion of his account.
      * 
@@ -329,8 +320,8 @@ public class UserService {
     }
 
     /**
-     * Looks up in the repository and finds out whether an {@link User} with the given <code>username</code>
-     * exists, or not.
+     * Looks up in the repository and finds out whether an {@link User} with the given <code>username</code> exists, or
+     * not.
      * 
      * @return <code>true</code> the corresponding {@link User} exists.
      */
@@ -344,8 +335,8 @@ public class UserService {
     }
 
     /**
-     * Looks up in the repository and finds out whether an {@link User} with the given
-     * <code>emailAddress</code> exists, or not.
+     * Looks up in the repository and finds out whether an {@link User} with the given <code>emailAddress</code> exists,
+     * or not.
      * 
      * @return <code>true</code> the corresponding {@link User} exists.
      */
@@ -359,14 +350,13 @@ public class UserService {
     }
 
     /**
-     * Sets the password of the specified {@link User} to a new generated password. Notifies the user about
-     * this operation by email containing the new password.
+     * Sets the password of the specified {@link User} to a new generated password. Notifies the user about this
+     * operation by email containing the new password.
      * 
      * @param email
      *            Email address of the {@link User} whose password is reset
      */
-    public void resetPasswordAndNotifyUser(String email, HttpServletRequest request,
-            MessageSource messageSource) {
+    public void resetPasswordAndNotifyUser(String email, HttpServletRequest request, MessageSource messageSource) {
         User user = findByEmail(email);
 
         String newPassword = Password.generateNew();
@@ -393,8 +383,8 @@ public class UserService {
     }
 
     /**
-     * Gets a {@link Map} which for each input {@link User} contains a corresponding localized delete question
-     * which is asked before deletion of that user.
+     * Gets a {@link Map} which for each input {@link User} contains a corresponding localized delete question which is
+     * asked before deletion of that user.
      */
     public static Map<User, String> getLocalizedDeleteQuestions(List<User> users, HttpServletRequest request,
             MessageSource messageSource) {
@@ -403,15 +393,14 @@ public class UserService {
 
         for (User user : users) {
             Object[] messageParams = new Object[] { user.getUsername(), user.getFullName() };
-            questions.put(user,
-                    Localization.findLocaleMessage(messageSource, request, messageCode, messageParams));
+            questions.put(user, Localization.findLocaleMessage(messageSource, request, messageCode, messageParams));
         }
         return questions;
     }
 
     /**
-     * Gets a {@link Map} which for each constant of the {@link NotificationType} enumeration contains a pair
-     * of its {@link NotificationType#getOrdinal() ordinal} and its localized title.
+     * Gets a {@link Map} which for each constant of the {@link NotificationType} enumeration contains a pair of its
+     * {@link NotificationType#getOrdinal() ordinal} and its localized title.
      */
     public static Map<Long, String> getLocalizedNotificationTitles(HttpServletRequest request,
             MessageSource messageSource) {

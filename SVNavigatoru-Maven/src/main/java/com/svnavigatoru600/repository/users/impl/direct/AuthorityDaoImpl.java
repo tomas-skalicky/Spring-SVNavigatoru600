@@ -44,8 +44,8 @@ public class AuthorityDaoImpl extends NamedParameterJdbcDaoSupport implements Au
     @Override
     public List<Authority> findAll(String username) {
         String usernameColumn = AuthorityField.username.getColumnName();
-        String query = String.format("SELECT * FROM %s a WHERE a.%s = :%s", AuthorityDaoImpl.TABLE_NAME,
-                usernameColumn, usernameColumn);
+        String query = String.format("SELECT * FROM %s a WHERE a.%s = :%s", AuthorityDaoImpl.TABLE_NAME, usernameColumn,
+                usernameColumn);
 
         Map<String, String> args = Collections.singletonMap(usernameColumn, username);
 
@@ -65,9 +65,8 @@ public class AuthorityDaoImpl extends NamedParameterJdbcDaoSupport implements Au
 
     @Override
     public void save(Authority authority) {
-        SimpleJdbcInsert insert = new SimpleJdbcInsert(getDataSource()).withTableName(
-                AuthorityDaoImpl.TABLE_NAME).usingColumns(AuthorityField.username.getColumnName(),
-                AuthorityField.authority.getColumnName());
+        SimpleJdbcInsert insert = new SimpleJdbcInsert(getDataSource()).withTableName(AuthorityDaoImpl.TABLE_NAME)
+                .usingColumns(AuthorityField.username.getColumnName(), AuthorityField.authority.getColumnName());
 
         insert.execute(getNamedParameters(authority));
     }
@@ -82,8 +81,8 @@ public class AuthorityDaoImpl extends NamedParameterJdbcDaoSupport implements Au
     @Override
     public void delete(String username) {
         String usernameColumn = AuthorityField.username.getColumnName();
-        String query = String.format("DELETE FROM %s WHERE %s = :%s", AuthorityDaoImpl.TABLE_NAME,
-                usernameColumn, usernameColumn);
+        String query = String.format("DELETE FROM %s WHERE %s = :%s", AuthorityDaoImpl.TABLE_NAME, usernameColumn,
+                usernameColumn);
 
         Map<String, String> args = Collections.singletonMap(usernameColumn, username);
 
@@ -94,8 +93,8 @@ public class AuthorityDaoImpl extends NamedParameterJdbcDaoSupport implements Au
     public void delete(String username, AuthorityType authorityType) {
         String usernameColumn = AuthorityField.username.getColumnName();
         String typeColumn = AuthorityField.authority.getColumnName();
-        String query = String.format("DELETE FROM %s WHERE %s = :%s AND %s = :%s",
-                AuthorityDaoImpl.TABLE_NAME, usernameColumn, usernameColumn, typeColumn, typeColumn);
+        String query = String.format("DELETE FROM %s WHERE %s = :%s AND %s = :%s", AuthorityDaoImpl.TABLE_NAME,
+                usernameColumn, usernameColumn, typeColumn, typeColumn);
 
         Map<String, String> args = new HashMap<String, String>();
         args.put(usernameColumn, username);

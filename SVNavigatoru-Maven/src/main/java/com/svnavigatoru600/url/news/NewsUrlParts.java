@@ -7,8 +7,7 @@ import com.svnavigatoru600.service.util.HttpRequestUtils;
 import com.svnavigatoru600.url.CommonUrlParts;
 
 /**
- * Contains snippets of URL which concern just web pages with only {@link com.svnavigatoru600.domain.News
- * News}.
+ * Contains snippets of URL which concern just web pages with only {@link com.svnavigatoru600.domain.News News}.
  * 
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
@@ -27,7 +26,7 @@ public final class NewsUrlParts {
      * Composes an absolute URL which holds details about the given {@link News}.
      */
     public static String getNewsUrl(News news, HttpServletRequest request) {
-        return String.format("%s%s#post_%d", HttpRequestUtils.getContextHomeDirectory(request),
-                NewsUrlParts.BASE_URL, news.getId());
+        return String.format("%s%s#post_%d", HttpRequestUtils.getContextHomeDirectory(request), NewsUrlParts.BASE_URL,
+                news.getId());
     }
 }

@@ -76,8 +76,7 @@ public class UserDaoImpl extends NamedParameterJdbcDaoSupport implements UserDao
 
     /**
      * @param lazy
-     *            If <code>true</code>, {@link Authority authorities} of the desired {@link User} are not
-     *            populated.
+     *            If <code>true</code>, {@link Authority authorities} of the desired {@link User} are not populated.
      */
     public User findByUsername(final String username, final boolean lazy) {
         logger.info(String.format("Load an user with the username '%s'", username));
@@ -90,8 +89,7 @@ public class UserDaoImpl extends NamedParameterJdbcDaoSupport implements UserDao
 
         final User user = getNamedParameterJdbcTemplate().queryForObject(query, args, new UserRowMapper());
         if (user == null) {
-            throw new DataRetrievalFailureException(String.format("No user with the username '%s' exists.",
-                    username));
+            throw new DataRetrievalFailureException(String.format("No user with the username '%s' exists.", username));
         }
 
         if (!lazy) {
@@ -110,15 +108,15 @@ public class UserDaoImpl extends NamedParameterJdbcDaoSupport implements UserDao
         logger.info(String.format("Load an user with the email '%s'", lowerCasedEmail));
 
         final String emailColumn = UserField.email.getColumnName();
-        final String query = String.format("SELECT * FROM %s u WHERE u.%s = :%s", UserDaoImpl.TABLE_NAME,
-                emailColumn, emailColumn);
+        final String query = String.format("SELECT * FROM %s u WHERE u.%s = :%s", UserDaoImpl.TABLE_NAME, emailColumn,
+                emailColumn);
 
         final Map<String, String> args = Collections.singletonMap(emailColumn, lowerCasedEmail);
 
         final User user = getNamedParameterJdbcTemplate().queryForObject(query, args, new UserRowMapper());
         if (user == null) {
-            throw new DataRetrievalFailureException(String.format("No user with the email '%s' exists.",
-                    lowerCasedEmail));
+            throw new DataRetrievalFailureException(
+                    String.format("No user with the email '%s' exists.", lowerCasedEmail));
         }
 
         this.populateAuthorities(user);
@@ -144,9 +142,10 @@ public class UserDaoImpl extends NamedParameterJdbcDaoSupport implements UserDao
     }
 
     @Override
-    public List<User> findAllByAuthorityAndSubscription(final String authority, final NotificationType notificationType) {
-        logger.info(String.format("Load all users with the authority '%s' and subscription '%s')",
-                authority, notificationType.name()));
+    public List<User> findAllByAuthorityAndSubscription(final String authority,
+            final NotificationType notificationType) {
+        logger.info(String.format("Load all users with the authority '%s' and subscription '%s')", authority,
+                notificationType.name()));
 
         final String authorityColumn = AuthorityField.authority.getColumnName();
         final String subscriptionColumn = UserField.getSubscriptionField(notificationType).getColumnName();
@@ -169,9 +168,8 @@ public class UserDaoImpl extends NamedParameterJdbcDaoSupport implements UserDao
 
         final String isTestUserColumn = UserField.isTestUser.getColumnName();
         final String query = String.format("SELECT * FROM %s u WHERE u.%s = :%s ORDER BY u.%s, u.%s %s",
-                UserDaoImpl.TABLE_NAME, isTestUserColumn, isTestUserColumn,
-                UserField.lastName.getColumnName(), UserField.firstName.getColumnName(),
-                order.getDatabaseCode());
+                UserDaoImpl.TABLE_NAME, isTestUserColumn, isTestUserColumn, UserField.lastName.getColumnName(),
+                UserField.firstName.getColumnName(), order.getDatabaseCode());
 
         final Map<String, Boolean> args = Collections.singletonMap(isTestUserColumn, testUsers);
 
@@ -197,10 +195,8 @@ public class UserDaoImpl extends NamedParameterJdbcDaoSupport implements UserDao
         parameters.put(UserField.subscribedToNews.getColumnName(), user.isSubscribedToNews());
         parameters.put(UserField.subscribedToEvents.getColumnName(), user.isSubscribedToEvents());
         parameters.put(UserField.subscribedToForum.getColumnName(), user.isSubscribedToForum());
-        parameters.put(UserField.subscribedToOtherDocuments.getColumnName(),
-                user.isSubscribedToOtherDocuments());
-        parameters.put(UserField.subscribedToOtherSections.getColumnName(),
-                user.isSubscribedToOtherSections());
+        parameters.put(UserField.subscribedToOtherDocuments.getColumnName(), user.isSubscribedToOtherDocuments());
+        parameters.put(UserField.subscribedToOtherSections.getColumnName(), user.isSubscribedToOtherSections());
         parameters.put(UserField.smtpPort.getColumnName(), user.getSmtpPort());
         parameters.put(UserField.redirectEmail.getColumnName(), user.getRedirectEmail());
         return parameters;
@@ -231,16 +227,17 @@ public class UserDaoImpl extends NamedParameterJdbcDaoSupport implements UserDao
         final String subscribedToOtherSectionsColumn = UserField.subscribedToOtherSections.getColumnName();
         final String smtpPortColumn = UserField.smtpPort.getColumnName();
         final String redirectEmailColumn = UserField.redirectEmail.getColumnName();
-        final String query = String.format("UPDATE %s SET %s = :%s, %s = :%s, %s = :%s, %s = :%s,"
-                + " %s = :%s, %s = :%s, %s = :%s, %s = :%s, %s = :%s, %s = :%s, %s = :%s, %s = :%s, %s = :%s, %s = :%s"
-                + " WHERE %s = :%s", UserDaoImpl.TABLE_NAME, passwordColumn, passwordColumn, enabledColumn,
-                enabledColumn, firstNameColumn, firstNameColumn, lastNameColumn, lastNameColumn, emailColumn,
-                emailColumn, phoneColumn, phoneColumn, isTestUserColumn, isTestUserColumn,
-                subscribedToNewsColumn, subscribedToNewsColumn, subscribedToEventsColumn,
-                subscribedToEventsColumn, subscribedToForumColumn, subscribedToForumColumn,
-                subscribedToOtherDocumentsColumn, subscribedToOtherDocumentsColumn,
-                subscribedToOtherSectionsColumn, subscribedToOtherSectionsColumn, smtpPortColumn,
-                smtpPortColumn, redirectEmailColumn, redirectEmailColumn, usernameColumn, usernameColumn);
+        final String query = String.format(
+                "UPDATE %s SET %s = :%s, %s = :%s, %s = :%s, %s = :%s,"
+                        + " %s = :%s, %s = :%s, %s = :%s, %s = :%s, %s = :%s, %s = :%s, %s = :%s, %s = :%s, %s = :%s, %s = :%s"
+                        + " WHERE %s = :%s",
+                UserDaoImpl.TABLE_NAME, passwordColumn, passwordColumn, enabledColumn, enabledColumn, firstNameColumn,
+                firstNameColumn, lastNameColumn, lastNameColumn, emailColumn, emailColumn, phoneColumn, phoneColumn,
+                isTestUserColumn, isTestUserColumn, subscribedToNewsColumn, subscribedToNewsColumn,
+                subscribedToEventsColumn, subscribedToEventsColumn, subscribedToForumColumn, subscribedToForumColumn,
+                subscribedToOtherDocumentsColumn, subscribedToOtherDocumentsColumn, subscribedToOtherSectionsColumn,
+                subscribedToOtherSectionsColumn, smtpPortColumn, smtpPortColumn, redirectEmailColumn,
+                redirectEmailColumn, usernameColumn, usernameColumn);
 
         getNamedParameterJdbcTemplate().update(query, getNamedParameters(user));
 
@@ -260,12 +257,10 @@ public class UserDaoImpl extends NamedParameterJdbcDaoSupport implements UserDao
                         UserField.enabled.getColumnName(), UserField.firstName.getColumnName(),
                         UserField.lastName.getColumnName(), UserField.email.getColumnName(),
                         UserField.phone.getColumnName(), UserField.isTestUser.getColumnName(),
-                        UserField.subscribedToNews.getColumnName(),
-                        UserField.subscribedToEvents.getColumnName(),
+                        UserField.subscribedToNews.getColumnName(), UserField.subscribedToEvents.getColumnName(),
                         UserField.subscribedToForum.getColumnName(),
                         UserField.subscribedToOtherDocuments.getColumnName(),
-                        UserField.subscribedToOtherSections.getColumnName(),
-                        UserField.smtpPort.getColumnName(),
+                        UserField.subscribedToOtherSections.getColumnName(), UserField.smtpPort.getColumnName(),
                         UserField.redirectEmail.getColumnName());
 
         insert.execute(getNamedParameters(user));

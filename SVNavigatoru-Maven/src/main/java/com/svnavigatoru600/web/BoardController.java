@@ -46,17 +46,16 @@ public class BoardController extends AbstractWysiwygSectionController {
     @Override
     @RequestMapping(value = BoardInfoUrlParts.SAVE_EDIT_URL, method = RequestMethod.POST)
     @PreAuthorize("hasRole('ROLE_MEMBER_OF_BOARD')")
-    public String saveChanges(@ModelAttribute("wysiwygSectionEditCommand") WysiwygSection command,
-            BindingResult result, SessionStatus status, ModelMap model) {
+    public String saveChanges(@ModelAttribute("wysiwygSectionEditCommand") WysiwygSection command, BindingResult result,
+            SessionStatus status, ModelMap model) {
         return super.saveChanges(command, result, status, model);
     }
 
     @Override
     @RequestMapping(value = BoardInfoUrlParts.SAVE_EDIT_AND_EXIT_URL, method = RequestMethod.POST)
     @PreAuthorize("hasRole('ROLE_MEMBER_OF_BOARD')")
-    public String saveChangesAndFinishEditing(
-            @ModelAttribute("wysiwygSectionEditCommand") WysiwygSection command, BindingResult result,
-            SessionStatus status, ModelMap model) {
+    public String saveChangesAndFinishEditing(@ModelAttribute("wysiwygSectionEditCommand") WysiwygSection command,
+            BindingResult result, SessionStatus status, ModelMap model) {
         return super.saveChangesAndFinishEditing(command, result, status, model);
     }
 

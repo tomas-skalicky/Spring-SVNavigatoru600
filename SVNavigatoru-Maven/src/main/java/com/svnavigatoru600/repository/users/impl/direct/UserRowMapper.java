@@ -9,9 +9,8 @@ import com.svnavigatoru600.domain.users.User;
 import com.svnavigatoru600.repository.users.impl.UserField;
 
 /**
- * The mapper is helpful when the SimpleJdbcTemplate is used. The class is a very lightweight version of the
- * Hibernate mapping. For more information, see
- * http://www.mkyong.com/spring/spring-simplejdbctemplate-querying-examples/.
+ * The mapper is helpful when the SimpleJdbcTemplate is used. The class is a very lightweight version of the Hibernate
+ * mapping. For more information, see http://www.mkyong.com/spring/spring-simplejdbctemplate-querying-examples/.
  * 
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */

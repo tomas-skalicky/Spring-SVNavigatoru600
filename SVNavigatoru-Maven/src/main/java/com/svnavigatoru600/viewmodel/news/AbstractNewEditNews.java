@@ -32,7 +32,7 @@ public abstract class AbstractNewEditNews implements SendNotificationViewModel {
 
     @Override
     public String toString() {
-        return new StringBuilder("[news=").append(news).append(", sendNotification=")
-                .append(sendNotification).append("]").toString();
+        return new StringBuilder("[news=").append(news).append(", sendNotification=").append(sendNotification)
+                .append("]").toString();
     }
 }

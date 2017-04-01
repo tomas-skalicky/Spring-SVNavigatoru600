@@ -15,8 +15,8 @@ public abstract class AbstractDocumentRecord implements Serializable {
      */
     private int id;
     /**
-     * The filename of the textual file which contains the full records. There is one directory which contains
-     * all files; hence the filename contains no "/".
+     * The filename of the textual file which contains the full records. There is one directory which contains all
+     * files; hence the filename contains no "/".
      */
     private String fileName;
     private Blob file;
@@ -61,7 +61,7 @@ public abstract class AbstractDocumentRecord implements Serializable {
 
     @Override
     public String toString() {
-        return new StringBuilder("[id=").append(this.id).append(", fileName=").append(this.fileName)
-                .append("]").toString();
+        return new StringBuilder("[id=").append(this.id).append(", fileName=").append(this.fileName).append("]")
+                .toString();
     }
 }

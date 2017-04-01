@@ -8,8 +8,8 @@ import com.svnavigatoru600.service.forum.ContributionService;
 import com.svnavigatoru600.web.AbstractPrivateSectionMetaController;
 
 /**
- * Parent of all controllers which handle all operations upon the
- * {@link com.svnavigatoru600.domain.forum.Contribution Contributions}.
+ * Parent of all controllers which handle all operations upon the {@link com.svnavigatoru600.domain.forum.Contribution
+ * Contributions}.
  * 
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */

@@ -50,8 +50,7 @@ public class NewNewsResponse extends AbstractNewEditNewsResponse {
 
         News news = getCommand().getNews();
         Date creationTime = news.getCreationTime();
-        this.localizedMonth = DateUtils
-                .format(creationTime, DateUtils.LONG_MONTH_FORMATS.get(locale), locale);
+        this.localizedMonth = DateUtils.format(creationTime, DateUtils.LONG_MONTH_FORMATS.get(locale), locale);
         this.localizedDay = DateUtils.format(creationTime, DateUtils.SHORT_DAY_FORMATS.get(locale), locale);
     }
 
@@ -65,8 +64,7 @@ public class NewNewsResponse extends AbstractNewEditNewsResponse {
     }
 
     private void initEditUrlVariables(HttpServletRequest request) {
-        this.editUrlBeginning = new StringBuffer(request.getContextPath()).append(NewsUrlParts.EXISTING_URL)
-                .toString();
+        this.editUrlBeginning = new StringBuffer(request.getContextPath()).append(NewsUrlParts.EXISTING_URL).toString();
     }
 
     public String getLocalizedMonth() {

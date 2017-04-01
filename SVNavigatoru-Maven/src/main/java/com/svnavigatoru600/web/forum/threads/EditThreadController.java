@@ -59,7 +59,8 @@ public class EditThreadController extends AbstractNewEditThreadController {
         return PageViews.EDIT.getViewName();
     }
 
-    @RequestMapping(value = ThreadsUrlParts.EXISTING_URL + "{threadId}/" + CommonUrlParts.SAVED_EXTENSION, method = RequestMethod.GET)
+    @RequestMapping(value = ThreadsUrlParts.EXISTING_URL + "{threadId}/"
+            + CommonUrlParts.SAVED_EXTENSION, method = RequestMethod.GET)
     public String initFormAfterSave(@PathVariable int threadId, HttpServletRequest request, ModelMap model) {
         String view = initForm(threadId, request, model);
         ((EditThread) model.get(AbstractNewEditThreadController.COMMAND)).setDataSaved(true);
@@ -69,8 +70,8 @@ public class EditThreadController extends AbstractNewEditThreadController {
     @RequestMapping(value = ThreadsUrlParts.EXISTING_URL + "{threadId}/", method = RequestMethod.POST)
     @Transactional
     public String processSubmittedForm(@ModelAttribute(EditThreadController.COMMAND) EditThread command,
-            BindingResult result, SessionStatus status, @PathVariable int threadId,
-            HttpServletRequest request, ModelMap model) {
+            BindingResult result, SessionStatus status, @PathVariable int threadId, HttpServletRequest request,
+            ModelMap model) {
 
         ThreadService threadService = getThreadService();
         threadService.canEdit(threadId);
@@ -89,8 +90,8 @@ public class EditThreadController extends AbstractNewEditThreadController {
             status.setComplete();
 
             // Returns the form success view.
-            model.addAttribute(AbstractMetaController.REDIRECTION_ATTRIBUTE, String.format("%s%d/%s",
-                    ThreadsUrlParts.EXISTING_URL, threadId, CommonUrlParts.SAVED_EXTENSION));
+            model.addAttribute(AbstractMetaController.REDIRECTION_ATTRIBUTE,
+                    String.format("%s%d/%s", ThreadsUrlParts.EXISTING_URL, threadId, CommonUrlParts.SAVED_EXTENSION));
             return AbstractMetaController.REDIRECTION_PAGE;
 
         } catch (DataAccessException e) {

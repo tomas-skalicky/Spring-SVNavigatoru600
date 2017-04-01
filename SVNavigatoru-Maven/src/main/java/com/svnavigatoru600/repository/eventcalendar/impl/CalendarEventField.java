@@ -1,8 +1,7 @@
 package com.svnavigatoru600.repository.eventcalendar.impl;
 
 /**
- * Names of the fields of the {@link com.svnavigatoru600.domain.eventcalendar.CalendarEvent CalendarEvent}
- * class.
+ * Names of the fields of the {@link com.svnavigatoru600.domain.eventcalendar.CalendarEvent CalendarEvent} class.
  * 
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */

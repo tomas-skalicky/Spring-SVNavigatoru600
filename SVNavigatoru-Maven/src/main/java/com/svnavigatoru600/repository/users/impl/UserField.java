@@ -42,8 +42,7 @@ public enum UserField {
     }
 
     /**
-     * Names of the columns of the database table which contains {@link com.svnavigatoru600.domain.users.User
-     * users}.
+     * Names of the columns of the database table which contains {@link com.svnavigatoru600.domain.users.User users}.
      */
     private enum UserColumn {
 
@@ -69,8 +68,8 @@ public enum UserField {
     /**
      * Gets the {@link UserField} corresponding to the given {@link NotificationType notificationType}.
      * <p>
-     * Do NOT put these information to the {@link NotificationType} enum though you could get rid of the
-     * switch. The problem is that it would be a mixture of domain and repository tiers.
+     * Do NOT put these information to the {@link NotificationType} enum though you could get rid of the switch. The
+     * problem is that it would be a mixture of domain and repository tiers.
      */
     public static UserField getSubscriptionField(NotificationType notificationType) {
         switch (notificationType) {

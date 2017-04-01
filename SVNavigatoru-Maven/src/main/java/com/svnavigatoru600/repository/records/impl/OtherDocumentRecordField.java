@@ -1,16 +1,15 @@
 package com.svnavigatoru600.repository.records.impl;
 
 /**
- * Names of the fields of the {@link com.svnavigatoru600.domain.records.OtherDocumentRecord
- * OtherDocumentRecord} class.
+ * Names of the fields of the {@link com.svnavigatoru600.domain.records.OtherDocumentRecord OtherDocumentRecord} class.
  * 
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
 public enum OtherDocumentRecordField {
 
     id(OtherDocumentRecordColumn.id), name(OtherDocumentRecordColumn.name), description(
-            OtherDocumentRecordColumn.description), creationTime(OtherDocumentRecordColumn.creation_time), lastSaveTime(
-            OtherDocumentRecordColumn.last_save_time);
+            OtherDocumentRecordColumn.description), creationTime(
+                    OtherDocumentRecordColumn.creation_time), lastSaveTime(OtherDocumentRecordColumn.last_save_time);
 
     /**
      * The name of a corresponding database column.

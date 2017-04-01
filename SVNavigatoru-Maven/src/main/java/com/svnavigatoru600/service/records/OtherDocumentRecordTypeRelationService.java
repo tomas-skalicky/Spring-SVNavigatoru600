@@ -32,9 +32,8 @@ public class OtherDocumentRecordTypeRelationService {
     }
 
     /**
-     * Returns all {@link OtherDocumentRecordTypeRelation type relations} stored in the repository which are
-     * associated with the specified {@link com.svnavigatoru600.domain.records.OtherDocumentRecord
-     * OtherDocumentRecord}.
+     * Returns all {@link OtherDocumentRecordTypeRelation type relations} stored in the repository which are associated
+     * with the specified {@link com.svnavigatoru600.domain.records.OtherDocumentRecord OtherDocumentRecord}.
      * 
      * @param recordId
      *            The ID of the document record which desired type relations are associated with.
@@ -44,12 +43,11 @@ public class OtherDocumentRecordTypeRelationService {
     }
 
     /**
-     * Stores the given {@link OtherDocumentRecordTypeRelation typeRelations} to the repository. If there is
-     * already a {@link OtherDocumentRecordTypeRelation type relation} with the same
+     * Stores the given {@link OtherDocumentRecordTypeRelation typeRelations} to the repository. If there is already a
+     * {@link OtherDocumentRecordTypeRelation type relation} with the same
      * {@link com.svnavigatoru600.domain.records.OtherDocumentRecordTypeRelationId#getRecordId() ID} of
      * {@link com.svnavigatoru600.domain.records.OtherDocumentRecord OtherDocumentRecord} and the same
-     * {@link com.svnavigatoru600.domain.records.OtherDocumentRecordTypeRelationId#getType() type}, throws an
-     * exception.
+     * {@link com.svnavigatoru600.domain.records.OtherDocumentRecordTypeRelationId#getType() type}, throws an exception.
      */
     public void save(Collection<OtherDocumentRecordTypeRelation> typeRelations) {
         this.typeRelationDao.save(typeRelations);

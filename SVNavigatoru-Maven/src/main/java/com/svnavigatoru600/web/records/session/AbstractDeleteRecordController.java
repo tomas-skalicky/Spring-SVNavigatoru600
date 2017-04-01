@@ -17,8 +17,7 @@ import com.svnavigatoru600.web.AbstractMetaController;
 import com.svnavigatoru600.web.records.AbstractPageViews;
 
 /**
- * Parent of all controllers which delete the {@link com.svnavigatoru600.domain.records.SessionRecord
- * SessionRecords}.
+ * Parent of all controllers which delete the {@link com.svnavigatoru600.domain.records.SessionRecord SessionRecords}.
  * 
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
@@ -36,8 +35,8 @@ public abstract class AbstractDeleteRecordController extends AbstractSessionReco
      * Constructs a controller which considers all {@link com.svnavigatoru600.domain.records.SessionRecord
      * SessionRecords} of all {@link SessionRecordType SessionRecordTypes}.
      */
-    public AbstractDeleteRecordController(String baseUrl, AbstractPageViews views,
-            SessionRecordService recordService, MessageSource messageSource) {
+    public AbstractDeleteRecordController(String baseUrl, AbstractPageViews views, SessionRecordService recordService,
+            MessageSource messageSource) {
         // Note that allRecordTypes is set up during the creation of the parent.
         super(baseUrl, views, recordService, messageSource);
         this.successfulDeleteUrl = getBaseUrl() + CommonUrlParts.DELETED_EXTENSION;
@@ -47,8 +46,8 @@ public abstract class AbstractDeleteRecordController extends AbstractSessionReco
      * Constructs a controller which considers all {@link com.svnavigatoru600.domain.records.SessionRecord
      * SessionRecords} of the given <code>recordType</code>.
      */
-    public AbstractDeleteRecordController(String baseUrl, AbstractPageViews views,
-            SessionRecordType recordType, SessionRecordService recordService, MessageSource messageSource) {
+    public AbstractDeleteRecordController(String baseUrl, AbstractPageViews views, SessionRecordType recordType,
+            SessionRecordService recordService, MessageSource messageSource) {
         super(baseUrl, views, recordType, recordService, messageSource);
         this.successfulDeleteUrl = getBaseUrl() + CommonUrlParts.DELETED_EXTENSION;
     }

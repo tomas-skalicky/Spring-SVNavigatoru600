@@ -28,8 +28,7 @@ public final class RecordsCommonUrlParts {
      */
     public static String getAttachedFileUrl(AbstractDocumentRecord record, String sectionBaseUrl,
             HttpServletRequest request) {
-        return String.format("%s%s%s%d/%s", HttpRequestUtils.getContextHomeDirectory(request),
-                sectionBaseUrl, CommonUrlParts.EXISTING_EXTENSION, record.getId(),
-                RecordsCommonUrlParts.DOWNLOAD_EXTENSION);
+        return String.format("%s%s%s%d/%s", HttpRequestUtils.getContextHomeDirectory(request), sectionBaseUrl,
+                CommonUrlParts.EXISTING_EXTENSION, record.getId(), RecordsCommonUrlParts.DOWNLOAD_EXTENSION);
     }
 }

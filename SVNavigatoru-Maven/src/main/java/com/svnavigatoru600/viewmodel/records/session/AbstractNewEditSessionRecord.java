@@ -60,7 +60,6 @@ public abstract class AbstractNewEditSessionRecord implements SendNotificationVi
     @Override
     public String toString() {
         return new StringBuilder("[record=").append(this.record).append(", sendNotification=")
-                .append(this.sendNotification).append(", newType=").append(this.newType).append("]")
-                .toString();
+                .append(this.sendNotification).append(", newType=").append(this.newType).append("]").toString();
     }
 }

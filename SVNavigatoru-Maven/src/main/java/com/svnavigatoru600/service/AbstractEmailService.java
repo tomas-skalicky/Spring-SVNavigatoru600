@@ -27,8 +27,8 @@ public abstract class AbstractEmailService {
      */
     protected String getLocalizedRecipientAddressing(User recipient, HttpServletRequest request,
             MessageSource messageSource) {
-        return Localization.findLocaleMessage(messageSource, request,
-                AbstractEmailService.EMAIL_TEXT_ADDRESSING_CODE, recipient.getLastName());
+        return Localization.findLocaleMessage(messageSource, request, AbstractEmailService.EMAIL_TEXT_ADDRESSING_CODE,
+                recipient.getLastName());
     }
 
     /**

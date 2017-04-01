@@ -25,8 +25,8 @@ public class ListBoardSessionRecordsController extends AbstractListRecordsContro
      */
     @Inject
     public ListBoardSessionRecordsController(SessionRecordService recordService, MessageSource messageSource) {
-        super(BoardSessionsUrlParts.BASE_URL, new PageViews(), SessionRecordType.SESSION_RECORD_OF_BOARD,
-                recordService, messageSource);
+        super(BoardSessionsUrlParts.BASE_URL, new PageViews(), SessionRecordType.SESSION_RECORD_OF_BOARD, recordService,
+                messageSource);
     }
 
     @Override

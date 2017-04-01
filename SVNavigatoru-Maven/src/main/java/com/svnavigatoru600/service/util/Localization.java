@@ -23,8 +23,7 @@ public final class Localization {
     }
 
     /**
-     * Gets a localization of the message which has the given <code>messageCode</code>. The code requires NO
-     * parameter.
+     * Gets a localization of the message which has the given <code>messageCode</code>. The code requires NO parameter.
      * <p>
      * The current locale settings is used.
      * 
@@ -37,38 +36,35 @@ public final class Localization {
     }
 
     /**
-     * Gets a localization of the message which has the given <code>messageCode</code>. The code requires ONE
-     * parameter.
+     * Gets a localization of the message which has the given <code>messageCode</code>. The code requires ONE parameter.
      * <p>
      * The current locale settings is used.
      * 
      * @param messageCode
      *            Code of the message stored typically in messages*.properties.
      * @param parameter
-     *            Parameter of the code which substitutes the <code>{0}</code> placeholder in the
-     *            localization.
+     *            Parameter of the code which substitutes the <code>{0}</code> placeholder in the localization.
      */
-    public static String findLocaleMessage(MessageSource messageSource, HttpServletRequest request,
-            String messageCode, Object parameter) {
-        return Localization
-                .findLocaleMessage(messageSource, request, messageCode, new Object[] { parameter });
+    public static String findLocaleMessage(MessageSource messageSource, HttpServletRequest request, String messageCode,
+            Object parameter) {
+        return Localization.findLocaleMessage(messageSource, request, messageCode, new Object[] { parameter });
     }
 
     /**
-     * Gets a localization of the message which has the given <code>messageCode</code>. The code requires a
-     * various number of parameters depending on the given code.
+     * Gets a localization of the message which has the given <code>messageCode</code>. The code requires a various
+     * number of parameters depending on the given code.
      * <p>
      * The current locale settings is used.
      * 
      * @param messageCode
      *            Code of the message stored typically in messages*.properties.
      * @param parameters
-     *            Parameters of the code which substitute placeholders in the localization. The order of the
-     *            parameters in the array is important. For instance: the 2nd parameter (with index 1)
-     *            substitutes the <code>{1}</code> placeholder in the localization.
+     *            Parameters of the code which substitute placeholders in the localization. The order of the parameters
+     *            in the array is important. For instance: the 2nd parameter (with index 1) substitutes the
+     *            <code>{1}</code> placeholder in the localization.
      */
-    public static String findLocaleMessage(MessageSource messageSource, HttpServletRequest request,
-            String messageCode, Object[] parameters) {
+    public static String findLocaleMessage(MessageSource messageSource, HttpServletRequest request, String messageCode,
+            Object[] parameters) {
         return messageSource.getMessage(messageCode, parameters, Localization.getLocale(request));
     }
 
@@ -88,11 +84,11 @@ public final class Localization {
     }
 
     /**
-     * Localizes the global errors of the {@link org.springframework.validation.BindingResult BindingResult}
-     * object. The reason for usage of this method is an application of AJAX requests.
+     * Localizes the global errors of the {@link org.springframework.validation.BindingResult BindingResult} object. The
+     * reason for usage of this method is an application of AJAX requests.
      */
-    public static List<ObjectError> localizeGlobalErrors(List<ObjectError> errors,
-            MessageSource messageSource, HttpServletRequest request) {
+    public static List<ObjectError> localizeGlobalErrors(List<ObjectError> errors, MessageSource messageSource,
+            HttpServletRequest request) {
         List<ObjectError> localizedErrors = new ArrayList<ObjectError>();
         for (ObjectError error : errors) {
             String[] localizedCodes = Localization.localizeCodes(error.getCodes(), messageSource, request);
@@ -103,17 +99,16 @@ public final class Localization {
     }
 
     /**
-     * Localizes the field errors of the {@link org.springframework.validation.BindingResult BindingResult}
-     * object. The reason for usage of this method is an application of AJAX requests.
+     * Localizes the field errors of the {@link org.springframework.validation.BindingResult BindingResult} object. The
+     * reason for usage of this method is an application of AJAX requests.
      */
     public static List<FieldError> localizeFieldErrors(List<FieldError> errors, MessageSource messageSource,
             HttpServletRequest request) {
         List<FieldError> localizedErrors = new ArrayList<FieldError>();
         for (FieldError error : errors) {
             String[] localizedCodes = Localization.localizeCodes(error.getCodes(), messageSource, request);
-            localizedErrors.add(new FieldError(error.getObjectName(), error.getField(), error
-                    .getRejectedValue(), error.isBindingFailure(), localizedCodes, error.getArguments(),
-                    error.getDefaultMessage()));
+            localizedErrors.add(new FieldError(error.getObjectName(), error.getField(), error.getRejectedValue(),
+                    error.isBindingFailure(), localizedCodes, error.getArguments(), error.getDefaultMessage()));
         }
         return localizedErrors;
     }
@@ -121,8 +116,7 @@ public final class Localization {
     /**
      * Localizes the given message codes.
      */
-    private static String[] localizeCodes(String[] codes, MessageSource messageSource,
-            HttpServletRequest request) {
+    private static String[] localizeCodes(String[] codes, MessageSource messageSource, HttpServletRequest request) {
         String[] localizedCodes = new String[codes.length];
         for (int codeI = 0; codeI < codes.length; ++codeI) {
             try {

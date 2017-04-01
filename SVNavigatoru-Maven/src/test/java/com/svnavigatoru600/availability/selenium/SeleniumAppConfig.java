@@ -8,8 +8,8 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 
 /**
- * {@link org.springframework.context.ApplicationContext Application context} for Selenium tests. It creates
- * necessary {@link Bean beans}.
+ * {@link org.springframework.context.ApplicationContext Application context} for Selenium tests. It creates necessary
+ * {@link Bean beans}.
  * 
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
@@ -24,8 +24,7 @@ public class SeleniumAppConfig {
     private Environment environment;
 
     /**
-     * Gets the test user which used in Selenium tests to sign-in. It means that his credentials are stored in
-     * the DB.
+     * Gets the test user which used in Selenium tests to sign-in. It means that his credentials are stored in the DB.
      * 
      * @return The test user
      */

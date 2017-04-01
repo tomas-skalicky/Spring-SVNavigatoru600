@@ -42,8 +42,7 @@ public class UserEmailService extends AbstractEmailService {
     /**
      * Sends an email of the {@link User newUser} with his credentials.
      * <p>
-     * The function is invoked when the user has already been successfully added to the repository by the
-     * administrator.
+     * The function is invoked when the user has already been successfully added to the repository by the administrator.
      */
     public void sendEmailOnUserCreation(User newUser, String newPassword, HttpServletRequest request,
             MessageSource messageSource) {
@@ -55,13 +54,11 @@ public class UserEmailService extends AbstractEmailService {
         String addressing = getLocalizedRecipientAddressing(newUser, request, messageSource);
         String usernameLabel = Localization.findLocaleMessage(messageSource, request,
                 UserEmailService.USER_ACCOUNT_TITLE_CODE);
-        String emailLabel = Localization.findLocaleMessage(messageSource, request,
-                UserEmailService.EMAIL_CODE);
-        String passwordLabel = Localization.findLocaleMessage(messageSource, request,
-                UserEmailService.PASSWORD_CODE);
+        String emailLabel = Localization.findLocaleMessage(messageSource, request, UserEmailService.EMAIL_CODE);
+        String passwordLabel = Localization.findLocaleMessage(messageSource, request, UserEmailService.PASSWORD_CODE);
         String signature = getLocalizedAdminSignature(request, messageSource);
-        Object[] messageParams = new Object[] { addressing, Configuration.DOMAIN, usernameLabel,
-                newUser.getUsername(), emailLabel, email, passwordLabel, newPassword, signature };
+        Object[] messageParams = new Object[] { addressing, Configuration.DOMAIN, usernameLabel, newUser.getUsername(),
+                emailLabel, email, passwordLabel, newPassword, signature };
         String messageText = Localization.findLocaleMessage(messageSource, request,
                 UserEmailService.EMAIL_TEXT_NEW_USER_CODE, messageParams);
 
@@ -95,8 +92,7 @@ public class UserEmailService extends AbstractEmailService {
     /**
      * Sends an email to the given {@link User} with his <code>newPassword</code>.
      * <p>
-     * The function is invoked when user's password has already been successfully changed by the
-     * administrator.
+     * The function is invoked when user's password has already been successfully changed by the administrator.
      */
     public void sendEmailOnPasswordChange(User user, String newPassword, HttpServletRequest request,
             MessageSource messageSource) {
@@ -113,11 +109,10 @@ public class UserEmailService extends AbstractEmailService {
     }
 
     /**
-     * Converts the new authorities of the given {@link User user} to a {@link String} representation. The
-     * conversion is for email purposes.
+     * Converts the new authorities of the given {@link User user} to a {@link String} representation. The conversion is
+     * for email purposes.
      */
-    private String convertAuthoritiesForEmail(User user, HttpServletRequest request,
-            MessageSource messageSource) {
+    private String convertAuthoritiesForEmail(User user, HttpServletRequest request, MessageSource messageSource) {
         StringBuilder newAuthorities = new StringBuilder();
         if (user.canSeeNews()) {
             if (user.canEditNews()) {
@@ -149,11 +144,9 @@ public class UserEmailService extends AbstractEmailService {
      * Sends an emailto the given {@link User} with his new {@link com.svnavigatoru600.domain.users.Authority
      * Authorities}.
      * <p>
-     * The function is invoked when user's authorities have already been successfully changed by the
-     * administrator.
+     * The function is invoked when user's authorities have already been successfully changed by the administrator.
      */
-    public void sendEmailOnAuthoritiesChange(User user, HttpServletRequest request,
-            MessageSource messageSource) {
+    public void sendEmailOnAuthoritiesChange(User user, HttpServletRequest request, MessageSource messageSource) {
         String subject = Localization.findLocaleMessage(messageSource, request,
                 UserEmailService.EMAIL_SUBJECT_AUTHORITIES_CHANGED_CODE);
 

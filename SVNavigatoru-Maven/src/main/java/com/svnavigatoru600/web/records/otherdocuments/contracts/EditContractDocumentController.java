@@ -35,8 +35,8 @@ public class EditContractDocumentController extends AbstractEditDocumentControll
     public EditContractDocumentController(OtherDocumentRecordService recordService,
             SendNotificationEditModelFiller sendNotificationModelFiller, EditRecordValidator validator,
             MessageSource messageSource) {
-        super(ContractsUrlParts.EXISTING_URL, new PageViews(), OtherDocumentRecordType.CONTRACT,
-                recordService, sendNotificationModelFiller, validator, messageSource);
+        super(ContractsUrlParts.EXISTING_URL, new PageViews(), OtherDocumentRecordType.CONTRACT, recordService,
+                sendNotificationModelFiller, validator, messageSource);
     }
 
     @Override
@@ -46,16 +46,17 @@ public class EditContractDocumentController extends AbstractEditDocumentControll
     }
 
     @Override
-    @RequestMapping(value = ContractsUrlParts.EXISTING_URL + "{recordId}/" + CommonUrlParts.SAVED_EXTENSION, method = RequestMethod.GET)
+    @RequestMapping(value = ContractsUrlParts.EXISTING_URL + "{recordId}/"
+            + CommonUrlParts.SAVED_EXTENSION, method = RequestMethod.GET)
     public String initFormAfterSave(@PathVariable int recordId, HttpServletRequest request, ModelMap model) {
         return super.initFormAfterSave(recordId, request, model);
     }
 
     @Override
     @RequestMapping(value = ContractsUrlParts.EXISTING_URL + "{recordId}/", method = RequestMethod.POST)
-    public String processSubmittedForm(
-            @ModelAttribute(AbstractEditDocumentController.COMMAND) EditRecord command, BindingResult result,
-            SessionStatus status, @PathVariable int recordId, HttpServletRequest request, ModelMap model) {
+    public String processSubmittedForm(@ModelAttribute(AbstractEditDocumentController.COMMAND) EditRecord command,
+            BindingResult result, SessionStatus status, @PathVariable int recordId, HttpServletRequest request,
+            ModelMap model) {
         return super.processSubmittedForm(command, result, status, recordId, request, model);
     }
 }

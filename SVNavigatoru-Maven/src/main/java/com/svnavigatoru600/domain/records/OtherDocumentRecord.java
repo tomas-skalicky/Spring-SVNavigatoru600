@@ -34,14 +34,14 @@ public class OtherDocumentRecord extends AbstractDocumentRecord {
      */
     private Set<OtherDocumentRecordTypeRelation> types;
     /**
-     * {@link Date} when this {@link OtherDocumentRecord} has been created. The date is set by automatically
-     * by the application.
+     * {@link Date} when this {@link OtherDocumentRecord} has been created. The date is set by automatically by the
+     * application.
      */
     @DateTimeFormat(style = "LS")
     private Date creationTime;
     /**
-     * {@link Date} when this {@link OtherDocumentRecord} has been last saved to the repository. The date is
-     * set by automatically by the application.
+     * {@link Date} when this {@link OtherDocumentRecord} has been last saved to the repository. The date is set by
+     * automatically by the application.
      */
     @DateTimeFormat(style = "LS")
     private Date lastSaveTime;
@@ -88,9 +88,8 @@ public class OtherDocumentRecord extends AbstractDocumentRecord {
 
     @Override
     public String toString() {
-        return new StringBuilder(super.toString()).append(" [name=").append(this.name)
-                .append(", description=").append(this.description).append(", types=").append(this.types)
-                .append(", creationTime=").append(this.creationTime).append(", lastSaveTime=")
-                .append(this.lastSaveTime).append("]").toString();
+        return new StringBuilder(super.toString()).append(" [name=").append(this.name).append(", description=")
+                .append(this.description).append(", types=").append(this.types).append(", creationTime=")
+                .append(this.creationTime).append(", lastSaveTime=").append(this.lastSaveTime).append("]").toString();
     }
 }

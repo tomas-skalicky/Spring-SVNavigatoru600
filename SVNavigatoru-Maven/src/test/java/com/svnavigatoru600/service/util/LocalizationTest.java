@@ -26,8 +26,8 @@ public final class LocalizationTest {
     }
 
     /**
-     * Expected result in this test is same as the input since non-standard ASCII characters (except czech
-     * ones) are not translated.
+     * Expected result in this test is same as the input since non-standard ASCII characters (except czech ones) are not
+     * translated.
      */
     @Test
     public void testStripCzechDiacriticsOnOtherNonStandardCharacters() {

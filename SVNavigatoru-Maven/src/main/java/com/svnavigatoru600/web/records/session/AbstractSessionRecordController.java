@@ -18,10 +18,9 @@ import com.svnavigatoru600.web.records.AbstractPageViews;
 public abstract class AbstractSessionRecordController extends AbstractDocumentRecordController {
 
     /**
-     * If all {@link com.svnavigatoru600.domain.records.SessionRecord SessionRecords} are considered (i.e.
-     * processed) by this controller, <code>allRecordTypes</code> equals <code>true</code>. Otherwise,
-     * <code>allRecordTypes</code> equals <code>false</code> and <code>RECORD_TYPE</code> determines the exact
-     * type of treated records.
+     * If all {@link com.svnavigatoru600.domain.records.SessionRecord SessionRecords} are considered (i.e. processed) by
+     * this controller, <code>allRecordTypes</code> equals <code>true</code>. Otherwise, <code>allRecordTypes</code>
+     * equals <code>false</code> and <code>RECORD_TYPE</code> determines the exact type of treated records.
      */
     private final SessionRecordType recordType;
     private boolean allRecordTypes = false;
@@ -31,8 +30,8 @@ public abstract class AbstractSessionRecordController extends AbstractDocumentRe
      * Constructs a controller which considers all {@link com.svnavigatoru600.domain.records.SessionRecord
      * SessionRecords} of all {@link SessionRecordType SessionRecordTypes}.
      */
-    public AbstractSessionRecordController(String baseUrl, AbstractPageViews views,
-            SessionRecordService recordService, MessageSource messageSource) {
+    public AbstractSessionRecordController(String baseUrl, AbstractPageViews views, SessionRecordService recordService,
+            MessageSource messageSource) {
         this(baseUrl, views, null, recordService, messageSource);
         this.allRecordTypes = true;
     }
@@ -41,8 +40,8 @@ public abstract class AbstractSessionRecordController extends AbstractDocumentRe
      * Constructs a controller which considers all {@link com.svnavigatoru600.domain.records.SessionRecord
      * SessionRecords} of the given <code>recordType</code>.
      */
-    public AbstractSessionRecordController(String baseUrl, AbstractPageViews views,
-            SessionRecordType recordType, SessionRecordService recordService, MessageSource messageSource) {
+    public AbstractSessionRecordController(String baseUrl, AbstractPageViews views, SessionRecordType recordType,
+            SessionRecordService recordService, MessageSource messageSource) {
         super(baseUrl, views, messageSource);
         this.recordType = recordType;
         this.recordService = recordService;

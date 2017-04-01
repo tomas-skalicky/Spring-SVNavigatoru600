@@ -7,8 +7,8 @@ package com.svnavigatoru600.repository.news.impl;
  */
 public enum NewsField {
 
-    id(NewsColumn.id), title(NewsColumn.title), text(NewsColumn.text), creationTime(NewsColumn.creation_time), lastSaveTime(
-            NewsColumn.last_save_time);
+    id(NewsColumn.id), title(NewsColumn.title), text(NewsColumn.text), creationTime(
+            NewsColumn.creation_time), lastSaveTime(NewsColumn.last_save_time);
 
     /**
      * The name of a corresponding database column.

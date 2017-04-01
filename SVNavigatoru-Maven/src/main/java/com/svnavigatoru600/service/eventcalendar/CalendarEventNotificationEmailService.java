@@ -18,8 +18,7 @@ import com.svnavigatoru600.service.util.Localization;
 import com.svnavigatoru600.service.util.Url;
 
 /**
- * Provide sending of emails concerning notifications of new {@link CalendarEvent calendar events} and updated
- * ones.
+ * Provide sending of emails concerning notifications of new {@link CalendarEvent calendar events} and updated ones.
  * 
  * @author <a href="mailto:tomas.skalicky@gfk.com">Tomas Skalicky</a>
  */
@@ -46,8 +45,8 @@ public class CalendarEventNotificationEmailService extends AbstractNotificationE
             MessageSource messageSource) {
         CalendarEvent event = (CalendarEvent) newEvent;
 
-        String subject = getSubject(CalendarEventNotificationEmailService.EVENT_CREATED_SUBJECT_CODE, event,
-                request, messageSource);
+        String subject = getSubject(CalendarEventNotificationEmailService.EVENT_CREATED_SUBJECT_CODE, event, request,
+                messageSource);
 
         String eventName = event.getName();
         String localizedDateLabel = getLocalizedDateLabel(request, messageSource);
@@ -58,8 +57,8 @@ public class CalendarEventNotificationEmailService extends AbstractNotificationE
         for (User user : usersToNotify) {
             String addressing = getLocalizedRecipientAddressing(user, request, messageSource);
             String signature = getLocalizedNotificationSignature(user, request, messageSource);
-            Object[] messageParams = new Object[] { addressing, eventName, localizedDateLabel,
-                    localizedEventDate, localizedDescriptionLabel, eventDescription, signature };
+            Object[] messageParams = new Object[] { addressing, eventName, localizedDateLabel, localizedEventDate,
+                    localizedDescriptionLabel, eventDescription, signature };
             String messageText = Localization.findLocaleMessage(messageSource, request,
                     CalendarEventNotificationEmailService.EVENT_CREATED_TEXT_CODE, messageParams);
 
@@ -72,8 +71,8 @@ public class CalendarEventNotificationEmailService extends AbstractNotificationE
             MessageSource messageSource) {
         CalendarEvent event = (CalendarEvent) updatedEvent;
 
-        String subject = getSubject(CalendarEventNotificationEmailService.EVENT_UPDATED_SUBJECT_CODE, event,
-                request, messageSource);
+        String subject = getSubject(CalendarEventNotificationEmailService.EVENT_UPDATED_SUBJECT_CODE, event, request,
+                messageSource);
 
         String eventName = event.getName();
         String localizedEventDate = getLocalizedDate(event, request);
@@ -98,8 +97,8 @@ public class CalendarEventNotificationEmailService extends AbstractNotificationE
      * @param event
      *            Newly posted or updated {@link CalendarEvent}
      */
-    private String getSubject(String subjectLocalizationCode, CalendarEvent event,
-            HttpServletRequest request, MessageSource messageSource) {
+    private String getSubject(String subjectLocalizationCode, CalendarEvent event, HttpServletRequest request,
+            MessageSource messageSource) {
         Object[] messageParams = new Object[] { event.getName(), getLocalizedDate(event, request) };
 
         return Localization.findLocaleMessage(messageSource, request, subjectLocalizationCode, messageParams);

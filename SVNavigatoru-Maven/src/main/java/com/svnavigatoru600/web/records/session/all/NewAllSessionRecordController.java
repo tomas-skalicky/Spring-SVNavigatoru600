@@ -33,8 +33,8 @@ public class NewAllSessionRecordController extends AbstractNewRecordController {
     public NewAllSessionRecordController(SessionRecordService recordService,
             SendNotificationNewModelFiller sendNotificationModelFiller, NewSessionRecordValidator validator,
             MessageSource messageSource) {
-        super(AllSessionsUrlParts.BASE_URL, new PageViews(), recordService, sendNotificationModelFiller,
-                validator, messageSource);
+        super(AllSessionsUrlParts.BASE_URL, new PageViews(), recordService, sendNotificationModelFiller, validator,
+                messageSource);
     }
 
     /**
@@ -47,8 +47,7 @@ public class NewAllSessionRecordController extends AbstractNewRecordController {
 
     @Override
     @RequestMapping(value = AllSessionsUrlParts.NEW_URL, method = RequestMethod.POST)
-    public String processSubmittedForm(
-            @ModelAttribute(AbstractNewRecordController.COMMAND) NewSessionRecord command,
+    public String processSubmittedForm(@ModelAttribute(AbstractNewRecordController.COMMAND) NewSessionRecord command,
             BindingResult result, SessionStatus status, HttpServletRequest request, ModelMap model) {
         return super.processSubmittedForm(command, result, status, request, model);
     }

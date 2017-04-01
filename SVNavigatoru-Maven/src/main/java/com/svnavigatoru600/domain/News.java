@@ -93,8 +93,8 @@ public class News implements Serializable {
 
     @Override
     public String toString() {
-        return new StringBuilder("[id=").append(this.id).append(", title=").append(this.title)
-                .append(", text=").append(this.text).append(", creationTime=").append(this.creationTime)
-                .append(", lastSaveTime=").append(this.lastSaveTime).append("]").toString();
+        return new StringBuilder("[id=").append(this.id).append(", title=").append(this.title).append(", text=")
+                .append(this.text).append(", creationTime=").append(this.creationTime).append(", lastSaveTime=")
+                .append(this.lastSaveTime).append("]").toString();
     }
 }

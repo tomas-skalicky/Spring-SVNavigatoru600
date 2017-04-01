@@ -32,8 +32,8 @@ public class NewAllDocumentController extends AbstractNewDocumentController {
     public NewAllDocumentController(OtherDocumentRecordService recordService,
             SendNotificationNewModelFiller sendNotificationModelFiller, NewRecordValidator validator,
             MessageSource messageSource) {
-        super(AllDocumentsUrlParts.BASE_URL, new PageViews(), recordService, sendNotificationModelFiller,
-                validator, messageSource);
+        super(AllDocumentsUrlParts.BASE_URL, new PageViews(), recordService, sendNotificationModelFiller, validator,
+                messageSource);
     }
 
     @Override
@@ -44,9 +44,8 @@ public class NewAllDocumentController extends AbstractNewDocumentController {
 
     @Override
     @RequestMapping(value = AllDocumentsUrlParts.NEW_URL, method = RequestMethod.POST)
-    public String processSubmittedForm(
-            @ModelAttribute(AbstractNewDocumentController.COMMAND) NewRecord command, BindingResult result,
-            SessionStatus status, HttpServletRequest request, ModelMap model) {
+    public String processSubmittedForm(@ModelAttribute(AbstractNewDocumentController.COMMAND) NewRecord command,
+            BindingResult result, SessionStatus status, HttpServletRequest request, ModelMap model) {
         return super.processSubmittedForm(command, result, status, request, model);
     }
 }

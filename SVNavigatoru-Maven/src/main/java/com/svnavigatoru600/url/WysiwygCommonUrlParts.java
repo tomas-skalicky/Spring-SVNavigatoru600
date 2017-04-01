@@ -1,8 +1,8 @@
 package com.svnavigatoru600.url;
 
 /**
- * Contains snippets of URL which are common for all web pages with
- * {@link com.svnavigatoru600.domain.WysiwygSection WysiwygSections}.
+ * Contains snippets of URL which are common for all web pages with {@link com.svnavigatoru600.domain.WysiwygSection
+ * WysiwygSections}.
  * 
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */

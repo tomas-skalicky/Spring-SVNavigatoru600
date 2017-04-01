@@ -51,8 +51,7 @@ public class NewsNotificationEmailService extends AbstractNotificationEmailServi
     }
 
     /**
-     * Sends emails to the given {@link User Users} with notification of the newly posted or updated
-     * {@link News}.
+     * Sends emails to the given {@link User Users} with notification of the newly posted or updated {@link News}.
      * 
      * @param news
      *            Newly posted or updated {@link News}
@@ -65,8 +64,7 @@ public class NewsNotificationEmailService extends AbstractNotificationEmailServi
         String newsTitle = news.getTitle();
         String textWithConvertedUrls = Url.convertImageRelativeUrlsToAbsolute(news.getText(), request);
         String wholeTextUrl = NewsUrlParts.getNewsUrl(news, request);
-        String croppedText = cropTooLongTextAndAddLink(textWithConvertedUrls, wholeTextUrl, request,
-                messageSource);
+        String croppedText = cropTooLongTextAndAddLink(textWithConvertedUrls, wholeTextUrl, request, messageSource);
 
         for (User user : usersToNotify) {
             String addressing = getLocalizedRecipientAddressing(user, request, messageSource);
@@ -87,7 +85,6 @@ public class NewsNotificationEmailService extends AbstractNotificationEmailServi
      */
     private String getSubject(String subjectLocalizationCode, News news, HttpServletRequest request,
             MessageSource messageSource) {
-        return Localization.findLocaleMessage(messageSource, request, subjectLocalizationCode,
-                news.getTitle());
+        return Localization.findLocaleMessage(messageSource, request, subjectLocalizationCode, news.getTitle());
     }
 }

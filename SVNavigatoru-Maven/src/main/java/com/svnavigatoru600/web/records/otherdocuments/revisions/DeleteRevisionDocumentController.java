@@ -26,14 +26,14 @@ public class DeleteRevisionDocumentController extends AbstractDeleteDocumentCont
      * Constructor.
      */
     @Inject
-    public DeleteRevisionDocumentController(OtherDocumentRecordService recordService,
-            MessageSource messageSource) {
-        super(RevisionsUrlParts.BASE_URL, new PageViews(), OtherDocumentRecordType.REGULAR_REVISION,
-                recordService, messageSource);
+    public DeleteRevisionDocumentController(OtherDocumentRecordService recordService, MessageSource messageSource) {
+        super(RevisionsUrlParts.BASE_URL, new PageViews(), OtherDocumentRecordType.REGULAR_REVISION, recordService,
+                messageSource);
     }
 
     @Override
-    @RequestMapping(value = RevisionsUrlParts.EXISTING_URL + "{recordId}/" + CommonUrlParts.DELETE_EXTENSION, method = RequestMethod.GET)
+    @RequestMapping(value = RevisionsUrlParts.EXISTING_URL + "{recordId}/"
+            + CommonUrlParts.DELETE_EXTENSION, method = RequestMethod.GET)
     public String delete(@PathVariable int recordId, HttpServletRequest request, ModelMap model) {
         return super.delete(recordId, request, model);
     }

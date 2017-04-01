@@ -31,8 +31,8 @@ public abstract class AbstractWysiwygSectionController extends AbstractPrivateSe
      * Constructor.
      */
     @Inject
-    public AbstractWysiwygSectionController(WysiwygSectionService sectionService,
-            WysiwygSectionName sectionName, String viewPageView, String editPageView, String viewPageAddress) {
+    public AbstractWysiwygSectionController(WysiwygSectionService sectionService, WysiwygSectionName sectionName,
+            String viewPageView, String editPageView, String viewPageAddress) {
         LogFactory.getLog(this.getClass()).debug("The WysiwygSectionController object created.");
         this.sectionService = sectionService;
         this.sectionName = sectionName;
@@ -56,8 +56,8 @@ public abstract class AbstractWysiwygSectionController extends AbstractPrivateSe
     }
 
     @Transactional
-    public String saveChanges(@ModelAttribute("wysiwygSectionEditCommand") WysiwygSection command,
-            BindingResult result, SessionStatus status, ModelMap model) {
+    public String saveChanges(@ModelAttribute("wysiwygSectionEditCommand") WysiwygSection command, BindingResult result,
+            SessionStatus status, ModelMap model) {
         // No validation necessary.
 
         command.setName(this.sectionName);
@@ -76,9 +76,8 @@ public abstract class AbstractWysiwygSectionController extends AbstractPrivateSe
     }
 
     @Transactional
-    public String saveChangesAndFinishEditing(
-            @ModelAttribute("wysiwygSectionEditCommand") WysiwygSection command, BindingResult result,
-            SessionStatus status, ModelMap model) {
+    public String saveChangesAndFinishEditing(@ModelAttribute("wysiwygSectionEditCommand") WysiwygSection command,
+            BindingResult result, SessionStatus status, ModelMap model) {
         // No validation necessary.
 
         saveChanges(command, result, status, model);

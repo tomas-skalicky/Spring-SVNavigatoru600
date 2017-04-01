@@ -11,13 +11,11 @@ import com.svnavigatoru600.repository.records.impl.DocumentRecordField;
 import com.svnavigatoru600.repository.records.impl.SessionRecordField;
 
 /**
- * For more information, see {@link com.svnavigatoru600.repository.users.impl.direct.UserRowMapper
- * UserRowMapper}.
+ * For more information, see {@link com.svnavigatoru600.repository.users.impl.direct.UserRowMapper UserRowMapper}.
  * 
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
-public class SessionRecordRowMapper extends AbstractDocumentRecordRowMapper implements
-        RowMapper<SessionRecord> {
+public class SessionRecordRowMapper extends AbstractDocumentRecordRowMapper implements RowMapper<SessionRecord> {
 
     /**
      * Constructor.
@@ -46,8 +44,7 @@ public class SessionRecordRowMapper extends AbstractDocumentRecordRowMapper impl
         }
 
         record.setType(rs.getString(SessionRecordField.type.getColumnName()));
-        record.setSessionDate(new Date(rs.getTimestamp(SessionRecordField.sessionDate.getColumnName())
-                .getTime()));
+        record.setSessionDate(new Date(rs.getTimestamp(SessionRecordField.sessionDate.getColumnName()).getTime()));
         record.setDiscussedTopics(rs.getString(SessionRecordField.discussedTopics.getColumnName()));
         return record;
     }

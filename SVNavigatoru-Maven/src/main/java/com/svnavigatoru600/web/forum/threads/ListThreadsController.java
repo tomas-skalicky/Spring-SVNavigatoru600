@@ -50,8 +50,8 @@ public class ListThreadsController extends AbstractThreadController {
 
         // Sets up all auxiliary (but necessary) maps.
         command.setLastSavedContributions(Thread.getLastSavedContributions(threads));
-        command.setLocalizedDeleteQuestions(ThreadService.getLocalizedDeleteQuestions(threads, request,
-                getMessageSource()));
+        command.setLocalizedDeleteQuestions(
+                ThreadService.getLocalizedDeleteQuestions(threads, request, getMessageSource()));
 
         // Gets more information about authors of the last saved contributions.
         getUserService().loadAuthorsOfLastSavedContributions(command.getLastSavedContributions());

@@ -12,12 +12,9 @@ public final class RemostavDocumentsUrlParts {
 
     public static final String BASE_URL = "/remostav/dokumentace/";
     public static final String NEW_URL = RemostavDocumentsUrlParts.BASE_URL + CommonUrlParts.NEW_EXTENSION;
-    public static final String EXISTING_URL = RemostavDocumentsUrlParts.BASE_URL
-            + CommonUrlParts.EXISTING_EXTENSION;
-    public static final String CREATED_URL = RemostavDocumentsUrlParts.BASE_URL
-            + CommonUrlParts.CREATED_EXTENSION;
-    public static final String DELETED_URL = RemostavDocumentsUrlParts.BASE_URL
-            + CommonUrlParts.DELETED_EXTENSION;
+    public static final String EXISTING_URL = RemostavDocumentsUrlParts.BASE_URL + CommonUrlParts.EXISTING_EXTENSION;
+    public static final String CREATED_URL = RemostavDocumentsUrlParts.BASE_URL + CommonUrlParts.CREATED_EXTENSION;
+    public static final String DELETED_URL = RemostavDocumentsUrlParts.BASE_URL + CommonUrlParts.DELETED_EXTENSION;
 
     private RemostavDocumentsUrlParts() {
     }

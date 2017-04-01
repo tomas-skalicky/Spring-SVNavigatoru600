@@ -24,10 +24,9 @@ public class ListRevisionDocumentsController extends AbstractListDocumentsContro
      * Constructor.
      */
     @Inject
-    public ListRevisionDocumentsController(OtherDocumentRecordService recordService,
-            MessageSource messageSource) {
-        super(RevisionsUrlParts.BASE_URL, new PageViews(), OtherDocumentRecordType.REGULAR_REVISION,
-                recordService, messageSource);
+    public ListRevisionDocumentsController(OtherDocumentRecordService recordService, MessageSource messageSource) {
+        super(RevisionsUrlParts.BASE_URL, new PageViews(), OtherDocumentRecordType.REGULAR_REVISION, recordService,
+                messageSource);
     }
 
     @Override

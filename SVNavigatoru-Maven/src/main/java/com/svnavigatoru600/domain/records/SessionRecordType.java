@@ -26,20 +26,18 @@ public enum SessionRecordType {
     }
 
     /**
-     * This method is based on the method <code>valueOf(String)</code>. The difference is that the first
-     * parameter is not the name of the type, but the result of localization of its
-     * <code>localizationCode</code>.
+     * This method is based on the method <code>valueOf(String)</code>. The difference is that the first parameter is
+     * not the name of the type, but the result of localization of its <code>localizationCode</code>.
      */
-    public static SessionRecordType valueOfAccordingLocalization(String localizedType,
-            MessageSource messageSource, HttpServletRequest request) {
+    public static SessionRecordType valueOfAccordingLocalization(String localizedType, MessageSource messageSource,
+            HttpServletRequest request) {
         if (localizedType == null) {
             // Throws the NullPointerException.
             SessionRecordType.valueOf(localizedType);
         }
 
         for (SessionRecordType type : SessionRecordType.values()) {
-            String localized = Localization.findLocaleMessage(messageSource, request,
-                    type.getLocalizationCode());
+            String localized = Localization.findLocaleMessage(messageSource, request, type.getLocalizationCode());
             if (localized.equals(localizedType)) {
                 return type;
             }

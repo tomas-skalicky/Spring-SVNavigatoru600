@@ -47,8 +47,8 @@ public class DeleteContributionController extends AbstractContributionController
             + ContributionsUrlParts.CONTRIBUTIONS_EXISTING_EXTENSION + "{contributionId}/"
             + CommonUrlParts.DELETE_EXTENSION, method = RequestMethod.GET)
     @Transactional
-    public String delete(@PathVariable int threadId, @PathVariable int contributionId,
-            HttpServletRequest request, ModelMap model) {
+    public String delete(@PathVariable int threadId, @PathVariable int contributionId, HttpServletRequest request,
+            ModelMap model) {
 
         // Checks permission.
         getContributionService().canDelete(contributionId);
@@ -58,8 +58,7 @@ public class DeleteContributionController extends AbstractContributionController
 
             // Returns the form success view.
             model.addAttribute(AbstractMetaController.REDIRECTION_ATTRIBUTE, String.format("%s%d/%s",
-                    ContributionsUrlParts.BASE_URL, threadId,
-                    ContributionsUrlParts.CONTRIBUTIONS_DELETED_EXTENSION));
+                    ContributionsUrlParts.BASE_URL, threadId, ContributionsUrlParts.CONTRIBUTIONS_DELETED_EXTENSION));
             return AbstractMetaController.REDIRECTION_PAGE;
 
         } catch (DataAccessException e) {

@@ -30,16 +30,15 @@ public class WysiwygSectionService {
     }
 
     /**
-     * Returns a {@link WysiwygSection} stored in the repository which has the given
-     * {@link WysiwygSectionName name}.
+     * Returns a {@link WysiwygSection} stored in the repository which has the given {@link WysiwygSectionName name}.
      */
     public WysiwygSection findByName(WysiwygSectionName name) {
         return this.sectionDao.findByName(name);
     }
 
     /**
-     * Updates the given {@link WysiwygSection} in the repository. The old version of this section should be
-     * already stored there.
+     * Updates the given {@link WysiwygSection} in the repository. The old version of this section should be already
+     * stored there.
      */
     public void update(WysiwygSection section) {
         this.sectionDao.update(section);

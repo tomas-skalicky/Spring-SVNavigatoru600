@@ -41,8 +41,7 @@ public abstract class AbstractNewEditNewsResponse extends AbstractNewsResponse {
      */
     public void setFail(BindingResult result, MessageSource messageSource, HttpServletRequest request) {
         this.setFail();
-        this.globalErrors = Localization.localizeGlobalErrors(result.getGlobalErrors(), messageSource,
-                request);
+        this.globalErrors = Localization.localizeGlobalErrors(result.getGlobalErrors(), messageSource, request);
         this.fieldErrors = Localization.localizeFieldErrors(result.getFieldErrors(), messageSource, request);
     }
 

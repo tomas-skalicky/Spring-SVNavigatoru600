@@ -31,17 +31,17 @@ import com.svnavigatoru600.service.util.DateUtils;
 import com.svnavigatoru600.service.util.File;
 
 /**
- * Contains convenient methods used in {@link AbstractRepositoryTest DAO tests}. The methods are basically two
- * types:<br />
+ * Contains convenient methods used in {@link AbstractRepositoryTest DAO tests}. The methods are basically two types:
+ * <br />
  * those which return an implementation of DAO interface and<br />
  * those which return an instance of persisted class.
  * <p>
- * DO NOT CREATE any default instances or any other instances of persisted classes (e.g. Contribution,
- * CalendarEvent) here, in advance. The very first time the classes can be instantiated is in
- * {@link org.junit.Before Before} methods.<br />
- * The reason is a potential danger that a certain test would change an instance created here and other tests
- * in the same test class would use this changed object in a belief that the object has really the original
- * properties, but it has not.
+ * DO NOT CREATE any default instances or any other instances of persisted classes (e.g. Contribution, CalendarEvent)
+ * here, in advance. The very first time the classes can be instantiated is in {@link org.junit.Before Before} methods.
+ * <br />
+ * The reason is a potential danger that a certain test would change an instance created here and other tests in the
+ * same test class would use this changed object in a belief that the object has really the original properties, but it
+ * has not.
  * 
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
@@ -136,8 +136,7 @@ public final class RepositoryTestUtils {
      */
     static final AuthorityType AUTHORITY_DEFAULT_TYPE = AuthorityType.ROLE_REGISTERED_USER;
     /**
-     * Default type of user's second test authority. This type is different from
-     * {@link #AUTHORITY_DEFAULT_TYPE}.
+     * Default type of user's second test authority. This type is different from {@link #AUTHORITY_DEFAULT_TYPE}.
      */
     static final AuthorityType SECOND_AUTHORITY_DEFAULT_TYPE = AuthorityType.ROLE_MEMBER_OF_SV;
     /**
@@ -273,8 +272,8 @@ public final class RepositoryTestUtils {
     /**
      * Creates and saves a test thread.
      * <p>
-     * {@link Contribution#getThread() thread} of the given <code>contributions</code> need not be set. This
-     * method does it itself.
+     * {@link Contribution#getThread() thread} of the given <code>contributions</code> need not be set. This method does
+     * it itself.
      * 
      * @return ID of the newly created thread
      */
@@ -299,9 +298,8 @@ public final class RepositoryTestUtils {
     public UserBuilder createDefaultUserBuilder() {
         return UserBuilder.anUser().withUsername(USER_DEFAULT_USERNAME).withPassword(USER_DEFAULT_PASSWORD)
                 .enabled(USER_DEFAULT_ENABLED).withFirstName(USER_DEFAULT_FIRST_NAME)
-                .withLastName(USER_DEFAULT_LAST_NAME).withEmail(USER_DEFAULT_EMAIL)
-                .withPhone(USER_DEFAULT_PHONE).forTestPurposes(USER_DEFAULT_IS_TEST_USER)
-                .withAuthorities(USER_DEFAULT_AUTHORITIES);
+                .withLastName(USER_DEFAULT_LAST_NAME).withEmail(USER_DEFAULT_EMAIL).withPhone(USER_DEFAULT_PHONE)
+                .forTestPurposes(USER_DEFAULT_IS_TEST_USER).withAuthorities(USER_DEFAULT_AUTHORITIES);
     }
 
     /**

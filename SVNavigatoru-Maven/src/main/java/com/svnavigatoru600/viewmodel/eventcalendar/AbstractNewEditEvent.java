@@ -18,8 +18,8 @@ public abstract class AbstractNewEditEvent implements SendNotificationViewModel 
     private Map<Integer, String> priorityCheckboxId = null;
     private Map<Integer, String> localizedPriorityCheckboxTitles = null;
     /**
-     * Holds a value of the <code>newPriority</code> radiobutton. The value equals a localization of the
-     * selected {@link com.svnavigatoru600.domain.eventcalendar.PriorityType PriorityType}. See the
+     * Holds a value of the <code>newPriority</code> radiobutton. The value equals a localization of the selected
+     * {@link com.svnavigatoru600.domain.eventcalendar.PriorityType PriorityType}. See the
      * <code>NewEditEventController.populatePriorityTypeList</code> method.
      */
     private String newPriority;
@@ -71,8 +71,7 @@ public abstract class AbstractNewEditEvent implements SendNotificationViewModel 
     public String toString() {
         return new StringBuilder("[event=").append(this.event).append(", priorityCheckboxId=")
                 .append(this.priorityCheckboxId).append(", localizedPriorityCheckboxTitles=")
-                .append(this.localizedPriorityCheckboxTitles).append(", newPriority=")
-                .append(this.newPriority).append(", sendNotification=").append(this.sendNotification)
-                .append("]").toString();
+                .append(this.localizedPriorityCheckboxTitles).append(", newPriority=").append(this.newPriority)
+                .append(", sendNotification=").append(this.sendNotification).append("]").toString();
     }
 }

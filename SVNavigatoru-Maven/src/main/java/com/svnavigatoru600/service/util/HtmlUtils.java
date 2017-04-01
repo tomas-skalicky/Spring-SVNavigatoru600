@@ -5,6 +5,10 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.StringReader;
 
+import org.apache.commons.lang3.StringEscapeUtils;
+
+import com.svnavigatoru600.service.Configuration;
+
 import nu.xom.Attribute;
 import nu.xom.Builder;
 import nu.xom.Document;
@@ -14,10 +18,6 @@ import nu.xom.ParsingException;
 import nu.xom.Serializer;
 import nu.xom.Text;
 import nu.xom.ValidityException;
-
-import org.apache.commons.lang3.StringEscapeUtils;
-
-import com.svnavigatoru600.service.Configuration;
 
 /**
  * Provides a set of convenient functions related to HTML.
@@ -30,19 +30,17 @@ public final class HtmlUtils {
     }
 
     /**
-     * Crops the given <code>escapedHtml</code> text in a way that its length is not beyond the given upper
-     * bound <code>maxLength</code>.
+     * Crops the given <code>escapedHtml</code> text in a way that its length is not beyond the given upper bound
+     * <code>maxLength</code>.
      * <p>
      * If the text is
      * <ul>
-     * <li>a <i>plain text</i>, the function just does a simple crop (see {@link String#substring(int)
-     * substring}).</li>
-     * <li><i>not a well-formed</i> HTML text, the function unescapes the text, crops it (the same as by the
-     * plain text option) and escapes the whole result again.</li>
-     * <li>a <i>well-formed</i> HTML text, the function unescapes the text and crops it carefully so that the
-     * cropping does not break text's well-formed-ness (all tags correctly closed). In terms of the length
-     * limit, only contents of {@link Text} nodes are counted to the result's length. Finally, the function
-     * escapes all CDATA.</li>
+     * <li>a <i>plain text</i>, the function just does a simple crop (see {@link String#substring(int) substring}).</li>
+     * <li><i>not a well-formed</i> HTML text, the function unescapes the text, crops it (the same as by the plain text
+     * option) and escapes the whole result again.</li>
+     * <li>a <i>well-formed</i> HTML text, the function unescapes the text and crops it carefully so that the cropping
+     * does not break text's well-formed-ness (all tags correctly closed). In terms of the length limit, only contents
+     * of {@link Text} nodes are counted to the result's length. Finally, the function escapes all CDATA.</li>
      * </ul>
      * 
      * @param escapedHtml
@@ -64,11 +62,11 @@ public final class HtmlUtils {
     }
 
     /**
-     * Encapsulates the given <code>html</code> text with a block element <code>div</code> to secure that the
-     * text has exactly one root XML element.
+     * Encapsulates the given <code>html</code> text with a block element <code>div</code> to secure that the text has
+     * exactly one root XML element.
      * <p>
-     * NOTE: If this method was not been invoked before the {@link Builder#build(java.io.Reader) build}, the
-     * XOM would throw a {@link ParsingException}.
+     * NOTE: If this method was not been invoked before the {@link Builder#build(java.io.Reader) build}, the XOM would
+     * throw a {@link ParsingException}.
      */
     private static String wrapWithRootElement(String html) {
         return "<div>" + html + "</div>";
@@ -77,8 +75,8 @@ public final class HtmlUtils {
     /**
      * Gets the root element of the given <code>html</code> text.
      * <p>
-     * NOTE: It is checked whether the HTML text is well-formed XML. If it is not, {@link ParsingException} is
-     * thrown. Validity of the HTML text in terms of DOCTYPE and XML Schema is not checked.
+     * NOTE: It is checked whether the HTML text is well-formed XML. If it is not, {@link ParsingException} is thrown.
+     * Validity of the HTML text in terms of DOCTYPE and XML Schema is not checked.
      */
     private static Element getRoot(String html) throws ParsingException, ValidityException, IOException {
         // Builder(false) checks whether the text is well-formed XML document.
@@ -89,8 +87,8 @@ public final class HtmlUtils {
     }
 
     /**
-     * Indicates whether the given {@link Element} contains just a plain text. In other words, whether the
-     * element is a leaf of the XML DOM.
+     * Indicates whether the given {@link Element} contains just a plain text. In other words, whether the element is a
+     * leaf of the XML DOM.
      * 
      * @return <code>true</code> if the element contains just a plain text; otherwise <code>false</code>.
      */
@@ -107,8 +105,8 @@ public final class HtmlUtils {
     }
 
     /**
-     * Crops the given <code>unescapedHtml</code> text in a way that its length is not beyond the given upper
-     * bound <code>maxLength</code>. Then, <i>escapes</i> the cropped HTML text.
+     * Crops the given <code>unescapedHtml</code> text in a way that its length is not beyond the given upper bound
+     * <code>maxLength</code>. Then, <i>escapes</i> the cropped HTML text.
      * 
      * @param unescapedHtml
      *            <i>Unescaped</i> HTML text
@@ -119,8 +117,8 @@ public final class HtmlUtils {
     }
 
     /**
-     * Crops an unescaped HTML text represented by an XML tree where the given {@link Element} is root. The
-     * crop does not break well-formed-ness of the HTML text.
+     * Crops an unescaped HTML text represented by an XML tree where the given {@link Element} is root. The crop does
+     * not break well-formed-ness of the HTML text.
      * 
      * @param root
      *            Root of the whole DOM
@@ -137,16 +135,14 @@ public final class HtmlUtils {
         // The serializer adds automatically the XML header and "amp;" behind all "&", hence let's undo these
         // changes.
         return byteArrayOut.toString(Configuration.DEFAULT_ENCODING)
-                .replaceFirst("<[?]xml version=\"1.0\" encoding=\"UTF-8\"[?]>\r\n", "")
-                .replaceAll("amp;", "");
+                .replaceFirst("<[?]xml version=\"1.0\" encoding=\"UTF-8\"[?]>\r\n", "").replaceAll("amp;", "");
     }
 
     /**
      * Performs the crop operation and stores changes back to the {@link Node} and its XML sub-tree.
      * <p>
-     * Crops texts visible to the user and unescapes them. Unescapes localized attribute values (but does not
-     * crop them). Does nothing with elements. If reaches the limit, detaches those nodes which have not been
-     * processed yet.
+     * Crops texts visible to the user and unescapes them. Unescapes localized attribute values (but does not crop
+     * them). Does nothing with elements. If reaches the limit, detaches those nodes which have not been processed yet.
      * 
      * @param node
      *            DOM node which is to be processed now.
@@ -162,8 +158,8 @@ public final class HtmlUtils {
     }
 
     /**
-     * Crops an unescaped text of the given {@link Text} node and escapes the cropped text. Replaces the old
-     * value with the result.
+     * Crops an unescaped text of the given {@link Text} node and escapes the cropped text. Replaces the old value with
+     * the result.
      * 
      * @param currentLength
      *            Length of the whole already-composed text visible to the user.
@@ -190,8 +186,7 @@ public final class HtmlUtils {
     }
 
     /**
-     * Escapes the value of the given {@link Attribute} if the attribute is of such a type which holds
-     * localized texts.
+     * Escapes the value of the given {@link Attribute} if the attribute is of such a type which holds localized texts.
      */
     private static void processAttributeNode(Attribute attributeNode) {
         String attributeName = attributeNode.getLocalName();
@@ -201,9 +196,9 @@ public final class HtmlUtils {
     }
 
     /**
-     * Propagates the processing of the crop operation down to the children of the given {@link Node}. If the
-     * limit <code>maxLength</code> is met during the processing of a certain node, all its right siblings
-     * (those which have not been processed) are detached from the DOM.
+     * Propagates the processing of the crop operation down to the children of the given {@link Node}. If the limit
+     * <code>maxLength</code> is met during the processing of a certain node, all its right siblings (those which have
+     * not been processed) are detached from the DOM.
      * 
      * @param currentLength
      *            Length of the whole already-composed text visible to the user.

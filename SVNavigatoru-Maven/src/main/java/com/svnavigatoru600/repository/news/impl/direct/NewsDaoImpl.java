@@ -42,8 +42,7 @@ public class NewsDaoImpl extends NamedParameterJdbcDaoSupport implements NewsDao
     @Override
     public News findById(int newsId) {
         String idColumn = NewsField.id.getColumnName();
-        String query = String.format("SELECT * FROM %s n WHERE n.%s = :%s", NewsDaoImpl.TABLE_NAME, idColumn,
-                idColumn);
+        String query = String.format("SELECT * FROM %s n WHERE n.%s = :%s", NewsDaoImpl.TABLE_NAME, idColumn, idColumn);
 
         Map<String, Integer> args = Collections.singletonMap(idColumn, newsId);
 
@@ -52,8 +51,8 @@ public class NewsDaoImpl extends NamedParameterJdbcDaoSupport implements NewsDao
 
     @Override
     public List<News> findAllOrdered(FindAllOrderedArguments arguments) {
-        String query = String.format("SELECT * FROM %s n ORDER BY %s %s", NewsDaoImpl.TABLE_NAME, arguments
-                .getSortField().getColumnName(), arguments.getSortDirection().getDatabaseCode());
+        String query = String.format("SELECT * FROM %s n ORDER BY %s %s", NewsDaoImpl.TABLE_NAME,
+                arguments.getSortField().getColumnName(), arguments.getSortDirection().getDatabaseCode());
 
         return getJdbcTemplate().query(query, new NewsRowMapper());
     }
@@ -88,11 +87,10 @@ public class NewsDaoImpl extends NamedParameterJdbcDaoSupport implements NewsDao
 
     @Override
     public int save(News news) {
-        SimpleJdbcInsert insert = new SimpleJdbcInsert(getDataSource())
-                .withTableName(NewsDaoImpl.TABLE_NAME)
-                .usingGeneratedKeyColumns(NewsField.id.getColumnName())
-                .usingColumns(NewsField.title.getColumnName(), NewsField.text.getColumnName(),
-                        NewsField.creationTime.getColumnName(), NewsField.lastSaveTime.getColumnName());
+        SimpleJdbcInsert insert = new SimpleJdbcInsert(getDataSource()).withTableName(NewsDaoImpl.TABLE_NAME)
+                .usingGeneratedKeyColumns(NewsField.id.getColumnName()).usingColumns(NewsField.title.getColumnName(),
+                        NewsField.text.getColumnName(), NewsField.creationTime.getColumnName(),
+                        NewsField.lastSaveTime.getColumnName());
 
         Date now = new Date();
         news.setCreationTime(now);
@@ -105,8 +103,7 @@ public class NewsDaoImpl extends NamedParameterJdbcDaoSupport implements NewsDao
     @Override
     public void delete(News news) {
         String idColumn = NewsField.id.getColumnName();
-        String query = String.format("DELETE FROM %s WHERE %s = :%s", NewsDaoImpl.TABLE_NAME, idColumn,
-                idColumn);
+        String query = String.format("DELETE FROM %s WHERE %s = :%s", NewsDaoImpl.TABLE_NAME, idColumn, idColumn);
 
         Map<String, Integer> args = Collections.singletonMap(idColumn, news.getId());
 

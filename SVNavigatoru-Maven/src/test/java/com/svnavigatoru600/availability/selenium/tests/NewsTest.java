@@ -76,11 +76,11 @@ public final class NewsTest extends AbstractTailoredSeleniumTest {
         browserDriver.findElement(By.xpath(XPATH_NEW_NEWS_LINK)).click();
         Assert.isTrue((new WebDriverWait(browserDriver, DEFAULT_TIMEOUT_IN_SECONDS,
                 DEFAULT_SLEEP_BETWEEN_POLLS_IN_MILLISECONDS)).until(new ExpectedCondition<Boolean>() {
-            @Override
-            public Boolean apply(WebDriver driver) {
-                return "Přidat novinku".equals(NewsTest.this.getAttributeValue(NEW_NEWS_SUBMIT_ID));
-            }
-        }));
+                    @Override
+                    public Boolean apply(WebDriver driver) {
+                        return "Přidat novinku".equals(NewsTest.this.getAttributeValue(NEW_NEWS_SUBMIT_ID));
+                    }
+                }));
 
         final String newTitle = "New News";
         browserDriver.findElement(By.id(NEW_NEWS_TITLE_ID)).sendKeys(newTitle);
@@ -95,17 +95,17 @@ public final class NewsTest extends AbstractTailoredSeleniumTest {
         browserDriver.findElement(By.cssSelector(SUBMIT_SELECTOR)).click();
         Assert.isTrue((new WebDriverWait(browserDriver, DEFAULT_TIMEOUT_IN_SECONDS,
                 DEFAULT_SLEEP_BETWEEN_POLLS_IN_MILLISECONDS)).until(new ExpectedCondition<Boolean>() {
-            @Override
-            public Boolean apply(WebDriver driver) {
-                return newTitle.equals(NewsTest.this.getElementText(XPATH_FIRST_NEWS_TITLE))
-                        && newText.equals(NewsTest.this.getElementText(XPATH_FIRST_NEWS_TEXT));
-            }
-        }));
+                    @Override
+                    public Boolean apply(WebDriver driver) {
+                        return newTitle.equals(NewsTest.this.getElementText(XPATH_FIRST_NEWS_TITLE))
+                                && newText.equals(NewsTest.this.getElementText(XPATH_FIRST_NEWS_TEXT));
+                    }
+                }));
     }
 
     /**
-     * Makes a slight modification of the last inserted news record, i.e. the news which has been created by
-     * the {@link #createNewNews() createNewNews} method.
+     * Makes a slight modification of the last inserted news record, i.e. the news which has been created by the
+     * {@link #createNewNews() createNewNews} method.
      */
     private void editNewNews() {
         WebDriver browserDriver = getBrowserDriver();
@@ -113,11 +113,11 @@ public final class NewsTest extends AbstractTailoredSeleniumTest {
         browserDriver.findElement(By.xpath(XPATH_FIRST_NEWS_EDIT)).click();
         Assert.isTrue((new WebDriverWait(browserDriver, DEFAULT_TIMEOUT_IN_SECONDS,
                 DEFAULT_SLEEP_BETWEEN_POLLS_IN_MILLISECONDS)).until(new ExpectedCondition<Boolean>() {
-            @Override
-            public Boolean apply(WebDriver driver) {
-                return "Uložit změny".equals(NewsTest.this.getAttributeValue(EDIT_NEWS_SUBMIT_ID));
-            }
-        }));
+                    @Override
+                    public Boolean apply(WebDriver driver) {
+                        return "Uložit změny".equals(NewsTest.this.getAttributeValue(EDIT_NEWS_SUBMIT_ID));
+                    }
+                }));
 
         String newTitle = "Edited News";
         browserDriver.findElement(By.id(EDIT_NEWS_TITLE_ID)).sendKeys(newTitle);
@@ -132,19 +132,19 @@ public final class NewsTest extends AbstractTailoredSeleniumTest {
         browserDriver.findElement(By.cssSelector(SUBMIT_SELECTOR)).click();
         Assert.isTrue((new WebDriverWait(browserDriver, DEFAULT_TIMEOUT_IN_SECONDS,
                 DEFAULT_SLEEP_BETWEEN_POLLS_IN_MILLISECONDS)).until(new ExpectedCondition<Boolean>() {
-            @Override
-            public Boolean apply(WebDriver driver) {
-                return driver.findElement(By.id(SUCCESS_EDIT_MESSAGE_ID)).isDisplayed();
-            }
-        }));
+                    @Override
+                    public Boolean apply(WebDriver driver) {
+                        return driver.findElement(By.id(SUCCESS_EDIT_MESSAGE_ID)).isDisplayed();
+                    }
+                }));
 
         browserDriver.findElement(By.xpath(XPATH_NEWS_SECTION)).click();
         waitForPageUrl(browserDriver, HOMEPAGE_URL_REG_EXP);
     }
 
     /**
-     * Deletes the last inserted news record, i.e. the news which has been created by the
-     * {@link #createNewNews() createNewNews} method.
+     * Deletes the last inserted news record, i.e. the news which has been created by the {@link #createNewNews()
+     * createNewNews} method.
      */
     private void deleteNewNews() {
         WebDriver browserDriver = getBrowserDriver();

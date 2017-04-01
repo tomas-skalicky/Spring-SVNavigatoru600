@@ -20,8 +20,7 @@ public interface CalendarEventDao {
      * Returns all {@link CalendarEvent CalendarEvents} stored in the repository arranged according to their
      * {@link CalendarEvent#getDate() date} in the given {@link OrderType sortDirection}.
      * <p>
-     * Moreover, only {@link CalendarEvent CalendarEvents} which will take place are returned, the passed ones
-     * are not.
+     * Moreover, only {@link CalendarEvent CalendarEvents} which will take place are returned, the passed ones are not.
      * 
      * @param earliestDate
      *            Represents the time "now"
@@ -29,8 +28,8 @@ public interface CalendarEventDao {
     List<CalendarEvent> findAllFutureEventsOrdered(Date earliestDate, OrderType sortDirection);
 
     /**
-     * Updates the given {@link CalendarEvent} in the repository. The old version of this event should be
-     * already stored there.
+     * Updates the given {@link CalendarEvent} in the repository. The old version of this event should be already stored
+     * there.
      */
     void update(CalendarEvent event);
 

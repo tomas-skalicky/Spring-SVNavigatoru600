@@ -45,11 +45,9 @@ public class SessionRecord extends AbstractDocumentRecord {
     }
 
     /**
-     * Initialises record's filename, file, type, session date and discussed topics. Other properties are not
-     * touched.
+     * Initialises record's filename, file, type, session date and discussed topics. Other properties are not touched.
      */
-    public SessionRecord(String fileName, Blob file, SessionRecordType type, Date sessionDate,
-            String discussedTopics) {
+    public SessionRecord(String fileName, Blob file, SessionRecordType type, Date sessionDate, String discussedTopics) {
         super(fileName, file);
         this.type = type;
         this.sessionDate = sessionDate;
@@ -57,8 +55,8 @@ public class SessionRecord extends AbstractDocumentRecord {
     }
 
     /**
-     * Different - not "getType" - name of the getter method is necessary. Otherwise, the methods' signatures
-     * would be identical.
+     * Different - not "getType" - name of the getter method is necessary. Otherwise, the methods' signatures would be
+     * identical.
      */
     public SessionRecordType getTypedType() {
         return this.type;
@@ -100,8 +98,8 @@ public class SessionRecord extends AbstractDocumentRecord {
 
     @Override
     public String toString() {
-        return new StringBuilder(super.toString()).append(" [type=").append(this.type)
-                .append(", sessionDate=").append(this.sessionDate).append(", discussedTopics=")
-                .append(this.discussedTopics).append("]").toString();
+        return new StringBuilder(super.toString()).append(" [type=").append(this.type).append(", sessionDate=")
+                .append(this.sessionDate).append(", discussedTopics=").append(this.discussedTopics).append("]")
+                .toString();
     }
 }

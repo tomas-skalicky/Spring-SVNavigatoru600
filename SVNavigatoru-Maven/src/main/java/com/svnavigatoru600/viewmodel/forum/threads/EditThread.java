@@ -20,7 +20,6 @@ public class EditThread extends AbstractNewEditThread {
 
     @Override
     public String toString() {
-        return new StringBuilder(super.toString()).append(" [dataSaved=").append(this.dataSaved).append("]")
-                .toString();
+        return new StringBuilder(super.toString()).append(" [dataSaved=").append(this.dataSaved).append("]").toString();
     }
 }

@@ -44,8 +44,8 @@ public class ListEventsController extends AbstractEventController {
         command.setEvents(events);
 
         // Sets up all auxiliary (but necessary) maps.
-        command.setLocalizedDeleteQuestions(CalendarEventService.getLocalizedDeleteQuestions(events, request,
-                getMessageSource()));
+        command.setLocalizedDeleteQuestions(
+                CalendarEventService.getLocalizedDeleteQuestions(events, request, getMessageSource()));
 
         model.addAttribute(ListEventsController.COMMAND, command);
         return PageViews.LIST.getViewName();

@@ -18,8 +18,7 @@ public class UrlTest {
         String secondRelativeUrl = "/tinymce/jscripts/tiny_mce/plugins/emotions/img/smiley-smile.gif";
 
         final String textPatter = "A src=\"%s\" B src=%s\" C src=\"%s\" D ";
-        String originalText = String.format(textPatter, firstRelativeUrl, secondRelativeUrl,
-                secondRelativeUrl);
+        String originalText = String.format(textPatter, firstRelativeUrl, secondRelativeUrl, secondRelativeUrl);
         String webPageDomain = "www.domain123.cz";
 
         String expectedText = String.format(textPatter, webPageDomain + firstRelativeUrl, secondRelativeUrl,

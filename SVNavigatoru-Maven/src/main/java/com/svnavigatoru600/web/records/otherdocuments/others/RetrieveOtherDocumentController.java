@@ -26,10 +26,8 @@ public class RetrieveOtherDocumentController extends AbstractRetrieveDocumentCon
      * Constructor.
      */
     @Inject
-    public RetrieveOtherDocumentController(OtherDocumentRecordService recordService,
-            MessageSource messageSource) {
-        super(OthersUrlParts.BASE_URL, new PageViews(), OtherDocumentRecordType.OTHER, recordService,
-                messageSource);
+    public RetrieveOtherDocumentController(OtherDocumentRecordService recordService, MessageSource messageSource) {
+        super(OthersUrlParts.BASE_URL, new PageViews(), OtherDocumentRecordType.OTHER, recordService, messageSource);
     }
 
     @Override

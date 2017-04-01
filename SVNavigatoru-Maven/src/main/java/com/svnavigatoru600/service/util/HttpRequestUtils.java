@@ -38,11 +38,11 @@ public final class HttpRequestUtils {
      * <p>
      * Example:
      * <ul>
-     * <li>The app is running in the production environment <code>www.svnavigatoru600.com</code> in the
-     * default (root) context =&gt; its context home is <code><b>www.svnavigatoru600:80</b></code></li>
+     * <li>The app is running in the production environment <code>www.svnavigatoru600.com</code> in the default (root)
+     * context =&gt; its context home is <code><b>www.svnavigatoru600:80</b></code></li>
      * <li>The app is running in the development environment <code>localhost:9980</code> in the
-     * <code>svnavigatoru600</code> context =&gt; its context home is
-     * <code><b>localhost:9980/svnavigatoru600</b></code></li>
+     * <code>svnavigatoru600</code> context =&gt; its context home is <code><b>localhost:9980/svnavigatoru600</b></code>
+     * </li>
      * </ul>
      * <p>
      * NOTE: The returned context home does never end up with "/".

@@ -7,8 +7,8 @@ import com.svnavigatoru600.service.util.HttpRequestUtils;
 import com.svnavigatoru600.url.CommonUrlParts;
 
 /**
- * Contains snippets of URL which concern just web pages with only
- * {@link com.svnavigatoru600.domain.forum.Contribution Contributions}.
+ * Contains snippets of URL which concern just web pages with only {@link com.svnavigatoru600.domain.forum.Contribution
+ * Contributions}.
  * 
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
@@ -41,8 +41,8 @@ public final class ContributionsUrlParts {
      * Composes a relative URL which holds details about the newly added {@link Contribution}.
      */
     public static String getRelativeContributionUrlAfterCreation(Contribution newContribution) {
-        return String.format("%s%d/%s#contribution_%d", ContributionsUrlParts.BASE_URL, newContribution
-                .getThread().getId(), ContributionsUrlParts.CONTRIBUTIONS_CREATED_EXTENSION, newContribution
-                .getId());
+        return String.format("%s%d/%s#contribution_%d", ContributionsUrlParts.BASE_URL,
+                newContribution.getThread().getId(), ContributionsUrlParts.CONTRIBUTIONS_CREATED_EXTENSION,
+                newContribution.getId());
     }
 }

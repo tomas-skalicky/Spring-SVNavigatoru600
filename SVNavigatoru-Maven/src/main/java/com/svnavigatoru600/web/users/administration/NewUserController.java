@@ -68,8 +68,8 @@ public class NewUserController extends AbstractNewEditUserController {
 
         // Sets up all (but necessary) maps.
         command.setRoleCheckboxId(AuthorityService.getRoleCheckboxId());
-        command.setLocalizedRoleCheckboxTitles(this.authorityService.getLocalizedRoleTitles(request,
-                getMessageSource()));
+        command.setLocalizedRoleCheckboxTitles(
+                this.authorityService.getLocalizedRoleTitles(request, getMessageSource()));
 
         model.addAttribute(AbstractNewEditUserController.COMMAND, command);
         return PageViews.NEW.getViewName();
@@ -82,15 +82,13 @@ public class NewUserController extends AbstractNewEditUserController {
      */
     @RequestMapping(value = UserAdministrationUrlParts.NEW_URL, method = RequestMethod.POST)
     @Transactional
-    public String processSubmittedForm(
-            @ModelAttribute(NewUserController.COMMAND) AdministrateUserData command, BindingResult result,
-            SessionStatus status, HttpServletRequest request, ModelMap model) {
+    public String processSubmittedForm(@ModelAttribute(NewUserController.COMMAND) AdministrateUserData command,
+            BindingResult result, SessionStatus status, HttpServletRequest request, ModelMap model) {
 
         // Sets up all (but necessary) maps.
         command.setRoleCheckboxId(AuthorityService.getRoleCheckboxId());
         MessageSource messageSource = getMessageSource();
-        command.setLocalizedRoleCheckboxTitles(this.authorityService.getLocalizedRoleTitles(request,
-                messageSource));
+        command.setLocalizedRoleCheckboxTitles(this.authorityService.getLocalizedRoleTitles(request, messageSource));
 
         this.validator.validate(command, result);
         if (result.hasErrors()) {
@@ -99,15 +97,14 @@ public class NewUserController extends AbstractNewEditUserController {
 
         User newUser = command.getUser();
         try {
-            getUserService().saveAndNotifyUser(newUser, command.getNewPassword(),
-                    command.getNewAuthorities(), request, messageSource);
+            getUserService().saveAndNotifyUser(newUser, command.getNewPassword(), command.getNewAuthorities(), request,
+                    messageSource);
 
             // Clears the command object from the session.
             status.setComplete();
 
             // Returns the form success view.
-            model.addAttribute(AbstractMetaController.REDIRECTION_ATTRIBUTE,
-                    UserAdministrationUrlParts.CREATED_URL);
+            model.addAttribute(AbstractMetaController.REDIRECTION_ATTRIBUTE, UserAdministrationUrlParts.CREATED_URL);
             return AbstractMetaController.REDIRECTION_PAGE;
 
         } catch (DataAccessException e) {

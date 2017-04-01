@@ -58,8 +58,8 @@ public class NewEventController extends AbstractNewEditEventController {
         command.setEvent(calendarEvent);
 
         MessageSource messageSource = getMessageSource();
-        command.setNewPriority(Localization.findLocaleMessage(messageSource, request,
-                PriorityType.NORMAL.getLocalizationCode()));
+        command.setNewPriority(
+                Localization.findLocaleMessage(messageSource, request, PriorityType.NORMAL.getLocalizationCode()));
 
         getSendNotificationModelFiller().populateSendNotificationInInitForm(command, request, messageSource);
 
@@ -68,8 +68,8 @@ public class NewEventController extends AbstractNewEditEventController {
     }
 
     /**
-     * If values in the form are OK, the new calendar event is stored to the repository. Otherwise, returns
-     * back to the form.
+     * If values in the form are OK, the new calendar event is stored to the repository. Otherwise, returns back to the
+     * form.
      * 
      * @return The name of the view which is to be shown.
      */
@@ -79,8 +79,7 @@ public class NewEventController extends AbstractNewEditEventController {
             BindingResult result, SessionStatus status, HttpServletRequest request, ModelMap model) {
 
         MessageSource messageSource = getMessageSource();
-        getSendNotificationModelFiller()
-                .populateSendNotificationInSubmitForm(command, request, messageSource);
+        getSendNotificationModelFiller().populateSendNotificationInSubmitForm(command, request, messageSource);
 
         getValidator().validate(command, result);
         if (result.hasErrors()) {
@@ -89,8 +88,8 @@ public class NewEventController extends AbstractNewEditEventController {
 
         // Updates the data of the new calendar event.
         CalendarEvent newEvent = command.getEvent();
-        newEvent.setPriority(PriorityType.valueOfAccordingLocalization(command.getNewPriority(),
-                messageSource, request));
+        newEvent.setPriority(
+                PriorityType.valueOfAccordingLocalization(command.getNewPriority(), messageSource, request));
 
         try {
             // Saves the event to the repository.

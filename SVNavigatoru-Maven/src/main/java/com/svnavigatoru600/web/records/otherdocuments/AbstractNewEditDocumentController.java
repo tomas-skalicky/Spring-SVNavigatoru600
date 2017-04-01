@@ -12,8 +12,8 @@ import com.svnavigatoru600.web.SendNotificationModelFiller;
 import com.svnavigatoru600.web.records.AbstractPageViews;
 
 /**
- * Parent of all controllers which create and edit the
- * {@link com.svnavigatoru600.domain.records.OtherDocumentRecord OtherDocumentRecords}.
+ * Parent of all controllers which create and edit the {@link com.svnavigatoru600.domain.records.OtherDocumentRecord
+ * OtherDocumentRecords}.
  * 
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
@@ -22,8 +22,8 @@ import com.svnavigatoru600.web.records.AbstractPageViews;
 public abstract class AbstractNewEditDocumentController extends AbstractOtherDocumentRecordController {
 
     /**
-     * Code of the error message used when the {@link IllegalStateException} or {@link java.io.IOException
-     * IOException} is thrown.
+     * Code of the error message used when the {@link IllegalStateException} or {@link java.io.IOException IOException}
+     * is thrown.
      */
     public static final String UPLOAD_FILE_ERROR_MESSAGE_CODE = "file.error-during-saving-file";
     /**
@@ -34,13 +34,11 @@ public abstract class AbstractNewEditDocumentController extends AbstractOtherDoc
     private final SendNotificationModelFiller sendNotificationModelFiller;
 
     /**
-     * Constructs a controller which considers all
-     * {@link com.svnavigatoru600.domain.records.OtherDocumentRecord OtherDocumentRecords} of all
-     * {@link OtherDocumentRecordType OtherDocumentRecordTypes}.
+     * Constructs a controller which considers all {@link com.svnavigatoru600.domain.records.OtherDocumentRecord
+     * OtherDocumentRecords} of all {@link OtherDocumentRecordType OtherDocumentRecordTypes}.
      */
     public AbstractNewEditDocumentController(String baseUrl, AbstractPageViews views,
-            OtherDocumentRecordService recordService,
-            SendNotificationModelFiller sendNotificationModelFiller,
+            OtherDocumentRecordService recordService, SendNotificationModelFiller sendNotificationModelFiller,
             AbstractOtherDocumentRecordValidator validator, MessageSource messageSource) {
         super(baseUrl, views, recordService, messageSource);
         this.validator = validator;
@@ -48,14 +46,13 @@ public abstract class AbstractNewEditDocumentController extends AbstractOtherDoc
     }
 
     /**
-     * Constructs a controller which considers all
-     * {@link com.svnavigatoru600.domain.records.OtherDocumentRecord OtherDocumentRecords} of the given
-     * <code>recordType</code>.
+     * Constructs a controller which considers all {@link com.svnavigatoru600.domain.records.OtherDocumentRecord
+     * OtherDocumentRecords} of the given <code>recordType</code>.
      */
     public AbstractNewEditDocumentController(String baseUrl, AbstractPageViews views,
             OtherDocumentRecordType recordType, OtherDocumentRecordService recordService,
-            SendNotificationModelFiller sendNotificationModelFiller,
-            AbstractOtherDocumentRecordValidator validator, MessageSource messageSource) {
+            SendNotificationModelFiller sendNotificationModelFiller, AbstractOtherDocumentRecordValidator validator,
+            MessageSource messageSource) {
         super(baseUrl, views, recordType, recordService, messageSource);
         this.validator = validator;
         this.sendNotificationModelFiller = sendNotificationModelFiller;

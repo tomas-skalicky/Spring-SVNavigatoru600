@@ -37,8 +37,8 @@ public enum AuthorityField {
     }
 
     /**
-     * Names of the columns of the database table which contains
-     * {@link com.svnavigatoru600.domain.users.Authority authorities}.
+     * Names of the columns of the database table which contains {@link com.svnavigatoru600.domain.users.Authority
+     * authorities}.
      */
     private enum AuthorityColumn {
 

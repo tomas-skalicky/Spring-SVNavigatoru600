@@ -77,9 +77,8 @@ public abstract class AbstractNewEditRecord implements SendNotificationViewModel
     @Override
     public String toString() {
         return new StringBuilder("[record=").append(this.record).append(", newTypes=")
-                .append(Arrays.toString(this.newTypes)).append(", typeCheckboxId=")
-                .append(this.typeCheckboxId).append(", localizedTypeCheckboxTitles=")
-                .append(this.localizedTypeCheckboxTitles).append(", sendNotification=")
-                .append(this.sendNotification).append("]").toString();
+                .append(Arrays.toString(this.newTypes)).append(", typeCheckboxId=").append(this.typeCheckboxId)
+                .append(", localizedTypeCheckboxTitles=").append(this.localizedTypeCheckboxTitles)
+                .append(", sendNotification=").append(this.sendNotification).append("]").toString();
     }
 }

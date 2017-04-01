@@ -68,9 +68,8 @@ public abstract class AbstractGoToFormResponse extends AbstractNewsResponse {
 
     @Override
     public String toString() {
-        return new StringBuilder("[news=").append(this.news).append(", sendNotification=")
-                .append(this.sendNotification).append(", formAction=").append(this.formAction)
-                .append(", localizedTitleOfSubmit=").append(this.localizedTitleOfSubmit).append("]")
-                .toString();
+        return new StringBuilder("[news=").append(this.news).append(", sendNotification=").append(this.sendNotification)
+                .append(", formAction=").append(this.formAction).append(", localizedTitleOfSubmit=")
+                .append(this.localizedTitleOfSubmit).append("]").toString();
     }
 }

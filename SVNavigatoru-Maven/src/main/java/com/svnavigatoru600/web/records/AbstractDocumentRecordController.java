@@ -29,11 +29,10 @@ public abstract class AbstractDocumentRecordController extends AbstractPrivateSe
     private final MessageSource messageSource;
 
     /**
-     * Constructs a controller which considers all
-     * {@link com.svnavigatoru600.domain.records.AbstractDocumentRecord AbstractDocumentRecords}.
+     * Constructs a controller which considers all {@link com.svnavigatoru600.domain.records.AbstractDocumentRecord
+     * AbstractDocumentRecords}.
      */
-    public AbstractDocumentRecordController(String baseUrl, AbstractPageViews views,
-            MessageSource messageSource) {
+    public AbstractDocumentRecordController(String baseUrl, AbstractPageViews views, MessageSource messageSource) {
         this.baseUrl = baseUrl;
         this.views = views;
         this.messageSource = messageSource;

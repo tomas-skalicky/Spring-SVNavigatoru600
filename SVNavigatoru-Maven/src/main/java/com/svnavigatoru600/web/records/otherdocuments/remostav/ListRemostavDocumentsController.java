@@ -24,10 +24,9 @@ public class ListRemostavDocumentsController extends AbstractListDocumentsContro
      * Constructor.
      */
     @Inject
-    public ListRemostavDocumentsController(OtherDocumentRecordService recordService,
-            MessageSource messageSource) {
-        super(RemostavDocumentsUrlParts.BASE_URL, new PageViews(), OtherDocumentRecordType.REMOSTAV,
-                recordService, messageSource);
+    public ListRemostavDocumentsController(OtherDocumentRecordService recordService, MessageSource messageSource) {
+        super(RemostavDocumentsUrlParts.BASE_URL, new PageViews(), OtherDocumentRecordType.REMOSTAV, recordService,
+                messageSource);
     }
 
     @Override

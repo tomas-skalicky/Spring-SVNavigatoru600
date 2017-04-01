@@ -8,17 +8,16 @@ package com.svnavigatoru600.repository.records.impl;
  */
 public enum OtherDocumentRecordTypeRelationField {
 
-    recordId(OtherDocumentRecordTypeRelationColumn.record_id, "id.recordId"), type(
-            OtherDocumentRecordTypeRelationColumn.type, "id.type");
+    recordId(OtherDocumentRecordTypeRelationColumn.record_id,
+            "id.recordId"), type(OtherDocumentRecordTypeRelationColumn.type, "id.type");
 
     /**
      * The name of a corresponding database column.
      */
     private final OtherDocumentRecordTypeRelationColumn column;
     /**
-     * The chain of fields. Used when the {@link OtherDocumentRecordTypeRelationField} is not located directly
-     * in the {@link com.svnavigatoru600.domain.records.OtherDocumentRecordTypeRelation
-     * OtherDocumentRecordTypeRelation} class.
+     * The chain of fields. Used when the {@link OtherDocumentRecordTypeRelationField} is not located directly in the
+     * {@link com.svnavigatoru600.domain.records.OtherDocumentRecordTypeRelation OtherDocumentRecordTypeRelation} class.
      */
     private final String fieldChain;
 
@@ -26,8 +25,7 @@ public enum OtherDocumentRecordTypeRelationField {
         this(column, null);
     }
 
-    private OtherDocumentRecordTypeRelationField(OtherDocumentRecordTypeRelationColumn column,
-            String fieldChain) {
+    private OtherDocumentRecordTypeRelationField(OtherDocumentRecordTypeRelationColumn column, String fieldChain) {
         this.column = column;
         this.fieldChain = fieldChain;
     }

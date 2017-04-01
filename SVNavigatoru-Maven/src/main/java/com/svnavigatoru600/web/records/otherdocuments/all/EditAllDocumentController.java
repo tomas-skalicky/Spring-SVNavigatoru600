@@ -34,8 +34,8 @@ public class EditAllDocumentController extends AbstractEditDocumentController {
     public EditAllDocumentController(OtherDocumentRecordService recordService,
             SendNotificationEditModelFiller sendNotificationModelFiller, EditRecordValidator validator,
             MessageSource messageSource) {
-        super(AllDocumentsUrlParts.EXISTING_URL, new PageViews(), recordService, sendNotificationModelFiller,
-                validator, messageSource);
+        super(AllDocumentsUrlParts.EXISTING_URL, new PageViews(), recordService, sendNotificationModelFiller, validator,
+                messageSource);
     }
 
     @Override
@@ -53,9 +53,9 @@ public class EditAllDocumentController extends AbstractEditDocumentController {
 
     @Override
     @RequestMapping(value = AllDocumentsUrlParts.EXISTING_URL + "{recordId}/", method = RequestMethod.POST)
-    public String processSubmittedForm(
-            @ModelAttribute(AbstractEditDocumentController.COMMAND) EditRecord command, BindingResult result,
-            SessionStatus status, @PathVariable int recordId, HttpServletRequest request, ModelMap model) {
+    public String processSubmittedForm(@ModelAttribute(AbstractEditDocumentController.COMMAND) EditRecord command,
+            BindingResult result, SessionStatus status, @PathVariable int recordId, HttpServletRequest request,
+            ModelMap model) {
         return super.processSubmittedForm(command, result, status, recordId, request, model);
     }
 }

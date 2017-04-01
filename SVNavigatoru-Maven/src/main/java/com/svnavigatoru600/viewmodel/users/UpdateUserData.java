@@ -102,14 +102,12 @@ public class UpdateUserData {
 
     @Override
     public String toString() {
-        return new StringBuilder("[user=").append(this.user).append(", newPassword=")
-                .append(this.newPassword).append(", newPasswordConfirmation=")
-                .append(this.newPasswordConfirmation).append(", localizedNotificationCheckboxTitles=")
-                .append(this.localizedNotificationCheckboxTitles).append(", dataSaved=")
-                .append(this.dataSaved).append(", notificationsUnsubscribed=")
+        return new StringBuilder("[user=").append(this.user).append(", newPassword=").append(this.newPassword)
+                .append(", newPasswordConfirmation=").append(this.newPasswordConfirmation)
+                .append(", localizedNotificationCheckboxTitles=").append(this.localizedNotificationCheckboxTitles)
+                .append(", dataSaved=").append(this.dataSaved).append(", notificationsUnsubscribed=")
                 .append(this.notificationsUnsubscribed).append(", localizedUnsubscribedNotificationTitle=")
-                .append(this.localizedUnsubscribedNotificationTitle)
-                .append(", foreignAccountDuringUnsubscription=")
+                .append(this.localizedUnsubscribedNotificationTitle).append(", foreignAccountDuringUnsubscription=")
                 .append(this.foreignAccountDuringUnsubscription).append(", foreignAccountUsername=")
                 .append(this.foreignAccountUsername).append("]").toString();
     }

@@ -27,8 +27,8 @@ public final class HttpResponseUtils {
      * @param fileExtension
      *            The extension of the file (e.g. txt, doc, pdf)
      */
-    public static void sendFile(HttpServletResponse response, byte[] fileBytes, String fileName,
-            String fileExtension) throws IOException {
+    public static void sendFile(HttpServletResponse response, byte[] fileBytes, String fileName, String fileExtension)
+            throws IOException {
         if ("txt".equalsIgnoreCase(fileExtension)) {
             response.setContentType("text/plain");
         } else if ("doc".equalsIgnoreCase(fileExtension) || "docx".equalsIgnoreCase(fileExtension)) {

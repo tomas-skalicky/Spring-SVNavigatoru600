@@ -35,8 +35,8 @@ public class EditRemostavDocumentController extends AbstractEditDocumentControll
     public EditRemostavDocumentController(OtherDocumentRecordService recordService,
             SendNotificationEditModelFiller sendNotificationModelFiller, EditRecordValidator validator,
             MessageSource messageSource) {
-        super(RemostavDocumentsUrlParts.EXISTING_URL, new PageViews(), OtherDocumentRecordType.REMOSTAV,
-                recordService, sendNotificationModelFiller, validator, messageSource);
+        super(RemostavDocumentsUrlParts.EXISTING_URL, new PageViews(), OtherDocumentRecordType.REMOSTAV, recordService,
+                sendNotificationModelFiller, validator, messageSource);
     }
 
     @Override
@@ -54,9 +54,9 @@ public class EditRemostavDocumentController extends AbstractEditDocumentControll
 
     @Override
     @RequestMapping(value = RemostavDocumentsUrlParts.EXISTING_URL + "{recordId}/", method = RequestMethod.POST)
-    public String processSubmittedForm(
-            @ModelAttribute(AbstractEditDocumentController.COMMAND) EditRecord command, BindingResult result,
-            SessionStatus status, @PathVariable int recordId, HttpServletRequest request, ModelMap model) {
+    public String processSubmittedForm(@ModelAttribute(AbstractEditDocumentController.COMMAND) EditRecord command,
+            BindingResult result, SessionStatus status, @PathVariable int recordId, HttpServletRequest request,
+            ModelMap model) {
         return super.processSubmittedForm(command, result, status, recordId, request, model);
     }
 }

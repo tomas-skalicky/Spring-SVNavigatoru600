@@ -26,10 +26,9 @@ public class DeleteRemostavDocumentController extends AbstractDeleteDocumentCont
      * Constructor.
      */
     @Inject
-    public DeleteRemostavDocumentController(OtherDocumentRecordService recordService,
-            MessageSource messageSource) {
-        super(RemostavDocumentsUrlParts.BASE_URL, new PageViews(), OtherDocumentRecordType.REMOSTAV,
-                recordService, messageSource);
+    public DeleteRemostavDocumentController(OtherDocumentRecordService recordService, MessageSource messageSource) {
+        super(RemostavDocumentsUrlParts.BASE_URL, new PageViews(), OtherDocumentRecordType.REMOSTAV, recordService,
+                messageSource);
     }
 
     @Override

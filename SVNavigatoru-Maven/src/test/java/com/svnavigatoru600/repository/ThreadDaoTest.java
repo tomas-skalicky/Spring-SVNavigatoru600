@@ -120,8 +120,7 @@ public final class ThreadDaoTest extends AbstractRepositoryTest {
         // SELECT ONE
         thread = threadDao.findById(thread.getId());
         Assert.assertEquals(threadId, thread.getId());
-        Assert.assertEquals(RepositoryTestUtils.SECOND_USER_DEFAULT_USERNAME, thread.getAuthor()
-                .getUsername());
+        Assert.assertEquals(RepositoryTestUtils.SECOND_USER_DEFAULT_USERNAME, thread.getAuthor().getUsername());
         Assert.assertEquals(EDITED_THREAD_NAME, thread.getName());
     }
 

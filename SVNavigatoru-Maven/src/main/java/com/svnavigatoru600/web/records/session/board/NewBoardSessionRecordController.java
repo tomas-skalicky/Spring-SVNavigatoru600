@@ -33,8 +33,8 @@ public class NewBoardSessionRecordController extends AbstractNewRecordController
     public NewBoardSessionRecordController(SessionRecordService recordService,
             SendNotificationNewModelFiller sendNotificationModelFiller, NewSessionRecordValidator validator,
             MessageSource messageSource) {
-        super(BoardSessionsUrlParts.BASE_URL, new PageViews(), SessionRecordType.SESSION_RECORD_OF_BOARD,
-                recordService, sendNotificationModelFiller, validator, messageSource);
+        super(BoardSessionsUrlParts.BASE_URL, new PageViews(), SessionRecordType.SESSION_RECORD_OF_BOARD, recordService,
+                sendNotificationModelFiller, validator, messageSource);
     }
 
     /**
@@ -47,8 +47,7 @@ public class NewBoardSessionRecordController extends AbstractNewRecordController
 
     @Override
     @RequestMapping(value = BoardSessionsUrlParts.NEW_URL, method = RequestMethod.POST)
-    public String processSubmittedForm(
-            @ModelAttribute(AbstractNewRecordController.COMMAND) NewSessionRecord command,
+    public String processSubmittedForm(@ModelAttribute(AbstractNewRecordController.COMMAND) NewSessionRecord command,
             BindingResult result, SessionStatus status, HttpServletRequest request, ModelMap model) {
         return super.processSubmittedForm(command, result, status, request, model);
     }

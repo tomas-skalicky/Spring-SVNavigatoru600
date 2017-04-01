@@ -33,9 +33,8 @@ public abstract class AbstractDeleteDocumentController extends AbstractOtherDocu
     private final String successfulDeleteUrl;
 
     /**
-     * Constructs a controller which considers all
-     * {@link com.svnavigatoru600.domain.records.OtherDocumentRecord OtherDocumentRecords} of all
-     * {@link OtherDocumentRecordType OtherDocumentRecordTypes}.
+     * Constructs a controller which considers all {@link com.svnavigatoru600.domain.records.OtherDocumentRecord
+     * OtherDocumentRecords} of all {@link OtherDocumentRecordType OtherDocumentRecordTypes}.
      */
     public AbstractDeleteDocumentController(String baseUrl, AbstractPageViews views,
             OtherDocumentRecordService recordService, MessageSource messageSource) {
@@ -45,13 +44,11 @@ public abstract class AbstractDeleteDocumentController extends AbstractOtherDocu
     }
 
     /**
-     * Constructs a controller which considers all
-     * {@link com.svnavigatoru600.domain.records.OtherDocumentRecord OtherDocumentRecords} of the given
-     * <code>recordType</code>.
+     * Constructs a controller which considers all {@link com.svnavigatoru600.domain.records.OtherDocumentRecord
+     * OtherDocumentRecords} of the given <code>recordType</code>.
      */
-    public AbstractDeleteDocumentController(String baseUrl, AbstractPageViews views,
-            OtherDocumentRecordType recordType, OtherDocumentRecordService recordService,
-            MessageSource messageSource) {
+    public AbstractDeleteDocumentController(String baseUrl, AbstractPageViews views, OtherDocumentRecordType recordType,
+            OtherDocumentRecordService recordService, MessageSource messageSource) {
         super(baseUrl, views, recordType, recordService, messageSource);
         this.successfulDeleteUrl = getBaseUrl() + CommonUrlParts.DELETED_EXTENSION;
     }

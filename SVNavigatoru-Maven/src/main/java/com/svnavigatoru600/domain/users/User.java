@@ -46,16 +46,15 @@ public class User implements UserDetails, Serializable {
     private String lastName;
     private String email;
     /**
-     * If the server of recipient (=of this {@link User}) blocks emails from MochaHost,
-     * these emails are first sent to recipient's Gmail address (created by admin) and
-     * then this Gmail redirects automatically all emails to the recipient {@link User#email}.
+     * If the server of recipient (=of this {@link User}) blocks emails from MochaHost, these emails are first sent to
+     * recipient's Gmail address (created by admin) and then this Gmail redirects automatically all emails to the
+     * recipient {@link User#email}.
      */
     private String redirectEmail;
     private String phone;
     private boolean isTestUser;
     /**
-     * The following five subscribed* fields concern email notifications on certain group of news (of any
-     * type).
+     * The following five subscribed* fields concern email notifications on certain group of news (of any type).
      */
     private boolean subscribedToNews;
     private boolean subscribedToEvents;
@@ -66,18 +65,17 @@ public class User implements UserDetails, Serializable {
     private Set<GrantedAuthority> authorities;
 
     /**
-     * Default constructor. It is necessary because of /WEB-INF/model-beans/User.xml. It initialises no
-     * property.
+     * Default constructor. It is necessary because of /WEB-INF/model-beans/User.xml. It initialises no property.
      */
     public User() {
     }
 
     /**
-     * Initialises user's username (=login), password, flag if he is active, first name, last name, email,
-     * phone, flag if he is a test user and authorities. Other properties are not touched.
+     * Initialises user's username (=login), password, flag if he is active, first name, last name, email, phone, flag
+     * if he is a test user and authorities. Other properties are not touched.
      */
-    public User(String username, String password, boolean enabled, String firstName, String lastName,
-            String email, String phone, boolean isTestUser, Set<GrantedAuthority> authorities) {
+    public User(String username, String password, boolean enabled, String firstName, String lastName, String email,
+            String phone, boolean isTestUser, Set<GrantedAuthority> authorities) {
         this.username = username;
         this.password = password;
         this.enabled = enabled;
@@ -247,8 +245,8 @@ public class User implements UserDetails, Serializable {
     }
 
     /**
-     * Returns an object of the authority with the given {@link AuthorityType authorityType} if this
-     * {@link User} has such a role (~ rights). Otherwise, returns <code>null</code>
+     * Returns an object of the authority with the given {@link AuthorityType authorityType} if this {@link User} has
+     * such a role (~ rights). Otherwise, returns <code>null</code>
      */
     private GrantedAuthority getAuthority(AuthorityType authorityType) {
         String typeName = authorityType.name();
@@ -331,22 +329,21 @@ public class User implements UserDetails, Serializable {
      * 
      * @param indicatorsOfNewAuthorities
      *            <code>true</code> in the index <code>x</code> in the array means that the authority with the
-     *            {@link AuthorityType#ordinal() ordinal}<code> == x</code> has been selected as one of the
-     *            new authorities of this user. And vice versa.
-     * @return <code>true</code> if the new authorities are different from those before the method invocation;
-     *         otherwise <code>false</code>.
+     *            {@link AuthorityType#ordinal() ordinal}<code> == x</code> has been selected as one of the new
+     *            authorities of this user. And vice versa.
+     * @return <code>true</code> if the new authorities are different from those before the method invocation; otherwise
+     *         <code>false</code>.
      */
     public boolean updateAuthorities(boolean[] indicatorsOfNewAuthorities) {
-        Set<GrantedAuthority> checkedAuthorities = AuthorityUtils.convertIndicatorsToAuthorities(
-                indicatorsOfNewAuthorities, this.username);
+        Set<GrantedAuthority> checkedAuthorities = AuthorityUtils
+                .convertIndicatorsToAuthorities(indicatorsOfNewAuthorities, this.username);
         // The role ROLE_REGISTERED_USER is automatically added.
         checkedAuthorities.add(new Authority(this.username, AuthorityType.ROLE_REGISTERED_USER));
 
         boolean authoritiesChanged = true;
         Collection<GrantedAuthority> currentAuthorities = getAuthorities();
         if (currentAuthorities != null) {
-            authoritiesChanged = !CheckboxUtils.areSame(
-                    AuthorityUtils.getArrayOfCheckIndicators(checkedAuthorities),
+            authoritiesChanged = !CheckboxUtils.areSame(AuthorityUtils.getArrayOfCheckIndicators(checkedAuthorities),
                     AuthorityUtils.getArrayOfCheckIndicators(currentAuthorities));
         }
 
@@ -413,8 +410,8 @@ public class User implements UserDetails, Serializable {
     }
 
     /**
-     * Adds the specified {@link Authority} to this {@link User} if he has not this authority now. Otherwise,
-     * does nothing.
+     * Adds the specified {@link Authority} to this {@link User} if he has not this authority now. Otherwise, does
+     * nothing.
      * 
      * @param type
      *            Type of the authority which is to be added to this user.
@@ -426,8 +423,8 @@ public class User implements UserDetails, Serializable {
     }
 
     /**
-     * Removes the specified {@link Authority} from this {@link User} if he has this authority now. Otherwise,
-     * does nothing.
+     * Removes the specified {@link Authority} from this {@link User} if he has this authority now. Otherwise, does
+     * nothing.
      * 
      * @param type
      *            Type of the authority which is to be taken away from this user.

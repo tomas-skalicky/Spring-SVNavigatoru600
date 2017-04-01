@@ -32,9 +32,8 @@ public abstract class AbstractRetrieveDocumentController extends AbstractOtherDo
     private final Log logger = LogFactory.getLog(this.getClass());
 
     /**
-     * Constructs a controller which considers all
-     * {@link com.svnavigatoru600.domain.records.OtherDocumentRecord OtherDocumentRecords} of all
-     * {@link OtherDocumentRecordType OtherDocumentRecordTypes}.
+     * Constructs a controller which considers all {@link com.svnavigatoru600.domain.records.OtherDocumentRecord
+     * OtherDocumentRecords} of all {@link OtherDocumentRecordType OtherDocumentRecordTypes}.
      */
     public AbstractRetrieveDocumentController(String baseUrl, AbstractPageViews views,
             OtherDocumentRecordService recordService, MessageSource messageSource) {
@@ -43,13 +42,11 @@ public abstract class AbstractRetrieveDocumentController extends AbstractOtherDo
     }
 
     /**
-     * Constructs a controller which considers all
-     * {@link com.svnavigatoru600.domain.records.OtherDocumentRecord OtherDocumentRecords} of the given
-     * <code>recordType</code>.
+     * Constructs a controller which considers all {@link com.svnavigatoru600.domain.records.OtherDocumentRecord
+     * OtherDocumentRecords} of the given <code>recordType</code>.
      */
     public AbstractRetrieveDocumentController(String baseUrl, AbstractPageViews views,
-            OtherDocumentRecordType recordType, OtherDocumentRecordService recordService,
-            MessageSource messageSource) {
+            OtherDocumentRecordType recordType, OtherDocumentRecordService recordService, MessageSource messageSource) {
         super(baseUrl, views, recordType, recordService, messageSource);
     }
 

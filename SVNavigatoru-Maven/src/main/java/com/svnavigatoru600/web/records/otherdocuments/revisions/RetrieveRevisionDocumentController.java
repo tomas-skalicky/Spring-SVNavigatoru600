@@ -26,10 +26,9 @@ public class RetrieveRevisionDocumentController extends AbstractRetrieveDocument
      * Constructor.
      */
     @Inject
-    public RetrieveRevisionDocumentController(OtherDocumentRecordService recordService,
-            MessageSource messageSource) {
-        super(RevisionsUrlParts.BASE_URL, new PageViews(), OtherDocumentRecordType.REGULAR_REVISION,
-                recordService, messageSource);
+    public RetrieveRevisionDocumentController(OtherDocumentRecordService recordService, MessageSource messageSource) {
+        super(RevisionsUrlParts.BASE_URL, new PageViews(), OtherDocumentRecordType.REGULAR_REVISION, recordService,
+                messageSource);
     }
 
     @Override

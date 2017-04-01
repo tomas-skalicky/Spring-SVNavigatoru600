@@ -32,8 +32,7 @@ import com.svnavigatoru600.service.util.OrderType;
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
 @Repository("otherDocumentRecordDao")
-public class OtherDocumentRecordDaoImpl extends NamedParameterJdbcDaoSupport implements
-        OtherDocumentRecordDao {
+public class OtherDocumentRecordDaoImpl extends NamedParameterJdbcDaoSupport implements OtherDocumentRecordDao {
 
     /**
      * Database table which provides a persistence of {@link OtherDocumentRecord OtherDocumentRecords}.
@@ -58,10 +57,9 @@ public class OtherDocumentRecordDaoImpl extends NamedParameterJdbcDaoSupport imp
      * {@link AbstractDocumentRecord}.
      */
     private static final String SELECT_FROM_CLAUSE_WITHOUT_FILE = String.format(
-            "SELECT r.*, d.%s FROM %s r INNER JOIN %s d ON d.%s = r.%s",
-            DocumentRecordField.fileName.getColumnName(), OtherDocumentRecordDaoImpl.TABLE_NAME,
-            PersistedClass.AbstractDocumentRecord.getTableName(), DocumentRecordField.id.getColumnName(),
-            OtherDocumentRecordField.id.getColumnName());
+            "SELECT r.*, d.%s FROM %s r INNER JOIN %s d ON d.%s = r.%s", DocumentRecordField.fileName.getColumnName(),
+            OtherDocumentRecordDaoImpl.TABLE_NAME, PersistedClass.AbstractDocumentRecord.getTableName(),
+            DocumentRecordField.id.getColumnName(), OtherDocumentRecordField.id.getColumnName());
 
     @Inject
     private DocumentRecordDaoImpl documentRecordDao;
@@ -117,8 +115,7 @@ public class OtherDocumentRecordDaoImpl extends NamedParameterJdbcDaoSupport imp
         OtherDocumentRecord record = getNamedParameterJdbcTemplate().queryForObject(query, args,
                 new OtherDocumentRecordRowMapper(loadFile));
         if (record == null) {
-            throw new DataRetrievalFailureException(String.format("No record with the ID '%s' exists.",
-                    recordId));
+            throw new DataRetrievalFailureException(String.format("No record with the ID '%s' exists.", recordId));
         }
 
         this.populateTypes(record);
@@ -127,12 +124,10 @@ public class OtherDocumentRecordDaoImpl extends NamedParameterJdbcDaoSupport imp
 
     @Override
     public List<OtherDocumentRecord> findAllOrdered(OrderType order) {
-        String query = String.format("%s ORDER BY r.%s %s",
-                OtherDocumentRecordDaoImpl.SELECT_FROM_CLAUSE_WITHOUT_FILE,
+        String query = String.format("%s ORDER BY r.%s %s", OtherDocumentRecordDaoImpl.SELECT_FROM_CLAUSE_WITHOUT_FILE,
                 OtherDocumentRecordField.creationTime.getColumnName(), order.getDatabaseCode());
 
-        List<OtherDocumentRecord> records = getJdbcTemplate().query(query,
-                new OtherDocumentRecordRowMapper(false));
+        List<OtherDocumentRecord> records = getJdbcTemplate().query(query, new OtherDocumentRecordRowMapper(false));
 
         this.populateTypes(records);
         return records;
@@ -158,8 +153,7 @@ public class OtherDocumentRecordDaoImpl extends NamedParameterJdbcDaoSupport imp
     }
 
     /**
-     * Maps properties of the given {@link OtherDocumentRecord} to names of the corresponding database
-     * columns.
+     * Maps properties of the given {@link OtherDocumentRecord} to names of the corresponding database columns.
      */
     private Map<String, Object> getNamedParameters(OtherDocumentRecord record) {
         Map<String, Object> parameters = new HashMap<String, Object>();
@@ -185,8 +179,8 @@ public class OtherDocumentRecordDaoImpl extends NamedParameterJdbcDaoSupport imp
         String descriptionColumn = OtherDocumentRecordField.description.getColumnName();
         String lastSaveTimeColumn = OtherDocumentRecordField.lastSaveTime.getColumnName();
         String query = String.format("UPDATE %s SET %s = :%s, %s = :%s, %s = :%s WHERE %s = :%s",
-                OtherDocumentRecordDaoImpl.TABLE_NAME, nameColumn, nameColumn, descriptionColumn,
-                descriptionColumn, lastSaveTimeColumn, lastSaveTimeColumn, idColumn, idColumn);
+                OtherDocumentRecordDaoImpl.TABLE_NAME, nameColumn, nameColumn, descriptionColumn, descriptionColumn,
+                lastSaveTimeColumn, lastSaveTimeColumn, idColumn, idColumn);
 
         getNamedParameterJdbcTemplate().update(query, getNamedParameters(record));
 
@@ -205,12 +199,12 @@ public class OtherDocumentRecordDaoImpl extends NamedParameterJdbcDaoSupport imp
         // 'other_document_records'.
         int recordId = this.documentRecordDao.save(record, getDataSource());
 
-        SimpleJdbcInsert insert = new SimpleJdbcInsert(getDataSource()).withTableName(
-                OtherDocumentRecordDaoImpl.TABLE_NAME).usingColumns(
-                OtherDocumentRecordField.id.getColumnName(), OtherDocumentRecordField.name.getColumnName(),
-                OtherDocumentRecordField.description.getColumnName(),
-                OtherDocumentRecordField.creationTime.getColumnName(),
-                OtherDocumentRecordField.lastSaveTime.getColumnName());
+        SimpleJdbcInsert insert = new SimpleJdbcInsert(getDataSource())
+                .withTableName(OtherDocumentRecordDaoImpl.TABLE_NAME).usingColumns(
+                        OtherDocumentRecordField.id.getColumnName(), OtherDocumentRecordField.name.getColumnName(),
+                        OtherDocumentRecordField.description.getColumnName(),
+                        OtherDocumentRecordField.creationTime.getColumnName(),
+                        OtherDocumentRecordField.lastSaveTime.getColumnName());
 
         Map<String, Object> parameters = getNamedParameters(record);
         parameters.put(OtherDocumentRecordField.id.getColumnName(), recordId);

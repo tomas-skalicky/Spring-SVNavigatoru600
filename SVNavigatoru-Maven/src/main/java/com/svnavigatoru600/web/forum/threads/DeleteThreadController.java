@@ -45,7 +45,8 @@ public class DeleteThreadController extends AbstractThreadController {
         super(threadService, messageSource);
     }
 
-    @RequestMapping(value = ThreadsUrlParts.EXISTING_URL + "{threadId}/" + CommonUrlParts.DELETE_EXTENSION, method = RequestMethod.GET)
+    @RequestMapping(value = ThreadsUrlParts.EXISTING_URL + "{threadId}/"
+            + CommonUrlParts.DELETE_EXTENSION, method = RequestMethod.GET)
     @Transactional
     public String delete(@PathVariable int threadId, HttpServletRequest request, ModelMap model) {
 
@@ -57,8 +58,7 @@ public class DeleteThreadController extends AbstractThreadController {
             Thread thread = threadService.findById(threadId);
             if (thread.getContributions().size() > 0) {
                 String view = this.listController.initPage(request, model);
-                model.addAttribute("error",
-                        DeleteThreadController.CANNOT_DELETE_DUE_CONTRIBUTION_MESSAGE_CODE);
+                model.addAttribute("error", DeleteThreadController.CANNOT_DELETE_DUE_CONTRIBUTION_MESSAGE_CODE);
                 return view;
             }
             threadService.delete(thread);

@@ -18,8 +18,8 @@ public interface DocumentRecordDao {
      * Returns a {@link AbstractDocumentRecord} stored in the repository which has the given ID.
      * 
      * @param loadFile
-     *            If <code>true</code>, the associated {@link AbstractDocumentRecord#getFile() file} will be
-     *            loaded as well; otherwise not.
+     *            If <code>true</code>, the associated {@link AbstractDocumentRecord#getFile() file} will be loaded as
+     *            well; otherwise not.
      */
     AbstractDocumentRecord findById(int recordId, boolean loadFile);
 

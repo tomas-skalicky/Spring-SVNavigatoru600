@@ -14,8 +14,8 @@ import com.svnavigatoru600.viewmodel.records.validator.AbstractDocumentRecordVal
 public abstract class AbstractOtherDocumentRecordValidator extends AbstractDocumentRecordValidator {
 
     /**
-     * Checks whether the given {@link com.svnavigatoru600.domain.records.OtherDocumentRecord
-     * OtherDocumentRecord's} <code>recordName</code> is valid.
+     * Checks whether the given {@link com.svnavigatoru600.domain.records.OtherDocumentRecord OtherDocumentRecord's}
+     * <code>recordName</code> is valid.
      */
     protected void checkNewName(String recordName, Errors errors) {
         String field = "record.name";

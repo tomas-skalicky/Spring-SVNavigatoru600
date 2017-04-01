@@ -34,7 +34,7 @@ public class SendNotification {
 
     @Override
     public String toString() {
-        return new StringBuilder("[status=").append(this.status).append(", checkboxTitle=")
-                .append(this.checkboxTitle).append("]").toString();
+        return new StringBuilder("[status=").append(this.status).append(", checkboxTitle=").append(this.checkboxTitle)
+                .append("]").toString();
     }
 }

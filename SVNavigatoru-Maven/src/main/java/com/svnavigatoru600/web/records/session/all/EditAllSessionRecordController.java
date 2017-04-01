@@ -32,10 +32,10 @@ public class EditAllSessionRecordController extends AbstractEditRecordController
      */
     @Inject
     public EditAllSessionRecordController(SessionRecordService recordService,
-            SendNotificationEditModelFiller sendNotificationModelFiller,
-            EditSessionRecordValidator validator, MessageSource messageSource) {
-        super(AllSessionsUrlParts.EXISTING_URL, new PageViews(), recordService, sendNotificationModelFiller,
-                validator, messageSource);
+            SendNotificationEditModelFiller sendNotificationModelFiller, EditSessionRecordValidator validator,
+            MessageSource messageSource) {
+        super(AllSessionsUrlParts.EXISTING_URL, new PageViews(), recordService, sendNotificationModelFiller, validator,
+                messageSource);
     }
 
     @Override
@@ -45,17 +45,17 @@ public class EditAllSessionRecordController extends AbstractEditRecordController
     }
 
     @Override
-    @RequestMapping(value = AllSessionsUrlParts.EXISTING_URL + "{recordId}/" + CommonUrlParts.SAVED_EXTENSION, method = RequestMethod.GET)
+    @RequestMapping(value = AllSessionsUrlParts.EXISTING_URL + "{recordId}/"
+            + CommonUrlParts.SAVED_EXTENSION, method = RequestMethod.GET)
     public String initFormAfterSave(@PathVariable int recordId, HttpServletRequest request, ModelMap model) {
         return super.initFormAfterSave(recordId, request, model);
     }
 
     @Override
     @RequestMapping(value = AllSessionsUrlParts.EXISTING_URL + "{recordId}/", method = RequestMethod.POST)
-    public String processSubmittedForm(
-            @ModelAttribute(AbstractEditRecordController.COMMAND) EditSessionRecord command,
-            BindingResult result, SessionStatus status, @PathVariable int recordId,
-            HttpServletRequest request, ModelMap model) {
+    public String processSubmittedForm(@ModelAttribute(AbstractEditRecordController.COMMAND) EditSessionRecord command,
+            BindingResult result, SessionStatus status, @PathVariable int recordId, HttpServletRequest request,
+            ModelMap model) {
         return super.processSubmittedForm(command, result, status, recordId, request, model);
     }
 }

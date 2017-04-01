@@ -28,8 +28,8 @@ public final class UserAccountUrlParts {
 
     /**
      * Gets URL which unsubscribes the given {@link User user} from receiving notifications of the given
-     * {@link NotificationType notificationType} if the user clicks on it. Moreover, controller associated
-     * with the URL redirects the user to the user account settings page.
+     * {@link NotificationType notificationType} if the user clicks on it. Moreover, controller associated with the URL
+     * redirects the user to the user account settings page.
      */
     public static String getUrlForUnsubscription(User user, NotificationType notificationType,
             HttpServletRequest request) {

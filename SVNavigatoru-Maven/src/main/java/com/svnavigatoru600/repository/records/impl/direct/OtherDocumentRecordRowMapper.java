@@ -11,13 +11,12 @@ import com.svnavigatoru600.repository.records.impl.DocumentRecordField;
 import com.svnavigatoru600.repository.records.impl.OtherDocumentRecordField;
 
 /**
- * For more information, see {@link com.svnavigatoru600.repository.users.impl.direct.UserRowMapper
- * UserRowMapper}.
+ * For more information, see {@link com.svnavigatoru600.repository.users.impl.direct.UserRowMapper UserRowMapper}.
  * 
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
-public class OtherDocumentRecordRowMapper extends AbstractDocumentRecordRowMapper implements
-        RowMapper<OtherDocumentRecord> {
+public class OtherDocumentRecordRowMapper extends AbstractDocumentRecordRowMapper
+        implements RowMapper<OtherDocumentRecord> {
 
     /**
      * Constructor.
@@ -50,10 +49,10 @@ public class OtherDocumentRecordRowMapper extends AbstractDocumentRecordRowMappe
 
         record.setName(rs.getString(OtherDocumentRecordField.name.getColumnName()));
         record.setDescription(rs.getString(OtherDocumentRecordField.description.getColumnName()));
-        record.setCreationTime(new Date(rs
-                .getTimestamp(OtherDocumentRecordField.creationTime.getColumnName()).getTime()));
-        record.setLastSaveTime(new Date(rs
-                .getTimestamp(OtherDocumentRecordField.lastSaveTime.getColumnName()).getTime()));
+        record.setCreationTime(
+                new Date(rs.getTimestamp(OtherDocumentRecordField.creationTime.getColumnName()).getTime()));
+        record.setLastSaveTime(
+                new Date(rs.getTimestamp(OtherDocumentRecordField.lastSaveTime.getColumnName()).getTime()));
         return record;
     }
 }

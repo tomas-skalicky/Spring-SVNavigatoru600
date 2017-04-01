@@ -26,10 +26,9 @@ public class RetrieveAccountingDocumentController extends AbstractRetrieveDocume
      * Constructor.
      */
     @Inject
-    public RetrieveAccountingDocumentController(OtherDocumentRecordService recordService,
-            MessageSource messageSource) {
-        super(AccountingUrlParts.BASE_URL, new PageViews(), OtherDocumentRecordType.ACCOUNTING,
-                recordService, messageSource);
+    public RetrieveAccountingDocumentController(OtherDocumentRecordService recordService, MessageSource messageSource) {
+        super(AccountingUrlParts.BASE_URL, new PageViews(), OtherDocumentRecordType.ACCOUNTING, recordService,
+                messageSource);
     }
 
     @Override

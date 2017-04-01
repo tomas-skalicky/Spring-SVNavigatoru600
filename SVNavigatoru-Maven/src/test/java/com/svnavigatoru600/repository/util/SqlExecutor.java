@@ -19,13 +19,13 @@ import org.apache.ibatis.jdbc.ScriptRunner;
 public final class SqlExecutor {
 
     /**
-     * The {@link String} which determines that the text behind (on that line) should not be considered as an
-     * executable SQL code, but as an inline comment.
+     * The {@link String} which determines that the text behind (on that line) should not be considered as an executable
+     * SQL code, but as an inline comment.
      */
     static final String SQL_INLINE_COMMENT_BEGINNING = "--";
     /**
-     * The {@link String} which determines that the text behind should not be considered as an executable SQL
-     * code, but as a block comment. The comment ends up with the {@link #SQL_BLOCK_COMMENT_ENDING} sign.
+     * The {@link String} which determines that the text behind should not be considered as an executable SQL code, but
+     * as a block comment. The comment ends up with the {@link #SQL_BLOCK_COMMENT_ENDING} sign.
      */
     static final String SQL_BLOCK_COMMENT_BEGINNING = "/*";
     /**
@@ -46,8 +46,7 @@ public final class SqlExecutor {
      * @param fileName
      *            The name of the SQL file.
      */
-    public static void executeSqlFile(DataSource dataSource, String fileName) throws SQLException,
-            IOException {
+    public static void executeSqlFile(DataSource dataSource, String fileName) throws SQLException, IOException {
         Connection connection = null;
         BufferedReader fileReader = null;
         try {

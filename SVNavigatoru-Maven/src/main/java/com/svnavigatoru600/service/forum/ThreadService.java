@@ -22,8 +22,8 @@ import com.svnavigatoru600.service.util.Localization;
 /**
  * Provides convenient methods to work with {@link com.svnavigatoru600.domain.forum.Thread Thread} objects.
  * <p>
- * For instance: There are methods which determine whether the currently logged-in user has rights to
- * manipulate with a particular {@link com.svnavigatoru600.domain.forum.Thread Thread}.
+ * For instance: There are methods which determine whether the currently logged-in user has rights to manipulate with a
+ * particular {@link com.svnavigatoru600.domain.forum.Thread Thread}.
  * 
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
@@ -84,22 +84,22 @@ public class ThreadService implements SubjectOfNotificationService {
     }
 
     /**
-     * Updates the given {@link Thread} in the repository. The old version of this thread should be already
-     * stored there.
+     * Updates the given {@link Thread} in the repository. The old version of this thread should be already stored
+     * there.
      */
     public void update(Thread thread) {
         this.threadDao.update(thread);
     }
 
     /**
-     * Updates properties of the given <code>threadToUpdate</code> and persists this {@link Thread} into the
-     * repository. The old version of this thread should be already stored there.
+     * Updates properties of the given <code>threadToUpdate</code> and persists this {@link Thread} into the repository.
+     * The old version of this thread should be already stored there.
      * 
      * @param threadToUpdate
      *            Persisted {@link Thread}
      * @param newThread
-     *            {@link Thread} which contains new values of properties of <code>threadToUpdate</code>. These
-     *            values are copied to the persisted thread.
+     *            {@link Thread} which contains new values of properties of <code>threadToUpdate</code>. These values
+     *            are copied to the persisted thread.
      */
     public void update(Thread threadToUpdate, Thread newThread) {
         threadToUpdate.setName(newThread.getName());
@@ -113,8 +113,7 @@ public class ThreadService implements SubjectOfNotificationService {
     }
 
     @Override
-    public void notifyUsersOfUpdate(Object updatedObject, HttpServletRequest request,
-            MessageSource messageSource) {
+    public void notifyUsersOfUpdate(Object updatedObject, HttpServletRequest request, MessageSource messageSource) {
         throw new IllegalAccessError("This method is not supported");
     }
 
@@ -128,8 +127,8 @@ public class ThreadService implements SubjectOfNotificationService {
     }
 
     /**
-     * Updates corresponding {@link java.util.Date Date} fields of the given new {@link Thread} (if there are
-     * any appropriate) and stores the thread to the repository.
+     * Updates corresponding {@link java.util.Date Date} fields of the given new {@link Thread} (if there are any
+     * appropriate) and stores the thread to the repository.
      * <p>
      * Finally, notifies all users which have corresponding rights by email about a creation of the thread.
      * 
@@ -146,8 +145,7 @@ public class ThreadService implements SubjectOfNotificationService {
     }
 
     @Override
-    public void notifyUsersOfCreation(Object newThread, HttpServletRequest request,
-            MessageSource messageSource) {
+    public void notifyUsersOfCreation(Object newThread, HttpServletRequest request, MessageSource messageSource) {
         this.emailService.sendEmailOnCreation(newThread, gainUsersToNotify(), request, messageSource);
     }
 
@@ -159,18 +157,17 @@ public class ThreadService implements SubjectOfNotificationService {
     }
 
     /**
-     * Gets a {@link Map} which for each input {@link Thread} contains a corresponding localized delete
-     * question which is asked before deletion of that thread.
+     * Gets a {@link Map} which for each input {@link Thread} contains a corresponding localized delete question which
+     * is asked before deletion of that thread.
      */
-    public static Map<Thread, String> getLocalizedDeleteQuestions(List<Thread> threads,
-            HttpServletRequest request, MessageSource messageSource) {
+    public static Map<Thread, String> getLocalizedDeleteQuestions(List<Thread> threads, HttpServletRequest request,
+            MessageSource messageSource) {
         String messageCode = "forum.threads.do-you-really-want-to-delete-thread";
         Map<Thread, String> questions = new HashMap<Thread, String>();
 
         for (Thread thread : threads) {
             Object[] messageParams = new Object[] { thread.getName() };
-            questions.put(thread,
-                    Localization.findLocaleMessage(messageSource, request, messageCode, messageParams));
+            questions.put(thread, Localization.findLocaleMessage(messageSource, request, messageCode, messageParams));
         }
         return questions;
     }

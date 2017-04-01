@@ -43,7 +43,8 @@ public class DeleteEventController extends AbstractEventController {
         super(eventService, messageSource);
     }
 
-    @RequestMapping(value = EventsUrlParts.EXISTING_URL + "{eventId}/" + CommonUrlParts.DELETE_EXTENSION, method = RequestMethod.GET)
+    @RequestMapping(value = EventsUrlParts.EXISTING_URL + "{eventId}/"
+            + CommonUrlParts.DELETE_EXTENSION, method = RequestMethod.GET)
     @Transactional
     public String delete(@PathVariable int eventId, HttpServletRequest request, ModelMap model) {
         try {

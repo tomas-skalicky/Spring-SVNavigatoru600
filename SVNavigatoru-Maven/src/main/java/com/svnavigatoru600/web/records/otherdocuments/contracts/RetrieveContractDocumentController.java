@@ -26,8 +26,7 @@ public class RetrieveContractDocumentController extends AbstractRetrieveDocument
      * Constructor.
      */
     @Inject
-    public RetrieveContractDocumentController(OtherDocumentRecordService recordService,
-            MessageSource messageSource) {
+    public RetrieveContractDocumentController(OtherDocumentRecordService recordService, MessageSource messageSource) {
         super(ContractsUrlParts.BASE_URL, new PageViews(), OtherDocumentRecordType.CONTRACT, recordService,
                 messageSource);
     }

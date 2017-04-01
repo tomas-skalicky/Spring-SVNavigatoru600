@@ -7,8 +7,8 @@ package com.svnavigatoru600.repository.records.impl;
  */
 public enum SessionRecordField {
 
-    id(SessionRecordColumn.id), type(SessionRecordColumn.type), sessionDate(SessionRecordColumn.session_date), discussedTopics(
-            SessionRecordColumn.discussed_topics);
+    id(SessionRecordColumn.id), type(SessionRecordColumn.type), sessionDate(
+            SessionRecordColumn.session_date), discussedTopics(SessionRecordColumn.discussed_topics);
 
     /**
      * The name of a corresponding database column.
@@ -24,8 +24,8 @@ public enum SessionRecordField {
     }
 
     /**
-     * Names of the columns of the database table which contains
-     * {@link com.svnavigatoru600.domain.records.SessionRecord SessionRecords}.
+     * Names of the columns of the database table which contains {@link com.svnavigatoru600.domain.records.SessionRecord
+     * SessionRecords}.
      */
     private enum SessionRecordColumn {
 

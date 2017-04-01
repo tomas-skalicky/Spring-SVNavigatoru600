@@ -11,8 +11,8 @@ import com.svnavigatoru600.test.category.ControllerIntegrationTests;
  * Contains all tests which belong to the {@link ControllerIntegrationTests} category.
  * 
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
- * @see <a
- *      href="http://stackoverflow.com/questions/6226026/how-to-run-all-junit-tests-in-a-category-suite-with-ant">How-to-run-all-JUnit-tests-in-a-category</a>
+ * @see <a href="http://stackoverflow.com/questions/6226026/how-to-run-all-junit-tests-in-a-category-suite-with-ant">How
+ *      -to-run-all-JUnit-tests-in-a-category</a>
  */
 @RunWith(Categories.class)
 @IncludeCategory(ControllerIntegrationTests.class)

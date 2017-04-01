@@ -27,8 +27,8 @@ import com.svnavigatoru600.web.records.AbstractPageViews;
 public abstract class AbstractNewEditRecordController extends AbstractSessionRecordController {
 
     /**
-     * Code of the error message used when the {@link IllegalStateException} or {@link java.io.IOException
-     * IOException} is thrown.
+     * Code of the error message used when the {@link IllegalStateException} or {@link java.io.IOException IOException}
+     * is thrown.
      */
     public static final String UPLOAD_FILE_ERROR_MESSAGE_CODE = "file.error-during-saving-file";
     /**
@@ -42,9 +42,9 @@ public abstract class AbstractNewEditRecordController extends AbstractSessionRec
      * Constructs a controller which considers all {@link com.svnavigatoru600.domain.records.SessionRecord
      * SessionRecords} of all {@link SessionRecordType SessionRecordTypes}.
      */
-    public AbstractNewEditRecordController(String baseUrl, AbstractPageViews views,
-            SessionRecordService recordService, SendNotificationModelFiller sendNotificationModelFiller,
-            AbstractSessionRecordValidator validator, MessageSource messageSource) {
+    public AbstractNewEditRecordController(String baseUrl, AbstractPageViews views, SessionRecordService recordService,
+            SendNotificationModelFiller sendNotificationModelFiller, AbstractSessionRecordValidator validator,
+            MessageSource messageSource) {
         super(baseUrl, views, recordService, messageSource);
         this.validator = validator;
         this.sendNotificationModelFiller = sendNotificationModelFiller;
@@ -54,10 +54,9 @@ public abstract class AbstractNewEditRecordController extends AbstractSessionRec
      * Constructs a controller which considers all {@link com.svnavigatoru600.domain.records.SessionRecord
      * SessionRecords} of the given <code>recordType</code>.
      */
-    public AbstractNewEditRecordController(String baseUrl, AbstractPageViews views,
-            SessionRecordType recordType, SessionRecordService recordService,
-            SendNotificationModelFiller sendNotificationModelFiller, AbstractSessionRecordValidator validator,
-            MessageSource messageSource) {
+    public AbstractNewEditRecordController(String baseUrl, AbstractPageViews views, SessionRecordType recordType,
+            SessionRecordService recordService, SendNotificationModelFiller sendNotificationModelFiller,
+            AbstractSessionRecordValidator validator, MessageSource messageSource) {
         super(baseUrl, views, recordType, recordService, messageSource);
         this.validator = validator;
         this.sendNotificationModelFiller = sendNotificationModelFiller;
@@ -78,11 +77,11 @@ public abstract class AbstractNewEditRecordController extends AbstractSessionRec
     }
 
     /**
-     * Creates a {@link List} of localized names of {@link SessionRecordType SessionRecordTypes}. The forms
-     * which use this controller can access the resulting list.
+     * Creates a {@link List} of localized names of {@link SessionRecordType SessionRecordTypes}. The forms which use
+     * this controller can access the resulting list.
      * <p>
-     * This method is used for filling up the tag <em>radiobuttons</em> and the value of the selected
-     * radiobutton is stored to <code>NewEditSessionRecord.newType</code>.
+     * This method is used for filling up the tag <em>radiobuttons</em> and the value of the selected radiobutton is
+     * stored to <code>NewEditSessionRecord.newType</code>.
      */
     @ModelAttribute("sessionRecordTypeList")
     public List<String> populateSessionRecordTypeList(HttpServletRequest request) {

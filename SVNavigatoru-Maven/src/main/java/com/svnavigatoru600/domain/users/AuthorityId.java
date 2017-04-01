@@ -77,7 +77,7 @@ public class AuthorityId implements Serializable {
 
     @Override
     public String toString() {
-        return new StringBuilder("[username=").append(this.username).append(", authority=")
-                .append(this.authority).append("]").toString();
+        return new StringBuilder("[username=").append(this.username).append(", authority=").append(this.authority)
+                .append("]").toString();
     }
 }

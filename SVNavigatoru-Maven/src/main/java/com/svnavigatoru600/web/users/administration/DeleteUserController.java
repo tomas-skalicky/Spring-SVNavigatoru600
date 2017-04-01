@@ -29,8 +29,7 @@ public class DeleteUserController extends AbstractUserController {
             getUserService().delete(username, request, getMessageSource());
 
             // Returns the form success view.
-            model.addAttribute(AbstractMetaController.REDIRECTION_ATTRIBUTE,
-                    UserAdministrationUrlParts.DELETED_URL);
+            model.addAttribute(AbstractMetaController.REDIRECTION_ATTRIBUTE, UserAdministrationUrlParts.DELETED_URL);
             return AbstractMetaController.REDIRECTION_PAGE;
 
         } catch (DataAccessException e) {

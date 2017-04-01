@@ -24,10 +24,9 @@ public class ListAccountingDocumentsController extends AbstractListDocumentsCont
      * Constructor.
      */
     @Inject
-    public ListAccountingDocumentsController(OtherDocumentRecordService recordService,
-            MessageSource messageSource) {
-        super(AccountingUrlParts.BASE_URL, new PageViews(), OtherDocumentRecordType.ACCOUNTING,
-                recordService, messageSource);
+    public ListAccountingDocumentsController(OtherDocumentRecordService recordService, MessageSource messageSource) {
+        super(AccountingUrlParts.BASE_URL, new PageViews(), OtherDocumentRecordType.ACCOUNTING, recordService,
+                messageSource);
     }
 
     @Override

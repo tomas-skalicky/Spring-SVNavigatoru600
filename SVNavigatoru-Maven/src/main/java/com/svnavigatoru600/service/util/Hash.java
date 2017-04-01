@@ -14,8 +14,8 @@ public final class Hash {
     }
 
     /**
-     * Hashes the given <code>string</code> via the SHA-1 algorithm. The implementation is borrowed from <a
-     * href="http://www.jguru.com/faq/view.jsp?EID=3822">jGuru</a>.
+     * Hashes the given <code>string</code> via the SHA-1 algorithm. The implementation is borrowed from
+     * <a href="http://www.jguru.com/faq/view.jsp?EID=3822">jGuru</a>.
      * 
      * @param string
      *            {@link String} which is to be hashed.

@@ -86,8 +86,8 @@ public class CalendarEvent implements Serializable {
     }
 
     /**
-     * Different - not "getPriority" - name of the getter method is necessary. Otherwise, the methods'
-     * signatures would be identical.
+     * Different - not "getPriority" - name of the getter method is necessary. Otherwise, the methods' signatures would
+     * be identical.
      */
     public PriorityType getTypedPriority() {
         return this.priority;
@@ -113,8 +113,8 @@ public class CalendarEvent implements Serializable {
 
     @Override
     public String toString() {
-        return new StringBuilder("[id=").append(this.id).append(", name=").append(this.name)
-                .append(", date=").append(this.date).append(", description=").append(this.description)
-                .append(", priority=").append(this.priority).append("]").toString();
+        return new StringBuilder("[id=").append(this.id).append(", name=").append(this.name).append(", date=")
+                .append(this.date).append(", description=").append(this.description).append(", priority=")
+                .append(this.priority).append("]").toString();
     }
 }

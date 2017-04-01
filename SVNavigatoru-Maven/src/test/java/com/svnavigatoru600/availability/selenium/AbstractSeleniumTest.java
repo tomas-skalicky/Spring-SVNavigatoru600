@@ -36,8 +36,8 @@ public abstract class AbstractSeleniumTest {
     }
 
     /**
-     * Time in seconds how long in total the browser may wait at most. If the given expectations are fulfilled
-     * in between, a method ends up with a success; otherwise with a failure.
+     * Time in seconds how long in total the browser may wait at most. If the given expectations are fulfilled in
+     * between, a method ends up with a success; otherwise with a failure.
      */
     protected static final long DEFAULT_TIMEOUT_IN_SECONDS = 10;
     /**
@@ -61,8 +61,8 @@ public abstract class AbstractSeleniumTest {
     @BeforeClass
     public static void openBrowser() throws Exception {
         Server seleniumServer = (Server) APPLICATION_CONTEXT.getBean("seleniumServer");
-        browserDriver = (new Augmenter()).augment(new RemoteWebDriver(new URL(seleniumServer.getUrl()),
-                DesiredCapabilities.firefox()));
+        browserDriver = (new Augmenter())
+                .augment(new RemoteWebDriver(new URL(seleniumServer.getUrl()), DesiredCapabilities.firefox()));
         // browserDriver = new FirefoxDriver();
     }
 
@@ -93,8 +93,8 @@ public abstract class AbstractSeleniumTest {
     }
 
     /**
-     * The further processing of the caller test waits till either a timeout expires or the URL of the loaded
-     * page matches the given regular expression.
+     * The further processing of the caller test waits till either a timeout expires or the URL of the loaded page
+     * matches the given regular expression.
      * 
      * @param browserDriver
      *            The web browser where the test is running
@@ -106,11 +106,11 @@ public abstract class AbstractSeleniumTest {
     protected boolean waitForPageUrl(WebDriver browserDriver, final String urlRegExp) {
         return (new WebDriverWait(browserDriver, DEFAULT_TIMEOUT_IN_SECONDS,
                 DEFAULT_SLEEP_BETWEEN_POLLS_IN_MILLISECONDS)).until(new ExpectedCondition<Boolean>() {
-            @Override
-            public Boolean apply(WebDriver driver) {
-                return driver.getCurrentUrl().matches(urlRegExp);
-            }
-        });
+                    @Override
+                    public Boolean apply(WebDriver driver) {
+                        return driver.getCurrentUrl().matches(urlRegExp);
+                    }
+                });
     }
 
     /**

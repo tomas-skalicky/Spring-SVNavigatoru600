@@ -81,8 +81,8 @@ public class SessionRecordService extends AbstractDocumentRecordService {
 
     /**
      * Returns all {@link SessionRecord SessionRecords} stored in the repository which are of the given
-     * {@link SessionRecordType type}. The records are arranged according to their
-     * {@link SessionRecord#getSessionDate() sessionDates} in the given {@link OrderType order}.
+     * {@link SessionRecordType type}. The records are arranged according to their {@link SessionRecord#getSessionDate()
+     * sessionDates} in the given {@link OrderType order}.
      */
     public List<SessionRecord> findAllOrdered(SessionRecordType type, OrderType order) {
         return this.sessionRecordDao.findAllOrdered(type, order);
@@ -93,8 +93,8 @@ public class SessionRecordService extends AbstractDocumentRecordService {
      * {@link SessionRecord#getSessionDate() sessionDates} descending.
      * 
      * @param allRecordTypes
-     *            If <code>true</code>, all session records are returned. Otherwise, only records which are of
-     *            the given {@link SessionRecordType recordType} are returned.
+     *            If <code>true</code>, all session records are returned. Otherwise, only records which are of the given
+     *            {@link SessionRecordType recordType} are returned.
      * @param recordType
      *            see <code>allRecordTypes</code>
      */
@@ -108,24 +108,24 @@ public class SessionRecordService extends AbstractDocumentRecordService {
     }
 
     /**
-     * Updates the given {@link SessionRecord} in the repository. The old version of this record should be
-     * already stored there.
+     * Updates the given {@link SessionRecord} in the repository. The old version of this record should be already
+     * stored there.
      */
     public void update(SessionRecord record) {
         this.sessionRecordDao.update(record);
     }
 
     /**
-     * Updates properties of the {@link SessionRecord} specified by <code>recordToUpdateId</code>, localizes
-     * the <code>newType</code>, converts the <code>newAttachedFile</code> to {@link java.sql.Blob Blob} (if
-     * <code>isFileReplaced == true</code>) and persists this record into the repository. The old version of
-     * this record should be already stored there.
+     * Updates properties of the {@link SessionRecord} specified by <code>recordToUpdateId</code>, localizes the
+     * <code>newType</code>, converts the <code>newAttachedFile</code> to {@link java.sql.Blob Blob} (if
+     * <code>isFileReplaced == true</code>) and persists this record into the repository. The old version of this record
+     * should be already stored there.
      * 
      * @param recordToUpdateId
      *            ID of the persisted {@link SessionRecord}
      * @param newRecord
-     *            {@link SessionRecord} which contains new values of properties of the persisted record. These
-     *            values are copied to it.
+     *            {@link SessionRecord} which contains new values of properties of the persisted record. These values
+     *            are copied to it.
      * @param newType
      *            New type of the persisted record
      * @param isFileReplaced
@@ -139,19 +139,17 @@ public class SessionRecordService extends AbstractDocumentRecordService {
         SessionRecord recordToUpdate = findByIdWithoutFile(recordToUpdateId);
         recordToUpdate.setSessionDate(newRecord.getSessionDate());
         recordToUpdate.setDiscussedTopics(newRecord.getDiscussedTopics());
-        recordToUpdate.setType(SessionRecordType
-                .valueOfAccordingLocalization(newType, messageSource, request));
+        recordToUpdate.setType(SessionRecordType.valueOfAccordingLocalization(newType, messageSource, request));
 
         updateRecordWithSaveFileToDatabase(recordToUpdate, isFileReplaced, newAttachedFile);
     }
 
     /**
-     * Updates {@link SessionRecord recordToUpdate's} properties related to the {@link MultipartFile
-     * newAttachedFile} if <code>isFileReplaced == true</code>. Then, persists the record into the repository.
-     * The old version of this record should be already stored there.
+     * Updates {@link SessionRecord recordToUpdate's} properties related to the {@link MultipartFile newAttachedFile} if
+     * <code>isFileReplaced == true</code>. Then, persists the record into the repository. The old version of this
+     * record should be already stored there.
      * <p>
-     * NOTE: Analogy to the
-     * {@link #updateRecordWithSaveFileToFileSystem(SessionRecord, boolean, MultipartFile)
+     * NOTE: Analogy to the {@link #updateRecordWithSaveFileToFileSystem(SessionRecord, boolean, MultipartFile)
      * updateRecordWithSaveFileToFileSystem} method.
      * 
      * @param recordToUpdate
@@ -173,18 +171,17 @@ public class SessionRecordService extends AbstractDocumentRecordService {
     }
 
     /**
-     * Updates {@link SessionRecord recordToUpdate's} properties related to the {@link MultipartFile
-     * newAttachedFile} if <code>isFileReplaced == true</code>. Then, persists the record into the repository.
-     * The old version of this record should be already stored there.
+     * Updates {@link SessionRecord recordToUpdate's} properties related to the {@link MultipartFile newAttachedFile} if
+     * <code>isFileReplaced == true</code>. Then, persists the record into the repository. The old version of this
+     * record should be already stored there.
      * <p>
-     * If <code>isFileReplaced == true</code>, deletes the old file just before the persisting of the record
-     * and copies the new file to the target folder just after the persisting.
+     * If <code>isFileReplaced == true</code>, deletes the old file just before the persisting of the record and copies
+     * the new file to the target folder just after the persisting.
      * <p>
-     * NOTE: It is necessary to secure the uniqueness of its filename since all files of records are in one
-     * common directory.
+     * NOTE: It is necessary to secure the uniqueness of its filename since all files of records are in one common
+     * directory.
      * <p>
-     * This method is not used since we were not able to find out where in the MochaHost directory hierarchy
-     * we were.
+     * This method is not used since we were not able to find out where in the MochaHost directory hierarchy we were.
      * <p>
      * NOTE: Analogy to the {@link #updateRecordWithSaveFileToDatabase(SessionRecord, boolean, MultipartFile)
      * updateRecordWithSaveFileToDatabase} method.
@@ -215,14 +212,14 @@ public class SessionRecordService extends AbstractDocumentRecordService {
 
     /**
      * First, the method performs the
-     * {@link #update(int, SessionRecord, String, boolean, MultipartFile, HttpServletRequest, MessageSource)
-     * update} method. Then, this method notifies all users which have corresponding rights by email.
+     * {@link #update(int, SessionRecord, String, boolean, MultipartFile, HttpServletRequest, MessageSource) update}
+     * method. Then, this method notifies all users which have corresponding rights by email.
      * 
      * @param recordToUpdateId
      *            ID of the persisted {@link SessionRecord}
      * @param newRecord
-     *            {@link SessionRecord} which contains new values of properties of the persisted record. These
-     *            values are copied to it.
+     *            {@link SessionRecord} which contains new values of properties of the persisted record. These values
+     *            are copied to it.
      * @param newType
      *            New type of the persisted record
      * @param isFileReplaced
@@ -233,10 +230,9 @@ public class SessionRecordService extends AbstractDocumentRecordService {
      *            If <code>true</code>, the notification is sent; otherwise not.
      */
     public void updateAndNotifyUsers(int recordToUpdateId, SessionRecord newRecord, String newType,
-            boolean isFileReplaced, MultipartFile newAttachedFile, boolean sendNotification,
-            HttpServletRequest request, MessageSource messageSource) throws SQLException, IOException {
-        this.update(recordToUpdateId, newRecord, newType, isFileReplaced, newAttachedFile, request,
-                messageSource);
+            boolean isFileReplaced, MultipartFile newAttachedFile, boolean sendNotification, HttpServletRequest request,
+            MessageSource messageSource) throws SQLException, IOException {
+        this.update(recordToUpdateId, newRecord, newType, isFileReplaced, newAttachedFile, request, messageSource);
 
         if (sendNotification) {
             notifyUsersOfUpdate(findByIdWithoutFile(recordToUpdateId), request, messageSource);
@@ -250,8 +246,7 @@ public class SessionRecordService extends AbstractDocumentRecordService {
     }
 
     @Override
-    public void notifyUsersOfUpdate(Object updatedRecord, HttpServletRequest request,
-            MessageSource messageSource) {
+    public void notifyUsersOfUpdate(Object updatedRecord, HttpServletRequest request, MessageSource messageSource) {
         this.emailService.sendEmailOnUpdate(updatedRecord, gainUsersToNotify(), request, messageSource);
     }
 
@@ -271,9 +266,8 @@ public class SessionRecordService extends AbstractDocumentRecordService {
 
     /**
      * Localizes the <code>recordType</code> of the given {@link SessionRecord newRecord}, converts the
-     * <code>attachedFile</code> to {@link java.sql.Blob Blob} and stores the record to the repository. If
-     * there is already a record with the same {@link SessionRecord#getFileName() filename}, throws an
-     * exception.
+     * <code>attachedFile</code> to {@link java.sql.Blob Blob} and stores the record to the repository. If there is
+     * already a record with the same {@link SessionRecord#getFileName() filename}, throws an exception.
      * <p>
      * Note that the method assigns the new ID to the session record as well.
      * 
@@ -284,8 +278,8 @@ public class SessionRecordService extends AbstractDocumentRecordService {
      * @param attachedFile
      *            File which is attached to the new record.
      */
-    public void save(SessionRecord newRecord, String recordType, MultipartFile attachedFile,
-            HttpServletRequest request, MessageSource messageSource) throws SQLException, IOException {
+    public void save(SessionRecord newRecord, String recordType, MultipartFile attachedFile, HttpServletRequest request,
+            MessageSource messageSource) throws SQLException, IOException {
         newRecord.setType(SessionRecordType.valueOfAccordingLocalization(recordType, messageSource, request));
 
         prepareForSaveFileToDatabase(newRecord, attachedFile);
@@ -293,8 +287,7 @@ public class SessionRecordService extends AbstractDocumentRecordService {
     }
 
     /**
-     * Prepares the {@link SessionRecord newRecord} for saving the {@link MultipartFile attachedFile} to the
-     * database.
+     * Prepares the {@link SessionRecord newRecord} for saving the {@link MultipartFile attachedFile} to the database.
      * <p>
      * NOTE: Analogy to the {@link #preparedAndSaveFileToFileSystem(SessionRecord, MultipartFile)
      * preparedAndSaveFileToFileSystem} method.
@@ -312,14 +305,13 @@ public class SessionRecordService extends AbstractDocumentRecordService {
     }
 
     /**
-     * Prepares the {@link SessionRecord newRecord} for saving and saves the {@link MultipartFile
-     * attachedFile} to the file system.
+     * Prepares the {@link SessionRecord newRecord} for saving and saves the {@link MultipartFile attachedFile} to the
+     * file system.
      * <p>
-     * NOTE: It is necessary to secure the uniqueness of its filename since all files of records are in one
-     * common directory.
+     * NOTE: It is necessary to secure the uniqueness of its filename since all files of records are in one common
+     * directory.
      * <p>
-     * This method is not used since we were not able to find out where in the MochaHost directory hierarchy
-     * we were.
+     * This method is not used since we were not able to find out where in the MochaHost directory hierarchy we were.
      * <p>
      * NOTE: Analogy to the {@link #prepareForSaveFileToDatabase(SessionRecord, MultipartFile)
      * prepareForSaveFileToDatabase} method.
@@ -339,8 +331,8 @@ public class SessionRecordService extends AbstractDocumentRecordService {
 
     /**
      * First, the method performs the
-     * {@link #save(SessionRecord, String, MultipartFile, HttpServletRequest, MessageSource) save} method.
-     * Then, this method notifies all users which have corresponding rights by email.
+     * {@link #save(SessionRecord, String, MultipartFile, HttpServletRequest, MessageSource) save} method. Then, this
+     * method notifies all users which have corresponding rights by email.
      * 
      * @param newRecord
      *            New session record
@@ -362,14 +354,13 @@ public class SessionRecordService extends AbstractDocumentRecordService {
     }
 
     @Override
-    public void notifyUsersOfCreation(Object newRecord, HttpServletRequest request,
-            MessageSource messageSource) {
+    public void notifyUsersOfCreation(Object newRecord, HttpServletRequest request, MessageSource messageSource) {
         this.emailService.sendEmailOnCreation(newRecord, gainUsersToNotify(), request, messageSource);
     }
 
     /**
-     * Deletes the specified {@link SessionRecord} together with all its {@link SessionRecordType types} from
-     * the repository. Moreover, deletes the associated {@link java.io.File file}.
+     * Deletes the specified {@link SessionRecord} together with all its {@link SessionRecordType types} from the
+     * repository. Moreover, deletes the associated {@link java.io.File file}.
      * 
      * @param recordId
      *            ID of the session record
@@ -405,27 +396,24 @@ public class SessionRecordService extends AbstractDocumentRecordService {
         Map<SessionRecord, String> sessionDates = new HashMap<SessionRecord, String>();
 
         for (SessionRecord record : records) {
-            String date = DateUtils.format(record.getSessionDate(), DateUtils.LONG_DATE_FORMATS.get(locale),
-                    locale);
+            String date = DateUtils.format(record.getSessionDate(), DateUtils.LONG_DATE_FORMATS.get(locale), locale);
             sessionDates.put(record, date);
         }
         return sessionDates;
     }
 
     /**
-     * Gets a {@link Map} which for each input {@link SessionRecord} contains a corresponding localized delete
-     * question which is asked before deletion of that record.
+     * Gets a {@link Map} which for each input {@link SessionRecord} contains a corresponding localized delete question
+     * which is asked before deletion of that record.
      */
     public static Map<SessionRecord, String> getLocalizedDeleteQuestions(List<SessionRecord> records,
-            HttpServletRequest request, Map<SessionRecord, String> localizedSessionDates,
-            MessageSource messageSource) {
+            HttpServletRequest request, Map<SessionRecord, String> localizedSessionDates, MessageSource messageSource) {
         String messageCode = "session-records.do-you-really-want-to-delete-record";
         Map<SessionRecord, String> questions = new HashMap<SessionRecord, String>();
 
         for (SessionRecord record : records) {
             Object[] messageParams = new Object[] { localizedSessionDates.get(record) };
-            questions.put(record,
-                    Localization.findLocaleMessage(messageSource, request, messageCode, messageParams));
+            questions.put(record, Localization.findLocaleMessage(messageSource, request, messageCode, messageParams));
         }
         return questions;
     }
@@ -437,8 +425,7 @@ public class SessionRecordService extends AbstractDocumentRecordService {
         List<String> localizedTypes = new ArrayList<String>();
 
         for (SessionRecordType type : SessionRecordType.values()) {
-            localizedTypes.add(Localization.findLocaleMessage(messageSource, request,
-                    type.getLocalizationCode()));
+            localizedTypes.add(Localization.findLocaleMessage(messageSource, request, type.getLocalizationCode()));
         }
         return localizedTypes;
     }

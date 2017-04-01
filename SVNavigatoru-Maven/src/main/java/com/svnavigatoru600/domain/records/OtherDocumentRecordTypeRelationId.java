@@ -21,8 +21,8 @@ public class OtherDocumentRecordTypeRelationId implements Serializable {
     }
 
     /**
-     * Different - not "getType" - name of the getter method is necessary. Otherwise, the methods' signatures
-     * would be identical.
+     * Different - not "getType" - name of the getter method is necessary. Otherwise, the methods' signatures would be
+     * identical.
      */
     public OtherDocumentRecordType getTypedType() {
         return this.type;
@@ -85,7 +85,7 @@ public class OtherDocumentRecordTypeRelationId implements Serializable {
 
     @Override
     public String toString() {
-        return new StringBuilder().append("[recordId=").append(this.recordId).append(", type=")
-                .append(this.type).append("]").toString();
+        return new StringBuilder().append("[recordId=").append(this.recordId).append(", type=").append(this.type)
+                .append("]").toString();
     }
 }

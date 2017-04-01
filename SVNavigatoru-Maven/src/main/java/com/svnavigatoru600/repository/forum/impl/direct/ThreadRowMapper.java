@@ -11,8 +11,7 @@ import com.svnavigatoru600.domain.users.User;
 import com.svnavigatoru600.repository.forum.impl.ThreadField;
 
 /**
- * For more information, see {@link com.svnavigatoru600.repository.users.impl.direct.UserRowMapper
- * UserRowMapper}.
+ * For more information, see {@link com.svnavigatoru600.repository.users.impl.direct.UserRowMapper UserRowMapper}.
  * 
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */

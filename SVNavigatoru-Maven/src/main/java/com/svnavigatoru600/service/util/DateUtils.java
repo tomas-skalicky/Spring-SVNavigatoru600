@@ -62,8 +62,8 @@ public final class DateUtils {
     }
 
     /**
-     * Formats the given <code>date</code> according to the given <code>format</code>. The <code>locale</code>
-     * is important for localization.
+     * Formats the given <code>date</code> according to the given <code>format</code>. The <code>locale</code> is
+     * important for localization.
      * 
      * @return Formatted <code>date</code>
      */
@@ -74,8 +74,8 @@ public final class DateUtils {
     }
 
     /**
-     * Gets the today date. It means that hours, minutes and so on are set to zero. In other words, the
-     * returned {@link Date} could be printed out in the format:
+     * Gets the today date. It means that hours, minutes and so on are set to zero. In other words, the returned
+     * {@link Date} could be printed out in the format:
      * <p>
      * <code>YYYY-MM-DD</code> 00:00:00.000
      * <p>
@@ -86,8 +86,8 @@ public final class DateUtils {
     }
 
     /**
-     * Gets the yesterday date. It means that hours, minutes and so on are set to zero. In other words, the
-     * returned {@link Date} could be printed out in the format:
+     * Gets the yesterday date. It means that hours, minutes and so on are set to zero. In other words, the returned
+     * {@link Date} could be printed out in the format:
      * <p>
      * (<code>YYYY-MM-DD</code> - 1) 00:00:00.000
      * <p>
@@ -98,8 +98,8 @@ public final class DateUtils {
     }
 
     /**
-     * Gets the tomorrow date. It means that hours, minutes and so on are set to zero. In other words, the
-     * returned {@link Date} could be printed out in the format:
+     * Gets the tomorrow date. It means that hours, minutes and so on are set to zero. In other words, the returned
+     * {@link Date} could be printed out in the format:
      * <p>
      * (<code>YYYY-MM-DD</code> + 1) 00:00:00.000
      * <p>
@@ -110,16 +110,15 @@ public final class DateUtils {
     }
 
     /**
-     * Gets the date of particular day. It means that hours, minutes and so on are set to zero. In other
-     * words, the returned {@link Date} could be printed out in the format:
+     * Gets the date of particular day. It means that hours, minutes and so on are set to zero. In other words, the
+     * returned {@link Date} could be printed out in the format:
      * <p>
      * (<code>YYYY-MM-DD</code> + <code>dayOffsetFromToday</code>) 00:00:00.000
      * <p>
      * where <code>YYYY-MM-DD</code> represents today.
      * 
      * @param dayOffsetFromToday
-     *            The number of days from today specifies the particular day. Can be both positive and
-     *            negative.
+     *            The number of days from today specifies the particular day. Can be both positive and negative.
      */
     public static Date getDay(int dayOffsetFromToday) {
         Date now = new Date();
@@ -127,8 +126,8 @@ public final class DateUtils {
     }
 
     /**
-     * Gets the date of particular day. It means that hours, minutes and so on are set to zero. In other
-     * words, the returned {@link Date} could be printed out in the format:
+     * Gets the date of particular day. It means that hours, minutes and so on are set to zero. In other words, the
+     * returned {@link Date} could be printed out in the format:
      * <p>
      * (<code>YYYY-MM-DD</code> + <code>dayOffset</code>) 00:00:00.000
      * <p>

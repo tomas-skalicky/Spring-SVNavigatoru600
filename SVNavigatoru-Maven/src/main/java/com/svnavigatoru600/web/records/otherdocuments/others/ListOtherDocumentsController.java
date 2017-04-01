@@ -25,8 +25,7 @@ public class ListOtherDocumentsController extends AbstractListDocumentsControlle
      */
     @Inject
     public ListOtherDocumentsController(OtherDocumentRecordService recordService, MessageSource messageSource) {
-        super(OthersUrlParts.BASE_URL, new PageViews(), OtherDocumentRecordType.OTHER, recordService,
-                messageSource);
+        super(OthersUrlParts.BASE_URL, new PageViews(), OtherDocumentRecordType.OTHER, recordService, messageSource);
     }
 
     @Override

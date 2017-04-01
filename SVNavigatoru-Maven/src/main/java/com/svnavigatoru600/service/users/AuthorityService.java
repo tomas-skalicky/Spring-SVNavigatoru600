@@ -47,18 +47,16 @@ public class AuthorityService {
     }
 
     /**
-     * Stores the given {@link GrantedAuthority authorities} to the repository. If there is already an
-     * {@link Authority} with the same {@link com.svnavigatoru600.domain.users.AuthorityId#getUsername()
-     * username} and {@link com.svnavigatoru600.domain.users.AuthorityId#getAuthority() authority's name},
-     * throws an exception.
+     * Stores the given {@link GrantedAuthority authorities} to the repository. If there is already an {@link Authority}
+     * with the same {@link com.svnavigatoru600.domain.users.AuthorityId#getUsername() username} and
+     * {@link com.svnavigatoru600.domain.users.AuthorityId#getAuthority() authority's name}, throws an exception.
      */
     public void save(Collection<GrantedAuthority> authorities) {
         this.authorityDao.save(authorities);
     }
 
     /**
-     * Deletes all {@link Authority Authorities} of the specified
-     * {@link com.svnavigatoru600.domain.users.User User}.
+     * Deletes all {@link Authority Authorities} of the specified {@link com.svnavigatoru600.domain.users.User User}.
      * 
      * @param username
      *            The username (=login) of the user
@@ -68,8 +66,8 @@ public class AuthorityService {
     }
 
     /**
-     * Gets a {@link Map} which for each constant of the {@link AuthorityType} enumeration contains a pair of
-     * its {@link AuthorityType#getOrdinal() ordinal} and ID of its checkbox.
+     * Gets a {@link Map} which for each constant of the {@link AuthorityType} enumeration contains a pair of its
+     * {@link AuthorityType#getOrdinal() ordinal} and ID of its checkbox.
      */
     public static Map<Long, String> getRoleCheckboxId() {
         String commonIdFormat = "newAuthorities[%s]";
@@ -83,8 +81,8 @@ public class AuthorityService {
     }
 
     /**
-     * Gets a {@link Map} which for each constant of the {@link AuthorityType} enumeration contains a pair of
-     * its {@link AuthorityType#getOrdinal() ordinal} and its localized title.
+     * Gets a {@link Map} which for each constant of the {@link AuthorityType} enumeration contains a pair of its
+     * {@link AuthorityType#getOrdinal() ordinal} and its localized title.
      */
     @Cacheable("localizedRoleTitles")
     public Map<Long, String> getLocalizedRoleTitles(HttpServletRequest request, MessageSource messageSource) {

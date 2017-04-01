@@ -37,7 +37,8 @@ public final class UserDaoTest extends AbstractRepositoryTest {
     /**
      * Default rights of the second test user.
      */
-    private static final AuthorityType[] SECOND_USER_DEFAULT_AUTHORITIES = new AuthorityType[] { AuthorityType.ROLE_USER_ADMINISTRATOR };
+    private static final AuthorityType[] SECOND_USER_DEFAULT_AUTHORITIES = new AuthorityType[] {
+            AuthorityType.ROLE_USER_ADMINISTRATOR };
     /**
      * Default username of the third test user.
      */
@@ -75,8 +76,7 @@ public final class UserDaoTest extends AbstractRepositoryTest {
         Assert.assertEquals(RepositoryTestUtils.SECOND_USER_DEFAULT_EMAIL, user.getEmail());
         int expectedAuthoritiesCount = SECOND_USER_DEFAULT_AUTHORITIES.length;
         Assert.assertEquals(expectedAuthoritiesCount, user.getAuthorities().size());
-        Authority[] actualAuthorities = user.getAuthorities()
-                .toArray(new Authority[expectedAuthoritiesCount]);
+        Authority[] actualAuthorities = user.getAuthorities().toArray(new Authority[expectedAuthoritiesCount]);
         Collection<String> actualAuthorityTypes = TEST_UTILS.extractAuthorityTypes(actualAuthorities);
         Assert.assertTrue(actualAuthorityTypes.contains(SECOND_USER_DEFAULT_AUTHORITIES[0].name()));
     }
@@ -100,8 +100,7 @@ public final class UserDaoTest extends AbstractRepositoryTest {
         Assert.assertEquals(RepositoryTestUtils.USER_DEFAULT_EMAIL, user.getEmail());
         int expectedAuthoritiesCount = FIRST_USER_DEFAULT_AUTHORITIES.length;
         Assert.assertEquals(expectedAuthoritiesCount, user.getAuthorities().size());
-        Authority[] actualAuthorities = user.getAuthorities()
-                .toArray(new Authority[expectedAuthoritiesCount]);
+        Authority[] actualAuthorities = user.getAuthorities().toArray(new Authority[expectedAuthoritiesCount]);
         Collection<String> actualAuthorityTypes = TEST_UTILS.extractAuthorityTypes(actualAuthorities);
         Assert.assertTrue(actualAuthorityTypes.contains(FIRST_USER_DEFAULT_AUTHORITIES[0].name()));
         Assert.assertTrue(actualAuthorityTypes.contains(FIRST_USER_DEFAULT_AUTHORITIES[1].name()));
@@ -169,8 +168,7 @@ public final class UserDaoTest extends AbstractRepositoryTest {
         userDao.update(thirdUser);
 
         // SELECT ALL
-        List<User> foundUsers = userDao.findAllByAuthorityAndSubscription(authorityType.name(),
-                notificationType);
+        List<User> foundUsers = userDao.findAllByAuthorityAndSubscription(authorityType.name(), notificationType);
         int expectedFoundUserCount = 1;
         Assert.assertEquals(expectedFoundUserCount, foundUsers.size());
         Assert.assertEquals(this.secondUser.getUsername(), foundUsers.get(0).getUsername());
@@ -191,8 +189,7 @@ public final class UserDaoTest extends AbstractRepositoryTest {
         userDao.update(this.secondUser);
 
         // SELECT ALL
-        List<User> foundUsers = userDao.findAllByAuthorityAndSubscription(authorityType.name(),
-                notificationType);
+        List<User> foundUsers = userDao.findAllByAuthorityAndSubscription(authorityType.name(), notificationType);
         int expectedFoundUserCount = 2;
         List<String> usernames = getUsernames(foundUsers);
         Assert.assertEquals(expectedFoundUserCount, usernames.size());
@@ -228,9 +225,8 @@ public final class UserDaoTest extends AbstractRepositoryTest {
      * @return Newly created user
      */
     private User createThirdDefaultTestUser() {
-        return TEST_UTILS.saveTestUser(TEST_UTILS.createDefaultUserBuilder()
-                .withUsername(THIRD_USER_DEFAULT_USERNAME).withEmail(THIRD_USER_DEFAULT_EMAIL)
-                .withAuthorities(THIRD_USER_DEFAULT_AUTHORITIES));
+        return TEST_UTILS.saveTestUser(TEST_UTILS.createDefaultUserBuilder().withUsername(THIRD_USER_DEFAULT_USERNAME)
+                .withEmail(THIRD_USER_DEFAULT_EMAIL).withAuthorities(THIRD_USER_DEFAULT_AUTHORITIES));
     }
 
     /**

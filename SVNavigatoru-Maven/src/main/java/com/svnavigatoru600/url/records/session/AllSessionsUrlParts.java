@@ -12,8 +12,7 @@ public final class AllSessionsUrlParts {
 
     public static final String BASE_URL = SessionsCommonUrlParts.BASE_URL;
     public static final String NEW_URL = AllSessionsUrlParts.BASE_URL + CommonUrlParts.NEW_EXTENSION;
-    public static final String EXISTING_URL = AllSessionsUrlParts.BASE_URL
-            + CommonUrlParts.EXISTING_EXTENSION;
+    public static final String EXISTING_URL = AllSessionsUrlParts.BASE_URL + CommonUrlParts.EXISTING_EXTENSION;
     public static final String CREATED_URL = AllSessionsUrlParts.BASE_URL + CommonUrlParts.CREATED_EXTENSION;
     public static final String DELETED_URL = AllSessionsUrlParts.BASE_URL + CommonUrlParts.DELETED_EXTENSION;
 

@@ -1,11 +1,16 @@
 package com.svnavigatoru600.web.forum.threads;
 
-import static org.mockito.Matchers.*;
-import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-import static org.springframework.test.web.servlet.setup.MockMvcBuilders.*;
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.forwardedUrl;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.setup.MockMvcBuilders.standaloneSetup;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -73,8 +78,7 @@ public final class EditThreadControllerTest {
     public void initMockMvc() {
         initMocks();
 
-        this.controller = new EditThreadController(this.threadService, this.editThreadValidator,
-                this.messageSource);
+        this.controller = new EditThreadController(this.threadService, this.editThreadValidator, this.messageSource);
         mockControllerModelAttributes(this.controller);
 
         this.mockMvc = standaloneSetup(this.controller).build();

@@ -32,7 +32,8 @@ public class DeleteSvSessionRecordController extends AbstractDeleteRecordControl
     }
 
     @Override
-    @RequestMapping(value = SvUrlParts.EXISTING_URL + "{recordId}/" + CommonUrlParts.DELETE_EXTENSION, method = RequestMethod.GET)
+    @RequestMapping(value = SvUrlParts.EXISTING_URL + "{recordId}/"
+            + CommonUrlParts.DELETE_EXTENSION, method = RequestMethod.GET)
     public String delete(@PathVariable int recordId, HttpServletRequest request, ModelMap model) {
         return super.delete(recordId, request, model);
     }

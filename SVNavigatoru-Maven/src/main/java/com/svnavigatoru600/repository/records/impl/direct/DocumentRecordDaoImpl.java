@@ -37,8 +37,7 @@ public class DocumentRecordDaoImpl extends NamedParameterJdbcDaoSupport {
     }
 
     /**
-     * Maps properties of the given {@link AbstractDocumentRecord} to names of the corresponding database
-     * column.
+     * Maps properties of the given {@link AbstractDocumentRecord} to names of the corresponding database column.
      */
     private Map<String, Object> getNamedParameters(AbstractDocumentRecord record) {
         Map<String, Object> parameters = new HashMap<String, Object>();
@@ -57,8 +56,8 @@ public class DocumentRecordDaoImpl extends NamedParameterJdbcDaoSupport {
         String fileNameColumn = DocumentRecordField.fileName.getColumnName();
         String fileColumn = DocumentRecordField.file.getColumnName();
         String query = String.format("UPDATE %s SET %s = :%s, %s = :%s WHERE %s = :%s",
-                DocumentRecordDaoImpl.TABLE_NAME, fileNameColumn, fileNameColumn, fileColumn, fileColumn,
-                idColumn, idColumn);
+                DocumentRecordDaoImpl.TABLE_NAME, fileNameColumn, fileNameColumn, fileColumn, fileColumn, idColumn,
+                idColumn);
 
         // this.getSimpleJdbcTemplate() cannot be used here since the dataSource
         // is not set (i.e. equals null).
@@ -66,19 +65,17 @@ public class DocumentRecordDaoImpl extends NamedParameterJdbcDaoSupport {
     }
 
     public int save(AbstractDocumentRecord record, DataSource dataSource) {
-        SimpleJdbcInsert insert = new SimpleJdbcInsert(dataSource)
-                .withTableName(DocumentRecordDaoImpl.TABLE_NAME)
+        SimpleJdbcInsert insert = new SimpleJdbcInsert(dataSource).withTableName(DocumentRecordDaoImpl.TABLE_NAME)
                 .usingGeneratedKeyColumns(DocumentRecordField.id.getColumnName())
-                .usingColumns(DocumentRecordField.fileName.getColumnName(),
-                        DocumentRecordField.file.getColumnName());
+                .usingColumns(DocumentRecordField.fileName.getColumnName(), DocumentRecordField.file.getColumnName());
 
         return insert.executeAndReturnKey(getNamedParameters(record)).intValue();
     }
 
     public void delete(AbstractDocumentRecord record, DataSource dataSource) {
         String idColumn = DocumentRecordField.id.getColumnName();
-        String query = String.format("DELETE FROM %s WHERE %s = :%s", DocumentRecordDaoImpl.TABLE_NAME,
-                idColumn, idColumn);
+        String query = String.format("DELETE FROM %s WHERE %s = :%s", DocumentRecordDaoImpl.TABLE_NAME, idColumn,
+                idColumn);
 
         Map<String, Integer> args = Collections.singletonMap(idColumn, record.getId());
 

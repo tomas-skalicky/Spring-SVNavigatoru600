@@ -67,28 +67,26 @@ public class NewContributionController extends AbstractNewEditContributionContro
         contribution.setThread(this.threadService.findById(threadId));
         command.setContribution(contribution);
 
-        getSendNotificationModelFiller().populateSendNotificationInInitForm(command, request,
-                getMessageSource());
+        getSendNotificationModelFiller().populateSendNotificationInInitForm(command, request, getMessageSource());
 
         model.addAttribute(AbstractNewEditContributionController.COMMAND, command);
         return PageViews.NEW.getViewName();
     }
 
     /**
-     * If values in the form are OK, the new contribution is stored to the repository. Otherwise, returns back
-     * to the form.
+     * If values in the form are OK, the new contribution is stored to the repository. Otherwise, returns back to the
+     * form.
      * 
      * @return The name of the view which is to be shown.
      */
     @RequestMapping(value = NewContributionController.BASE_URL, method = RequestMethod.POST)
     @Transactional
-    public String processSubmittedForm(
-            @ModelAttribute(NewContributionController.COMMAND) NewContribution command, BindingResult result,
-            SessionStatus status, @PathVariable int threadId, HttpServletRequest request, ModelMap model) {
+    public String processSubmittedForm(@ModelAttribute(NewContributionController.COMMAND) NewContribution command,
+            BindingResult result, SessionStatus status, @PathVariable int threadId, HttpServletRequest request,
+            ModelMap model) {
 
         MessageSource messageSource = getMessageSource();
-        getSendNotificationModelFiller()
-                .populateSendNotificationInSubmitForm(command, request, messageSource);
+        getSendNotificationModelFiller().populateSendNotificationInSubmitForm(command, request, messageSource);
 
         getValidator().validate(command, result);
         if (result.hasErrors()) {
@@ -103,8 +101,8 @@ public class NewContributionController extends AbstractNewEditContributionContro
             newContribution.setThread(this.threadService.findById(threadId));
 
             // Saves the contribution to the repository.
-            getContributionService().saveAndNotifyUsers(newContribution,
-                    command.getSendNotification().isStatus(), request, messageSource);
+            getContributionService().saveAndNotifyUsers(newContribution, command.getSendNotification().isStatus(),
+                    request, messageSource);
 
             // Clears the command object from the session.
             status.setComplete();

@@ -26,14 +26,14 @@ public class DeleteAccountingDocumentController extends AbstractDeleteDocumentCo
      * Constructor.
      */
     @Inject
-    public DeleteAccountingDocumentController(OtherDocumentRecordService recordService,
-            MessageSource messageSource) {
-        super(AccountingUrlParts.BASE_URL, new PageViews(), OtherDocumentRecordType.ACCOUNTING,
-                recordService, messageSource);
+    public DeleteAccountingDocumentController(OtherDocumentRecordService recordService, MessageSource messageSource) {
+        super(AccountingUrlParts.BASE_URL, new PageViews(), OtherDocumentRecordType.ACCOUNTING, recordService,
+                messageSource);
     }
 
     @Override
-    @RequestMapping(value = AccountingUrlParts.EXISTING_URL + "{recordId}/" + CommonUrlParts.DELETE_EXTENSION, method = RequestMethod.GET)
+    @RequestMapping(value = AccountingUrlParts.EXISTING_URL + "{recordId}/"
+            + CommonUrlParts.DELETE_EXTENSION, method = RequestMethod.GET)
     public String delete(@PathVariable int recordId, HttpServletRequest request, ModelMap model) {
         return super.delete(recordId, request, model);
     }

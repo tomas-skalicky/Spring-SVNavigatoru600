@@ -58,8 +58,8 @@ public final class NewsDaoTest extends AbstractRepositoryTest {
         int secondNewsId = TEST_UTILS.createDefaultTestNews();
 
         // SELECT ALL
-        List<News> foundNews = newsDao.findAllOrdered(new FindAllOrderedArguments(NewsField.creationTime,
-                OrderType.ASCENDING));
+        List<News> foundNews = newsDao
+                .findAllOrdered(new FindAllOrderedArguments(NewsField.creationTime, OrderType.ASCENDING));
         int expectedFoundNewsCount = 2;
         Assert.assertEquals(expectedFoundNewsCount, foundNews.size());
         Assert.assertEquals(firstNewsId, foundNews.get(0).getId());

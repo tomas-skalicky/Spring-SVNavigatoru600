@@ -25,8 +25,8 @@ public final class NewUserValidatorTest {
 
     @Parameters(name = "Run #{index}: firstName={0} => errorCount={1}")
     public static Iterable<Object[]> data() {
-        return Arrays.asList(new Object[][] { { null, 1 }, { StringUtils.EMPTY, 1 }, { "A", 1 }, { "A!", 1 },
-                { "AB", 0 } });
+        return Arrays
+                .asList(new Object[][] { { null, 1 }, { StringUtils.EMPTY, 1 }, { "A", 1 }, { "A!", 1 }, { "AB", 0 } });
     }
 
     /**

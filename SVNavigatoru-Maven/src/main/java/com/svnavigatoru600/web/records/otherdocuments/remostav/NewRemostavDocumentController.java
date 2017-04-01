@@ -33,8 +33,8 @@ public class NewRemostavDocumentController extends AbstractNewDocumentController
     public NewRemostavDocumentController(OtherDocumentRecordService recordService,
             SendNotificationNewModelFiller sendNotificationModelFiller, NewRecordValidator validator,
             MessageSource messageSource) {
-        super(RemostavDocumentsUrlParts.BASE_URL, new PageViews(), OtherDocumentRecordType.REMOSTAV,
-                recordService, sendNotificationModelFiller, validator, messageSource);
+        super(RemostavDocumentsUrlParts.BASE_URL, new PageViews(), OtherDocumentRecordType.REMOSTAV, recordService,
+                sendNotificationModelFiller, validator, messageSource);
     }
 
     @Override
@@ -45,9 +45,8 @@ public class NewRemostavDocumentController extends AbstractNewDocumentController
 
     @Override
     @RequestMapping(value = RemostavDocumentsUrlParts.NEW_URL, method = RequestMethod.POST)
-    public String processSubmittedForm(
-            @ModelAttribute(AbstractNewDocumentController.COMMAND) NewRecord command, BindingResult result,
-            SessionStatus status, HttpServletRequest request, ModelMap model) {
+    public String processSubmittedForm(@ModelAttribute(AbstractNewDocumentController.COMMAND) NewRecord command,
+            BindingResult result, SessionStatus status, HttpServletRequest request, ModelMap model) {
         return super.processSubmittedForm(command, result, status, request, model);
     }
 }

@@ -10,8 +10,8 @@ import com.svnavigatoru600.domain.users.Authority;
 import com.svnavigatoru600.domain.users.AuthorityType;
 
 /**
- * Provides a set of static functions related to {@link Authority authorities (= roles)} and their
- * {@link AuthorityType types}.
+ * Provides a set of static functions related to {@link Authority authorities (= roles)} and their {@link AuthorityType
+ * types}.
  * 
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
@@ -21,9 +21,9 @@ public final class AuthorityUtils {
     }
 
     /**
-     * Gets an array of flags which say which authorities (= roles) are checked (selected), and which
-     * authorities are not checked. The array is filled in according to the given array of checked
-     * {@link GrantedAuthority} called <code>authorities</code>.
+     * Gets an array of flags which say which authorities (= roles) are checked (selected), and which authorities are
+     * not checked. The array is filled in according to the given array of checked {@link GrantedAuthority} called
+     * <code>authorities</code>.
      */
     public static boolean[] getArrayOfCheckIndicators(Collection<GrantedAuthority> authorities) {
         boolean[] indicators = AuthorityUtils.createArrayOfCheckIndicators();
@@ -38,8 +38,8 @@ public final class AuthorityUtils {
      * Gets the default array of flags which say which authorities (= roles) are checked (selected), and which
      * authorities are not checked.
      * <p>
-     * <b>Precondition:</b> Ordinal values of all {@link AuthorityType AuthorityTypes} are exactly in the
-     * range of <code>[0, 1, ..., AuthorityType.values().length-1]</code>.
+     * <b>Precondition:</b> Ordinal values of all {@link AuthorityType AuthorityTypes} are exactly in the range of
+     * <code>[0, 1, ..., AuthorityType.values().length-1]</code>.
      */
     public static boolean[] getDefaultArrayOfCheckIndicators() {
         boolean[] indicators = AuthorityUtils.createArrayOfCheckIndicators();
@@ -52,9 +52,9 @@ public final class AuthorityUtils {
     }
 
     /**
-     * Converts the given array of check <code>indicators</code> to the {@link Set} of
-     * {@link GrantedAuthority GrantedAuthorities} associated with an
-     * {@link com.svnavigatoru600.domain.users.User User} with the given <code>username</code>.
+     * Converts the given array of check <code>indicators</code> to the {@link Set} of {@link GrantedAuthority
+     * GrantedAuthorities} associated with an {@link com.svnavigatoru600.domain.users.User User} with the given
+     * <code>username</code>.
      * 
      * @return Set of those authorities which have been checked, i.e. their flags equal <code>true</code>.
      */

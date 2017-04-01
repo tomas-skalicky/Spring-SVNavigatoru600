@@ -10,8 +10,7 @@ import com.svnavigatoru600.domain.News;
 import com.svnavigatoru600.repository.news.impl.NewsField;
 
 /**
- * For more information, see {@link com.svnavigatoru600.repository.users.impl.direct.UserRowMapper
- * UserRowMapper}.
+ * For more information, see {@link com.svnavigatoru600.repository.users.impl.direct.UserRowMapper UserRowMapper}.
  * 
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */

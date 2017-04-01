@@ -42,12 +42,12 @@ public abstract class AbstractEditRecordController extends AbstractNewEditRecord
     private final Log logger = LogFactory.getLog(this.getClass());
 
     /**
-     * Constructs a controller which considers all {@link SessionRecord SessionRecords} of all
-     * {@link SessionRecordType SessionRecordTypes}.
+     * Constructs a controller which considers all {@link SessionRecord SessionRecords} of all {@link SessionRecordType
+     * SessionRecordTypes}.
      */
-    public AbstractEditRecordController(String baseUrl, AbstractPageViews views,
-            SessionRecordService recordService, SendNotificationModelFiller sendNotificationModelFiller,
-            EditSessionRecordValidator validator, MessageSource messageSource) {
+    public AbstractEditRecordController(String baseUrl, AbstractPageViews views, SessionRecordService recordService,
+            SendNotificationModelFiller sendNotificationModelFiller, EditSessionRecordValidator validator,
+            MessageSource messageSource) {
         super(baseUrl, views, recordService, sendNotificationModelFiller, validator, messageSource);
     }
 
@@ -55,12 +55,10 @@ public abstract class AbstractEditRecordController extends AbstractNewEditRecord
      * Constructs a controller which considers all {@link SessionRecord SessionRecords} of the given
      * <code>recordType</code>.
      */
-    public AbstractEditRecordController(String baseUrl, AbstractPageViews views,
-            SessionRecordType recordType, SessionRecordService recordService,
-            SendNotificationModelFiller sendNotificationModelFiller, EditSessionRecordValidator validator,
-            MessageSource messageSource) {
-        super(baseUrl, views, recordType, recordService, sendNotificationModelFiller, validator,
-                messageSource);
+    public AbstractEditRecordController(String baseUrl, AbstractPageViews views, SessionRecordType recordType,
+            SessionRecordService recordService, SendNotificationModelFiller sendNotificationModelFiller,
+            EditSessionRecordValidator validator, MessageSource messageSource) {
+        super(baseUrl, views, recordType, recordService, sendNotificationModelFiller, validator, messageSource);
     }
 
     /**
@@ -77,8 +75,8 @@ public abstract class AbstractEditRecordController extends AbstractNewEditRecord
         command.setRecord(record);
 
         MessageSource messageSource = getMessageSource();
-        command.setNewType(Localization.findLocaleMessage(messageSource, request, record.getTypedType()
-                .getLocalizationCode()));
+        command.setNewType(
+                Localization.findLocaleMessage(messageSource, request, record.getTypedType().getLocalizationCode()));
 
         getSendNotificationModelFiller().populateSendNotificationInInitForm(command, request, messageSource);
 
@@ -87,8 +85,8 @@ public abstract class AbstractEditRecordController extends AbstractNewEditRecord
     }
 
     /**
-     * Initializes the form after the modified data were successfully saved to the repository and the new file
-     * (if it exists) was uploaded.
+     * Initializes the form after the modified data were successfully saved to the repository and the new file (if it
+     * exists) was uploaded.
      */
     public String initFormAfterSave(int recordId, HttpServletRequest request, ModelMap model) {
         String view = initForm(recordId, request, model);
@@ -97,8 +95,8 @@ public abstract class AbstractEditRecordController extends AbstractNewEditRecord
     }
 
     /**
-     * If values in the form are OK, updates data of the record with the given <code>recordId</code>.
-     * Otherwise, returns back to the form.
+     * If values in the form are OK, updates data of the record with the given <code>recordId</code>. Otherwise, returns
+     * back to the form.
      * 
      * @return The name of the view which is to be shown.
      */
@@ -107,8 +105,7 @@ public abstract class AbstractEditRecordController extends AbstractNewEditRecord
             int recordId, HttpServletRequest request, ModelMap model) {
 
         MessageSource messageSource = getMessageSource();
-        getSendNotificationModelFiller()
-                .populateSendNotificationInSubmitForm(command, request, messageSource);
+        getSendNotificationModelFiller().populateSendNotificationInSubmitForm(command, request, messageSource);
 
         getValidator().validate(command, result);
         if (result.hasErrors()) {
@@ -118,8 +115,8 @@ public abstract class AbstractEditRecordController extends AbstractNewEditRecord
 
         try {
             getRecordService().updateAndNotifyUsers(recordId, command.getRecord(), command.getNewType(),
-                    command.isFileChanged(), command.getNewFile(), command.getSendNotification().isStatus(),
-                    request, messageSource);
+                    command.isFileChanged(), command.getNewFile(), command.getSendNotification().isStatus(), request,
+                    messageSource);
 
             // Clears the command object from the session.
             status.setComplete();

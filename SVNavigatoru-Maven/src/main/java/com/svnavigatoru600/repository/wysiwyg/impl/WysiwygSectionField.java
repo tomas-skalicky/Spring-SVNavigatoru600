@@ -23,8 +23,8 @@ public enum WysiwygSectionField {
     }
 
     /**
-     * Names of the columns of the database table which contains
-     * {@link com.svnavigatoru600.domain.WysiwygSection WYSIWYG sections}.
+     * Names of the columns of the database table which contains {@link com.svnavigatoru600.domain.WysiwygSection
+     * WYSIWYG sections}.
      */
     private enum NewsColumn {
 

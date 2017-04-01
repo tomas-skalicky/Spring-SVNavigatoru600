@@ -46,8 +46,7 @@ public final class SessionRecordDaoTest extends AbstractRepositoryTest {
         // SELECT ONE
         SessionRecord record = recordDao.findById(recordId);
         doAssertAfterFindById(record, recordId);
-        Assert.assertEquals(RepositoryTestUtils.DOCUMENT_RECORD_DEFAULT_FILE.length(), record.getFile()
-                .length());
+        Assert.assertEquals(RepositoryTestUtils.DOCUMENT_RECORD_DEFAULT_FILE.length(), record.getFile().length());
     }
 
     @Test
@@ -68,8 +67,7 @@ public final class SessionRecordDaoTest extends AbstractRepositoryTest {
         Assert.assertEquals(expectedRecordId, foundRecord.getId());
         Assert.assertEquals(RepositoryTestUtils.DOCUMENT_RECORD_DEFAULT_FILE_NAME, foundRecord.getFileName());
         Assert.assertEquals(RepositoryTestUtils.SESSION_RECORD_DEFAULT_TYPE, foundRecord.getTypedType());
-        Assert.assertEquals(RepositoryTestUtils.SESSION_RECORD_DEFAULT_SESSION_DATE,
-                foundRecord.getSessionDate());
+        Assert.assertEquals(RepositoryTestUtils.SESSION_RECORD_DEFAULT_SESSION_DATE, foundRecord.getSessionDate());
         Assert.assertEquals(RepositoryTestUtils.SESSION_RECORD_DEFAULT_DISCUSSED_TOPICS,
                 foundRecord.getDiscussedTopics());
     }
@@ -99,8 +97,8 @@ public final class SessionRecordDaoTest extends AbstractRepositoryTest {
         SessionRecordType type = SessionRecordType.SESSION_RECORD_OF_BOARD;
         int firstRecordId = TEST_UTILS.createDefaultTestSessionRecord(type, DateUtils.getYesterday());
         @SuppressWarnings("unused")
-        int secondRecordId = TEST_UTILS.createDefaultTestSessionRecord(
-                SessionRecordType.SESSION_RECORD_OF_SV, DateUtils.getToday());
+        int secondRecordId = TEST_UTILS.createDefaultTestSessionRecord(SessionRecordType.SESSION_RECORD_OF_SV,
+                DateUtils.getToday());
         int thirdRecordId = TEST_UTILS.createDefaultTestSessionRecord(type, DateUtils.getTomorrow());
 
         // SELECT ALL
@@ -132,10 +130,8 @@ public final class SessionRecordDaoTest extends AbstractRepositoryTest {
         record = recordDao.findById(record.getId());
         Assert.assertEquals(recordId, record.getId());
         Assert.assertEquals(RepositoryTestUtils.EDITED_DOCUMENT_RECORD_FILE_NAME, record.getFileName());
-        Assert.assertEquals(RepositoryTestUtils.EDITED_DOCUMENT_RECORD_FILE.length(), record.getFile()
-                .length());
-        Assert.assertFalse(RepositoryTestUtils.DOCUMENT_RECORD_DEFAULT_FILE.length() == record.getFile()
-                .length());
+        Assert.assertEquals(RepositoryTestUtils.EDITED_DOCUMENT_RECORD_FILE.length(), record.getFile().length());
+        Assert.assertFalse(RepositoryTestUtils.DOCUMENT_RECORD_DEFAULT_FILE.length() == record.getFile().length());
         Assert.assertEquals(EDITED_SESSION_RECORD_TYPE, record.getTypedType());
         Assert.assertEquals(EDITED_SESSION_RECORD_SESSION_DATE, record.getSessionDate());
         Assert.assertEquals(EDITED_SESSION_RECORD_DISCUSSED_TOPICS, record.getDiscussedTopics());

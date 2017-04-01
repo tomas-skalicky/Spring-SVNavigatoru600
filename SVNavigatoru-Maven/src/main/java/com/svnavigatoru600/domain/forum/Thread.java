@@ -91,8 +91,8 @@ public class Thread implements Serializable, Comparable<Thread> {
     }
 
     /**
-     * Sorts {@link Thread Threads} according to their last saved {@link Contribution Contributions} returned
-     * by the {@link #getLastSavedContribution() getLastSavedContribution} method.
+     * Sorts {@link Thread Threads} according to their last saved {@link Contribution Contributions} returned by the
+     * {@link #getLastSavedContribution() getLastSavedContribution} method.
      */
     @Override
     public int compareTo(Thread t) {
@@ -110,8 +110,8 @@ public class Thread implements Serializable, Comparable<Thread> {
     }
 
     /**
-     * Gets the {@link Contribution} which has been saved the latest time among all {@link Contribution
-     * Contributions} of this {@link Thread}.
+     * Gets the {@link Contribution} which has been saved the latest time among all {@link Contribution Contributions}
+     * of this {@link Thread}.
      */
     public Contribution getLastSavedContribution() {
         Contribution lastSavedContribution = null;
@@ -126,9 +126,9 @@ public class Thread implements Serializable, Comparable<Thread> {
     }
 
     /**
-     * Gets a {@link Map} which for each input {@link Thread} contains a {@link Contribution} which has the
-     * highest {@link Contribution#getLastSaveTime() lastSaveTime} and which belongs to that thread. Moreover,
-     * the method finds the author of such a contribution.
+     * Gets a {@link Map} which for each input {@link Thread} contains a {@link Contribution} which has the highest
+     * {@link Contribution#getLastSaveTime() lastSaveTime} and which belongs to that thread. Moreover, the method finds
+     * the author of such a contribution.
      */
     public static Map<Thread, Contribution> getLastSavedContributions(List<Thread> threads) {
         Map<Thread, Contribution> lastSavedContributions = new HashMap<Thread, Contribution>();
@@ -141,9 +141,8 @@ public class Thread implements Serializable, Comparable<Thread> {
 
     @Override
     public String toString() {
-        return new StringBuilder("[id=").append(this.id).append(", name=").append(this.name)
-                .append(", creationTime=").append(this.creationTime).append(", author=").append(this.author)
-                .append("]").toString();
+        return new StringBuilder("[id=").append(this.id).append(", name=").append(this.name).append(", creationTime=")
+                .append(this.creationTime).append(", author=").append(this.author).append("]").toString();
     }
 
     private Thread(Builder builder) {

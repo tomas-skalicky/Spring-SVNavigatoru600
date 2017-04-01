@@ -69,8 +69,8 @@ public class EditUserController extends AbstractNewEditUserController {
 
         // Sets up all auxiliary (but necessary) maps.
         command.setRoleCheckboxId(AuthorityService.getRoleCheckboxId());
-        command.setLocalizedRoleCheckboxTitles(this.authorityService.getLocalizedRoleTitles(request,
-                getMessageSource()));
+        command.setLocalizedRoleCheckboxTitles(
+                this.authorityService.getLocalizedRoleTitles(request, getMessageSource()));
 
         model.addAttribute(AbstractNewEditUserController.COMMAND, command);
         return PageViews.EDIT.getViewName();
@@ -88,23 +88,21 @@ public class EditUserController extends AbstractNewEditUserController {
     }
 
     /**
-     * If values in the form are OK, updates date of the given <code>username</code>. Otherwise, returns back
-     * to the form.
+     * If values in the form are OK, updates date of the given <code>username</code>. Otherwise, returns back to the
+     * form.
      * 
      * @return The name of the view which is to be shown.
      */
     @RequestMapping(value = UserAdministrationUrlParts.EXISTING_URL + "{username}/", method = RequestMethod.POST)
     @Transactional
     public String processSubmittedForm(
-            @ModelAttribute(AbstractNewEditUserController.COMMAND) AdministrateUserData command,
-            BindingResult result, SessionStatus status, @PathVariable String username,
-            HttpServletRequest request, ModelMap model) {
+            @ModelAttribute(AbstractNewEditUserController.COMMAND) AdministrateUserData command, BindingResult result,
+            SessionStatus status, @PathVariable String username, HttpServletRequest request, ModelMap model) {
 
         // Sets up all auxiliary (but necessary) maps.
         command.setRoleCheckboxId(AuthorityService.getRoleCheckboxId());
         MessageSource messageSource = getMessageSource();
-        command.setLocalizedRoleCheckboxTitles(this.authorityService.getLocalizedRoleTitles(request,
-                messageSource));
+        command.setLocalizedRoleCheckboxTitles(this.authorityService.getLocalizedRoleTitles(request, messageSource));
 
         this.validator.validate(command, result);
         if (result.hasErrors()) {

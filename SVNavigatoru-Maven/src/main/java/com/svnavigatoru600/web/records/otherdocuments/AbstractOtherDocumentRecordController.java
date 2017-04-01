@@ -18,19 +18,18 @@ import com.svnavigatoru600.web.records.AbstractPageViews;
 public abstract class AbstractOtherDocumentRecordController extends AbstractDocumentRecordController {
 
     /**
-     * If all {@link com.svnavigatoru600.domain.records.OtherDocumentRecord OtherDocumentRecords} are
-     * considered (i.e. processed) by this controller, <code>allRecordTypes</code> equals <code>true</code>.
-     * Otherwise, <code>allRecordTypes</code> equals <code>false</code> and <code>RECORD_TYPE</code>
-     * determines the exact type of treated records.
+     * If all {@link com.svnavigatoru600.domain.records.OtherDocumentRecord OtherDocumentRecords} are considered (i.e.
+     * processed) by this controller, <code>allRecordTypes</code> equals <code>true</code>. Otherwise,
+     * <code>allRecordTypes</code> equals <code>false</code> and <code>RECORD_TYPE</code> determines the exact type of
+     * treated records.
      */
     private final OtherDocumentRecordType recordType;
     private boolean allRecordTypes = false;
     private OtherDocumentRecordService recordService = null;
 
     /**
-     * Constructs a controller which considers all
-     * {@link com.svnavigatoru600.domain.records.OtherDocumentRecord OtherDocumentRecords} of all
-     * {@link OtherDocumentRecordType OtherDocumentRecordTypes}.
+     * Constructs a controller which considers all {@link com.svnavigatoru600.domain.records.OtherDocumentRecord
+     * OtherDocumentRecords} of all {@link OtherDocumentRecordType OtherDocumentRecordTypes}.
      */
     public AbstractOtherDocumentRecordController(String baseUrl, AbstractPageViews views,
             OtherDocumentRecordService recordService, MessageSource messageSource) {
@@ -39,13 +38,11 @@ public abstract class AbstractOtherDocumentRecordController extends AbstractDocu
     }
 
     /**
-     * Constructs a controller which considers all
-     * {@link com.svnavigatoru600.domain.records.OtherDocumentRecord OtherDocumentRecords} of the given
-     * <code>recordType</code>.
+     * Constructs a controller which considers all {@link com.svnavigatoru600.domain.records.OtherDocumentRecord
+     * OtherDocumentRecords} of the given <code>recordType</code>.
      */
     public AbstractOtherDocumentRecordController(String baseUrl, AbstractPageViews views,
-            OtherDocumentRecordType recordType, OtherDocumentRecordService recordService,
-            MessageSource messageSource) {
+            OtherDocumentRecordType recordType, OtherDocumentRecordService recordService, MessageSource messageSource) {
         super(baseUrl, views, messageSource);
         this.recordType = recordType;
         this.recordService = recordService;

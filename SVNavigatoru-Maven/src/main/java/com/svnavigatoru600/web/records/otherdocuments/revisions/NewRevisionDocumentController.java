@@ -33,8 +33,8 @@ public class NewRevisionDocumentController extends AbstractNewDocumentController
     public NewRevisionDocumentController(OtherDocumentRecordService recordService,
             SendNotificationNewModelFiller sendNotificationModelFiller, NewRecordValidator validator,
             MessageSource messageSource) {
-        super(RevisionsUrlParts.BASE_URL, new PageViews(), OtherDocumentRecordType.REGULAR_REVISION,
-                recordService, sendNotificationModelFiller, validator, messageSource);
+        super(RevisionsUrlParts.BASE_URL, new PageViews(), OtherDocumentRecordType.REGULAR_REVISION, recordService,
+                sendNotificationModelFiller, validator, messageSource);
     }
 
     @Override
@@ -45,9 +45,8 @@ public class NewRevisionDocumentController extends AbstractNewDocumentController
 
     @Override
     @RequestMapping(value = RevisionsUrlParts.NEW_URL, method = RequestMethod.POST)
-    public String processSubmittedForm(
-            @ModelAttribute(AbstractNewDocumentController.COMMAND) NewRecord command, BindingResult result,
-            SessionStatus status, HttpServletRequest request, ModelMap model) {
+    public String processSubmittedForm(@ModelAttribute(AbstractNewDocumentController.COMMAND) NewRecord command,
+            BindingResult result, SessionStatus status, HttpServletRequest request, ModelMap model) {
         return super.processSubmittedForm(command, result, status, request, model);
     }
 }

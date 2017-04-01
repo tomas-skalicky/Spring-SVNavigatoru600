@@ -33,8 +33,8 @@ public class UpdateUserDataValidator implements Validator {
     }
 
     /**
-     * Checks whether the given <code>password</code> and its <code>confirmation</code> are equal and whether
-     * they represent the valid password. If both of them are blank, the parameters are OK.
+     * Checks whether the given <code>password</code> and its <code>confirmation</code> are equal and whether they
+     * represent the valid password. If both of them are blank, the parameters are OK.
      * 
      * @param password
      *            Password which is to be checked.

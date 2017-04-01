@@ -74,8 +74,7 @@ public class WysiwygSection implements Serializable {
 
     @Override
     public String toString() {
-        return new StringBuilder("[name=").append(this.name).append(", lastSaveTime=")
-                .append(this.lastSaveTime).append(", sourceCode=").append(this.sourceCode).append("]")
-                .toString();
+        return new StringBuilder("[name=").append(this.name).append(", lastSaveTime=").append(this.lastSaveTime)
+                .append(", sourceCode=").append(this.sourceCode).append("]").toString();
     }
 }

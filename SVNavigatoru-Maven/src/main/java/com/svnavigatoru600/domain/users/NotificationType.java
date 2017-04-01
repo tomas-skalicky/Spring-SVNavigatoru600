@@ -48,8 +48,8 @@ public enum NotificationType {
     }
 
     /**
-     * Gets the localization code of the title of this {@link NotificationType}. Values which correspond to
-     * this code are stored in <code>messages*.properties</code> files.
+     * Gets the localization code of the title of this {@link NotificationType}. Values which correspond to this code
+     * are stored in <code>messages*.properties</code> files.
      */
     public String getTitleLocalizationCode() {
         return this.titleLocalizationCode;

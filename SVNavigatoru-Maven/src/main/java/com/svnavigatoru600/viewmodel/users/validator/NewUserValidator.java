@@ -13,8 +13,8 @@ import com.svnavigatoru600.service.util.Username;
 import com.svnavigatoru600.viewmodel.users.AdministrateUserData;
 
 /**
- * Validates the data of a new {@link com.svnavigatoru600.domain.users.User User} filled in in the
- * <i>new-user.jsp</i> form.
+ * Validates the data of a new {@link com.svnavigatoru600.domain.users.User User} filled in in the <i>new-user.jsp</i>
+ * form.
  * 
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */

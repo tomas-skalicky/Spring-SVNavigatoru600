@@ -14,8 +14,8 @@ import com.svnavigatoru600.service.util.Localization;
 import com.svnavigatoru600.url.users.UserAccountUrlParts;
 
 /**
- * Ancestor of all {@link Service Services} which provide sending of emails concerning notifications of new
- * posts and updates.
+ * Ancestor of all {@link Service Services} which provide sending of emails concerning notifications of new posts and
+ * updates.
  * 
  * @author <a href="mailto:tomas.skalicky@gfk.com">Tomas Skalicky</a>
  */
@@ -49,8 +49,7 @@ public abstract class AbstractNotificationEmailService extends AbstractEmailServ
                 getNotificationType().getTitleLocalizationCode());
         String linkText = Localization.findLocaleMessage(messageSource, request,
                 AbstractNotificationEmailService.NOTIFICATIONS_EMAIL_TEXT_UNSUBSCRIPTION_LINK_TEXT_CODE);
-        String unsubscriptionUrl = UserAccountUrlParts.getUrlForUnsubscription(user, getNotificationType(),
-                request);
+        String unsubscriptionUrl = UserAccountUrlParts.getUrlForUnsubscription(user, getNotificationType(), request);
         String hereClickToUnsubscribe = String.format("<a href='%s'>%s</a>", unsubscriptionUrl, linkText);
 
         Object[] messageParams = new Object[] { Configuration.DOMAIN, sectionWhichIsToBeUnsubscribed,
@@ -64,36 +63,33 @@ public abstract class AbstractNotificationEmailService extends AbstractEmailServ
      * 
      * @param newObject
      *            Newly posted {@link com.svnavigatoru600.domain.News News},
-     *            {@link com.svnavigatoru600.domain.eventcalendar.CalendarEvent CalendarEvent} or something
-     *            else.
+     *            {@link com.svnavigatoru600.domain.eventcalendar.CalendarEvent CalendarEvent} or something else.
      */
-    public abstract void sendEmailOnCreation(Object newObject, List<User> usersToNotify,
-            HttpServletRequest request, MessageSource messageSource);
+    public abstract void sendEmailOnCreation(Object newObject, List<User> usersToNotify, HttpServletRequest request,
+            MessageSource messageSource);
 
     /**
      * Sends emails to the given {@link User Users} with notification of changes in the given {@link Object}.
      * 
      * @param updatedObject
      *            Updated {@link com.svnavigatoru600.domain.News News},
-     *            {@link com.svnavigatoru600.domain.eventcalendar.CalendarEvent CalendarEvent} or something
-     *            else.
+     *            {@link com.svnavigatoru600.domain.eventcalendar.CalendarEvent CalendarEvent} or something else.
      */
-    public abstract void sendEmailOnUpdate(Object updatedObject, List<User> usersToNotify,
-            HttpServletRequest request, MessageSource messageSource);
+    public abstract void sendEmailOnUpdate(Object updatedObject, List<User> usersToNotify, HttpServletRequest request,
+            MessageSource messageSource);
 
     /**
-     * Composes an HTML code which provides the user with the given <code>fileUrl</code> (i.e. the locator of
-     * the desired file) when he clicks on the localized {@link #DO_DOWNLOAD_CODE}.
+     * Composes an HTML code which provides the user with the given <code>fileUrl</code> (i.e. the locator of the
+     * desired file) when he clicks on the localized {@link #DO_DOWNLOAD_CODE}.
      */
-    protected String getAttachedFileUrlHtml(String fileUrl, HttpServletRequest request,
-            MessageSource messageSource) {
+    protected String getAttachedFileUrlHtml(String fileUrl, HttpServletRequest request, MessageSource messageSource) {
         String linkText = getLocalizedDoDownload(request, messageSource);
         return getFileUrlHtml(fileUrl, linkText, request, messageSource);
     }
 
     /**
-     * Composes an HTML code which provides the user with the given <code>fileUrl</code> (i.e. the locator of
-     * the desired file) when he clicks on the given <code>linkText</code>.
+     * Composes an HTML code which provides the user with the given <code>fileUrl</code> (i.e. the locator of the
+     * desired file) when he clicks on the given <code>linkText</code>.
      */
     protected String getFileUrlHtml(String fileUrl, String linkText, HttpServletRequest request,
             MessageSource messageSource) {
@@ -101,20 +97,20 @@ public abstract class AbstractNotificationEmailService extends AbstractEmailServ
     }
 
     /**
-     * Crops the given <code>text</code> in a way that the new length is not beyond the upper bound determined
-     * by the {@link #TEXT_MAX_LENGTH} constant. If the text is cropped, adds an link at the end of the text
-     * with the <code>wholeTextUrl</code>. If the text is not too long, adds nothing.
+     * Crops the given <code>text</code> in a way that the new length is not beyond the upper bound determined by the
+     * {@link #TEXT_MAX_LENGTH} constant. If the text is cropped, adds an link at the end of the text with the
+     * <code>wholeTextUrl</code>. If the text is not too long, adds nothing.
      * <p>
-     * If the text is an HTML code, the cropping is done carefully in order to prevent breaking code
-     * well-formed-ness (all tags correctly closed). Values of attributes are not count to the length of the
-     * text which decide whether to crop it, or not.
+     * If the text is an HTML code, the cropping is done carefully in order to prevent breaking code well-formed-ness
+     * (all tags correctly closed). Values of attributes are not count to the length of the text which decide whether to
+     * crop it, or not.
      * 
      * @param text
      *            Either a plain text or an HTML code.
      * @param wholeTextUrl
      *            URL which represents a web page with the whole <code>text</code>
-     * @return Cropped <code>text</code> with a link to the whole contents if necessary; otherwise the
-     *         original <code>text</code>.
+     * @return Cropped <code>text</code> with a link to the whole contents if necessary; otherwise the original
+     *         <code>text</code>.
      */
     protected String cropTooLongTextAndAddLink(String text, String wholeTextUrl, HttpServletRequest request,
             MessageSource messageSource) {

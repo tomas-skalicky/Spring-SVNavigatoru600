@@ -1,8 +1,8 @@
 package com.svnavigatoru600.url.forum;
 
-import static org.junit.Assert.*;
-import static org.mockito.Matchers.*;
-import static org.mockito.Mockito.*;
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.when;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -37,8 +37,7 @@ public class ContributionsUrlPartsTest {
         contribution.setId(contributionId);
 
         PowerMockito.mockStatic(HttpRequestUtils.class);
-        when(HttpRequestUtils.getContextHomeDirectory(any(HttpServletRequest.class))).thenReturn(
-                "svnavigatoru600.com");
+        when(HttpRequestUtils.getContextHomeDirectory(any(HttpServletRequest.class))).thenReturn("svnavigatoru600.com");
 
         // Calls the tested method.
         String url = ContributionsUrlParts.getAbsoluteContributionUrl(contribution, null);

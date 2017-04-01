@@ -52,8 +52,8 @@ public class ListContributionsController extends AbstractContributionController 
         command.setThread(this.threadService.findById(threadId));
 
         // Sets up all auxiliary (but necessary) maps.
-        command.setLocalizedDeleteQuestions(ContributionService.getLocalizedDeleteQuestions(contributions,
-                request, getMessageSource()));
+        command.setLocalizedDeleteQuestions(
+                ContributionService.getLocalizedDeleteQuestions(contributions, request, getMessageSource()));
 
         model.addAttribute(ListContributionsController.COMMAND, command);
         return PageViews.LIST.getViewName();

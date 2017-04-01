@@ -9,7 +9,7 @@ public enum ContributionField {
 
     id(ContributionColumn.id), threadId(ContributionColumn.thread_id, "thread.id"), text(
             ContributionColumn.text), creationTime(ContributionColumn.creation_time), lastSaveTime(
-            ContributionColumn.last_save_time), authorUsername(ContributionColumn.author_username);
+                    ContributionColumn.last_save_time), authorUsername(ContributionColumn.author_username);
 
     /**
      * The name of a corresponding database column.
@@ -39,8 +39,8 @@ public enum ContributionField {
     }
 
     /**
-     * Names of the columns of the database table which contains
-     * {@link com.svnavigatoru600.domain.forum.Contribution contributions}.
+     * Names of the columns of the database table which contains {@link com.svnavigatoru600.domain.forum.Contribution
+     * contributions}.
      */
     private enum ContributionColumn {
 

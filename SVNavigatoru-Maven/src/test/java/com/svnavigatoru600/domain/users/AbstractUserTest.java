@@ -7,8 +7,7 @@ import org.junit.Before;
 import org.springframework.security.core.GrantedAuthority;
 
 /**
- * The parent of all classes which contain {@link org.junit.Test tests} of the {@link User} class and its
- * methods.
+ * The parent of all classes which contain {@link org.junit.Test tests} of the {@link User} class and its methods.
  * 
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */

@@ -37,10 +37,11 @@ public class DeleteNewsController extends AbstractNewsController {
         super(newsService, messageSource);
     }
 
-    @RequestMapping(value = NewsUrlParts.EXISTING_URL + "{newsId}/" + CommonUrlParts.DELETE_EXTENSION, method = RequestMethod.GET)
+    @RequestMapping(value = NewsUrlParts.EXISTING_URL + "{newsId}/"
+            + CommonUrlParts.DELETE_EXTENSION, method = RequestMethod.GET)
     @Transactional
-    public @ResponseBody
-    AbstractNewsResponse delete(@PathVariable int newsId, HttpServletRequest request, ModelMap model) {
+    public @ResponseBody AbstractNewsResponse delete(@PathVariable int newsId, HttpServletRequest request,
+            ModelMap model) {
 
         DeleteNewsResponse response = new DeleteNewsResponse();
 

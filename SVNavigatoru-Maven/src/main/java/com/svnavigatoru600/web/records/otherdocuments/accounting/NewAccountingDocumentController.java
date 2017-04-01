@@ -33,8 +33,8 @@ public class NewAccountingDocumentController extends AbstractNewDocumentControll
     public NewAccountingDocumentController(OtherDocumentRecordService recordService,
             SendNotificationNewModelFiller sendNotificationModelFiller, NewRecordValidator validator,
             MessageSource messageSource) {
-        super(AccountingUrlParts.BASE_URL, new PageViews(), OtherDocumentRecordType.ACCOUNTING,
-                recordService, sendNotificationModelFiller, validator, messageSource);
+        super(AccountingUrlParts.BASE_URL, new PageViews(), OtherDocumentRecordType.ACCOUNTING, recordService,
+                sendNotificationModelFiller, validator, messageSource);
     }
 
     @Override
@@ -45,9 +45,8 @@ public class NewAccountingDocumentController extends AbstractNewDocumentControll
 
     @Override
     @RequestMapping(value = AccountingUrlParts.NEW_URL, method = RequestMethod.POST)
-    public String processSubmittedForm(
-            @ModelAttribute(AbstractNewDocumentController.COMMAND) NewRecord command, BindingResult result,
-            SessionStatus status, HttpServletRequest request, ModelMap model) {
+    public String processSubmittedForm(@ModelAttribute(AbstractNewDocumentController.COMMAND) NewRecord command,
+            BindingResult result, SessionStatus status, HttpServletRequest request, ModelMap model) {
         return super.processSubmittedForm(command, result, status, request, model);
     }
 }

@@ -49,8 +49,8 @@ public class EditContributionController extends AbstractNewEditContributionContr
     }
 
     @RequestMapping(value = EditContributionController.BASE_URL, method = RequestMethod.GET)
-    public String initForm(@PathVariable int threadId, @PathVariable int contributionId,
-            HttpServletRequest request, ModelMap model) {
+    public String initForm(@PathVariable int threadId, @PathVariable int contributionId, HttpServletRequest request,
+            ModelMap model) {
 
         getContributionService().canEdit(contributionId);
 
@@ -59,14 +59,14 @@ public class EditContributionController extends AbstractNewEditContributionContr
         Contribution contribution = getContributionService().findById(contributionId);
         command.setContribution(contribution);
 
-        getSendNotificationModelFiller().populateSendNotificationInInitForm(command, request,
-                getMessageSource());
+        getSendNotificationModelFiller().populateSendNotificationInInitForm(command, request, getMessageSource());
 
         model.addAttribute(AbstractNewEditContributionController.COMMAND, command);
         return PageViews.EDIT.getViewName();
     }
 
-    @RequestMapping(value = EditContributionController.BASE_URL + CommonUrlParts.SAVED_EXTENSION, method = RequestMethod.GET)
+    @RequestMapping(value = EditContributionController.BASE_URL
+            + CommonUrlParts.SAVED_EXTENSION, method = RequestMethod.GET)
     public String initFormAfterSave(@PathVariable int threadId, @PathVariable int contributionId,
             HttpServletRequest request, ModelMap model) {
         String view = initForm(threadId, contributionId, request, model);
@@ -76,16 +76,14 @@ public class EditContributionController extends AbstractNewEditContributionContr
 
     @RequestMapping(value = EditContributionController.BASE_URL, method = RequestMethod.POST)
     @Transactional
-    public String processSubmittedForm(
-            @ModelAttribute(EditContributionController.COMMAND) EditContribution command,
-            BindingResult result, SessionStatus status, @PathVariable int threadId,
-            @PathVariable int contributionId, HttpServletRequest request, ModelMap model) {
+    public String processSubmittedForm(@ModelAttribute(EditContributionController.COMMAND) EditContribution command,
+            BindingResult result, SessionStatus status, @PathVariable int threadId, @PathVariable int contributionId,
+            HttpServletRequest request, ModelMap model) {
 
         getContributionService().canEdit(contributionId);
 
         MessageSource messageSource = getMessageSource();
-        getSendNotificationModelFiller()
-                .populateSendNotificationInSubmitForm(command, request, messageSource);
+        getSendNotificationModelFiller().populateSendNotificationInSubmitForm(command, request, messageSource);
 
         getValidator().validate(command, result);
         if (result.hasErrors()) {
@@ -96,17 +94,17 @@ public class EditContributionController extends AbstractNewEditContributionContr
         Contribution originalContribution = null;
         try {
             originalContribution = contributionService.findById(contributionId);
-            contributionService.updateAndNotifyUsers(originalContribution, command.getContribution(), command
-                    .getSendNotification().isStatus(), request, messageSource);
+            contributionService.updateAndNotifyUsers(originalContribution, command.getContribution(),
+                    command.getSendNotification().isStatus(), request, messageSource);
 
             // Clears the command object from the session.
             status.setComplete();
 
             // Returns the form success view.
-            model.addAttribute(AbstractMetaController.REDIRECTION_ATTRIBUTE, String.format("%s%d/%s%d/%s",
-                    ContributionsUrlParts.BASE_URL, threadId,
-                    ContributionsUrlParts.CONTRIBUTIONS_EXISTING_EXTENSION, contributionId,
-                    CommonUrlParts.SAVED_EXTENSION));
+            model.addAttribute(AbstractMetaController.REDIRECTION_ATTRIBUTE,
+                    String.format("%s%d/%s%d/%s", ContributionsUrlParts.BASE_URL, threadId,
+                            ContributionsUrlParts.CONTRIBUTIONS_EXISTING_EXTENSION, contributionId,
+                            CommonUrlParts.SAVED_EXTENSION));
             return AbstractMetaController.REDIRECTION_PAGE;
 
         } catch (DataAccessException e) {

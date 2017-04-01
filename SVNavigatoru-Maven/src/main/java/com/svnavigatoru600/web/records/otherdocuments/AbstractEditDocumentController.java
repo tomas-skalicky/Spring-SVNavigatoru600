@@ -46,22 +46,19 @@ public abstract class AbstractEditDocumentController extends AbstractNewEditDocu
      * {@link OtherDocumentRecordType OtherDocumentRecordTypes}.
      */
     public AbstractEditDocumentController(String baseUrl, AbstractPageViews views,
-            OtherDocumentRecordService recordService,
-            SendNotificationModelFiller sendNotificationModelFiller, EditRecordValidator validator,
-            MessageSource messageSource) {
+            OtherDocumentRecordService recordService, SendNotificationModelFiller sendNotificationModelFiller,
+            EditRecordValidator validator, MessageSource messageSource) {
         super(baseUrl, views, recordService, sendNotificationModelFiller, validator, messageSource);
     }
 
     /**
-     * Constructs a controller which considers all {@link OtherDocumentRecord OtherDocumentRecords} of the
-     * given <code>recordType</code>.
+     * Constructs a controller which considers all {@link OtherDocumentRecord OtherDocumentRecords} of the given
+     * <code>recordType</code>.
      */
-    public AbstractEditDocumentController(String baseUrl, AbstractPageViews views,
-            OtherDocumentRecordType recordType, OtherDocumentRecordService recordService,
-            SendNotificationModelFiller sendNotificationModelFiller, EditRecordValidator validator,
-            MessageSource messageSource) {
-        super(baseUrl, views, recordType, recordService, sendNotificationModelFiller, validator,
-                messageSource);
+    public AbstractEditDocumentController(String baseUrl, AbstractPageViews views, OtherDocumentRecordType recordType,
+            OtherDocumentRecordService recordService, SendNotificationModelFiller sendNotificationModelFiller,
+            EditRecordValidator validator, MessageSource messageSource) {
+        super(baseUrl, views, recordType, recordService, sendNotificationModelFiller, validator, messageSource);
     }
 
     /**
@@ -83,8 +80,8 @@ public abstract class AbstractEditDocumentController extends AbstractNewEditDocu
         // Sets up all auxiliary (but necessary) maps.
         command.setTypeCheckboxId(OtherDocumentRecordService.getTypeCheckboxId());
         MessageSource messageSource = getMessageSource();
-        command.setLocalizedTypeCheckboxTitles(OtherDocumentRecordService.getLocalizedTypeTitles(request,
-                messageSource));
+        command.setLocalizedTypeCheckboxTitles(
+                OtherDocumentRecordService.getLocalizedTypeTitles(request, messageSource));
 
         getSendNotificationModelFiller().populateSendNotificationInInitForm(command, request, messageSource);
 
@@ -93,8 +90,8 @@ public abstract class AbstractEditDocumentController extends AbstractNewEditDocu
     }
 
     /**
-     * Initializes the form after the modified data were successfully saved to the repository and the new file
-     * (if it exists) was uploaded.
+     * Initializes the form after the modified data were successfully saved to the repository and the new file (if it
+     * exists) was uploaded.
      */
     public String initFormAfterSave(int recordId, HttpServletRequest request, ModelMap model) {
         String view = initForm(recordId, request, model);
@@ -103,22 +100,21 @@ public abstract class AbstractEditDocumentController extends AbstractNewEditDocu
     }
 
     /**
-     * If values in the form are OK, updates data of the record with the given <code>recordId</code>.
-     * Otherwise, returns back to the form.
+     * If values in the form are OK, updates data of the record with the given <code>recordId</code>. Otherwise, returns
+     * back to the form.
      * 
      * @return The name of the view which is to be shown.
      */
     @Transactional
-    public String processSubmittedForm(EditRecord command, BindingResult result, SessionStatus status,
-            int recordId, HttpServletRequest request, ModelMap model) {
+    public String processSubmittedForm(EditRecord command, BindingResult result, SessionStatus status, int recordId,
+            HttpServletRequest request, ModelMap model) {
 
         // Sets up all auxiliary (but necessary) maps.
         command.setTypeCheckboxId(OtherDocumentRecordService.getTypeCheckboxId());
         MessageSource messageSource = getMessageSource();
-        command.setLocalizedTypeCheckboxTitles(OtherDocumentRecordService.getLocalizedTypeTitles(request,
-                messageSource));
-        getSendNotificationModelFiller()
-                .populateSendNotificationInSubmitForm(command, request, messageSource);
+        command.setLocalizedTypeCheckboxTitles(
+                OtherDocumentRecordService.getLocalizedTypeTitles(request, messageSource));
+        getSendNotificationModelFiller().populateSendNotificationInSubmitForm(command, request, messageSource);
 
         getValidator().validate(command, result);
         if (result.hasErrors()) {
@@ -128,8 +124,8 @@ public abstract class AbstractEditDocumentController extends AbstractNewEditDocu
 
         try {
             getRecordService().updateAndNotifyUsers(recordId, command.getRecord(), command.getNewTypes(),
-                    command.isFileChanged(), command.getNewFile(), command.getSendNotification().isStatus(),
-                    request, messageSource);
+                    command.isFileChanged(), command.getNewFile(), command.getSendNotification().isStatus(), request,
+                    messageSource);
 
             // Clears the command object from the session.
             status.setComplete();

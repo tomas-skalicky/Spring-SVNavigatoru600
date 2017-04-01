@@ -26,10 +26,9 @@ public class RetrieveBoardSessionRecordController extends AbstractRetrieveRecord
      * Constructor.
      */
     @Inject
-    public RetrieveBoardSessionRecordController(SessionRecordService recordService,
-            MessageSource messageSource) {
-        super(BoardSessionsUrlParts.BASE_URL, new PageViews(), SessionRecordType.SESSION_RECORD_OF_BOARD,
-                recordService, messageSource);
+    public RetrieveBoardSessionRecordController(SessionRecordService recordService, MessageSource messageSource) {
+        super(BoardSessionsUrlParts.BASE_URL, new PageViews(), SessionRecordType.SESSION_RECORD_OF_BOARD, recordService,
+                messageSource);
     }
 
     @Override

@@ -27,12 +27,12 @@ public class DeleteOtherDocumentController extends AbstractDeleteDocumentControl
      */
     @Inject
     public DeleteOtherDocumentController(OtherDocumentRecordService recordService, MessageSource messageSource) {
-        super(OthersUrlParts.BASE_URL, new PageViews(), OtherDocumentRecordType.OTHER, recordService,
-                messageSource);
+        super(OthersUrlParts.BASE_URL, new PageViews(), OtherDocumentRecordType.OTHER, recordService, messageSource);
     }
 
     @Override
-    @RequestMapping(value = OthersUrlParts.EXISTING_URL + "{recordId}/" + CommonUrlParts.DELETE_EXTENSION, method = RequestMethod.GET)
+    @RequestMapping(value = OthersUrlParts.EXISTING_URL + "{recordId}/"
+            + CommonUrlParts.DELETE_EXTENSION, method = RequestMethod.GET)
     public String delete(@PathVariable int recordId, HttpServletRequest request, ModelMap model) {
         return super.delete(recordId, request, model);
     }
