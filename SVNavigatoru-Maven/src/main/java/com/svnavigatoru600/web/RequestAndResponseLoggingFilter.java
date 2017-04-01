@@ -53,7 +53,7 @@ import com.svnavigatoru600.common.constants.CommonConstants;
  * different request object than you have got.
  *
  * @author Tomas Skalicky
- * @date 29.03.2017
+ * @since 29.03.2017
  */
 public class RequestAndResponseLoggingFilter extends OncePerRequestFilter {
 
@@ -68,7 +68,7 @@ public class RequestAndResponseLoggingFilter extends OncePerRequestFilter {
      * returned an empty {@link java.util.Map}.
      *
      * @author Tomas Skalicky
-     * @date 01.04.2017
+     * @since 01.04.2017
      */
     @VisibleForTesting
     class RequestWrapper extends HttpServletRequestWrapper {
