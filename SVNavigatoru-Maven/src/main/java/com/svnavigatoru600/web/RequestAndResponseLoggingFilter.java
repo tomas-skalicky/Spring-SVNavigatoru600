@@ -396,7 +396,8 @@ public class RequestAndResponseLoggingFilter extends OncePerRequestFilter {
 
         if (response.isJson()) {
             message.append(NEW_LINE);
-            appendToResponseMessage(message, "payload", new String(response.responsePayloadOutputStream.toByteArray()));
+            appendToResponseMessage(message, "payload",
+                    new String(response.responsePayloadOutputStream.toByteArray(), CommonConstants.DEFAULT_CHARSET));
         }
 
         return message.toString();
