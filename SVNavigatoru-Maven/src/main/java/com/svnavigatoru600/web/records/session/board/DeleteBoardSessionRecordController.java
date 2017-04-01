@@ -26,7 +26,7 @@ public class DeleteBoardSessionRecordController extends AbstractDeleteRecordCont
      * Constructor.
      */
     @Inject
-    public DeleteBoardSessionRecordController(SessionRecordService recordService, MessageSource messageSource) {
+    public DeleteBoardSessionRecordController(final SessionRecordService recordService, final MessageSource messageSource) {
         super(BoardSessionsUrlParts.BASE_URL, new PageViews(), SessionRecordType.SESSION_RECORD_OF_BOARD, recordService,
                 messageSource);
     }
@@ -34,7 +34,7 @@ public class DeleteBoardSessionRecordController extends AbstractDeleteRecordCont
     @Override
     @RequestMapping(value = BoardSessionsUrlParts.EXISTING_URL + "{recordId}/"
             + CommonUrlParts.DELETE_EXTENSION, method = RequestMethod.GET)
-    public String delete(@PathVariable int recordId, HttpServletRequest request, ModelMap model) {
+    public String delete(@PathVariable final int recordId, final HttpServletRequest request, final ModelMap model) {
         return super.delete(recordId, request, model);
     }
 }

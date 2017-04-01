@@ -26,7 +26,7 @@ public class RetrieveContractDocumentController extends AbstractRetrieveDocument
      * Constructor.
      */
     @Inject
-    public RetrieveContractDocumentController(OtherDocumentRecordService recordService, MessageSource messageSource) {
+    public RetrieveContractDocumentController(final OtherDocumentRecordService recordService, final MessageSource messageSource) {
         super(ContractsUrlParts.BASE_URL, new PageViews(), OtherDocumentRecordType.CONTRACT, recordService,
                 messageSource);
     }
@@ -34,7 +34,7 @@ public class RetrieveContractDocumentController extends AbstractRetrieveDocument
     @Override
     @RequestMapping(value = ContractsUrlParts.EXISTING_URL + "{recordId}/"
             + RecordsCommonUrlParts.DOWNLOAD_EXTENSION, method = RequestMethod.GET)
-    public void retrieve(@PathVariable int recordId, HttpServletResponse response, ModelMap model) {
+    public void retrieve(@PathVariable final int recordId, final HttpServletResponse response, final ModelMap model) {
         super.retrieve(recordId, response, model);
     }
 }

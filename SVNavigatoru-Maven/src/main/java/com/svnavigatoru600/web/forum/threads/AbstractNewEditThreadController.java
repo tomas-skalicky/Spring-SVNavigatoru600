@@ -1,7 +1,6 @@
 package com.svnavigatoru600.web.forum.threads;
 
 import org.springframework.context.MessageSource;
-import org.springframework.stereotype.Controller;
 import org.springframework.validation.Validator;
 
 import com.svnavigatoru600.service.forum.ThreadService;
@@ -12,7 +11,6 @@ import com.svnavigatoru600.viewmodel.forum.threads.validator.AbstractThreadValid
  * 
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
-@Controller
 public abstract class AbstractNewEditThreadController extends AbstractThreadController {
 
     /**
@@ -21,8 +19,8 @@ public abstract class AbstractNewEditThreadController extends AbstractThreadCont
     public static final String COMMAND = "newEditThreadCommand";
     private final Validator validator;
 
-    public AbstractNewEditThreadController(ThreadService threadService, AbstractThreadValidator validator,
-            MessageSource messageSource) {
+    public AbstractNewEditThreadController(final ThreadService threadService, final AbstractThreadValidator validator,
+            final MessageSource messageSource) {
         super(threadService, messageSource);
         this.validator = validator;
     }
@@ -31,6 +29,6 @@ public abstract class AbstractNewEditThreadController extends AbstractThreadCont
      * Trivial getter
      */
     protected Validator getValidator() {
-        return this.validator;
+        return validator;
     }
 }

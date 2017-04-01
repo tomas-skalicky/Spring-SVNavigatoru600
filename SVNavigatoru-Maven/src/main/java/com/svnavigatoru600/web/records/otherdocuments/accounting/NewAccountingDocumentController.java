@@ -30,23 +30,23 @@ public class NewAccountingDocumentController extends AbstractNewDocumentControll
      * Constructor.
      */
     @Inject
-    public NewAccountingDocumentController(OtherDocumentRecordService recordService,
-            SendNotificationNewModelFiller sendNotificationModelFiller, NewRecordValidator validator,
-            MessageSource messageSource) {
+    public NewAccountingDocumentController(final OtherDocumentRecordService recordService,
+            final SendNotificationNewModelFiller sendNotificationModelFiller, final NewRecordValidator validator,
+            final MessageSource messageSource) {
         super(AccountingUrlParts.BASE_URL, new PageViews(), OtherDocumentRecordType.ACCOUNTING, recordService,
                 sendNotificationModelFiller, validator, messageSource);
     }
 
     @Override
     @RequestMapping(value = AccountingUrlParts.NEW_URL, method = RequestMethod.GET)
-    public String initForm(HttpServletRequest request, ModelMap model) {
+    public String initForm(final HttpServletRequest request, final ModelMap model) {
         return super.initForm(request, model);
     }
 
     @Override
     @RequestMapping(value = AccountingUrlParts.NEW_URL, method = RequestMethod.POST)
-    public String processSubmittedForm(@ModelAttribute(AbstractNewDocumentController.COMMAND) NewRecord command,
-            BindingResult result, SessionStatus status, HttpServletRequest request, ModelMap model) {
+    public String processSubmittedForm(@ModelAttribute(AbstractNewDocumentController.COMMAND) final NewRecord command,
+            final BindingResult result, final SessionStatus status, final HttpServletRequest request, final ModelMap model) {
         return super.processSubmittedForm(command, result, status, request, model);
     }
 }

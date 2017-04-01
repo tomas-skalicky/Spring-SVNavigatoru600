@@ -33,24 +33,24 @@ public class DeleteNewsController extends AbstractNewsController {
      * Constructor.
      */
     @Inject
-    public DeleteNewsController(NewsService newsService, MessageSource messageSource) {
+    public DeleteNewsController(final NewsService newsService, final MessageSource messageSource) {
         super(newsService, messageSource);
     }
 
     @RequestMapping(value = NewsUrlParts.EXISTING_URL + "{newsId}/"
             + CommonUrlParts.DELETE_EXTENSION, method = RequestMethod.GET)
     @Transactional
-    public @ResponseBody AbstractNewsResponse delete(@PathVariable int newsId, HttpServletRequest request,
-            ModelMap model) {
+    public @ResponseBody AbstractNewsResponse delete(@PathVariable final int newsId, final HttpServletRequest request,
+            final ModelMap model) {
 
-        DeleteNewsResponse response = new DeleteNewsResponse();
+        final DeleteNewsResponse response = new DeleteNewsResponse();
 
         try {
             getNewsService().delete(newsId);
 
             response.setSuccess();
 
-        } catch (DataAccessException e) {
+        } catch (final DataAccessException e) {
             // We encountered a database problem.
             LogFactory.getLog(this.getClass()).error(e);
             response.setFail(DeleteNewsController.DATABASE_ERROR_MESSAGE_CODE, getMessageSource(), request);

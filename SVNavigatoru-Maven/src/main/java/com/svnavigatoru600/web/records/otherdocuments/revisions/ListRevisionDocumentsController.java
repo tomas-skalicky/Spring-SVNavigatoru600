@@ -24,26 +24,26 @@ public class ListRevisionDocumentsController extends AbstractListDocumentsContro
      * Constructor.
      */
     @Inject
-    public ListRevisionDocumentsController(OtherDocumentRecordService recordService, MessageSource messageSource) {
+    public ListRevisionDocumentsController(final OtherDocumentRecordService recordService, final MessageSource messageSource) {
         super(RevisionsUrlParts.BASE_URL, new PageViews(), OtherDocumentRecordType.REGULAR_REVISION, recordService,
                 messageSource);
     }
 
     @Override
     @RequestMapping(value = RevisionsUrlParts.BASE_URL, method = RequestMethod.GET)
-    public String initPage(HttpServletRequest request, ModelMap model) {
+    public String initPage(final HttpServletRequest request, final ModelMap model) {
         return super.initPage(request, model);
     }
 
     @Override
     @RequestMapping(value = RevisionsUrlParts.CREATED_URL, method = RequestMethod.GET)
-    public String initPageAfterCreate(HttpServletRequest request, ModelMap model) {
+    public String initPageAfterCreate(final HttpServletRequest request, final ModelMap model) {
         return super.initPageAfterCreate(request, model);
     }
 
     @Override
     @RequestMapping(value = RevisionsUrlParts.DELETED_URL, method = RequestMethod.GET)
-    public String initPageAfterDelete(HttpServletRequest request, ModelMap model) {
+    public String initPageAfterDelete(final HttpServletRequest request, final ModelMap model) {
         return super.initPageAfterDelete(request, model);
     }
 }

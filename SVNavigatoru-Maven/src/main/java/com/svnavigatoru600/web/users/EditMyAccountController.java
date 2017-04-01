@@ -12,10 +12,10 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.support.SessionStatus;
 
 import com.svnavigatoru600.domain.users.NotificationSubscriberVisitor;
@@ -50,8 +50,8 @@ public class EditMyAccountController extends AbstractPrivateSectionMetaControlle
      * Constructor.
      */
     @Inject
-    public EditMyAccountController(UserService userService, UpdateUserDataValidator validator,
-            MessageSource messageSource) {
+    public EditMyAccountController(final UserService userService, final UpdateUserDataValidator validator,
+            final MessageSource messageSource) {
         LogFactory.getLog(this.getClass()).debug("The UserAccountController object created.");
         this.userService = userService;
         this.validator = validator;
@@ -61,13 +61,13 @@ public class EditMyAccountController extends AbstractPrivateSectionMetaControlle
     /**
      * Initializes the form.
      */
-    @RequestMapping(value = UserAccountUrlParts.BASE_URL, method = RequestMethod.GET)
+    @GetMapping(value = UserAccountUrlParts.BASE_URL)
     @PreAuthorize("hasRole('ROLE_REGISTERED_USER')")
-    public String initForm(HttpServletRequest request, ModelMap model) {
+    public String initForm(final HttpServletRequest request, final ModelMap model) {
 
-        UpdateUserData command = new UpdateUserData();
+        final UpdateUserData command = new UpdateUserData();
 
-        User user = UserUtils.getLoggedUser();
+        final User user = UserUtils.getLoggedUser();
         command.setUser(user);
 
         // Sets up all auxiliary (but necessary) maps.
@@ -81,10 +81,10 @@ public class EditMyAccountController extends AbstractPrivateSectionMetaControlle
     /**
      * Initializes the form after the modified data were successfully saved to a repository.
      */
-    @RequestMapping(value = UserAccountUrlParts.SAVED_URL, method = RequestMethod.GET)
+    @GetMapping(value = UserAccountUrlParts.SAVED_URL)
     @PreAuthorize("hasRole('ROLE_REGISTERED_USER')")
-    public String initFormAfterSave(HttpServletRequest request, ModelMap model) {
-        String view = initForm(request, model);
+    public String initFormAfterSave(final HttpServletRequest request, final ModelMap model) {
+        final String view = initForm(request, model);
         ((UpdateUserData) model.get(EditMyAccountController.COMMAND)).setDataSaved(true);
         return view;
     }
@@ -94,11 +94,11 @@ public class EditMyAccountController extends AbstractPrivateSectionMetaControlle
      *
      * @return The name of the view which is to be shown.
      */
-    @RequestMapping(value = UserAccountUrlParts.BASE_URL, method = RequestMethod.POST)
+    @PostMapping(value = UserAccountUrlParts.BASE_URL)
     @PreAuthorize("hasRole('ROLE_REGISTERED_USER')")
     @Transactional
-    public String processSubmittedForm(@ModelAttribute(EditMyAccountController.COMMAND) UpdateUserData command,
-            BindingResult result, SessionStatus status, HttpServletRequest request, ModelMap model) {
+    public String processSubmittedForm(@ModelAttribute(EditMyAccountController.COMMAND) final UpdateUserData command,
+            final BindingResult result, final SessionStatus status, final HttpServletRequest request, final ModelMap model) {
 
         // Sets up all auxiliary (but necessary) maps.
         // It is necessary to do it again since they are not push as a part of the command back. They have
@@ -127,7 +127,7 @@ public class EditMyAccountController extends AbstractPrivateSectionMetaControlle
             model.addAttribute(AbstractMetaController.REDIRECTION_ATTRIBUTE, UserAccountUrlParts.SAVED_URL);
             return AbstractMetaController.REDIRECTION_PAGE;
 
-        } catch (DataAccessException e) {
+        } catch (final DataAccessException e) {
             // We encountered a database problem.
             LogFactory.getLog(this.getClass()).error(originalUser, e);
             result.rejectValue("user.email", "email.occupied-by-somebody");
@@ -145,19 +145,19 @@ public class EditMyAccountController extends AbstractPrivateSectionMetaControlle
      * @param notificationTypeOrdinal
      *            Ordinal of notifications' type which is to be deactivated by the user.
      */
-    @RequestMapping(value = UserAccountUrlParts.BASE_URL + "{username}/" + UserAccountUrlParts.UNSUBSCRIBE_EXTENSION
-            + "{notificationType}/", method = RequestMethod.GET)
+    @GetMapping(value = UserAccountUrlParts.BASE_URL + "{username}/" + UserAccountUrlParts.UNSUBSCRIBE_EXTENSION
+            + "{notificationType}/")
     @PreAuthorize("hasRole('ROLE_REGISTERED_USER')")
-    public String unsubscribeNotificationsAndRedirect(@PathVariable("username") String username,
-            @PathVariable("notificationType") int notificationTypeOrdinal, HttpServletRequest request, ModelMap model) {
-        User loggedUser = UserUtils.getLoggedUser();
+    public String unsubscribeNotificationsAndRedirect(@PathVariable("username") final String username,
+            @PathVariable("notificationType") final int notificationTypeOrdinal, final HttpServletRequest request, final ModelMap model) {
+        final User loggedUser = UserUtils.getLoggedUser();
         if (!loggedUser.getUsername().equals(username)) {
             model.addAttribute(AbstractMetaController.REDIRECTION_ATTRIBUTE,
                     UserAccountUrlParts.UNSUBSCRIBE_FAILED_FOREIGN_ACCOUNT_URL + username + "/");
             return AbstractMetaController.REDIRECTION_PAGE;
         }
 
-        NotificationType notificationType = NotificationType.values()[notificationTypeOrdinal];
+        final NotificationType notificationType = NotificationType.values()[notificationTypeOrdinal];
         try {
             userService.unsubscribeFromNotifications(username, notificationType);
 
@@ -169,7 +169,7 @@ public class EditMyAccountController extends AbstractPrivateSectionMetaControlle
                     + notificationTypeOrdinal + "/" + UserAccountUrlParts.UNSUBSCRIBED_EXTENSION);
             return AbstractMetaController.REDIRECTION_PAGE;
 
-        } catch (DataAccessException e) {
+        } catch (final DataAccessException e) {
             // We encountered a database problem.
             LogFactory.getLog(this.getClass())
                     .error(String.format("DB error: username=%s, notificationType=%d", username, notificationType), e);
@@ -181,18 +181,18 @@ public class EditMyAccountController extends AbstractPrivateSectionMetaControlle
      * Initializes the form after the given <code>notificationType</code> have been successfully unsubscribed and these
      * changes have been persisted.
      */
-    @RequestMapping(value = UserAccountUrlParts.UNSUBSCRIBE_URL + "{notificationType}/"
-            + UserAccountUrlParts.UNSUBSCRIBED_EXTENSION, method = RequestMethod.GET)
+    @GetMapping(value = UserAccountUrlParts.UNSUBSCRIBE_URL + "{notificationType}/"
+            + UserAccountUrlParts.UNSUBSCRIBED_EXTENSION)
     @PreAuthorize("hasRole('ROLE_REGISTERED_USER')")
-    public String initFormAfterUnsubscription(@PathVariable("notificationType") int notificationType,
-            HttpServletRequest request, ModelMap model) {
-        String view = initForm(request, model);
+    public String initFormAfterUnsubscription(@PathVariable("notificationType") final int notificationType,
+            final HttpServletRequest request, final ModelMap model) {
+        final String view = initForm(request, model);
 
-        UpdateUserData command = (UpdateUserData) model.get(EditMyAccountController.COMMAND);
+        final UpdateUserData command = (UpdateUserData) model.get(EditMyAccountController.COMMAND);
         command.setNotificationsUnsubscribed(true);
 
-        String localizationCode = NotificationType.values()[notificationType].getTitleLocalizationCode();
-        String localizedTitle = Localization.findLocaleMessage(messageSource, request, localizationCode);
+        final String localizationCode = NotificationType.values()[notificationType].getTitleLocalizationCode();
+        final String localizedTitle = Localization.findLocaleMessage(messageSource, request, localizationCode);
         command.setLocalizedUnsubscribedNotificationTitle(localizedTitle);
         return view;
     }
@@ -204,14 +204,13 @@ public class EditMyAccountController extends AbstractPrivateSectionMetaControlle
      * It looks like that the currently logged user has either an access to more than one account or has an access to an
      * email inbox of foreign account.
      */
-    @RequestMapping(value = UserAccountUrlParts.UNSUBSCRIBE_FAILED_FOREIGN_ACCOUNT_URL
-            + "{username}/", method = RequestMethod.GET)
+    @GetMapping(value = UserAccountUrlParts.UNSUBSCRIBE_FAILED_FOREIGN_ACCOUNT_URL + "{username}/")
     @PreAuthorize("hasRole('ROLE_REGISTERED_USER')")
-    public String initFormAfterUnsubscriptionFail(@PathVariable("username") String username, HttpServletRequest request,
-            ModelMap model) {
-        String view = initForm(request, model);
+    public String initFormAfterUnsubscriptionFail(@PathVariable("username") final String username, final HttpServletRequest request,
+            final ModelMap model) {
+        final String view = initForm(request, model);
 
-        UpdateUserData command = (UpdateUserData) model.get(EditMyAccountController.COMMAND);
+        final UpdateUserData command = (UpdateUserData) model.get(EditMyAccountController.COMMAND);
         command.setForeignAccountDuringUnsubscription(true);
         command.setForeignAccountUsername(username);
         return view;

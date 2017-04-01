@@ -1,7 +1,6 @@
 package com.svnavigatoru600.web.forum.contributions;
 
 import org.springframework.context.MessageSource;
-import org.springframework.stereotype.Controller;
 import org.springframework.validation.Validator;
 
 import com.svnavigatoru600.service.forum.ContributionService;
@@ -14,7 +13,6 @@ import com.svnavigatoru600.web.SendNotificationModelFiller;
  * 
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
-@Controller
 public abstract class AbstractNewEditContributionController extends AbstractContributionController
         implements SendNotificationController {
 
@@ -25,9 +23,9 @@ public abstract class AbstractNewEditContributionController extends AbstractCont
     private final Validator validator;
     private final SendNotificationModelFiller sendNotificationModelFiller;
 
-    public AbstractNewEditContributionController(ContributionService contributionService,
-            SendNotificationModelFiller sendNotificationModelFiller, AbstractContributionValidator validator,
-            MessageSource messageSource) {
+    public AbstractNewEditContributionController(final ContributionService contributionService,
+            final SendNotificationModelFiller sendNotificationModelFiller, final AbstractContributionValidator validator,
+            final MessageSource messageSource) {
         super(contributionService, messageSource);
         this.validator = validator;
         this.sendNotificationModelFiller = sendNotificationModelFiller;
@@ -37,13 +35,13 @@ public abstract class AbstractNewEditContributionController extends AbstractCont
      * Trivial getter
      */
     protected Validator getValidator() {
-        return this.validator;
+        return validator;
     }
 
     /**
      * Trivial getter
      */
     protected SendNotificationModelFiller getSendNotificationModelFiller() {
-        return this.sendNotificationModelFiller;
+        return sendNotificationModelFiller;
     }
 }

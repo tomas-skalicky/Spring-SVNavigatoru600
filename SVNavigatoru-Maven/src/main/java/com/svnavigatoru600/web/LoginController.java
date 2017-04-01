@@ -21,7 +21,7 @@ public class LoginController extends AbstractMetaController {
     }
 
     @RequestMapping(value = LoginUrlParts.FAIL_URL, method = RequestMethod.GET)
-    public String loginFailed(ModelMap model) {
+    public String loginFailed(final ModelMap model) {
         model.addAttribute("error", Boolean.TRUE.toString());
         return LoginController.PAGE_VIEW;
     }

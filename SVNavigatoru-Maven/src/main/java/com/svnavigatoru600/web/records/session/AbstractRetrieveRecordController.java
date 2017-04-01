@@ -9,7 +9,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.context.MessageSource;
 import org.springframework.dao.DataAccessException;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 
 import com.svnavigatoru600.domain.records.SessionRecordType;
@@ -22,7 +21,6 @@ import com.svnavigatoru600.web.records.AbstractPageViews;
  * 
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
-@Controller
 public abstract class AbstractRetrieveRecordController extends AbstractSessionRecordController {
 
     /**
@@ -35,8 +33,8 @@ public abstract class AbstractRetrieveRecordController extends AbstractSessionRe
      * Constructs a controller which considers all {@link com.svnavigatoru600.domain.records.SessionRecord
      * SessionRecords} of all {@link SessionRecordType SessionRecordTypes}.
      */
-    public AbstractRetrieveRecordController(String baseUrl, AbstractPageViews views, SessionRecordService recordService,
-            MessageSource messageSource) {
+    public AbstractRetrieveRecordController(final String baseUrl, final AbstractPageViews views, final SessionRecordService recordService,
+            final MessageSource messageSource) {
         // Note that allRecordTypes is set up during the creation of the parent.
         super(baseUrl, views, recordService, messageSource);
     }
@@ -45,26 +43,26 @@ public abstract class AbstractRetrieveRecordController extends AbstractSessionRe
      * Constructs a controller which considers all {@link com.svnavigatoru600.domain.records.SessionRecord
      * SessionRecords} of the given <code>recordType</code>.
      */
-    public AbstractRetrieveRecordController(String baseUrl, AbstractPageViews views, SessionRecordType recordType,
-            SessionRecordService recordService, MessageSource messageSource) {
+    public AbstractRetrieveRecordController(final String baseUrl, final AbstractPageViews views, final SessionRecordType recordType,
+            final SessionRecordService recordService, final MessageSource messageSource) {
         super(baseUrl, views, recordType, recordService, messageSource);
     }
 
-    public void retrieve(int recordId, HttpServletResponse response, ModelMap model) {
+    public void retrieve(final int recordId, final HttpServletResponse response, final ModelMap model) {
         try {
             getRecordService().retrieve(recordId, response);
 
             // NOTE: nothing is returned.
 
-        } catch (DataAccessException e) {
+        } catch (final DataAccessException e) {
             // We encountered a database problem.
-            this.logger.error(e);
+            logger.error(e);
             model.addAttribute("error", AbstractRetrieveRecordController.DATABASE_ERROR_MESSAGE_CODE);
-        } catch (SQLException e) {
-            this.logger.error(e);
+        } catch (final SQLException e) {
+            logger.error(e);
             model.addAttribute("error", AbstractRetrieveRecordController.DATABASE_ERROR_MESSAGE_CODE);
-        } catch (IOException e) {
-            this.logger.error(e);
+        } catch (final IOException e) {
+            logger.error(e);
             model.addAttribute("error", AbstractRetrieveRecordController.DATABASE_ERROR_MESSAGE_CODE);
         }
     }

@@ -26,7 +26,7 @@ public class RetrieveRemostavDocumentController extends AbstractRetrieveDocument
      * Constructor.
      */
     @Inject
-    public RetrieveRemostavDocumentController(OtherDocumentRecordService recordService, MessageSource messageSource) {
+    public RetrieveRemostavDocumentController(final OtherDocumentRecordService recordService, final MessageSource messageSource) {
         super(RemostavDocumentsUrlParts.BASE_URL, new PageViews(), OtherDocumentRecordType.REMOSTAV, recordService,
                 messageSource);
     }
@@ -34,7 +34,7 @@ public class RetrieveRemostavDocumentController extends AbstractRetrieveDocument
     @Override
     @RequestMapping(value = RemostavDocumentsUrlParts.EXISTING_URL + "{recordId}/"
             + RecordsCommonUrlParts.DOWNLOAD_EXTENSION, method = RequestMethod.GET)
-    public void retrieve(@PathVariable int recordId, HttpServletResponse response, ModelMap model) {
+    public void retrieve(@PathVariable final int recordId, final HttpServletResponse response, final ModelMap model) {
         super.retrieve(recordId, response, model);
     }
 }

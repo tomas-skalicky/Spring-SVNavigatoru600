@@ -32,17 +32,17 @@ public class ListThreadsController extends AbstractThreadController {
      * Constructor.
      */
     @Inject
-    public ListThreadsController(ThreadService threadService, MessageSource messageSource) {
+    public ListThreadsController(final ThreadService threadService, final MessageSource messageSource) {
         super(threadService, messageSource);
     }
 
     @RequestMapping(value = ThreadsUrlParts.BASE_URL, method = RequestMethod.GET)
-    public String initPage(HttpServletRequest request, ModelMap model) {
+    public String initPage(final HttpServletRequest request, final ModelMap model) {
 
-        ShowAllThreads command = new ShowAllThreads();
+        final ShowAllThreads command = new ShowAllThreads();
 
-        ThreadService threadService = getThreadService();
-        List<Thread> threads = threadService.loadAll();
+        final ThreadService threadService = getThreadService();
+        final List<Thread> threads = threadService.loadAll();
         // Sorts in the descending order according to the last saved
         // contributions of the threads.
         Collections.sort(threads);
@@ -61,15 +61,15 @@ public class ListThreadsController extends AbstractThreadController {
     }
 
     @RequestMapping(value = ThreadsUrlParts.CREATED_URL, method = RequestMethod.GET)
-    public String initPageAfterCreate(HttpServletRequest request, ModelMap model) {
-        String view = initPage(request, model);
+    public String initPageAfterCreate(final HttpServletRequest request, final ModelMap model) {
+        final String view = initPage(request, model);
         ((ShowAllThreads) model.get(ListThreadsController.COMMAND)).setThreadCreated(true);
         return view;
     }
 
     @RequestMapping(value = ThreadsUrlParts.DELETED_URL, method = RequestMethod.GET)
-    public String initPageAfterDelete(HttpServletRequest request, ModelMap model) {
-        String view = initPage(request, model);
+    public String initPageAfterDelete(final HttpServletRequest request, final ModelMap model) {
+        final String view = initPage(request, model);
         ((ShowAllThreads) model.get(ListThreadsController.COMMAND)).setThreadDeleted(true);
         return view;
     }

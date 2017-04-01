@@ -26,7 +26,7 @@ public class DeleteRemostavDocumentController extends AbstractDeleteDocumentCont
      * Constructor.
      */
     @Inject
-    public DeleteRemostavDocumentController(OtherDocumentRecordService recordService, MessageSource messageSource) {
+    public DeleteRemostavDocumentController(final OtherDocumentRecordService recordService, final MessageSource messageSource) {
         super(RemostavDocumentsUrlParts.BASE_URL, new PageViews(), OtherDocumentRecordType.REMOSTAV, recordService,
                 messageSource);
     }
@@ -34,7 +34,7 @@ public class DeleteRemostavDocumentController extends AbstractDeleteDocumentCont
     @Override
     @RequestMapping(value = RemostavDocumentsUrlParts.EXISTING_URL + "{recordId}/"
             + CommonUrlParts.DELETE_EXTENSION, method = RequestMethod.GET)
-    public String delete(@PathVariable int recordId, HttpServletRequest request, ModelMap model) {
+    public String delete(@PathVariable final int recordId, final HttpServletRequest request, final ModelMap model) {
         return super.delete(recordId, request, model);
     }
 }

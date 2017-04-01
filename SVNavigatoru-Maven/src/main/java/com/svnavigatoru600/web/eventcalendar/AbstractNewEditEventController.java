@@ -6,7 +6,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.context.MessageSource;
-import org.springframework.stereotype.Controller;
 import org.springframework.validation.Validator;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
@@ -23,7 +22,6 @@ import com.svnavigatoru600.web.SendNotificationModelFiller;
  *
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
-@Controller
 public abstract class AbstractNewEditEventController extends AbstractEventController
         implements SendNotificationController {
 
@@ -34,9 +32,9 @@ public abstract class AbstractNewEditEventController extends AbstractEventContro
     private final Validator validator;
     private final SendNotificationModelFiller sendNotificationModelFiller;
 
-    public AbstractNewEditEventController(CalendarEventService eventService,
-            SendNotificationModelFiller sendNotificationModelFiller, AbstractEventValidator validator,
-            MessageSource messageSource) {
+    public AbstractNewEditEventController(final CalendarEventService eventService,
+            final SendNotificationModelFiller sendNotificationModelFiller, final AbstractEventValidator validator,
+            final MessageSource messageSource) {
         super(eventService, messageSource);
         this.validator = validator;
         this.sendNotificationModelFiller = sendNotificationModelFiller;
@@ -64,11 +62,11 @@ public abstract class AbstractNewEditEventController extends AbstractEventContro
      * stored to <code>NewEditEvent.newPriority</code>.
      */
     @ModelAttribute("priorityTypeList")
-    public List<String> populatePriorityTypeList(HttpServletRequest request) {
-        List<String> priorityTypeList = new ArrayList<String>();
+    public List<String> populatePriorityTypeList(final HttpServletRequest request) {
+        final List<String> priorityTypeList = new ArrayList<String>();
 
-        for (PriorityType type : PriorityType.values()) {
-            String localizationCode = type.getLocalizationCode();
+        for (final PriorityType type : PriorityType.values()) {
+            final String localizationCode = type.getLocalizationCode();
             priorityTypeList.add(Localization.findLocaleMessage(getMessageSource(), request, localizationCode));
         }
         return priorityTypeList;

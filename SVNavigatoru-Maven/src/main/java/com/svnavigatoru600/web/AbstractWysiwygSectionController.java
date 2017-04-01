@@ -4,7 +4,6 @@ import javax.inject.Inject;
 
 import org.apache.commons.logging.LogFactory;
 import org.springframework.dao.DataAccessException;
-import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -18,7 +17,6 @@ import com.svnavigatoru600.service.WysiwygSectionService;
 /**
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
-@Controller
 public abstract class AbstractWysiwygSectionController extends AbstractPrivateSectionMetaController {
 
     private final WysiwygSectionService sectionService;
@@ -31,8 +29,8 @@ public abstract class AbstractWysiwygSectionController extends AbstractPrivateSe
      * Constructor.
      */
     @Inject
-    public AbstractWysiwygSectionController(WysiwygSectionService sectionService, WysiwygSectionName sectionName,
-            String viewPageView, String editPageView, String viewPageAddress) {
+    public AbstractWysiwygSectionController(final WysiwygSectionService sectionService, final WysiwygSectionName sectionName,
+            final String viewPageView, final String editPageView, final String viewPageAddress) {
         LogFactory.getLog(this.getClass()).debug("The WysiwygSectionController object created.");
         this.sectionService = sectionService;
         this.sectionName = sectionName;
@@ -41,56 +39,56 @@ public abstract class AbstractWysiwygSectionController extends AbstractPrivateSe
         this.viewPageAddress = viewPageAddress;
     }
 
-    public String showViewPage(ModelMap model) {
+    public String showViewPage(final ModelMap model) {
         try {
-            model.addAttribute("section", this.sectionService.findByName(this.sectionName));
-        } catch (DataAccessException e) {
+            model.addAttribute("section", sectionService.findByName(sectionName));
+        } catch (final DataAccessException e) {
             LogFactory.getLog(this.getClass()).error(null, e);
         }
-        return this.viewPageView;
+        return viewPageView;
     }
 
-    public String showEditPage(ModelMap model) {
-        model.addAttribute("wysiwygSectionEditCommand", this.sectionService.findByName(this.sectionName));
-        return this.editPageView;
+    public String showEditPage(final ModelMap model) {
+        model.addAttribute("wysiwygSectionEditCommand", sectionService.findByName(sectionName));
+        return editPageView;
     }
 
     @Transactional
-    public String saveChanges(@ModelAttribute("wysiwygSectionEditCommand") WysiwygSection command, BindingResult result,
-            SessionStatus status, ModelMap model) {
+    public String saveChanges(@ModelAttribute("wysiwygSectionEditCommand") final WysiwygSection command, final BindingResult result,
+            final SessionStatus status, final ModelMap model) {
         // No validation necessary.
 
-        command.setName(this.sectionName);
+        command.setName(sectionName);
 
         try {
             // Stores the data.
-            this.sectionService.update(command);
+            sectionService.update(command);
 
             // Clears the command object from the session.
             status.setComplete();
-        } catch (DataAccessException e) {
+        } catch (final DataAccessException e) {
             LogFactory.getLog(this.getClass()).error(null, e);
             result.reject("edit.changes-not-saved-due-to-database-error");
         }
-        return this.editPageView;
+        return editPageView;
     }
 
     @Transactional
-    public String saveChangesAndFinishEditing(@ModelAttribute("wysiwygSectionEditCommand") WysiwygSection command,
-            BindingResult result, SessionStatus status, ModelMap model) {
+    public String saveChangesAndFinishEditing(@ModelAttribute("wysiwygSectionEditCommand") final WysiwygSection command,
+            final BindingResult result, final SessionStatus status, final ModelMap model) {
         // No validation necessary.
 
         saveChanges(command, result, status, model);
         if (result.hasErrors()) {
-            return this.editPageView;
+            return editPageView;
         } else {
-            model.addAttribute(AbstractMetaController.REDIRECTION_ATTRIBUTE, this.viewPageAddress);
+            model.addAttribute(AbstractMetaController.REDIRECTION_ATTRIBUTE, viewPageAddress);
             return AbstractMetaController.REDIRECTION_PAGE;
         }
     }
 
-    public String cancelChangesAndFinishEditing(ModelMap model) {
-        model.addAttribute(AbstractMetaController.REDIRECTION_ATTRIBUTE, this.viewPageAddress);
+    public String cancelChangesAndFinishEditing(final ModelMap model) {
+        model.addAttribute(AbstractMetaController.REDIRECTION_ATTRIBUTE, viewPageAddress);
         return AbstractMetaController.REDIRECTION_PAGE;
     }
 }

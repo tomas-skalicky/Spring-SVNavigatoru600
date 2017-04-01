@@ -23,25 +23,25 @@ public class ListAllDocumentsController extends AbstractListDocumentsController 
      * Constructor.
      */
     @Inject
-    public ListAllDocumentsController(OtherDocumentRecordService recordService, MessageSource messageSource) {
+    public ListAllDocumentsController(final OtherDocumentRecordService recordService, final MessageSource messageSource) {
         super(AllDocumentsUrlParts.BASE_URL, new PageViews(), recordService, messageSource);
     }
 
     @Override
     @RequestMapping(value = AllDocumentsUrlParts.BASE_URL, method = RequestMethod.GET)
-    public String initPage(HttpServletRequest request, ModelMap model) {
+    public String initPage(final HttpServletRequest request, final ModelMap model) {
         return super.initPage(request, model);
     }
 
     @Override
     @RequestMapping(value = AllDocumentsUrlParts.CREATED_URL, method = RequestMethod.GET)
-    public String initPageAfterCreate(HttpServletRequest request, ModelMap model) {
+    public String initPageAfterCreate(final HttpServletRequest request, final ModelMap model) {
         return super.initPageAfterCreate(request, model);
     }
 
     @Override
     @RequestMapping(value = AllDocumentsUrlParts.DELETED_URL, method = RequestMethod.GET)
-    public String initPageAfterDelete(HttpServletRequest request, ModelMap model) {
+    public String initPageAfterDelete(final HttpServletRequest request, final ModelMap model) {
         return super.initPageAfterDelete(request, model);
     }
 }

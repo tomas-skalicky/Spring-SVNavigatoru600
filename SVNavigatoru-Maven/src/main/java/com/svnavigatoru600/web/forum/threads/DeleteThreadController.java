@@ -33,7 +33,7 @@ public class DeleteThreadController extends AbstractThreadController {
     private ListThreadsController listController;
 
     @Inject
-    public void setListController(ListThreadsController listController) {
+    public void setListController(final ListThreadsController listController) {
         this.listController = listController;
     }
 
@@ -41,23 +41,23 @@ public class DeleteThreadController extends AbstractThreadController {
      * Constructor.
      */
     @Inject
-    public DeleteThreadController(ThreadService threadService, MessageSource messageSource) {
+    public DeleteThreadController(final ThreadService threadService, final MessageSource messageSource) {
         super(threadService, messageSource);
     }
 
     @RequestMapping(value = ThreadsUrlParts.EXISTING_URL + "{threadId}/"
             + CommonUrlParts.DELETE_EXTENSION, method = RequestMethod.GET)
     @Transactional
-    public String delete(@PathVariable int threadId, HttpServletRequest request, ModelMap model) {
+    public String delete(@PathVariable final int threadId, final HttpServletRequest request, final ModelMap model) {
 
-        ThreadService threadService = getThreadService();
+        final ThreadService threadService = getThreadService();
         threadService.canDelete(threadId);
 
         try {
             // Deletes the thread from the repository.
-            Thread thread = threadService.findById(threadId);
+            final Thread thread = threadService.findById(threadId);
             if (thread.getContributions().size() > 0) {
-                String view = this.listController.initPage(request, model);
+                final String view = listController.initPage(request, model);
                 model.addAttribute("error", DeleteThreadController.CANNOT_DELETE_DUE_CONTRIBUTION_MESSAGE_CODE);
                 return view;
             }
@@ -67,10 +67,10 @@ public class DeleteThreadController extends AbstractThreadController {
             model.addAttribute(AbstractMetaController.REDIRECTION_ATTRIBUTE, ThreadsUrlParts.DELETED_URL);
             return AbstractMetaController.REDIRECTION_PAGE;
 
-        } catch (DataAccessException e) {
+        } catch (final DataAccessException e) {
             // We encountered a database problem.
             LogFactory.getLog(this.getClass()).error(e);
-            String view = this.listController.initPage(request, model);
+            final String view = listController.initPage(request, model);
             model.addAttribute("error", DeleteThreadController.DATABASE_ERROR_MESSAGE_CODE);
             return view;
         }

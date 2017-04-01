@@ -20,7 +20,7 @@ public class WelcomePagesController extends AbstractPrivateSectionMetaController
     private ListNewsController newsController;
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    public String init(HttpServletRequest request, ModelMap model) {
-        return this.newsController.initPage(request, model);
+    public String init(final HttpServletRequest request, final ModelMap model) {
+        return newsController.initPage(request, model);
     }
 }

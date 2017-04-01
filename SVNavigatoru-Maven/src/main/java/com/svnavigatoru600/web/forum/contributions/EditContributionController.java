@@ -42,21 +42,21 @@ public class EditContributionController extends AbstractNewEditContributionContr
      * Constructor.
      */
     @Inject
-    public EditContributionController(ContributionService contributionService,
-            SendNotificationEditModelFiller sendNotificationModelFiller, EditContributionValidator validator,
-            MessageSource messageSource) {
+    public EditContributionController(final ContributionService contributionService,
+            final SendNotificationEditModelFiller sendNotificationModelFiller, final EditContributionValidator validator,
+            final MessageSource messageSource) {
         super(contributionService, sendNotificationModelFiller, validator, messageSource);
     }
 
     @RequestMapping(value = EditContributionController.BASE_URL, method = RequestMethod.GET)
-    public String initForm(@PathVariable int threadId, @PathVariable int contributionId, HttpServletRequest request,
-            ModelMap model) {
+    public String initForm(@PathVariable final int threadId, @PathVariable final int contributionId, final HttpServletRequest request,
+            final ModelMap model) {
 
         getContributionService().canEdit(contributionId);
 
-        EditContribution command = new EditContribution();
+        final EditContribution command = new EditContribution();
 
-        Contribution contribution = getContributionService().findById(contributionId);
+        final Contribution contribution = getContributionService().findById(contributionId);
         command.setContribution(contribution);
 
         getSendNotificationModelFiller().populateSendNotificationInInitForm(command, request, getMessageSource());
@@ -67,22 +67,22 @@ public class EditContributionController extends AbstractNewEditContributionContr
 
     @RequestMapping(value = EditContributionController.BASE_URL
             + CommonUrlParts.SAVED_EXTENSION, method = RequestMethod.GET)
-    public String initFormAfterSave(@PathVariable int threadId, @PathVariable int contributionId,
-            HttpServletRequest request, ModelMap model) {
-        String view = initForm(threadId, contributionId, request, model);
+    public String initFormAfterSave(@PathVariable final int threadId, @PathVariable final int contributionId,
+            final HttpServletRequest request, final ModelMap model) {
+        final String view = initForm(threadId, contributionId, request, model);
         ((EditContribution) model.get(AbstractNewEditContributionController.COMMAND)).setDataSaved(true);
         return view;
     }
 
     @RequestMapping(value = EditContributionController.BASE_URL, method = RequestMethod.POST)
     @Transactional
-    public String processSubmittedForm(@ModelAttribute(EditContributionController.COMMAND) EditContribution command,
-            BindingResult result, SessionStatus status, @PathVariable int threadId, @PathVariable int contributionId,
-            HttpServletRequest request, ModelMap model) {
+    public String processSubmittedForm(@ModelAttribute(EditContributionController.COMMAND) final EditContribution command,
+            final BindingResult result, final SessionStatus status, @PathVariable final int threadId, @PathVariable final int contributionId,
+            final HttpServletRequest request, final ModelMap model) {
 
         getContributionService().canEdit(contributionId);
 
-        MessageSource messageSource = getMessageSource();
+        final MessageSource messageSource = getMessageSource();
         getSendNotificationModelFiller().populateSendNotificationInSubmitForm(command, request, messageSource);
 
         getValidator().validate(command, result);
@@ -90,7 +90,7 @@ public class EditContributionController extends AbstractNewEditContributionContr
             return PageViews.EDIT.getViewName();
         }
 
-        ContributionService contributionService = getContributionService();
+        final ContributionService contributionService = getContributionService();
         Contribution originalContribution = null;
         try {
             originalContribution = contributionService.findById(contributionId);
@@ -107,7 +107,7 @@ public class EditContributionController extends AbstractNewEditContributionContr
                             CommonUrlParts.SAVED_EXTENSION));
             return AbstractMetaController.REDIRECTION_PAGE;
 
-        } catch (DataAccessException e) {
+        } catch (final DataAccessException e) {
             // We encountered a database problem.
             LogFactory.getLog(this.getClass()).error(originalContribution, e);
             result.reject(EditContributionController.DATABASE_ERROR_MESSAGE_CODE);

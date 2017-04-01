@@ -10,7 +10,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.context.MessageSource;
 import org.springframework.dao.DataAccessException;
-import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -32,7 +31,6 @@ import com.svnavigatoru600.web.records.AbstractPageViews;
  * 
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
-@Controller
 public abstract class AbstractNewRecordController extends AbstractNewEditRecordController {
 
     /**
@@ -45,9 +43,9 @@ public abstract class AbstractNewRecordController extends AbstractNewEditRecordC
      * Constructs a controller which considers all {@link SessionRecord SessionRecords} of all {@link SessionRecordType
      * SessionRecordTypes}.
      */
-    public AbstractNewRecordController(String baseUrl, AbstractPageViews views, SessionRecordService recordService,
-            SendNotificationModelFiller sendNotificationModelFiller, NewSessionRecordValidator validator,
-            MessageSource messageSource) {
+    public AbstractNewRecordController(final String baseUrl, final AbstractPageViews views, final SessionRecordService recordService,
+            final SendNotificationModelFiller sendNotificationModelFiller, final NewSessionRecordValidator validator,
+            final MessageSource messageSource) {
         super(baseUrl, views, recordService, sendNotificationModelFiller, validator, messageSource);
     }
 
@@ -55,23 +53,23 @@ public abstract class AbstractNewRecordController extends AbstractNewEditRecordC
      * Constructs a controller which considers all {@link SessionRecord SessionRecords} of the given
      * <code>recordType</code>.
      */
-    public AbstractNewRecordController(String baseUrl, AbstractPageViews views, SessionRecordType recordType,
-            SessionRecordService recordService, SendNotificationModelFiller sendNotificationModelFiller,
-            NewSessionRecordValidator validator, MessageSource messageSource) {
+    public AbstractNewRecordController(final String baseUrl, final AbstractPageViews views, final SessionRecordType recordType,
+            final SessionRecordService recordService, final SendNotificationModelFiller sendNotificationModelFiller,
+            final NewSessionRecordValidator validator, final MessageSource messageSource) {
         super(baseUrl, views, recordType, recordService, sendNotificationModelFiller, validator, messageSource);
     }
 
     /**
      * Initializes the form.
      */
-    public String initForm(SessionRecordType recordType, HttpServletRequest request, ModelMap model) {
+    public String initForm(final SessionRecordType recordType, final HttpServletRequest request, final ModelMap model) {
 
-        NewSessionRecord command = new NewSessionRecord();
+        final NewSessionRecord command = new NewSessionRecord();
 
-        SessionRecord record = new SessionRecord();
+        final SessionRecord record = new SessionRecord();
         command.setRecord(record);
 
-        MessageSource messageSource = getMessageSource();
+        final MessageSource messageSource = getMessageSource();
         command.setNewType(Localization.findLocaleMessage(messageSource, request, recordType.getLocalizationCode()));
 
         getSendNotificationModelFiller().populateSendNotificationInInitForm(command, request, messageSource);
@@ -86,10 +84,10 @@ public abstract class AbstractNewRecordController extends AbstractNewEditRecordC
      * @return The name of the view which is to be shown.
      */
     @Transactional
-    public String processSubmittedForm(NewSessionRecord command, BindingResult result, SessionStatus status,
-            HttpServletRequest request, ModelMap model) {
+    public String processSubmittedForm(final NewSessionRecord command, final BindingResult result, final SessionStatus status,
+            final HttpServletRequest request, final ModelMap model) {
 
-        MessageSource messageSource = getMessageSource();
+        final MessageSource messageSource = getMessageSource();
         getSendNotificationModelFiller().populateSendNotificationInSubmitForm(command, request, messageSource);
 
         getValidator().validate(command, result);
@@ -97,7 +95,7 @@ public abstract class AbstractNewRecordController extends AbstractNewEditRecordC
             return getViews().getNeww();
         }
 
-        SessionRecord newRecord = command.getRecord();
+        final SessionRecord newRecord = command.getRecord();
         try {
             getRecordService().saveAndNotifyUsers(newRecord, command.getNewType(), command.getNewFile(),
                     command.getSendNotification().isStatus(), request, messageSource);
@@ -110,21 +108,21 @@ public abstract class AbstractNewRecordController extends AbstractNewEditRecordC
                     String.format("%s%s", getBaseUrl(), CommonUrlParts.CREATED_EXTENSION));
             return AbstractMetaController.REDIRECTION_PAGE;
 
-        } catch (IllegalStateException e) {
-            this.logger.error(newRecord, e);
+        } catch (final IllegalStateException e) {
+            logger.error(newRecord, e);
             result.reject(AbstractNewEditRecordController.UPLOAD_FILE_ERROR_MESSAGE_CODE);
-        } catch (IOException e) {
-            this.logger.error(newRecord, e);
+        } catch (final IOException e) {
+            logger.error(newRecord, e);
             result.reject(AbstractNewEditRecordController.UPLOAD_FILE_ERROR_MESSAGE_CODE);
-        } catch (SerialException e) {
-            this.logger.error(newRecord, e);
+        } catch (final SerialException e) {
+            logger.error(newRecord, e);
             result.reject(AbstractNewEditRecordController.UPLOAD_FILE_ERROR_MESSAGE_CODE);
-        } catch (SQLException e) {
-            this.logger.error(newRecord, e);
+        } catch (final SQLException e) {
+            logger.error(newRecord, e);
             result.reject(AbstractNewEditRecordController.UPLOAD_FILE_ERROR_MESSAGE_CODE);
-        } catch (DataAccessException e) {
+        } catch (final DataAccessException e) {
             // We encountered a database problem.
-            this.logger.error(newRecord, e);
+            logger.error(newRecord, e);
             result.reject(AbstractNewRecordController.DATABASE_ERROR_MESSAGE_CODE);
         }
         return getViews().getNeww();

@@ -29,11 +29,11 @@ public class ListUsersController extends AbstractUserController {
      * Initializes the page with all users.
      */
     @RequestMapping(value = UserAdministrationUrlParts.BASE_URL, method = RequestMethod.GET)
-    public String initPage(HttpServletRequest request, ModelMap model) {
+    public String initPage(final HttpServletRequest request, final ModelMap model) {
 
-        ShowAllUsers command = new ShowAllUsers();
+        final ShowAllUsers command = new ShowAllUsers();
 
-        List<User> users = getUserService().findAllOrdered();
+        final List<User> users = getUserService().findAllOrdered();
         command.setUsers(users);
 
         // Sets up all (but necessary) maps.
@@ -49,8 +49,8 @@ public class ListUsersController extends AbstractUserController {
      * repository recently.
      */
     @RequestMapping(value = UserAdministrationUrlParts.CREATED_URL, method = RequestMethod.GET)
-    public String initPageAfterCreate(HttpServletRequest request, ModelMap model) {
-        String view = initPage(request, model);
+    public String initPageAfterCreate(final HttpServletRequest request, final ModelMap model) {
+        final String view = initPage(request, model);
         ((ShowAllUsers) model.get(ListUsersController.COMMAND)).setUserCreated(true);
         return view;
     }
@@ -60,8 +60,8 @@ public class ListUsersController extends AbstractUserController {
      * the repository.
      */
     @RequestMapping(value = UserAdministrationUrlParts.DELETED_URL, method = RequestMethod.GET)
-    public String initPageAfterDelete(HttpServletRequest request, ModelMap model) {
-        String view = initPage(request, model);
+    public String initPageAfterDelete(final HttpServletRequest request, final ModelMap model) {
+        final String view = initPage(request, model);
         ((ShowAllUsers) model.get(ListUsersController.COMMAND)).setUserDeleted(true);
         return view;
     }

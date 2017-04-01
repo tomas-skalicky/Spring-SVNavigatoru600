@@ -46,8 +46,8 @@ public class NewThreadController extends AbstractNewEditThreadController impleme
      * Constructor.
      */
     @Inject
-    public NewThreadController(ThreadService threadService, SendNotificationNewModelFiller sendNotificationModelFiller,
-            NewThreadValidator validator, MessageSource messageSource) {
+    public NewThreadController(final ThreadService threadService, final SendNotificationNewModelFiller sendNotificationModelFiller,
+            final NewThreadValidator validator, final MessageSource messageSource) {
         super(threadService, validator, messageSource);
         this.sendNotificationModelFiller = sendNotificationModelFiller;
     }
@@ -56,16 +56,16 @@ public class NewThreadController extends AbstractNewEditThreadController impleme
      * Initializes the form.
      */
     @RequestMapping(value = ThreadsUrlParts.NEW_URL, method = RequestMethod.GET)
-    public String initForm(HttpServletRequest request, ModelMap model) {
+    public String initForm(final HttpServletRequest request, final ModelMap model) {
 
-        NewThread command = new NewThread();
+        final NewThread command = new NewThread();
 
-        Thread thread = new Thread();
+        final Thread thread = new Thread();
         command.setThread(thread);
-        Contribution contribution = new Contribution();
+        final Contribution contribution = new Contribution();
         command.setContribution(contribution);
 
-        this.sendNotificationModelFiller.populateSendNotificationInInitForm(command, request, getMessageSource());
+        sendNotificationModelFiller.populateSendNotificationInInitForm(command, request, getMessageSource());
 
         model.addAttribute(AbstractNewEditThreadController.COMMAND, command);
         return PageViews.NEW.getViewName();
@@ -78,11 +78,11 @@ public class NewThreadController extends AbstractNewEditThreadController impleme
      */
     @RequestMapping(value = ThreadsUrlParts.NEW_URL, method = RequestMethod.POST)
     @Transactional
-    public String processSubmittedForm(@ModelAttribute(NewThreadController.COMMAND) NewThread command,
-            BindingResult result, SessionStatus status, HttpServletRequest request, ModelMap model) {
+    public String processSubmittedForm(@ModelAttribute(NewThreadController.COMMAND) final NewThread command,
+            final BindingResult result, final SessionStatus status, final HttpServletRequest request, final ModelMap model) {
 
-        MessageSource messageSource = getMessageSource();
-        this.sendNotificationModelFiller.populateSendNotificationInSubmitForm(command, request, messageSource);
+        final MessageSource messageSource = getMessageSource();
+        sendNotificationModelFiller.populateSendNotificationInSubmitForm(command, request, messageSource);
 
         getValidator().validate(command, result);
         if (result.hasErrors()) {
@@ -90,11 +90,11 @@ public class NewThreadController extends AbstractNewEditThreadController impleme
         }
 
         // Updates the data of the new thread and its first contribution.
-        Thread newThread = command.getThread();
-        User author = UserUtils.getLoggedUser();
+        final Thread newThread = command.getThread();
+        final User author = UserUtils.getLoggedUser();
         newThread.setAuthor(author);
 
-        Contribution firstContribution = command.getContribution();
+        final Contribution firstContribution = command.getContribution();
         firstContribution.setThread(newThread);
         firstContribution.setAuthor(author);
 
@@ -113,7 +113,7 @@ public class NewThreadController extends AbstractNewEditThreadController impleme
             model.addAttribute(AbstractMetaController.REDIRECTION_ATTRIBUTE, ThreadsUrlParts.CREATED_URL);
             return AbstractMetaController.REDIRECTION_PAGE;
 
-        } catch (DataAccessException e) {
+        } catch (final DataAccessException e) {
             // We encountered a database problem.
             LogFactory.getLog(this.getClass()).error(newThread, e);
             result.reject(NewThreadController.DATABASE_ERROR_MESSAGE_CODE);

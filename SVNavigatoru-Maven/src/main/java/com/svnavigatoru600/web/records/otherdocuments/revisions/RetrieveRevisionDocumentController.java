@@ -26,7 +26,7 @@ public class RetrieveRevisionDocumentController extends AbstractRetrieveDocument
      * Constructor.
      */
     @Inject
-    public RetrieveRevisionDocumentController(OtherDocumentRecordService recordService, MessageSource messageSource) {
+    public RetrieveRevisionDocumentController(final OtherDocumentRecordService recordService, final MessageSource messageSource) {
         super(RevisionsUrlParts.BASE_URL, new PageViews(), OtherDocumentRecordType.REGULAR_REVISION, recordService,
                 messageSource);
     }
@@ -34,7 +34,7 @@ public class RetrieveRevisionDocumentController extends AbstractRetrieveDocument
     @Override
     @RequestMapping(value = RevisionsUrlParts.EXISTING_URL + "{recordId}/"
             + RecordsCommonUrlParts.DOWNLOAD_EXTENSION, method = RequestMethod.GET)
-    public void retrieve(@PathVariable int recordId, HttpServletResponse response, ModelMap model) {
+    public void retrieve(@PathVariable final int recordId, final HttpServletResponse response, final ModelMap model) {
         super.retrieve(recordId, response, model);
     }
 }

@@ -31,16 +31,16 @@ public class ListEventsController extends AbstractEventController {
      * Constructor.
      */
     @Inject
-    public ListEventsController(CalendarEventService eventService, MessageSource messageSource) {
+    public ListEventsController(final CalendarEventService eventService, final MessageSource messageSource) {
         super(eventService, messageSource);
     }
 
     @RequestMapping(value = EventsUrlParts.BASE_URL, method = RequestMethod.GET)
-    public String initPage(HttpServletRequest request, ModelMap model) {
+    public String initPage(final HttpServletRequest request, final ModelMap model) {
 
-        ShowAllEvents command = new ShowAllEvents();
+        final ShowAllEvents command = new ShowAllEvents();
 
-        List<CalendarEvent> events = getEventService().findAllFutureEventsOrdered();
+        final List<CalendarEvent> events = getEventService().findAllFutureEventsOrdered();
         command.setEvents(events);
 
         // Sets up all auxiliary (but necessary) maps.
@@ -52,15 +52,15 @@ public class ListEventsController extends AbstractEventController {
     }
 
     @RequestMapping(value = EventsUrlParts.CREATED_URL, method = RequestMethod.GET)
-    public String initPageAfterCreate(HttpServletRequest request, ModelMap model) {
-        String view = initPage(request, model);
+    public String initPageAfterCreate(final HttpServletRequest request, final ModelMap model) {
+        final String view = initPage(request, model);
         ((ShowAllEvents) model.get(ListEventsController.COMMAND)).setEventCreated(true);
         return view;
     }
 
     @RequestMapping(value = EventsUrlParts.DELETED_URL, method = RequestMethod.GET)
-    public String initPageAfterDelete(HttpServletRequest request, ModelMap model) {
-        String view = initPage(request, model);
+    public String initPageAfterDelete(final HttpServletRequest request, final ModelMap model) {
+        final String view = initPage(request, model);
         ((ShowAllEvents) model.get(ListEventsController.COMMAND)).setEventDeleted(true);
         return view;
     }

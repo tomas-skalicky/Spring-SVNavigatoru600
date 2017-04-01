@@ -26,14 +26,14 @@ public class RetrieveOtherDocumentController extends AbstractRetrieveDocumentCon
      * Constructor.
      */
     @Inject
-    public RetrieveOtherDocumentController(OtherDocumentRecordService recordService, MessageSource messageSource) {
+    public RetrieveOtherDocumentController(final OtherDocumentRecordService recordService, final MessageSource messageSource) {
         super(OthersUrlParts.BASE_URL, new PageViews(), OtherDocumentRecordType.OTHER, recordService, messageSource);
     }
 
     @Override
     @RequestMapping(value = OthersUrlParts.EXISTING_URL + "{recordId}/"
             + RecordsCommonUrlParts.DOWNLOAD_EXTENSION, method = RequestMethod.GET)
-    public void retrieve(@PathVariable int recordId, HttpServletResponse response, ModelMap model) {
+    public void retrieve(@PathVariable final int recordId, final HttpServletResponse response, final ModelMap model) {
         super.retrieve(recordId, response, model);
     }
 }

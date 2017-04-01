@@ -40,9 +40,9 @@ public class NewEventController extends AbstractNewEditEventController {
      * Constructor.
      */
     @Inject
-    public NewEventController(CalendarEventService eventService,
-            SendNotificationNewModelFiller sendNotificationModelFiller, NewEventValidator validator,
-            MessageSource messageSource) {
+    public NewEventController(final CalendarEventService eventService,
+            final SendNotificationNewModelFiller sendNotificationModelFiller, final NewEventValidator validator,
+            final MessageSource messageSource) {
         super(eventService, sendNotificationModelFiller, validator, messageSource);
     }
 
@@ -50,14 +50,14 @@ public class NewEventController extends AbstractNewEditEventController {
      * Initializes the form.
      */
     @RequestMapping(value = EventsUrlParts.NEW_URL, method = RequestMethod.GET)
-    public String initForm(HttpServletRequest request, ModelMap model) {
+    public String initForm(final HttpServletRequest request, final ModelMap model) {
 
-        NewEvent command = new NewEvent();
+        final NewEvent command = new NewEvent();
 
-        CalendarEvent calendarEvent = new CalendarEvent();
+        final CalendarEvent calendarEvent = new CalendarEvent();
         command.setEvent(calendarEvent);
 
-        MessageSource messageSource = getMessageSource();
+        final MessageSource messageSource = getMessageSource();
         command.setNewPriority(
                 Localization.findLocaleMessage(messageSource, request, PriorityType.NORMAL.getLocalizationCode()));
 
@@ -75,10 +75,10 @@ public class NewEventController extends AbstractNewEditEventController {
      */
     @RequestMapping(value = EventsUrlParts.NEW_URL, method = RequestMethod.POST)
     @Transactional
-    public String processSubmittedForm(@ModelAttribute(NewEventController.COMMAND) NewEvent command,
-            BindingResult result, SessionStatus status, HttpServletRequest request, ModelMap model) {
+    public String processSubmittedForm(@ModelAttribute(NewEventController.COMMAND) final NewEvent command,
+            final BindingResult result, final SessionStatus status, final HttpServletRequest request, final ModelMap model) {
 
-        MessageSource messageSource = getMessageSource();
+        final MessageSource messageSource = getMessageSource();
         getSendNotificationModelFiller().populateSendNotificationInSubmitForm(command, request, messageSource);
 
         getValidator().validate(command, result);
@@ -87,7 +87,7 @@ public class NewEventController extends AbstractNewEditEventController {
         }
 
         // Updates the data of the new calendar event.
-        CalendarEvent newEvent = command.getEvent();
+        final CalendarEvent newEvent = command.getEvent();
         newEvent.setPriority(
                 PriorityType.valueOfAccordingLocalization(command.getNewPriority(), messageSource, request));
 
@@ -103,7 +103,7 @@ public class NewEventController extends AbstractNewEditEventController {
             model.addAttribute(AbstractMetaController.REDIRECTION_ATTRIBUTE, EventsUrlParts.CREATED_URL);
             return AbstractMetaController.REDIRECTION_PAGE;
 
-        } catch (DataAccessException e) {
+        } catch (final DataAccessException e) {
             // We encountered a database problem.
             LogFactory.getLog(this.getClass()).error(newEvent, e);
             result.reject(NewEventController.DATABASE_ERROR_MESSAGE_CODE);

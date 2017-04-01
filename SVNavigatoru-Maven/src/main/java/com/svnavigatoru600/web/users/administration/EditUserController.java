@@ -46,7 +46,7 @@ public class EditUserController extends AbstractNewEditUserController {
      */
     @Inject
     @Required
-    public void setValidator(AdministrateUserDataValidator validator) {
+    public void setValidator(final AdministrateUserDataValidator validator) {
         this.validator = validator;
     }
 
@@ -57,11 +57,11 @@ public class EditUserController extends AbstractNewEditUserController {
      *            The username of the administrated user.
      */
     @RequestMapping(value = UserAdministrationUrlParts.EXISTING_URL + "{username}/", method = RequestMethod.GET)
-    public String initForm(@PathVariable String username, HttpServletRequest request, ModelMap model) {
+    public String initForm(@PathVariable final String username, final HttpServletRequest request, final ModelMap model) {
 
-        AdministrateUserData command = new AdministrateUserData();
+        final AdministrateUserData command = new AdministrateUserData();
 
-        User user = getUserService().findByUsername(username);
+        final User user = getUserService().findByUsername(username);
         command.setUser(user);
 
         // Collection of authorities is converted to a map.
@@ -70,7 +70,7 @@ public class EditUserController extends AbstractNewEditUserController {
         // Sets up all auxiliary (but necessary) maps.
         command.setRoleCheckboxId(AuthorityService.getRoleCheckboxId());
         command.setLocalizedRoleCheckboxTitles(
-                this.authorityService.getLocalizedRoleTitles(request, getMessageSource()));
+                authorityService.getLocalizedRoleTitles(request, getMessageSource()));
 
         model.addAttribute(AbstractNewEditUserController.COMMAND, command);
         return PageViews.EDIT.getViewName();
@@ -81,8 +81,8 @@ public class EditUserController extends AbstractNewEditUserController {
      */
     @RequestMapping(value = UserAdministrationUrlParts.EXISTING_URL + "{username}/"
             + CommonUrlParts.SAVED_EXTENSION, method = RequestMethod.GET)
-    public String initFormAfterSave(@PathVariable String username, HttpServletRequest request, ModelMap model) {
-        String view = initForm(username, request, model);
+    public String initFormAfterSave(@PathVariable final String username, final HttpServletRequest request, final ModelMap model) {
+        final String view = initForm(username, request, model);
         ((AdministrateUserData) model.get(AbstractNewEditUserController.COMMAND)).setDataSaved(true);
         return view;
     }
@@ -96,20 +96,20 @@ public class EditUserController extends AbstractNewEditUserController {
     @RequestMapping(value = UserAdministrationUrlParts.EXISTING_URL + "{username}/", method = RequestMethod.POST)
     @Transactional
     public String processSubmittedForm(
-            @ModelAttribute(AbstractNewEditUserController.COMMAND) AdministrateUserData command, BindingResult result,
-            SessionStatus status, @PathVariable String username, HttpServletRequest request, ModelMap model) {
+            @ModelAttribute(AbstractNewEditUserController.COMMAND) final AdministrateUserData command, final BindingResult result,
+            final SessionStatus status, @PathVariable final String username, final HttpServletRequest request, final ModelMap model) {
 
         // Sets up all auxiliary (but necessary) maps.
         command.setRoleCheckboxId(AuthorityService.getRoleCheckboxId());
-        MessageSource messageSource = getMessageSource();
-        command.setLocalizedRoleCheckboxTitles(this.authorityService.getLocalizedRoleTitles(request, messageSource));
+        final MessageSource messageSource = getMessageSource();
+        command.setLocalizedRoleCheckboxTitles(authorityService.getLocalizedRoleTitles(request, messageSource));
 
-        this.validator.validate(command, result);
+        validator.validate(command, result);
         if (result.hasErrors()) {
             return PageViews.EDIT.getViewName();
         }
 
-        UserService userService = getUserService();
+        final UserService userService = getUserService();
         User originalUser = null;
         try {
             originalUser = userService.findByUsername(username);
@@ -124,7 +124,7 @@ public class EditUserController extends AbstractNewEditUserController {
                     UserAdministrationUrlParts.EXISTING_URL, username, CommonUrlParts.SAVED_EXTENSION));
             return AbstractMetaController.REDIRECTION_PAGE;
 
-        } catch (DataAccessException e) {
+        } catch (final DataAccessException e) {
             // We encountered a database problem.
             LogFactory.getLog(this.getClass()).error(originalUser, e);
             result.reject("edit.changes-not-saved-due-to-database-error");

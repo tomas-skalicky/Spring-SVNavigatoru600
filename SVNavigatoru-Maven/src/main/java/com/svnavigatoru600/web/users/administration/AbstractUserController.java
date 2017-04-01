@@ -5,7 +5,6 @@ import javax.inject.Inject;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Required;
 import org.springframework.context.MessageSource;
-import org.springframework.stereotype.Controller;
 
 import com.svnavigatoru600.web.AbstractPrivateSectionMetaController;
 
@@ -15,7 +14,6 @@ import com.svnavigatoru600.web.AbstractPrivateSectionMetaController;
  * 
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
-@Controller
 public abstract class AbstractUserController extends AbstractPrivateSectionMetaController {
 
     private MessageSource messageSource = null;
@@ -32,7 +30,7 @@ public abstract class AbstractUserController extends AbstractPrivateSectionMetaC
      * Trivial getter
      */
     protected MessageSource getMessageSource() {
-        return this.messageSource;
+        return messageSource;
     }
 
     /**
@@ -40,7 +38,7 @@ public abstract class AbstractUserController extends AbstractPrivateSectionMetaC
      */
     @Inject
     @Required
-    public void setMessageSource(MessageSource messageSource) {
+    public void setMessageSource(final MessageSource messageSource) {
         this.messageSource = messageSource;
     }
 }

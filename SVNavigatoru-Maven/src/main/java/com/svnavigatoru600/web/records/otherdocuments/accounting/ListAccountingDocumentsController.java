@@ -24,26 +24,26 @@ public class ListAccountingDocumentsController extends AbstractListDocumentsCont
      * Constructor.
      */
     @Inject
-    public ListAccountingDocumentsController(OtherDocumentRecordService recordService, MessageSource messageSource) {
+    public ListAccountingDocumentsController(final OtherDocumentRecordService recordService, final MessageSource messageSource) {
         super(AccountingUrlParts.BASE_URL, new PageViews(), OtherDocumentRecordType.ACCOUNTING, recordService,
                 messageSource);
     }
 
     @Override
     @RequestMapping(value = AccountingUrlParts.BASE_URL, method = RequestMethod.GET)
-    public String initPage(HttpServletRequest request, ModelMap model) {
+    public String initPage(final HttpServletRequest request, final ModelMap model) {
         return super.initPage(request, model);
     }
 
     @Override
     @RequestMapping(value = AccountingUrlParts.CREATED_URL, method = RequestMethod.GET)
-    public String initPageAfterCreate(HttpServletRequest request, ModelMap model) {
+    public String initPageAfterCreate(final HttpServletRequest request, final ModelMap model) {
         return super.initPageAfterCreate(request, model);
     }
 
     @Override
     @RequestMapping(value = AccountingUrlParts.DELETED_URL, method = RequestMethod.GET)
-    public String initPageAfterDelete(HttpServletRequest request, ModelMap model) {
+    public String initPageAfterDelete(final HttpServletRequest request, final ModelMap model) {
         return super.initPageAfterDelete(request, model);
     }
 }

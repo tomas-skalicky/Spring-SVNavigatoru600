@@ -24,26 +24,26 @@ public class ListBoardSessionRecordsController extends AbstractListRecordsContro
      * Constructor.
      */
     @Inject
-    public ListBoardSessionRecordsController(SessionRecordService recordService, MessageSource messageSource) {
+    public ListBoardSessionRecordsController(final SessionRecordService recordService, final MessageSource messageSource) {
         super(BoardSessionsUrlParts.BASE_URL, new PageViews(), SessionRecordType.SESSION_RECORD_OF_BOARD, recordService,
                 messageSource);
     }
 
     @Override
     @RequestMapping(value = BoardSessionsUrlParts.BASE_URL, method = RequestMethod.GET)
-    public String initPage(HttpServletRequest request, ModelMap model) {
+    public String initPage(final HttpServletRequest request, final ModelMap model) {
         return super.initPage(request, model);
     }
 
     @Override
     @RequestMapping(value = BoardSessionsUrlParts.CREATED_URL, method = RequestMethod.GET)
-    public String initPageAfterCreate(HttpServletRequest request, ModelMap model) {
+    public String initPageAfterCreate(final HttpServletRequest request, final ModelMap model) {
         return super.initPageAfterCreate(request, model);
     }
 
     @Override
     @RequestMapping(value = BoardSessionsUrlParts.DELETED_URL, method = RequestMethod.GET)
-    public String initPageAfterDelete(HttpServletRequest request, ModelMap model) {
+    public String initPageAfterDelete(final HttpServletRequest request, final ModelMap model) {
         return super.initPageAfterDelete(request, model);
     }
 }

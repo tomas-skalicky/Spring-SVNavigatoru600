@@ -35,21 +35,21 @@ public class ListContributionsController extends AbstractContributionController 
      * Constructor.
      */
     @Inject
-    public ListContributionsController(ContributionService contributionService, ThreadService threadService,
-            MessageSource messageSource) {
+    public ListContributionsController(final ContributionService contributionService, final ThreadService threadService,
+            final MessageSource messageSource) {
         super(contributionService, messageSource);
         this.threadService = threadService;
     }
 
     @RequestMapping(value = ListContributionsController.BASE_URL
             + ContributionsUrlParts.CONTRIBUTIONS_EXTENSION, method = RequestMethod.GET)
-    public String initPage(@PathVariable int threadId, HttpServletRequest request, ModelMap model) {
+    public String initPage(@PathVariable final int threadId, final HttpServletRequest request, final ModelMap model) {
 
-        ShowAllContributions command = new ShowAllContributions();
+        final ShowAllContributions command = new ShowAllContributions();
 
-        List<Contribution> contributions = getContributionService().findAllOrdered(threadId);
+        final List<Contribution> contributions = getContributionService().findAllOrdered(threadId);
         command.setContributions(contributions);
-        command.setThread(this.threadService.findById(threadId));
+        command.setThread(threadService.findById(threadId));
 
         // Sets up all auxiliary (but necessary) maps.
         command.setLocalizedDeleteQuestions(
@@ -61,16 +61,16 @@ public class ListContributionsController extends AbstractContributionController 
 
     @RequestMapping(value = ListContributionsController.BASE_URL
             + ContributionsUrlParts.CONTRIBUTIONS_CREATED_EXTENSION, method = RequestMethod.GET)
-    public String initPageAfterCreate(@PathVariable int threadId, HttpServletRequest request, ModelMap model) {
-        String view = initPage(threadId, request, model);
+    public String initPageAfterCreate(@PathVariable final int threadId, final HttpServletRequest request, final ModelMap model) {
+        final String view = initPage(threadId, request, model);
         ((ShowAllContributions) model.get(ListContributionsController.COMMAND)).setContributionCreated(true);
         return view;
     }
 
     @RequestMapping(value = ListContributionsController.BASE_URL
             + ContributionsUrlParts.CONTRIBUTIONS_DELETED_EXTENSION, method = RequestMethod.GET)
-    public String initPageAfterDelete(@PathVariable int threadId, HttpServletRequest request, ModelMap model) {
-        String view = initPage(threadId, request, model);
+    public String initPageAfterDelete(@PathVariable final int threadId, final HttpServletRequest request, final ModelMap model) {
+        final String view = initPage(threadId, request, model);
         ((ShowAllContributions) model.get(ListContributionsController.COMMAND)).setContributionDeleted(true);
         return view;
     }

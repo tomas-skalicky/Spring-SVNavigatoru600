@@ -39,20 +39,20 @@ public class EditThreadController extends AbstractNewEditThreadController {
      * Constructor.
      */
     @Inject
-    public EditThreadController(ThreadService threadService, EditThreadValidator validator,
-            MessageSource messageSource) {
+    public EditThreadController(final ThreadService threadService, final EditThreadValidator validator,
+            final MessageSource messageSource) {
         super(threadService, validator, messageSource);
     }
 
     @RequestMapping(value = ThreadsUrlParts.EXISTING_URL + "{threadId}/", method = RequestMethod.GET)
-    public String initForm(@PathVariable int threadId, HttpServletRequest request, ModelMap model) {
+    public String initForm(@PathVariable final int threadId, final HttpServletRequest request, final ModelMap model) {
 
-        ThreadService threadService = getThreadService();
+        final ThreadService threadService = getThreadService();
         threadService.canEdit(threadId);
 
-        EditThread command = new EditThread();
+        final EditThread command = new EditThread();
 
-        Thread thread = threadService.findById(threadId);
+        final Thread thread = threadService.findById(threadId);
         command.setThread(thread);
 
         model.addAttribute(AbstractNewEditThreadController.COMMAND, command);
@@ -61,19 +61,19 @@ public class EditThreadController extends AbstractNewEditThreadController {
 
     @RequestMapping(value = ThreadsUrlParts.EXISTING_URL + "{threadId}/"
             + CommonUrlParts.SAVED_EXTENSION, method = RequestMethod.GET)
-    public String initFormAfterSave(@PathVariable int threadId, HttpServletRequest request, ModelMap model) {
-        String view = initForm(threadId, request, model);
+    public String initFormAfterSave(@PathVariable final int threadId, final HttpServletRequest request, final ModelMap model) {
+        final String view = initForm(threadId, request, model);
         ((EditThread) model.get(AbstractNewEditThreadController.COMMAND)).setDataSaved(true);
         return view;
     }
 
     @RequestMapping(value = ThreadsUrlParts.EXISTING_URL + "{threadId}/", method = RequestMethod.POST)
     @Transactional
-    public String processSubmittedForm(@ModelAttribute(EditThreadController.COMMAND) EditThread command,
-            BindingResult result, SessionStatus status, @PathVariable int threadId, HttpServletRequest request,
-            ModelMap model) {
+    public String processSubmittedForm(@ModelAttribute(EditThreadController.COMMAND) final EditThread command,
+            final BindingResult result, final SessionStatus status, @PathVariable final int threadId, final HttpServletRequest request,
+            final ModelMap model) {
 
-        ThreadService threadService = getThreadService();
+        final ThreadService threadService = getThreadService();
         threadService.canEdit(threadId);
 
         getValidator().validate(command, result);
@@ -94,7 +94,7 @@ public class EditThreadController extends AbstractNewEditThreadController {
                     String.format("%s%d/%s", ThreadsUrlParts.EXISTING_URL, threadId, CommonUrlParts.SAVED_EXTENSION));
             return AbstractMetaController.REDIRECTION_PAGE;
 
-        } catch (DataAccessException e) {
+        } catch (final DataAccessException e) {
             // We encountered a database problem.
             LogFactory.getLog(this.getClass()).error(originalThread, e);
             result.reject(EditThreadController.DATABASE_ERROR_MESSAGE_CODE);

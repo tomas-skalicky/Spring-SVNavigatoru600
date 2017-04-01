@@ -43,7 +43,7 @@ public class ForgottenPasswordController extends AbstractMetaController {
     private MessageSource messageSource;
 
     @Inject
-    public void setMessageSource(MessageSource messageSource) {
+    public void setMessageSource(final MessageSource messageSource) {
         this.messageSource = messageSource;
     }
 
@@ -51,7 +51,7 @@ public class ForgottenPasswordController extends AbstractMetaController {
      * Constructor.
      */
     @Inject
-    public ForgottenPasswordController(UserService userService, SendNewPasswordValidator validator) {
+    public ForgottenPasswordController(final UserService userService, final SendNewPasswordValidator validator) {
         LogFactory.getLog(this.getClass()).debug("The ForgottenPasswordController object created.");
         this.userService = userService;
         this.validator = validator;
@@ -61,19 +61,19 @@ public class ForgottenPasswordController extends AbstractMetaController {
      * Initializes the form.
      */
     @RequestMapping(value = LoginUrlParts.FORGOTTEN_PASSWORD_URL, method = RequestMethod.GET)
-    public String initForm(ModelMap model) {
+    public String initForm(final ModelMap model) {
 
-        SendNewPassword command = new SendNewPassword();
+        final SendNewPassword command = new SendNewPassword();
 
-        User user = new User();
+        final User user = new User();
         user.setEmail("@");
         command.setUser(user);
 
-        List<User> adminsFromDb = this.userService.findAllAdministrators();
-        List<User> newAdmins = new ArrayList<User>();
+        final List<User> adminsFromDb = userService.findAllAdministrators();
+        final List<User> newAdmins = new ArrayList<User>();
         // Excludes me (Tomas Skalicky).
-        for (User admin : adminsFromDb) {
-            boolean isMe = (admin.getEmail() != null) && "skalicky.tomas@gmail.com".equals(admin.getEmail());
+        for (final User admin : adminsFromDb) {
+            final boolean isMe = (admin.getEmail() != null) && "skalicky.tomas@gmail.com".equals(admin.getEmail());
             if (!isMe) {
                 newAdmins.add(admin);
             }
@@ -81,7 +81,7 @@ public class ForgottenPasswordController extends AbstractMetaController {
         // Note that AutoPopulatingList is used here. The reason is that in the
         // form forgotten-password.jsp, we need to bind each administrator back
         // to the list.
-        AutoPopulatingList<User> adminsForModel = new AutoPopulatingList<User>(newAdmins, User.class);
+        final AutoPopulatingList<User> adminsForModel = new AutoPopulatingList<User>(newAdmins, User.class);
         command.setAdministrators(adminsForModel);
 
         // ATTENTION: The attribute called "sendNewPasswordCommand" is connected
@@ -99,10 +99,10 @@ public class ForgottenPasswordController extends AbstractMetaController {
      * @return The name of the view which is to be shown.
      */
     @RequestMapping(value = LoginUrlParts.SEND_NEW_PASSWORD_URL, method = RequestMethod.POST)
-    public String processSubmittedForm(@ModelAttribute("sendNewPasswordCommand") SendNewPassword command,
-            BindingResult result, SessionStatus status, HttpServletRequest request, ModelMap model) {
+    public String processSubmittedForm(@ModelAttribute("sendNewPasswordCommand") final SendNewPassword command,
+            final BindingResult result, final SessionStatus status, final HttpServletRequest request, final ModelMap model) {
 
-        this.validator.validate(command, result);
+        validator.validate(command, result);
         if (result.hasErrors()) {
             // ATTENTION: The view name cannot be redirected via the redirection
             // page. The reason is that in that case, the ModelMap is lost (=
@@ -111,7 +111,7 @@ public class ForgottenPasswordController extends AbstractMetaController {
         }
 
         try {
-            this.userService.resetPasswordAndNotifyUser(command.getUser().getEmail(), request, this.messageSource);
+            userService.resetPasswordAndNotifyUser(command.getUser().getEmail(), request, messageSource);
 
             // Clears the command object from the session.
             status.setComplete();
@@ -123,7 +123,7 @@ public class ForgottenPasswordController extends AbstractMetaController {
             // reset once again. This is the counterpart to the following catch.
             return AbstractMetaController.REDIRECTION_PAGE;
 
-        } catch (NonTransientDataAccessException e) {
+        } catch (final NonTransientDataAccessException e) {
             // Returns back since the email address was wrong.
             LogFactory.getLog(this.getClass()).error(null, e);
             result.rejectValue("user.email", "email.occupied-by-nobody");

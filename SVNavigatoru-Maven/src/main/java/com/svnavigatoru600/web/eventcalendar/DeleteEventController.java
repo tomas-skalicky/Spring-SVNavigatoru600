@@ -31,7 +31,7 @@ public class DeleteEventController extends AbstractEventController {
     private ListEventsController listController;
 
     @Inject
-    public void setListController(ListEventsController listController) {
+    public void setListController(final ListEventsController listController) {
         this.listController = listController;
     }
 
@@ -39,14 +39,14 @@ public class DeleteEventController extends AbstractEventController {
      * Constructor.
      */
     @Inject
-    public DeleteEventController(CalendarEventService eventService, MessageSource messageSource) {
+    public DeleteEventController(final CalendarEventService eventService, final MessageSource messageSource) {
         super(eventService, messageSource);
     }
 
     @RequestMapping(value = EventsUrlParts.EXISTING_URL + "{eventId}/"
             + CommonUrlParts.DELETE_EXTENSION, method = RequestMethod.GET)
     @Transactional
-    public String delete(@PathVariable int eventId, HttpServletRequest request, ModelMap model) {
+    public String delete(@PathVariable final int eventId, final HttpServletRequest request, final ModelMap model) {
         try {
             getEventService().delete(eventId);
 
@@ -54,10 +54,10 @@ public class DeleteEventController extends AbstractEventController {
             model.addAttribute(AbstractMetaController.REDIRECTION_ATTRIBUTE, EventsUrlParts.DELETED_URL);
             return AbstractMetaController.REDIRECTION_PAGE;
 
-        } catch (DataAccessException e) {
+        } catch (final DataAccessException e) {
             // We encountered a database problem.
             LogFactory.getLog(this.getClass()).error(e);
-            String view = this.listController.initPage(request, model);
+            final String view = listController.initPage(request, model);
             model.addAttribute("error", DeleteEventController.DATABASE_ERROR_MESSAGE_CODE);
             return view;
         }

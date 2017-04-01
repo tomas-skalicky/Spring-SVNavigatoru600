@@ -7,7 +7,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.context.MessageSource;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 
 import com.svnavigatoru600.domain.records.SessionRecord;
@@ -21,7 +20,6 @@ import com.svnavigatoru600.web.records.AbstractPageViews;
  * 
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
-@Controller
 public abstract class AbstractListRecordsController extends AbstractSessionRecordController {
 
     /**
@@ -33,8 +31,8 @@ public abstract class AbstractListRecordsController extends AbstractSessionRecor
      * Constructs a controller which considers all {@link SessionRecord SessionRecords} of all {@link SessionRecordType
      * SessionRecordTypes}.
      */
-    public AbstractListRecordsController(String baseUrl, AbstractPageViews views, SessionRecordService recordService,
-            MessageSource messageSource) {
+    public AbstractListRecordsController(final String baseUrl, final AbstractPageViews views, final SessionRecordService recordService,
+            final MessageSource messageSource) {
         super(baseUrl, views, recordService, messageSource);
     }
 
@@ -42,27 +40,27 @@ public abstract class AbstractListRecordsController extends AbstractSessionRecor
      * Constructs a controller which considers all {@link SessionRecord SessionRecords} of the given
      * <code>recordType</code>.
      */
-    public AbstractListRecordsController(String baseUrl, AbstractPageViews views, SessionRecordType recordType,
-            SessionRecordService recordService, MessageSource messageSource) {
+    public AbstractListRecordsController(final String baseUrl, final AbstractPageViews views, final SessionRecordType recordType,
+            final SessionRecordService recordService, final MessageSource messageSource) {
         super(baseUrl, views, recordType, recordService, messageSource);
     }
 
-    public String initPage(HttpServletRequest request, ModelMap model) {
+    public String initPage(final HttpServletRequest request, final ModelMap model) {
 
-        ShowAllSessionRecords command = new ShowAllSessionRecords();
-        boolean allRecordTypes = isAllRecordTypes();
+        final ShowAllSessionRecords command = new ShowAllSessionRecords();
+        final boolean allRecordTypes = isAllRecordTypes();
         command.setAllRecordTypes(allRecordTypes);
 
-        List<SessionRecord> records = getRecordService().findAllOrdered(allRecordTypes, getRecordType());
+        final List<SessionRecord> records = getRecordService().findAllOrdered(allRecordTypes, getRecordType());
         command.setRecords(records);
 
         // Sets up all auxiliary (but necessary) maps.
-        MessageSource messageSource = getMessageSource();
+        final MessageSource messageSource = getMessageSource();
         if (allRecordTypes) {
             command.setLocalizedTypeTitles(
                     SessionRecordService.getLocalizedTypeTitles(records, request, messageSource));
         }
-        Map<SessionRecord, String> sessionDates = SessionRecordService.getLocalizedSessionDates(records, request);
+        final Map<SessionRecord, String> sessionDates = SessionRecordService.getLocalizedSessionDates(records, request);
         command.setLocalizedSessionDates(sessionDates);
         command.setLocalizedDeleteQuestions(
                 SessionRecordService.getLocalizedDeleteQuestions(records, request, sessionDates, messageSource));
@@ -72,15 +70,15 @@ public abstract class AbstractListRecordsController extends AbstractSessionRecor
     }
 
     @PreAuthorize("hasRole('ROLE_MEMBER_OF_BOARD')")
-    public String initPageAfterCreate(HttpServletRequest request, ModelMap model) {
-        String view = initPage(request, model);
+    public String initPageAfterCreate(final HttpServletRequest request, final ModelMap model) {
+        final String view = initPage(request, model);
         ((ShowAllSessionRecords) model.get(AbstractListRecordsController.COMMAND)).setRecordCreated(true);
         return view;
     }
 
     @PreAuthorize("hasRole('ROLE_MEMBER_OF_BOARD')")
-    public String initPageAfterDelete(HttpServletRequest request, ModelMap model) {
-        String view = initPage(request, model);
+    public String initPageAfterDelete(final HttpServletRequest request, final ModelMap model) {
+        final String view = initPage(request, model);
         ((ShowAllSessionRecords) model.get(AbstractListRecordsController.COMMAND)).setRecordDeleted(true);
         return view;
     }

@@ -29,23 +29,23 @@ public class NewAllDocumentController extends AbstractNewDocumentController {
      * Constructor.
      */
     @Inject
-    public NewAllDocumentController(OtherDocumentRecordService recordService,
-            SendNotificationNewModelFiller sendNotificationModelFiller, NewRecordValidator validator,
-            MessageSource messageSource) {
+    public NewAllDocumentController(final OtherDocumentRecordService recordService,
+            final SendNotificationNewModelFiller sendNotificationModelFiller, final NewRecordValidator validator,
+            final MessageSource messageSource) {
         super(AllDocumentsUrlParts.BASE_URL, new PageViews(), recordService, sendNotificationModelFiller, validator,
                 messageSource);
     }
 
     @Override
     @RequestMapping(value = AllDocumentsUrlParts.NEW_URL, method = RequestMethod.GET)
-    public String initForm(HttpServletRequest request, ModelMap model) {
+    public String initForm(final HttpServletRequest request, final ModelMap model) {
         return super.initForm(request, model);
     }
 
     @Override
     @RequestMapping(value = AllDocumentsUrlParts.NEW_URL, method = RequestMethod.POST)
-    public String processSubmittedForm(@ModelAttribute(AbstractNewDocumentController.COMMAND) NewRecord command,
-            BindingResult result, SessionStatus status, HttpServletRequest request, ModelMap model) {
+    public String processSubmittedForm(@ModelAttribute(AbstractNewDocumentController.COMMAND) final NewRecord command,
+            final BindingResult result, final SessionStatus status, final HttpServletRequest request, final ModelMap model) {
         return super.processSubmittedForm(command, result, status, request, model);
     }
 }

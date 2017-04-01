@@ -38,7 +38,7 @@ public class NewUserController extends AbstractNewEditUserController {
 
     private Validator validator;
 
-    public void setAuthorityService(AuthorityService authorityService) {
+    public void setAuthorityService(final AuthorityService authorityService) {
         this.authorityService = authorityService;
     }
 
@@ -47,7 +47,7 @@ public class NewUserController extends AbstractNewEditUserController {
      */
     @Inject
     @Required
-    public void setValidator(NewUserValidator validator) {
+    public void setValidator(final NewUserValidator validator) {
         this.validator = validator;
     }
 
@@ -55,11 +55,11 @@ public class NewUserController extends AbstractNewEditUserController {
      * Initializes the form.
      */
     @RequestMapping(value = UserAdministrationUrlParts.NEW_URL, method = RequestMethod.GET)
-    public String initForm(HttpServletRequest request, ModelMap model) {
+    public String initForm(final HttpServletRequest request, final ModelMap model) {
 
-        AdministrateUserData command = new AdministrateUserData();
+        final AdministrateUserData command = new AdministrateUserData();
 
-        User user = new User();
+        final User user = new User();
         user.setEnabled(true);
         command.setUser(user);
 
@@ -69,7 +69,7 @@ public class NewUserController extends AbstractNewEditUserController {
         // Sets up all (but necessary) maps.
         command.setRoleCheckboxId(AuthorityService.getRoleCheckboxId());
         command.setLocalizedRoleCheckboxTitles(
-                this.authorityService.getLocalizedRoleTitles(request, getMessageSource()));
+                authorityService.getLocalizedRoleTitles(request, getMessageSource()));
 
         model.addAttribute(AbstractNewEditUserController.COMMAND, command);
         return PageViews.NEW.getViewName();
@@ -82,20 +82,20 @@ public class NewUserController extends AbstractNewEditUserController {
      */
     @RequestMapping(value = UserAdministrationUrlParts.NEW_URL, method = RequestMethod.POST)
     @Transactional
-    public String processSubmittedForm(@ModelAttribute(NewUserController.COMMAND) AdministrateUserData command,
-            BindingResult result, SessionStatus status, HttpServletRequest request, ModelMap model) {
+    public String processSubmittedForm(@ModelAttribute(NewUserController.COMMAND) final AdministrateUserData command,
+            final BindingResult result, final SessionStatus status, final HttpServletRequest request, final ModelMap model) {
 
         // Sets up all (but necessary) maps.
         command.setRoleCheckboxId(AuthorityService.getRoleCheckboxId());
-        MessageSource messageSource = getMessageSource();
-        command.setLocalizedRoleCheckboxTitles(this.authorityService.getLocalizedRoleTitles(request, messageSource));
+        final MessageSource messageSource = getMessageSource();
+        command.setLocalizedRoleCheckboxTitles(authorityService.getLocalizedRoleTitles(request, messageSource));
 
-        this.validator.validate(command, result);
+        validator.validate(command, result);
         if (result.hasErrors()) {
             return PageViews.NEW.getViewName();
         }
 
-        User newUser = command.getUser();
+        final User newUser = command.getUser();
         try {
             getUserService().saveAndNotifyUser(newUser, command.getNewPassword(), command.getNewAuthorities(), request,
                     messageSource);
@@ -107,7 +107,7 @@ public class NewUserController extends AbstractNewEditUserController {
             model.addAttribute(AbstractMetaController.REDIRECTION_ATTRIBUTE, UserAdministrationUrlParts.CREATED_URL);
             return AbstractMetaController.REDIRECTION_PAGE;
 
-        } catch (DataAccessException e) {
+        } catch (final DataAccessException e) {
             // We encountered a database problem.
             LogFactory.getLog(this.getClass()).error(newUser, e);
             result.reject("user-administration.creation-failed-due-to-database-error");

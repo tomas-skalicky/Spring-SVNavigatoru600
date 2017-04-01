@@ -26,7 +26,7 @@ public class RetrieveBoardSessionRecordController extends AbstractRetrieveRecord
      * Constructor.
      */
     @Inject
-    public RetrieveBoardSessionRecordController(SessionRecordService recordService, MessageSource messageSource) {
+    public RetrieveBoardSessionRecordController(final SessionRecordService recordService, final MessageSource messageSource) {
         super(BoardSessionsUrlParts.BASE_URL, new PageViews(), SessionRecordType.SESSION_RECORD_OF_BOARD, recordService,
                 messageSource);
     }
@@ -34,7 +34,7 @@ public class RetrieveBoardSessionRecordController extends AbstractRetrieveRecord
     @Override
     @RequestMapping(value = BoardSessionsUrlParts.EXISTING_URL + "{recordId}/"
             + RecordsCommonUrlParts.DOWNLOAD_EXTENSION, method = RequestMethod.GET)
-    public void retrieve(@PathVariable int recordId, HttpServletResponse response, ModelMap model) {
+    public void retrieve(@PathVariable final int recordId, final HttpServletResponse response, final ModelMap model) {
         super.retrieve(recordId, response, model);
     }
 }

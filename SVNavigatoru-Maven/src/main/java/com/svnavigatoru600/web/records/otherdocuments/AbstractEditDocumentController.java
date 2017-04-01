@@ -10,7 +10,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.context.MessageSource;
 import org.springframework.dao.DataAccessException;
-import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -32,7 +31,6 @@ import com.svnavigatoru600.web.records.AbstractPageViews;
  * 
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
-@Controller
 public abstract class AbstractEditDocumentController extends AbstractNewEditDocumentController {
 
     /**
@@ -45,9 +43,9 @@ public abstract class AbstractEditDocumentController extends AbstractNewEditDocu
      * Constructs a controller which considers all {@link OtherDocumentRecord OtherDocumentRecords} of all
      * {@link OtherDocumentRecordType OtherDocumentRecordTypes}.
      */
-    public AbstractEditDocumentController(String baseUrl, AbstractPageViews views,
-            OtherDocumentRecordService recordService, SendNotificationModelFiller sendNotificationModelFiller,
-            EditRecordValidator validator, MessageSource messageSource) {
+    public AbstractEditDocumentController(final String baseUrl, final AbstractPageViews views,
+            final OtherDocumentRecordService recordService, final SendNotificationModelFiller sendNotificationModelFiller,
+            final EditRecordValidator validator, final MessageSource messageSource) {
         super(baseUrl, views, recordService, sendNotificationModelFiller, validator, messageSource);
     }
 
@@ -55,9 +53,9 @@ public abstract class AbstractEditDocumentController extends AbstractNewEditDocu
      * Constructs a controller which considers all {@link OtherDocumentRecord OtherDocumentRecords} of the given
      * <code>recordType</code>.
      */
-    public AbstractEditDocumentController(String baseUrl, AbstractPageViews views, OtherDocumentRecordType recordType,
-            OtherDocumentRecordService recordService, SendNotificationModelFiller sendNotificationModelFiller,
-            EditRecordValidator validator, MessageSource messageSource) {
+    public AbstractEditDocumentController(final String baseUrl, final AbstractPageViews views, final OtherDocumentRecordType recordType,
+            final OtherDocumentRecordService recordService, final SendNotificationModelFiller sendNotificationModelFiller,
+            final EditRecordValidator validator, final MessageSource messageSource) {
         super(baseUrl, views, recordType, recordService, sendNotificationModelFiller, validator, messageSource);
     }
 
@@ -67,11 +65,11 @@ public abstract class AbstractEditDocumentController extends AbstractNewEditDocu
      * @param recordId
      *            ID of the modified {@link OtherDocumentRecord}
      */
-    public String initForm(int recordId, HttpServletRequest request, ModelMap model) {
+    public String initForm(final int recordId, final HttpServletRequest request, final ModelMap model) {
 
-        EditRecord command = new EditRecord();
+        final EditRecord command = new EditRecord();
 
-        OtherDocumentRecord record = getRecordService().findByIdWithoutFile(recordId);
+        final OtherDocumentRecord record = getRecordService().findByIdWithoutFile(recordId);
         command.setRecord(record);
 
         // Collection of types is converted to a map.
@@ -79,7 +77,7 @@ public abstract class AbstractEditDocumentController extends AbstractNewEditDocu
 
         // Sets up all auxiliary (but necessary) maps.
         command.setTypeCheckboxId(OtherDocumentRecordService.getTypeCheckboxId());
-        MessageSource messageSource = getMessageSource();
+        final MessageSource messageSource = getMessageSource();
         command.setLocalizedTypeCheckboxTitles(
                 OtherDocumentRecordService.getLocalizedTypeTitles(request, messageSource));
 
@@ -93,8 +91,8 @@ public abstract class AbstractEditDocumentController extends AbstractNewEditDocu
      * Initializes the form after the modified data were successfully saved to the repository and the new file (if it
      * exists) was uploaded.
      */
-    public String initFormAfterSave(int recordId, HttpServletRequest request, ModelMap model) {
-        String view = initForm(recordId, request, model);
+    public String initFormAfterSave(final int recordId, final HttpServletRequest request, final ModelMap model) {
+        final String view = initForm(recordId, request, model);
         ((EditRecord) model.get(AbstractNewEditDocumentController.COMMAND)).setDataSaved(true);
         return view;
     }
@@ -106,12 +104,12 @@ public abstract class AbstractEditDocumentController extends AbstractNewEditDocu
      * @return The name of the view which is to be shown.
      */
     @Transactional
-    public String processSubmittedForm(EditRecord command, BindingResult result, SessionStatus status, int recordId,
-            HttpServletRequest request, ModelMap model) {
+    public String processSubmittedForm(final EditRecord command, final BindingResult result, final SessionStatus status, final int recordId,
+            final HttpServletRequest request, final ModelMap model) {
 
         // Sets up all auxiliary (but necessary) maps.
         command.setTypeCheckboxId(OtherDocumentRecordService.getTypeCheckboxId());
-        MessageSource messageSource = getMessageSource();
+        final MessageSource messageSource = getMessageSource();
         command.setLocalizedTypeCheckboxTitles(
                 OtherDocumentRecordService.getLocalizedTypeTitles(request, messageSource));
         getSendNotificationModelFiller().populateSendNotificationInSubmitForm(command, request, messageSource);
@@ -135,21 +133,21 @@ public abstract class AbstractEditDocumentController extends AbstractNewEditDocu
                     String.format("%s%d/%s", getBaseUrl(), recordId, CommonUrlParts.SAVED_EXTENSION));
             return AbstractMetaController.REDIRECTION_PAGE;
 
-        } catch (IllegalStateException e) {
-            this.logger.error(command, e);
+        } catch (final IllegalStateException e) {
+            logger.error(command, e);
             result.reject(AbstractNewEditDocumentController.UPLOAD_FILE_ERROR_MESSAGE_CODE);
-        } catch (IOException e) {
-            this.logger.error(command, e);
+        } catch (final IOException e) {
+            logger.error(command, e);
             result.reject(AbstractNewEditDocumentController.UPLOAD_FILE_ERROR_MESSAGE_CODE);
-        } catch (SerialException e) {
-            this.logger.error(command, e);
+        } catch (final SerialException e) {
+            logger.error(command, e);
             result.reject(AbstractNewEditDocumentController.UPLOAD_FILE_ERROR_MESSAGE_CODE);
-        } catch (SQLException e) {
-            this.logger.error(command, e);
+        } catch (final SQLException e) {
+            logger.error(command, e);
             result.reject(AbstractNewEditDocumentController.UPLOAD_FILE_ERROR_MESSAGE_CODE);
-        } catch (DataAccessException e) {
+        } catch (final DataAccessException e) {
             // We encountered a database problem.
-            this.logger.error(command, e);
+            logger.error(command, e);
             result.reject(AbstractEditDocumentController.DATABASE_ERROR_MESSAGE_CODE);
         }
         return getViews().getEdit();

@@ -30,9 +30,9 @@ public class NewAllSessionRecordController extends AbstractNewRecordController {
      * Constructor.
      */
     @Inject
-    public NewAllSessionRecordController(SessionRecordService recordService,
-            SendNotificationNewModelFiller sendNotificationModelFiller, NewSessionRecordValidator validator,
-            MessageSource messageSource) {
+    public NewAllSessionRecordController(final SessionRecordService recordService,
+            final SendNotificationNewModelFiller sendNotificationModelFiller, final NewSessionRecordValidator validator,
+            final MessageSource messageSource) {
         super(AllSessionsUrlParts.BASE_URL, new PageViews(), recordService, sendNotificationModelFiller, validator,
                 messageSource);
     }
@@ -41,14 +41,14 @@ public class NewAllSessionRecordController extends AbstractNewRecordController {
      * This method cannot be annotated with {@link Override} since it has one less parameter.
      */
     @RequestMapping(value = AllSessionsUrlParts.NEW_URL, method = RequestMethod.GET)
-    public String initForm(HttpServletRequest request, ModelMap model) {
+    public String initForm(final HttpServletRequest request, final ModelMap model) {
         return super.initForm(SessionRecordType.SESSION_RECORD_OF_BOARD, request, model);
     }
 
     @Override
     @RequestMapping(value = AllSessionsUrlParts.NEW_URL, method = RequestMethod.POST)
-    public String processSubmittedForm(@ModelAttribute(AbstractNewRecordController.COMMAND) NewSessionRecord command,
-            BindingResult result, SessionStatus status, HttpServletRequest request, ModelMap model) {
+    public String processSubmittedForm(@ModelAttribute(AbstractNewRecordController.COMMAND) final NewSessionRecord command,
+            final BindingResult result, final SessionStatus status, final HttpServletRequest request, final ModelMap model) {
         return super.processSubmittedForm(command, result, status, request, model);
     }
 }

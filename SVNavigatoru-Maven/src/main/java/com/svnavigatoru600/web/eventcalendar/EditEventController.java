@@ -42,21 +42,21 @@ public class EditEventController extends AbstractNewEditEventController {
      * Constructor.
      */
     @Inject
-    public EditEventController(CalendarEventService eventService,
-            SendNotificationEditModelFiller sendNotificationModelFiller, EditEventValidator validator,
-            MessageSource messageSource) {
+    public EditEventController(final CalendarEventService eventService,
+            final SendNotificationEditModelFiller sendNotificationModelFiller, final EditEventValidator validator,
+            final MessageSource messageSource) {
         super(eventService, sendNotificationModelFiller, validator, messageSource);
     }
 
     @RequestMapping(value = EventsUrlParts.EXISTING_URL + "{eventId}/", method = RequestMethod.GET)
-    public String initForm(@PathVariable int eventId, HttpServletRequest request, ModelMap model) {
+    public String initForm(@PathVariable final int eventId, final HttpServletRequest request, final ModelMap model) {
 
-        EditEvent command = new EditEvent();
+        final EditEvent command = new EditEvent();
 
-        CalendarEvent calendarEvent = getEventService().findById(eventId);
+        final CalendarEvent calendarEvent = getEventService().findById(eventId);
         command.setEvent(calendarEvent);
 
-        MessageSource messageSource = getMessageSource();
+        final MessageSource messageSource = getMessageSource();
         command.setNewPriority(Localization.findLocaleMessage(messageSource, request,
                 calendarEvent.getTypedPriority().getLocalizationCode()));
 
@@ -68,8 +68,8 @@ public class EditEventController extends AbstractNewEditEventController {
 
     @RequestMapping(value = EventsUrlParts.EXISTING_URL + "{eventId}/"
             + CommonUrlParts.SAVED_EXTENSION, method = RequestMethod.GET)
-    public String initFormAfterSave(@PathVariable int eventId, HttpServletRequest request, ModelMap model) {
-        String view = initForm(eventId, request, model);
+    public String initFormAfterSave(@PathVariable final int eventId, final HttpServletRequest request, final ModelMap model) {
+        final String view = initForm(eventId, request, model);
         ((EditEvent) model.get(AbstractNewEditEventController.COMMAND)).setDataSaved(true);
         return view;
     }
@@ -92,11 +92,11 @@ public class EditEventController extends AbstractNewEditEventController {
 
     @RequestMapping(value = EventsUrlParts.EXISTING_URL + "{eventId}/", method = RequestMethod.POST)
     @Transactional
-    public String processSubmittedForm(@ModelAttribute(EditEventController.COMMAND) EditEvent command,
-            BindingResult result, SessionStatus status, @PathVariable int eventId, HttpServletRequest request,
-            ModelMap model) {
+    public String processSubmittedForm(@ModelAttribute(EditEventController.COMMAND) final EditEvent command,
+            final BindingResult result, final SessionStatus status, @PathVariable final int eventId, final HttpServletRequest request,
+            final ModelMap model) {
 
-        MessageSource messageSource = getMessageSource();
+        final MessageSource messageSource = getMessageSource();
         getSendNotificationModelFiller().populateSendNotificationInSubmitForm(command, request, messageSource);
 
         getValidator().validate(command, result);
@@ -104,11 +104,11 @@ public class EditEventController extends AbstractNewEditEventController {
             return PageViews.EDIT.getViewName();
         }
 
-        CalendarEventService eventService = getEventService();
+        final CalendarEventService eventService = getEventService();
         CalendarEvent originalEvent = null;
         try {
             originalEvent = eventService.findById(eventId);
-            PriorityType newPriority = PriorityType.valueOfAccordingLocalization(command.getNewPriority(),
+            final PriorityType newPriority = PriorityType.valueOfAccordingLocalization(command.getNewPriority(),
                     messageSource, request);
             eventService.updateAndNotifyUsers(originalEvent, command.getEvent(), newPriority,
                     command.getSendNotification().isStatus(), request, messageSource);
@@ -125,7 +125,7 @@ public class EditEventController extends AbstractNewEditEventController {
             // SEND_NOTIFICATION_GET_PARAMETER, command.getSendNotification()));
             return AbstractMetaController.REDIRECTION_PAGE;
 
-        } catch (DataAccessException e) {
+        } catch (final DataAccessException e) {
             // We encountered a database problem.
             LogFactory.getLog(this.getClass()).error(originalEvent, e);
             result.reject(EditEventController.DATABASE_ERROR_MESSAGE_CODE);

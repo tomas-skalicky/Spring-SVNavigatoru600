@@ -24,26 +24,26 @@ public class ListRemostavDocumentsController extends AbstractListDocumentsContro
      * Constructor.
      */
     @Inject
-    public ListRemostavDocumentsController(OtherDocumentRecordService recordService, MessageSource messageSource) {
+    public ListRemostavDocumentsController(final OtherDocumentRecordService recordService, final MessageSource messageSource) {
         super(RemostavDocumentsUrlParts.BASE_URL, new PageViews(), OtherDocumentRecordType.REMOSTAV, recordService,
                 messageSource);
     }
 
     @Override
     @RequestMapping(value = RemostavDocumentsUrlParts.BASE_URL, method = RequestMethod.GET)
-    public String initPage(HttpServletRequest request, ModelMap model) {
+    public String initPage(final HttpServletRequest request, final ModelMap model) {
         return super.initPage(request, model);
     }
 
     @Override
     @RequestMapping(value = RemostavDocumentsUrlParts.CREATED_URL, method = RequestMethod.GET)
-    public String initPageAfterCreate(HttpServletRequest request, ModelMap model) {
+    public String initPageAfterCreate(final HttpServletRequest request, final ModelMap model) {
         return super.initPageAfterCreate(request, model);
     }
 
     @Override
     @RequestMapping(value = RemostavDocumentsUrlParts.DELETED_URL, method = RequestMethod.GET)
-    public String initPageAfterDelete(HttpServletRequest request, ModelMap model) {
+    public String initPageAfterDelete(final HttpServletRequest request, final ModelMap model) {
         return super.initPageAfterDelete(request, model);
     }
 }

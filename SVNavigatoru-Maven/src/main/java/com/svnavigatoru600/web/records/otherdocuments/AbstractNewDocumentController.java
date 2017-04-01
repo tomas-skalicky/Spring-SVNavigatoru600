@@ -10,7 +10,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.context.MessageSource;
 import org.springframework.dao.DataAccessException;
-import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -32,7 +31,6 @@ import com.svnavigatoru600.web.records.AbstractPageViews;
  * 
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
-@Controller
 public abstract class AbstractNewDocumentController extends AbstractNewEditDocumentController {
 
     /**
@@ -45,9 +43,9 @@ public abstract class AbstractNewDocumentController extends AbstractNewEditDocum
      * Constructs a controller which considers all {@link OtherDocumentRecord OtherDocumentRecords} of all
      * {@link OtherDocumentRecordType OtherDocumentRecordTypes}.
      */
-    public AbstractNewDocumentController(String baseUrl, AbstractPageViews views,
-            OtherDocumentRecordService recordService, SendNotificationModelFiller sendNotificationModelFiller,
-            NewRecordValidator validator, MessageSource messageSource) {
+    public AbstractNewDocumentController(final String baseUrl, final AbstractPageViews views,
+            final OtherDocumentRecordService recordService, final SendNotificationModelFiller sendNotificationModelFiller,
+            final NewRecordValidator validator, final MessageSource messageSource) {
         super(baseUrl, views, recordService, sendNotificationModelFiller, validator, messageSource);
     }
 
@@ -55,26 +53,26 @@ public abstract class AbstractNewDocumentController extends AbstractNewEditDocum
      * Constructs a controller which considers all {@link OtherDocumentRecord OtherDocumentRecords} of the given
      * <code>recordType</code>.
      */
-    public AbstractNewDocumentController(String baseUrl, AbstractPageViews views, OtherDocumentRecordType recordType,
-            OtherDocumentRecordService recordService, SendNotificationModelFiller sendNotificationModelFiller,
-            NewRecordValidator validator, MessageSource messageSource) {
+    public AbstractNewDocumentController(final String baseUrl, final AbstractPageViews views, final OtherDocumentRecordType recordType,
+            final OtherDocumentRecordService recordService, final SendNotificationModelFiller sendNotificationModelFiller,
+            final NewRecordValidator validator, final MessageSource messageSource) {
         super(baseUrl, views, recordType, recordService, sendNotificationModelFiller, validator, messageSource);
     }
 
     /**
      * Initializes the form.
      */
-    public String initForm(HttpServletRequest request, ModelMap model) {
+    public String initForm(final HttpServletRequest request, final ModelMap model) {
 
-        NewRecord command = new NewRecord();
+        final NewRecord command = new NewRecord();
 
-        OtherDocumentRecord record = new OtherDocumentRecord();
+        final OtherDocumentRecord record = new OtherDocumentRecord();
         command.setRecord(record);
 
         // Collection of types is converted to a map. If this controller
         // considers only one special type of records, checkbox of this type
         // is pre-checked.
-        boolean[] newTypes = OtherDocumentRecordUtils.getDefaultArrayOfCheckIndicators();
+        final boolean[] newTypes = OtherDocumentRecordUtils.getDefaultArrayOfCheckIndicators();
         if (!isAllRecordTypes()) {
             newTypes[getRecordType().ordinal()] = true;
         }
@@ -82,7 +80,7 @@ public abstract class AbstractNewDocumentController extends AbstractNewEditDocum
 
         // Sets up all auxiliary (but necessary) maps.
         command.setTypeCheckboxId(OtherDocumentRecordService.getTypeCheckboxId());
-        MessageSource messageSource = getMessageSource();
+        final MessageSource messageSource = getMessageSource();
         command.setLocalizedTypeCheckboxTitles(
                 OtherDocumentRecordService.getLocalizedTypeTitles(request, messageSource));
 
@@ -92,13 +90,13 @@ public abstract class AbstractNewDocumentController extends AbstractNewEditDocum
         return getViews().getNeww();
     }
 
-    public static void displayIt(java.io.File node) {
+    public static void displayIt(final java.io.File node) {
 
         System.out.println(node.getAbsoluteFile());
 
         if (node.isDirectory()) {
-            String[] subNote = node.list();
-            for (String fileName : subNote) {
+            final String[] subNote = node.list();
+            for (final String fileName : subNote) {
                 displayIt(new java.io.File(node, fileName));
             }
         }
@@ -111,12 +109,12 @@ public abstract class AbstractNewDocumentController extends AbstractNewEditDocum
      * @return The name of the view which is to be shown.
      */
     @Transactional
-    public String processSubmittedForm(NewRecord command, BindingResult result, SessionStatus status,
-            HttpServletRequest request, ModelMap model) {
+    public String processSubmittedForm(final NewRecord command, final BindingResult result, final SessionStatus status,
+            final HttpServletRequest request, final ModelMap model) {
 
         // Sets up all auxiliary (but necessary) maps.
         command.setTypeCheckboxId(OtherDocumentRecordService.getTypeCheckboxId());
-        MessageSource messageSource = getMessageSource();
+        final MessageSource messageSource = getMessageSource();
         command.setLocalizedTypeCheckboxTitles(
                 OtherDocumentRecordService.getLocalizedTypeTitles(request, messageSource));
         getSendNotificationModelFiller().populateSendNotificationInSubmitForm(command, request, messageSource);
@@ -126,7 +124,7 @@ public abstract class AbstractNewDocumentController extends AbstractNewEditDocum
             return getViews().getNeww();
         }
 
-        OtherDocumentRecord newRecord = command.getRecord();
+        final OtherDocumentRecord newRecord = command.getRecord();
         try {
             getRecordService().saveAndNotifyUsers(newRecord, command.getNewTypes(), command.getNewFile(),
                     command.getSendNotification().isStatus(), request, messageSource);
@@ -139,21 +137,21 @@ public abstract class AbstractNewDocumentController extends AbstractNewEditDocum
                     String.format("%s%s", getBaseUrl(), CommonUrlParts.CREATED_EXTENSION));
             return AbstractMetaController.REDIRECTION_PAGE;
 
-        } catch (IllegalStateException e) {
-            this.logger.error(newRecord, e);
+        } catch (final IllegalStateException e) {
+            logger.error(newRecord, e);
             result.reject(AbstractNewEditDocumentController.UPLOAD_FILE_ERROR_MESSAGE_CODE);
-        } catch (IOException e) {
-            this.logger.error(newRecord, e);
+        } catch (final IOException e) {
+            logger.error(newRecord, e);
             result.reject(AbstractNewEditDocumentController.UPLOAD_FILE_ERROR_MESSAGE_CODE);
-        } catch (SerialException e) {
-            this.logger.error(newRecord, e);
+        } catch (final SerialException e) {
+            logger.error(newRecord, e);
             result.reject(AbstractNewEditDocumentController.UPLOAD_FILE_ERROR_MESSAGE_CODE);
-        } catch (SQLException e) {
-            this.logger.error(newRecord, e);
+        } catch (final SQLException e) {
+            logger.error(newRecord, e);
             result.reject(AbstractNewEditDocumentController.UPLOAD_FILE_ERROR_MESSAGE_CODE);
-        } catch (DataAccessException e) {
+        } catch (final DataAccessException e) {
             // We encountered a database problem.
-            this.logger.error(newRecord, e);
+            logger.error(newRecord, e);
             result.reject(AbstractNewDocumentController.DATABASE_ERROR_MESSAGE_CODE);
         }
         return getViews().getNeww();

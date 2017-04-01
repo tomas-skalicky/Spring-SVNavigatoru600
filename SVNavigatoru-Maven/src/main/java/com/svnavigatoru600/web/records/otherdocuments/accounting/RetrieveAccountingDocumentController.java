@@ -26,7 +26,7 @@ public class RetrieveAccountingDocumentController extends AbstractRetrieveDocume
      * Constructor.
      */
     @Inject
-    public RetrieveAccountingDocumentController(OtherDocumentRecordService recordService, MessageSource messageSource) {
+    public RetrieveAccountingDocumentController(final OtherDocumentRecordService recordService, final MessageSource messageSource) {
         super(AccountingUrlParts.BASE_URL, new PageViews(), OtherDocumentRecordType.ACCOUNTING, recordService,
                 messageSource);
     }
@@ -34,7 +34,7 @@ public class RetrieveAccountingDocumentController extends AbstractRetrieveDocume
     @Override
     @RequestMapping(value = AccountingUrlParts.EXISTING_URL + "{recordId}/"
             + RecordsCommonUrlParts.DOWNLOAD_EXTENSION, method = RequestMethod.GET)
-    public void retrieve(@PathVariable int recordId, HttpServletResponse response, ModelMap model) {
+    public void retrieve(@PathVariable final int recordId, final HttpServletResponse response, final ModelMap model) {
         super.retrieve(recordId, response, model);
     }
 }

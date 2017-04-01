@@ -41,7 +41,7 @@ public class NewContributionController extends AbstractNewEditContributionContro
     private ThreadService threadService;
 
     @Inject
-    public void setThreadService(ThreadService threadService) {
+    public void setThreadService(final ThreadService threadService) {
         this.threadService = threadService;
     }
 
@@ -49,9 +49,9 @@ public class NewContributionController extends AbstractNewEditContributionContro
      * Constructor.
      */
     @Inject
-    public NewContributionController(ContributionService contributionService,
-            SendNotificationNewModelFiller sendNotificationModelFiller, NewContributionValidator validator,
-            MessageSource messageSource) {
+    public NewContributionController(final ContributionService contributionService,
+            final SendNotificationNewModelFiller sendNotificationModelFiller, final NewContributionValidator validator,
+            final MessageSource messageSource) {
         super(contributionService, sendNotificationModelFiller, validator, messageSource);
     }
 
@@ -59,12 +59,12 @@ public class NewContributionController extends AbstractNewEditContributionContro
      * Initializes the form.
      */
     @RequestMapping(value = NewContributionController.BASE_URL, method = RequestMethod.GET)
-    public String initForm(@PathVariable int threadId, HttpServletRequest request, ModelMap model) {
+    public String initForm(@PathVariable final int threadId, final HttpServletRequest request, final ModelMap model) {
 
-        NewContribution command = new NewContribution();
+        final NewContribution command = new NewContribution();
 
-        Contribution contribution = new Contribution();
-        contribution.setThread(this.threadService.findById(threadId));
+        final Contribution contribution = new Contribution();
+        contribution.setThread(threadService.findById(threadId));
         command.setContribution(contribution);
 
         getSendNotificationModelFiller().populateSendNotificationInInitForm(command, request, getMessageSource());
@@ -81,11 +81,11 @@ public class NewContributionController extends AbstractNewEditContributionContro
      */
     @RequestMapping(value = NewContributionController.BASE_URL, method = RequestMethod.POST)
     @Transactional
-    public String processSubmittedForm(@ModelAttribute(NewContributionController.COMMAND) NewContribution command,
-            BindingResult result, SessionStatus status, @PathVariable int threadId, HttpServletRequest request,
-            ModelMap model) {
+    public String processSubmittedForm(@ModelAttribute(NewContributionController.COMMAND) final NewContribution command,
+            final BindingResult result, final SessionStatus status, @PathVariable final int threadId, final HttpServletRequest request,
+            final ModelMap model) {
 
-        MessageSource messageSource = getMessageSource();
+        final MessageSource messageSource = getMessageSource();
         getSendNotificationModelFiller().populateSendNotificationInSubmitForm(command, request, messageSource);
 
         getValidator().validate(command, result);
@@ -94,11 +94,11 @@ public class NewContributionController extends AbstractNewEditContributionContro
         }
 
         // Updates the data of the new contribution.
-        Contribution newContribution = command.getContribution();
+        final Contribution newContribution = command.getContribution();
         newContribution.setAuthor(UserUtils.getLoggedUser());
 
         try {
-            newContribution.setThread(this.threadService.findById(threadId));
+            newContribution.setThread(threadService.findById(threadId));
 
             // Saves the contribution to the repository.
             getContributionService().saveAndNotifyUsers(newContribution, command.getSendNotification().isStatus(),
@@ -112,7 +112,7 @@ public class NewContributionController extends AbstractNewEditContributionContro
                     ContributionsUrlParts.getRelativeContributionUrlAfterCreation(newContribution));
             return AbstractMetaController.REDIRECTION_PAGE;
 
-        } catch (DataAccessException e) {
+        } catch (final DataAccessException e) {
             // We encountered a database problem.
             LogFactory.getLog(this.getClass()).error(newContribution, e);
             result.reject(NewContributionController.DATABASE_ERROR_MESSAGE_CODE);

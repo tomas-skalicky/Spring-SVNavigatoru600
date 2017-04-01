@@ -6,7 +6,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.context.MessageSource;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.stereotype.Controller;
 import org.springframework.validation.Validator;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
@@ -22,7 +21,6 @@ import com.svnavigatoru600.web.records.AbstractPageViews;
  *
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
-@Controller
 @PreAuthorize("hasRole('ROLE_MEMBER_OF_BOARD')")
 public abstract class AbstractNewEditRecordController extends AbstractSessionRecordController {
 
@@ -42,9 +40,9 @@ public abstract class AbstractNewEditRecordController extends AbstractSessionRec
      * Constructs a controller which considers all {@link com.svnavigatoru600.domain.records.SessionRecord
      * SessionRecords} of all {@link SessionRecordType SessionRecordTypes}.
      */
-    public AbstractNewEditRecordController(String baseUrl, AbstractPageViews views, SessionRecordService recordService,
-            SendNotificationModelFiller sendNotificationModelFiller, AbstractSessionRecordValidator validator,
-            MessageSource messageSource) {
+    public AbstractNewEditRecordController(final String baseUrl, final AbstractPageViews views, final SessionRecordService recordService,
+            final SendNotificationModelFiller sendNotificationModelFiller, final AbstractSessionRecordValidator validator,
+            final MessageSource messageSource) {
         super(baseUrl, views, recordService, messageSource);
         this.validator = validator;
         this.sendNotificationModelFiller = sendNotificationModelFiller;
@@ -54,9 +52,9 @@ public abstract class AbstractNewEditRecordController extends AbstractSessionRec
      * Constructs a controller which considers all {@link com.svnavigatoru600.domain.records.SessionRecord
      * SessionRecords} of the given <code>recordType</code>.
      */
-    public AbstractNewEditRecordController(String baseUrl, AbstractPageViews views, SessionRecordType recordType,
-            SessionRecordService recordService, SendNotificationModelFiller sendNotificationModelFiller,
-            AbstractSessionRecordValidator validator, MessageSource messageSource) {
+    public AbstractNewEditRecordController(final String baseUrl, final AbstractPageViews views, final SessionRecordType recordType,
+            final SessionRecordService recordService, final SendNotificationModelFiller sendNotificationModelFiller,
+            final AbstractSessionRecordValidator validator, final MessageSource messageSource) {
         super(baseUrl, views, recordType, recordService, messageSource);
         this.validator = validator;
         this.sendNotificationModelFiller = sendNotificationModelFiller;
@@ -84,7 +82,7 @@ public abstract class AbstractNewEditRecordController extends AbstractSessionRec
      * stored to <code>NewEditSessionRecord.newType</code>.
      */
     @ModelAttribute("sessionRecordTypeList")
-    public List<String> populateSessionRecordTypeList(HttpServletRequest request) {
+    public List<String> populateSessionRecordTypeList(final HttpServletRequest request) {
         return SessionRecordService.getLocalizedTypes(request, getMessageSource());
     }
 }

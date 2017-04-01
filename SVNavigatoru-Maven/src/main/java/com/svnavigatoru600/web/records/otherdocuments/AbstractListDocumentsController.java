@@ -6,7 +6,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.context.MessageSource;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 
 import com.svnavigatoru600.domain.records.OtherDocumentRecord;
@@ -20,7 +19,6 @@ import com.svnavigatoru600.web.records.AbstractPageViews;
  * 
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
-@Controller
 public abstract class AbstractListDocumentsController extends AbstractOtherDocumentRecordController {
 
     /**
@@ -32,8 +30,8 @@ public abstract class AbstractListDocumentsController extends AbstractOtherDocum
      * Constructs a controller which considers all {@link OtherDocumentRecord OtherDocumentRecords} of all
      * {@link OtherDocumentRecordType OtherDocumentRecordTypes}.
      */
-    public AbstractListDocumentsController(String baseUrl, AbstractPageViews views,
-            OtherDocumentRecordService recordService, MessageSource messageSource) {
+    public AbstractListDocumentsController(final String baseUrl, final AbstractPageViews views,
+            final OtherDocumentRecordService recordService, final MessageSource messageSource) {
         super(baseUrl, views, recordService, messageSource);
     }
 
@@ -41,16 +39,16 @@ public abstract class AbstractListDocumentsController extends AbstractOtherDocum
      * Constructs a controller which considers all {@link OtherDocumentRecord OtherDocumentRecords} of the given
      * <code>recordType</code>.
      */
-    public AbstractListDocumentsController(String baseUrl, AbstractPageViews views, OtherDocumentRecordType recordType,
-            OtherDocumentRecordService recordService, MessageSource messageSource) {
+    public AbstractListDocumentsController(final String baseUrl, final AbstractPageViews views, final OtherDocumentRecordType recordType,
+            final OtherDocumentRecordService recordService, final MessageSource messageSource) {
         super(baseUrl, views, recordType, recordService, messageSource);
     }
 
-    public String initPage(HttpServletRequest request, ModelMap model) {
+    public String initPage(final HttpServletRequest request, final ModelMap model) {
 
-        ShowAllRecords command = new ShowAllRecords();
+        final ShowAllRecords command = new ShowAllRecords();
 
-        List<OtherDocumentRecord> records = getRecordService().findAllOrdered(isAllRecordTypes(), getRecordType());
+        final List<OtherDocumentRecord> records = getRecordService().findAllOrdered(isAllRecordTypes(), getRecordType());
         command.setRecords(records);
 
         // Sets up all auxiliary (but necessary) maps.
@@ -62,15 +60,15 @@ public abstract class AbstractListDocumentsController extends AbstractOtherDocum
     }
 
     @PreAuthorize("hasRole('ROLE_MEMBER_OF_BOARD')")
-    public String initPageAfterCreate(HttpServletRequest request, ModelMap model) {
-        String view = initPage(request, model);
+    public String initPageAfterCreate(final HttpServletRequest request, final ModelMap model) {
+        final String view = initPage(request, model);
         ((ShowAllRecords) model.get(AbstractListDocumentsController.COMMAND)).setRecordCreated(true);
         return view;
     }
 
     @PreAuthorize("hasRole('ROLE_MEMBER_OF_BOARD')")
-    public String initPageAfterDelete(HttpServletRequest request, ModelMap model) {
-        String view = initPage(request, model);
+    public String initPageAfterDelete(final HttpServletRequest request, final ModelMap model) {
+        final String view = initPage(request, model);
         ((ShowAllRecords) model.get(AbstractListDocumentsController.COMMAND)).setRecordDeleted(true);
         return view;
     }

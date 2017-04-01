@@ -32,31 +32,31 @@ public class EditRevisionDocumentController extends AbstractEditDocumentControll
      * Constructor.
      */
     @Inject
-    public EditRevisionDocumentController(OtherDocumentRecordService recordService,
-            SendNotificationEditModelFiller sendNotificationModelFiller, EditRecordValidator validator,
-            MessageSource messageSource) {
+    public EditRevisionDocumentController(final OtherDocumentRecordService recordService,
+            final SendNotificationEditModelFiller sendNotificationModelFiller, final EditRecordValidator validator,
+            final MessageSource messageSource) {
         super(RevisionsUrlParts.EXISTING_URL, new PageViews(), OtherDocumentRecordType.REGULAR_REVISION, recordService,
                 sendNotificationModelFiller, validator, messageSource);
     }
 
     @Override
     @RequestMapping(value = RevisionsUrlParts.EXISTING_URL + "{recordId}/", method = RequestMethod.GET)
-    public String initForm(@PathVariable int recordId, HttpServletRequest request, ModelMap model) {
+    public String initForm(@PathVariable final int recordId, final HttpServletRequest request, final ModelMap model) {
         return super.initForm(recordId, request, model);
     }
 
     @Override
     @RequestMapping(value = RevisionsUrlParts.EXISTING_URL + "{recordId}/"
             + CommonUrlParts.SAVED_EXTENSION, method = RequestMethod.GET)
-    public String initFormAfterSave(@PathVariable int recordId, HttpServletRequest request, ModelMap model) {
+    public String initFormAfterSave(@PathVariable final int recordId, final HttpServletRequest request, final ModelMap model) {
         return super.initFormAfterSave(recordId, request, model);
     }
 
     @Override
     @RequestMapping(value = RevisionsUrlParts.EXISTING_URL + "{recordId}/", method = RequestMethod.POST)
-    public String processSubmittedForm(@ModelAttribute(AbstractEditDocumentController.COMMAND) EditRecord command,
-            BindingResult result, SessionStatus status, @PathVariable int recordId, HttpServletRequest request,
-            ModelMap model) {
+    public String processSubmittedForm(@ModelAttribute(AbstractEditDocumentController.COMMAND) final EditRecord command,
+            final BindingResult result, final SessionStatus status, @PathVariable final int recordId, final HttpServletRequest request,
+            final ModelMap model) {
         return super.processSubmittedForm(command, result, status, recordId, request, model);
     }
 }

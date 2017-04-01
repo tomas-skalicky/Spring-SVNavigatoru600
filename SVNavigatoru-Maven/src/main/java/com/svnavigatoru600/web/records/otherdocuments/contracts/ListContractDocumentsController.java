@@ -24,26 +24,26 @@ public class ListContractDocumentsController extends AbstractListDocumentsContro
      * Constructor.
      */
     @Inject
-    public ListContractDocumentsController(OtherDocumentRecordService recordService, MessageSource messageSource) {
+    public ListContractDocumentsController(final OtherDocumentRecordService recordService, final MessageSource messageSource) {
         super(ContractsUrlParts.BASE_URL, new PageViews(), OtherDocumentRecordType.CONTRACT, recordService,
                 messageSource);
     }
 
     @Override
     @RequestMapping(value = ContractsUrlParts.BASE_URL, method = RequestMethod.GET)
-    public String initPage(HttpServletRequest request, ModelMap model) {
+    public String initPage(final HttpServletRequest request, final ModelMap model) {
         return super.initPage(request, model);
     }
 
     @Override
     @RequestMapping(value = ContractsUrlParts.CREATED_URL, method = RequestMethod.GET)
-    public String initPageAfterCreate(HttpServletRequest request, ModelMap model) {
+    public String initPageAfterCreate(final HttpServletRequest request, final ModelMap model) {
         return super.initPageAfterCreate(request, model);
     }
 
     @Override
     @RequestMapping(value = ContractsUrlParts.DELETED_URL, method = RequestMethod.GET)
-    public String initPageAfterDelete(HttpServletRequest request, ModelMap model) {
+    public String initPageAfterDelete(final HttpServletRequest request, final ModelMap model) {
         return super.initPageAfterDelete(request, model);
     }
 }

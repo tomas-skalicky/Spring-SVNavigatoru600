@@ -5,7 +5,6 @@ import java.util.Date;
 
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.context.MessageSource;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 
@@ -18,7 +17,6 @@ import com.svnavigatoru600.web.AbstractPrivateSectionMetaController;
  * 
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
-@Controller
 public abstract class AbstractDocumentRecordController extends AbstractPrivateSectionMetaController {
 
     /**
@@ -32,7 +30,7 @@ public abstract class AbstractDocumentRecordController extends AbstractPrivateSe
      * Constructs a controller which considers all {@link com.svnavigatoru600.domain.records.AbstractDocumentRecord
      * AbstractDocumentRecords}.
      */
-    public AbstractDocumentRecordController(String baseUrl, AbstractPageViews views, MessageSource messageSource) {
+    public AbstractDocumentRecordController(final String baseUrl, final AbstractPageViews views, final MessageSource messageSource) {
         this.baseUrl = baseUrl;
         this.views = views;
         this.messageSource = messageSource;
@@ -42,27 +40,27 @@ public abstract class AbstractDocumentRecordController extends AbstractPrivateSe
      * Trivial getter
      */
     protected String getBaseUrl() {
-        return this.baseUrl;
+        return baseUrl;
     }
 
     /**
      * Trivial getter
      */
     protected AbstractPageViews getViews() {
-        return this.views;
+        return views;
     }
 
     /**
      * Trivial getter
      */
     protected MessageSource getMessageSource() {
-        return this.messageSource;
+        return messageSource;
     }
 
     @InitBinder
-    public void initBinder(WebDataBinder binder) {
+    public void initBinder(final WebDataBinder binder) {
         // Nasty since the format is localized.
-        SimpleDateFormat dateFormat = new SimpleDateFormat(DateUtils.CALENDAR_DATE_FORMAT);
+        final SimpleDateFormat dateFormat = new SimpleDateFormat(DateUtils.CALENDAR_DATE_FORMAT);
 
         binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
     }

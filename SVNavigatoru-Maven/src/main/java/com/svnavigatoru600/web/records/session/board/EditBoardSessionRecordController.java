@@ -32,31 +32,31 @@ public class EditBoardSessionRecordController extends AbstractEditRecordControll
      * Constructor.
      */
     @Inject
-    public EditBoardSessionRecordController(SessionRecordService recordService,
-            SendNotificationEditModelFiller sendNotificationModelFiller, EditSessionRecordValidator validator,
-            MessageSource messageSource) {
+    public EditBoardSessionRecordController(final SessionRecordService recordService,
+            final SendNotificationEditModelFiller sendNotificationModelFiller, final EditSessionRecordValidator validator,
+            final MessageSource messageSource) {
         super(BoardSessionsUrlParts.EXISTING_URL, new PageViews(), SessionRecordType.SESSION_RECORD_OF_BOARD,
                 recordService, sendNotificationModelFiller, validator, messageSource);
     }
 
     @Override
     @RequestMapping(value = BoardSessionsUrlParts.EXISTING_URL + "{recordId}/", method = RequestMethod.GET)
-    public String initForm(@PathVariable int recordId, HttpServletRequest request, ModelMap model) {
+    public String initForm(@PathVariable final int recordId, final HttpServletRequest request, final ModelMap model) {
         return super.initForm(recordId, request, model);
     }
 
     @Override
     @RequestMapping(value = BoardSessionsUrlParts.EXISTING_URL + "{recordId}/"
             + CommonUrlParts.SAVED_EXTENSION, method = RequestMethod.GET)
-    public String initFormAfterSave(@PathVariable int recordId, HttpServletRequest request, ModelMap model) {
+    public String initFormAfterSave(@PathVariable final int recordId, final HttpServletRequest request, final ModelMap model) {
         return super.initFormAfterSave(recordId, request, model);
     }
 
     @Override
     @RequestMapping(value = BoardSessionsUrlParts.EXISTING_URL + "{recordId}/", method = RequestMethod.POST)
-    public String processSubmittedForm(@ModelAttribute(AbstractEditRecordController.COMMAND) EditSessionRecord command,
-            BindingResult result, SessionStatus status, @PathVariable int recordId, HttpServletRequest request,
-            ModelMap model) {
+    public String processSubmittedForm(@ModelAttribute(AbstractEditRecordController.COMMAND) final EditSessionRecord command,
+            final BindingResult result, final SessionStatus status, @PathVariable final int recordId, final HttpServletRequest request,
+            final ModelMap model) {
         return super.processSubmittedForm(command, result, status, recordId, request, model);
     }
 }

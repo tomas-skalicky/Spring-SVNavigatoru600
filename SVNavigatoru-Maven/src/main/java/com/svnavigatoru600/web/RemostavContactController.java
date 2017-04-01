@@ -26,44 +26,44 @@ public class RemostavContactController extends AbstractWysiwygSectionController 
      * Constructor.
      */
     @Inject
-    public RemostavContactController(WysiwygSectionService sectionService) {
+    public RemostavContactController(final WysiwygSectionService sectionService) {
         super(sectionService, WysiwygSectionName.REMOSTAV_CONTACT, "viewRemostavContact", "editRemostavContact",
                 RemostavContactsUrlParts.BASE_URL);
     }
 
     @Override
     @RequestMapping(value = RemostavContactsUrlParts.BASE_URL, method = RequestMethod.GET)
-    public String showViewPage(ModelMap model) {
+    public String showViewPage(final ModelMap model) {
         return super.showViewPage(model);
     }
 
     @Override
     @RequestMapping(value = RemostavContactsUrlParts.EDIT_URL, method = RequestMethod.GET)
     @PreAuthorize("hasRole('ROLE_MEMBER_OF_BOARD')")
-    public String showEditPage(ModelMap model) {
+    public String showEditPage(final ModelMap model) {
         return super.showEditPage(model);
     }
 
     @Override
     @RequestMapping(value = RemostavContactsUrlParts.SAVE_EDIT_URL, method = RequestMethod.POST)
     @PreAuthorize("hasRole('ROLE_MEMBER_OF_BOARD')")
-    public String saveChanges(@ModelAttribute("wysiwygSectionEditCommand") WysiwygSection command, BindingResult result,
-            SessionStatus status, ModelMap model) {
+    public String saveChanges(@ModelAttribute("wysiwygSectionEditCommand") final WysiwygSection command,
+            final BindingResult result, final SessionStatus status, final ModelMap model) {
         return super.saveChanges(command, result, status, model);
     }
 
     @Override
     @RequestMapping(value = RemostavContactsUrlParts.SAVE_EDIT_AND_EXIT_URL, method = RequestMethod.POST)
     @PreAuthorize("hasRole('ROLE_MEMBER_OF_BOARD')")
-    public String saveChangesAndFinishEditing(@ModelAttribute("wysiwygSectionEditCommand") WysiwygSection command,
-            BindingResult result, SessionStatus status, ModelMap model) {
+    public String saveChangesAndFinishEditing(@ModelAttribute("wysiwygSectionEditCommand") final WysiwygSection command,
+            final BindingResult result, final SessionStatus status, final ModelMap model) {
         return super.saveChangesAndFinishEditing(command, result, status, model);
     }
 
     @Override
     @RequestMapping(value = RemostavContactsUrlParts.DONT_SAVE_EDIT_AND_EXIT_URL, method = RequestMethod.POST)
     @PreAuthorize("hasRole('ROLE_MEMBER_OF_BOARD')")
-    public String cancelChangesAndFinishEditing(ModelMap model) {
+    public String cancelChangesAndFinishEditing(final ModelMap model) {
         return super.cancelChangesAndFinishEditing(model);
     }
 }

@@ -2,7 +2,6 @@ package com.svnavigatoru600.web.records.otherdocuments;
 
 import org.springframework.context.MessageSource;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.stereotype.Controller;
 import org.springframework.validation.Validator;
 
 import com.svnavigatoru600.domain.records.OtherDocumentRecordType;
@@ -17,7 +16,6 @@ import com.svnavigatoru600.web.records.AbstractPageViews;
  * 
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
-@Controller
 @PreAuthorize("hasRole('ROLE_MEMBER_OF_BOARD')")
 public abstract class AbstractNewEditDocumentController extends AbstractOtherDocumentRecordController {
 
@@ -37,9 +35,9 @@ public abstract class AbstractNewEditDocumentController extends AbstractOtherDoc
      * Constructs a controller which considers all {@link com.svnavigatoru600.domain.records.OtherDocumentRecord
      * OtherDocumentRecords} of all {@link OtherDocumentRecordType OtherDocumentRecordTypes}.
      */
-    public AbstractNewEditDocumentController(String baseUrl, AbstractPageViews views,
-            OtherDocumentRecordService recordService, SendNotificationModelFiller sendNotificationModelFiller,
-            AbstractOtherDocumentRecordValidator validator, MessageSource messageSource) {
+    public AbstractNewEditDocumentController(final String baseUrl, final AbstractPageViews views,
+            final OtherDocumentRecordService recordService, final SendNotificationModelFiller sendNotificationModelFiller,
+            final AbstractOtherDocumentRecordValidator validator, final MessageSource messageSource) {
         super(baseUrl, views, recordService, messageSource);
         this.validator = validator;
         this.sendNotificationModelFiller = sendNotificationModelFiller;
@@ -49,10 +47,10 @@ public abstract class AbstractNewEditDocumentController extends AbstractOtherDoc
      * Constructs a controller which considers all {@link com.svnavigatoru600.domain.records.OtherDocumentRecord
      * OtherDocumentRecords} of the given <code>recordType</code>.
      */
-    public AbstractNewEditDocumentController(String baseUrl, AbstractPageViews views,
-            OtherDocumentRecordType recordType, OtherDocumentRecordService recordService,
-            SendNotificationModelFiller sendNotificationModelFiller, AbstractOtherDocumentRecordValidator validator,
-            MessageSource messageSource) {
+    public AbstractNewEditDocumentController(final String baseUrl, final AbstractPageViews views,
+            final OtherDocumentRecordType recordType, final OtherDocumentRecordService recordService,
+            final SendNotificationModelFiller sendNotificationModelFiller, final AbstractOtherDocumentRecordValidator validator,
+            final MessageSource messageSource) {
         super(baseUrl, views, recordType, recordService, messageSource);
         this.validator = validator;
         this.sendNotificationModelFiller = sendNotificationModelFiller;
@@ -62,13 +60,13 @@ public abstract class AbstractNewEditDocumentController extends AbstractOtherDoc
      * Trivial getter
      */
     protected Validator getValidator() {
-        return this.validator;
+        return validator;
     }
 
     /**
      * Trivial getter
      */
     protected SendNotificationModelFiller getSendNotificationModelFiller() {
-        return this.sendNotificationModelFiller;
+        return sendNotificationModelFiller;
     }
 }

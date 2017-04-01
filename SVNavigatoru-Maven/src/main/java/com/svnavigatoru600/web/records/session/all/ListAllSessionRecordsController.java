@@ -23,25 +23,25 @@ public class ListAllSessionRecordsController extends AbstractListRecordsControll
      * Constructor.
      */
     @Inject
-    public ListAllSessionRecordsController(SessionRecordService recordService, MessageSource messageSource) {
+    public ListAllSessionRecordsController(final SessionRecordService recordService, final MessageSource messageSource) {
         super(AllSessionsUrlParts.BASE_URL, new PageViews(), recordService, messageSource);
     }
 
     @Override
     @RequestMapping(value = AllSessionsUrlParts.BASE_URL, method = RequestMethod.GET)
-    public String initPage(HttpServletRequest request, ModelMap model) {
+    public String initPage(final HttpServletRequest request, final ModelMap model) {
         return super.initPage(request, model);
     }
 
     @Override
     @RequestMapping(value = AllSessionsUrlParts.CREATED_URL, method = RequestMethod.GET)
-    public String initPageAfterCreate(HttpServletRequest request, ModelMap model) {
+    public String initPageAfterCreate(final HttpServletRequest request, final ModelMap model) {
         return super.initPageAfterCreate(request, model);
     }
 
     @Override
     @RequestMapping(value = AllSessionsUrlParts.DELETED_URL, method = RequestMethod.GET)
-    public String initPageAfterDelete(HttpServletRequest request, ModelMap model) {
+    public String initPageAfterDelete(final HttpServletRequest request, final ModelMap model) {
         return super.initPageAfterDelete(request, model);
     }
 }
