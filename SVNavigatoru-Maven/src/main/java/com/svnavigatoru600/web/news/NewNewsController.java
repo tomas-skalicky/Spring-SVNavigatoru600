@@ -12,8 +12,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.support.SessionStatus;
 
@@ -68,11 +68,10 @@ public class NewNewsController extends AbstractNewEditNewsController {
      *
      * @return Response in the JSON format
      */
-    @PostMapping(value = NewsUrlParts.NEW_URL, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @PostMapping(value = NewsUrlParts.NEW_URL, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @Transactional
-    public @ResponseBody AbstractNewsResponse processSubmittedForm(
-            @ModelAttribute(NewNewsController.COMMAND) final NewNews command, final BindingResult result,
-            final SessionStatus status, final HttpServletRequest request) {
+    public @ResponseBody AbstractNewsResponse processSubmittedForm(@RequestBody final NewNews command,
+            final BindingResult result, final SessionStatus status, final HttpServletRequest request) {
 
         final NewNewsResponse response = new NewNewsResponse(command);
 

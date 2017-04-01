@@ -149,12 +149,16 @@ $("#newEditNewsCommand").submit(function(event) {
 	$.ajax({
 		type : "POST",
 		url : $action,
-		data : {
-			"news.id" : $newsIdElement.val(),
-			"news.title" : $newsTitleElement.val(),
-			"news.text" : $newsTextElement.val(),
-			"sendNotification.status" : $sendNotificationStatusElement.attr("checked") ? 1 : 0
-		},
+		contentType: "application/json; charset=utf-8",
+		dataType: "json",
+		data : JSON.stringify({
+			'news' : {
+				'id' : $newsIdElement.val(),
+				'title' : $newsTitleElement.val(),
+				'text' : $newsTextElement.val()
+			},
+			'sendNotification' : { 'status' : $sendNotificationStatusElement.attr("checked") ? 1 : 0 }
+		}),
 		success : function(response) {
 			if (response.successful) {
 				// The news has been successfully created or edited.

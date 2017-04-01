@@ -11,9 +11,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.support.SessionStatus;
 
@@ -67,11 +67,11 @@ public class EditNewsController extends AbstractNewEditNewsController {
     }
 
     @PostMapping(value = NewsUrlParts.EXISTING_URL + "{" + Vars.NEWS_ID
-            + "}/", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+            + "}/", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @Transactional
     public @ResponseBody AbstractNewsResponse processSubmittedForm(@PathVariable(Vars.NEWS_ID) final int newsId,
-            @ModelAttribute(EditNewsController.COMMAND) final EditNews command, final BindingResult result,
-            final SessionStatus status, final HttpServletRequest request) {
+            @RequestBody final EditNews command, final BindingResult result, final SessionStatus status,
+            final HttpServletRequest request) {
 
         final EditNewsResponse response = new EditNewsResponse(command);
 
