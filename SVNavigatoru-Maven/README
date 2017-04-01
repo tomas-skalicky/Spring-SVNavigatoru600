@@ -1,10 +1,8 @@
-1) Start the Sonatype Nexus
-   - Execute cd /home/tom/Documents/Dropbox/private/scripts/docker/sonatype_nexus
-   - Execute ./start_nexus.bash
+1) Start the Sonatype Nexus with
+   - cd /home/tom/Documents/Dropbox/private/scripts/docker/sonatype_nexus; ./start_nexus.bash
 
-2) Start the Jenkins
-   - Execute cd /home/tom/Documents/Dropbox/private/scripts/docker/jenkins
-   - Execute ./start_jenkins_master.bash
+2) Start the Jenkins with
+   - cd /home/tom/Documents/Dropbox/private/scripts/docker/jenkins; ./start_jenkins_master.bash
    - Go to Jenkins on http://localhost:8080/ (credentials are in KeePass)
 
 3) Execute tests on the command line (all should be successful):

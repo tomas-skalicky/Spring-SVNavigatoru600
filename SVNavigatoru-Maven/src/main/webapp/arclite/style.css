@@ -17,17 +17,6 @@
 	padding: 0;
 }
 
-/* try to use custom fonts trough css3 (opera 10, safari 3.1 and ff 3.1 only) */
-@font-face {
-	font-family: "Union";
-	src: url(fonts/union.ttf) format("truetype");
-}
-
-@font-face {
-	font-family: "Share";
-	src: url(fonts/share.ttf) format("truetype");
-}
-
 /*** COMMON ELEMENTS ***/
 html,body {
 	height: 100%;
@@ -61,7 +50,7 @@ a:hover {
 
 /* headings */
 h1 {
-	font-family: "Union", "Lucida Grande", "Lucida Sans Unicode", Arial, Helvetica, Sans, FreeSans, Jamrul, Garuda, Kalimati;
+	font-family: "Lucida Grande", "Lucida Sans Unicode", Arial, Helvetica, Sans, FreeSans, Jamrul, Garuda, Kalimati;
 	font-weight: bold;
 	font-size: 360%;
 	letter-spacing: -0.04em;
@@ -70,7 +59,7 @@ h1 {
 }
 
 h2 {
-	font-family: "Union", "Lucida Grande", "Lucida Sans Unicode", Arial, Helvetica, Sans, FreeSans, Jamrul, Garuda, Kalimati;
+	font-family: "Lucida Grande", "Lucida Sans Unicode", Arial, Helvetica, Sans, FreeSans, Jamrul, Garuda, Kalimati;
 	font-weight: normal;
 	font-size: 220%;
 	letter-spacing: -0.04em;
@@ -89,7 +78,7 @@ h3 {
 }
 
 h4 {
-	font-family: "Share", "Arial Narrow", Arial, Sans;
+	font-family: "Arial Narrow", Arial, Sans;
 	font-size: 200%;
 	font-weight: normal;
 	margin: .5em 0 .2em;
@@ -613,7 +602,7 @@ blockquote p {
 }
 
 .post h3,.post h2 {
-	font-family: "Union", "Lucida Grande", "Lucida Sans Unicode", Arial, Helvetica, Sans, FreeSans, Jamrul, Garuda, Kalimati;
+	font-family: "Lucida Grande", "Lucida Sans Unicode", Arial, Helvetica, Sans, FreeSans, Jamrul, Garuda, Kalimati;
 	margin: 0;
 	padding: .8em 0 .1em 0;
 	font-size: 180%;

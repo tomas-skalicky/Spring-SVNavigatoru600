@@ -11,7 +11,7 @@
 }
 
 /*** COMMON ELEMENTS ***/
-html,body {
+html, body {
 	height: 100%;
 }
 
@@ -20,7 +20,8 @@ html {
 }
 
 body {
-	font-family: "Lucida Grande", "Lucida Sans Unicode", Calibri, Arial, Helvetica, Sans, FreeSans, Jamrul, Garuda, Kalimati;
+	font-family: "Lucida Grande", "Lucida Sans Unicode", Calibri, Arial,
+		Helvetica, Sans, FreeSans, Jamrul, Garuda, Kalimati;
 	font-size: .8em;
 	font-style: normal;
 	color: #000;
@@ -43,7 +44,8 @@ a:hover {
 
 /* headings */
 h1 {
-	font-family: "Union", "Lucida Grande", "Lucida Sans Unicode", Arial, Helvetica, Sans, FreeSans, Jamrul, Garuda, Kalimati;
+	font-family: "Lucida Grande", "Lucida Sans Unicode", Arial, Helvetica,
+		Sans, FreeSans, Jamrul, Garuda, Kalimati;
 	font-weight: bold;
 	font-size: 360%;
 	letter-spacing: -0.04em;
@@ -52,7 +54,8 @@ h1 {
 }
 
 h2 {
-	font-family: "Union", "Lucida Grande", "Lucida Sans Unicode", Arial, Helvetica, Sans, FreeSans, Jamrul, Garuda, Kalimati;
+	font-family: "Lucida Grande", "Lucida Sans Unicode", Arial, Helvetica,
+		Sans, FreeSans, Jamrul, Garuda, Kalimati;
 	font-weight: normal;
 	font-size: 220%;
 	letter-spacing: -0.04em;
@@ -61,7 +64,8 @@ h2 {
 }
 
 h3 {
-	font-family: "Arial Black", Arial, Helvetica, Sans, FreeSans, Jamrul, Garuda, Kalimati;
+	font-family: "Arial Black", Arial, Helvetica, Sans, FreeSans, Jamrul,
+		Garuda, Kalimati;
 	font-size: 180%;
 	font-weight: normal;
 	letter-spacing: -0.04em;
@@ -71,7 +75,7 @@ h3 {
 }
 
 h4 {
-	font-family: "Share", "Arial Narrow", Arial, Sans;
+	font-family: "Arial Narrow", Arial, Sans;
 	font-size: 200%;
 	font-weight: normal;
 	margin: .5em 0 .2em;
@@ -86,7 +90,8 @@ h5 {
 }
 
 h6 {
-	font-family: "Lucida Grande", "Lucida Sans Unicode", Arial, Helvetica, Sans, FreeSans, Jamrul, Garuda, Kalimati;
+	font-family: "Lucida Grande", "Lucida Sans Unicode", Arial, Helvetica,
+		Sans, FreeSans, Jamrul, Garuda, Kalimati;
 	font-size: 125%;
 	font-weight: normal;
 	text-transform: uppercase;
@@ -98,7 +103,7 @@ table {
 	margin: .5em 0 1em;
 }
 
-table td,table th {
+table td, table th {
 	text-align: left;
 	border-right: 1px solid #e8e1c8;
 	padding: .4em .8em;
@@ -125,17 +130,18 @@ table tr:hover td {
 }
 
 /* forms */
-input,textarea,select {
-	font-family: "Lucida Grande", "Lucida Sans Unicode", Arial, Helvetica, Sans, FreeSans, Jamrul, Garuda, Kalimati;
+input, textarea, select {
+	font-family: "Lucida Grande", "Lucida Sans Unicode", Arial, Helvetica,
+		Sans, FreeSans, Jamrul, Garuda, Kalimati;
 	font-size: 100%;
 	margin: .2em 0;
 }
 
-input,textarea {
+input, textarea {
 	padding: .2em .4em;
 }
 
-input.radio,input.checkbox {
+input.radio, input.checkbox {
 	background: #fff;
 	padding: 2px;
 }
@@ -157,12 +163,12 @@ legend {
 }
 
 /* lists */
-ul,ol {
+ul, ol {
 	margin: .4em 0 1em;
 	line-height: 150%;
 }
 
-ul li,ol li {
+ul li, ol li {
 	list-style-position: outside;
 	margin-left: 1.6em;
 }
@@ -211,8 +217,8 @@ pre {
 	white-space: -moz-pre-wrap; /* ff */
 	word-wrap: break-word; /* ie */
 	font-size: 12px;
-	font-family: "Courier New", Courier, "Lucida Console", Monaco, "DejaVu Sans Mono", "Nimbus Mono L",
-		"Bitstream Vera Sans Mono";
+	font-family: "Courier New", Courier, "Lucida Console", Monaco,
+		"DejaVu Sans Mono", "Nimbus Mono L", "Bitstream Vera Sans Mono";
 	background: #fff;
 	padding: .4em;
 	margin: 1em 0;
@@ -268,13 +274,13 @@ blockquote p {
 	overflow: hidden; /* This chops off any overhanging divs */
 }
 
-.mask-main .mask-right,.mask-main .mask-mid,.mask-main .mask-left {
+.mask-main .mask-right, .mask-main .mask-mid, .mask-main .mask-left {
 	float: left;
 	width: 100%;
 	position: relative;
 }
 
-.mask-main .col1,.mask-main .col2,.mask-main .col3 {
+.mask-main .col1, .mask-main .col2, .mask-main .col3 {
 	float: left;
 	position: relative;
 	padding: 0;
@@ -327,7 +333,8 @@ blockquote p {
 }
 
 #pagetitle h1.logo {
-	font-family: "Arial Black", Arial, Helvetica, Sans, FreeSans, Jamrul, Garuda, Kalimati;
+	font-family: "Arial Black", Arial, Helvetica, Sans, FreeSans, Jamrul,
+		Garuda, Kalimati;
 	font-size: 500%;
 	float: left;
 	padding: .1em 0 0 0;
@@ -410,7 +417,7 @@ blockquote p {
 	float: left;
 }
 
-#nav-wrap2 ul#nav,#nav-wrap2 ul#nav li {
+#nav-wrap2 ul#nav, #nav-wrap2 ul#nav li {
 	padding: 0;
 	margin: 0;
 	list-style-type: none;
@@ -486,13 +493,14 @@ blockquote p {
 	
 }
 
-#nav-wrap2 ul#nav a.active ul,#nav-wrap2 ul#nav li.current_page_item ul,#nav-wrap2 ul#nav li.current_page_ancestor ul,#nav-wrap2 ul#nav li.current-cat ul
+#nav-wrap2 ul#nav a.active ul, #nav-wrap2 ul#nav li.current_page_item ul,
+	#nav-wrap2 ul#nav li.current_page_ancestor ul, #nav-wrap2 ul#nav li.current-cat ul
 	{
 	background: #fff;
 }
 
-#nav-wrap2 ul#nav li.current_page_item ul ul,#nav-wrap2 ul#nav li.current_page_ancestor ul ul,#nav-wrap2 ul#nav li.current-cat ul ul
-	{
+#nav-wrap2 ul#nav li.current_page_item ul ul, #nav-wrap2 ul#nav li.current_page_ancestor ul ul,
+	#nav-wrap2 ul#nav li.current-cat ul ul {
 	border: 1px solid #fff !important;
 }
 
@@ -508,7 +516,7 @@ blockquote p {
 	line-height: 125%;
 }
 
-#nav-wrap2 ul#nav li ul a span,#nav-wrap2 ul#nav li ul a span span {
+#nav-wrap2 ul#nav li ul a span, #nav-wrap2 ul#nav li ul a span span {
 	margin: 0;
 	padding: 0;
 	height: auto;
@@ -519,17 +527,21 @@ blockquote p {
 	background: #3b88b7;
 }
 
-#nav-wrap2 ul#nav li ul a:hover,#nav-wrap2 li ul#nav ul a:hover,#nav-wrap2 ul#nav a.active ul a:hover,#nav-wrap2 ul#nav li.current_page_item ul a:hover,#nav-wrap2 ul#nav li.current_page_ancestor ul a:hover
+#nav-wrap2 ul#nav li ul a:hover, #nav-wrap2 li ul#nav ul a:hover,
+	#nav-wrap2 ul#nav a.active ul a:hover, #nav-wrap2 ul#nav li.current_page_item ul a:hover,
+	#nav-wrap2 ul#nav li.current_page_ancestor ul a:hover {
+	color: #fff;
+}
+
+#nav-wrap2 ul#nav ul a:hover, #nav-wrap2 ul#nav ul a:hover span,
+	#nav-wrap2 ul#nav a.active ul a:hover span, #nav-wrap2 ul#nav li.current_page_item ul a:hover span,
+	#nav-wrap2 ul#nav li.current_page_ancestor ul a:hover span, #nav-wrap2 ul#nav ul li.current_page_parent a:hover span,
+	#nav-wrap2 ul#nav ul li.current_page_item a:hover span, #nav-wrap2 ul#nav ul li.current_page_parent li.current_page_item a:hover span
 	{
 	color: #fff;
 }
 
-#nav-wrap2 ul#nav ul a:hover,#nav-wrap2 ul#nav ul a:hover span,#nav-wrap2 ul#nav a.active ul a:hover span,#nav-wrap2 ul#nav li.current_page_item ul a:hover span,#nav-wrap2 ul#nav li.current_page_ancestor ul a:hover span,#nav-wrap2 ul#nav ul li.current_page_parent a:hover span,#nav-wrap2 ul#nav ul li.current_page_item a:hover span,#nav-wrap2 ul#nav ul li.current_page_parent li.current_page_item a:hover span
-	{
-	color: #fff;
-}
-
-#nav-wrap2 ul#nav li ul a span,#nav-wrap2 ul#nav li ul a span {
+#nav-wrap2 ul#nav li ul a span, #nav-wrap2 ul#nav li ul a span {
 	background: none;
 }
 
@@ -542,22 +554,26 @@ blockquote p {
 	top: 4px;
 }
 
-#nav-wrap2 ul#nav li:hover ul ul,#nav-wrap2 ul#nav li:hover ul ul ul,#nav-wrap2 ul#nav li:hover ul ul ul ul {
+#nav-wrap2 ul#nav li:hover ul ul, #nav-wrap2 ul#nav li:hover ul ul ul,
+	#nav-wrap2 ul#nav li:hover ul ul ul ul {
 	display: none;
 }
 
-#nav-wrap2 ul#nav li:hover ul,#nav-wrap2 ul#nav li li:hover ul,#nav-wrap2 ul#nav li li li:hover ul,#nav-wrap2 ul#nav li li li li:hover ul
+#nav-wrap2 ul#nav li:hover ul, #nav-wrap2 ul#nav li li:hover ul,
+	#nav-wrap2 ul#nav li li li:hover ul, #nav-wrap2 ul#nav li li li li:hover ul
 	{
 	display: block;
 }
 
 /* active submenus */
-#nav-wrap2 ul#nav ul li.current_page_parent a span,#nav-wrap2 ul#nav ul li.current_page_item a span,#nav-wrap2 ul#nav ul li.current_page_parent li.current_page_item a span
+#nav-wrap2 ul#nav ul li.current_page_parent a span, #nav-wrap2 ul#nav ul li.current_page_item a span,
+	#nav-wrap2 ul#nav ul li.current_page_parent li.current_page_item a span
 	{
 	color: #2d83d5;
 }
 
-#nav-wrap2 ul#nav ul li.current_page_item li a span,#nav-wrap2 ul#nav ul li.current_page_parent li a span {
+#nav-wrap2 ul#nav ul li.current_page_item li a span, #nav-wrap2 ul#nav ul li.current_page_parent li a span
+	{
 	color: #000;
 }
 
@@ -580,8 +596,9 @@ blockquote p {
 	margin: 1em 0;
 }
 
-.post h3,.post h2 {
-	font-family: "Union", "Lucida Grande", "Lucida Sans Unicode", Arial, Helvetica, Sans, FreeSans, Jamrul, Garuda, Kalimati;
+.post h3, .post h2 {
+	font-family: "Lucida Grande", "Lucida Sans Unicode", Arial, Helvetica,
+		Sans, FreeSans, Jamrul, Garuda, Kalimati;
 	margin: 0;
 	padding: .8em 0 .1em 0;
 	font-size: 180%;
@@ -590,12 +607,12 @@ blockquote p {
 	text-shadow: #fff 1px 1px 1px;
 }
 
-.post h3 a,.post h2 a {
+.post h3 a, .post h2 a {
 	text-decoration: none;
 	color: #000;
 }
 
-.post h3 a:hover,.post h2 a:hover {
+.post h3 a:hover, .post h2 a:hover {
 	color: #df2e56;
 }
 
@@ -705,13 +722,15 @@ blockquote p {
 
 /* comments */
 h3.comments {
-	font-family: "Lucida Grande", "Lucida Sans Unicode", Arial, Helvetica, Sans, FreeSans, Jamrul, Garuda, Kalimati;
+	font-family: "Lucida Grande", "Lucida Sans Unicode", Arial, Helvetica,
+		Sans, FreeSans, Jamrul, Garuda, Kalimati;
 	padding: 0;
 	margin: 2em 0 0 1em;
 	font-size: 150%;
 }
 
-ul#comments,ul#comments li.comment,ul#comments ul,ul#trackbacks,ul#trackbacks li {
+ul#comments, ul#comments li.comment, ul#comments ul, ul#trackbacks, ul#trackbacks li
+	{
 	list-style-type: none;
 	margin: 0;
 	padding: 0;
@@ -792,7 +811,7 @@ ul#comments ul {
 	margin: 0;
 }
 
-.comment-head p a,.comment-head p a:visited {
+.comment-head p a, .comment-head p a:visited {
 	color: #ebe6da;
 }
 
@@ -847,7 +866,7 @@ li.comment #respond {
 }
 
 /* sidebar menu */
-ul.menu,ul.menu li {
+ul.menu, ul.menu li {
 	margin: 0;
 	padding: 0;
 	list-style-type: none;
@@ -979,7 +998,8 @@ ul.menu li li .fadeThis span.hover {
 }
 
 .box .titlewrap h4 {
-	font-family: "Lucida Grande", "Lucida Sans Unicode", Arial, Helvetica, Sans, FreeSans, Jamrul, Garuda, Kalimati;
+	font-family: "Lucida Grande", "Lucida Sans Unicode", Arial, Helvetica,
+		Sans, FreeSans, Jamrul, Garuda, Kalimati;
 	font-weight: normal;
 	letter-spacing: -0.04em;
 	display: block;
@@ -1203,7 +1223,7 @@ div.clear {
 	height: 1%; /* Hide from IE Mac */
 }
 
-.error,.red {
+.error, .red {
 	color: #ed1f24;
 }
 
@@ -1215,7 +1235,8 @@ div.clear {
 	display: block;
 }
 
-.commentnavi .page-numbers,#pagenavi a,#pagenavi span.pages,#pagenavi span.extend {
+.commentnavi .page-numbers, #pagenavi a, #pagenavi span.pages, #pagenavi span.extend
+	{
 	padding: 2px 6px 2px 6px !important;
 	border: 1px solid #a9947c !important;
 	background: #f2eedf !important;
@@ -1223,7 +1244,7 @@ div.clear {
 	text-decoration: none;
 }
 
-#pagenavi a,#pagenavi span.pages,#pagenavi span.extend {
+#pagenavi a, #pagenavi span.pages, #pagenavi span.extend {
 	margin: 0 2px;
 }
 
@@ -1244,7 +1265,7 @@ div.clear {
 	color: #f44365;
 }
 
-#comment .page-numbers.current,#pagenavi span.pages {
+#comment .page-numbers.current, #pagenavi span.pages {
 	color: #a9947c !important;
 }
 
@@ -1273,7 +1294,8 @@ div.clear {
 }
 
 /* captions, thumbnail images in posts */
-.post .post-content img,.attachment img,.navigation .alignleft img,.navigation .alignright img {
+.post .post-content img, .attachment img, .navigation .alignleft img,
+	.navigation .alignright img {
 	padding: 3px;
 	margin: 4px 10px;
 	border: 1px solid #b7a99a;
@@ -1281,15 +1303,15 @@ div.clear {
 	-moz-border-radius: 4px;
 }
 
-.post .post-content img.alignleft,.attachment img.alignleft {
+.post .post-content img.alignleft, .attachment img.alignleft {
 	margin-left: 0;
 }
 
-.post .post-content img.alignright,.attachment img.alignright {
+.post .post-content img.alignright, .attachment img.alignright {
 	margin-right: 0;
 }
 
-.post .post-content img.aligncenter,.attachment img.aligncenter {
+.post .post-content img.aligncenter, .attachment img.aligncenter {
 	margin: 0 auto;
 	text-align: center;
 }
@@ -1310,7 +1332,8 @@ div.clear {
 }
 
 /* no border on smilies */
-img.wp-smiley,.post .post-content img.wp-smiley,.attachment img.wp-smiley {
+img.wp-smiley, .post .post-content img.wp-smiley, .attachment img.wp-smiley
+	{
 	padding: 0;
 	margin: 0;
 	border: 0;
@@ -1332,7 +1355,8 @@ img.wp-smiley,.post .post-content img.wp-smiley,.attachment img.wp-smiley {
 	color: #928a85;
 }
 
-.wp-caption img,.post .post-content .wp-caption img,.attachment .wp-caption img {
+.wp-caption img, .post .post-content .wp-caption img, .attachment .wp-caption img
+	{
 	margin: 0;
 	border: 0;
 	padding: 0;
@@ -1385,8 +1409,9 @@ img.wp-smiley,.post .post-content img.wp-smiley,.attachment img.wp-smiley {
 }
 
 /* no .box style on calendar */
-.widget_calendar .box,.widget_calendar .box .wrapleft,.widget_calendar .box .wrapright,.widget_calendar .box .tr,.widget_calendar .box .bl,.widget_calendar .box .tl,.widget_calendar .box .br,.widget_calendar .box .the-content
-	{
+.widget_calendar .box, .widget_calendar .box .wrapleft, .widget_calendar .box .wrapright,
+	.widget_calendar .box .tr, .widget_calendar .box .bl, .widget_calendar .box .tl,
+	.widget_calendar .box .br, .widget_calendar .box .the-content {
 	background: none;
 	padding: 0;
 	margin: 0;
@@ -1410,7 +1435,7 @@ img.wp-smiley,.post .post-content img.wp-smiley,.attachment img.wp-smiley {
 	width: 100%;
 }
 
-.widget_calendar .box table td,.widget_calendar .box table th {
+.widget_calendar .box table td, .widget_calendar .box table th {
 	text-align: center;
 	padding: .1em .3em;
 }
@@ -1437,7 +1462,8 @@ img.wp-smiley,.post .post-content img.wp-smiley,.attachment img.wp-smiley {
 }
 
 /* no border on smilies */
-img.wp-smiley,.post .postbody img.wp-smiley,.attachment img.wp-smiley {
+img.wp-smiley, .post .postbody img.wp-smiley, .attachment img.wp-smiley
+	{
 	padding: 0;
 	margin: 0;
 	border: 0;

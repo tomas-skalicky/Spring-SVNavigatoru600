@@ -7,7 +7,6 @@ import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Required;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
 import com.svnavigatoru600.domain.eventcalendar.CalendarEvent;
@@ -20,12 +19,11 @@ import com.svnavigatoru600.viewmodel.eventcalendar.EventWrapper;
 import com.svnavigatoru600.viewmodel.forum.contributions.ContributionWrapper;
 
 /**
- * Parent of all controllers (except {@link ErrorController}) of the private section in the application. The
- * private section is the one which is accessible only to the registered users.
- * 
+ * Parent of all controllers (except {@link ErrorController}) of the private section in the application. The private
+ * section is the one which is accessible only to the registered users.
+ *
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
-@Controller
 public abstract class AbstractPrivateSectionMetaController extends AbstractMetaController {
 
     /**
@@ -42,25 +40,25 @@ public abstract class AbstractPrivateSectionMetaController extends AbstractMetaC
     private UserService userService;
 
     @Inject
-    public void setCalendarEventService(CalendarEventService eventService) {
+    public void setCalendarEventService(final CalendarEventService eventService) {
         this.eventService = eventService;
     }
 
     @Inject
-    public void setContributionService(ContributionService contributionService) {
+    public void setContributionService(final ContributionService contributionService) {
         this.contributionService = contributionService;
     }
 
     @ModelAttribute("loggedUser")
     public User populateLoggedUser() {
-        return this.userService.getLoggerUser();
+        return userService.getLoggerUser();
     }
 
     @ModelAttribute("futureEvents")
-    public List<EventWrapper> populateFutureEvents(HttpServletRequest request) {
-        List<CalendarEvent> events = this.eventService.findAllFutureEventsOrdered();
+    public List<EventWrapper> populateFutureEvents(final HttpServletRequest request) {
+        final List<CalendarEvent> events = eventService.findAllFutureEventsOrdered();
 
-        List<EventWrapper> futureEvents = new ArrayList<EventWrapper>(FUTURE_EVENT_COUNT);
+        final List<EventWrapper> futureEvents = new ArrayList<EventWrapper>(FUTURE_EVENT_COUNT);
         for (int eventNum = 0, eventCount = events.size(); (eventNum < FUTURE_EVENT_COUNT)
                 && (eventNum < eventCount); ++eventNum) {
             futureEvents.add(new EventWrapper(events.get(eventNum), request));
@@ -69,14 +67,15 @@ public abstract class AbstractPrivateSectionMetaController extends AbstractMetaC
     }
 
     @ModelAttribute("lastSavedContributions")
-    public List<ContributionWrapper> populateLastSavedContributions(HttpServletRequest request) {
-        List<Contribution> contributions = this.contributionService
+    public List<ContributionWrapper> populateLastSavedContributions(final HttpServletRequest request) {
+        final List<Contribution> contributions = contributionService
                 .findLimitedNumberOrdered(LAST_SAVED_CONTRIBUTION_COUNT);
 
-        List<ContributionWrapper> lastSavedContributions = new ArrayList<ContributionWrapper>(
+        final List<ContributionWrapper> lastSavedContributions = new ArrayList<ContributionWrapper>(
                 LAST_SAVED_CONTRIBUTION_COUNT);
-        for (int contributionNum = 0, contributionCount = contributions.size(); (contributionNum < LAST_SAVED_CONTRIBUTION_COUNT)
-                && (contributionNum < contributionCount); ++contributionNum) {
+        for (int contributionNum = 0, contributionCount = contributions
+                .size(); (contributionNum < LAST_SAVED_CONTRIBUTION_COUNT)
+                        && (contributionNum < contributionCount); ++contributionNum) {
             lastSavedContributions.add(new ContributionWrapper(contributions.get(contributionNum), request));
         }
         return lastSavedContributions;
@@ -86,7 +85,7 @@ public abstract class AbstractPrivateSectionMetaController extends AbstractMetaC
      * Trivial getter
      */
     protected UserService getUserService() {
-        return this.userService;
+        return userService;
     }
 
     /**
@@ -94,7 +93,7 @@ public abstract class AbstractPrivateSectionMetaController extends AbstractMetaC
      */
     @Inject
     @Required
-    public void setUserService(UserService userService) {
+    public void setUserService(final UserService userService) {
         this.userService = userService;
     }
 }

@@ -5,7 +5,6 @@ import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
 import com.svnavigatoru600.service.util.DateUtils;
@@ -16,7 +15,6 @@ import com.svnavigatoru600.service.util.Localization;
  * 
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
-@Controller
 public abstract class AbstractMetaController {
 
     /**
@@ -30,23 +28,23 @@ public abstract class AbstractMetaController {
     public static final String REDIRECTION_ATTRIBUTE = "redirectTo";
 
     @ModelAttribute("homeUrl")
-    public String populateHomeUrl(HttpServletRequest request) {
+    public String populateHomeUrl(final HttpServletRequest request) {
         return request.getContextPath();
     }
 
     @ModelAttribute("currentYear")
-    public String populateCurrentYear(HttpServletRequest request) {
-        Locale locale = Localization.getLocale(request);
+    public String populateCurrentYear(final HttpServletRequest request) {
+        final Locale locale = Localization.getLocale(request);
         return DateUtils.format(new Date(), DateUtils.LONG_YEAR_FORMAT, locale);
     }
 
     @ModelAttribute("myCssHome")
-    public String populateMyCssHome(HttpServletRequest request) {
+    public String populateMyCssHome(final HttpServletRequest request) {
         return "/lib/css/";
     }
 
     @ModelAttribute("myJsHome")
-    public String populateMyJsHome(HttpServletRequest request) {
+    public String populateMyJsHome(final HttpServletRequest request) {
         return "/lib/js/";
     }
 }
