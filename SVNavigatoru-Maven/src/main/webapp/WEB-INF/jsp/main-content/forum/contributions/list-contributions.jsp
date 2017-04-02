@@ -39,7 +39,7 @@
 <%
 // Gets the command from the ModelMap.
 ShowAllContributions command = (ShowAllContributions) request.getAttribute(ListContributionsController.COMMAND);
-List<Contribution> contributions = command.getContributions();
+List<ForumContribution> contributions = command.getContributions();
 if (contributions.size() > 0) {
 %>
 <ul id="comments">
@@ -48,7 +48,7 @@ if (contributions.size() > 0) {
 User loggedUser = UserUtils.getLoggedUser();
 String homeUrl = request.getContextPath();
 Locale locale = Localization.getLocale(request);
-for (Contribution contribution : contributions) {
+for (ForumContribution contribution : contributions) {
 	int contributionId = contribution.getId();
 %>
 	<li class="comment" id="contribution_<%=contributionId%>">

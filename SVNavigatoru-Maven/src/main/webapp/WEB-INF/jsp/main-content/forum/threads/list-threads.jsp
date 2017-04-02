@@ -34,7 +34,7 @@
 <%
 // Gets the command from the ModelMap.
 ShowAllThreads command = (ShowAllThreads) request.getAttribute(ListThreadsController.COMMAND);
-List<Thread> threads = command.getThreads();
+List<ForumThread> threads = command.getThreads();
 if (threads.size() > 0) {
 %>
 <table>
@@ -51,7 +51,7 @@ if (threads.size() > 0) {
 User loggedUser = UserUtils.getLoggedUser();
 String homeUrl = request.getContextPath();
 Locale locale = Localization.getLocale(request);
-for (Thread thread : threads) {
+for (ForumThread thread : threads) {
 	int threadId = thread.getId();
 %>
 	<tr>
@@ -60,7 +60,7 @@ for (Thread thread : threads) {
 		</td>
 		<td>
 			<%
-				Contribution contribution = command.getLastSavedContributions().get(thread);
+				ForumContribution contribution = command.getLastSavedContributions().get(thread);
 				if (contribution != null) {
 					User contributionAuthor = contribution.getAuthor();
 					if (contributionAuthor != null) {

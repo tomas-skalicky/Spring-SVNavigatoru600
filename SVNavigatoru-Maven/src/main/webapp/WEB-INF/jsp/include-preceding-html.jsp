@@ -24,8 +24,8 @@
 <%@ page import="com.svnavigatoru600.domain.News"%>
 <%@ page import="com.svnavigatoru600.domain.eventcalendar.CalendarEvent"%>
 <%@ page import="com.svnavigatoru600.domain.eventcalendar.PriorityType"%>
-<%@ page import="com.svnavigatoru600.domain.forum.Contribution"%>
-<%@ page import="com.svnavigatoru600.domain.forum.Thread"%>
+<%@ page import="com.svnavigatoru600.domain.forum.ForumContribution"%>
+<%@ page import="com.svnavigatoru600.domain.forum.ForumThread"%>
 <%@ page import="com.svnavigatoru600.domain.records.OtherDocumentRecord"%>
 <%@ page import="com.svnavigatoru600.domain.records.OtherDocumentRecordType"%>
 <%@ page import="com.svnavigatoru600.domain.records.SessionRecord"%>

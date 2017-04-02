@@ -49,7 +49,7 @@
 
 
 		<tr>
-			<td><span class="formNote">* <spring:message code="required-data" /></td>
+			<td><span class="formNote">* <spring:message code="required-data" /></span></td>
 			<td><input type="submit" value="<spring:message code="edit.save-changes" />"
 				onclick="setFormAction('userCommand',
 					'<c:url value='/administrace-uzivatelu/existujici/${userCommand.user.username}/' />')" />

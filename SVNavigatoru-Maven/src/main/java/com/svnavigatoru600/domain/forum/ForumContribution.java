@@ -13,6 +13,7 @@ import com.svnavigatoru600.domain.users.User;
 public class ForumContribution implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    public static final String CLASS_FULL_NAME = "com.svnavigatoru600.domain.forum.ForumContribution";
 
     private int id;
     private ForumThread thread;

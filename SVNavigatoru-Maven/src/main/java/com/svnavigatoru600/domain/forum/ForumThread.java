@@ -16,6 +16,7 @@ import com.svnavigatoru600.domain.users.User;
 public class ForumThread implements Serializable, Comparable<ForumThread> {
 
     private static final long serialVersionUID = 1L;
+    public static final String CLASS_FULL_NAME = "com.svnavigatoru600.domain.forum.ForumThread";
 
     private int id;
     private String name;
