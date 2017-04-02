@@ -23,14 +23,14 @@
 
 <%@ page import="com.svnavigatoru600.domain.News"%>
 <%@ page import="com.svnavigatoru600.domain.eventcalendar.CalendarEvent"%>
-<%@ page import="com.svnavigatoru600.domain.eventcalendar.PriorityType"%>
+<%@ page import="com.svnavigatoru600.domain.eventcalendar.PriorityTypeEnum"%>
 <%@ page import="com.svnavigatoru600.domain.forum.ForumContribution"%>
 <%@ page import="com.svnavigatoru600.domain.forum.ForumThread"%>
 <%@ page import="com.svnavigatoru600.domain.records.OtherDocumentRecord"%>
-<%@ page import="com.svnavigatoru600.domain.records.OtherDocumentRecordType"%>
+<%@ page import="com.svnavigatoru600.domain.records.OtherDocumentRecordTypeEnum"%>
 <%@ page import="com.svnavigatoru600.domain.records.SessionRecord"%>
-<%@ page import="com.svnavigatoru600.domain.records.SessionRecordType"%>
-<%@ page import="com.svnavigatoru600.domain.users.AuthorityType"%>
+<%@ page import="com.svnavigatoru600.domain.records.SessionRecordTypeEnum"%>
+<%@ page import="com.svnavigatoru600.domain.users.AuthorityTypeEnum"%>
 <%@ page import="com.svnavigatoru600.domain.users.User"%>
 
 <%@ page import="com.svnavigatoru600.service.util.DateUtils"%>

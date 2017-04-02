@@ -35,16 +35,20 @@ public class ContributionDaoImpl extends NamedParameterJdbcDaoSupport implements
      */
     private static final String TABLE_NAME = "contributions";
 
-    private final ThreadDao threadDao;
+    /**
+     * NOTE: Cannot be injected via constructor since otherwise "unresolvable circular reference".
+     */
+    @Inject
+    private ThreadDao threadDao;
+
     private final UserDao userDao;
 
     /**
      * NOTE: Added because of the final setter.
      */
     @Inject
-    public ContributionDaoImpl(final DataSource dataSource, final ThreadDao threadDao, final UserDao userDao) {
+    public ContributionDaoImpl(final DataSource dataSource, final UserDao userDao) {
         setDataSource(dataSource);
-        this.threadDao = threadDao;
         this.userDao = userDao;
     }
 
@@ -97,8 +101,8 @@ public class ContributionDaoImpl extends NamedParameterJdbcDaoSupport implements
     }
 
     @Override
-    public List<ForumContribution> findAllOrdered(final ContributionFieldEnum sortField, final OrderTypeEnum sortDirection,
-            final int maxResultSize) {
+    public List<ForumContribution> findAllOrdered(final ContributionFieldEnum sortField,
+            final OrderTypeEnum sortDirection, final int maxResultSize) {
         final String query = String.format("SELECT * FROM %s c ORDER BY c.%s %s", ContributionDaoImpl.TABLE_NAME,
                 sortField.getColumnName(), sortDirection.getDatabaseCode());
 
@@ -176,8 +180,9 @@ public class ContributionDaoImpl extends NamedParameterJdbcDaoSupport implements
         final SimpleJdbcInsert insert = new SimpleJdbcInsert(getDataSource())
                 .withTableName(ContributionDaoImpl.TABLE_NAME)
                 .usingGeneratedKeyColumns(ContributionFieldEnum.ID.getColumnName())
-                .usingColumns(ContributionFieldEnum.THREAD_ID.getColumnName(), ContributionFieldEnum.TEXT.getColumnName(),
-                        ContributionFieldEnum.CREATION_TIME.getColumnName(), ContributionFieldEnum.LAST_SAVE_TIME.getColumnName(),
+                .usingColumns(ContributionFieldEnum.THREAD_ID.getColumnName(),
+                        ContributionFieldEnum.TEXT.getColumnName(), ContributionFieldEnum.CREATION_TIME.getColumnName(),
+                        ContributionFieldEnum.LAST_SAVE_TIME.getColumnName(),
                         ContributionFieldEnum.AUTHOR_USERNAME.getColumnName());
 
         return insert.executeAndReturnKey(getNamedParameters(contribution)).intValue();

@@ -35,16 +35,20 @@ public class ThreadDaoImpl extends NamedParameterJdbcDaoSupport implements Threa
      */
     private static final String TABLE_NAME = "threads";
 
-    private final ContributionDao contributionDao;
+    /**
+     * NOTE: Cannot be injected via constructor since otherwise "unresolvable circular reference".
+     */
+    @Inject
+    private ContributionDao contributionDao;
+
     private final UserDao userDao;
 
     /**
      * NOTE: Added because of the final setter.
      */
     @Inject
-    public ThreadDaoImpl(final DataSource dataSource, final ContributionDao contributionDao, final UserDao userDao) {
+    public ThreadDaoImpl(final DataSource dataSource, final UserDao userDao) {
         setDataSource(dataSource);
-        this.contributionDao = contributionDao;
         this.userDao = userDao;
     }
 
@@ -147,8 +151,9 @@ public class ThreadDaoImpl extends NamedParameterJdbcDaoSupport implements Threa
     @Override
     public int save(final ForumThread thread) {
         final SimpleJdbcInsert insert = new SimpleJdbcInsert(getDataSource()).withTableName(ThreadDaoImpl.TABLE_NAME)
-                .usingGeneratedKeyColumns(ThreadFieldEnum.ID.getColumnName()).usingColumns(ThreadFieldEnum.NAME.getColumnName(),
-                        ThreadFieldEnum.CREATION_TIME.getColumnName(), ThreadFieldEnum.AUTHOR_USERNAME.getColumnName());
+                .usingGeneratedKeyColumns(ThreadFieldEnum.ID.getColumnName())
+                .usingColumns(ThreadFieldEnum.NAME.getColumnName(), ThreadFieldEnum.CREATION_TIME.getColumnName(),
+                        ThreadFieldEnum.AUTHOR_USERNAME.getColumnName());
 
         final Date now = new Date();
         thread.setCreationTime(now);

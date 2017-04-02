@@ -12,7 +12,7 @@ import com.svnavigatoru600.repository.records.impl.OtherDocumentRecordFieldEnum;
 
 /**
  * For more information, see {@link com.svnavigatoru600.repository.users.impl.direct.UserRowMapper UserRowMapper}.
- * 
+ *
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
 public class OtherDocumentRecordRowMapper extends AbstractDocumentRecordRowMapper
@@ -42,7 +42,7 @@ public class OtherDocumentRecordRowMapper extends AbstractDocumentRecordRowMappe
             record.setFile(null);
         }
 
-        record.setName(rs.getString(OtherDocumentRecordFieldEnum.name.getColumnName()));
+        record.setName(rs.getString(OtherDocumentRecordFieldEnum.NAME.getColumnName()));
         record.setDescription(rs.getString(OtherDocumentRecordFieldEnum.DESCRIPTION.getColumnName()));
         record.setCreationTime(
                 new Date(rs.getTimestamp(OtherDocumentRecordFieldEnum.CREATION_TIME.getColumnName()).getTime()));
