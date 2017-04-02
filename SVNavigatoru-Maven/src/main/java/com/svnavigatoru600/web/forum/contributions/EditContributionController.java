@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.support.SessionStatus;
 
-import com.svnavigatoru600.domain.forum.Contribution;
+import com.svnavigatoru600.domain.forum.ForumContribution;
 import com.svnavigatoru600.service.forum.ContributionService;
 import com.svnavigatoru600.url.CommonUrlParts;
 import com.svnavigatoru600.url.forum.ContributionsUrlParts;
@@ -53,7 +53,7 @@ public class EditContributionController extends AbstractNewEditContributionContr
 
         final EditContribution command = new EditContribution();
 
-        final Contribution contribution = getContributionService().findById(contributionId);
+        final ForumContribution contribution = getContributionService().findById(contributionId);
         command.setContribution(contribution);
 
         getSendNotificationModelFiller().populateSendNotificationInInitForm(command, request, getMessageSource());
@@ -88,7 +88,7 @@ public class EditContributionController extends AbstractNewEditContributionContr
         }
 
         final ContributionService contributionService = getContributionService();
-        Contribution originalContribution = null;
+        ForumContribution originalContribution = null;
         try {
             originalContribution = contributionService.findById(contributionId);
             contributionService.updateAndNotifyUsers(originalContribution, command.getContribution(),

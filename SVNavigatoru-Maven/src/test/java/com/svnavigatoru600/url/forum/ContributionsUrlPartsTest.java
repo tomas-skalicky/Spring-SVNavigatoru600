@@ -13,8 +13,8 @@ import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
-import com.svnavigatoru600.domain.forum.Contribution;
-import com.svnavigatoru600.domain.forum.Thread;
+import com.svnavigatoru600.domain.forum.ForumContribution;
+import com.svnavigatoru600.domain.forum.ForumThread;
 import com.svnavigatoru600.service.util.HttpRequestUtils;
 import com.svnavigatoru600.test.category.UnitTests;
 
@@ -29,10 +29,12 @@ public class ContributionsUrlPartsTest {
     @Test
     public void testGetAbsoluteContributionUrl() throws Exception {
         // Prepares an input.
-        Thread thread = new Thread();
+        final ForumThread thread = new ForumThread();
         final int threadId = 123;
         thread.setId(threadId);
-        Contribution contribution = new Contribution(thread, "", null);
+        final ForumContribution contribution = new ForumContribution();
+        contribution.setThread(thread);
+        contribution.setText("");
         final int contributionId = 123456;
         contribution.setId(contributionId);
 
@@ -40,7 +42,7 @@ public class ContributionsUrlPartsTest {
         when(HttpRequestUtils.getContextHomeDirectory(any(HttpServletRequest.class))).thenReturn("svnavigatoru600.com");
 
         // Calls the tested method.
-        String url = ContributionsUrlParts.getAbsoluteContributionUrl(contribution, null);
+        final String url = ContributionsUrlParts.getAbsoluteContributionUrl(contribution, null);
 
         // Checks the output.
         assertEquals("svnavigatoru600.com/forum/temata/existujici/123/prispevky/#contribution_123456", url);
@@ -49,15 +51,17 @@ public class ContributionsUrlPartsTest {
     @Test
     public void testGetRelativeContributionUrlAfterCreation() throws Exception {
         // Prepares an input.
-        Thread thread = new Thread();
+        final ForumThread thread = new ForumThread();
         final int threadId = 123;
         thread.setId(threadId);
-        Contribution contribution = new Contribution(thread, "", null);
+        final ForumContribution contribution = new ForumContribution();
+        contribution.setThread(thread);
+        contribution.setText("");
         final int contributionId = 123456;
         contribution.setId(contributionId);
 
         // Calls the tested method.
-        String url = ContributionsUrlParts.getRelativeContributionUrlAfterCreation(contribution);
+        final String url = ContributionsUrlParts.getRelativeContributionUrlAfterCreation(contribution);
 
         // Checks the output.
         assertEquals("/forum/temata/existujici/123/prispevky/vytvoreno/#contribution_123456", url);

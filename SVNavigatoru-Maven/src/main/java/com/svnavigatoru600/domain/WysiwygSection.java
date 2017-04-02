@@ -3,32 +3,14 @@ package com.svnavigatoru600.domain;
 import java.io.Serializable;
 import java.util.Date;
 
-import javax.inject.Inject;
-
 import org.springframework.format.annotation.DateTimeFormat;
-
-import com.svnavigatoru600.service.WysiwygSectionService;
 
 /**
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
 public class WysiwygSection implements Serializable {
 
-    private static final long serialVersionUID = -2762455439041490854L;
-
-    private WysiwygSectionService sectionService;
-
-    @Inject
-    public void setWysiwygSectionService(WysiwygSectionService sectionService) {
-        this.sectionService = sectionService;
-    }
-
-    /**
-     * Updates the persisted copy of this object.
-     */
-    public void update() {
-        this.sectionService.update(this);
-    }
+    private static final long serialVersionUID = 1L;
 
     private WysiwygSectionName name;
     /**
@@ -42,39 +24,46 @@ public class WysiwygSection implements Serializable {
      * This getter is necessary because of Hibernate.
      */
     public String getName() {
-        return this.name.name();
+        return name.name();
     }
 
-    public void setName(WysiwygSectionName name) {
+    public void setName(final WysiwygSectionName name) {
         this.name = name;
     }
 
     /**
      * This setter is necessary because of Hibernate.
      */
-    public void setName(String name) {
+    public void setName(final String name) {
         this.name = WysiwygSectionName.valueOf(name);
     }
 
     public Date getLastSaveTime() {
-        return this.lastSaveTime;
+        return lastSaveTime;
     }
 
-    public void setLastSaveTime(Date lastSaveTime) {
+    public void setLastSaveTime(final Date lastSaveTime) {
         this.lastSaveTime = lastSaveTime;
     }
 
     public String getSourceCode() {
-        return this.sourceCode;
+        return sourceCode;
     }
 
-    public void setSourceCode(String sourceCode) {
+    public void setSourceCode(final String sourceCode) {
         this.sourceCode = sourceCode;
     }
 
     @Override
     public String toString() {
-        return new StringBuilder("[name=").append(this.name).append(", lastSaveTime=").append(this.lastSaveTime)
-                .append(", sourceCode=").append(this.sourceCode).append("]").toString();
+        final StringBuilder builder = new StringBuilder();
+        builder.append("WysiwygSection [name=");
+        builder.append(name);
+        builder.append(", lastSaveTime=");
+        builder.append(lastSaveTime);
+        builder.append(", sourceCode=");
+        builder.append(sourceCode);
+        builder.append("]");
+        return builder.toString();
     }
 }

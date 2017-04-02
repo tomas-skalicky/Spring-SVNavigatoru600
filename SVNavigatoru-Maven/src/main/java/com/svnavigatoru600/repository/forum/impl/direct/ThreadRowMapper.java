@@ -6,7 +6,7 @@ import java.util.Date;
 
 import org.springframework.jdbc.core.RowMapper;
 
-import com.svnavigatoru600.domain.forum.Thread;
+import com.svnavigatoru600.domain.forum.ForumThread;
 import com.svnavigatoru600.domain.users.User;
 import com.svnavigatoru600.repository.forum.impl.ThreadField;
 
@@ -15,11 +15,11 @@ import com.svnavigatoru600.repository.forum.impl.ThreadField;
  * 
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
-public class ThreadRowMapper implements RowMapper<Thread> {
+public class ThreadRowMapper implements RowMapper<ForumThread> {
 
     @Override
-    public Thread mapRow(ResultSet rs, int rowNum) throws SQLException {
-        Thread thread = new Thread();
+    public ForumThread mapRow(ResultSet rs, int rowNum) throws SQLException {
+        ForumThread thread = new ForumThread();
         thread.setId(rs.getInt(ThreadField.id.getColumnName()));
         thread.setName(rs.getString(ThreadField.name.getColumnName()));
         thread.setCreationTime(new Date(rs.getTimestamp(ThreadField.creationTime.getColumnName()).getTime()));

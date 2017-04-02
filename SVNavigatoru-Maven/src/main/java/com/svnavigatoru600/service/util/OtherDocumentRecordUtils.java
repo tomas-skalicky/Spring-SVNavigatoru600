@@ -9,7 +9,7 @@ import com.svnavigatoru600.domain.records.OtherDocumentRecordTypeRelation;
 
 /**
  * This utility class is based on the {@link AuthorityUtils} one.
- * 
+ *
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
 public final class OtherDocumentRecordUtils {
@@ -26,7 +26,7 @@ public final class OtherDocumentRecordUtils {
     /**
      * Indicates whether the given <code>recordName</code> is valid.
      */
-    public static boolean isRecordNameValid(String recordName) {
+    public static boolean isRecordNameValid(final String recordName) {
         return (recordName != null) && (recordName.length() >= RECORD_NAME_MINIMAL_LENGTH);
     }
 
@@ -35,10 +35,10 @@ public final class OtherDocumentRecordUtils {
      * which types are not. The array is filled in according to the given array of checked
      * {@link OtherDocumentRecordTypeRelation} called <code>types</code>.
      */
-    public static boolean[] getArrayOfCheckIndicators(Collection<OtherDocumentRecordTypeRelation> types) {
-        boolean[] indicators = OtherDocumentRecordUtils.createArrayOfCheckIndicators();
-        for (OtherDocumentRecordTypeRelation type : types) {
-            int typeOrdinal = type.getId().getTypedType().ordinal();
+    public static boolean[] getArrayOfCheckIndicators(final Collection<OtherDocumentRecordTypeRelation> types) {
+        final boolean[] indicators = OtherDocumentRecordUtils.createArrayOfCheckIndicators();
+        for (final OtherDocumentRecordTypeRelation type : types) {
+            final int typeOrdinal = type.getId().getTypedType().ordinal();
             indicators[typeOrdinal] = true;
         }
         return indicators;
@@ -64,18 +64,18 @@ public final class OtherDocumentRecordUtils {
      * {@link OtherDocumentRecordTypeRelation OtherDocumentRecordTypeRelations} associated with an
      * {@link com.svnavigatoru600.domain.records.OtherDocumentRecord OtherDocumentRecord} with the given
      * <code>recordId</code>.
-     * 
+     *
      * @return Set of those record types which have been checked, i.e. their indicators equal <code>true</code>.
      */
-    public static Set<OtherDocumentRecordTypeRelation> convertIndicatorsToRelations(boolean[] indicators,
-            int recordId) {
-        Set<OtherDocumentRecordTypeRelation> checkedTypes = new HashSet<OtherDocumentRecordTypeRelation>();
+    public static Set<OtherDocumentRecordTypeRelation> convertIndicatorsToRelations(final boolean[] indicators,
+            final int recordId) {
+        final Set<OtherDocumentRecordTypeRelation> checkedTypes = new HashSet<OtherDocumentRecordTypeRelation>();
 
         for (int i = 0; i < indicators.length; ++i) {
-            boolean isRelationChecked = indicators[i];
+            final boolean isRelationChecked = indicators[i];
             if (isRelationChecked) {
-                OtherDocumentRecordType recordType = OtherDocumentRecordType.values()[i];
-                checkedTypes.add(new OtherDocumentRecordTypeRelation(recordId, recordType));
+                final OtherDocumentRecordType recordType = OtherDocumentRecordType.values()[i];
+                checkedTypes.add(OtherDocumentRecordTypeRelation.createFrom(recordId, recordType));
             }
         }
         return checkedTypes;

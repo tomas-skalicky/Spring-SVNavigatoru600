@@ -9,8 +9,8 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.springframework.dao.EmptyResultDataAccessException;
 
-import com.svnavigatoru600.domain.forum.Contribution;
-import com.svnavigatoru600.domain.forum.Thread;
+import com.svnavigatoru600.domain.forum.ForumContribution;
+import com.svnavigatoru600.domain.forum.ForumThread;
 import com.svnavigatoru600.domain.users.User;
 import com.svnavigatoru600.repository.forum.ContributionDao;
 import com.svnavigatoru600.repository.forum.impl.ContributionField;
@@ -36,7 +36,7 @@ public final class ContributionDaoTest extends AbstractRepositoryTest {
     /**
      * Default test thread of contributions.
      */
-    private Thread defaultThread = null;
+    private ForumThread defaultThread = null;
 
     @Before
     public void createDefaultAuthorAndThread() {
@@ -52,7 +52,7 @@ public final class ContributionDaoTest extends AbstractRepositoryTest {
         int contributionId = createDefaultTestContribution();
 
         // SELECT ONE
-        Contribution contribution = contributionDao.findById(contributionId);
+        ForumContribution contribution = contributionDao.findById(contributionId);
         Assert.assertTrue(contribution.getId() >= 1);
         Assert.assertEquals(contributionId, contribution.getId());
         Assert.assertEquals(this.defaultThread.getId(), contribution.getThread().getId());
@@ -75,7 +75,7 @@ public final class ContributionDaoTest extends AbstractRepositoryTest {
                 RepositoryTestUtils.CONTRIBUTION_DEFAULT_TEXT, this.defaultAuthor);
 
         // SELECT ALL
-        List<Contribution> foundContributions = contributionDao.findAll(this.defaultThread.getId());
+        List<ForumContribution> foundContributions = contributionDao.findAll(this.defaultThread.getId());
         int expectedFoundContributionCount = 2;
         Assert.assertEquals(expectedFoundContributionCount, foundContributions.size());
         Assert.assertEquals(firstContributionId, foundContributions.get(0).getId());
@@ -95,7 +95,7 @@ public final class ContributionDaoTest extends AbstractRepositoryTest {
 
         // SELECT ALL
         int maxResultSize = 2;
-        List<Contribution> foundContributions = contributionDao.findAllOrdered(ContributionField.creationTime,
+        List<ForumContribution> foundContributions = contributionDao.findAllOrdered(ContributionField.creationTime,
                 OrderType.DESCENDING, maxResultSize);
         Assert.assertEquals(maxResultSize, foundContributions.size());
         Assert.assertEquals(thirdContributionId, foundContributions.get(0).getId());
@@ -114,7 +114,7 @@ public final class ContributionDaoTest extends AbstractRepositoryTest {
         int thirdContributionId = createDefaultTestContribution();
 
         // SELECT ALL
-        List<Contribution> foundContributions = contributionDao.findAllOrdered(this.defaultThread.getId(),
+        List<ForumContribution> foundContributions = contributionDao.findAllOrdered(this.defaultThread.getId(),
                 ContributionField.lastSaveTime, OrderType.ASCENDING);
         int expectedFoundContributionCount = 2;
         Assert.assertEquals(expectedFoundContributionCount, foundContributions.size());
@@ -128,7 +128,7 @@ public final class ContributionDaoTest extends AbstractRepositoryTest {
 
         // INSERT & SELECT ONE
         int contributionId = createDefaultTestContribution();
-        Contribution contribution = contributionDao.findById(contributionId);
+        ForumContribution contribution = contributionDao.findById(contributionId);
 
         // UPDATE
         contribution.setThread(createDefaultTestThread());
@@ -149,7 +149,7 @@ public final class ContributionDaoTest extends AbstractRepositoryTest {
 
         // INSERT & SELECT ONE
         int contributionId = createDefaultTestContribution();
-        Contribution contribution = contributionDao.findById(contributionId);
+        ForumContribution contribution = contributionDao.findById(contributionId);
 
         // DELETE
         contributionDao.delete(contribution);
@@ -174,7 +174,7 @@ public final class ContributionDaoTest extends AbstractRepositoryTest {
      * 
      * @return Newly created thread
      */
-    Thread createDefaultTestThread() {
+    ForumThread createDefaultTestThread() {
         int threadId = createDefaultTestThreadAndGetId();
         return TEST_UTILS.getThreadDao().findById(threadId);
     }

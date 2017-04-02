@@ -12,7 +12,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-import com.svnavigatoru600.domain.forum.Thread;
+import com.svnavigatoru600.domain.forum.ForumThread;
 import com.svnavigatoru600.service.forum.ThreadService;
 import com.svnavigatoru600.url.CommonUrlParts;
 import com.svnavigatoru600.url.forum.ThreadsUrlParts;
@@ -50,7 +50,7 @@ public class DeleteThreadController extends AbstractThreadController {
 
         try {
             // Deletes the thread from the repository.
-            final Thread thread = threadService.findById(threadId);
+            final ForumThread thread = threadService.findById(threadId);
             if (thread.getContributions().size() > 0) {
                 final String view = listController.initPage(request, model);
                 model.addAttribute("error", DeleteThreadController.CANNOT_DELETE_DUE_CONTRIBUTION_MESSAGE_CODE);

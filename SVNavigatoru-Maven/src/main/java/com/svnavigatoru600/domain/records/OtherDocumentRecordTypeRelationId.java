@@ -7,16 +7,21 @@ import java.io.Serializable;
  */
 public class OtherDocumentRecordTypeRelationId implements Serializable {
 
-    private static final long serialVersionUID = -1879445826891635320L;
+    private static final long serialVersionUID = 1L;
 
     private int recordId;
     private OtherDocumentRecordType type;
 
-    public int getRecordId() {
-        return this.recordId;
+    public OtherDocumentRecordTypeRelationId(final int recordId, final OtherDocumentRecordType type) {
+        this.recordId = recordId;
+        this.type = type;
     }
 
-    public void setRecordId(int recordId) {
+    public int getRecordId() {
+        return recordId;
+    }
+
+    public void setRecordId(final int recordId) {
         this.recordId = recordId;
     }
 
@@ -25,24 +30,24 @@ public class OtherDocumentRecordTypeRelationId implements Serializable {
      * identical.
      */
     public OtherDocumentRecordType getTypedType() {
-        return this.type;
+        return type;
     }
 
     /**
      * This getter is necessary because of Hibernate.
      */
     public String getType() {
-        return this.type.name();
+        return type.name();
     }
 
-    public void setType(OtherDocumentRecordType type) {
+    public void setType(final OtherDocumentRecordType type) {
         this.type = type;
     }
 
     /**
      * This setter is necessary because of Hibernate.
      */
-    public void setType(String type) {
+    public void setType(final String type) {
         this.type = OtherDocumentRecordType.valueOf(type);
     }
 
@@ -51,10 +56,10 @@ public class OtherDocumentRecordTypeRelationId implements Serializable {
      */
     @Override
     public int hashCode() {
-        int prime = 31;
+        final int prime = 31;
         int result = 1;
-        result = prime * result + this.recordId;
-        result = prime * result + ((this.type == null) ? 0 : this.type.hashCode());
+        result = prime * result + recordId;
+        result = prime * result + ((type == null) ? 0 : type.hashCode());
         return result;
     }
 
@@ -62,7 +67,7 @@ public class OtherDocumentRecordTypeRelationId implements Serializable {
      * Generated
      */
     @Override
-    public boolean equals(Object obj) {
+    public boolean equals(final Object obj) {
         if (this == obj) {
             return true;
         }
@@ -73,11 +78,11 @@ public class OtherDocumentRecordTypeRelationId implements Serializable {
             return false;
         }
 
-        OtherDocumentRecordTypeRelationId other = (OtherDocumentRecordTypeRelationId) obj;
-        if (this.recordId != other.recordId) {
+        final OtherDocumentRecordTypeRelationId other = (OtherDocumentRecordTypeRelationId) obj;
+        if (recordId != other.recordId) {
             return false;
         }
-        if (this.type != other.type) {
+        if (type != other.type) {
             return false;
         }
         return true;
@@ -85,7 +90,12 @@ public class OtherDocumentRecordTypeRelationId implements Serializable {
 
     @Override
     public String toString() {
-        return new StringBuilder().append("[recordId=").append(this.recordId).append(", type=").append(this.type)
-                .append("]").toString();
+        final StringBuilder builder = new StringBuilder();
+        builder.append("OtherDocumentRecordTypeRelationId [recordId=");
+        builder.append(recordId);
+        builder.append(", type=");
+        builder.append(type);
+        builder.append("]");
+        return builder.toString();
     }
 }

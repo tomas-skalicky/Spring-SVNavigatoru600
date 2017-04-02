@@ -1,6 +1,6 @@
 package com.svnavigatoru600.viewmodel.forum.contributions;
 
-import com.svnavigatoru600.domain.forum.Contribution;
+import com.svnavigatoru600.domain.forum.ForumContribution;
 import com.svnavigatoru600.viewmodel.SendNotification;
 import com.svnavigatoru600.viewmodel.SendNotificationViewModel;
 
@@ -9,14 +9,14 @@ import com.svnavigatoru600.viewmodel.SendNotificationViewModel;
  */
 public abstract class AbstractNewEditContribution implements SendNotificationViewModel {
 
-    private Contribution contribution = null;
+    private ForumContribution contribution = null;
     private SendNotification sendNotification = null;
 
-    public Contribution getContribution() {
+    public ForumContribution getContribution() {
         return this.contribution;
     }
 
-    public void setContribution(Contribution contribution) {
+    public void setContribution(ForumContribution contribution) {
         this.contribution = contribution;
     }
 

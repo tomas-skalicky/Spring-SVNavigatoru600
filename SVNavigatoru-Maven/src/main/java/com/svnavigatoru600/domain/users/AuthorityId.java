@@ -4,29 +4,29 @@ import java.io.Serializable;
 
 /**
  * Helper with the representation of the composite key of the {@link Authority} class.
- * 
+ *
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
 public class AuthorityId implements Serializable {
 
-    private static final long serialVersionUID = -3842400502191977690L;
+    private static final long serialVersionUID = 1L;
 
     private String username;
     private String authority;
 
     public String getUsername() {
-        return this.username;
+        return username;
     }
 
-    public void setUsername(String username) {
+    public void setUsername(final String username) {
         this.username = username;
     }
 
     public String getAuthority() {
-        return this.authority;
+        return authority;
     }
 
-    public void setAuthority(String authority) {
+    public void setAuthority(final String authority) {
         this.authority = authority;
     }
 
@@ -35,10 +35,10 @@ public class AuthorityId implements Serializable {
      */
     @Override
     public int hashCode() {
-        int prime = 31;
+        final int prime = 31;
         int result = 1;
-        result = prime * result + ((this.authority == null) ? 0 : this.authority.hashCode());
-        result = prime * result + ((this.username == null) ? 0 : this.username.hashCode());
+        result = prime * result + ((authority == null) ? 0 : authority.hashCode());
+        result = prime * result + ((username == null) ? 0 : username.hashCode());
         return result;
     }
 
@@ -46,7 +46,7 @@ public class AuthorityId implements Serializable {
      * Generated
      */
     @Override
-    public boolean equals(Object obj) {
+    public boolean equals(final Object obj) {
         if (this == obj) {
             return true;
         }
@@ -57,19 +57,19 @@ public class AuthorityId implements Serializable {
             return false;
         }
 
-        AuthorityId other = (AuthorityId) obj;
-        if (this.authority == null) {
+        final AuthorityId other = (AuthorityId) obj;
+        if (authority == null) {
             if (other.authority != null) {
                 return false;
             }
-        } else if (!this.authority.equals(other.authority)) {
+        } else if (!authority.equals(other.authority)) {
             return false;
         }
-        if (this.username == null) {
+        if (username == null) {
             if (other.username != null) {
                 return false;
             }
-        } else if (!this.username.equals(other.username)) {
+        } else if (!username.equals(other.username)) {
             return false;
         }
         return true;
@@ -77,7 +77,12 @@ public class AuthorityId implements Serializable {
 
     @Override
     public String toString() {
-        return new StringBuilder("[username=").append(this.username).append(", authority=").append(this.authority)
-                .append("]").toString();
+        final StringBuilder builder = new StringBuilder();
+        builder.append("AuthorityId [username=");
+        builder.append(username);
+        builder.append(", authority=");
+        builder.append(authority);
+        builder.append("]");
+        return builder.toString();
     }
 }

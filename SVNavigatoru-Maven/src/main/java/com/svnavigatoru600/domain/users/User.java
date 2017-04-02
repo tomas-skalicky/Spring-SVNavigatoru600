@@ -6,13 +6,10 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
-import javax.inject.Inject;
-
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.svnavigatoru600.service.users.UserService;
 import com.svnavigatoru600.service.util.AuthorityUtils;
 import com.svnavigatoru600.service.util.CheckboxUtils;
 import com.svnavigatoru600.service.util.FullNameFormat;
@@ -23,21 +20,7 @@ import com.svnavigatoru600.service.util.UserFullNameFormatterVisitor;
  */
 public class User implements UserDetails, Serializable {
 
-    private static final long serialVersionUID = 4756202473560293423L;
-
-    private UserService userService;
-
-    @Inject
-    public void setUserService(UserService userService) {
-        this.userService = userService;
-    }
-
-    /**
-     * Updates the persisted copy of this object.
-     */
-    public void update() {
-        this.userService.update(this);
-    }
+    private static final long serialVersionUID = 1L;
 
     private String username;
     private String password;
@@ -74,8 +57,8 @@ public class User implements UserDetails, Serializable {
      * Initialises user's username (=login), password, flag if he is active, first name, last name, email, phone, flag
      * if he is a test user and authorities. Other properties are not touched.
      */
-    public User(String username, String password, boolean enabled, String firstName, String lastName, String email,
-            String phone, boolean isTestUser, Set<GrantedAuthority> authorities) {
+    public User(final String username, final String password, final boolean enabled, final String firstName, final String lastName, final String email,
+            final String phone, final boolean isTestUser, final Set<GrantedAuthority> authorities) {
         this.username = username;
         this.password = password;
         this.enabled = enabled;
@@ -89,44 +72,44 @@ public class User implements UserDetails, Serializable {
 
     @Override
     public String getUsername() {
-        return this.username;
+        return username;
     }
 
-    public void setUsername(String username) {
+    public void setUsername(final String username) {
         this.username = username;
     }
 
     @Override
     public String getPassword() {
-        return this.password;
+        return password;
     }
 
-    public void setPassword(String password) {
+    public void setPassword(final String password) {
         this.password = password;
     }
 
     @Override
     public boolean isEnabled() {
-        return this.enabled;
+        return enabled;
     }
 
-    public void setEnabled(boolean enabled) {
+    public void setEnabled(final boolean enabled) {
         this.enabled = enabled;
     }
 
     public String getFirstName() {
-        return this.firstName;
+        return firstName;
     }
 
-    public void setFirstName(String firstName) {
+    public void setFirstName(final String firstName) {
         this.firstName = firstName;
     }
 
     public String getLastName() {
-        return this.lastName;
+        return lastName;
     }
 
-    public void setLastName(String lastName) {
+    public void setLastName(final String lastName) {
         this.lastName = lastName;
     }
 
@@ -140,23 +123,23 @@ public class User implements UserDetails, Serializable {
     /**
      * Gets the full name of this {@link User} in the given {@link FullNameFormat}.
      */
-    public String getFullName(FullNameFormat format) {
+    public String getFullName(final FullNameFormat format) {
         return format.accept(new UserFullNameFormatterVisitor(this));
     }
 
     public String getEmail() {
-        return this.email;
+        return email;
     }
 
     public String getLowerCasedEmail() {
-        if (this.email != null) {
-            return this.email.toLowerCase();
+        if (email != null) {
+            return email.toLowerCase();
         } else {
-            return this.email;
+            return email;
         }
     }
 
-    public void setEmail(String email) {
+    public void setEmail(final String email) {
         this.email = email;
     }
 
@@ -164,72 +147,72 @@ public class User implements UserDetails, Serializable {
         return redirectEmail;
     }
 
-    public void setRedirectEmail(String redirectEmail) {
+    public void setRedirectEmail(final String redirectEmail) {
         this.redirectEmail = redirectEmail;
     }
 
     public String getPhone() {
-        return this.phone;
+        return phone;
     }
 
-    public void setPhone(String phone) {
+    public void setPhone(final String phone) {
         this.phone = phone;
     }
 
     public boolean isTestUser() {
-        return this.isTestUser;
+        return isTestUser;
     }
 
-    public void setTestUser(boolean isTestUser) {
+    public void setTestUser(final boolean isTestUser) {
         this.isTestUser = isTestUser;
     }
 
     public boolean isSubscribedToNews() {
-        return this.subscribedToNews;
+        return subscribedToNews;
     }
 
-    public void setSubscribedToNews(boolean subscribedToNews) {
+    public void setSubscribedToNews(final boolean subscribedToNews) {
         this.subscribedToNews = subscribedToNews;
     }
 
     public boolean isSubscribedToEvents() {
-        return this.subscribedToEvents;
+        return subscribedToEvents;
     }
 
-    public void setSubscribedToEvents(boolean subscribedToEvents) {
+    public void setSubscribedToEvents(final boolean subscribedToEvents) {
         this.subscribedToEvents = subscribedToEvents;
     }
 
     public boolean isSubscribedToForum() {
-        return this.subscribedToForum;
+        return subscribedToForum;
     }
 
-    public void setSubscribedToForum(boolean subscribedToForum) {
+    public void setSubscribedToForum(final boolean subscribedToForum) {
         this.subscribedToForum = subscribedToForum;
     }
 
     public boolean isSubscribedToOtherDocuments() {
-        return this.subscribedToOtherDocuments;
+        return subscribedToOtherDocuments;
     }
 
-    public void setSubscribedToOtherDocuments(boolean subscribedToOtherDocuments) {
+    public void setSubscribedToOtherDocuments(final boolean subscribedToOtherDocuments) {
         this.subscribedToOtherDocuments = subscribedToOtherDocuments;
     }
 
     public boolean isSubscribedToOtherSections() {
-        return this.subscribedToOtherSections;
+        return subscribedToOtherSections;
     }
 
-    public void setSubscribedToOtherSections(boolean subscribedToOtherSections) {
+    public void setSubscribedToOtherSections(final boolean subscribedToOtherSections) {
         this.subscribedToOtherSections = subscribedToOtherSections;
     }
 
     @Override
     public Collection<GrantedAuthority> getAuthorities() {
-        return this.authorities;
+        return authorities;
     }
 
-    public void setAuthorities(Set<GrantedAuthority> authorities) {
+    public void setAuthorities(final Set<GrantedAuthority> authorities) {
         this.authorities = authorities;
     }
 
@@ -237,22 +220,22 @@ public class User implements UserDetails, Serializable {
      * Gets an array of names of authorities (= roles).
      */
     public String[] getAuthorityNames() {
-        List<String> authorityNames = new ArrayList<String>();
-        for (GrantedAuthority authority : this.authorities) {
+        final List<String> authorityNames = new ArrayList<String>();
+        for (final GrantedAuthority authority : authorities) {
             authorityNames.add(authority.getAuthority());
         }
-        return authorityNames.toArray(new String[this.authorities.size()]);
+        return authorityNames.toArray(new String[authorities.size()]);
     }
 
     /**
      * Returns an object of the authority with the given {@link AuthorityType authorityType} if this {@link User} has
      * such a role (~ rights). Otherwise, returns <code>null</code>
      */
-    private GrantedAuthority getAuthority(AuthorityType authorityType) {
-        String typeName = authorityType.name();
-        Collection<GrantedAuthority> ownedAuthorities = getAuthorities();
+    private GrantedAuthority getAuthority(final AuthorityType authorityType) {
+        final String typeName = authorityType.name();
+        final Collection<GrantedAuthority> ownedAuthorities = getAuthorities();
 
-        for (GrantedAuthority ownedAuthority : ownedAuthorities) {
+        for (final GrantedAuthority ownedAuthority : ownedAuthorities) {
             if (ownedAuthority.getAuthority().equals(typeName)) {
                 return ownedAuthority;
             }
@@ -263,7 +246,7 @@ public class User implements UserDetails, Serializable {
     /**
      * Indicates whether this {@link User} has the given authority.
      */
-    public boolean hasAuthority(AuthorityType authority) {
+    public boolean hasAuthority(final AuthorityType authority) {
         return getAuthority(authority) != null;
     }
 
@@ -296,10 +279,10 @@ public class User implements UserDetails, Serializable {
     }
 
     public int getSmtpPort() {
-        return this.smtpPort;
+        return smtpPort;
     }
 
-    public void setSmtpPort(int smtpPort) {
+    public void setSmtpPort(final int smtpPort) {
         this.smtpPort = smtpPort;
     }
 
@@ -319,14 +302,14 @@ public class User implements UserDetails, Serializable {
     }
 
     public void setEmailToNullIfBlank() {
-        if (StringUtils.isBlank(this.email)) {
-            this.email = null;
+        if (StringUtils.isBlank(email)) {
+            email = null;
         }
     }
 
     /**
      * Sets {@link User#getAuthorities() authorities} of this {@link User} according to the given flags.
-     * 
+     *
      * @param indicatorsOfNewAuthorities
      *            <code>true</code> in the index <code>x</code> in the array means that the authority with the
      *            {@link AuthorityType#ordinal() ordinal}<code> == x</code> has been selected as one of the new
@@ -334,14 +317,14 @@ public class User implements UserDetails, Serializable {
      * @return <code>true</code> if the new authorities are different from those before the method invocation; otherwise
      *         <code>false</code>.
      */
-    public boolean updateAuthorities(boolean[] indicatorsOfNewAuthorities) {
-        Set<GrantedAuthority> checkedAuthorities = AuthorityUtils
-                .convertIndicatorsToAuthorities(indicatorsOfNewAuthorities, this.username);
+    public boolean updateAuthorities(final boolean[] indicatorsOfNewAuthorities) {
+        final Set<GrantedAuthority> checkedAuthorities = AuthorityUtils
+                .convertIndicatorsToAuthorities(indicatorsOfNewAuthorities, username);
         // The role ROLE_REGISTERED_USER is automatically added.
-        checkedAuthorities.add(new Authority(this.username, AuthorityType.ROLE_REGISTERED_USER));
+        checkedAuthorities.add(new Authority(username, AuthorityType.ROLE_REGISTERED_USER));
 
         boolean authoritiesChanged = true;
-        Collection<GrantedAuthority> currentAuthorities = getAuthorities();
+        final Collection<GrantedAuthority> currentAuthorities = getAuthorities();
         if (currentAuthorities != null) {
             authoritiesChanged = !CheckboxUtils.areSame(AuthorityUtils.getArrayOfCheckIndicators(checkedAuthorities),
                     AuthorityUtils.getArrayOfCheckIndicators(currentAuthorities));
@@ -354,83 +337,83 @@ public class User implements UserDetails, Serializable {
     @Override
     public String toString() {
         // @formatter:off
-        return new StringBuilder("[username=").append(this.username)
-                .append(", password=").append(this.password)
-                .append(", enabled=").append(this.enabled)
-                .append(", firstName=").append(this.firstName)
-                .append(", lastName=").append(this.lastName)
-                .append(", email=").append(this.email)
-                .append(", phone=").append(this.phone)
-                .append(", isTestUser=").append(this.isTestUser)
-                .append(", subscribedToNews=").append(this.subscribedToNews)
-                .append(", subscribedToEvents=").append(this.subscribedToEvents)
-                .append(", subscribedToForum=").append(this.subscribedToForum)
-                .append(", subscribedToOtherDocuments=").append(this.subscribedToOtherDocuments)
-                .append(", subscribedToOtherSections=").append(this.subscribedToOtherSections)
-                .append(", smtpPort=").append(this.smtpPort)
-                .append(", authorities=").append(this.authorities).append("]").toString();
+        return new StringBuilder("[username=").append(username)
+                .append(", password=").append(password)
+                .append(", enabled=").append(enabled)
+                .append(", firstName=").append(firstName)
+                .append(", lastName=").append(lastName)
+                .append(", email=").append(email)
+                .append(", phone=").append(phone)
+                .append(", isTestUser=").append(isTestUser)
+                .append(", subscribedToNews=").append(subscribedToNews)
+                .append(", subscribedToEvents=").append(subscribedToEvents)
+                .append(", subscribedToForum=").append(subscribedToForum)
+                .append(", subscribedToOtherDocuments=").append(subscribedToOtherDocuments)
+                .append(", subscribedToOtherSections=").append(subscribedToOtherSections)
+                .append(", smtpPort=").append(smtpPort)
+                .append(", authorities=").append(authorities).append("]").toString();
         // @formatter:on
     }
 
     /**
      * Updates email, phone and subscription properties of this {@link User} according to the given user.
-     * 
+     *
      * @param sourceUser
      *            {@link User} which is used as a source.
      */
-    public void copyEmailPhoneSubscriptions(User sourceUser) {
-        this.email = sourceUser.email;
-        this.phone = sourceUser.phone;
+    public void copyEmailPhoneSubscriptions(final User sourceUser) {
+        email = sourceUser.email;
+        phone = sourceUser.phone;
         copySubscriptions(sourceUser);
     }
 
     /**
      * Updates subscription properties of this {@link User} according to the given user.
-     * 
+     *
      * @param sourceUser
      *            {@link User} which is used as a source.
      */
-    public void copySubscriptions(User sourceUser) {
-        this.subscribedToNews = sourceUser.subscribedToNews;
-        this.subscribedToEvents = sourceUser.subscribedToEvents;
-        this.subscribedToForum = sourceUser.subscribedToForum;
-        this.subscribedToOtherDocuments = sourceUser.subscribedToOtherDocuments;
-        this.subscribedToOtherSections = sourceUser.subscribedToOtherSections;
+    public void copySubscriptions(final User sourceUser) {
+        subscribedToNews = sourceUser.subscribedToNews;
+        subscribedToEvents = sourceUser.subscribedToEvents;
+        subscribedToForum = sourceUser.subscribedToForum;
+        subscribedToOtherDocuments = sourceUser.subscribedToOtherDocuments;
+        subscribedToOtherSections = sourceUser.subscribedToOtherSections;
     }
 
     /**
      * Sets all subscription properties of this {@link User} to {@code true}.
      */
     public void subscribeToEverything() {
-        this.subscribedToNews = true;
-        this.subscribedToEvents = true;
-        this.subscribedToForum = true;
-        this.subscribedToOtherDocuments = true;
-        this.subscribedToOtherSections = true;
+        subscribedToNews = true;
+        subscribedToEvents = true;
+        subscribedToForum = true;
+        subscribedToOtherDocuments = true;
+        subscribedToOtherSections = true;
     }
 
     /**
      * Adds the specified {@link Authority} to this {@link User} if he has not this authority now. Otherwise, does
      * nothing.
-     * 
+     *
      * @param type
      *            Type of the authority which is to be added to this user.
      */
-    public void addAuthority(AuthorityType type) {
+    public void addAuthority(final AuthorityType type) {
         if (!hasAuthority(type)) {
-            getAuthorities().add(new Authority(this.username, type));
+            getAuthorities().add(new Authority(username, type));
         }
     }
 
     /**
      * Removes the specified {@link Authority} from this {@link User} if he has this authority now. Otherwise, does
      * nothing.
-     * 
+     *
      * @param type
      *            Type of the authority which is to be taken away from this user.
      */
-    public void removeAuthority(AuthorityType type) {
-        GrantedAuthority authority = getAuthority(type);
+    public void removeAuthority(final AuthorityType type) {
+        final GrantedAuthority authority = getAuthority(type);
         if (authority != null) {
             getAuthorities().remove(authority);
         }
@@ -438,12 +421,12 @@ public class User implements UserDetails, Serializable {
 
     /**
      * Filters all {@link User Users} from the given {@link List} out who have not email.
-     * 
+     *
      * @return All users from the <code>users</code> who have email.
      */
-    public static List<User> filterWithNoEmailOut(List<User> users) {
-        List<User> usersWithEmail = new ArrayList<User>(users.size());
-        for (User user : users) {
+    public static List<User> filterWithNoEmailOut(final List<User> users) {
+        final List<User> usersWithEmail = new ArrayList<User>(users.size());
+        for (final User user : users) {
             if (StringUtils.isNotBlank(user.getEmail())) {
                 usersWithEmail.add(user);
             }

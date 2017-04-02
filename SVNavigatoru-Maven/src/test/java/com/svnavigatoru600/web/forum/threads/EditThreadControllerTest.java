@@ -24,7 +24,7 @@ import org.springframework.test.context.TestContextManager;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 
-import com.svnavigatoru600.domain.forum.Thread;
+import com.svnavigatoru600.domain.forum.ForumThread;
 import com.svnavigatoru600.service.eventcalendar.CalendarEventService;
 import com.svnavigatoru600.service.forum.ContributionService;
 import com.svnavigatoru600.service.forum.ThreadService;
@@ -70,28 +70,28 @@ public final class EditThreadControllerTest {
     public void setUpContext() throws Exception {
         // This is where the magic happens. We actually do "by hand" what the
         // spring runner would do for us.
-        this.testContextManager = new TestContextManager(this.getClass());
-        this.testContextManager.prepareTestInstance(this);
+        testContextManager = new TestContextManager(this.getClass());
+        testContextManager.prepareTestInstance(this);
     }
 
     @Before
     public void initMockMvc() {
         initMocks();
 
-        this.controller = new EditThreadController(this.threadService, this.editThreadValidator, this.messageSource);
-        mockControllerModelAttributes(this.controller);
+        controller = new EditThreadController(threadService, editThreadValidator, messageSource);
+        mockControllerModelAttributes(controller);
 
-        this.mockMvc = standaloneSetup(this.controller).build();
+        mockMvc = standaloneSetup(controller).build();
     }
 
     private void initMocks() {
         MockitoAnnotations.initMocks(this);
     }
 
-    private void mockControllerModelAttributes(AbstractPrivateSectionMetaController controller) {
-        controller.setCalendarEventService(this.calendarEventService);
-        controller.setContributionService(this.contributionService);
-        controller.setUserService(this.userService);
+    private void mockControllerModelAttributes(final AbstractPrivateSectionMetaController controller) {
+        controller.setCalendarEventService(calendarEventService);
+        controller.setContributionService(contributionService);
+        controller.setUserService(userService);
     }
 
     @Test
@@ -99,11 +99,14 @@ public final class EditThreadControllerTest {
         final int threadId = 211;
 
         // Mocks calls to business logic
-        doNothing().when(this.threadService).canEdit(threadId);
-        when(this.threadService.findById(threadId)).thenReturn(new Thread.Builder().withId(threadId).build());
+        doNothing().when(threadService).canEdit(threadId);
+
+        final ForumThread thread = new ForumThread();
+        thread.setId(threadId);
+        when(threadService.findById(threadId)).thenReturn(thread);
 
         // @formatter:off
-        this.mockMvc.perform(get(ThreadsUrlParts.EXISTING_URL + threadId + "/")
+        mockMvc.perform(get(ThreadsUrlParts.EXISTING_URL + threadId + "/")
                 .accept(MediaType.TEXT_HTML))
                 .andExpect(status().isOk())
                 .andExpect(forwardedUrl("editThread"))
@@ -113,8 +116,8 @@ public final class EditThreadControllerTest {
         // @formatter:on
 
         // Verifies mocked calls
-        verify(this.threadService).canEdit(threadId);
-        verify(this.threadService).findById(threadId);
+        verify(threadService).canEdit(threadId);
+        verify(threadService).findById(threadId);
     }
 
     @Test
@@ -122,12 +125,15 @@ public final class EditThreadControllerTest {
         final int threadId = 9393931;
 
         // Mocks calls to business logic
-        doNothing().when(this.threadService).canEdit(threadId);
-        when(this.threadService.findById(threadId)).thenReturn(new Thread.Builder().withId(threadId).build());
-        doNothing().when(this.threadService).update(any(Thread.class), any(Thread.class));
+        doNothing().when(threadService).canEdit(threadId);
+
+        final ForumThread thread = new ForumThread();
+        thread.setId(threadId);
+        when(threadService.findById(threadId)).thenReturn(thread);
+        doNothing().when(threadService).update(any(ForumThread.class), any(ForumThread.class));
 
         // @formatter:off
-        this.mockMvc.perform(post(ThreadsUrlParts.EXISTING_URL + threadId + "/")
+        mockMvc.perform(post(ThreadsUrlParts.EXISTING_URL + threadId + "/")
                 .accept(MediaType.TEXT_HTML))
                 .andExpect(status().isOk())
                 .andExpect(forwardedUrl("page-for-redirection"))
@@ -137,8 +143,8 @@ public final class EditThreadControllerTest {
         // @formatter:on
 
         // Verifies mocked calls
-        verify(this.threadService).canEdit(threadId);
-        verify(this.threadService).findById(threadId);
-        verify(this.threadService).update(any(Thread.class), any(Thread.class));
+        verify(threadService).canEdit(threadId);
+        verify(threadService).findById(threadId);
+        verify(threadService).update(any(ForumThread.class), any(ForumThread.class));
     }
 }

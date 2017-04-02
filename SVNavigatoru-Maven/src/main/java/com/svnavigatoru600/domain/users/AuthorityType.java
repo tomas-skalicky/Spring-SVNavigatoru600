@@ -2,7 +2,7 @@ package com.svnavigatoru600.domain.users;
 
 /**
  * All allowed roles (authorities) in the application.
- * 
+ *
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
 public enum AuthorityType {
@@ -29,7 +29,7 @@ public enum AuthorityType {
 
     private final String titleLocalizationCode;
 
-    private AuthorityType(String titleLocalizationCode) {
+    private AuthorityType(final String titleLocalizationCode) {
         this.titleLocalizationCode = titleLocalizationCode;
     }
 
@@ -38,12 +38,12 @@ public enum AuthorityType {
      * stored in <code>messages*.properties</code> files.
      */
     public String getTitleLocalizationCode() {
-        return this.titleLocalizationCode;
+        return titleLocalizationCode;
     }
 
     /**
      * This getter is necessary for Spring Expression Language (SpEL).
-     * 
+     *
      * @return The same value as {@link #ordinal()}.
      */
     public long getOrdinal() {

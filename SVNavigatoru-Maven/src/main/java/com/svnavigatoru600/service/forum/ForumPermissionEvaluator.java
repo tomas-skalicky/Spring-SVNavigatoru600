@@ -8,8 +8,8 @@ import org.springframework.security.access.PermissionEvaluator;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
-import com.svnavigatoru600.domain.forum.Contribution;
-import com.svnavigatoru600.domain.forum.Thread;
+import com.svnavigatoru600.domain.forum.ForumContribution;
+import com.svnavigatoru600.domain.forum.ForumThread;
 import com.svnavigatoru600.domain.users.User;
 
 /**
@@ -33,11 +33,11 @@ public class ForumPermissionEvaluator implements PermissionEvaluator {
 
     @Override
     public boolean hasPermission(Authentication authentication, Object targetDomainObject, Object permission) {
-        if (targetDomainObject instanceof Contribution) {
-            Contribution contribution = (Contribution) targetDomainObject;
+        if (targetDomainObject instanceof ForumContribution) {
+            ForumContribution contribution = (ForumContribution) targetDomainObject;
             return hasUserPermission(authentication, contribution.getAuthor(), permission);
-        } else if (targetDomainObject instanceof Contribution) {
-            Thread thread = (Thread) targetDomainObject;
+        } else if (targetDomainObject instanceof ForumContribution) {
+            ForumThread thread = (ForumThread) targetDomainObject;
             return hasUserPermission(authentication, thread.getAuthor(), permission);
         } else {
             throw new RuntimeException("Unsupported type of target domain object.");
@@ -47,11 +47,11 @@ public class ForumPermissionEvaluator implements PermissionEvaluator {
     @Override
     public boolean hasPermission(Authentication authentication, Serializable targetId, String targetType,
             Object permission) {
-        if (Contribution.class.getName().equals(targetType)) {
-            Contribution contribution = this.contributionService.findById((Integer) targetId);
+        if (ForumContribution.class.getName().equals(targetType)) {
+            ForumContribution contribution = this.contributionService.findById((Integer) targetId);
             return hasUserPermission(authentication, contribution.getAuthor(), permission);
-        } else if (Thread.class.getName().equals(targetType)) {
-            Thread thread = this.threadService.findById((Integer) targetId);
+        } else if (ForumThread.class.getName().equals(targetType)) {
+            ForumThread thread = this.threadService.findById((Integer) targetId);
             return hasUserPermission(authentication, thread.getAuthor(), permission);
         } else {
             throw new RuntimeException("Unsupported type of target domain object.");

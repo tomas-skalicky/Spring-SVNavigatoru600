@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.support.SessionStatus;
 
-import com.svnavigatoru600.domain.forum.Contribution;
+import com.svnavigatoru600.domain.forum.ForumContribution;
 import com.svnavigatoru600.service.forum.ContributionService;
 import com.svnavigatoru600.service.forum.ThreadService;
 import com.svnavigatoru600.service.util.UserUtils;
@@ -60,7 +60,7 @@ public class NewContributionController extends AbstractNewEditContributionContro
 
         final NewContribution command = new NewContribution();
 
-        final Contribution contribution = new Contribution();
+        final ForumContribution contribution = new ForumContribution();
         contribution.setThread(threadService.findById(threadId));
         command.setContribution(contribution);
 
@@ -91,7 +91,7 @@ public class NewContributionController extends AbstractNewEditContributionContro
         }
 
         // Updates the data of the new contribution.
-        final Contribution newContribution = command.getContribution();
+        final ForumContribution newContribution = command.getContribution();
         newContribution.setAuthor(UserUtils.getLoggedUser());
 
         try {

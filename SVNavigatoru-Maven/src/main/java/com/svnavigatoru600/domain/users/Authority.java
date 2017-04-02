@@ -2,26 +2,14 @@ package com.svnavigatoru600.domain.users;
 
 import java.io.Serializable;
 
-import javax.inject.Inject;
-
 import org.springframework.security.core.GrantedAuthority;
-
-import com.svnavigatoru600.service.users.AuthorityService;
 
 /**
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
 public class Authority implements GrantedAuthority, Serializable {
 
-    private static final long serialVersionUID = -65071618776307089L;
-
-    @SuppressWarnings("unused")
-    private AuthorityService authorityService;
-
-    @Inject
-    public void setAuthorityService(AuthorityService authorityService) {
-        this.authorityService = authorityService;
-    }
+    private static final long serialVersionUID = 1L;
 
     /**
      * Initialises no property.
@@ -32,36 +20,40 @@ public class Authority implements GrantedAuthority, Serializable {
     /**
      * Initialises authority's username and its type. Other properties are not touched.
      */
-    public Authority(String username, AuthorityType authorityType) {
+    public Authority(final String username, final AuthorityType authorityType) {
         this(username, authorityType.name());
     }
 
     /**
      * Initialises authority's username and its type. Other properties are not touched.
      */
-    public Authority(String username, String authorityTypeName) {
-        this.id = new AuthorityId();
-        this.id.setUsername(username);
-        this.id.setAuthority(authorityTypeName);
+    public Authority(final String username, final String authorityTypeName) {
+        id = new AuthorityId();
+        id.setUsername(username);
+        id.setAuthority(authorityTypeName);
     }
 
-    private AuthorityId id;
+    private AuthorityId id = new AuthorityId();
 
     public AuthorityId getId() {
-        return this.id;
+        return id;
     }
 
-    public void setId(AuthorityId id) {
+    public void setId(final AuthorityId id) {
         this.id = id;
     }
 
     @Override
     public String getAuthority() {
-        return this.id.getAuthority();
+        return id.getAuthority();
     }
 
     @Override
     public String toString() {
-        return this.id.toString();
+        final StringBuilder builder = new StringBuilder();
+        builder.append("Authority [id=");
+        builder.append(id);
+        builder.append("]");
+        return builder.toString();
     }
 }

@@ -3,32 +3,14 @@ package com.svnavigatoru600.domain.eventcalendar;
 import java.io.Serializable;
 import java.util.Date;
 
-import javax.inject.Inject;
-
 import org.springframework.format.annotation.DateTimeFormat;
-
-import com.svnavigatoru600.service.eventcalendar.CalendarEventService;
 
 /**
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
 public class CalendarEvent implements Serializable {
 
-    private static final long serialVersionUID = 530408081345869305L;
-
-    private CalendarEventService eventService;
-
-    @Inject
-    public void setCalendarEventService(CalendarEventService eventService) {
-        this.eventService = eventService;
-    }
-
-    /**
-     * Updates the persisted copy of this object.
-     */
-    public void update() {
-        this.eventService.update(this);
-    }
+    private static final long serialVersionUID = 1L;
 
     private int id;
     private String name;
@@ -37,51 +19,35 @@ public class CalendarEvent implements Serializable {
     private String description;
     private PriorityType priority;
 
-    /**
-     * Initialises no property.
-     */
-    public CalendarEvent() {
-    }
-
-    /**
-     * Initialises event's name, date, description and priority. Other properties are not touched.
-     */
-    public CalendarEvent(String name, Date date, String description, PriorityType priority) {
-        this.name = name;
-        this.date = date;
-        this.description = description;
-        this.priority = priority;
-    }
-
     public int getId() {
-        return this.id;
+        return id;
     }
 
-    public void setId(int id) {
+    public void setId(final int id) {
         this.id = id;
     }
 
     public String getName() {
-        return this.name;
+        return name;
     }
 
-    public void setName(String name) {
+    public void setName(final String name) {
         this.name = name;
     }
 
     public Date getDate() {
-        return this.date;
+        return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(final Date date) {
         this.date = date;
     }
 
     public String getDescription() {
-        return this.description;
+        return description;
     }
 
-    public void setDescription(String description) {
+    public void setDescription(final String description) {
         this.description = description;
     }
 
@@ -90,31 +56,41 @@ public class CalendarEvent implements Serializable {
      * be identical.
      */
     public PriorityType getTypedPriority() {
-        return this.priority;
+        return priority;
     }
 
     /**
      * This getter is necessary because of Hibernate.
      */
     public String getPriority() {
-        return this.priority.name();
+        return priority.name();
     }
 
-    public void setPriority(PriorityType priority) {
+    public void setPriority(final PriorityType priority) {
         this.priority = priority;
     }
 
     /**
      * This setter is necessary because of Hibernate.
      */
-    public void setPriority(String priority) {
+    public void setPriority(final String priority) {
         this.priority = PriorityType.valueOf(priority);
     }
 
     @Override
     public String toString() {
-        return new StringBuilder("[id=").append(this.id).append(", name=").append(this.name).append(", date=")
-                .append(this.date).append(", description=").append(this.description).append(", priority=")
-                .append(this.priority).append("]").toString();
+        final StringBuilder builder = new StringBuilder();
+        builder.append("CalendarEvent [id=");
+        builder.append(id);
+        builder.append(", name=");
+        builder.append(name);
+        builder.append(", date=");
+        builder.append(date);
+        builder.append(", description=");
+        builder.append(description);
+        builder.append(", priority=");
+        builder.append(priority);
+        builder.append("]");
+        return builder.toString();
     }
 }

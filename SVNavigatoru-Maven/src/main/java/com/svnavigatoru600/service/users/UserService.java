@@ -13,8 +13,8 @@ import org.springframework.context.MessageSource;
 import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.stereotype.Service;
 
-import com.svnavigatoru600.domain.forum.Contribution;
-import com.svnavigatoru600.domain.forum.Thread;
+import com.svnavigatoru600.domain.forum.ForumContribution;
+import com.svnavigatoru600.domain.forum.ForumThread;
 import com.svnavigatoru600.domain.users.AuthorityType;
 import com.svnavigatoru600.domain.users.NotificationSubscriberVisitor;
 import com.svnavigatoru600.domain.users.NotificationType;
@@ -364,12 +364,12 @@ public class UserService {
     }
 
     /**
-     * Loads more information about authors of the last saved {@link Contribution Contributions} (see
-     * {@link Thread#getLastSavedContributions(List) getLastSavedContributions}).
+     * Loads more information about authors of the last saved {@link ForumContribution Contributions} (see
+     * {@link ForumThread#getLastSavedContributions(List) getLastSavedContributions}).
      */
-    public void loadAuthorsOfLastSavedContributions(final Map<Thread, Contribution> lastSavedContributions) {
-        for (final Thread thread : lastSavedContributions.keySet()) {
-            final Contribution contribution = lastSavedContributions.get(thread);
+    public void loadAuthorsOfLastSavedContributions(final Map<ForumThread, ForumContribution> lastSavedContributions) {
+        for (final ForumThread thread : lastSavedContributions.keySet()) {
+            final ForumContribution contribution = lastSavedContributions.get(thread);
             if (contribution == null) {
                 continue;
             }

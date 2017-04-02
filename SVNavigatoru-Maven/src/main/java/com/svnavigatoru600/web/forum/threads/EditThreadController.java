@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.support.SessionStatus;
 
-import com.svnavigatoru600.domain.forum.Thread;
+import com.svnavigatoru600.domain.forum.ForumThread;
 import com.svnavigatoru600.service.forum.ThreadService;
 import com.svnavigatoru600.url.CommonUrlParts;
 import com.svnavigatoru600.url.forum.ThreadsUrlParts;
@@ -49,7 +49,7 @@ public class EditThreadController extends AbstractNewEditThreadController {
 
         final EditThread command = new EditThread();
 
-        final Thread thread = threadService.findById(threadId);
+        final ForumThread thread = threadService.findById(threadId);
         command.setThread(thread);
 
         model.addAttribute(AbstractNewEditThreadController.COMMAND, command);
@@ -78,7 +78,7 @@ public class EditThreadController extends AbstractNewEditThreadController {
             return PageViews.EDIT.getViewName();
         }
 
-        Thread originalThread = null;
+        ForumThread originalThread = null;
         try {
             originalThread = threadService.findById(threadId);
             threadService.update(originalThread, command.getThread());

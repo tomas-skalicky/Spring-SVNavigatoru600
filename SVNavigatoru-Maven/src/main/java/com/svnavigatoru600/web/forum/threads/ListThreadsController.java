@@ -11,7 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import com.svnavigatoru600.domain.forum.Thread;
+import com.svnavigatoru600.domain.forum.ForumThread;
 import com.svnavigatoru600.service.forum.ThreadService;
 import com.svnavigatoru600.url.forum.ThreadsUrlParts;
 import com.svnavigatoru600.viewmodel.forum.threads.ShowAllThreads;
@@ -38,14 +38,14 @@ public class ListThreadsController extends AbstractThreadController {
         final ShowAllThreads command = new ShowAllThreads();
 
         final ThreadService threadService = getThreadService();
-        final List<Thread> threads = threadService.loadAll();
+        final List<ForumThread> threads = threadService.loadAll();
         // Sorts in the descending order according to the last saved
         // contributions of the threads.
         Collections.sort(threads);
         command.setThreads(threads);
 
         // Sets up all auxiliary (but necessary) maps.
-        command.setLastSavedContributions(Thread.getLastSavedContributions(threads));
+        command.setLastSavedContributions(ForumThread.getLastSavedContributions(threads));
         command.setLocalizedDeleteQuestions(
                 ThreadService.getLocalizedDeleteQuestions(threads, request, getMessageSource()));
 

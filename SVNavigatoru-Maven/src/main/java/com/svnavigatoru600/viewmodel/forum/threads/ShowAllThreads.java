@@ -5,8 +5,8 @@ import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
-import com.svnavigatoru600.domain.forum.Contribution;
-import com.svnavigatoru600.domain.forum.Thread;
+import com.svnavigatoru600.domain.forum.ForumContribution;
+import com.svnavigatoru600.domain.forum.ForumThread;
 
 /**
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
@@ -14,33 +14,33 @@ import com.svnavigatoru600.domain.forum.Thread;
 @Service
 public class ShowAllThreads {
 
-    private List<Thread> threads = null;
-    private Map<Thread, Contribution> lastSavedContributions = null;
-    private Map<Thread, String> localizedDeleteQuestions = null;
+    private List<ForumThread> threads = null;
+    private Map<ForumThread, ForumContribution> lastSavedContributions = null;
+    private Map<ForumThread, String> localizedDeleteQuestions = null;
     private boolean threadCreated = false;
     private boolean threadDeleted = false;
 
-    public List<Thread> getThreads() {
+    public List<ForumThread> getThreads() {
         return this.threads;
     }
 
-    public void setThreads(List<Thread> threads) {
+    public void setThreads(List<ForumThread> threads) {
         this.threads = threads;
     }
 
-    public Map<Thread, Contribution> getLastSavedContributions() {
+    public Map<ForumThread, ForumContribution> getLastSavedContributions() {
         return this.lastSavedContributions;
     }
 
-    public void setLastSavedContributions(Map<Thread, Contribution> lastSavedContributions) {
+    public void setLastSavedContributions(Map<ForumThread, ForumContribution> lastSavedContributions) {
         this.lastSavedContributions = lastSavedContributions;
     }
 
-    public Map<Thread, String> getLocalizedDeleteQuestions() {
+    public Map<ForumThread, String> getLocalizedDeleteQuestions() {
         return this.localizedDeleteQuestions;
     }
 
-    public void setLocalizedDeleteQuestions(Map<Thread, String> localizedDeleteQuestions) {
+    public void setLocalizedDeleteQuestions(Map<ForumThread, String> localizedDeleteQuestions) {
         this.localizedDeleteQuestions = localizedDeleteQuestions;
     }
 

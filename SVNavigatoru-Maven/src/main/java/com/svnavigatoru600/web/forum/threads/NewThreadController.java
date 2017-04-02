@@ -17,8 +17,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.support.SessionStatus;
 
-import com.svnavigatoru600.domain.forum.Contribution;
-import com.svnavigatoru600.domain.forum.Thread;
+import com.svnavigatoru600.domain.forum.ForumContribution;
+import com.svnavigatoru600.domain.forum.ForumThread;
 import com.svnavigatoru600.domain.users.User;
 import com.svnavigatoru600.service.forum.ThreadService;
 import com.svnavigatoru600.service.util.UserUtils;
@@ -58,9 +58,9 @@ public class NewThreadController extends AbstractNewEditThreadController impleme
 
         final NewThread command = new NewThread();
 
-        final Thread thread = new Thread();
+        final ForumThread thread = new ForumThread();
         command.setThread(thread);
-        final Contribution contribution = new Contribution();
+        final ForumContribution contribution = new ForumContribution();
         command.setContribution(contribution);
 
         sendNotificationModelFiller.populateSendNotificationInInitForm(command, request, getMessageSource());
@@ -89,11 +89,11 @@ public class NewThreadController extends AbstractNewEditThreadController impleme
         }
 
         // Updates the data of the new thread and its first contribution.
-        final Thread newThread = command.getThread();
+        final ForumThread newThread = command.getThread();
         final User author = UserUtils.getLoggedUser();
         newThread.setAuthor(author);
 
-        final Contribution firstContribution = command.getContribution();
+        final ForumContribution firstContribution = command.getContribution();
         firstContribution.setThread(newThread);
         firstContribution.setAuthor(author);
 

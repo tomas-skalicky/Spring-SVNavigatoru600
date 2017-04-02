@@ -2,7 +2,7 @@ package com.svnavigatoru600.viewmodel.forum.threads;
 
 import org.springframework.stereotype.Service;
 
-import com.svnavigatoru600.domain.forum.Thread;
+import com.svnavigatoru600.domain.forum.ForumThread;
 
 /**
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
@@ -10,13 +10,13 @@ import com.svnavigatoru600.domain.forum.Thread;
 @Service
 public abstract class AbstractNewEditThread {
 
-    private Thread thread = null;
+    private ForumThread thread = null;
 
-    public Thread getThread() {
+    public ForumThread getThread() {
         return this.thread;
     }
 
-    public void setThread(Thread thread) {
+    public void setThread(ForumThread thread) {
         this.thread = thread;
     }
 

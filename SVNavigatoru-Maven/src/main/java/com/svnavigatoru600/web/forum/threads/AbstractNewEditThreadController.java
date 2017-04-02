@@ -7,7 +7,7 @@ import com.svnavigatoru600.service.forum.ThreadService;
 import com.svnavigatoru600.viewmodel.forum.threads.validator.AbstractThreadValidator;
 
 /**
- * Parent of controllers which create and edit the {@link com.svnavigatoru600.domain.forum.Thread Threads}.
+ * Parent of controllers which create and edit the {@link com.svnavigatoru600.domain.forum.ForumThread Threads}.
  * 
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */

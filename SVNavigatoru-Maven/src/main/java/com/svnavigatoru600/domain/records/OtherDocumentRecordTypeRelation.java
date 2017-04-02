@@ -2,51 +2,38 @@ package com.svnavigatoru600.domain.records;
 
 import java.io.Serializable;
 
-import javax.inject.Inject;
-
-import com.svnavigatoru600.service.records.OtherDocumentRecordTypeRelationService;
-
 /**
  * Helps to map the <code>types</code> array in the {@link OtherDocumentRecordType} class to Hibernate.
- * 
+ *
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
 public class OtherDocumentRecordTypeRelation implements Serializable {
 
-    private static final long serialVersionUID = -490430948638448565L;
-
-    @SuppressWarnings("unused")
-    private OtherDocumentRecordTypeRelationService typeService;
-
-    @Inject
-    public void setOtherDocumentRecordTypeRelationService(OtherDocumentRecordTypeRelationService typeService) {
-        this.typeService = typeService;
-    }
-
-    /**
-     * Default constructor. Necessary.
-     */
-    public OtherDocumentRecordTypeRelation() {
-    }
-
-    public OtherDocumentRecordTypeRelation(int recordId, OtherDocumentRecordType type) {
-        this.id = new OtherDocumentRecordTypeRelationId();
-        this.id.setRecordId(recordId);
-        this.id.setType(type);
-    }
+    private static final long serialVersionUID = 1L;
 
     private OtherDocumentRecordTypeRelationId id;
 
-    public OtherDocumentRecordTypeRelationId getId() {
-        return this.id;
+    public static OtherDocumentRecordTypeRelation createFrom(final int recordId, final OtherDocumentRecordType type) {
+        final OtherDocumentRecordTypeRelation relation = new OtherDocumentRecordTypeRelation();
+
+        relation.id = new OtherDocumentRecordTypeRelationId(recordId, type);
+        return relation;
     }
 
-    public void setId(OtherDocumentRecordTypeRelationId id) {
+    public OtherDocumentRecordTypeRelationId getId() {
+        return id;
+    }
+
+    public void setId(final OtherDocumentRecordTypeRelationId id) {
         this.id = id;
     }
 
     @Override
     public String toString() {
-        return this.id.toString();
+        final StringBuilder builder = new StringBuilder();
+        builder.append("OtherDocumentRecordTypeRelation [id=");
+        builder.append(id);
+        builder.append("]");
+        return builder.toString();
     }
 }

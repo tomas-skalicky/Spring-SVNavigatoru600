@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
 
-import com.svnavigatoru600.domain.forum.Thread;
+import com.svnavigatoru600.domain.forum.ForumThread;
 import com.svnavigatoru600.domain.users.NotificationType;
 import com.svnavigatoru600.domain.users.User;
 import com.svnavigatoru600.service.AbstractNotificationEmailService;
@@ -16,7 +16,7 @@ import com.svnavigatoru600.service.util.Localization;
 import com.svnavigatoru600.service.util.Url;
 
 /**
- * Provide sending of emails concerning notifications of new {@link Thread threads} and updated ones.
+ * Provide sending of emails concerning notifications of new {@link ForumThread threads} and updated ones.
  * 
  * @author <a href="mailto:tomas.skalicky@gfk.com">Tomas Skalicky</a>
  */
@@ -39,7 +39,7 @@ public class ThreadNotificationEmailService extends AbstractNotificationEmailSer
     @Override
     public void sendEmailOnCreation(Object newThread, List<User> usersToNotify, HttpServletRequest request,
             MessageSource messageSource) {
-        Thread thread = (Thread) newThread;
+        ForumThread thread = (ForumThread) newThread;
 
         String subject = getSubject(ThreadNotificationEmailService.THREAD_CREATED_SUBJECT_CODE, thread, request,
                 messageSource);
@@ -73,9 +73,9 @@ public class ThreadNotificationEmailService extends AbstractNotificationEmailSer
      * Gets a localized subject of notification emails.
      * 
      * @param event
-     *            Newly created {@link Thread}
+     *            Newly created {@link ForumThread}
      */
-    private String getSubject(String subjectLocalizationCode, Thread thread, HttpServletRequest request,
+    private String getSubject(String subjectLocalizationCode, ForumThread thread, HttpServletRequest request,
             MessageSource messageSource) {
         return Localization.findLocaleMessage(messageSource, request, subjectLocalizationCode, thread.getName());
     }

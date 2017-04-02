@@ -2,7 +2,7 @@ package com.svnavigatoru600.repository.forum;
 
 import java.util.List;
 
-import com.svnavigatoru600.domain.forum.Contribution;
+import com.svnavigatoru600.domain.forum.ForumContribution;
 import com.svnavigatoru600.repository.forum.impl.ContributionField;
 import com.svnavigatoru600.service.util.OrderType;
 
@@ -12,72 +12,72 @@ import com.svnavigatoru600.service.util.OrderType;
 public interface ContributionDao {
 
     /**
-     * Returns a {@link Contribution} stored in the repository which has the given ID.
+     * Returns a {@link ForumContribution} stored in the repository which has the given ID.
      * <p>
-     * The returned contribution has its {@link Contribution#getThread() thread} and {@link Contribution#getAuthor()
+     * The returned contribution has its {@link ForumContribution#getThread() thread} and {@link ForumContribution#getAuthor()
      * author} populated.
      */
-    Contribution findById(int contributionId);
+    ForumContribution findById(int contributionId);
 
     /**
-     * Returns all {@link Contribution Contributions} stored in the repository which belong to the specified
-     * {@link com.svnavigatoru600.domain.forum.Thread thread}.
+     * Returns all {@link ForumContribution Contributions} stored in the repository which belong to the specified
+     * {@link com.svnavigatoru600.domain.forum.ForumThread thread}.
      * <p>
-     * Returned contributions do NOT have their {@link Contribution#getThread() threads} and
-     * {@link Contribution#getAuthor() authors} populated.
+     * Returned contributions do NOT have their {@link ForumContribution#getThread() threads} and
+     * {@link ForumContribution#getAuthor() authors} populated.
      *
      * @param threadId
      *            The ID of the thread
      */
-    List<Contribution> findAll(int threadId);
+    List<ForumContribution> findAll(int threadId);
 
     /**
-     * Returns all {@link Contribution Contributions} stored in the repository arranged according to the given
+     * Returns all {@link ForumContribution Contributions} stored in the repository arranged according to the given
      * {@link ContributionField sortField} and {@link OrderType sortDirection}.
      * <p>
-     * It returns only the first <code>maxResultSize</code> {@link Contribution Contributions}.
+     * It returns only the first <code>maxResultSize</code> {@link ForumContribution Contributions}.
      * <p>
-     * Returned contributions have their {@link Contribution#getThread() threads} and {@link Contribution#getAuthor()
+     * Returned contributions have their {@link ForumContribution#getThread() threads} and {@link ForumContribution#getAuthor()
      * authors} populated.
      */
-    List<Contribution> findAllOrdered(ContributionField sortField, OrderType sortDirection, int maxResultSize);
+    List<ForumContribution> findAllOrdered(ContributionField sortField, OrderType sortDirection, int maxResultSize);
 
     /**
-     * Returns all {@link Contribution Contributions} stored in the repository arranged according to the given
+     * Returns all {@link ForumContribution Contributions} stored in the repository arranged according to the given
      * {@link ContributionField sortField} and {@link OrderType sortDirection}.
      * <p>
-     * Moreover, the resulting {@link Contribution Contributions} are only those which belong to the specified
-     * {@link com.svnavigatoru600.domain.forum.Thread Thread}.
+     * Moreover, the resulting {@link ForumContribution Contributions} are only those which belong to the specified
+     * {@link com.svnavigatoru600.domain.forum.ForumThread Thread}.
      * <p>
-     * Returned contributions have their {@link Contribution#getThread() threads} and {@link Contribution#getAuthor()
+     * Returned contributions have their {@link ForumContribution#getThread() threads} and {@link ForumContribution#getAuthor()
      * authors} populated.
      *
      * @param threadId
      *            The ID of the thread
      */
-    List<Contribution> findAllOrdered(int threadId, ContributionField sortField, OrderType sortDirection);
+    List<ForumContribution> findAllOrdered(int threadId, ContributionField sortField, OrderType sortDirection);
 
     /**
-     * Updates the given {@link Contribution} in the repository. The old version of this contribution should be already
+     * Updates the given {@link ForumContribution} in the repository. The old version of this contribution should be already
      * stored there.
      * <p>
-     * <b>Preconditions:</b> The new <code>contribution</code>'s {@link Contribution#getThread() thread} and
-     * {@link Contribution#getAuthor() author} must have already been persisted in the repository.
+     * <b>Preconditions:</b> The new <code>contribution</code>'s {@link ForumContribution#getThread() thread} and
+     * {@link ForumContribution#getAuthor() author} must have already been persisted in the repository.
      */
-    void update(Contribution contribution);
+    void update(ForumContribution contribution);
 
     /**
-     * Stores the given {@link Contribution} to the repository.
+     * Stores the given {@link ForumContribution} to the repository.
      * <p>
-     * <b>Preconditions:</b> The new <code>contribution</code>'s {@link Contribution#getThread() thread} and
-     * {@link Contribution#getAuthor() author} must have already been persisted in the repository.
+     * <b>Preconditions:</b> The new <code>contribution</code>'s {@link ForumContribution#getThread() thread} and
+     * {@link ForumContribution#getAuthor() author} must have already been persisted in the repository.
      *
-     * @return The new ID of the given {@link Contribution} generated by the repository
+     * @return The new ID of the given {@link ForumContribution} generated by the repository
      */
-    int save(Contribution contribution);
+    int save(ForumContribution contribution);
 
     /**
-     * Deletes the given {@link Contribution} from the repository.
+     * Deletes the given {@link ForumContribution} from the repository.
      */
-    void delete(Contribution contribution);
+    void delete(ForumContribution contribution);
 }

@@ -13,7 +13,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcDaoSupport;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 
-import com.svnavigatoru600.domain.forum.Contribution;
+import com.svnavigatoru600.domain.forum.ForumContribution;
 import com.svnavigatoru600.repository.forum.ContributionDao;
 import com.svnavigatoru600.repository.forum.ThreadDao;
 import com.svnavigatoru600.repository.forum.impl.ContributionField;
@@ -29,7 +29,7 @@ import com.svnavigatoru600.service.util.OrderType;
 public class ContributionDaoImpl extends NamedParameterJdbcDaoSupport implements ContributionDao {
 
     /**
-     * Database table which provides a persistence of {@link Contribution Contributions}.
+     * Database table which provides a persistence of {@link ForumContribution Contributions}.
      */
     private static final String TABLE_NAME = PersistedClass.Contribution.getTableName();
 
@@ -51,7 +51,7 @@ public class ContributionDaoImpl extends NamedParameterJdbcDaoSupport implements
     /**
      * Populates the <code>thread</code> and <code>author</code> property of the given <code>contribution</code>.
      */
-    private void populateThreadAndAuthor(Contribution contribution) {
+    private void populateThreadAndAuthor(ForumContribution contribution) {
         // "true" means that the User (the Thread) will be loaded without
         // associated authorities (contributions).
         boolean lazy = true;
@@ -66,21 +66,21 @@ public class ContributionDaoImpl extends NamedParameterJdbcDaoSupport implements
     /**
      * Populates the <code>thread</code> and <code>author</code> property of all the given <code>contributions</code>.
      */
-    private void populateThreadAndAuthor(List<Contribution> contributions) {
-        for (Contribution contribution : contributions) {
+    private void populateThreadAndAuthor(List<ForumContribution> contributions) {
+        for (ForumContribution contribution : contributions) {
             this.populateThreadAndAuthor(contribution);
         }
     }
 
     @Override
-    public Contribution findById(int contributionId) {
+    public ForumContribution findById(int contributionId) {
         String idColumn = ContributionField.id.getColumnName();
         String query = String.format("SELECT * FROM %s c WHERE c.%s = :%s", ContributionDaoImpl.TABLE_NAME, idColumn,
                 idColumn);
 
         Map<String, Integer> args = Collections.singletonMap(idColumn, contributionId);
 
-        Contribution contribution = getNamedParameterJdbcTemplate().queryForObject(query, args,
+        ForumContribution contribution = getNamedParameterJdbcTemplate().queryForObject(query, args,
                 new ContributionRowMapper());
 
         this.populateThreadAndAuthor(contribution);
@@ -88,7 +88,7 @@ public class ContributionDaoImpl extends NamedParameterJdbcDaoSupport implements
     }
 
     @Override
-    public List<Contribution> findAll(int threadId) {
+    public List<ForumContribution> findAll(int threadId) {
         String threadIdColumn = ContributionField.threadId.getColumnName();
         String query = String.format("SELECT * FROM %s c WHERE c.%s = :%s", ContributionDaoImpl.TABLE_NAME,
                 threadIdColumn, threadIdColumn);
@@ -99,12 +99,12 @@ public class ContributionDaoImpl extends NamedParameterJdbcDaoSupport implements
     }
 
     @Override
-    public List<Contribution> findAllOrdered(ContributionField sortField, OrderType sortDirection, int maxResultSize) {
+    public List<ForumContribution> findAllOrdered(ContributionField sortField, OrderType sortDirection, int maxResultSize) {
         String query = String.format("SELECT * FROM %s c ORDER BY c.%s %s", ContributionDaoImpl.TABLE_NAME,
                 sortField.getColumnName(), sortDirection.getDatabaseCode());
 
-        List<Contribution> contributionsFromDb = getJdbcTemplate().query(query, new ContributionRowMapper());
-        List<Contribution> filteredContributions = contributionsFromDb.subList(0,
+        List<ForumContribution> contributionsFromDb = getJdbcTemplate().query(query, new ContributionRowMapper());
+        List<ForumContribution> filteredContributions = contributionsFromDb.subList(0,
                 Math.min(contributionsFromDb.size(), maxResultSize));
 
         this.populateThreadAndAuthor(filteredContributions);
@@ -112,7 +112,7 @@ public class ContributionDaoImpl extends NamedParameterJdbcDaoSupport implements
     }
 
     @Override
-    public List<Contribution> findAllOrdered(int threadId, ContributionField sortField, OrderType sortDirection) {
+    public List<ForumContribution> findAllOrdered(int threadId, ContributionField sortField, OrderType sortDirection) {
         String threadIdColumn = ContributionField.threadId.getColumnName();
         String query = String.format("SELECT * FROM %s c WHERE c.%s = :%s ORDER BY c.%s %s",
                 ContributionDaoImpl.TABLE_NAME, threadIdColumn, threadIdColumn, sortField.getColumnName(),
@@ -120,7 +120,7 @@ public class ContributionDaoImpl extends NamedParameterJdbcDaoSupport implements
 
         Map<String, Integer> args = Collections.singletonMap(threadIdColumn, threadId);
 
-        List<Contribution> contributions = getNamedParameterJdbcTemplate().query(query, args,
+        List<ForumContribution> contributions = getNamedParameterJdbcTemplate().query(query, args,
                 new ContributionRowMapper());
 
         this.populateThreadAndAuthor(contributions);
@@ -128,9 +128,9 @@ public class ContributionDaoImpl extends NamedParameterJdbcDaoSupport implements
     }
 
     /**
-     * Maps properties of the given {@link Contribution} to names of the corresponding database columns.
+     * Maps properties of the given {@link ForumContribution} to names of the corresponding database columns.
      */
-    private Map<String, Object> getNamedParameters(Contribution contribution) {
+    private Map<String, Object> getNamedParameters(ForumContribution contribution) {
         Map<String, Object> parameters = new HashMap<String, Object>();
         parameters.put(ContributionField.id.getColumnName(), contribution.getId());
         parameters.put(ContributionField.threadId.getColumnName(), contribution.getThread().getId());
@@ -142,7 +142,7 @@ public class ContributionDaoImpl extends NamedParameterJdbcDaoSupport implements
     }
 
     @Override
-    public void update(Contribution contribution) {
+    public void update(ForumContribution contribution) {
         String idColumn = ContributionField.id.getColumnName();
         String threadIdColumn = ContributionField.threadId.getColumnName();
         String textColumn = ContributionField.text.getColumnName();
@@ -158,7 +158,7 @@ public class ContributionDaoImpl extends NamedParameterJdbcDaoSupport implements
     }
 
     @Override
-    public int save(Contribution contribution) {
+    public int save(ForumContribution contribution) {
         Date now = new Date();
         contribution.setCreationTime(now);
         contribution.setLastSaveTime(now);
@@ -166,13 +166,13 @@ public class ContributionDaoImpl extends NamedParameterJdbcDaoSupport implements
     }
 
     /**
-     * Does the save as {@link ContributionDaoImpl#save(Contribution)}, but does not sets
-     * {@link Contribution#getCreationTime() creation time} and {@link Contribution#getLastSaveTime() last save time} of
-     * the given {@link Contribution}.
+     * Does the save as {@link ContributionDaoImpl#save(ForumContribution)}, but does not sets
+     * {@link ForumContribution#getCreationTime() creation time} and {@link ForumContribution#getLastSaveTime() last save time} of
+     * the given {@link ForumContribution}.
      * 
-     * @return The new ID of the given {@link Contribution} generated by the repository
+     * @return The new ID of the given {@link ForumContribution} generated by the repository
      */
-    int saveWithoutTimeSetup(Contribution contribution) {
+    int saveWithoutTimeSetup(ForumContribution contribution) {
         SimpleJdbcInsert insert = new SimpleJdbcInsert(getDataSource()).withTableName(ContributionDaoImpl.TABLE_NAME)
                 .usingGeneratedKeyColumns(ContributionField.id.getColumnName())
                 .usingColumns(ContributionField.threadId.getColumnName(), ContributionField.text.getColumnName(),
@@ -183,7 +183,7 @@ public class ContributionDaoImpl extends NamedParameterJdbcDaoSupport implements
     }
 
     @Override
-    public void delete(Contribution contribution) {
+    public void delete(ForumContribution contribution) {
         String idColumn = ContributionField.id.getColumnName();
         String query = String.format("DELETE FROM %s WHERE %s = :%s", ContributionDaoImpl.TABLE_NAME, idColumn,
                 idColumn);

@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Required;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
 import com.svnavigatoru600.domain.eventcalendar.CalendarEvent;
-import com.svnavigatoru600.domain.forum.Contribution;
+import com.svnavigatoru600.domain.forum.ForumContribution;
 import com.svnavigatoru600.domain.users.User;
 import com.svnavigatoru600.service.eventcalendar.CalendarEventService;
 import com.svnavigatoru600.service.forum.ContributionService;
@@ -31,7 +31,7 @@ public abstract class AbstractPrivateSectionMetaController extends AbstractMetaC
      */
     private static final int FUTURE_EVENT_COUNT = 2;
     /**
-     * The number of last saved {@link Contribution contributions} shown in the sidebar of the web page.
+     * The number of last saved {@link ForumContribution contributions} shown in the sidebar of the web page.
      */
     private static final int LAST_SAVED_CONTRIBUTION_COUNT = 2;
 
@@ -68,7 +68,7 @@ public abstract class AbstractPrivateSectionMetaController extends AbstractMetaC
 
     @ModelAttribute("lastSavedContributions")
     public List<ContributionWrapper> populateLastSavedContributions(final HttpServletRequest request) {
-        final List<Contribution> contributions = contributionService
+        final List<ForumContribution> contributions = contributionService
                 .findLimitedNumberOrdered(LAST_SAVED_CONTRIBUTION_COUNT);
 
         final List<ContributionWrapper> lastSavedContributions = new ArrayList<ContributionWrapper>(

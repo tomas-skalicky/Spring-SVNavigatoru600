@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
 
-import com.svnavigatoru600.domain.forum.Contribution;
+import com.svnavigatoru600.domain.forum.ForumContribution;
 import com.svnavigatoru600.domain.users.NotificationType;
 import com.svnavigatoru600.domain.users.User;
 import com.svnavigatoru600.service.AbstractNotificationEmailService;
@@ -17,7 +17,7 @@ import com.svnavigatoru600.service.util.Url;
 import com.svnavigatoru600.url.forum.ContributionsUrlParts;
 
 /**
- * Provide sending of emails concerning notifications of new {@link Contribution contributions} and updated ones.
+ * Provide sending of emails concerning notifications of new {@link ForumContribution contributions} and updated ones.
  * 
  * @author <a href="mailto:tomas.skalicky@gfk.com">Tomas Skalicky</a>
  */
@@ -42,7 +42,7 @@ public class ContributionNotificationEmailService extends AbstractNotificationEm
     @Override
     public void sendEmailOnCreation(Object newContribution, List<User> usersToNotify, HttpServletRequest request,
             MessageSource messageSource) {
-        sendEmail((Contribution) newContribution,
+        sendEmail((ForumContribution) newContribution,
                 ContributionNotificationEmailService.CONTRIBUTION_CREATED_SUBJECT_CODE,
                 ContributionNotificationEmailService.CONTRIBUTION_CREATED_TEXT_CODE, usersToNotify, request,
                 messageSource);
@@ -51,7 +51,7 @@ public class ContributionNotificationEmailService extends AbstractNotificationEm
     @Override
     public void sendEmailOnUpdate(Object updatedContribution, List<User> usersToNotify, HttpServletRequest request,
             MessageSource messageSource) {
-        sendEmail((Contribution) updatedContribution,
+        sendEmail((ForumContribution) updatedContribution,
                 ContributionNotificationEmailService.CONTRIBUTION_UPDATED_SUBJECT_CODE,
                 ContributionNotificationEmailService.CONTRIBUTION_UPDATED_TEXT_CODE, usersToNotify, request,
                 messageSource);
@@ -59,12 +59,12 @@ public class ContributionNotificationEmailService extends AbstractNotificationEm
 
     /**
      * Sends emails to the given {@link User Users} with notification of the newly posted or updated
-     * {@link Contribution}.
+     * {@link ForumContribution}.
      * 
      * @param contribution
-     *            Newly posted or updated {@link Contribution}
+     *            Newly posted or updated {@link ForumContribution}
      */
-    private void sendEmail(Contribution contribution, String subjectLocalizationCode, String textLocalizationCode,
+    private void sendEmail(ForumContribution contribution, String subjectLocalizationCode, String textLocalizationCode,
             List<User> usersToNotify, HttpServletRequest request, MessageSource messageSource) {
 
         String subject = getSubject(subjectLocalizationCode, contribution, request, messageSource);
@@ -93,9 +93,9 @@ public class ContributionNotificationEmailService extends AbstractNotificationEm
      * Gets a localized subject of notification emails.
      * 
      * @param contribution
-     *            Newly posted or updated {@link Contribution}
+     *            Newly posted or updated {@link ForumContribution}
      */
-    private String getSubject(String subjectLocalizationCode, Contribution contribution, HttpServletRequest request,
+    private String getSubject(String subjectLocalizationCode, ForumContribution contribution, HttpServletRequest request,
             MessageSource messageSource) {
         return Localization.findLocaleMessage(messageSource, request, subjectLocalizationCode,
                 contribution.getThread().getName());

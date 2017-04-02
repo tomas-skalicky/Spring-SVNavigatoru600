@@ -8,20 +8,20 @@ import com.svnavigatoru600.service.util.Localization;
 
 /**
  * All types of {@link SessionRecord SessionRecords} in the application.
- * 
+ *
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
 public enum SessionRecordType {
 
-    SESSION_RECORD_OF_SV("session-records.sv"), SESSION_RECORD_OF_BOARD("session-records.board");
+    // @formatter:off
+    SESSION_RECORD_OF_SV    ("session-records.sv"),
+    SESSION_RECORD_OF_BOARD ("session-records.board"),
+    ;
+    // @formatter:on
 
-    private String localizationCode;
+    private final String localizationCode;
 
-    public String getLocalizationCode() {
-        return this.localizationCode;
-    }
-
-    private SessionRecordType(String localizationCode) {
+    private SessionRecordType(final String localizationCode) {
         this.localizationCode = localizationCode;
     }
 
@@ -29,15 +29,15 @@ public enum SessionRecordType {
      * This method is based on the method <code>valueOf(String)</code>. The difference is that the first parameter is
      * not the name of the type, but the result of localization of its <code>localizationCode</code>.
      */
-    public static SessionRecordType valueOfAccordingLocalization(String localizedType, MessageSource messageSource,
-            HttpServletRequest request) {
+    public static SessionRecordType valueOfAccordingLocalization(final String localizedType,
+            final MessageSource messageSource, final HttpServletRequest request) {
         if (localizedType == null) {
             // Throws the NullPointerException.
             SessionRecordType.valueOf(localizedType);
         }
 
-        for (SessionRecordType type : SessionRecordType.values()) {
-            String localized = Localization.findLocaleMessage(messageSource, request, type.getLocalizationCode());
+        for (final SessionRecordType type : SessionRecordType.values()) {
+            final String localized = Localization.findLocaleMessage(messageSource, request, type.localizationCode);
             if (localized.equals(localizedType)) {
                 return type;
             }
@@ -45,5 +45,9 @@ public enum SessionRecordType {
         // Throws the IllegalArgumentException.
         SessionRecordType.valueOf(localizedType);
         return null;
+    }
+
+    public String getLocalizationCode() {
+        return localizationCode;
     }
 }

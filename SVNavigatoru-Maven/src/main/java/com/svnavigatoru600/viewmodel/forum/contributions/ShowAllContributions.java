@@ -5,8 +5,8 @@ import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
-import com.svnavigatoru600.domain.forum.Contribution;
-import com.svnavigatoru600.domain.forum.Thread;
+import com.svnavigatoru600.domain.forum.ForumContribution;
+import com.svnavigatoru600.domain.forum.ForumThread;
 
 /**
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
@@ -14,33 +14,33 @@ import com.svnavigatoru600.domain.forum.Thread;
 @Service
 public class ShowAllContributions {
 
-    private List<Contribution> contributions;
-    private Thread thread;
-    private Map<Contribution, String> localizedDeleteQuestions = null;
+    private List<ForumContribution> contributions;
+    private ForumThread thread;
+    private Map<ForumContribution, String> localizedDeleteQuestions = null;
     private boolean contributionCreated = false;
     private boolean contributionDeleted = false;
 
-    public List<Contribution> getContributions() {
+    public List<ForumContribution> getContributions() {
         return this.contributions;
     }
 
-    public void setContributions(List<Contribution> contributions) {
+    public void setContributions(List<ForumContribution> contributions) {
         this.contributions = contributions;
     }
 
-    public Thread getThread() {
+    public ForumThread getThread() {
         return this.thread;
     }
 
-    public void setThread(Thread thread) {
+    public void setThread(ForumThread thread) {
         this.thread = thread;
     }
 
-    public Map<Contribution, String> getLocalizedDeleteQuestions() {
+    public Map<ForumContribution, String> getLocalizedDeleteQuestions() {
         return this.localizedDeleteQuestions;
     }
 
-    public void setLocalizedDeleteQuestions(Map<Contribution, String> localizedDeleteQuestions) {
+    public void setLocalizedDeleteQuestions(Map<ForumContribution, String> localizedDeleteQuestions) {
         this.localizedDeleteQuestions = localizedDeleteQuestions;
     }
 

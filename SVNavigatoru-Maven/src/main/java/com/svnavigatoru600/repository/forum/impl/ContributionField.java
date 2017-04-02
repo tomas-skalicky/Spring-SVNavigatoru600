@@ -1,7 +1,7 @@
 package com.svnavigatoru600.repository.forum.impl;
 
 /**
- * Names of the fields of the {@link com.svnavigatoru600.domain.forum.Contribution Contribution} class.
+ * Names of the fields of the {@link com.svnavigatoru600.domain.forum.ForumContribution Contribution} class.
  * 
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
@@ -17,7 +17,7 @@ public enum ContributionField {
     private final ContributionColumn column;
     /**
      * The chain of fields. Used when the {@link ContributionField} is not located directly in the
-     * {@link com.svnavigatoru600.domain.forum.Contribution Contribution} class.
+     * {@link com.svnavigatoru600.domain.forum.ForumContribution Contribution} class.
      */
     private final String fieldChain;
 
@@ -39,7 +39,7 @@ public enum ContributionField {
     }
 
     /**
-     * Names of the columns of the database table which contains {@link com.svnavigatoru600.domain.forum.Contribution
+     * Names of the columns of the database table which contains {@link com.svnavigatoru600.domain.forum.ForumContribution
      * contributions}.
      */
     private enum ContributionColumn {

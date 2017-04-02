@@ -14,8 +14,8 @@ import org.springframework.security.core.GrantedAuthority;
 import com.svnavigatoru600.domain.News;
 import com.svnavigatoru600.domain.eventcalendar.CalendarEvent;
 import com.svnavigatoru600.domain.eventcalendar.PriorityType;
-import com.svnavigatoru600.domain.forum.Contribution;
-import com.svnavigatoru600.domain.forum.Thread;
+import com.svnavigatoru600.domain.forum.ForumContribution;
+import com.svnavigatoru600.domain.forum.ForumThread;
 import com.svnavigatoru600.domain.records.SessionRecord;
 import com.svnavigatoru600.domain.records.SessionRecordType;
 import com.svnavigatoru600.domain.users.Authority;
@@ -42,7 +42,7 @@ import com.svnavigatoru600.service.util.File;
  * The reason is a potential danger that a certain test would change an instance created here and other tests in the
  * same test class would use this changed object in a belief that the object has really the original properties, but it
  * has not.
- * 
+ *
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
 public final class RepositoryTestUtils {
@@ -78,7 +78,7 @@ public final class RepositoryTestUtils {
     /**
      * Default contributions of test thread.
      */
-    static final List<Contribution> THREAD_DEFAULT_CONTRIBUTIONS = new ArrayList<Contribution>();
+    static final List<ForumContribution> THREAD_DEFAULT_CONTRIBUTIONS = new ArrayList<ForumContribution>();
     /**
      * Default text of test contribution.
      */
@@ -173,7 +173,7 @@ public final class RepositoryTestUtils {
      */
     private final ApplicationContext applicationContext;
 
-    RepositoryTestUtils(ApplicationContext applicationContext) {
+    RepositoryTestUtils(final ApplicationContext applicationContext) {
         this.applicationContext = applicationContext;
     }
 
@@ -181,12 +181,12 @@ public final class RepositoryTestUtils {
      * Gets a {@link CalendarEventDao} from an application context.
      */
     CalendarEventDao getEventDao() {
-        return this.applicationContext.getBean(CalendarEventDao.class);
+        return applicationContext.getBean(CalendarEventDao.class);
     }
 
     /**
      * Creates and saves a default test event.
-     * 
+     *
      * @return ID of the newly created event
      */
     int createDefaultTestEvent() {
@@ -195,20 +195,24 @@ public final class RepositoryTestUtils {
 
     /**
      * Creates and saves a default test event with the given date.
-     * 
+     *
      * @return ID of the newly created event
      */
-    int createDefaultTestEvent(Date date) {
+    int createDefaultTestEvent(final Date date) {
         return createTestEvent(EVENT_DEFAULT_NAME, date, EVENT_DEFAULT_DESCRIPTION, EVENT_DEFAULT_PRIORITY);
     }
 
     /**
      * Creates and saves a test event.
-     * 
+     *
      * @return ID of the newly created event
      */
-    int createTestEvent(String name, Date date, String description, PriorityType priority) {
-        CalendarEvent event = new CalendarEvent(name, date, description, priority);
+    int createTestEvent(final String name, final Date date, final String description, final PriorityType priority) {
+        final CalendarEvent event = new CalendarEvent();
+        event.setName(name);
+        event.setDate(date);
+        event.setDescription(description);
+        event.setPriority(priority);
         return getEventDao().save(event);
     }
 
@@ -216,12 +220,12 @@ public final class RepositoryTestUtils {
      * Gets a {@link NewsDao} from an application context.
      */
     NewsDao getNewsDao() {
-        return this.applicationContext.getBean(NewsDao.class);
+        return applicationContext.getBean(NewsDao.class);
     }
 
     /**
      * Creates and saves a default test news.
-     * 
+     *
      * @return ID of the newly created news
      */
     int createDefaultTestNews() {
@@ -230,11 +234,13 @@ public final class RepositoryTestUtils {
 
     /**
      * Creates and saves a test news.
-     * 
+     *
      * @return ID of the newly created news
      */
-    int createTestNews(String title, String text) {
-        News news = new News(title, text);
+    int createTestNews(final String title, final String text) {
+        final News news = new News();
+        news.setTitle(title);
+        news.setText(text);
         return getNewsDao().save(news);
     }
 
@@ -242,23 +248,26 @@ public final class RepositoryTestUtils {
      * Gets a {@link WysiwygSectionDao} from an application context.
      */
     WysiwygSectionDao getSectionDao() {
-        return this.applicationContext.getBean(WysiwygSectionDao.class);
+        return applicationContext.getBean(WysiwygSectionDao.class);
     }
 
     /**
      * Gets a {@link ContributionDao} from an application context.
      */
     ContributionDao getContributionDao() {
-        return this.applicationContext.getBean(ContributionDao.class);
+        return applicationContext.getBean(ContributionDao.class);
     }
 
     /**
      * Creates and saves a test contribution.
-     * 
+     *
      * @return ID of the newly created contribution
      */
-    int createTestContribution(Thread thread, String text, User author) {
-        Contribution contribution = new Contribution(thread, text, author);
+    int createTestContribution(final ForumThread thread, final String text, final User author) {
+        final ForumContribution contribution = new ForumContribution();
+        contribution.setThread(thread);
+        contribution.setText(text);
+        contribution.setAuthor(author);
         return getContributionDao().save(contribution);
     }
 
@@ -266,20 +275,23 @@ public final class RepositoryTestUtils {
      * Gets a {@link ThreadDao} from an application context.
      */
     ThreadDao getThreadDao() {
-        return this.applicationContext.getBean(ThreadDao.class);
+        return applicationContext.getBean(ThreadDao.class);
     }
 
     /**
      * Creates and saves a test thread.
      * <p>
-     * {@link Contribution#getThread() thread} of the given <code>contributions</code> need not be set. This method does
+     * {@link ForumContribution#getThread() thread} of the given <code>contributions</code> need not be set. This method does
      * it itself.
-     * 
+     *
      * @return ID of the newly created thread
      */
-    int createTestThread(String name, User author, List<Contribution> contributions) {
-        Thread thread = new Thread(name, author, contributions);
-        for (Contribution contribution : contributions) {
+    int createTestThread(final String name, final User author, final List<ForumContribution> contributions) {
+        final ForumThread thread = new ForumThread();
+        thread.setName(name);
+        thread.setAuthor(author);
+        thread.setContributions(contributions);
+        for (final ForumContribution contribution : contributions) {
             contribution.setThread(thread);
         }
         return getThreadDao().save(thread);
@@ -289,7 +301,7 @@ public final class RepositoryTestUtils {
      * Gets a {@link UserDao} from an application context.
      */
     UserDao getUserDao() {
-        return this.applicationContext.getBean(UserDao.class);
+        return applicationContext.getBean(UserDao.class);
     }
 
     /**
@@ -304,7 +316,7 @@ public final class RepositoryTestUtils {
 
     /**
      * Creates and saves the first default test user.
-     * 
+     *
      * @return Newly created user
      */
     User createDefaultTestUser() {
@@ -313,7 +325,7 @@ public final class RepositoryTestUtils {
 
     /**
      * Creates and saves the second default test user.
-     * 
+     *
      * @return Newly created user
      */
     User createSecondDefaultTestUser() {
@@ -323,11 +335,11 @@ public final class RepositoryTestUtils {
 
     /**
      * Creates and saves a default test user.
-     * 
+     *
      * @return Newly created user
      */
-    User saveTestUser(UserBuilder userBuilder) {
-        User user = userBuilder.build();
+    User saveTestUser(final UserBuilder userBuilder) {
+        final User user = userBuilder.build();
         getUserDao().save(user);
         return getUserDao().findByUsername(user.getUsername());
     }
@@ -336,48 +348,48 @@ public final class RepositoryTestUtils {
      * Gets a {@link AuthorityDao} from an application context.
      */
     AuthorityDao getAuthorityDao() {
-        return this.applicationContext.getBean(AuthorityDao.class);
+        return applicationContext.getBean(AuthorityDao.class);
     }
 
     /**
      * Creates and saves a default test authority.
      */
-    void createDefaultTestAuthority(String username) {
+    void createDefaultTestAuthority(final String username) {
         createTestAuthority(username, AUTHORITY_DEFAULT_TYPE);
     }
 
     /**
      * Creates and saves the second default test authority.
      */
-    void createSecondDefaultTestAuthority(String username) {
+    void createSecondDefaultTestAuthority(final String username) {
         createTestAuthority(username, SECOND_AUTHORITY_DEFAULT_TYPE);
     }
 
     /**
      * Creates and saves a test authority.
      */
-    void createTestAuthority(String username, AuthorityType authorityType) {
-        Authority authority = new Authority(username, authorityType);
+    void createTestAuthority(final String username, final AuthorityType authorityType) {
+        final Authority authority = new Authority(username, authorityType);
         getAuthorityDao().save(authority);
     }
 
     /**
      * Extracts types of the given authorities.
-     * 
+     *
      * @return Extracted types
      */
-    Collection<String> extractAuthorityTypes(Collection<Authority> authorities) {
+    Collection<String> extractAuthorityTypes(final Collection<Authority> authorities) {
         return this.extractAuthorityTypes(authorities.toArray(new Authority[authorities.size()]));
     }
 
     /**
      * Extracts types of the given authorities.
-     * 
+     *
      * @return Extracted types
      */
-    Collection<String> extractAuthorityTypes(Authority[] authorities) {
-        List<String> types = new ArrayList<String>(authorities.length);
-        for (Authority authority : authorities) {
+    Collection<String> extractAuthorityTypes(final Authority[] authorities) {
+        final List<String> types = new ArrayList<String>(authorities.length);
+        for (final Authority authority : authorities) {
             types.add(authority.getId().getAuthority());
         }
         return types;
@@ -387,12 +399,12 @@ public final class RepositoryTestUtils {
      * Gets a {@link SessionRecordDao} from an application context.
      */
     SessionRecordDao getSessionRecordDao() {
-        return this.applicationContext.getBean(SessionRecordDao.class);
+        return applicationContext.getBean(SessionRecordDao.class);
     }
 
     /**
      * Creates and saves a default test session record. It is not associated with any file.
-     * 
+     *
      * @return ID of the newly created record
      */
     int createDefaultTestSessionRecord() {
@@ -401,31 +413,31 @@ public final class RepositoryTestUtils {
 
     /**
      * Creates and saves a default test session record. It is not associated with any file.
-     * 
+     *
      * @return ID of the newly created record
      */
-    int createDefaultTestSessionRecord(Date sessionDate) {
+    int createDefaultTestSessionRecord(final Date sessionDate) {
         return this.createDefaultTestSessionRecord(SESSION_RECORD_DEFAULT_TYPE, sessionDate);
     }
 
     /**
      * Creates and saves a default test session record. It is not associated with any file.
-     * 
+     *
      * @return ID of the newly created record
      */
-    int createDefaultTestSessionRecord(SessionRecordType type, Date sessionDate) {
+    int createDefaultTestSessionRecord(final SessionRecordType type, final Date sessionDate) {
         return createTestSessionRecord(DOCUMENT_RECORD_DEFAULT_FILE_NAME, DOCUMENT_RECORD_DEFAULT_FILE, type,
                 sessionDate, SESSION_RECORD_DEFAULT_DISCUSSED_TOPICS);
     }
 
     /**
      * Creates and saves a test session record. It is not associated with any file.
-     * 
+     *
      * @return ID of the newly created record
      */
-    int createTestSessionRecord(String fileName, Blob file, SessionRecordType type, Date sessionDate,
-            String discussedTopics) {
-        SessionRecord record = new SessionRecord(fileName, file, type, sessionDate, discussedTopics);
+    int createTestSessionRecord(final String fileName, final Blob file, final SessionRecordType type,
+            final Date sessionDate, final String discussedTopics) {
+        final SessionRecord record = new SessionRecord(fileName, file, type, sessionDate, discussedTopics);
         return getSessionRecordDao().save(record);
     }
 }

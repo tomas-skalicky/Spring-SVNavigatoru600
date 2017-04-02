@@ -6,8 +6,8 @@ import java.util.Date;
 
 import org.springframework.jdbc.core.RowMapper;
 
-import com.svnavigatoru600.domain.forum.Contribution;
-import com.svnavigatoru600.domain.forum.Thread;
+import com.svnavigatoru600.domain.forum.ForumContribution;
+import com.svnavigatoru600.domain.forum.ForumThread;
 import com.svnavigatoru600.domain.users.User;
 import com.svnavigatoru600.repository.forum.impl.ContributionField;
 
@@ -16,11 +16,11 @@ import com.svnavigatoru600.repository.forum.impl.ContributionField;
  * 
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
-public class ContributionRowMapper implements RowMapper<Contribution> {
+public class ContributionRowMapper implements RowMapper<ForumContribution> {
 
     @Override
-    public Contribution mapRow(ResultSet rs, int rowNum) throws SQLException {
-        Contribution contribution = new Contribution();
+    public ForumContribution mapRow(ResultSet rs, int rowNum) throws SQLException {
+        ForumContribution contribution = new ForumContribution();
         contribution.setId(rs.getInt(ContributionField.id.getColumnName()));
         contribution.setText(rs.getString(ContributionField.text.getColumnName()));
         // NOTE: getTimestamp is used since getDate does not return hours,
@@ -30,7 +30,7 @@ public class ContributionRowMapper implements RowMapper<Contribution> {
         contribution
                 .setLastSaveTime(new Date(rs.getTimestamp(ContributionField.lastSaveTime.getColumnName()).getTime()));
 
-        Thread thread = new Thread();
+        ForumThread thread = new ForumThread();
         thread.setId(rs.getInt(ContributionField.threadId.getColumnName()));
         contribution.setThread(thread);
 

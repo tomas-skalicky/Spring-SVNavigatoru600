@@ -8,7 +8,7 @@ import java.sql.Blob;
  */
 public abstract class AbstractDocumentRecord implements Serializable {
 
-    private static final long serialVersionUID = -5778831731988822276L;
+    private static final long serialVersionUID = 1L;
 
     /**
      * Artificial ID.
@@ -30,38 +30,45 @@ public abstract class AbstractDocumentRecord implements Serializable {
     /**
      * Initialises record's filename and file. Other properties are not touched.
      */
-    protected AbstractDocumentRecord(String fileName, Blob file) {
+    protected AbstractDocumentRecord(final String fileName, final Blob file) {
         this.fileName = fileName;
         this.file = file;
     }
 
     public int getId() {
-        return this.id;
+        return id;
     }
 
-    public void setId(int id) {
+    public void setId(final int id) {
         this.id = id;
     }
 
     public String getFileName() {
-        return this.fileName;
+        return fileName;
     }
 
-    public void setFileName(String fileName) {
+    public void setFileName(final String fileName) {
         this.fileName = fileName;
     }
 
     public Blob getFile() {
-        return this.file;
+        return file;
     }
 
-    public void setFile(Blob file) {
+    public void setFile(final Blob file) {
         this.file = file;
     }
 
     @Override
     public String toString() {
-        return new StringBuilder("[id=").append(this.id).append(", fileName=").append(this.fileName).append("]")
-                .toString();
+        final StringBuilder builder = new StringBuilder();
+        builder.append("AbstractDocumentRecord [id=");
+        builder.append(id);
+        builder.append(", fileName=");
+        builder.append(fileName);
+        builder.append(", file=");
+        builder.append(file);
+        builder.append("]");
+        return builder.toString();
     }
 }

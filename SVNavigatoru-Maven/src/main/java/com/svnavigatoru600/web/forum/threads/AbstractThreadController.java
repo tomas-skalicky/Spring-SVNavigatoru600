@@ -7,7 +7,7 @@ import com.svnavigatoru600.service.forum.ThreadService;
 import com.svnavigatoru600.web.AbstractPrivateSectionMetaController;
 
 /**
- * Parent of all controllers which handle all operations upon {@link com.svnavigatoru600.domain.forum.Thread Threads}.
+ * Parent of all controllers which handle all operations upon {@link com.svnavigatoru600.domain.forum.ForumThread Threads}.
  * 
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */

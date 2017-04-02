@@ -3,26 +3,14 @@ package com.svnavigatoru600.domain.records;
 import java.util.Date;
 import java.util.Set;
 
-import javax.inject.Inject;
-
 import org.springframework.format.annotation.DateTimeFormat;
-
-import com.svnavigatoru600.service.records.OtherDocumentRecordService;
 
 /**
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
 public class OtherDocumentRecord extends AbstractDocumentRecord {
 
-    private static final long serialVersionUID = -2588978216531929106L;
-
-    @SuppressWarnings("unused")
-    private OtherDocumentRecordService recordService;
-
-    @Inject
-    public void setOtherDocumentRecordService(OtherDocumentRecordService recordService) {
-        this.recordService = recordService;
-    }
+    private static final long serialVersionUID = 1L;
 
     /**
      * The name of this record.
@@ -47,49 +35,61 @@ public class OtherDocumentRecord extends AbstractDocumentRecord {
     private Date lastSaveTime;
 
     public String getName() {
-        return this.name;
+        return name;
     }
 
-    public void setName(String name) {
+    public void setName(final String name) {
         this.name = name;
     }
 
     public String getDescription() {
-        return this.description;
+        return description;
     }
 
-    public void setDescription(String description) {
+    public void setDescription(final String description) {
         this.description = description;
     }
 
     public Set<OtherDocumentRecordTypeRelation> getTypes() {
-        return this.types;
+        return types;
     }
 
-    public void setTypes(Set<OtherDocumentRecordTypeRelation> types) {
+    public void setTypes(final Set<OtherDocumentRecordTypeRelation> types) {
         this.types = types;
     }
 
     public Date getCreationTime() {
-        return this.creationTime;
+        return creationTime;
     }
 
-    public void setCreationTime(Date creationTime) {
+    public void setCreationTime(final Date creationTime) {
         this.creationTime = creationTime;
     }
 
     public Date getLastSaveTime() {
-        return this.lastSaveTime;
+        return lastSaveTime;
     }
 
-    public void setLastSaveTime(Date lastSaveTime) {
+    public void setLastSaveTime(final Date lastSaveTime) {
         this.lastSaveTime = lastSaveTime;
     }
 
     @Override
     public String toString() {
-        return new StringBuilder(super.toString()).append(" [name=").append(this.name).append(", description=")
-                .append(this.description).append(", types=").append(this.types).append(", creationTime=")
-                .append(this.creationTime).append(", lastSaveTime=").append(this.lastSaveTime).append("]").toString();
+        final StringBuilder builder = new StringBuilder();
+        builder.append("OtherDocumentRecord [name=");
+        builder.append(name);
+        builder.append(", description=");
+        builder.append(description);
+        builder.append(", types=");
+        builder.append(types);
+        builder.append(", creationTime=");
+        builder.append(creationTime);
+        builder.append(", lastSaveTime=");
+        builder.append(lastSaveTime);
+        builder.append(", toString()=");
+        builder.append(super.toString());
+        builder.append("]");
+        return builder.toString();
     }
 }

@@ -3,26 +3,14 @@ package com.svnavigatoru600.domain.records;
 import java.sql.Blob;
 import java.util.Date;
 
-import javax.inject.Inject;
-
 import org.springframework.format.annotation.DateTimeFormat;
-
-import com.svnavigatoru600.service.records.SessionRecordService;
 
 /**
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
 public class SessionRecord extends AbstractDocumentRecord {
 
-    private static final long serialVersionUID = -7056147517890905426L;
-
-    @SuppressWarnings("unused")
-    private SessionRecordService recordService;
-
-    @Inject
-    public void setSessionRecordService(SessionRecordService recordService) {
-        this.recordService = recordService;
-    }
+    private static final long serialVersionUID = 1L;
 
     /**
      * Type of this {@link SessionRecord}.
@@ -47,7 +35,7 @@ public class SessionRecord extends AbstractDocumentRecord {
     /**
      * Initialises record's filename, file, type, session date and discussed topics. Other properties are not touched.
      */
-    public SessionRecord(String fileName, Blob file, SessionRecordType type, Date sessionDate, String discussedTopics) {
+    public SessionRecord(final String fileName, final Blob file, final SessionRecordType type, final Date sessionDate, final String discussedTopics) {
         super(fileName, file);
         this.type = type;
         this.sessionDate = sessionDate;
@@ -59,47 +47,55 @@ public class SessionRecord extends AbstractDocumentRecord {
      * identical.
      */
     public SessionRecordType getTypedType() {
-        return this.type;
+        return type;
     }
 
     /**
      * This getter is necessary because of Hibernate.
      */
     public String getType() {
-        return this.type.name();
+        return type.name();
     }
 
-    public void setType(SessionRecordType type) {
+    public void setType(final SessionRecordType type) {
         this.type = type;
     }
 
     /**
      * This setter is necessary because of Hibernate.
      */
-    public void setType(String type) {
+    public void setType(final String type) {
         this.type = SessionRecordType.valueOf(type);
     }
 
     public Date getSessionDate() {
-        return this.sessionDate;
+        return sessionDate;
     }
 
-    public void setSessionDate(Date sessionDate) {
+    public void setSessionDate(final Date sessionDate) {
         this.sessionDate = sessionDate;
     }
 
     public String getDiscussedTopics() {
-        return this.discussedTopics;
+        return discussedTopics;
     }
 
-    public void setDiscussedTopics(String discussedTopics) {
+    public void setDiscussedTopics(final String discussedTopics) {
         this.discussedTopics = discussedTopics;
     }
 
     @Override
     public String toString() {
-        return new StringBuilder(super.toString()).append(" [type=").append(this.type).append(", sessionDate=")
-                .append(this.sessionDate).append(", discussedTopics=").append(this.discussedTopics).append("]")
-                .toString();
+        final StringBuilder builder = new StringBuilder();
+        builder.append("SessionRecord [type=");
+        builder.append(type);
+        builder.append(", sessionDate=");
+        builder.append(sessionDate);
+        builder.append(", discussedTopics=");
+        builder.append(discussedTopics);
+        builder.append(", toString()=");
+        builder.append(super.toString());
+        builder.append("]");
+        return builder.toString();
     }
 }

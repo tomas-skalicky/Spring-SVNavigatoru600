@@ -1,23 +1,27 @@
-package com.svnavigatoru600.domain;
+package com.svnavigatoru600.domain.forum;
 
 import java.io.Serializable;
 import java.util.Date;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.svnavigatoru600.domain.users.User;
+
 /**
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
-public class News implements Serializable {
+public class ForumContribution implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     private int id;
-    private String title;
+    private ForumThread thread;
     private String text;
-    @DateTimeFormat(style = "M-")
+    @DateTimeFormat(style = "LS")
     private Date creationTime;
+    @DateTimeFormat(style = "LS")
     private Date lastSaveTime;
+    private User author;
 
     public int getId() {
         return id;
@@ -27,12 +31,12 @@ public class News implements Serializable {
         this.id = id;
     }
 
-    public String getTitle() {
-        return title;
+    public ForumThread getThread() {
+        return thread;
     }
 
-    public void setTitle(final String title) {
-        this.title = title;
+    public void setThread(final ForumThread thread) {
+        this.thread = thread;
     }
 
     public String getText() {
@@ -59,19 +63,32 @@ public class News implements Serializable {
         this.lastSaveTime = lastSaveTime;
     }
 
+    public User getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(final User author) {
+        this.author = author;
+    }
+
+    /**
+     * ATTENTION: Customized toString!
+     */
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append("News [id=");
+        builder.append("Contribution [id=");
         builder.append(id);
-        builder.append(", title=");
-        builder.append(title);
+        builder.append(", thread.id=");
+        builder.append(thread.getId());
         builder.append(", text=");
         builder.append(text);
         builder.append(", creationTime=");
         builder.append(creationTime);
         builder.append(", lastSaveTime=");
         builder.append(lastSaveTime);
+        builder.append(", author=");
+        builder.append(author);
         builder.append("]");
         return builder.toString();
     }

@@ -11,7 +11,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-import com.svnavigatoru600.domain.forum.Contribution;
+import com.svnavigatoru600.domain.forum.ForumContribution;
 import com.svnavigatoru600.service.forum.ContributionService;
 import com.svnavigatoru600.service.forum.ThreadService;
 import com.svnavigatoru600.url.forum.ContributionsUrlParts;
@@ -42,7 +42,7 @@ public class ListContributionsController extends AbstractContributionController 
 
         final ShowAllContributions command = new ShowAllContributions();
 
-        final List<Contribution> contributions = getContributionService().findAllOrdered(threadId);
+        final List<ForumContribution> contributions = getContributionService().findAllOrdered(threadId);
         command.setContributions(contributions);
         command.setThread(threadService.findById(threadId));
 

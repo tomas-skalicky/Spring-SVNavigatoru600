@@ -9,7 +9,7 @@ import com.svnavigatoru600.web.SendNotificationController;
 import com.svnavigatoru600.web.SendNotificationModelFiller;
 
 /**
- * Parent of controllers which create and edit the {@link com.svnavigatoru600.domain.forum.Contribution Contributions}.
+ * Parent of controllers which create and edit the {@link com.svnavigatoru600.domain.forum.ForumContribution Contributions}.
  * 
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */

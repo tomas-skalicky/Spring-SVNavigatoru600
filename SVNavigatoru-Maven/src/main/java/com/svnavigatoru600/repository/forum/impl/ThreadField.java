@@ -1,7 +1,7 @@
 package com.svnavigatoru600.repository.forum.impl;
 
 /**
- * Names of the fields of the {@link com.svnavigatoru600.domain.forum.Thread Thread} class.
+ * Names of the fields of the {@link com.svnavigatoru600.domain.forum.ForumThread Thread} class.
  * 
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
@@ -24,7 +24,7 @@ public enum ThreadField {
     }
 
     /**
-     * Names of the columns of the database table which contains {@link com.svnavigatoru600.domain.forum.Thread
+     * Names of the columns of the database table which contains {@link com.svnavigatoru600.domain.forum.ForumThread
      * threads}.
      */
     private enum ThreadColumn {

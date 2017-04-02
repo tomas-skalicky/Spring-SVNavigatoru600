@@ -3,7 +3,7 @@ package com.svnavigatoru600.url.forum;
 import com.svnavigatoru600.url.CommonUrlParts;
 
 /**
- * Contains snippets of URL which concern just web pages with only {@link com.svnavigatoru600.domain.forum.Thread
+ * Contains snippets of URL which concern just web pages with only {@link com.svnavigatoru600.domain.forum.ForumThread
  * Threads}.
  * 
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
