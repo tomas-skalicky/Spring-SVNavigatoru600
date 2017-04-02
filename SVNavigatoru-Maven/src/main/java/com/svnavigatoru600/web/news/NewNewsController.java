@@ -36,9 +36,6 @@ public class NewNewsController extends AbstractNewEditNewsController {
      */
     public static final String DATABASE_ERROR_MESSAGE_CODE = "news.adding-failed-due-to-database-error";
 
-    /**
-     * Constructor.
-     */
     @Inject
     public NewNewsController(final NewsService newsService, final NewNewsValidator validator,
             final MessageSource messageSource) {

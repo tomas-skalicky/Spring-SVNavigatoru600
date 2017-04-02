@@ -7,10 +7,10 @@ import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.support.SessionStatus;
 
 import com.svnavigatoru600.domain.records.SessionRecordType;
@@ -28,35 +28,33 @@ import com.svnavigatoru600.web.records.session.AbstractEditRecordController;
 @Controller
 public class EditBoardSessionRecordController extends AbstractEditRecordController {
 
-    /**
-     * Constructor.
-     */
     @Inject
     public EditBoardSessionRecordController(final SessionRecordService recordService,
-            final SendNotificationEditModelFiller sendNotificationModelFiller, final EditSessionRecordValidator validator,
-            final MessageSource messageSource) {
+            final SendNotificationEditModelFiller sendNotificationModelFiller,
+            final EditSessionRecordValidator validator, final MessageSource messageSource) {
         super(BoardSessionsUrlParts.EXISTING_URL, new PageViews(), SessionRecordType.SESSION_RECORD_OF_BOARD,
                 recordService, sendNotificationModelFiller, validator, messageSource);
     }
 
     @Override
-    @RequestMapping(value = BoardSessionsUrlParts.EXISTING_URL + "{recordId}/", method = RequestMethod.GET)
+    @GetMapping(value = BoardSessionsUrlParts.EXISTING_URL + "{recordId}/")
     public String initForm(@PathVariable final int recordId, final HttpServletRequest request, final ModelMap model) {
         return super.initForm(recordId, request, model);
     }
 
     @Override
-    @RequestMapping(value = BoardSessionsUrlParts.EXISTING_URL + "{recordId}/"
-            + CommonUrlParts.SAVED_EXTENSION, method = RequestMethod.GET)
-    public String initFormAfterSave(@PathVariable final int recordId, final HttpServletRequest request, final ModelMap model) {
+    @GetMapping(value = BoardSessionsUrlParts.EXISTING_URL + "{recordId}/" + CommonUrlParts.SAVED_EXTENSION)
+    public String initFormAfterSave(@PathVariable final int recordId, final HttpServletRequest request,
+            final ModelMap model) {
         return super.initFormAfterSave(recordId, request, model);
     }
 
     @Override
-    @RequestMapping(value = BoardSessionsUrlParts.EXISTING_URL + "{recordId}/", method = RequestMethod.POST)
-    public String processSubmittedForm(@ModelAttribute(AbstractEditRecordController.COMMAND) final EditSessionRecord command,
-            final BindingResult result, final SessionStatus status, @PathVariable final int recordId, final HttpServletRequest request,
-            final ModelMap model) {
+    @PostMapping(value = BoardSessionsUrlParts.EXISTING_URL + "{recordId}/")
+    public String processSubmittedForm(
+            @ModelAttribute(AbstractEditRecordController.COMMAND) final EditSessionRecord command,
+            final BindingResult result, final SessionStatus status, @PathVariable final int recordId,
+            final HttpServletRequest request, final ModelMap model) {
         return super.processSubmittedForm(command, result, status, recordId, request, model);
     }
 }

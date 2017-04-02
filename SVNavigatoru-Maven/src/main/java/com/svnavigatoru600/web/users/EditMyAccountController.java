@@ -46,9 +46,6 @@ public class EditMyAccountController extends AbstractPrivateSectionMetaControlle
     private final Validator validator;
     private final MessageSource messageSource;
 
-    /**
-     * Constructor.
-     */
     @Inject
     public EditMyAccountController(final UserService userService, final UpdateUserDataValidator validator,
             final MessageSource messageSource) {

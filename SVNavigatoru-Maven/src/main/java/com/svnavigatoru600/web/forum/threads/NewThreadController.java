@@ -12,9 +12,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.support.SessionStatus;
 
 import com.svnavigatoru600.domain.forum.Contribution;
@@ -42,12 +42,10 @@ public class NewThreadController extends AbstractNewEditThreadController impleme
     public static final String DATABASE_ERROR_MESSAGE_CODE = "forum.threads.adding-failed-due-to-database-error";
     private final SendNotificationModelFiller sendNotificationModelFiller;
 
-    /**
-     * Constructor.
-     */
     @Inject
-    public NewThreadController(final ThreadService threadService, final SendNotificationNewModelFiller sendNotificationModelFiller,
-            final NewThreadValidator validator, final MessageSource messageSource) {
+    public NewThreadController(final ThreadService threadService,
+            final SendNotificationNewModelFiller sendNotificationModelFiller, final NewThreadValidator validator,
+            final MessageSource messageSource) {
         super(threadService, validator, messageSource);
         this.sendNotificationModelFiller = sendNotificationModelFiller;
     }
@@ -55,7 +53,7 @@ public class NewThreadController extends AbstractNewEditThreadController impleme
     /**
      * Initializes the form.
      */
-    @RequestMapping(value = ThreadsUrlParts.NEW_URL, method = RequestMethod.GET)
+    @GetMapping(value = ThreadsUrlParts.NEW_URL)
     public String initForm(final HttpServletRequest request, final ModelMap model) {
 
         final NewThread command = new NewThread();
@@ -73,13 +71,14 @@ public class NewThreadController extends AbstractNewEditThreadController impleme
 
     /**
      * If values in the form are OK, the new thread is stored to the repository. Otherwise, returns back to the form.
-     * 
+     *
      * @return The name of the view which is to be shown.
      */
-    @RequestMapping(value = ThreadsUrlParts.NEW_URL, method = RequestMethod.POST)
+    @PostMapping(value = ThreadsUrlParts.NEW_URL)
     @Transactional
     public String processSubmittedForm(@ModelAttribute(NewThreadController.COMMAND) final NewThread command,
-            final BindingResult result, final SessionStatus status, final HttpServletRequest request, final ModelMap model) {
+            final BindingResult result, final SessionStatus status, final HttpServletRequest request,
+            final ModelMap model) {
 
         final MessageSource messageSource = getMessageSource();
         sendNotificationModelFiller.populateSendNotificationInSubmitForm(command, request, messageSource);

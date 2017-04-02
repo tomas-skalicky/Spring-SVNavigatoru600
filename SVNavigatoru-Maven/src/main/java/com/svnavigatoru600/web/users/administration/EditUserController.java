@@ -12,10 +12,10 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.support.SessionStatus;
 
 import com.svnavigatoru600.domain.users.User;
@@ -30,7 +30,7 @@ import com.svnavigatoru600.web.AbstractMetaController;
 
 /**
  * The controller bound mainly to the <i>user/administration/edit-user.jsp</i> page.
- * 
+ *
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
 @Controller
@@ -52,12 +52,13 @@ public class EditUserController extends AbstractNewEditUserController {
 
     /**
      * Initializes the form.
-     * 
+     *
      * @param username
      *            The username of the administrated user.
      */
-    @RequestMapping(value = UserAdministrationUrlParts.EXISTING_URL + "{username}/", method = RequestMethod.GET)
-    public String initForm(@PathVariable final String username, final HttpServletRequest request, final ModelMap model) {
+    @GetMapping(value = UserAdministrationUrlParts.EXISTING_URL + "{username}/")
+    public String initForm(@PathVariable final String username, final HttpServletRequest request,
+            final ModelMap model) {
 
         final AdministrateUserData command = new AdministrateUserData();
 
@@ -69,8 +70,7 @@ public class EditUserController extends AbstractNewEditUserController {
 
         // Sets up all auxiliary (but necessary) maps.
         command.setRoleCheckboxId(AuthorityService.getRoleCheckboxId());
-        command.setLocalizedRoleCheckboxTitles(
-                authorityService.getLocalizedRoleTitles(request, getMessageSource()));
+        command.setLocalizedRoleCheckboxTitles(authorityService.getLocalizedRoleTitles(request, getMessageSource()));
 
         model.addAttribute(AbstractNewEditUserController.COMMAND, command);
         return PageViews.EDIT.getViewName();
@@ -79,9 +79,9 @@ public class EditUserController extends AbstractNewEditUserController {
     /**
      * Initializes the form after the modified data were successfully saved to the repository.
      */
-    @RequestMapping(value = UserAdministrationUrlParts.EXISTING_URL + "{username}/"
-            + CommonUrlParts.SAVED_EXTENSION, method = RequestMethod.GET)
-    public String initFormAfterSave(@PathVariable final String username, final HttpServletRequest request, final ModelMap model) {
+    @GetMapping(value = UserAdministrationUrlParts.EXISTING_URL + "{username}/" + CommonUrlParts.SAVED_EXTENSION)
+    public String initFormAfterSave(@PathVariable final String username, final HttpServletRequest request,
+            final ModelMap model) {
         final String view = initForm(username, request, model);
         ((AdministrateUserData) model.get(AbstractNewEditUserController.COMMAND)).setDataSaved(true);
         return view;
@@ -90,14 +90,15 @@ public class EditUserController extends AbstractNewEditUserController {
     /**
      * If values in the form are OK, updates date of the given <code>username</code>. Otherwise, returns back to the
      * form.
-     * 
+     *
      * @return The name of the view which is to be shown.
      */
-    @RequestMapping(value = UserAdministrationUrlParts.EXISTING_URL + "{username}/", method = RequestMethod.POST)
+    @PostMapping(value = UserAdministrationUrlParts.EXISTING_URL + "{username}/")
     @Transactional
     public String processSubmittedForm(
-            @ModelAttribute(AbstractNewEditUserController.COMMAND) final AdministrateUserData command, final BindingResult result,
-            final SessionStatus status, @PathVariable final String username, final HttpServletRequest request, final ModelMap model) {
+            @ModelAttribute(AbstractNewEditUserController.COMMAND) final AdministrateUserData command,
+            final BindingResult result, final SessionStatus status, @PathVariable final String username,
+            final HttpServletRequest request, final ModelMap model) {
 
         // Sets up all auxiliary (but necessary) maps.
         command.setRoleCheckboxId(AuthorityService.getRoleCheckboxId());

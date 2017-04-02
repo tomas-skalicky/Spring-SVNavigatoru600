@@ -8,9 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.svnavigatoru600.domain.forum.Contribution;
 import com.svnavigatoru600.service.forum.ContributionService;
@@ -31,9 +30,6 @@ public class ListContributionsController extends AbstractContributionController 
     public static final String COMMAND = "showAllContributionsCommand";
     private final ThreadService threadService;
 
-    /**
-     * Constructor.
-     */
     @Inject
     public ListContributionsController(final ContributionService contributionService, final ThreadService threadService,
             final MessageSource messageSource) {
@@ -41,8 +37,7 @@ public class ListContributionsController extends AbstractContributionController 
         this.threadService = threadService;
     }
 
-    @RequestMapping(value = ListContributionsController.BASE_URL
-            + ContributionsUrlParts.CONTRIBUTIONS_EXTENSION, method = RequestMethod.GET)
+    @GetMapping(value = ListContributionsController.BASE_URL + ContributionsUrlParts.CONTRIBUTIONS_EXTENSION)
     public String initPage(@PathVariable final int threadId, final HttpServletRequest request, final ModelMap model) {
 
         final ShowAllContributions command = new ShowAllContributions();
@@ -59,17 +54,17 @@ public class ListContributionsController extends AbstractContributionController 
         return PageViews.LIST.getViewName();
     }
 
-    @RequestMapping(value = ListContributionsController.BASE_URL
-            + ContributionsUrlParts.CONTRIBUTIONS_CREATED_EXTENSION, method = RequestMethod.GET)
-    public String initPageAfterCreate(@PathVariable final int threadId, final HttpServletRequest request, final ModelMap model) {
+    @GetMapping(value = ListContributionsController.BASE_URL + ContributionsUrlParts.CONTRIBUTIONS_CREATED_EXTENSION)
+    public String initPageAfterCreate(@PathVariable final int threadId, final HttpServletRequest request,
+            final ModelMap model) {
         final String view = initPage(threadId, request, model);
         ((ShowAllContributions) model.get(ListContributionsController.COMMAND)).setContributionCreated(true);
         return view;
     }
 
-    @RequestMapping(value = ListContributionsController.BASE_URL
-            + ContributionsUrlParts.CONTRIBUTIONS_DELETED_EXTENSION, method = RequestMethod.GET)
-    public String initPageAfterDelete(@PathVariable final int threadId, final HttpServletRequest request, final ModelMap model) {
+    @GetMapping(value = ListContributionsController.BASE_URL + ContributionsUrlParts.CONTRIBUTIONS_DELETED_EXTENSION)
+    public String initPageAfterDelete(@PathVariable final int threadId, final HttpServletRequest request,
+            final ModelMap model) {
         final String view = initPage(threadId, request, model);
         ((ShowAllContributions) model.get(ListContributionsController.COMMAND)).setContributionDeleted(true);
         return view;

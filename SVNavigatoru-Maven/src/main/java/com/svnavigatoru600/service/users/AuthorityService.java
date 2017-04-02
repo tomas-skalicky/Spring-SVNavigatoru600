@@ -32,9 +32,6 @@ public class AuthorityService {
     @Inject
     private AuthorityDao authorityDao;
 
-    /**
-     * Constructor.
-     */
     public AuthorityService() {
     }
 
@@ -42,8 +39,8 @@ public class AuthorityService {
      * Returns all {@link Authority Authorities} stored in the repository which are associated with the given
      * <code>username</code>.
      */
-    public List<Authority> findAll(String username) {
-        return this.authorityDao.findAll(username);
+    public List<Authority> findAll(final String username) {
+        return authorityDao.findAll(username);
     }
 
     /**
@@ -51,8 +48,8 @@ public class AuthorityService {
      * with the same {@link com.svnavigatoru600.domain.users.AuthorityId#getUsername() username} and
      * {@link com.svnavigatoru600.domain.users.AuthorityId#getAuthority() authority's name}, throws an exception.
      */
-    public void save(Collection<GrantedAuthority> authorities) {
-        this.authorityDao.save(authorities);
+    public void save(final Collection<GrantedAuthority> authorities) {
+        authorityDao.save(authorities);
     }
 
     /**
@@ -61,8 +58,8 @@ public class AuthorityService {
      * @param username
      *            The username (=login) of the user
      */
-    public void delete(String username) {
-        this.authorityDao.delete(username);
+    public void delete(final String username) {
+        authorityDao.delete(username);
     }
 
     /**
@@ -70,11 +67,11 @@ public class AuthorityService {
      * {@link AuthorityType#getOrdinal() ordinal} and ID of its checkbox.
      */
     public static Map<Long, String> getRoleCheckboxId() {
-        String commonIdFormat = "newAuthorities[%s]";
-        Map<Long, String> checkboxIds = new HashMap<Long, String>();
+        final String commonIdFormat = "newAuthorities[%s]";
+        final Map<Long, String> checkboxIds = new HashMap<Long, String>();
 
-        for (AuthorityType type : AuthorityType.values()) {
-            long typeOrdinal = type.getOrdinal();
+        for (final AuthorityType type : AuthorityType.values()) {
+            final long typeOrdinal = type.getOrdinal();
             checkboxIds.put(typeOrdinal, String.format(commonIdFormat, typeOrdinal));
         }
         return checkboxIds;
@@ -85,11 +82,11 @@ public class AuthorityService {
      * {@link AuthorityType#getOrdinal() ordinal} and its localized title.
      */
     @Cacheable("localizedRoleTitles")
-    public Map<Long, String> getLocalizedRoleTitles(HttpServletRequest request, MessageSource messageSource) {
-        Map<Long, String> ordinalTitleMap = new HashMap<Long, String>();
+    public Map<Long, String> getLocalizedRoleTitles(final HttpServletRequest request, final MessageSource messageSource) {
+        final Map<Long, String> ordinalTitleMap = new HashMap<Long, String>();
 
-        for (AuthorityType type : AuthorityType.values()) {
-            String localizedTitle = Localization.findLocaleMessage(messageSource, request,
+        for (final AuthorityType type : AuthorityType.values()) {
+            final String localizedTitle = Localization.findLocaleMessage(messageSource, request,
                     type.getTitleLocalizationCode());
             ordinalTitleMap.put(type.getOrdinal(), localizedTitle);
         }

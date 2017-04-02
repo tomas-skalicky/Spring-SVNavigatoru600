@@ -10,10 +10,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.support.SessionStatus;
 
 import com.svnavigatoru600.domain.eventcalendar.CalendarEvent;
@@ -38,9 +38,6 @@ public class EditEventController extends AbstractNewEditEventController {
      */
     public static final String DATABASE_ERROR_MESSAGE_CODE = "edit.changes-not-saved-due-to-database-error";
 
-    /**
-     * Constructor.
-     */
     @Inject
     public EditEventController(final CalendarEventService eventService,
             final SendNotificationEditModelFiller sendNotificationModelFiller, final EditEventValidator validator,
@@ -48,7 +45,7 @@ public class EditEventController extends AbstractNewEditEventController {
         super(eventService, sendNotificationModelFiller, validator, messageSource);
     }
 
-    @RequestMapping(value = EventsUrlParts.EXISTING_URL + "{eventId}/", method = RequestMethod.GET)
+    @GetMapping(value = EventsUrlParts.EXISTING_URL + "{eventId}/")
     public String initForm(@PathVariable final int eventId, final HttpServletRequest request, final ModelMap model) {
 
         final EditEvent command = new EditEvent();
@@ -66,35 +63,19 @@ public class EditEventController extends AbstractNewEditEventController {
         return PageViews.EDIT.getViewName();
     }
 
-    @RequestMapping(value = EventsUrlParts.EXISTING_URL + "{eventId}/"
-            + CommonUrlParts.SAVED_EXTENSION, method = RequestMethod.GET)
-    public String initFormAfterSave(@PathVariable final int eventId, final HttpServletRequest request, final ModelMap model) {
+    @GetMapping(value = EventsUrlParts.EXISTING_URL + "{eventId}/" + CommonUrlParts.SAVED_EXTENSION)
+    public String initFormAfterSave(@PathVariable final int eventId, final HttpServletRequest request,
+            final ModelMap model) {
         final String view = initForm(eventId, request, model);
         ((EditEvent) model.get(AbstractNewEditEventController.COMMAND)).setDataSaved(true);
         return view;
     }
 
-    // Does not work. I do not know why.
-    /**
-     * see http://stackoverflow.com/questions/13213061/springmvc-requestmapping-for-get-parameters
-     */
-    // @RequestMapping(value = EditEventController.REQUEST_MAPPING_BASE_URL + CommonUrlParts.SAVED_EXTENSION,
-    // params = { "eventId", "sendNotification" }, method = RequestMethod.GET)
-    // public String initFormAfterSave(@PathVariable("eventId") int eventId,
-    // @PathVariable("sendNotification") boolean sendNotification, HttpServletRequest request,
-    // ModelMap model) {
-    // String view = this.initForm(eventId, request, model);
-    // EditEvent command = (EditEvent) model.get(AbstractNewEditEventController.COMMAND);
-    // command.setDataSaved(true);
-    // command.getSendNotification().setStatus(sendNotification);
-    // return view;
-    // }
-
-    @RequestMapping(value = EventsUrlParts.EXISTING_URL + "{eventId}/", method = RequestMethod.POST)
+    @PostMapping(value = EventsUrlParts.EXISTING_URL + "{eventId}/")
     @Transactional
     public String processSubmittedForm(@ModelAttribute(EditEventController.COMMAND) final EditEvent command,
-            final BindingResult result, final SessionStatus status, @PathVariable final int eventId, final HttpServletRequest request,
-            final ModelMap model) {
+            final BindingResult result, final SessionStatus status, @PathVariable final int eventId,
+            final HttpServletRequest request, final ModelMap model) {
 
         final MessageSource messageSource = getMessageSource();
         getSendNotificationModelFiller().populateSendNotificationInSubmitForm(command, request, messageSource);

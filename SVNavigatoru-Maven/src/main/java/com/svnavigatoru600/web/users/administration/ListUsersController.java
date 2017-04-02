@@ -6,8 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import com.svnavigatoru600.domain.users.User;
 import com.svnavigatoru600.service.users.UserService;
@@ -17,7 +16,7 @@ import com.svnavigatoru600.viewmodel.users.ShowAllUsers;
 /**
  * The controller bound mainly to the <i>users/administration/list.jsp</i> page. For more details about the concepts
  * used here, see the <i>ForgottenPasswordController</i> controller.
- * 
+ *
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
 @Controller
@@ -28,7 +27,7 @@ public class ListUsersController extends AbstractUserController {
     /**
      * Initializes the page with all users.
      */
-    @RequestMapping(value = UserAdministrationUrlParts.BASE_URL, method = RequestMethod.GET)
+    @GetMapping(value = UserAdministrationUrlParts.BASE_URL)
     public String initPage(final HttpServletRequest request, final ModelMap model) {
 
         final ShowAllUsers command = new ShowAllUsers();
@@ -48,7 +47,7 @@ public class ListUsersController extends AbstractUserController {
      * Initializes the page with all available users including the one which has been successfully added to the
      * repository recently.
      */
-    @RequestMapping(value = UserAdministrationUrlParts.CREATED_URL, method = RequestMethod.GET)
+    @GetMapping(value = UserAdministrationUrlParts.CREATED_URL)
     public String initPageAfterCreate(final HttpServletRequest request, final ModelMap model) {
         final String view = initPage(request, model);
         ((ShowAllUsers) model.get(ListUsersController.COMMAND)).setUserCreated(true);
@@ -59,7 +58,7 @@ public class ListUsersController extends AbstractUserController {
      * Initializes the page with all available users and notifies that one other user has been successfully deleted from
      * the repository.
      */
-    @RequestMapping(value = UserAdministrationUrlParts.DELETED_URL, method = RequestMethod.GET)
+    @GetMapping(value = UserAdministrationUrlParts.DELETED_URL)
     public String initPageAfterDelete(final HttpServletRequest request, final ModelMap model) {
         final String view = initPage(request, model);
         ((ShowAllUsers) model.get(ListUsersController.COMMAND)).setUserDeleted(true);

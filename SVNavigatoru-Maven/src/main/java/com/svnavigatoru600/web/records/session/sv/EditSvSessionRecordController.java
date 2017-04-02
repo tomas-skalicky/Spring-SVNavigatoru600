@@ -28,9 +28,6 @@ import com.svnavigatoru600.web.records.session.AbstractEditRecordController;
 @Controller
 public class EditSvSessionRecordController extends AbstractEditRecordController {
 
-    /**
-     * Constructor.
-     */
     @Inject
     public EditSvSessionRecordController(final SessionRecordService recordService,
             final SendNotificationEditModelFiller sendNotificationModelFiller, final EditSessionRecordValidator validator,

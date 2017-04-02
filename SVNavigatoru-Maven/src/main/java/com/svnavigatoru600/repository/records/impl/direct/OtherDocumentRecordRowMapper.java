@@ -18,26 +18,21 @@ import com.svnavigatoru600.repository.records.impl.OtherDocumentRecordField;
 public class OtherDocumentRecordRowMapper extends AbstractDocumentRecordRowMapper
         implements RowMapper<OtherDocumentRecord> {
 
-    /**
-     * Constructor.
-     */
     public OtherDocumentRecordRowMapper() {
         super();
     }
 
     /**
-     * Constructor.
-     * 
      * @param loadFile
      *            Flag whether the Blob file will be set up.
      */
-    public OtherDocumentRecordRowMapper(boolean loadFile) {
+    public OtherDocumentRecordRowMapper(final boolean loadFile) {
         super(loadFile);
     }
 
     @Override
-    public OtherDocumentRecord mapRow(ResultSet rs, int rowNum) throws SQLException {
-        OtherDocumentRecord record = new OtherDocumentRecord();
+    public OtherDocumentRecord mapRow(final ResultSet rs, final int rowNum) throws SQLException {
+        final OtherDocumentRecord record = new OtherDocumentRecord();
         record.setId(rs.getInt(OtherDocumentRecordField.id.getColumnName()));
         record.setFileName(rs.getString(DocumentRecordField.fileName.getColumnName()));
 

@@ -45,37 +45,34 @@ public class ContributionService implements SubjectOfNotificationService {
      */
     private ContributionNotificationEmailService emailService;
 
-    /**
-     * Constructor.
-     */
     @Inject
-    public ContributionService(ContributionDao contributionDao) {
+    public ContributionService(final ContributionDao contributionDao) {
         this.contributionDao = contributionDao;
     }
 
     @Inject
-    public void setUserService(UserService userService) {
+    public void setUserService(final UserService userService) {
         this.userService = userService;
     }
 
     @Inject
-    public void setEmailService(ContributionNotificationEmailService emailService) {
+    public void setEmailService(final ContributionNotificationEmailService emailService) {
         this.emailService = emailService;
     }
 
     @PreAuthorize("hasPermission(#contributionId, 'com.svnavigatoru600.domain.forum.Contribution', 'edit')")
-    public void canEdit(int contributionId) {
+    public void canEdit(final int contributionId) {
     }
 
     @PreAuthorize("hasPermission(#contributionId, 'com.svnavigatoru600.domain.forum.Contribution', 'delete')")
-    public void canDelete(int contributionId) {
+    public void canDelete(final int contributionId) {
     }
 
     /**
      * Returns a {@link Contribution} stored in the repository which has the given ID.
      */
-    public Contribution findById(int contributionId) {
-        return this.contributionDao.findById(contributionId);
+    public Contribution findById(final int contributionId) {
+        return contributionDao.findById(contributionId);
     }
 
     /**
@@ -85,8 +82,8 @@ public class ContributionService implements SubjectOfNotificationService {
      * @param threadId
      *            ID of the thread
      */
-    public List<Contribution> findAll(int threadId) {
-        return this.contributionDao.findAll(threadId);
+    public List<Contribution> findAll(final int threadId) {
+        return contributionDao.findAll(threadId);
     }
 
     /**
@@ -95,8 +92,8 @@ public class ContributionService implements SubjectOfNotificationService {
      * <p>
      * NOT IMPLEMENTED YET: It returns only the first <code>maxResultSize</code> {@link Contribution Contributions}.
      */
-    public List<Contribution> findLimitedNumberOrdered(int maxResultSize) {
-        return this.contributionDao.findAllOrdered(ContributionField.lastSaveTime, OrderType.DESCENDING, maxResultSize);
+    public List<Contribution> findLimitedNumberOrdered(final int maxResultSize) {
+        return contributionDao.findAllOrdered(ContributionField.lastSaveTime, OrderType.DESCENDING, maxResultSize);
     }
 
     /**
@@ -109,16 +106,16 @@ public class ContributionService implements SubjectOfNotificationService {
      * @param threadId
      *            ID of the thread
      */
-    public List<Contribution> findAllOrdered(int threadId) {
-        return this.contributionDao.findAllOrdered(threadId, ContributionField.creationTime, OrderType.ASCENDING);
+    public List<Contribution> findAllOrdered(final int threadId) {
+        return contributionDao.findAllOrdered(threadId, ContributionField.creationTime, OrderType.ASCENDING);
     }
 
     /**
      * Updates the given {@link Contribution} in the repository. The old version of this contribution should be already
      * stored there.
      */
-    public void update(Contribution contribution) {
-        this.contributionDao.update(contribution);
+    public void update(final Contribution contribution) {
+        contributionDao.update(contribution);
     }
 
     /**
@@ -131,7 +128,7 @@ public class ContributionService implements SubjectOfNotificationService {
      *            {@link Contribution} which contains new values of properties of <code>contributionToUpdate</code>.
      *            These values are copied to the persisted contribution.
      */
-    public void update(Contribution contributionToUpdate, Contribution newContribution) {
+    public void update(final Contribution contributionToUpdate, final Contribution newContribution) {
         contributionToUpdate.setText(newContribution.getText());
         this.update(contributionToUpdate);
     }
@@ -150,8 +147,8 @@ public class ContributionService implements SubjectOfNotificationService {
      * @param sendNotification
      *            If <code>true</code>, the notification is sent; otherwise not.
      */
-    public void updateAndNotifyUsers(Contribution contributionToUpdate, Contribution newContribution,
-            boolean sendNotification, HttpServletRequest request, MessageSource messageSource) {
+    public void updateAndNotifyUsers(final Contribution contributionToUpdate, final Contribution newContribution,
+            final boolean sendNotification, final HttpServletRequest request, final MessageSource messageSource) {
         this.update(contributionToUpdate, newContribution);
 
         if (sendNotification) {
@@ -161,14 +158,14 @@ public class ContributionService implements SubjectOfNotificationService {
 
     @Override
     public List<User> gainUsersToNotify() {
-        return this.userService.findAllWithEmailByAuthorityAndSubscription(AuthorityType.ROLE_MEMBER_OF_SV,
-                this.emailService.getNotificationType());
+        return userService.findAllWithEmailByAuthorityAndSubscription(AuthorityType.ROLE_MEMBER_OF_SV,
+                emailService.getNotificationType());
     }
 
     @Override
-    public void notifyUsersOfUpdate(Object updatedContribution, HttpServletRequest request,
-            MessageSource messageSource) {
-        this.emailService.sendEmailOnUpdate(updatedContribution, gainUsersToNotify(), request, messageSource);
+    public void notifyUsersOfUpdate(final Object updatedContribution, final HttpServletRequest request,
+            final MessageSource messageSource) {
+        emailService.sendEmailOnUpdate(updatedContribution, gainUsersToNotify(), request, messageSource);
     }
 
     /**
@@ -176,8 +173,8 @@ public class ContributionService implements SubjectOfNotificationService {
      * 
      * @return New ID of the given {@link Contribution} generated by the repository
      */
-    public int save(Contribution contribution) {
-        contribution.setId(this.contributionDao.save(contribution));
+    public int save(final Contribution contribution) {
+        contribution.setId(contributionDao.save(contribution));
         return contribution.getId();
     }
 
@@ -190,8 +187,8 @@ public class ContributionService implements SubjectOfNotificationService {
      * @param sendNotification
      *            If <code>true</code>, the notification is sent; otherwise not.
      */
-    public void saveAndNotifyUsers(Contribution newContribution, boolean sendNotification, HttpServletRequest request,
-            MessageSource messageSource) {
+    public void saveAndNotifyUsers(final Contribution newContribution, final boolean sendNotification, final HttpServletRequest request,
+            final MessageSource messageSource) {
         save(newContribution);
 
         if (sendNotification) {
@@ -200,15 +197,15 @@ public class ContributionService implements SubjectOfNotificationService {
     }
 
     @Override
-    public void notifyUsersOfCreation(Object newContribution, HttpServletRequest request, MessageSource messageSource) {
-        this.emailService.sendEmailOnCreation(newContribution, gainUsersToNotify(), request, messageSource);
+    public void notifyUsersOfCreation(final Object newContribution, final HttpServletRequest request, final MessageSource messageSource) {
+        emailService.sendEmailOnCreation(newContribution, gainUsersToNotify(), request, messageSource);
     }
 
     /**
      * Deletes the given {@link Contribution} from the repository.
      */
-    public void delete(Contribution contribution) {
-        this.contributionDao.delete(contribution);
+    public void delete(final Contribution contribution) {
+        contributionDao.delete(contribution);
     }
 
     /**
@@ -217,22 +214,22 @@ public class ContributionService implements SubjectOfNotificationService {
      * @param contributionId
      *            ID of the contribution
      */
-    public void delete(int contributionId) {
-        Contribution contribution = findById(contributionId);
-        this.contributionDao.delete(contribution);
+    public void delete(final int contributionId) {
+        final Contribution contribution = findById(contributionId);
+        contributionDao.delete(contribution);
     }
 
     /**
      * Gets a {@link Map} which for each input {@link Contribution} contains a corresponding localized delete question
      * which is asked before deletion of that contribution.
      */
-    public static Map<Contribution, String> getLocalizedDeleteQuestions(List<Contribution> contributions,
-            HttpServletRequest request, MessageSource messageSource) {
-        String messageCode = "forum.contributions.do-you-really-want-to-delete-contribution";
-        String question = Localization.findLocaleMessage(messageSource, request, messageCode);
-        Map<Contribution, String> questions = new HashMap<Contribution, String>();
+    public static Map<Contribution, String> getLocalizedDeleteQuestions(final List<Contribution> contributions,
+            final HttpServletRequest request, final MessageSource messageSource) {
+        final String messageCode = "forum.contributions.do-you-really-want-to-delete-contribution";
+        final String question = Localization.findLocaleMessage(messageSource, request, messageCode);
+        final Map<Contribution, String> questions = new HashMap<Contribution, String>();
 
-        for (Contribution contribution : contributions) {
+        for (final Contribution contribution : contributions) {
             questions.put(contribution, question);
         }
         return questions;

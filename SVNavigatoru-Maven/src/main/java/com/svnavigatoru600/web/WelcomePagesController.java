@@ -5,8 +5,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import com.svnavigatoru600.web.news.ListNewsController;
 
@@ -19,7 +18,7 @@ public class WelcomePagesController extends AbstractPrivateSectionMetaController
     @Inject
     private ListNewsController newsController;
 
-    @RequestMapping(value = "/", method = RequestMethod.GET)
+    @GetMapping(value = "/")
     public String init(final HttpServletRequest request, final ModelMap model) {
         return newsController.initPage(request, model);
     }

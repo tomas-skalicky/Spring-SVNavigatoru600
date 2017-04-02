@@ -21,9 +21,6 @@ import com.svnavigatoru600.web.records.session.AbstractDeleteRecordController;
 @Controller
 public class DeleteSvSessionRecordController extends AbstractDeleteRecordController {
 
-    /**
-     * Constructor.
-     */
     @Inject
     public DeleteSvSessionRecordController(final SessionRecordService recordService, final MessageSource messageSource) {
         super(SvUrlParts.BASE_URL, new PageViews(), SessionRecordType.SESSION_RECORD_OF_SV, recordService,

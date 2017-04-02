@@ -21,9 +21,6 @@ import com.svnavigatoru600.web.records.otherdocuments.AbstractDeleteDocumentCont
 @Controller
 public class DeleteOtherDocumentController extends AbstractDeleteDocumentController {
 
-    /**
-     * Constructor.
-     */
     @Inject
     public DeleteOtherDocumentController(final OtherDocumentRecordService recordService,
             final MessageSource messageSource) {

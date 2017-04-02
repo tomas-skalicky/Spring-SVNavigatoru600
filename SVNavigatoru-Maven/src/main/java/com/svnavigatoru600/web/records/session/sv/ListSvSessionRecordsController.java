@@ -19,9 +19,6 @@ import com.svnavigatoru600.web.records.session.AbstractListRecordsController;
 @Controller
 public class ListSvSessionRecordsController extends AbstractListRecordsController {
 
-    /**
-     * Constructor.
-     */
     @Inject
     public ListSvSessionRecordsController(final SessionRecordService recordService, final MessageSource messageSource) {
         super(SvUrlParts.BASE_URL, new PageViews(), SessionRecordType.SESSION_RECORD_OF_SV, recordService,

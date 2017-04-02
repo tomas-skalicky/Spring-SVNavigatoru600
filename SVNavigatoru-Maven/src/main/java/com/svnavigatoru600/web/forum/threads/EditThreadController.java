@@ -10,10 +10,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.support.SessionStatus;
 
 import com.svnavigatoru600.domain.forum.Thread;
@@ -35,16 +35,13 @@ public class EditThreadController extends AbstractNewEditThreadController {
      */
     public static final String DATABASE_ERROR_MESSAGE_CODE = "edit.changes-not-saved-due-to-database-error";
 
-    /**
-     * Constructor.
-     */
     @Inject
     public EditThreadController(final ThreadService threadService, final EditThreadValidator validator,
             final MessageSource messageSource) {
         super(threadService, validator, messageSource);
     }
 
-    @RequestMapping(value = ThreadsUrlParts.EXISTING_URL + "{threadId}/", method = RequestMethod.GET)
+    @GetMapping(value = ThreadsUrlParts.EXISTING_URL + "{threadId}/")
     public String initForm(@PathVariable final int threadId, final HttpServletRequest request, final ModelMap model) {
 
         final ThreadService threadService = getThreadService();
@@ -59,19 +56,19 @@ public class EditThreadController extends AbstractNewEditThreadController {
         return PageViews.EDIT.getViewName();
     }
 
-    @RequestMapping(value = ThreadsUrlParts.EXISTING_URL + "{threadId}/"
-            + CommonUrlParts.SAVED_EXTENSION, method = RequestMethod.GET)
-    public String initFormAfterSave(@PathVariable final int threadId, final HttpServletRequest request, final ModelMap model) {
+    @GetMapping(value = ThreadsUrlParts.EXISTING_URL + "{threadId}/" + CommonUrlParts.SAVED_EXTENSION)
+    public String initFormAfterSave(@PathVariable final int threadId, final HttpServletRequest request,
+            final ModelMap model) {
         final String view = initForm(threadId, request, model);
         ((EditThread) model.get(AbstractNewEditThreadController.COMMAND)).setDataSaved(true);
         return view;
     }
 
-    @RequestMapping(value = ThreadsUrlParts.EXISTING_URL + "{threadId}/", method = RequestMethod.POST)
+    @PostMapping(value = ThreadsUrlParts.EXISTING_URL + "{threadId}/")
     @Transactional
     public String processSubmittedForm(@ModelAttribute(EditThreadController.COMMAND) final EditThread command,
-            final BindingResult result, final SessionStatus status, @PathVariable final int threadId, final HttpServletRequest request,
-            final ModelMap model) {
+            final BindingResult result, final SessionStatus status, @PathVariable final int threadId,
+            final HttpServletRequest request, final ModelMap model) {
 
         final ThreadService threadService = getThreadService();
         threadService.canEdit(threadId);

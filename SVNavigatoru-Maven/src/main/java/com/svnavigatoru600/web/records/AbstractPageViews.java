@@ -11,33 +11,30 @@ public abstract class AbstractPageViews {
     private final String neww;
     private final String edit;
 
-    /**
-     * Constructor.
-     */
-    public AbstractPageViews(String listView, String newView, String editView) {
-        this.list = listView;
-        this.neww = newView;
-        this.edit = editView;
+    public AbstractPageViews(final String listView, final String newView, final String editView) {
+        list = listView;
+        neww = newView;
+        edit = editView;
     }
 
     /**
      * Trivial getter
      */
     public String getList() {
-        return this.list;
+        return list;
     }
 
     /**
      * Trivial getter
      */
     public String getNeww() {
-        return this.neww;
+        return neww;
     }
 
     /**
      * Trivial getter
      */
     public String getEdit() {
-        return this.edit;
+        return edit;
     }
 }

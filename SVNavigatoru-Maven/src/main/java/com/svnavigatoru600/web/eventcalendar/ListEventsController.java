@@ -8,8 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import com.svnavigatoru600.domain.eventcalendar.CalendarEvent;
 import com.svnavigatoru600.service.eventcalendar.CalendarEventService;
@@ -27,15 +26,12 @@ public class ListEventsController extends AbstractEventController {
      */
     public static final String COMMAND = "showAllEventsCommand";
 
-    /**
-     * Constructor.
-     */
     @Inject
     public ListEventsController(final CalendarEventService eventService, final MessageSource messageSource) {
         super(eventService, messageSource);
     }
 
-    @RequestMapping(value = EventsUrlParts.BASE_URL, method = RequestMethod.GET)
+    @GetMapping(value = EventsUrlParts.BASE_URL)
     public String initPage(final HttpServletRequest request, final ModelMap model) {
 
         final ShowAllEvents command = new ShowAllEvents();
@@ -51,14 +47,14 @@ public class ListEventsController extends AbstractEventController {
         return PageViews.LIST.getViewName();
     }
 
-    @RequestMapping(value = EventsUrlParts.CREATED_URL, method = RequestMethod.GET)
+    @GetMapping(value = EventsUrlParts.CREATED_URL)
     public String initPageAfterCreate(final HttpServletRequest request, final ModelMap model) {
         final String view = initPage(request, model);
         ((ShowAllEvents) model.get(ListEventsController.COMMAND)).setEventCreated(true);
         return view;
     }
 
-    @RequestMapping(value = EventsUrlParts.DELETED_URL, method = RequestMethod.GET)
+    @GetMapping(value = EventsUrlParts.DELETED_URL)
     public String initPageAfterDelete(final HttpServletRequest request, final ModelMap model) {
         final String view = initPage(request, model);
         ((ShowAllEvents) model.get(ListEventsController.COMMAND)).setEventDeleted(true);

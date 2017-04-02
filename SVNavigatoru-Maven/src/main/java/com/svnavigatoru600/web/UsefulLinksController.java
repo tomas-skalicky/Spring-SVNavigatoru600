@@ -6,9 +6,9 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.support.SessionStatus;
 
 import com.svnavigatoru600.domain.WysiwygSection;
@@ -22,9 +22,6 @@ import com.svnavigatoru600.url.UsefulLinksUrlParts;
 @Controller
 public class UsefulLinksController extends AbstractWysiwygSectionController {
 
-    /**
-     * Constructor.
-     */
     @Inject
     public UsefulLinksController(final WysiwygSectionService sectionService) {
         super(sectionService, WysiwygSectionName.USEFUL_LINKS, "viewUsefulLinks", "editUsefulLinks",
@@ -32,20 +29,20 @@ public class UsefulLinksController extends AbstractWysiwygSectionController {
     }
 
     @Override
-    @RequestMapping(value = UsefulLinksUrlParts.BASE_URL, method = RequestMethod.GET)
+    @GetMapping(value = UsefulLinksUrlParts.BASE_URL)
     public String showViewPage(final ModelMap model) {
         return super.showViewPage(model);
     }
 
     @Override
-    @RequestMapping(value = UsefulLinksUrlParts.EDIT_URL, method = RequestMethod.GET)
+    @GetMapping(value = UsefulLinksUrlParts.EDIT_URL)
     @PreAuthorize("hasRole('ROLE_MEMBER_OF_BOARD')")
     public String showEditPage(final ModelMap model) {
         return super.showEditPage(model);
     }
 
     @Override
-    @RequestMapping(value = UsefulLinksUrlParts.SAVE_EDIT_URL, method = RequestMethod.POST)
+    @PostMapping(value = UsefulLinksUrlParts.SAVE_EDIT_URL)
     @PreAuthorize("hasRole('ROLE_MEMBER_OF_BOARD')")
     public String saveChanges(@ModelAttribute("wysiwygSectionEditCommand") final WysiwygSection command,
             final BindingResult result, final SessionStatus status, final ModelMap model) {
@@ -53,7 +50,7 @@ public class UsefulLinksController extends AbstractWysiwygSectionController {
     }
 
     @Override
-    @RequestMapping(value = UsefulLinksUrlParts.SAVE_EDIT_AND_EXIT_URL, method = RequestMethod.POST)
+    @PostMapping(value = UsefulLinksUrlParts.SAVE_EDIT_AND_EXIT_URL)
     @PreAuthorize("hasRole('ROLE_MEMBER_OF_BOARD')")
     public String saveChangesAndFinishEditing(@ModelAttribute("wysiwygSectionEditCommand") final WysiwygSection command,
             final BindingResult result, final SessionStatus status, final ModelMap model) {
@@ -61,7 +58,7 @@ public class UsefulLinksController extends AbstractWysiwygSectionController {
     }
 
     @Override
-    @RequestMapping(value = UsefulLinksUrlParts.DONT_SAVE_EDIT_AND_EXIT_URL, method = RequestMethod.POST)
+    @PostMapping(value = UsefulLinksUrlParts.DONT_SAVE_EDIT_AND_EXIT_URL)
     @PreAuthorize("hasRole('ROLE_MEMBER_OF_BOARD')")
     public String cancelChangesAndFinishEditing(final ModelMap model) {
         return super.cancelChangesAndFinishEditing(model);

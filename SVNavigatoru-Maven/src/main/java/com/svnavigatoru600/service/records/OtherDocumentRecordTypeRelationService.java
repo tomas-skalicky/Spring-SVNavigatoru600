@@ -23,11 +23,8 @@ public class OtherDocumentRecordTypeRelationService {
      */
     private final OtherDocumentRecordTypeRelationDao typeRelationDao;
 
-    /**
-     * Constructor.
-     */
     @Inject
-    public OtherDocumentRecordTypeRelationService(OtherDocumentRecordTypeRelationDao typeRelationDao) {
+    public OtherDocumentRecordTypeRelationService(final OtherDocumentRecordTypeRelationDao typeRelationDao) {
         this.typeRelationDao = typeRelationDao;
     }
 
@@ -38,8 +35,8 @@ public class OtherDocumentRecordTypeRelationService {
      * @param recordId
      *            The ID of the document record which desired type relations are associated with.
      */
-    public List<OtherDocumentRecordTypeRelation> findAll(int recordId) {
-        return this.typeRelationDao.findAll(recordId);
+    public List<OtherDocumentRecordTypeRelation> findAll(final int recordId) {
+        return typeRelationDao.findAll(recordId);
     }
 
     /**
@@ -49,8 +46,8 @@ public class OtherDocumentRecordTypeRelationService {
      * {@link com.svnavigatoru600.domain.records.OtherDocumentRecord OtherDocumentRecord} and the same
      * {@link com.svnavigatoru600.domain.records.OtherDocumentRecordTypeRelationId#getType() type}, throws an exception.
      */
-    public void save(Collection<OtherDocumentRecordTypeRelation> typeRelations) {
-        this.typeRelationDao.save(typeRelations);
+    public void save(final Collection<OtherDocumentRecordTypeRelation> typeRelations) {
+        typeRelationDao.save(typeRelations);
     }
 
     /**
@@ -60,7 +57,7 @@ public class OtherDocumentRecordTypeRelationService {
      * @param recordId
      *            The ID of the document record which desired type relations are associated with.
      */
-    public void delete(int recordId) {
-        this.typeRelationDao.delete(recordId);
+    public void delete(final int recordId) {
+        typeRelationDao.delete(recordId);
     }
 }

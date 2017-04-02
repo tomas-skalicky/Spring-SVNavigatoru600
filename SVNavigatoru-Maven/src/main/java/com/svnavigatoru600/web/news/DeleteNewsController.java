@@ -9,9 +9,8 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.svnavigatoru600.service.news.NewsService;
@@ -29,16 +28,12 @@ public class DeleteNewsController extends AbstractNewsController {
      */
     public static final String DATABASE_ERROR_MESSAGE_CODE = "news.deletion-failed-due-to-database-error";
 
-    /**
-     * Constructor.
-     */
     @Inject
     public DeleteNewsController(final NewsService newsService, final MessageSource messageSource) {
         super(newsService, messageSource);
     }
 
-    @RequestMapping(value = NewsUrlParts.EXISTING_URL + "{newsId}/"
-            + CommonUrlParts.DELETE_EXTENSION, method = RequestMethod.GET)
+    @GetMapping(value = NewsUrlParts.EXISTING_URL + "{newsId}/" + CommonUrlParts.DELETE_EXTENSION)
     @Transactional
     public @ResponseBody AbstractNewsResponse delete(@PathVariable final int newsId, final HttpServletRequest request,
             final ModelMap model) {

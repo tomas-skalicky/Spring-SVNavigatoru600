@@ -14,9 +14,9 @@ import org.springframework.ui.ModelMap;
 import org.springframework.util.AutoPopulatingList;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.support.SessionStatus;
 
 import com.svnavigatoru600.domain.users.User;
@@ -27,7 +27,7 @@ import com.svnavigatoru600.viewmodel.users.validator.SendNewPasswordValidator;
 
 /**
  * The controller bound to the <i>forgotten-password.jsp</i> form.
- * 
+ *
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
 @Controller
@@ -47,9 +47,6 @@ public class ForgottenPasswordController extends AbstractMetaController {
         this.messageSource = messageSource;
     }
 
-    /**
-     * Constructor.
-     */
     @Inject
     public ForgottenPasswordController(final UserService userService, final SendNewPasswordValidator validator) {
         LogFactory.getLog(this.getClass()).debug("The ForgottenPasswordController object created.");
@@ -60,7 +57,7 @@ public class ForgottenPasswordController extends AbstractMetaController {
     /**
      * Initializes the form.
      */
-    @RequestMapping(value = LoginUrlParts.FORGOTTEN_PASSWORD_URL, method = RequestMethod.GET)
+    @GetMapping(value = LoginUrlParts.FORGOTTEN_PASSWORD_URL)
     public String initForm(final ModelMap model) {
 
         final SendNewPassword command = new SendNewPassword();
@@ -95,12 +92,13 @@ public class ForgottenPasswordController extends AbstractMetaController {
     /**
      * If values in the form are OK, generates a new password, stores it to a repository and sends it to the provided
      * email address. If something is wrong, returns back to the form.
-     * 
+     *
      * @return The name of the view which is to be shown.
      */
-    @RequestMapping(value = LoginUrlParts.SEND_NEW_PASSWORD_URL, method = RequestMethod.POST)
+    @PostMapping(value = LoginUrlParts.SEND_NEW_PASSWORD_URL)
     public String processSubmittedForm(@ModelAttribute("sendNewPasswordCommand") final SendNewPassword command,
-            final BindingResult result, final SessionStatus status, final HttpServletRequest request, final ModelMap model) {
+            final BindingResult result, final SessionStatus status, final HttpServletRequest request,
+            final ModelMap model) {
 
         validator.validate(command, result);
         if (result.hasErrors()) {

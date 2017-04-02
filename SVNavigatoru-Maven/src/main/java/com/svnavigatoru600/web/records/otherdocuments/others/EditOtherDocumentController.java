@@ -28,9 +28,6 @@ import com.svnavigatoru600.web.records.otherdocuments.AbstractEditDocumentContro
 @Controller
 public class EditOtherDocumentController extends AbstractEditDocumentController {
 
-    /**
-     * Constructor.
-     */
     @Inject
     public EditOtherDocumentController(final OtherDocumentRecordService recordService,
             final SendNotificationEditModelFiller sendNotificationModelFiller, final EditRecordValidator validator,

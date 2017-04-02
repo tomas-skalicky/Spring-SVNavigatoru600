@@ -33,9 +33,6 @@ public class ListNewsController extends AbstractNewsController {
         newNewsController = controller;
     }
 
-    /**
-     * Constructor.
-     */
     @Inject
     public ListNewsController(final NewsService newsService, final MessageSource messageSource) {
         super(newsService, messageSource);

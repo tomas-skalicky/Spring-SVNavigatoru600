@@ -9,8 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import com.svnavigatoru600.domain.forum.Thread;
 import com.svnavigatoru600.service.forum.ThreadService;
@@ -28,15 +27,12 @@ public class ListThreadsController extends AbstractThreadController {
      */
     public static final String COMMAND = "showAllThreadsCommand";
 
-    /**
-     * Constructor.
-     */
     @Inject
     public ListThreadsController(final ThreadService threadService, final MessageSource messageSource) {
         super(threadService, messageSource);
     }
 
-    @RequestMapping(value = ThreadsUrlParts.BASE_URL, method = RequestMethod.GET)
+    @GetMapping(value = ThreadsUrlParts.BASE_URL)
     public String initPage(final HttpServletRequest request, final ModelMap model) {
 
         final ShowAllThreads command = new ShowAllThreads();
@@ -60,14 +56,14 @@ public class ListThreadsController extends AbstractThreadController {
         return PageViews.LIST.getViewName();
     }
 
-    @RequestMapping(value = ThreadsUrlParts.CREATED_URL, method = RequestMethod.GET)
+    @GetMapping(value = ThreadsUrlParts.CREATED_URL)
     public String initPageAfterCreate(final HttpServletRequest request, final ModelMap model) {
         final String view = initPage(request, model);
         ((ShowAllThreads) model.get(ListThreadsController.COMMAND)).setThreadCreated(true);
         return view;
     }
 
-    @RequestMapping(value = ThreadsUrlParts.DELETED_URL, method = RequestMethod.GET)
+    @GetMapping(value = ThreadsUrlParts.DELETED_URL)
     public String initPageAfterDelete(final HttpServletRequest request, final ModelMap model) {
         final String view = initPage(request, model);
         ((ShowAllThreads) model.get(ListThreadsController.COMMAND)).setThreadDeleted(true);

@@ -43,16 +43,13 @@ public class UserService {
      */
     private UserEmailService emailService;
 
-    /**
-     * Constructor.
-     */
     @Inject
-    public UserService(UserDao userDao) {
+    public UserService(final UserDao userDao) {
         this.userDao = userDao;
     }
 
     @Inject
-    public void setEmailService(UserEmailService emailService) {
+    public void setEmailService(final UserEmailService emailService) {
         this.emailService = emailService;
     }
 
@@ -62,8 +59,8 @@ public class UserService {
      * <p>
      * The returned user has its {@link User#getAuthorities() authorities} populated.
      */
-    public User findByUsername(String username) {
-        return this.userDao.findByUsername(username);
+    public User findByUsername(final String username) {
+        return userDao.findByUsername(username);
     }
 
     /**
@@ -75,8 +72,8 @@ public class UserService {
      * @param email
      *            Case-insensitive email address of the desired user
      */
-    public User findByEmail(String email) {
-        return this.userDao.findByEmail(email);
+    public User findByEmail(final String email) {
+        return userDao.findByEmail(email);
     }
 
     /**
@@ -84,8 +81,8 @@ public class UserService {
      * <p>
      * {@link com.svnavigatoru600.domain.users.Authority Authorities} of the returned users are populated.
      */
-    public List<User> findAllByAuthority(AuthorityType authority) {
-        return this.userDao.findAllByAuthority(authority.name());
+    public List<User> findAllByAuthority(final AuthorityType authority) {
+        return userDao.findAllByAuthority(authority.name());
     }
 
     /**
@@ -103,8 +100,8 @@ public class UserService {
      * <p>
      * {@link com.svnavigatoru600.domain.users.Authority Authorities} of the returned users are NOT populated.
      */
-    public List<User> findAllByAuthorityAndSubscription(AuthorityType authority, NotificationType notificationType) {
-        return this.userDao.findAllByAuthorityAndSubscription(authority.name(), notificationType);
+    public List<User> findAllByAuthorityAndSubscription(final AuthorityType authority, final NotificationType notificationType) {
+        return userDao.findAllByAuthorityAndSubscription(authority.name(), notificationType);
     }
 
     /**
@@ -113,11 +110,11 @@ public class UserService {
      * <p>
      * {@link com.svnavigatoru600.domain.users.Authority Authorities} of the returned users are NOT populated.
      */
-    public List<User> findAllWithEmailByAuthorityAndSubscription(AuthorityType authority,
-            NotificationType notificationType) {
-        List<User> users = this.userDao.findAllByAuthorityAndSubscription(authority.name(), notificationType);
-        List<User> usersWithEmail = new ArrayList<User>(users.size());
-        for (User user : users) {
+    public List<User> findAllWithEmailByAuthorityAndSubscription(final AuthorityType authority,
+            final NotificationType notificationType) {
+        final List<User> users = userDao.findAllByAuthorityAndSubscription(authority.name(), notificationType);
+        final List<User> usersWithEmail = new ArrayList<User>(users.size());
+        for (final User user : users) {
             if (StringUtils.isNotBlank(user.getEmail())) {
                 usersWithEmail.add(user);
             }
@@ -135,8 +132,8 @@ public class UserService {
      *            If <code>true</code>, the method returns only test users. Otherwise, it returns only non-test users.
      *            Test users are those which are not accessible to the business user (= customer).
      */
-    public List<User> findAllOrdered(OrderType order, boolean testUsers) {
-        return this.userDao.findAllOrdered(order, testUsers);
+    public List<User> findAllOrdered(final OrderType order, final boolean testUsers) {
+        return userDao.findAllOrdered(order, testUsers);
     }
 
     /**
@@ -152,8 +149,8 @@ public class UserService {
     /**
      * Updates the given {@link User} in the repository. The old version of this user should be already stored there.
      */
-    public void update(User user) {
-        this.userDao.update(user);
+    public void update(final User user) {
+        userDao.update(user);
     }
 
     /**
@@ -171,8 +168,8 @@ public class UserService {
      * @param newPassword
      *            New not-hashed password of the persisted user
      */
-    public void update(User userToUpdate, User newUser, String newPassword) {
-        boolean isPasswordUpdated = StringUtils.isNotBlank(newPassword);
+    public void update(final User userToUpdate, final User newUser, final String newPassword) {
+        final boolean isPasswordUpdated = StringUtils.isNotBlank(newPassword);
         if (isPasswordUpdated) {
             userToUpdate.setPassword(Hash.doSha1Hashing(newPassword));
         }
@@ -185,7 +182,7 @@ public class UserService {
         // Makes the data persistent.
         this.update(userToUpdate);
 
-        User loggedUser = UserUtils.getLoggedUser();
+        final User loggedUser = UserUtils.getLoggedUser();
         loggedUser.copyEmailPhoneSubscriptions(userToUpdate);
         if (isPasswordUpdated) {
             loggedUser.setPassword(userToUpdate.getPassword());
@@ -212,19 +209,19 @@ public class UserService {
      *            {@link AuthorityType#ordinal() ordinal}<code> == x</code> has been selected as one of the new
      *            authorities of the persisted user; and vice versa.
      */
-    public void updateAndNotifyUser(User userToUpdate, User newUser, String newPassword,
-            boolean[] indicatorsOfNewAuthorities, HttpServletRequest request, MessageSource messageSource) {
+    public void updateAndNotifyUser(final User userToUpdate, final User newUser, final String newPassword,
+            final boolean[] indicatorsOfNewAuthorities, final HttpServletRequest request, final MessageSource messageSource) {
         boolean passwordChanged = false;
-        boolean isPasswordUpdated = StringUtils.isNotBlank(newPassword);
+        final boolean isPasswordUpdated = StringUtils.isNotBlank(newPassword);
         if (isPasswordUpdated) {
-            String newPasswordHash = Hash.doSha1Hashing(newPassword);
+            final String newPasswordHash = Hash.doSha1Hashing(newPassword);
             passwordChanged = !newPasswordHash.equals(userToUpdate.getPassword());
             userToUpdate.setPassword(newPasswordHash);
         }
         userToUpdate.setFirstName(newUser.getFirstName());
         userToUpdate.setLastName(newUser.getLastName());
 
-        boolean authoritiesChanged = userToUpdate.updateAuthorities(indicatorsOfNewAuthorities);
+        final boolean authoritiesChanged = userToUpdate.updateAuthorities(indicatorsOfNewAuthorities);
 
         // Sets user's email to null if the email is blank. The reason is the UNIQUE DB constraint.
         userToUpdate.setEmailToNullIfBlank();
@@ -232,10 +229,10 @@ public class UserService {
         this.update(userToUpdate);
 
         if (passwordChanged) {
-            this.emailService.sendEmailOnPasswordChange(userToUpdate, newPassword, request, messageSource);
+            emailService.sendEmailOnPasswordChange(userToUpdate, newPassword, request, messageSource);
         }
         if (authoritiesChanged) {
-            this.emailService.sendEmailOnAuthoritiesChange(userToUpdate, request, messageSource);
+            emailService.sendEmailOnAuthoritiesChange(userToUpdate, request, messageSource);
         }
     }
 
@@ -244,8 +241,8 @@ public class UserService {
      * {@link User#getUsername() username} or {@link User#getEmail() email}, throws an exception.
      * {@link com.svnavigatoru600.domain.users.Authority Authorities} of the user are persisted as well.
      */
-    public void save(User user) {
-        this.userDao.save(user);
+    public void save(final User user) {
+        userDao.save(user);
     }
 
     /**
@@ -265,8 +262,8 @@ public class UserService {
      *            {@link AuthorityType#ordinal() ordinal}<code> == x</code> has been selected as one of the new
      *            authorities of the persisted user; and vice versa.
      */
-    public void saveAndNotifyUser(User newUser, String newPassword, boolean[] indicatorsOfNewAuthorities,
-            HttpServletRequest request, MessageSource messageSource) {
+    public void saveAndNotifyUser(final User newUser, final String newPassword, final boolean[] indicatorsOfNewAuthorities,
+            final HttpServletRequest request, final MessageSource messageSource) {
         newUser.setPassword(Hash.doSha1Hashing(newPassword));
 
         newUser.updateAuthorities(indicatorsOfNewAuthorities);
@@ -278,7 +275,7 @@ public class UserService {
         save(newUser);
 
         if (!StringUtils.isBlank(newUser.getEmail())) {
-            this.emailService.sendEmailOnUserCreation(newUser, newPassword, request, messageSource);
+            emailService.sendEmailOnUserCreation(newUser, newPassword, request, messageSource);
         }
     }
 
@@ -286,8 +283,8 @@ public class UserService {
      * Deletes the given {@link User} together with all his {@link com.svnavigatoru600.domain.users.Authority
      * Authorities} from the repository.
      */
-    public void delete(User user) {
-        this.userDao.delete(user);
+    public void delete(final User user) {
+        userDao.delete(user);
     }
 
     /**
@@ -299,11 +296,11 @@ public class UserService {
      * @param username
      *            Username (=login) of the user which is to be deleted
      */
-    public void delete(String username, HttpServletRequest request, MessageSource messageSource) {
-        User user = findByUsername(username);
-        this.userDao.delete(user);
+    public void delete(final String username, final HttpServletRequest request, final MessageSource messageSource) {
+        final User user = findByUsername(username);
+        userDao.delete(user);
 
-        this.emailService.sendEmailOnUserDeletion(user, request, messageSource);
+        emailService.sendEmailOnUserDeletion(user, request, messageSource);
     }
 
     /**
@@ -313,10 +310,10 @@ public class UserService {
      * @param username
      *            Username (= login) of the affected user.
      */
-    public void unsubscribeFromNotifications(String username, NotificationType notificationType) {
-        User user = this.userDao.findByUsername(username);
+    public void unsubscribeFromNotifications(final String username, final NotificationType notificationType) {
+        final User user = userDao.findByUsername(username);
         notificationType.accept(new NotificationSubscriberVisitor(user, false));
-        this.userDao.update(user, false);
+        userDao.update(user, false);
     }
 
     /**
@@ -325,11 +322,11 @@ public class UserService {
      * 
      * @return <code>true</code> the corresponding {@link User} exists.
      */
-    public boolean isUsernameOccupied(String username) {
+    public boolean isUsernameOccupied(final String username) {
         try {
             findByUsername(username);
             return true;
-        } catch (DataRetrievalFailureException e) {
+        } catch (final DataRetrievalFailureException e) {
             return false;
         }
     }
@@ -340,11 +337,11 @@ public class UserService {
      * 
      * @return <code>true</code> the corresponding {@link User} exists.
      */
-    public boolean isEmailOccupied(String emailAddress) {
+    public boolean isEmailOccupied(final String emailAddress) {
         try {
             findByEmail(emailAddress);
             return true;
-        } catch (DataRetrievalFailureException e) {
+        } catch (final DataRetrievalFailureException e) {
             return false;
         }
     }
@@ -356,28 +353,28 @@ public class UserService {
      * @param email
      *            Email address of the {@link User} whose password is reset
      */
-    public void resetPasswordAndNotifyUser(String email, HttpServletRequest request, MessageSource messageSource) {
-        User user = findByEmail(email);
+    public void resetPasswordAndNotifyUser(final String email, final HttpServletRequest request, final MessageSource messageSource) {
+        final User user = findByEmail(email);
 
-        String newPassword = Password.generateNew();
+        final String newPassword = Password.generateNew();
         user.setPassword(Hash.doSha1Hashing(newPassword));
         this.update(user);
 
-        this.emailService.sendEmailOnPasswordReset(user, newPassword, request, messageSource);
+        emailService.sendEmailOnPasswordReset(user, newPassword, request, messageSource);
     }
 
     /**
      * Loads more information about authors of the last saved {@link Contribution Contributions} (see
      * {@link Thread#getLastSavedContributions(List) getLastSavedContributions}).
      */
-    public void loadAuthorsOfLastSavedContributions(Map<Thread, Contribution> lastSavedContributions) {
-        for (Thread thread : lastSavedContributions.keySet()) {
-            Contribution contribution = lastSavedContributions.get(thread);
+    public void loadAuthorsOfLastSavedContributions(final Map<Thread, Contribution> lastSavedContributions) {
+        for (final Thread thread : lastSavedContributions.keySet()) {
+            final Contribution contribution = lastSavedContributions.get(thread);
             if (contribution == null) {
                 continue;
             }
 
-            String authorUsername = contribution.getAuthor().getUsername();
+            final String authorUsername = contribution.getAuthor().getUsername();
             contribution.setAuthor(findByUsername(authorUsername));
         }
     }
@@ -386,13 +383,13 @@ public class UserService {
      * Gets a {@link Map} which for each input {@link User} contains a corresponding localized delete question which is
      * asked before deletion of that user.
      */
-    public static Map<User, String> getLocalizedDeleteQuestions(List<User> users, HttpServletRequest request,
-            MessageSource messageSource) {
-        String messageCode = "user-administration.do-you-really-want-to-delete-user";
-        Map<User, String> questions = new HashMap<User, String>();
+    public static Map<User, String> getLocalizedDeleteQuestions(final List<User> users, final HttpServletRequest request,
+            final MessageSource messageSource) {
+        final String messageCode = "user-administration.do-you-really-want-to-delete-user";
+        final Map<User, String> questions = new HashMap<User, String>();
 
-        for (User user : users) {
-            Object[] messageParams = new Object[] { user.getUsername(), user.getFullName() };
+        for (final User user : users) {
+            final Object[] messageParams = new Object[] { user.getUsername(), user.getFullName() };
             questions.put(user, Localization.findLocaleMessage(messageSource, request, messageCode, messageParams));
         }
         return questions;
@@ -402,12 +399,12 @@ public class UserService {
      * Gets a {@link Map} which for each constant of the {@link NotificationType} enumeration contains a pair of its
      * {@link NotificationType#getOrdinal() ordinal} and its localized title.
      */
-    public static Map<Long, String> getLocalizedNotificationTitles(HttpServletRequest request,
-            MessageSource messageSource) {
-        Map<Long, String> ordinalTitleMap = new HashMap<Long, String>();
+    public static Map<Long, String> getLocalizedNotificationTitles(final HttpServletRequest request,
+            final MessageSource messageSource) {
+        final Map<Long, String> ordinalTitleMap = new HashMap<Long, String>();
 
-        for (NotificationType type : NotificationType.values()) {
-            String localizedTitle = Localization.findLocaleMessage(messageSource, request,
+        for (final NotificationType type : NotificationType.values()) {
+            final String localizedTitle = Localization.findLocaleMessage(messageSource, request,
                     type.getTitleLocalizationCode());
             ordinalTitleMap.put(type.getOrdinal(), localizedTitle);
         }

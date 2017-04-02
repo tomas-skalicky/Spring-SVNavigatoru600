@@ -9,9 +9,6 @@ import org.openqa.selenium.WebDriver;
  */
 public final class AssertUtils {
 
-    /**
-     * Constructor.
-     */
     private AssertUtils() {
     }
 
@@ -22,7 +19,7 @@ public final class AssertUtils {
      *            The browser
      * @return The report about the current URL that the browser is looking at.
      */
-    public static String getActualUrlReport(WebDriver browserDriver) {
+    public static String getActualUrlReport(final WebDriver browserDriver) {
         return String.format("Actual location is '%s'", browserDriver.getCurrentUrl());
     }
 }

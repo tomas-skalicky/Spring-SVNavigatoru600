@@ -12,9 +12,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.support.SessionStatus;
 
 import com.svnavigatoru600.domain.users.User;
@@ -27,7 +27,7 @@ import com.svnavigatoru600.web.AbstractMetaController;
 
 /**
  * The controller bound to the <i>new-user.jsp</i> page.
- * 
+ *
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
 @Controller
@@ -54,7 +54,7 @@ public class NewUserController extends AbstractNewEditUserController {
     /**
      * Initializes the form.
      */
-    @RequestMapping(value = UserAdministrationUrlParts.NEW_URL, method = RequestMethod.GET)
+    @GetMapping(value = UserAdministrationUrlParts.NEW_URL)
     public String initForm(final HttpServletRequest request, final ModelMap model) {
 
         final AdministrateUserData command = new AdministrateUserData();
@@ -68,8 +68,7 @@ public class NewUserController extends AbstractNewEditUserController {
 
         // Sets up all (but necessary) maps.
         command.setRoleCheckboxId(AuthorityService.getRoleCheckboxId());
-        command.setLocalizedRoleCheckboxTitles(
-                authorityService.getLocalizedRoleTitles(request, getMessageSource()));
+        command.setLocalizedRoleCheckboxTitles(authorityService.getLocalizedRoleTitles(request, getMessageSource()));
 
         model.addAttribute(AbstractNewEditUserController.COMMAND, command);
         return PageViews.NEW.getViewName();
@@ -77,13 +76,14 @@ public class NewUserController extends AbstractNewEditUserController {
 
     /**
      * If values in the form are OK, new user is stored to a repository. Otherwise, returns back to the form.
-     * 
+     *
      * @return The name of the view which is to be shown.
      */
-    @RequestMapping(value = UserAdministrationUrlParts.NEW_URL, method = RequestMethod.POST)
+    @PostMapping(value = UserAdministrationUrlParts.NEW_URL)
     @Transactional
     public String processSubmittedForm(@ModelAttribute(NewUserController.COMMAND) final AdministrateUserData command,
-            final BindingResult result, final SessionStatus status, final HttpServletRequest request, final ModelMap model) {
+            final BindingResult result, final SessionStatus status, final HttpServletRequest request,
+            final ModelMap model) {
 
         // Sets up all (but necessary) maps.
         command.setRoleCheckboxId(AuthorityService.getRoleCheckboxId());

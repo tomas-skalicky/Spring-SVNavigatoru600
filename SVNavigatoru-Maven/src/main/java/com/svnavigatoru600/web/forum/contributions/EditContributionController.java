@@ -10,10 +10,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.support.SessionStatus;
 
 import com.svnavigatoru600.domain.forum.Contribution;
@@ -38,19 +38,16 @@ public class EditContributionController extends AbstractNewEditContributionContr
      */
     public static final String DATABASE_ERROR_MESSAGE_CODE = "edit.changes-not-saved-due-to-database-error";
 
-    /**
-     * Constructor.
-     */
     @Inject
     public EditContributionController(final ContributionService contributionService,
-            final SendNotificationEditModelFiller sendNotificationModelFiller, final EditContributionValidator validator,
-            final MessageSource messageSource) {
+            final SendNotificationEditModelFiller sendNotificationModelFiller,
+            final EditContributionValidator validator, final MessageSource messageSource) {
         super(contributionService, sendNotificationModelFiller, validator, messageSource);
     }
 
-    @RequestMapping(value = EditContributionController.BASE_URL, method = RequestMethod.GET)
-    public String initForm(@PathVariable final int threadId, @PathVariable final int contributionId, final HttpServletRequest request,
-            final ModelMap model) {
+    @GetMapping(value = EditContributionController.BASE_URL)
+    public String initForm(@PathVariable final int threadId, @PathVariable final int contributionId,
+            final HttpServletRequest request, final ModelMap model) {
 
         getContributionService().canEdit(contributionId);
 
@@ -65,8 +62,7 @@ public class EditContributionController extends AbstractNewEditContributionContr
         return PageViews.EDIT.getViewName();
     }
 
-    @RequestMapping(value = EditContributionController.BASE_URL
-            + CommonUrlParts.SAVED_EXTENSION, method = RequestMethod.GET)
+    @GetMapping(value = EditContributionController.BASE_URL + CommonUrlParts.SAVED_EXTENSION)
     public String initFormAfterSave(@PathVariable final int threadId, @PathVariable final int contributionId,
             final HttpServletRequest request, final ModelMap model) {
         final String view = initForm(threadId, contributionId, request, model);
@@ -74,11 +70,12 @@ public class EditContributionController extends AbstractNewEditContributionContr
         return view;
     }
 
-    @RequestMapping(value = EditContributionController.BASE_URL, method = RequestMethod.POST)
+    @PostMapping(value = EditContributionController.BASE_URL)
     @Transactional
-    public String processSubmittedForm(@ModelAttribute(EditContributionController.COMMAND) final EditContribution command,
-            final BindingResult result, final SessionStatus status, @PathVariable final int threadId, @PathVariable final int contributionId,
-            final HttpServletRequest request, final ModelMap model) {
+    public String processSubmittedForm(
+            @ModelAttribute(EditContributionController.COMMAND) final EditContribution command,
+            final BindingResult result, final SessionStatus status, @PathVariable final int threadId,
+            @PathVariable final int contributionId, final HttpServletRequest request, final ModelMap model) {
 
         getContributionService().canEdit(contributionId);
 

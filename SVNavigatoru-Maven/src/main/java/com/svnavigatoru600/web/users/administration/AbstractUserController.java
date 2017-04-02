@@ -18,9 +18,6 @@ public abstract class AbstractUserController extends AbstractPrivateSectionMetaC
 
     private MessageSource messageSource = null;
 
-    /**
-     * Constructor.
-     */
     @Inject
     public AbstractUserController() {
         LogFactory.getLog(this.getClass()).debug("The UserController object created.");

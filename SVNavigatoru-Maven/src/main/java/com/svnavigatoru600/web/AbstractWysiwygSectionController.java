@@ -25,9 +25,6 @@ public abstract class AbstractWysiwygSectionController extends AbstractPrivateSe
     private final String editPageView;
     private final String viewPageAddress;
 
-    /**
-     * Constructor.
-     */
     @Inject
     public AbstractWysiwygSectionController(final WysiwygSectionService sectionService, final WysiwygSectionName sectionName,
             final String viewPageView, final String editPageView, final String viewPageAddress) {

@@ -9,9 +9,8 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.svnavigatoru600.service.forum.ContributionService;
 import com.svnavigatoru600.url.CommonUrlParts;
@@ -35,20 +34,18 @@ public class DeleteContributionController extends AbstractContributionController
         this.listController = listController;
     }
 
-    /**
-     * Constructor.
-     */
     @Inject
-    public DeleteContributionController(final ContributionService contributionService, final MessageSource messageSource) {
+    public DeleteContributionController(final ContributionService contributionService,
+            final MessageSource messageSource) {
         super(contributionService, messageSource);
     }
 
-    @RequestMapping(value = ContributionsUrlParts.BASE_URL + "{threadId}/"
+    @GetMapping(value = ContributionsUrlParts.BASE_URL + "{threadId}/"
             + ContributionsUrlParts.CONTRIBUTIONS_EXISTING_EXTENSION + "{contributionId}/"
-            + CommonUrlParts.DELETE_EXTENSION, method = RequestMethod.GET)
+            + CommonUrlParts.DELETE_EXTENSION)
     @Transactional
-    public String delete(@PathVariable final int threadId, @PathVariable final int contributionId, final HttpServletRequest request,
-            final ModelMap model) {
+    public String delete(@PathVariable final int threadId, @PathVariable final int contributionId,
+            final HttpServletRequest request, final ModelMap model) {
 
         // Checks permission.
         getContributionService().canDelete(contributionId);

@@ -17,23 +17,17 @@ import com.svnavigatoru600.repository.records.impl.SessionRecordField;
  */
 public class SessionRecordRowMapper extends AbstractDocumentRecordRowMapper implements RowMapper<SessionRecord> {
 
-    /**
-     * Constructor.
-     */
     public SessionRecordRowMapper() {
         super();
     }
 
-    /**
-     * Constructor.
-     */
-    public SessionRecordRowMapper(boolean loadFile) {
+    public SessionRecordRowMapper(final boolean loadFile) {
         super(loadFile);
     }
 
     @Override
-    public SessionRecord mapRow(ResultSet rs, int rowNum) throws SQLException {
-        SessionRecord record = new SessionRecord();
+    public SessionRecord mapRow(final ResultSet rs, final int rowNum) throws SQLException {
+        final SessionRecord record = new SessionRecord();
         record.setId(rs.getInt(SessionRecordField.id.getColumnName()));
         record.setFileName(rs.getString(DocumentRecordField.fileName.getColumnName()));
 

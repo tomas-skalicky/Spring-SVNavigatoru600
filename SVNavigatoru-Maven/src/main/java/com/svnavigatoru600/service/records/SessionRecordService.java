@@ -42,32 +42,29 @@ public class SessionRecordService extends AbstractDocumentRecordService {
      */
     private SessionRecordNotificationEmailService emailService;
 
-    /**
-     * Constructor.
-     */
     @Inject
-    public SessionRecordService(SessionRecordDao sessionRecordDao) {
+    public SessionRecordService(final SessionRecordDao sessionRecordDao) {
         super(sessionRecordDao);
         this.sessionRecordDao = sessionRecordDao;
     }
 
     @Inject
-    public void setEmailService(SessionRecordNotificationEmailService emailService) {
+    public void setEmailService(final SessionRecordNotificationEmailService emailService) {
         this.emailService = emailService;
     }
 
     @Override
-    public SessionRecord findById(int recordId) {
-        return this.sessionRecordDao.findById(recordId);
+    public SessionRecord findById(final int recordId) {
+        return sessionRecordDao.findById(recordId);
     }
 
     @Override
-    public SessionRecord findById(int recordId, boolean loadFile) {
-        return this.sessionRecordDao.findById(recordId, loadFile);
+    public SessionRecord findById(final int recordId, final boolean loadFile) {
+        return sessionRecordDao.findById(recordId, loadFile);
     }
 
     @Override
-    public SessionRecord findByIdWithoutFile(int recordId) {
+    public SessionRecord findByIdWithoutFile(final int recordId) {
         return this.findById(recordId, false);
     }
 
@@ -75,8 +72,8 @@ public class SessionRecordService extends AbstractDocumentRecordService {
      * Returns all {@link SessionRecord SessionRecords} stored in the repository arranged according to their
      * {@link SessionRecord#getSessionDate() sessionDates} in the given {@link OrderType order}.
      */
-    public List<SessionRecord> findAllOrdered(OrderType order) {
-        return this.sessionRecordDao.findAllOrdered(order);
+    public List<SessionRecord> findAllOrdered(final OrderType order) {
+        return sessionRecordDao.findAllOrdered(order);
     }
 
     /**
@@ -84,8 +81,8 @@ public class SessionRecordService extends AbstractDocumentRecordService {
      * {@link SessionRecordType type}. The records are arranged according to their {@link SessionRecord#getSessionDate()
      * sessionDates} in the given {@link OrderType order}.
      */
-    public List<SessionRecord> findAllOrdered(SessionRecordType type, OrderType order) {
-        return this.sessionRecordDao.findAllOrdered(type, order);
+    public List<SessionRecord> findAllOrdered(final SessionRecordType type, final OrderType order) {
+        return sessionRecordDao.findAllOrdered(type, order);
     }
 
     /**
@@ -98,8 +95,8 @@ public class SessionRecordService extends AbstractDocumentRecordService {
      * @param recordType
      *            see <code>allRecordTypes</code>
      */
-    public List<SessionRecord> findAllOrdered(boolean allRecordTypes, SessionRecordType recordType) {
-        OrderType order = OrderType.DESCENDING;
+    public List<SessionRecord> findAllOrdered(final boolean allRecordTypes, final SessionRecordType recordType) {
+        final OrderType order = OrderType.DESCENDING;
         if (allRecordTypes) {
             return this.findAllOrdered(order);
         } else {
@@ -111,8 +108,8 @@ public class SessionRecordService extends AbstractDocumentRecordService {
      * Updates the given {@link SessionRecord} in the repository. The old version of this record should be already
      * stored there.
      */
-    public void update(SessionRecord record) {
-        this.sessionRecordDao.update(record);
+    public void update(final SessionRecord record) {
+        sessionRecordDao.update(record);
     }
 
     /**
@@ -133,10 +130,10 @@ public class SessionRecordService extends AbstractDocumentRecordService {
      * @param newAttachedFile
      *            New attached file of the persisted record
      */
-    public void update(int recordToUpdateId, SessionRecord newRecord, String newType, boolean isFileReplaced,
-            MultipartFile newAttachedFile, HttpServletRequest request, MessageSource messageSource)
+    public void update(final int recordToUpdateId, final SessionRecord newRecord, final String newType, final boolean isFileReplaced,
+            final MultipartFile newAttachedFile, final HttpServletRequest request, final MessageSource messageSource)
             throws SQLException, IOException {
-        SessionRecord recordToUpdate = findByIdWithoutFile(recordToUpdateId);
+        final SessionRecord recordToUpdate = findByIdWithoutFile(recordToUpdateId);
         recordToUpdate.setSessionDate(newRecord.getSessionDate());
         recordToUpdate.setDiscussedTopics(newRecord.getDiscussedTopics());
         recordToUpdate.setType(SessionRecordType.valueOfAccordingLocalization(newType, messageSource, request));
@@ -159,10 +156,10 @@ public class SessionRecordService extends AbstractDocumentRecordService {
      * @param newAttachedFile
      *            New attached file of the persisted record
      */
-    private void updateRecordWithSaveFileToDatabase(SessionRecord recordToUpdate, boolean isFileReplaced,
-            MultipartFile newAttachedFile) throws SQLException, IOException {
+    private void updateRecordWithSaveFileToDatabase(final SessionRecord recordToUpdate, final boolean isFileReplaced,
+            final MultipartFile newAttachedFile) throws SQLException, IOException {
         if (isFileReplaced) {
-            String newFileName = newAttachedFile.getOriginalFilename();
+            final String newFileName = newAttachedFile.getOriginalFilename();
             recordToUpdate.setFileName(newFileName);
             recordToUpdate.setFile(File.convertToBlob(newAttachedFile.getBytes()));
         }
@@ -194,10 +191,10 @@ public class SessionRecordService extends AbstractDocumentRecordService {
      *            New attached file of the persisted record
      */
     @SuppressWarnings("unused")
-    private void updateRecordWithSaveFileToFileSystem(SessionRecord recordToUpdate, boolean isFileReplaced,
-            MultipartFile newAttachedFile) throws SQLException, IOException {
+    private void updateRecordWithSaveFileToFileSystem(final SessionRecord recordToUpdate, final boolean isFileReplaced,
+            final MultipartFile newAttachedFile) throws SQLException, IOException {
         if (isFileReplaced) {
-            String newFileName = File.getUniqueFileName(newAttachedFile.getOriginalFilename());
+            final String newFileName = File.getUniqueFileName(newAttachedFile.getOriginalFilename());
             recordToUpdate.setFileName(newFileName);
             newAttachedFile.transferTo(File.getUploadedFile(newFileName));
         }
@@ -205,7 +202,7 @@ public class SessionRecordService extends AbstractDocumentRecordService {
         this.update(recordToUpdate);
 
         if (isFileReplaced) {
-            String oldFileName = recordToUpdate.getFileName();
+            final String oldFileName = recordToUpdate.getFileName();
             File.getUploadedFile(oldFileName).delete();
         }
     }
@@ -229,9 +226,9 @@ public class SessionRecordService extends AbstractDocumentRecordService {
      * @param sendNotification
      *            If <code>true</code>, the notification is sent; otherwise not.
      */
-    public void updateAndNotifyUsers(int recordToUpdateId, SessionRecord newRecord, String newType,
-            boolean isFileReplaced, MultipartFile newAttachedFile, boolean sendNotification, HttpServletRequest request,
-            MessageSource messageSource) throws SQLException, IOException {
+    public void updateAndNotifyUsers(final int recordToUpdateId, final SessionRecord newRecord, final String newType,
+            final boolean isFileReplaced, final MultipartFile newAttachedFile, final boolean sendNotification, final HttpServletRequest request,
+            final MessageSource messageSource) throws SQLException, IOException {
         this.update(recordToUpdateId, newRecord, newType, isFileReplaced, newAttachedFile, request, messageSource);
 
         if (sendNotification) {
@@ -242,12 +239,12 @@ public class SessionRecordService extends AbstractDocumentRecordService {
     @Override
     public List<User> gainUsersToNotify() {
         return getUserService().findAllWithEmailByAuthorityAndSubscription(AuthorityType.ROLE_MEMBER_OF_SV,
-                this.emailService.getNotificationType());
+                emailService.getNotificationType());
     }
 
     @Override
-    public void notifyUsersOfUpdate(Object updatedRecord, HttpServletRequest request, MessageSource messageSource) {
-        this.emailService.sendEmailOnUpdate(updatedRecord, gainUsersToNotify(), request, messageSource);
+    public void notifyUsersOfUpdate(final Object updatedRecord, final HttpServletRequest request, final MessageSource messageSource) {
+        emailService.sendEmailOnUpdate(updatedRecord, gainUsersToNotify(), request, messageSource);
     }
 
     /**
@@ -258,8 +255,8 @@ public class SessionRecordService extends AbstractDocumentRecordService {
      * 
      * @return The new ID of the given {@link SessionRecord} generated by the repository
      */
-    public int save(SessionRecord record) {
-        int newRecordId = this.sessionRecordDao.save(record);
+    public int save(final SessionRecord record) {
+        final int newRecordId = sessionRecordDao.save(record);
         record.setId(newRecordId);
         return newRecordId;
     }
@@ -278,8 +275,8 @@ public class SessionRecordService extends AbstractDocumentRecordService {
      * @param attachedFile
      *            File which is attached to the new record.
      */
-    public void save(SessionRecord newRecord, String recordType, MultipartFile attachedFile, HttpServletRequest request,
-            MessageSource messageSource) throws SQLException, IOException {
+    public void save(final SessionRecord newRecord, final String recordType, final MultipartFile attachedFile, final HttpServletRequest request,
+            final MessageSource messageSource) throws SQLException, IOException {
         newRecord.setType(SessionRecordType.valueOfAccordingLocalization(recordType, messageSource, request));
 
         prepareForSaveFileToDatabase(newRecord, attachedFile);
@@ -297,9 +294,9 @@ public class SessionRecordService extends AbstractDocumentRecordService {
      * @param attachedFile
      *            File which is attached to the new record.
      */
-    private void prepareForSaveFileToDatabase(SessionRecord newRecord, MultipartFile attachedFile)
+    private void prepareForSaveFileToDatabase(final SessionRecord newRecord, final MultipartFile attachedFile)
             throws SQLException, IOException {
-        String fileName = attachedFile.getOriginalFilename();
+        final String fileName = attachedFile.getOriginalFilename();
         newRecord.setFileName(fileName);
         newRecord.setFile(File.convertToBlob(attachedFile.getBytes()));
     }
@@ -322,9 +319,9 @@ public class SessionRecordService extends AbstractDocumentRecordService {
      *            File which is attached to the new record.
      */
     @SuppressWarnings("unused")
-    private void preparedAndSaveFileToFileSystem(SessionRecord newRecord, MultipartFile attachedFile)
+    private void preparedAndSaveFileToFileSystem(final SessionRecord newRecord, final MultipartFile attachedFile)
             throws SQLException, IOException {
-        String fileName = File.getUniqueFileName(attachedFile.getOriginalFilename());
+        final String fileName = File.getUniqueFileName(attachedFile.getOriginalFilename());
         newRecord.setFileName(fileName);
         attachedFile.transferTo(File.getUploadedFile(fileName));
     }
@@ -343,8 +340,8 @@ public class SessionRecordService extends AbstractDocumentRecordService {
      * @param sendNotification
      *            If <code>true</code>, the notification is sent; otherwise not.
      */
-    public void saveAndNotifyUsers(SessionRecord newRecord, String recordType, MultipartFile attachedFile,
-            boolean sendNotification, HttpServletRequest request, MessageSource messageSource)
+    public void saveAndNotifyUsers(final SessionRecord newRecord, final String recordType, final MultipartFile attachedFile,
+            final boolean sendNotification, final HttpServletRequest request, final MessageSource messageSource)
             throws SQLException, IOException {
         this.save(newRecord, recordType, attachedFile, request, messageSource);
 
@@ -354,8 +351,8 @@ public class SessionRecordService extends AbstractDocumentRecordService {
     }
 
     @Override
-    public void notifyUsersOfCreation(Object newRecord, HttpServletRequest request, MessageSource messageSource) {
-        this.emailService.sendEmailOnCreation(newRecord, gainUsersToNotify(), request, messageSource);
+    public void notifyUsersOfCreation(final Object newRecord, final HttpServletRequest request, final MessageSource messageSource) {
+        emailService.sendEmailOnCreation(newRecord, gainUsersToNotify(), request, messageSource);
     }
 
     /**
@@ -365,8 +362,8 @@ public class SessionRecordService extends AbstractDocumentRecordService {
      * @param recordId
      *            ID of the session record
      */
-    public void delete(int recordId) {
-        SessionRecord record = findByIdWithoutFile(recordId);
+    public void delete(final int recordId) {
+        final SessionRecord record = findByIdWithoutFile(recordId);
         this.delete(record);
     }
 
@@ -374,12 +371,12 @@ public class SessionRecordService extends AbstractDocumentRecordService {
      * Gets a {@link Map} which for each input {@link SessionRecord} contains a localized title of its
      * {@link SessionRecordType type}.
      */
-    public static Map<SessionRecord, String> getLocalizedTypeTitles(List<SessionRecord> records,
-            HttpServletRequest request, MessageSource messageSource) {
-        Map<SessionRecord, String> recordLocalizedTypeMap = new HashMap<SessionRecord, String>();
+    public static Map<SessionRecord, String> getLocalizedTypeTitles(final List<SessionRecord> records,
+            final HttpServletRequest request, final MessageSource messageSource) {
+        final Map<SessionRecord, String> recordLocalizedTypeMap = new HashMap<SessionRecord, String>();
 
-        for (SessionRecord record : records) {
-            String localizationCode = record.getTypedType().getLocalizationCode();
+        for (final SessionRecord record : records) {
+            final String localizationCode = record.getTypedType().getLocalizationCode();
             recordLocalizedTypeMap.put(record,
                     Localization.findLocaleMessage(messageSource, request, localizationCode));
         }
@@ -390,13 +387,13 @@ public class SessionRecordService extends AbstractDocumentRecordService {
      * Gets a {@link Map} which for each input {@link SessionRecord} contains its localized
      * {@link SessionRecord#getSessionDate() session date}.
      */
-    public static Map<SessionRecord, String> getLocalizedSessionDates(List<SessionRecord> records,
-            HttpServletRequest request) {
-        Locale locale = Localization.getLocale(request);
-        Map<SessionRecord, String> sessionDates = new HashMap<SessionRecord, String>();
+    public static Map<SessionRecord, String> getLocalizedSessionDates(final List<SessionRecord> records,
+            final HttpServletRequest request) {
+        final Locale locale = Localization.getLocale(request);
+        final Map<SessionRecord, String> sessionDates = new HashMap<SessionRecord, String>();
 
-        for (SessionRecord record : records) {
-            String date = DateUtils.format(record.getSessionDate(), DateUtils.LONG_DATE_FORMATS.get(locale), locale);
+        for (final SessionRecord record : records) {
+            final String date = DateUtils.format(record.getSessionDate(), DateUtils.LONG_DATE_FORMATS.get(locale), locale);
             sessionDates.put(record, date);
         }
         return sessionDates;
@@ -406,13 +403,13 @@ public class SessionRecordService extends AbstractDocumentRecordService {
      * Gets a {@link Map} which for each input {@link SessionRecord} contains a corresponding localized delete question
      * which is asked before deletion of that record.
      */
-    public static Map<SessionRecord, String> getLocalizedDeleteQuestions(List<SessionRecord> records,
-            HttpServletRequest request, Map<SessionRecord, String> localizedSessionDates, MessageSource messageSource) {
-        String messageCode = "session-records.do-you-really-want-to-delete-record";
-        Map<SessionRecord, String> questions = new HashMap<SessionRecord, String>();
+    public static Map<SessionRecord, String> getLocalizedDeleteQuestions(final List<SessionRecord> records,
+            final HttpServletRequest request, final Map<SessionRecord, String> localizedSessionDates, final MessageSource messageSource) {
+        final String messageCode = "session-records.do-you-really-want-to-delete-record";
+        final Map<SessionRecord, String> questions = new HashMap<SessionRecord, String>();
 
-        for (SessionRecord record : records) {
-            Object[] messageParams = new Object[] { localizedSessionDates.get(record) };
+        for (final SessionRecord record : records) {
+            final Object[] messageParams = new Object[] { localizedSessionDates.get(record) };
             questions.put(record, Localization.findLocaleMessage(messageSource, request, messageCode, messageParams));
         }
         return questions;
@@ -421,10 +418,10 @@ public class SessionRecordService extends AbstractDocumentRecordService {
     /**
      * Gets the {@link List} of all localized {@link SessionRecordType SessionRecordTypes}.
      */
-    public static List<String> getLocalizedTypes(HttpServletRequest request, MessageSource messageSource) {
-        List<String> localizedTypes = new ArrayList<String>();
+    public static List<String> getLocalizedTypes(final HttpServletRequest request, final MessageSource messageSource) {
+        final List<String> localizedTypes = new ArrayList<String>();
 
-        for (SessionRecordType type : SessionRecordType.values()) {
+        for (final SessionRecordType type : SessionRecordType.values()) {
             localizedTypes.add(Localization.findLocaleMessage(messageSource, request, type.getLocalizationCode()));
         }
         return localizedTypes;

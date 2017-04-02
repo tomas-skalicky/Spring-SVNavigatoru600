@@ -7,9 +7,9 @@ import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.support.SessionStatus;
 
 import com.svnavigatoru600.domain.records.SessionRecordType;
@@ -26,9 +26,6 @@ import com.svnavigatoru600.web.records.session.AbstractNewRecordController;
 @Controller
 public class NewAllSessionRecordController extends AbstractNewRecordController {
 
-    /**
-     * Constructor.
-     */
     @Inject
     public NewAllSessionRecordController(final SessionRecordService recordService,
             final SendNotificationNewModelFiller sendNotificationModelFiller, final NewSessionRecordValidator validator,
@@ -40,15 +37,17 @@ public class NewAllSessionRecordController extends AbstractNewRecordController {
     /**
      * This method cannot be annotated with {@link Override} since it has one less parameter.
      */
-    @RequestMapping(value = AllSessionsUrlParts.NEW_URL, method = RequestMethod.GET)
+    @GetMapping(value = AllSessionsUrlParts.NEW_URL)
     public String initForm(final HttpServletRequest request, final ModelMap model) {
         return super.initForm(SessionRecordType.SESSION_RECORD_OF_BOARD, request, model);
     }
 
     @Override
-    @RequestMapping(value = AllSessionsUrlParts.NEW_URL, method = RequestMethod.POST)
-    public String processSubmittedForm(@ModelAttribute(AbstractNewRecordController.COMMAND) final NewSessionRecord command,
-            final BindingResult result, final SessionStatus status, final HttpServletRequest request, final ModelMap model) {
+    @PostMapping(value = AllSessionsUrlParts.NEW_URL)
+    public String processSubmittedForm(
+            @ModelAttribute(AbstractNewRecordController.COMMAND) final NewSessionRecord command,
+            final BindingResult result, final SessionStatus status, final HttpServletRequest request,
+            final ModelMap model) {
         return super.processSubmittedForm(command, result, status, request, model);
     }
 }

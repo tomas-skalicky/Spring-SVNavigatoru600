@@ -43,9 +43,6 @@ public class EditNewsController extends AbstractNewEditNewsController {
      */
     public static final String DATABASE_ERROR_MESSAGE_CODE = "edit.changes-not-saved-due-to-database-error";
 
-    /**
-     * Constructor.
-     */
     @Inject
     public EditNewsController(final NewsService newsService, final EditNewsValidator validator,
             final MessageSource messageSource) {

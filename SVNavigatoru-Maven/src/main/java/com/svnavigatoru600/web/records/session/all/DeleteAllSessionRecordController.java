@@ -6,9 +6,8 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.svnavigatoru600.service.records.SessionRecordService;
 import com.svnavigatoru600.url.CommonUrlParts;
@@ -21,17 +20,14 @@ import com.svnavigatoru600.web.records.session.AbstractDeleteRecordController;
 @Controller
 public class DeleteAllSessionRecordController extends AbstractDeleteRecordController {
 
-    /**
-     * Constructor.
-     */
     @Inject
     public DeleteAllSessionRecordController(final SessionRecordService recordService, final MessageSource messageSource) {
         super(AllSessionsUrlParts.BASE_URL, new PageViews(), recordService, messageSource);
     }
 
     @Override
-    @RequestMapping(value = AllSessionsUrlParts.EXISTING_URL + "{recordId}/"
-            + CommonUrlParts.DELETE_EXTENSION, method = RequestMethod.GET)
+    @GetMapping(value = AllSessionsUrlParts.EXISTING_URL + "{recordId}/"
+            + CommonUrlParts.DELETE_EXTENSION)
     public String delete(@PathVariable final int recordId, final HttpServletRequest request, final ModelMap model) {
         return super.delete(recordId, request, model);
     }

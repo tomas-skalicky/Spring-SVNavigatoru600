@@ -10,10 +10,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.support.SessionStatus;
 
 import com.svnavigatoru600.domain.forum.Contribution;
@@ -45,9 +45,6 @@ public class NewContributionController extends AbstractNewEditContributionContro
         this.threadService = threadService;
     }
 
-    /**
-     * Constructor.
-     */
     @Inject
     public NewContributionController(final ContributionService contributionService,
             final SendNotificationNewModelFiller sendNotificationModelFiller, final NewContributionValidator validator,
@@ -58,7 +55,7 @@ public class NewContributionController extends AbstractNewEditContributionContro
     /**
      * Initializes the form.
      */
-    @RequestMapping(value = NewContributionController.BASE_URL, method = RequestMethod.GET)
+    @GetMapping(value = NewContributionController.BASE_URL)
     public String initForm(@PathVariable final int threadId, final HttpServletRequest request, final ModelMap model) {
 
         final NewContribution command = new NewContribution();
@@ -76,14 +73,14 @@ public class NewContributionController extends AbstractNewEditContributionContro
     /**
      * If values in the form are OK, the new contribution is stored to the repository. Otherwise, returns back to the
      * form.
-     * 
+     *
      * @return The name of the view which is to be shown.
      */
-    @RequestMapping(value = NewContributionController.BASE_URL, method = RequestMethod.POST)
+    @PostMapping(value = NewContributionController.BASE_URL)
     @Transactional
     public String processSubmittedForm(@ModelAttribute(NewContributionController.COMMAND) final NewContribution command,
-            final BindingResult result, final SessionStatus status, @PathVariable final int threadId, final HttpServletRequest request,
-            final ModelMap model) {
+            final BindingResult result, final SessionStatus status, @PathVariable final int threadId,
+            final HttpServletRequest request, final ModelMap model) {
 
         final MessageSource messageSource = getMessageSource();
         getSendNotificationModelFiller().populateSendNotificationInSubmitForm(command, request, messageSource);

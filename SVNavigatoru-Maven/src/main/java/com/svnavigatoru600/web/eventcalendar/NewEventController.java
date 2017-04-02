@@ -10,9 +10,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.support.SessionStatus;
 
 import com.svnavigatoru600.domain.eventcalendar.CalendarEvent;
@@ -36,9 +36,6 @@ public class NewEventController extends AbstractNewEditEventController {
      */
     public static final String DATABASE_ERROR_MESSAGE_CODE = "event-calendar.adding-failed-due-to-database-error";
 
-    /**
-     * Constructor.
-     */
     @Inject
     public NewEventController(final CalendarEventService eventService,
             final SendNotificationNewModelFiller sendNotificationModelFiller, final NewEventValidator validator,
@@ -49,7 +46,7 @@ public class NewEventController extends AbstractNewEditEventController {
     /**
      * Initializes the form.
      */
-    @RequestMapping(value = EventsUrlParts.NEW_URL, method = RequestMethod.GET)
+    @GetMapping(value = EventsUrlParts.NEW_URL)
     public String initForm(final HttpServletRequest request, final ModelMap model) {
 
         final NewEvent command = new NewEvent();
@@ -70,13 +67,14 @@ public class NewEventController extends AbstractNewEditEventController {
     /**
      * If values in the form are OK, the new calendar event is stored to the repository. Otherwise, returns back to the
      * form.
-     * 
+     *
      * @return The name of the view which is to be shown.
      */
-    @RequestMapping(value = EventsUrlParts.NEW_URL, method = RequestMethod.POST)
+    @PostMapping(value = EventsUrlParts.NEW_URL)
     @Transactional
     public String processSubmittedForm(@ModelAttribute(NewEventController.COMMAND) final NewEvent command,
-            final BindingResult result, final SessionStatus status, final HttpServletRequest request, final ModelMap model) {
+            final BindingResult result, final SessionStatus status, final HttpServletRequest request,
+            final ModelMap model) {
 
         final MessageSource messageSource = getMessageSource();
         getSendNotificationModelFiller().populateSendNotificationInSubmitForm(command, request, messageSource);

@@ -6,9 +6,8 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.svnavigatoru600.domain.records.OtherDocumentRecordType;
 import com.svnavigatoru600.service.records.OtherDocumentRecordService;
@@ -22,18 +21,15 @@ import com.svnavigatoru600.web.records.otherdocuments.AbstractDeleteDocumentCont
 @Controller
 public class DeleteRemostavDocumentController extends AbstractDeleteDocumentController {
 
-    /**
-     * Constructor.
-     */
     @Inject
-    public DeleteRemostavDocumentController(final OtherDocumentRecordService recordService, final MessageSource messageSource) {
+    public DeleteRemostavDocumentController(final OtherDocumentRecordService recordService,
+            final MessageSource messageSource) {
         super(RemostavDocumentsUrlParts.BASE_URL, new PageViews(), OtherDocumentRecordType.REMOSTAV, recordService,
                 messageSource);
     }
 
     @Override
-    @RequestMapping(value = RemostavDocumentsUrlParts.EXISTING_URL + "{recordId}/"
-            + CommonUrlParts.DELETE_EXTENSION, method = RequestMethod.GET)
+    @GetMapping(value = RemostavDocumentsUrlParts.EXISTING_URL + "{recordId}/" + CommonUrlParts.DELETE_EXTENSION)
     public String delete(@PathVariable final int recordId, final HttpServletRequest request, final ModelMap model) {
         return super.delete(recordId, request, model);
     }

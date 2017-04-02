@@ -21,26 +21,23 @@ public class WysiwygSectionService {
      */
     private final WysiwygSectionDao sectionDao;
 
-    /**
-     * Constructor.
-     */
     @Inject
-    public WysiwygSectionService(WysiwygSectionDao sectionDao) {
+    public WysiwygSectionService(final WysiwygSectionDao sectionDao) {
         this.sectionDao = sectionDao;
     }
 
     /**
      * Returns a {@link WysiwygSection} stored in the repository which has the given {@link WysiwygSectionName name}.
      */
-    public WysiwygSection findByName(WysiwygSectionName name) {
-        return this.sectionDao.findByName(name);
+    public WysiwygSection findByName(final WysiwygSectionName name) {
+        return sectionDao.findByName(name);
     }
 
     /**
      * Updates the given {@link WysiwygSection} in the repository. The old version of this section should be already
      * stored there.
      */
-    public void update(WysiwygSection section) {
-        this.sectionDao.update(section);
+    public void update(final WysiwygSection section) {
+        sectionDao.update(section);
     }
 }

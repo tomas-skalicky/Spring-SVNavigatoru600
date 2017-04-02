@@ -20,21 +20,15 @@ public abstract class AbstractDocumentRecordRowMapper {
      */
     private final boolean loadFile;
 
-    /**
-     * Constructor.
-     */
     public AbstractDocumentRecordRowMapper() {
         this(DEFAULT_LOAD_FILE);
     }
 
-    /**
-     * Constructor.
-     */
-    public AbstractDocumentRecordRowMapper(boolean loadFile) {
+    public AbstractDocumentRecordRowMapper(final boolean loadFile) {
         this.loadFile = loadFile;
     }
 
     public boolean isLoadFile() {
-        return this.loadFile;
+        return loadFile;
     }
 }
