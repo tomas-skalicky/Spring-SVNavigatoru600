@@ -1,16 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<project
-    xmlns="http://maven.apache.org/POM/4.0.0"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd"
->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com</groupId>
     <artifactId>svnavigatoru600</artifactId>
     <packaging>war</packaging>
-    <version>1.0.18-SNAPSHOT</version>
+    <version>1.0.18</version>
 
     <name>The SVNavigatoru600 web app</name>
     <url>http://svnavigatoru600.com</url>
@@ -47,7 +43,7 @@
         <connection>scm:git:git://github.com/tomas-skalicky/Spring-SVNavigatoru600.git</connection>
         <developerConnection>scm:git:[fetch=]https://github.com/tomas-skalicky/Spring-SVNavigatoru600.git[push=]git@github.com:tomas-skalicky/Spring-SVNavigatoru600.git</developerConnection>
         <url>https://github.com/tomas-skalicky/Spring-SVNavigatoru600</url>
-        <tag>HEAD</tag>
+        <tag>svnavigatoru600-1.0.18</tag>
     </scm>
 
 
