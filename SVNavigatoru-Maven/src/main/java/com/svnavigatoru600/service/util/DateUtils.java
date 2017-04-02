@@ -3,14 +3,15 @@ package com.svnavigatoru600.service.util;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.TimeZone;
 
+import com.google.common.collect.Maps;
+
 /**
  * Provides a set of static functions related to {@link Date Dates}.
- * 
+ *
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
 public final class DateUtils {
@@ -42,14 +43,14 @@ public final class DateUtils {
      * Static constructor.
      */
     static {
-        SHORT_DATE_FORMATS = new HashMap<Locale, String>();
-        MIDDLE_DATE_FORMATS = new HashMap<Locale, String>();
-        LONG_DATE_FORMATS = new HashMap<Locale, String>();
-        SHORT_DAY_FORMATS = new HashMap<Locale, String>();
-        LONG_MONTH_FORMATS = new HashMap<Locale, String>();
-        DEFAULT_DATE_TIME_FORMATS = new HashMap<Locale, String>();
+        SHORT_DATE_FORMATS = Maps.newHashMap();
+        MIDDLE_DATE_FORMATS = Maps.newHashMap();
+        LONG_DATE_FORMATS = Maps.newHashMap();
+        SHORT_DAY_FORMATS = Maps.newHashMap();
+        LONG_MONTH_FORMATS = Maps.newHashMap();
+        DEFAULT_DATE_TIME_FORMATS = Maps.newHashMap();
 
-        Locale csCZLocale = new Locale("cs", "CZ");
+        final Locale csCZLocale = new Locale("cs", "CZ");
         SHORT_DATE_FORMATS.put(csCZLocale, "d.M.yy");
         MIDDLE_DATE_FORMATS.put(csCZLocale, "d.M.yyyy");
         LONG_DATE_FORMATS.put(csCZLocale, "d. MMMM yyyy");
@@ -64,11 +65,11 @@ public final class DateUtils {
     /**
      * Formats the given <code>date</code> according to the given <code>format</code>. The <code>locale</code> is
      * important for localization.
-     * 
+     *
      * @return Formatted <code>date</code>
      */
-    public static String format(Date date, String format, Locale locale) {
-        SimpleDateFormat formatter = new SimpleDateFormat(format, locale);
+    public static String format(final Date date, final String format, final Locale locale) {
+        final SimpleDateFormat formatter = new SimpleDateFormat(format, locale);
         formatter.setTimeZone(DateUtils.TIME_ZONE);
         return formatter.format(date);
     }
@@ -116,12 +117,12 @@ public final class DateUtils {
      * (<code>YYYY-MM-DD</code> + <code>dayOffsetFromToday</code>) 00:00:00.000
      * <p>
      * where <code>YYYY-MM-DD</code> represents today.
-     * 
+     *
      * @param dayOffsetFromToday
      *            The number of days from today specifies the particular day. Can be both positive and negative.
      */
-    public static Date getDay(int dayOffsetFromToday) {
-        Date now = new Date();
+    public static Date getDay(final int dayOffsetFromToday) {
+        final Date now = new Date();
         return DateUtils.getDay(now, dayOffsetFromToday);
     }
 
@@ -132,14 +133,14 @@ public final class DateUtils {
      * (<code>YYYY-MM-DD</code> + <code>dayOffset</code>) 00:00:00.000
      * <p>
      * where <code>YYYY-MM-DD</code> represents the day of the given <code>date</code>.
-     * 
+     *
      * @param date
      *            Date on which we apply the given <code>dayOffset</code> to get the particular day.
      * @param dayOffset
      *            The number of days from <code>date</code>. Can be both positive and negative.
      */
-    public static Date getDay(Date date, int dayOffset) {
-        Calendar calendar = Calendar.getInstance();
+    public static Date getDay(final Date date, final int dayOffset) {
+        final Calendar calendar = Calendar.getInstance();
         calendar.setTimeZone(DateUtils.TIME_ZONE);
         calendar.setTime(date);
 

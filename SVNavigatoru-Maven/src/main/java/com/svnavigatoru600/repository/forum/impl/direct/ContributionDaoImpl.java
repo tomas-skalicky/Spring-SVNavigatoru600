@@ -2,7 +2,6 @@ package com.svnavigatoru600.repository.forum.impl.direct;
 
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -14,6 +13,7 @@ import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.google.common.collect.Maps;
 import com.svnavigatoru600.domain.forum.ForumContribution;
 import com.svnavigatoru600.repository.QueryUtil;
 import com.svnavigatoru600.repository.forum.ContributionDao;
@@ -135,7 +135,7 @@ public class ContributionDaoImpl extends NamedParameterJdbcDaoSupport implements
      * Maps properties of the given {@link ForumContribution} to names of the corresponding database columns.
      */
     private Map<String, Object> getNamedParameters(final ForumContribution contribution) {
-        final Map<String, Object> parameters = new HashMap<String, Object>();
+        final Map<String, Object> parameters = Maps.newHashMap();
         parameters.put(ContributionFieldEnum.ID.getColumnName(), contribution.getId());
         parameters.put(ContributionFieldEnum.THREAD_ID.getColumnName(), contribution.getThread().getId());
         parameters.put(ContributionFieldEnum.TEXT.getColumnName(), contribution.getText());

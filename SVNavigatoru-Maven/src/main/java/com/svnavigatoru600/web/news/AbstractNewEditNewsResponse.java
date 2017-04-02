@@ -1,6 +1,5 @@
 package com.svnavigatoru600.web.news;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -10,6 +9,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 
+import com.google.common.collect.Lists;
 import com.svnavigatoru600.service.util.Localization;
 import com.svnavigatoru600.viewmodel.news.AbstractNewEditNews;
 
@@ -25,13 +25,13 @@ public abstract class AbstractNewEditNewsResponse extends AbstractNewsResponse {
     /**
      * Contains global errors if any exists.
      */
-    private List<ObjectError> globalErrors = new ArrayList<ObjectError>();
+    private List<ObjectError> globalErrors = Lists.newArrayList();
     /**
      * Contains field errors if any exists.
      */
-    private List<FieldError> fieldErrors = new ArrayList<FieldError>();
+    private List<FieldError> fieldErrors = Lists.newArrayList();
 
-    public AbstractNewEditNewsResponse(AbstractNewEditNews command) {
+    public AbstractNewEditNewsResponse(final AbstractNewEditNews command) {
         super();
         this.command = command;
     }
@@ -39,21 +39,21 @@ public abstract class AbstractNewEditNewsResponse extends AbstractNewsResponse {
     /**
      * Sets up everything in a way that the processing of the command has failed.
      */
-    public void setFail(BindingResult result, MessageSource messageSource, HttpServletRequest request) {
+    public void setFail(final BindingResult result, final MessageSource messageSource, final HttpServletRequest request) {
         this.setFail();
-        this.globalErrors = Localization.localizeGlobalErrors(result.getGlobalErrors(), messageSource, request);
-        this.fieldErrors = Localization.localizeFieldErrors(result.getFieldErrors(), messageSource, request);
+        globalErrors = Localization.localizeGlobalErrors(result.getGlobalErrors(), messageSource, request);
+        fieldErrors = Localization.localizeFieldErrors(result.getFieldErrors(), messageSource, request);
     }
 
     public AbstractNewEditNews getCommand() {
-        return this.command;
+        return command;
     }
 
     public List<ObjectError> getGlobalErrors() {
-        return this.globalErrors;
+        return globalErrors;
     }
 
     public List<FieldError> getFieldErrors() {
-        return this.fieldErrors;
+        return fieldErrors;
     }
 }

@@ -2,7 +2,6 @@ package com.svnavigatoru600.repository.users.impl.direct;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -15,6 +14,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.google.common.collect.Maps;
 import com.svnavigatoru600.domain.users.Authority;
 import com.svnavigatoru600.domain.users.AuthorityId;
 import com.svnavigatoru600.domain.users.AuthorityTypeEnum;
@@ -56,7 +56,7 @@ public class AuthorityDaoImpl extends NamedParameterJdbcDaoSupport implements Au
      * Maps properties of the given {@link Authority} to names of the corresponding database columns.
      */
     private Map<String, Object> getNamedParameters(final Authority authority) {
-        final Map<String, Object> parameters = new HashMap<String, Object>();
+        final Map<String, Object> parameters = Maps.newHashMap();
         final AuthorityId id = authority.getId();
         parameters.put(AuthorityFieldEnum.USERNAME.getColumnName(), id.getUsername());
         parameters.put(AuthorityFieldEnum.AUTHORITY.getColumnName(), id.getAuthority());
@@ -95,7 +95,7 @@ public class AuthorityDaoImpl extends NamedParameterJdbcDaoSupport implements Au
         final String query = String.format("DELETE FROM %s WHERE %s = :%s AND %s = :%s", AuthorityDaoImpl.TABLE_NAME,
                 usernameColumn, usernameColumn, typeColumn, typeColumn);
 
-        final Map<String, String> args = new HashMap<String, String>();
+        final Map<String, String> args = Maps.newHashMap();
         args.put(usernameColumn, username);
         args.put(typeColumn, authorityType.name());
 

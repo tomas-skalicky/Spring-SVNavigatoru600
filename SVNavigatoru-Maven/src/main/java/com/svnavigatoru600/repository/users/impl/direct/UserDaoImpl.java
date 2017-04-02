@@ -1,7 +1,6 @@
 package com.svnavigatoru600.repository.users.impl.direct;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -18,6 +17,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.google.common.collect.Maps;
 import com.svnavigatoru600.domain.users.Authority;
 import com.svnavigatoru600.domain.users.NotificationTypeEnum;
 import com.svnavigatoru600.domain.users.User;
@@ -128,9 +128,8 @@ public class UserDaoImpl extends NamedParameterJdbcDaoSupport implements UserDao
 
         final String authorityColumn = AuthorityFieldEnum.AUTHORITY.getColumnName();
         final String query = String.format("SELECT u.* FROM %s u INNER JOIN %s a ON a.%s = u.%s WHERE a.%s = :%s",
-                UserDaoImpl.TABLE_NAME, AuthorityDaoImpl.TABLE_NAME,
-                AuthorityFieldEnum.USERNAME.getColumnName(), UserFieldEnum.USERNAME.getColumnName(), authorityColumn,
-                authorityColumn);
+                UserDaoImpl.TABLE_NAME, AuthorityDaoImpl.TABLE_NAME, AuthorityFieldEnum.USERNAME.getColumnName(),
+                UserFieldEnum.USERNAME.getColumnName(), authorityColumn, authorityColumn);
 
         final Map<String, String> args = Collections.singletonMap(authorityColumn, authority);
 
@@ -150,11 +149,11 @@ public class UserDaoImpl extends NamedParameterJdbcDaoSupport implements UserDao
         final String subscriptionColumn = UserFieldEnum.getSubscriptionField(notificationType).getColumnName();
         final String query = String.format(
                 "SELECT u.* FROM %s u INNER JOIN %s a ON a.%s = u.%s WHERE a.%s = :%s AND u.%s = :%s",
-                UserDaoImpl.TABLE_NAME, AuthorityDaoImpl.TABLE_NAME,
-                AuthorityFieldEnum.USERNAME.getColumnName(), UserFieldEnum.USERNAME.getColumnName(), authorityColumn,
-                authorityColumn, subscriptionColumn, subscriptionColumn);
+                UserDaoImpl.TABLE_NAME, AuthorityDaoImpl.TABLE_NAME, AuthorityFieldEnum.USERNAME.getColumnName(),
+                UserFieldEnum.USERNAME.getColumnName(), authorityColumn, authorityColumn, subscriptionColumn,
+                subscriptionColumn);
 
-        final Map<String, Object> args = new HashMap<String, Object>();
+        final Map<String, Object> args = Maps.newHashMap();
         args.put(authorityColumn, authority);
         args.put(subscriptionColumn, Boolean.TRUE);
 
@@ -182,7 +181,7 @@ public class UserDaoImpl extends NamedParameterJdbcDaoSupport implements UserDao
      * Maps properties of the given {@link User} to names of the corresponding database columns.
      */
     private Map<String, Object> getNamedParameters(final User user) {
-        final Map<String, Object> parameters = new HashMap<String, Object>();
+        final Map<String, Object> parameters = Maps.newHashMap();
         parameters.put(UserFieldEnum.USERNAME.getColumnName(), user.getUsername());
         parameters.put(UserFieldEnum.PASSWORD.getColumnName(), user.getPassword());
         parameters.put(UserFieldEnum.ENABLED.getColumnName(), user.isEnabled());
@@ -194,7 +193,8 @@ public class UserDaoImpl extends NamedParameterJdbcDaoSupport implements UserDao
         parameters.put(UserFieldEnum.SUBSCRIBED_TO_NEWS.getColumnName(), user.isSubscribedToNews());
         parameters.put(UserFieldEnum.SUBSCRIBED_TO_EVENTS.getColumnName(), user.isSubscribedToEvents());
         parameters.put(UserFieldEnum.SUBSCRIBED_TO_FORUM.getColumnName(), user.isSubscribedToForum());
-        parameters.put(UserFieldEnum.SUBSCRIBED_TO_OTHER_DOCUMENTS.getColumnName(), user.isSubscribedToOtherDocuments());
+        parameters.put(UserFieldEnum.SUBSCRIBED_TO_OTHER_DOCUMENTS.getColumnName(),
+                user.isSubscribedToOtherDocuments());
         parameters.put(UserFieldEnum.SUBSCRIBED_TO_OTHER_SECTIONS.getColumnName(), user.isSubscribedToOtherSections());
         parameters.put(UserFieldEnum.SMTP_PORT.getColumnName(), user.getSmtpPort());
         parameters.put(UserFieldEnum.REDIRECT_EMAIL.getColumnName(), user.getRedirectEmail());
@@ -256,11 +256,12 @@ public class UserDaoImpl extends NamedParameterJdbcDaoSupport implements UserDao
                         UserFieldEnum.ENABLED.getColumnName(), UserFieldEnum.FIRST_NAME.getColumnName(),
                         UserFieldEnum.LAST_NAME.getColumnName(), UserFieldEnum.EMAIL.getColumnName(),
                         UserFieldEnum.PHONE.getColumnName(), UserFieldEnum.IS_TEST_USER.getColumnName(),
-                        UserFieldEnum.SUBSCRIBED_TO_NEWS.getColumnName(), UserFieldEnum.SUBSCRIBED_TO_EVENTS.getColumnName(),
+                        UserFieldEnum.SUBSCRIBED_TO_NEWS.getColumnName(),
+                        UserFieldEnum.SUBSCRIBED_TO_EVENTS.getColumnName(),
                         UserFieldEnum.SUBSCRIBED_TO_FORUM.getColumnName(),
                         UserFieldEnum.SUBSCRIBED_TO_OTHER_DOCUMENTS.getColumnName(),
-                        UserFieldEnum.SUBSCRIBED_TO_OTHER_SECTIONS.getColumnName(), UserFieldEnum.SMTP_PORT.getColumnName(),
-                        UserFieldEnum.REDIRECT_EMAIL.getColumnName());
+                        UserFieldEnum.SUBSCRIBED_TO_OTHER_SECTIONS.getColumnName(),
+                        UserFieldEnum.SMTP_PORT.getColumnName(), UserFieldEnum.REDIRECT_EMAIL.getColumnName());
 
         insert.execute(getNamedParameters(user));
 

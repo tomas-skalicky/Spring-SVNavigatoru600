@@ -13,7 +13,7 @@ import com.svnavigatoru600.test.category.UnitTests;
 
 /**
  * Tests the rest of methods of the {@link User} class which are not tested in the {@link UserCopyMethodsTest} class.
- * 
+ *
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
 @Category(UnitTests.class)
@@ -26,10 +26,10 @@ public final class UserTest extends AbstractUserTest {
 
     @Test
     public void testAddAuthority() {
-        User user = getDefaultUser();
+        final User user = getDefaultUser();
 
         // Adds
-        AuthorityTypeEnum newAuthority = AuthorityTypeEnum.ROLE_MEMBER_OF_BOARD;
+        final AuthorityTypeEnum newAuthority = AuthorityTypeEnum.ROLE_MEMBER_OF_BOARD;
         user.addAuthority(newAuthority);
 
         // Checks
@@ -38,10 +38,10 @@ public final class UserTest extends AbstractUserTest {
 
     @Test
     public void testAddAuthorityMoreTimes() {
-        User user = getDefaultUser();
+        final User user = getDefaultUser();
 
         // Adds more times.
-        AuthorityTypeEnum newAuthority = AuthorityTypeEnum.ROLE_MEMBER_OF_BOARD;
+        final AuthorityTypeEnum newAuthority = AuthorityTypeEnum.ROLE_MEMBER_OF_BOARD;
         user.addAuthority(newAuthority);
         user.addAuthority(newAuthority);
         // OK since the remoteAuthority method should not throw an exception.
@@ -52,7 +52,7 @@ public final class UserTest extends AbstractUserTest {
 
     @Test
     public void testRemoveAuthority() {
-        User user = getDefaultUser();
+        final User user = getDefaultUser();
 
         // Adds two authorities.
         user.addAuthority(AuthorityTypeEnum.ROLE_MEMBER_OF_BOARD);
@@ -71,10 +71,10 @@ public final class UserTest extends AbstractUserTest {
 
     @Test
     public void testRemoveAuthorityMoreTimes() {
-        User user = getDefaultUser();
+        final User user = getDefaultUser();
 
         // Adds
-        AuthorityTypeEnum newAuthority = AuthorityTypeEnum.ROLE_MEMBER_OF_BOARD;
+        final AuthorityTypeEnum newAuthority = AuthorityTypeEnum.ROLE_MEMBER_OF_BOARD;
         user.addAuthority(newAuthority);
 
         // Removes more times.
@@ -89,7 +89,7 @@ public final class UserTest extends AbstractUserTest {
     /**
      * Checks that the given {@link User user} has just the given <code>ownedAuthority</code> and no other.
      */
-    private void checkAuthorities(User user, AuthorityTypeEnum ownedAuthority) {
+    private void checkAuthorities(final User user, final AuthorityTypeEnum ownedAuthority) {
         this.checkAuthorities(user, Arrays.asList(ownedAuthority));
     }
 
@@ -97,8 +97,8 @@ public final class UserTest extends AbstractUserTest {
      * Checks that the given {@link User user} has exactly the given <code>ownedAuthorities</code>, i.e. he has all of
      * them and no other.
      */
-    private void checkAuthorities(User user, List<AuthorityTypeEnum> ownedAuthorities) {
-        for (AuthorityTypeEnum authority : AuthorityTypeEnum.values()) {
+    private void checkAuthorities(final User user, final List<AuthorityTypeEnum> ownedAuthorities) {
+        for (final AuthorityTypeEnum authority : AuthorityTypeEnum.values()) {
             if (ownedAuthorities.contains(authority)) {
                 Assert.assertTrue(user.hasAuthority(authority));
             } else {
@@ -109,21 +109,21 @@ public final class UserTest extends AbstractUserTest {
 
     @Test
     public void testFilterWithNoEmailOut() {
-        User firstUser = new User();
+        final User firstUser = new User();
         firstUser.setEmail(null);
-        User secondUser = new User();
+        final User secondUser = new User();
         secondUser.setEmail("");
-        User thirdUser = new User();
+        final User thirdUser = new User();
         thirdUser.setEmail("     ");
-        User forthUser = new User();
+        final User forthUser = new User();
         forthUser.setEmail("email");
-        User fifthUser = new User();
+        final User fifthUser = new User();
         fifthUser.setEmail("email@host.com");
 
-        List<User> inputUsers = Arrays.asList(firstUser, secondUser, thirdUser, forthUser, fifthUser);
-        List<User> expectedUsers = Arrays.asList(forthUser, fifthUser);
+        final List<User> inputUsers = Arrays.asList(firstUser, secondUser, thirdUser, forthUser, fifthUser);
+        final List<User> expectedUsers = Arrays.asList(forthUser, fifthUser);
 
-        List<User> actualUsers = User.filterWithNoEmailOut(inputUsers);
+        final List<User> actualUsers = User.filterWithNoEmailOut(inputUsers);
         Assert.assertEquals(expectedUsers.size(), actualUsers.size());
         Assert.assertTrue(actualUsers.containsAll(expectedUsers));
     }

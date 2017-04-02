@@ -1,6 +1,5 @@
 package com.svnavigatoru600.web.eventcalendar;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -9,6 +8,7 @@ import org.springframework.context.MessageSource;
 import org.springframework.validation.Validator;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
+import com.google.common.collect.Lists;
 import com.svnavigatoru600.domain.eventcalendar.PriorityTypeEnum;
 import com.svnavigatoru600.service.eventcalendar.CalendarEventService;
 import com.svnavigatoru600.service.util.Localization;
@@ -63,7 +63,7 @@ public abstract class AbstractNewEditEventController extends AbstractEventContro
      */
     @ModelAttribute("priorityTypeList")
     public List<String> populatePriorityTypeList(final HttpServletRequest request) {
-        final List<String> priorityTypeList = new ArrayList<String>();
+        final List<String> priorityTypeList = Lists.newArrayList();
 
         for (final PriorityTypeEnum type : PriorityTypeEnum.values()) {
             final String localizationCode = type.getLocalizationCode();

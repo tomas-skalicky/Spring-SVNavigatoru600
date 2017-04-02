@@ -2,7 +2,6 @@ package com.svnavigatoru600.repository.eventcalendar.impl.direct;
 
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -14,6 +13,7 @@ import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.google.common.collect.Maps;
 import com.svnavigatoru600.domain.eventcalendar.CalendarEvent;
 import com.svnavigatoru600.repository.CalendarEventDao;
 import com.svnavigatoru600.repository.QueryUtil;
@@ -65,7 +65,7 @@ public class CalendarEventDaoImpl extends NamedParameterJdbcDaoSupport implement
      * Maps properties of the given {@link CalendarEvent} to names of the corresponding database columns.
      */
     private Map<String, Object> getNamedParameters(final CalendarEvent event) {
-        final Map<String, Object> parameters = new HashMap<String, Object>();
+        final Map<String, Object> parameters = Maps.newHashMap();
         parameters.put(CalendarEventFieldEnum.ID.getColumnName(), event.getId());
         parameters.put(CalendarEventFieldEnum.NAME.getColumnName(), event.getName());
         parameters.put(CalendarEventFieldEnum.DATE.getColumnName(), event.getDate());

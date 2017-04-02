@@ -93,4 +93,5 @@ public class ForumContribution implements Serializable {
         builder.append("]");
         return builder.toString();
     }
+
 }

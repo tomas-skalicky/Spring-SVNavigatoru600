@@ -2,12 +2,12 @@ package com.svnavigatoru600.domain.forum;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.google.common.collect.Maps;
 import com.svnavigatoru600.domain.users.User;
 
 /**
@@ -26,8 +26,8 @@ public class ForumThread implements Serializable, Comparable<ForumThread> {
     private List<ForumContribution> contributions;
 
     /**
-     * Sorts {@link ForumThread Threads} according to their last saved {@link ForumContribution Contributions} returned by the
-     * {@link #getLastSavedContribution() getLastSavedContribution} method.
+     * Sorts {@link ForumThread Threads} according to their last saved {@link ForumContribution Contributions} returned
+     * by the {@link #getLastSavedContribution() getLastSavedContribution} method.
      */
     @Override
     public int compareTo(final ForumThread t) {
@@ -45,8 +45,8 @@ public class ForumThread implements Serializable, Comparable<ForumThread> {
     }
 
     /**
-     * Gets the {@link ForumContribution} which has been saved the latest time among all {@link ForumContribution Contributions}
-     * of this {@link ForumThread}.
+     * Gets the {@link ForumContribution} which has been saved the latest time among all {@link ForumContribution
+     * Contributions} of this {@link ForumThread}.
      */
     public ForumContribution getLastSavedContribution() {
         ForumContribution lastSavedContribution = null;
@@ -61,12 +61,12 @@ public class ForumThread implements Serializable, Comparable<ForumThread> {
     }
 
     /**
-     * Gets a {@link Map} which for each input {@link ForumThread} contains a {@link ForumContribution} which has the highest
-     * {@link ForumContribution#getLastSaveTime() lastSaveTime} and which belongs to that thread. Moreover, the method finds
-     * the author of such a contribution.
+     * Gets a {@link Map} which for each input {@link ForumThread} contains a {@link ForumContribution} which has the
+     * highest {@link ForumContribution#getLastSaveTime() lastSaveTime} and which belongs to that thread. Moreover, the
+     * method finds the author of such a contribution.
      */
     public static Map<ForumThread, ForumContribution> getLastSavedContributions(final List<ForumThread> threads) {
-        final Map<ForumThread, ForumContribution> lastSavedContributions = new HashMap<ForumThread, ForumContribution>();
+        final Map<ForumThread, ForumContribution> lastSavedContributions = Maps.newHashMap();
 
         for (final ForumThread thread : threads) {
             lastSavedContributions.put(thread, thread.getLastSavedContribution());

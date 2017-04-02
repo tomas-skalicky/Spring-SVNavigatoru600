@@ -1,6 +1,5 @@
 package com.svnavigatoru600.service.forum;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -11,6 +10,7 @@ import org.springframework.context.MessageSource;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
+import com.google.common.collect.Maps;
 import com.svnavigatoru600.domain.forum.ForumThread;
 import com.svnavigatoru600.domain.users.AuthorityTypeEnum;
 import com.svnavigatoru600.domain.users.User;
@@ -89,14 +89,14 @@ public class ThreadService implements SubjectOfNotificationService {
     }
 
     /**
-     * Updates properties of the given <code>threadToUpdate</code> and persists this {@link ForumThread} into the repository.
-     * The old version of this thread should be already stored there.
+     * Updates properties of the given <code>threadToUpdate</code> and persists this {@link ForumThread} into the
+     * repository. The old version of this thread should be already stored there.
      *
      * @param threadToUpdate
      *            Persisted {@link ForumThread}
      * @param newThread
-     *            {@link ForumThread} which contains new values of properties of <code>threadToUpdate</code>. These values
-     *            are copied to the persisted thread.
+     *            {@link ForumThread} which contains new values of properties of <code>threadToUpdate</code>. These
+     *            values are copied to the persisted thread.
      */
     public void update(final ForumThread threadToUpdate, final ForumThread newThread) {
         threadToUpdate.setName(newThread.getName());
@@ -110,7 +110,8 @@ public class ThreadService implements SubjectOfNotificationService {
     }
 
     @Override
-    public void notifyUsersOfUpdate(final Object updatedObject, final HttpServletRequest request, final MessageSource messageSource) {
+    public void notifyUsersOfUpdate(final Object updatedObject, final HttpServletRequest request,
+            final MessageSource messageSource) {
         throw new IllegalAccessError("This method is not supported");
     }
 
@@ -132,8 +133,8 @@ public class ThreadService implements SubjectOfNotificationService {
      * @param sendNotification
      *            If <code>true</code>, the notification is sent; otherwise not.
      */
-    public void saveAndNotifyUsers(final ForumThread newThread, final boolean sendNotification, final HttpServletRequest request,
-            final MessageSource messageSource) {
+    public void saveAndNotifyUsers(final ForumThread newThread, final boolean sendNotification,
+            final HttpServletRequest request, final MessageSource messageSource) {
         save(newThread);
 
         if (sendNotification) {
@@ -142,7 +143,8 @@ public class ThreadService implements SubjectOfNotificationService {
     }
 
     @Override
-    public void notifyUsersOfCreation(final Object newThread, final HttpServletRequest request, final MessageSource messageSource) {
+    public void notifyUsersOfCreation(final Object newThread, final HttpServletRequest request,
+            final MessageSource messageSource) {
         emailService.sendEmailOnCreation(newThread, gainUsersToNotify(), request, messageSource);
     }
 
@@ -154,13 +156,13 @@ public class ThreadService implements SubjectOfNotificationService {
     }
 
     /**
-     * Gets a {@link Map} which for each input {@link ForumThread} contains a corresponding localized delete question which
-     * is asked before deletion of that thread.
+     * Gets a {@link Map} which for each input {@link ForumThread} contains a corresponding localized delete question
+     * which is asked before deletion of that thread.
      */
-    public static Map<ForumThread, String> getLocalizedDeleteQuestions(final List<ForumThread> threads, final HttpServletRequest request,
-            final MessageSource messageSource) {
+    public static Map<ForumThread, String> getLocalizedDeleteQuestions(final List<ForumThread> threads,
+            final HttpServletRequest request, final MessageSource messageSource) {
         final String messageCode = "forum.threads.do-you-really-want-to-delete-thread";
-        final Map<ForumThread, String> questions = new HashMap<ForumThread, String>();
+        final Map<ForumThread, String> questions = Maps.newHashMap();
 
         for (final ForumThread thread : threads) {
             final Object[] messageParams = new Object[] { thread.getName() };
@@ -168,4 +170,5 @@ public class ThreadService implements SubjectOfNotificationService {
         }
         return questions;
     }
+
 }

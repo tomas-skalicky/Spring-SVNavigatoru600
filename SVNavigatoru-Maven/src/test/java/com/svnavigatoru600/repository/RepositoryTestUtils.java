@@ -4,13 +4,14 @@ import java.sql.Blob;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.assertj.core.util.Sets;
 import org.springframework.context.ApplicationContext;
 import org.springframework.security.core.GrantedAuthority;
 
+import com.google.common.collect.Lists;
 import com.svnavigatoru600.domain.News;
 import com.svnavigatoru600.domain.eventcalendar.CalendarEvent;
 import com.svnavigatoru600.domain.eventcalendar.PriorityTypeEnum;
@@ -78,7 +79,7 @@ public final class RepositoryTestUtils {
     /**
      * Default contributions of test thread.
      */
-    static final List<ForumContribution> THREAD_DEFAULT_CONTRIBUTIONS = new ArrayList<ForumContribution>();
+    static final List<ForumContribution> THREAD_DEFAULT_CONTRIBUTIONS = Lists.newArrayList();
     /**
      * Default text of test contribution.
      */
@@ -118,7 +119,7 @@ public final class RepositoryTestUtils {
     /**
      * Default authorities of test user.
      */
-    static final Set<GrantedAuthority> USER_DEFAULT_AUTHORITIES = new HashSet<GrantedAuthority>();
+    static final Set<GrantedAuthority> USER_DEFAULT_AUTHORITIES = Sets.newHashSet();
     /**
      * Default username of the second test user.
      */
@@ -130,7 +131,7 @@ public final class RepositoryTestUtils {
     /**
      * Default authorities of the second test user.
      */
-    static final Set<GrantedAuthority> SECOND_USER_DEFAULT_AUTHORITIES = new HashSet<GrantedAuthority>();
+    static final Set<GrantedAuthority> SECOND_USER_DEFAULT_AUTHORITIES = Sets.newHashSet();
     /**
      * Default type of user's test authority.
      */

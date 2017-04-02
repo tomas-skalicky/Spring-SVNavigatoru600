@@ -10,6 +10,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.google.common.collect.Lists;
 import com.svnavigatoru600.service.util.AuthorityUtils;
 import com.svnavigatoru600.service.util.CheckboxUtils;
 import com.svnavigatoru600.service.util.FullNameFormatEnum;
@@ -220,7 +221,7 @@ public class User implements UserDetails, Serializable {
      * Gets an array of names of authorities (= roles).
      */
     public String[] getAuthorityNames() {
-        final List<String> authorityNames = new ArrayList<String>();
+        final List<String> authorityNames = Lists.newArrayList();
         for (final GrantedAuthority authority : authorities) {
             authorityNames.add(authority.getAuthority());
         }

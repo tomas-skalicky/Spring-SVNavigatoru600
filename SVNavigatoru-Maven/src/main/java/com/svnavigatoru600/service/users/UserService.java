@@ -1,7 +1,6 @@
 package com.svnavigatoru600.service.users;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -13,6 +12,7 @@ import org.springframework.context.MessageSource;
 import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.stereotype.Service;
 
+import com.google.common.collect.Maps;
 import com.svnavigatoru600.domain.forum.ForumContribution;
 import com.svnavigatoru600.domain.forum.ForumThread;
 import com.svnavigatoru600.domain.users.AuthorityTypeEnum;
@@ -28,7 +28,7 @@ import com.svnavigatoru600.service.util.UserUtils;
 
 /**
  * Provides convenient methods to work with {@link User} objects.
- * 
+ *
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
 @Service
@@ -68,7 +68,7 @@ public class UserService {
      * {@link User} is not found, an exception is thrown.
      * <p>
      * The returned user has its {@link User#getAuthorities() authorities} populated.
-     * 
+     *
      * @param email
      *            Case-insensitive email address of the desired user
      */
@@ -127,7 +127,7 @@ public class UserService {
      * last names} and {@link User#getFirstName() first names} in the given {@link OrderTypeEnum order}.
      * <p>
      * {@link com.svnavigatoru600.domain.users.Authority Authorities} of the returned users are populated.
-     * 
+     *
      * @param testUsers
      *            If <code>true</code>, the method returns only test users. Otherwise, it returns only non-test users.
      *            Test users are those which are not accessible to the business user (= customer).
@@ -159,7 +159,7 @@ public class UserService {
      * {@link com.svnavigatoru600.domain.users.Authority authorities} are persisted as well.
      * <p>
      * Finally, updates properties of the {@link User} object of the user which is currently logged to this web app.
-     * 
+     *
      * @param userToUpdate
      *            Persisted {@link User}
      * @param newUser
@@ -196,7 +196,7 @@ public class UserService {
      * {@link com.svnavigatoru600.domain.users.Authority authorities} are persisted as well.
      * <p>
      * Finally, notifies the <code>userToUpdate</code> by email about changes in his existing account.
-     * 
+     *
      * @param userToUpdate
      *            Persisted {@link User}
      * @param newUser
@@ -252,7 +252,7 @@ public class UserService {
      * Authorities} of the user are persisted as well.
      * <p>
      * Finally, notifies the user by email about his new account.
-     * 
+     *
      * @param newUser
      *            New user
      * @param newPassword
@@ -292,7 +292,7 @@ public class UserService {
      * Authorities} from the repository.
      * <p>
      * Finally, notifies the user about the deletion of his account.
-     * 
+     *
      * @param username
      *            Username (=login) of the user which is to be deleted
      */
@@ -306,7 +306,7 @@ public class UserService {
     /**
      * Unsubscribes the specified {@link User} from receiving notifications which are of the given
      * {@link NotificationTypeEnum}. This change is persisted.
-     * 
+     *
      * @param username
      *            Username (= login) of the affected user.
      */
@@ -319,7 +319,7 @@ public class UserService {
     /**
      * Looks up in the repository and finds out whether an {@link User} with the given <code>username</code> exists, or
      * not.
-     * 
+     *
      * @return <code>true</code> the corresponding {@link User} exists.
      */
     public boolean isUsernameOccupied(final String username) {
@@ -334,7 +334,7 @@ public class UserService {
     /**
      * Looks up in the repository and finds out whether an {@link User} with the given <code>emailAddress</code> exists,
      * or not.
-     * 
+     *
      * @return <code>true</code> the corresponding {@link User} exists.
      */
     public boolean isEmailOccupied(final String emailAddress) {
@@ -349,7 +349,7 @@ public class UserService {
     /**
      * Sets the password of the specified {@link User} to a new generated password. Notifies the user about this
      * operation by email containing the new password.
-     * 
+     *
      * @param email
      *            Email address of the {@link User} whose password is reset
      */
@@ -386,7 +386,7 @@ public class UserService {
     public static Map<User, String> getLocalizedDeleteQuestions(final List<User> users, final HttpServletRequest request,
             final MessageSource messageSource) {
         final String messageCode = "user-administration.do-you-really-want-to-delete-user";
-        final Map<User, String> questions = new HashMap<User, String>();
+        final Map<User, String> questions = Maps.newHashMap();
 
         for (final User user : users) {
             final Object[] messageParams = new Object[] { user.getUsername(), user.getFullName() };
@@ -401,7 +401,7 @@ public class UserService {
      */
     public static Map<Long, String> getLocalizedNotificationTitles(final HttpServletRequest request,
             final MessageSource messageSource) {
-        final Map<Long, String> ordinalTitleMap = new HashMap<Long, String>();
+        final Map<Long, String> ordinalTitleMap = Maps.newHashMap();
 
         for (final NotificationTypeEnum type : NotificationTypeEnum.values()) {
             final String localizedTitle = Localization.findLocaleMessage(messageSource, request,

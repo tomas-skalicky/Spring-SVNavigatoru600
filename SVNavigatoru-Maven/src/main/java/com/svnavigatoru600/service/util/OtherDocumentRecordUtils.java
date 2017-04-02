@@ -1,9 +1,9 @@
 package com.svnavigatoru600.service.util;
 
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.Set;
 
+import com.google.common.collect.Sets;
 import com.svnavigatoru600.domain.records.OtherDocumentRecordTypeEnum;
 import com.svnavigatoru600.domain.records.OtherDocumentRecordTypeRelation;
 
@@ -31,8 +31,8 @@ public final class OtherDocumentRecordUtils {
     }
 
     /**
-     * Gets an array of flags which say which {@link OtherDocumentRecordTypeEnum OtherDocumentRecordTypes} are checked, and
-     * which types are not. The array is filled in according to the given array of checked
+     * Gets an array of flags which say which {@link OtherDocumentRecordTypeEnum OtherDocumentRecordTypes} are checked,
+     * and which types are not. The array is filled in according to the given array of checked
      * {@link OtherDocumentRecordTypeRelation} called <code>types</code>.
      */
     public static boolean[] getArrayOfCheckIndicators(final Collection<OtherDocumentRecordTypeRelation> types) {
@@ -48,8 +48,8 @@ public final class OtherDocumentRecordUtils {
      * Gets the default array of flags which say which {@link OtherDocumentRecordTypeEnum OtherDocumentRecordTypes} are
      * checked (selected), and which types are not.
      * <p>
-     * <b>Precondition:</b> Ordinal values of all {@link OtherDocumentRecordTypeEnum OtherDocumentRecordTypes} are exactly
-     * in the range of <code>[0, 1, ..., OtherDocumentRecordType.values().length-1]</code>.
+     * <b>Precondition:</b> Ordinal values of all {@link OtherDocumentRecordTypeEnum OtherDocumentRecordTypes} are
+     * exactly in the range of <code>[0, 1, ..., OtherDocumentRecordType.values().length-1]</code>.
      */
     public static boolean[] getDefaultArrayOfCheckIndicators() {
         return OtherDocumentRecordUtils.createArrayOfCheckIndicators();
@@ -69,7 +69,7 @@ public final class OtherDocumentRecordUtils {
      */
     public static Set<OtherDocumentRecordTypeRelation> convertIndicatorsToRelations(final boolean[] indicators,
             final int recordId) {
-        final Set<OtherDocumentRecordTypeRelation> checkedTypes = new HashSet<OtherDocumentRecordTypeRelation>();
+        final Set<OtherDocumentRecordTypeRelation> checkedTypes = Sets.newHashSet();
 
         for (int i = 0; i < indicators.length; ++i) {
             final boolean isRelationChecked = indicators[i];

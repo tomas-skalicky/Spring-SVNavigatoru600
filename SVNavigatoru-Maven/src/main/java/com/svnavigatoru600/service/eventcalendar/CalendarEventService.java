@@ -1,6 +1,5 @@
 package com.svnavigatoru600.service.eventcalendar;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -10,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
 
+import com.google.common.collect.Maps;
 import com.svnavigatoru600.domain.eventcalendar.CalendarEvent;
 import com.svnavigatoru600.domain.eventcalendar.PriorityTypeEnum;
 import com.svnavigatoru600.domain.users.AuthorityTypeEnum;
@@ -192,7 +192,7 @@ public class CalendarEventService implements SubjectOfNotificationService {
     public static Map<CalendarEvent, String> getLocalizedDeleteQuestions(final List<CalendarEvent> events,
             final HttpServletRequest request, final MessageSource messageSource) {
         final String messageCode = "event-calendar.do-you-really-want-to-delete-event";
-        final Map<CalendarEvent, String> questions = new HashMap<CalendarEvent, String>();
+        final Map<CalendarEvent, String> questions = Maps.newHashMap();
 
         for (final CalendarEvent event : events) {
             final Object[] messageParams = new Object[] { event.getName() };
@@ -200,4 +200,5 @@ public class CalendarEventService implements SubjectOfNotificationService {
         }
         return questions;
     }
+
 }

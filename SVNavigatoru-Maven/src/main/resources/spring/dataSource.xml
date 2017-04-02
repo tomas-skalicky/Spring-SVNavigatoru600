@@ -68,6 +68,6 @@
 		p:dataSource-ref="dataSource" />
 	
 	<!-- Enables transaction demarcation with annotations -->
-    <tx:annotation-driven />
+    <tx:annotation-driven proxy-target-class="true" />
 
 </beans>

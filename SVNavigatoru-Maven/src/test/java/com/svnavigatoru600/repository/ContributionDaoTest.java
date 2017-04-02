@@ -19,7 +19,7 @@ import com.svnavigatoru600.test.category.PersistenceTests;
 
 /**
  * Tests methods of the {@link ContributionDao} interface.
- * 
+ *
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
 @Category(PersistenceTests.class)
@@ -40,24 +40,24 @@ public final class ContributionDaoTest extends AbstractRepositoryTest {
 
     @Before
     public void createDefaultAuthorAndThread() {
-        this.defaultAuthor = TEST_UTILS.createDefaultTestUser();
-        this.defaultThread = createDefaultTestThread();
+        defaultAuthor = TEST_UTILS.createDefaultTestUser();
+        defaultThread = createDefaultTestThread();
     }
 
     @Test
     public void testSaveFindById() throws Exception {
-        ContributionDao contributionDao = TEST_UTILS.getContributionDao();
+        final ContributionDao contributionDao = TEST_UTILS.getContributionDao();
 
         // INSERT
-        int contributionId = createDefaultTestContribution();
+        final int contributionId = createDefaultTestContribution();
 
         // SELECT ONE
-        ForumContribution contribution = contributionDao.findById(contributionId);
+        final ForumContribution contribution = contributionDao.findById(contributionId);
         Assert.assertTrue(contribution.getId() >= 1);
         Assert.assertEquals(contributionId, contribution.getId());
-        Assert.assertEquals(this.defaultThread.getId(), contribution.getThread().getId());
+        Assert.assertEquals(defaultThread.getId(), contribution.getThread().getId());
         Assert.assertEquals(RepositoryTestUtils.CONTRIBUTION_DEFAULT_TEXT, contribution.getText());
-        Assert.assertEquals(this.defaultAuthor.getUsername(), contribution.getAuthor().getUsername());
+        Assert.assertEquals(defaultAuthor.getUsername(), contribution.getAuthor().getUsername());
         Assert.assertTrue(new Date().after(contribution.getCreationTime()));
         Assert.assertTrue(new Date().after(contribution.getLastSaveTime()));
         Assert.assertEquals(contribution.getCreationTime(), contribution.getLastSaveTime());
@@ -65,18 +65,19 @@ public final class ContributionDaoTest extends AbstractRepositoryTest {
 
     @Test
     public void testFindAll() throws Exception {
-        ContributionDao contributionDao = TEST_UTILS.getContributionDao();
+        final ContributionDao contributionDao = TEST_UTILS.getContributionDao();
 
         // THREE INSERTS
-        int firstContributionId = createDefaultTestContribution();
-        int secondContributionId = createDefaultTestContribution();
+        final int firstContributionId = createDefaultTestContribution();
+        final int secondContributionId = createDefaultTestContribution();
         @SuppressWarnings("unused")
+        final
         int thirdContributionId = TEST_UTILS.createTestContribution(createDefaultTestThread(),
-                RepositoryTestUtils.CONTRIBUTION_DEFAULT_TEXT, this.defaultAuthor);
+                RepositoryTestUtils.CONTRIBUTION_DEFAULT_TEXT, defaultAuthor);
 
         // SELECT ALL
-        List<ForumContribution> foundContributions = contributionDao.findByThreadId(this.defaultThread.getId());
-        int expectedFoundContributionCount = 2;
+        final List<ForumContribution> foundContributions = contributionDao.findByThreadId(defaultThread.getId());
+        final int expectedFoundContributionCount = 2;
         Assert.assertEquals(expectedFoundContributionCount, foundContributions.size());
         Assert.assertEquals(firstContributionId, foundContributions.get(0).getId());
         Assert.assertEquals(secondContributionId, foundContributions.get(1).getId());
@@ -84,18 +85,19 @@ public final class ContributionDaoTest extends AbstractRepositoryTest {
 
     @Test
     public void testFindAllOrdered() throws Exception {
-        ContributionDao contributionDao = TEST_UTILS.getContributionDao();
+        final ContributionDao contributionDao = TEST_UTILS.getContributionDao();
 
         // THREE INSERTS
         @SuppressWarnings("unused")
+        final
         int firstContributionId = createDefaultTestContribution();
-        int secondContributionId = createDefaultTestContribution();
-        int thirdContributionId = TEST_UTILS.createTestContribution(createDefaultTestThread(),
-                RepositoryTestUtils.CONTRIBUTION_DEFAULT_TEXT, this.defaultAuthor);
+        final int secondContributionId = createDefaultTestContribution();
+        final int thirdContributionId = TEST_UTILS.createTestContribution(createDefaultTestThread(),
+                RepositoryTestUtils.CONTRIBUTION_DEFAULT_TEXT, defaultAuthor);
 
         // SELECT ALL
-        int maxResultSize = 2;
-        List<ForumContribution> foundContributions = contributionDao.findAllOrdered(ContributionFieldEnum.CREATION_TIME,
+        final int maxResultSize = 2;
+        final List<ForumContribution> foundContributions = contributionDao.findAllOrdered(ContributionFieldEnum.CREATION_TIME,
                 OrderTypeEnum.DESCENDING, maxResultSize);
         Assert.assertEquals(maxResultSize, foundContributions.size());
         Assert.assertEquals(thirdContributionId, foundContributions.get(0).getId());
@@ -104,19 +106,20 @@ public final class ContributionDaoTest extends AbstractRepositoryTest {
 
     @Test
     public void testFindAllOrderedWithThreadFilter() throws Exception {
-        ContributionDao contributionDao = TEST_UTILS.getContributionDao();
+        final ContributionDao contributionDao = TEST_UTILS.getContributionDao();
 
         // THREE INSERTS
-        int firstContributionId = createDefaultTestContribution();
+        final int firstContributionId = createDefaultTestContribution();
         @SuppressWarnings("unused")
+        final
         int secondContributionId = TEST_UTILS.createTestContribution(createDefaultTestThread(),
-                RepositoryTestUtils.CONTRIBUTION_DEFAULT_TEXT, this.defaultAuthor);
-        int thirdContributionId = createDefaultTestContribution();
+                RepositoryTestUtils.CONTRIBUTION_DEFAULT_TEXT, defaultAuthor);
+        final int thirdContributionId = createDefaultTestContribution();
 
         // SELECT ALL
-        List<ForumContribution> foundContributions = contributionDao.findAllOrdered(this.defaultThread.getId(),
+        final List<ForumContribution> foundContributions = contributionDao.findAllOrdered(defaultThread.getId(),
                 ContributionFieldEnum.LAST_SAVE_TIME, OrderTypeEnum.ASCENDING);
-        int expectedFoundContributionCount = 2;
+        final int expectedFoundContributionCount = 2;
         Assert.assertEquals(expectedFoundContributionCount, foundContributions.size());
         Assert.assertEquals(firstContributionId, foundContributions.get(0).getId());
         Assert.assertEquals(thirdContributionId, foundContributions.get(1).getId());
@@ -124,10 +127,10 @@ public final class ContributionDaoTest extends AbstractRepositoryTest {
 
     @Test
     public void testUpdate() throws Exception {
-        ContributionDao contributionDao = TEST_UTILS.getContributionDao();
+        final ContributionDao contributionDao = TEST_UTILS.getContributionDao();
 
         // INSERT & SELECT ONE
-        int contributionId = createDefaultTestContribution();
+        final int contributionId = createDefaultTestContribution();
         ForumContribution contribution = contributionDao.findById(contributionId);
 
         // UPDATE
@@ -138,18 +141,18 @@ public final class ContributionDaoTest extends AbstractRepositoryTest {
         // SELECT ONE
         contribution = contributionDao.findById(contribution.getId());
         Assert.assertEquals(contributionId, contribution.getId());
-        Assert.assertNotSame(this.defaultThread.getId(), contribution.getThread().getId());
+        Assert.assertNotSame(defaultThread.getId(), contribution.getThread().getId());
         Assert.assertEquals(EDITED_CONTRIBUTION_TEXT, contribution.getText());
         Assert.assertTrue(contribution.getLastSaveTime().after(contribution.getCreationTime()));
     }
 
     @Test(expected = EmptyResultDataAccessException.class)
     public void testDelete() throws Exception {
-        ContributionDao contributionDao = TEST_UTILS.getContributionDao();
+        final ContributionDao contributionDao = TEST_UTILS.getContributionDao();
 
         // INSERT & SELECT ONE
-        int contributionId = createDefaultTestContribution();
-        ForumContribution contribution = contributionDao.findById(contributionId);
+        final int contributionId = createDefaultTestContribution();
+        final ForumContribution contribution = contributionDao.findById(contributionId);
 
         // DELETE
         contributionDao.delete(contribution);
@@ -161,31 +164,31 @@ public final class ContributionDaoTest extends AbstractRepositoryTest {
 
     /**
      * Creates and saves a default test contribution.
-     * 
+     *
      * @return ID of the newly created contribution
      */
     private int createDefaultTestContribution() {
-        return TEST_UTILS.createTestContribution(this.defaultThread, RepositoryTestUtils.CONTRIBUTION_DEFAULT_TEXT,
-                this.defaultAuthor);
+        return TEST_UTILS.createTestContribution(defaultThread, RepositoryTestUtils.CONTRIBUTION_DEFAULT_TEXT,
+                defaultAuthor);
     }
 
     /**
      * Creates and saves a default test thread.
-     * 
+     *
      * @return Newly created thread
      */
     ForumThread createDefaultTestThread() {
-        int threadId = createDefaultTestThreadAndGetId();
+        final int threadId = createDefaultTestThreadAndGetId();
         return TEST_UTILS.getThreadDao().findById(threadId);
     }
 
     /**
      * Creates and saves a default test thread.
-     * 
+     *
      * @return ID of the newly created thread
      */
     private int createDefaultTestThreadAndGetId() {
-        return TEST_UTILS.createTestThread(RepositoryTestUtils.THREAD_DEFAULT_NAME, this.defaultAuthor,
+        return TEST_UTILS.createTestThread(RepositoryTestUtils.THREAD_DEFAULT_NAME, defaultAuthor,
                 RepositoryTestUtils.THREAD_DEFAULT_CONTRIBUTIONS);
     }
 }

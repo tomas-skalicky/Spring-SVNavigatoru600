@@ -19,7 +19,7 @@ import com.svnavigatoru600.service.util.Url;
 
 /**
  * Provide sending of emails concerning notifications of new {@link CalendarEvent calendar events} and updated ones.
- * 
+ *
  * @author <a href="mailto:tomas.skalicky@gfk.com">Tomas Skalicky</a>
  */
 @Service
@@ -41,25 +41,25 @@ public class CalendarEventNotificationEmailService extends AbstractNotificationE
     }
 
     @Override
-    public void sendEmailOnCreation(Object newEvent, List<User> usersToNotify, HttpServletRequest request,
-            MessageSource messageSource) {
-        CalendarEvent event = (CalendarEvent) newEvent;
+    public void sendEmailOnCreation(final Object newEvent, final List<User> usersToNotify, final HttpServletRequest request,
+            final MessageSource messageSource) {
+        final CalendarEvent event = (CalendarEvent) newEvent;
 
-        String subject = getSubject(CalendarEventNotificationEmailService.EVENT_CREATED_SUBJECT_CODE, event, request,
+        final String subject = getSubject(CalendarEventNotificationEmailService.EVENT_CREATED_SUBJECT_CODE, event, request,
                 messageSource);
 
-        String eventName = event.getName();
-        String localizedDateLabel = getLocalizedDateLabel(request, messageSource);
-        String localizedEventDate = getLocalizedDate(event, request);
-        String localizedDescriptionLabel = getLocalizedDescriptionLabel(request, messageSource);
-        String eventDescription = Url.convertImageRelativeUrlsToAbsolute(event.getDescription(), request);
+        final String eventName = event.getName();
+        final String localizedDateLabel = getLocalizedDateLabel(request, messageSource);
+        final String localizedEventDate = getLocalizedDate(event, request);
+        final String localizedDescriptionLabel = getLocalizedDescriptionLabel(request, messageSource);
+        final String eventDescription = Url.convertImageRelativeUrlsToAbsolute(event.getDescription(), request);
 
-        for (User user : usersToNotify) {
-            String addressing = getLocalizedRecipientAddressing(user, request, messageSource);
-            String signature = getLocalizedNotificationSignature(user, request, messageSource);
-            Object[] messageParams = new Object[] { addressing, eventName, localizedDateLabel, localizedEventDate,
+        for (final User user : usersToNotify) {
+            final String addressing = getLocalizedRecipientAddressing(user, request, messageSource);
+            final String signature = getLocalizedNotificationSignature(user, request, messageSource);
+            final Object[] messageParams = new Object[] { addressing, eventName, localizedDateLabel, localizedEventDate,
                     localizedDescriptionLabel, eventDescription, signature };
-            String messageText = Localization.findLocaleMessage(messageSource, request,
+            final String messageText = Localization.findLocaleMessage(messageSource, request,
                     CalendarEventNotificationEmailService.EVENT_CREATED_TEXT_CODE, messageParams);
 
             Email.sendMail(user, subject, messageText);
@@ -67,24 +67,24 @@ public class CalendarEventNotificationEmailService extends AbstractNotificationE
     }
 
     @Override
-    public void sendEmailOnUpdate(Object updatedEvent, List<User> usersToNotify, HttpServletRequest request,
-            MessageSource messageSource) {
-        CalendarEvent event = (CalendarEvent) updatedEvent;
+    public void sendEmailOnUpdate(final Object updatedEvent, final List<User> usersToNotify, final HttpServletRequest request,
+            final MessageSource messageSource) {
+        final CalendarEvent event = (CalendarEvent) updatedEvent;
 
-        String subject = getSubject(CalendarEventNotificationEmailService.EVENT_UPDATED_SUBJECT_CODE, event, request,
+        final String subject = getSubject(CalendarEventNotificationEmailService.EVENT_UPDATED_SUBJECT_CODE, event, request,
                 messageSource);
 
-        String eventName = event.getName();
-        String localizedEventDate = getLocalizedDate(event, request);
-        String localizedDescriptionLabel = getLocalizedDescriptionLabel(request, messageSource);
-        String eventDescription = Url.convertImageRelativeUrlsToAbsolute(event.getDescription(), request);
+        final String eventName = event.getName();
+        final String localizedEventDate = getLocalizedDate(event, request);
+        final String localizedDescriptionLabel = getLocalizedDescriptionLabel(request, messageSource);
+        final String eventDescription = Url.convertImageRelativeUrlsToAbsolute(event.getDescription(), request);
 
-        for (User user : usersToNotify) {
-            String addressing = getLocalizedRecipientAddressing(user, request, messageSource);
-            String signature = getLocalizedNotificationSignature(user, request, messageSource);
-            Object[] messageParams = new Object[] { addressing, eventName, localizedEventDate,
+        for (final User user : usersToNotify) {
+            final String addressing = getLocalizedRecipientAddressing(user, request, messageSource);
+            final String signature = getLocalizedNotificationSignature(user, request, messageSource);
+            final Object[] messageParams = new Object[] { addressing, eventName, localizedEventDate,
                     localizedDescriptionLabel, eventDescription, signature };
-            String messageText = Localization.findLocaleMessage(messageSource, request,
+            final String messageText = Localization.findLocaleMessage(messageSource, request,
                     CalendarEventNotificationEmailService.EVENT_UPDATED_TEXT_CODE, messageParams);
 
             Email.sendMail(user, subject, messageText);
@@ -93,13 +93,13 @@ public class CalendarEventNotificationEmailService extends AbstractNotificationE
 
     /**
      * Gets a localized subject of notification emails.
-     * 
+     *
      * @param event
      *            Newly posted or updated {@link CalendarEvent}
      */
-    private String getSubject(String subjectLocalizationCode, CalendarEvent event, HttpServletRequest request,
-            MessageSource messageSource) {
-        Object[] messageParams = new Object[] { event.getName(), getLocalizedDate(event, request) };
+    private String getSubject(final String subjectLocalizationCode, final CalendarEvent event, final HttpServletRequest request,
+            final MessageSource messageSource) {
+        final Object[] messageParams = new Object[] { event.getName(), getLocalizedDate(event, request) };
 
         return Localization.findLocaleMessage(messageSource, request, subjectLocalizationCode, messageParams);
     }
@@ -107,15 +107,15 @@ public class CalendarEventNotificationEmailService extends AbstractNotificationE
     /**
      * Gets localized {@link CalendarEvent#getDate() date} of the given {@link CalendarEvent}.
      */
-    private String getLocalizedDate(CalendarEvent event, HttpServletRequest request) {
-        Locale locale = Localization.getLocale(request);
+    private String getLocalizedDate(final CalendarEvent event, final HttpServletRequest request) {
+        final Locale locale = Localization.getLocale(request);
         return DateUtils.format(event.getDate(), DateUtils.MIDDLE_DATE_FORMATS.get(locale), locale);
     }
 
     /**
      * Trivial localization
      */
-    private String getLocalizedDateLabel(HttpServletRequest request, MessageSource messageSource) {
+    private String getLocalizedDateLabel(final HttpServletRequest request, final MessageSource messageSource) {
         return Localization.findLocaleMessage(messageSource, request,
                 CalendarEventNotificationEmailService.EVENT_DATE_CODE);
     }
@@ -123,8 +123,9 @@ public class CalendarEventNotificationEmailService extends AbstractNotificationE
     /**
      * Trivial localization
      */
-    private String getLocalizedDescriptionLabel(HttpServletRequest request, MessageSource messageSource) {
+    private String getLocalizedDescriptionLabel(final HttpServletRequest request, final MessageSource messageSource) {
         return Localization.findLocaleMessage(messageSource, request,
                 CalendarEventNotificationEmailService.EVENT_DESCRIPTION_CODE);
     }
+
 }

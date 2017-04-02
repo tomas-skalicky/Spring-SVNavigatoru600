@@ -17,7 +17,7 @@ import com.svnavigatoru600.service.util.Url;
 
 /**
  * Provide sending of emails concerning notifications of new {@link ForumThread threads} and updated ones.
- * 
+ *
  * @author <a href="mailto:tomas.skalicky@gfk.com">Tomas Skalicky</a>
  */
 @Service
@@ -37,26 +37,26 @@ public class ThreadNotificationEmailService extends AbstractNotificationEmailSer
     }
 
     @Override
-    public void sendEmailOnCreation(Object newThread, List<User> usersToNotify, HttpServletRequest request,
-            MessageSource messageSource) {
-        ForumThread thread = (ForumThread) newThread;
+    public void sendEmailOnCreation(final Object newThread, final List<User> usersToNotify, final HttpServletRequest request,
+            final MessageSource messageSource) {
+        final ForumThread thread = (ForumThread) newThread;
 
-        String subject = getSubject(ThreadNotificationEmailService.THREAD_CREATED_SUBJECT_CODE, thread, request,
+        final String subject = getSubject(ThreadNotificationEmailService.THREAD_CREATED_SUBJECT_CODE, thread, request,
                 messageSource);
 
-        String threadName = thread.getName();
-        String localizedAuthorLabel = getLocalizedContributionAuthorLabel(request, messageSource);
-        String authorFullName = thread.getAuthor().getFullName();
-        String localizedContributionTextLabel = getLocalizedFirstContributionLabel(request, messageSource);
-        String contributionText = Url.convertImageRelativeUrlsToAbsolute(thread.getContributions().get(0).getText(),
+        final String threadName = thread.getName();
+        final String localizedAuthorLabel = getLocalizedContributionAuthorLabel(request, messageSource);
+        final String authorFullName = thread.getAuthor().getFullName();
+        final String localizedContributionTextLabel = getLocalizedFirstContributionLabel(request, messageSource);
+        final String contributionText = Url.convertImageRelativeUrlsToAbsolute(thread.getContributions().get(0).getText(),
                 request);
 
-        for (User user : usersToNotify) {
-            String addressing = getLocalizedRecipientAddressing(user, request, messageSource);
-            String signature = getLocalizedNotificationSignature(user, request, messageSource);
-            Object[] messageParams = new Object[] { addressing, threadName, localizedAuthorLabel, authorFullName,
+        for (final User user : usersToNotify) {
+            final String addressing = getLocalizedRecipientAddressing(user, request, messageSource);
+            final String signature = getLocalizedNotificationSignature(user, request, messageSource);
+            final Object[] messageParams = new Object[] { addressing, threadName, localizedAuthorLabel, authorFullName,
                     localizedContributionTextLabel, contributionText, signature };
-            String messageText = Localization.findLocaleMessage(messageSource, request,
+            final String messageText = Localization.findLocaleMessage(messageSource, request,
                     ThreadNotificationEmailService.THREAD_CREATED_TEXT_CODE, messageParams);
 
             Email.sendMail(user, subject, messageText);
@@ -64,26 +64,26 @@ public class ThreadNotificationEmailService extends AbstractNotificationEmailSer
     }
 
     @Override
-    public void sendEmailOnUpdate(Object updatedThread, List<User> usersToNotify, HttpServletRequest request,
-            MessageSource messageSource) {
+    public void sendEmailOnUpdate(final Object updatedThread, final List<User> usersToNotify, final HttpServletRequest request,
+            final MessageSource messageSource) {
         throw new IllegalAccessError("This method is not supported");
     }
 
     /**
      * Gets a localized subject of notification emails.
-     * 
+     *
      * @param event
      *            Newly created {@link ForumThread}
      */
-    private String getSubject(String subjectLocalizationCode, ForumThread thread, HttpServletRequest request,
-            MessageSource messageSource) {
+    private String getSubject(final String subjectLocalizationCode, final ForumThread thread, final HttpServletRequest request,
+            final MessageSource messageSource) {
         return Localization.findLocaleMessage(messageSource, request, subjectLocalizationCode, thread.getName());
     }
 
     /**
      * Trivial localization
      */
-    private String getLocalizedContributionAuthorLabel(HttpServletRequest request, MessageSource messageSource) {
+    private String getLocalizedContributionAuthorLabel(final HttpServletRequest request, final MessageSource messageSource) {
         return Localization.findLocaleMessage(messageSource, request,
                 ThreadNotificationEmailService.THREAD_AUTHOR_CODE);
     }
@@ -91,8 +91,9 @@ public class ThreadNotificationEmailService extends AbstractNotificationEmailSer
     /**
      * Trivial localization
      */
-    private String getLocalizedFirstContributionLabel(HttpServletRequest request, MessageSource messageSource) {
+    private String getLocalizedFirstContributionLabel(final HttpServletRequest request, final MessageSource messageSource) {
         return Localization.findLocaleMessage(messageSource, request,
                 ThreadNotificationEmailService.FIRST_CONTRIBUTION_CODE);
     }
+
 }

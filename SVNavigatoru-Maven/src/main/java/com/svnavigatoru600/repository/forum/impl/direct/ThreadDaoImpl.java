@@ -2,7 +2,6 @@ package com.svnavigatoru600.repository.forum.impl.direct;
 
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -14,6 +13,7 @@ import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.google.common.collect.Maps;
 import com.svnavigatoru600.domain.forum.ForumContribution;
 import com.svnavigatoru600.domain.forum.ForumThread;
 import com.svnavigatoru600.repository.QueryUtil;
@@ -129,7 +129,7 @@ public class ThreadDaoImpl extends NamedParameterJdbcDaoSupport implements Threa
      * Maps properties of the given {@link ForumThread} to names of the corresponding database columns.
      */
     private Map<String, Object> getNamedParameters(final ForumThread thread) {
-        final Map<String, Object> parameters = new HashMap<String, Object>();
+        final Map<String, Object> parameters = Maps.newHashMap();
         parameters.put(ThreadFieldEnum.ID.getColumnName(), thread.getId());
         parameters.put(ThreadFieldEnum.NAME.getColumnName(), thread.getName());
         parameters.put(ThreadFieldEnum.CREATION_TIME.getColumnName(), thread.getCreationTime());

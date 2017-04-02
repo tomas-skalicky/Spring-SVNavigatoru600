@@ -2,7 +2,6 @@ package com.svnavigatoru600.repository.news.impl.direct;
 
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -14,6 +13,7 @@ import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.google.common.collect.Maps;
 import com.svnavigatoru600.domain.News;
 import com.svnavigatoru600.repository.NewsDao;
 import com.svnavigatoru600.repository.QueryUtil;
@@ -62,7 +62,7 @@ public class NewsDaoImpl extends NamedParameterJdbcDaoSupport implements NewsDao
      * Maps properties of the given {@link News} to names of the corresponding database columns.
      */
     private Map<String, Object> getNamedParameters(final News news) {
-        final Map<String, Object> parameters = new HashMap<String, Object>();
+        final Map<String, Object> parameters = Maps.newHashMap();
         parameters.put(NewsFieldEnum.ID.getColumnName(), news.getId());
         parameters.put(NewsFieldEnum.TITLE.getColumnName(), news.getTitle());
         parameters.put(NewsFieldEnum.TEXT.getColumnName(), news.getText());

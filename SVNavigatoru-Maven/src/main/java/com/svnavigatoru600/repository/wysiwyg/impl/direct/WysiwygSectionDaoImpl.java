@@ -2,7 +2,6 @@ package com.svnavigatoru600.repository.wysiwyg.impl.direct;
 
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Map;
 
 import javax.inject.Inject;
@@ -12,6 +11,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcDaoSupport;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.google.common.collect.Maps;
 import com.svnavigatoru600.domain.WysiwygSection;
 import com.svnavigatoru600.domain.WysiwygSectionNameEnum;
 import com.svnavigatoru600.repository.QueryUtil;
@@ -52,7 +52,7 @@ public class WysiwygSectionDaoImpl extends NamedParameterJdbcDaoSupport implemen
      * Maps properties of the given {@link WysiwygSection} to names of the corresponding database columns.
      */
     private Map<String, Object> getNamedParameters(final WysiwygSection section) {
-        final Map<String, Object> parameters = new HashMap<String, Object>();
+        final Map<String, Object> parameters = Maps.newHashMap();
         parameters.put(WysiwygSectionFieldEnum.NAME.getColumnName(), section.getName());
         parameters.put(WysiwygSectionFieldEnum.LAST_SAVE_TIME.getColumnName(), section.getLastSaveTime());
         parameters.put(WysiwygSectionFieldEnum.SOURCE_CODE.getColumnName(), section.getSourceCode());
@@ -73,4 +73,5 @@ public class WysiwygSectionDaoImpl extends NamedParameterJdbcDaoSupport implemen
 
         getNamedParameterJdbcTemplate().update(query, getNamedParameters(section));
     }
+
 }

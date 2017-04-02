@@ -2,7 +2,6 @@ package com.svnavigatoru600.service.records;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -14,6 +13,7 @@ import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.google.common.collect.Maps;
 import com.svnavigatoru600.domain.records.OtherDocumentRecord;
 import com.svnavigatoru600.domain.records.OtherDocumentRecordTypeEnum;
 import com.svnavigatoru600.domain.users.AuthorityTypeEnum;
@@ -26,7 +26,7 @@ import com.svnavigatoru600.service.util.OtherDocumentRecordUtils;
 
 /**
  * Provides convenient methods to work with {@link OtherDocumentRecord} objects.
- * 
+ *
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
 @Service
@@ -87,14 +87,15 @@ public class OtherDocumentRecordService extends AbstractDocumentRecordService {
     /**
      * Returns {@link OtherDocumentRecord OtherDocumentRecords} stored in the repository arranged according to their
      * {@link OtherDocumentRecord#getCreationTime() creationTimes} descending.
-     * 
+     *
      * @param allRecordTypes
      *            If <code>true</code>, all document records are returned. Otherwise, only records which are of the
      *            given {@link OtherDocumentRecordTypeEnum recordType} are returned.
      * @param recordType
      *            see <code>allRecordTypes</code>
      */
-    public List<OtherDocumentRecord> findAllOrdered(final boolean allRecordTypes, final OtherDocumentRecordTypeEnum recordType) {
+    public List<OtherDocumentRecord> findAllOrdered(final boolean allRecordTypes,
+            final OtherDocumentRecordTypeEnum recordType) {
         final OrderTypeEnum order = OrderTypeEnum.DESCENDING;
         if (allRecordTypes) {
             return this.findAllOrdered(order);
@@ -116,7 +117,7 @@ public class OtherDocumentRecordService extends AbstractDocumentRecordService {
      * <code>newType</code>, converts the <code>newAttachedFile</code> to {@link java.sql.Blob Blob} (if
      * <code>isFileReplaced == true</code>) and persists this record into the repository. The old version of this record
      * should be already stored there.
-     * 
+     *
      * @param recordToUpdateId
      *            ID of the persisted {@link OtherDocumentRecord}
      * @param newRecord
@@ -129,9 +130,9 @@ public class OtherDocumentRecordService extends AbstractDocumentRecordService {
      * @param newAttachedFile
      *            New attached file of the persisted record
      */
-    public void update(final int recordToUpdateId, final OtherDocumentRecord newRecord, final boolean[] newTypes, final boolean isFileReplaced,
-            final MultipartFile newAttachedFile, final HttpServletRequest request, final MessageSource messageSource)
-            throws SQLException, IOException {
+    public void update(final int recordToUpdateId, final OtherDocumentRecord newRecord, final boolean[] newTypes,
+            final boolean isFileReplaced, final MultipartFile newAttachedFile, final HttpServletRequest request,
+            final MessageSource messageSource) throws SQLException, IOException {
         final OtherDocumentRecord recordToUpdate = findByIdWithoutFile(recordToUpdateId);
         recordToUpdate.setName(newRecord.getName());
         recordToUpdate.setDescription(newRecord.getDescription());
@@ -147,7 +148,7 @@ public class OtherDocumentRecordService extends AbstractDocumentRecordService {
      * <p>
      * NOTE: Analogy to the {@link #updateRecordWithSaveFileToFileSystem(OtherDocumentRecord, boolean, MultipartFile)
      * updateRecordWithSaveFileToFileSystem} method.
-     * 
+     *
      * @param recordToUpdate
      *            New persisted {@link OtherDocumentRecord}
      * @param isFileReplaced
@@ -155,8 +156,8 @@ public class OtherDocumentRecordService extends AbstractDocumentRecordService {
      * @param newAttachedFile
      *            New attached file of the persisted record
      */
-    private void updateRecordWithSaveFileToDatabase(final OtherDocumentRecord recordToUpdate, final boolean isFileReplaced,
-            final MultipartFile newAttachedFile) throws SQLException, IOException {
+    private void updateRecordWithSaveFileToDatabase(final OtherDocumentRecord recordToUpdate,
+            final boolean isFileReplaced, final MultipartFile newAttachedFile) throws SQLException, IOException {
         if (isFileReplaced) {
             final String newFileName = newAttachedFile.getOriginalFilename();
             recordToUpdate.setFileName(newFileName);
@@ -181,7 +182,7 @@ public class OtherDocumentRecordService extends AbstractDocumentRecordService {
      * <p>
      * NOTE: Analogy to the {@link #updateRecordWithSaveFileToDatabase(OtherDocumentRecord, boolean, MultipartFile)
      * updateRecordWithSaveFileToDatabase} method.
-     * 
+     *
      * @param recordToUpdate
      *            New persisted {@link OtherDocumentRecord}
      * @param isFileReplaced
@@ -190,8 +191,8 @@ public class OtherDocumentRecordService extends AbstractDocumentRecordService {
      *            New attached file of the persisted record
      */
     @SuppressWarnings("unused")
-    private void updateRecordWithSaveFileToFileSystem(final OtherDocumentRecord recordToUpdate, final boolean isFileReplaced,
-            final MultipartFile newAttachedFile) throws SQLException, IOException {
+    private void updateRecordWithSaveFileToFileSystem(final OtherDocumentRecord recordToUpdate,
+            final boolean isFileReplaced, final MultipartFile newAttachedFile) throws SQLException, IOException {
         if (isFileReplaced) {
             final String newFileName = File.getUniqueFileName(newAttachedFile.getOriginalFilename());
             recordToUpdate.setFileName(newFileName);
@@ -210,7 +211,7 @@ public class OtherDocumentRecordService extends AbstractDocumentRecordService {
      * First, the method performs the
      * {@link #update(int, OtherDocumentRecord, boolean[], boolean, MultipartFile, HttpServletRequest, MessageSource)
      * update} method. Then, this method notifies all users which have corresponding rights by email.
-     * 
+     *
      * @param recordToUpdateId
      *            ID of the persisted {@link OtherDocumentRecord}
      * @param newRecord
@@ -225,9 +226,10 @@ public class OtherDocumentRecordService extends AbstractDocumentRecordService {
      * @param sendNotification
      *            If <code>true</code>, the notification is sent; otherwise not.
      */
-    public void updateAndNotifyUsers(final int recordToUpdateId, final OtherDocumentRecord newRecord, final boolean[] newTypes,
-            final boolean isFileReplaced, final MultipartFile newAttachedFile, final boolean sendNotification, final HttpServletRequest request,
-            final MessageSource messageSource) throws SQLException, IOException {
+    public void updateAndNotifyUsers(final int recordToUpdateId, final OtherDocumentRecord newRecord,
+            final boolean[] newTypes, final boolean isFileReplaced, final MultipartFile newAttachedFile,
+            final boolean sendNotification, final HttpServletRequest request, final MessageSource messageSource)
+            throws SQLException, IOException {
         this.update(recordToUpdateId, newRecord, newTypes, isFileReplaced, newAttachedFile, request, messageSource);
 
         if (sendNotification) {
@@ -242,7 +244,8 @@ public class OtherDocumentRecordService extends AbstractDocumentRecordService {
     }
 
     @Override
-    public void notifyUsersOfUpdate(final Object updatedRecord, final HttpServletRequest request, final MessageSource messageSource) {
+    public void notifyUsersOfUpdate(final Object updatedRecord, final HttpServletRequest request,
+            final MessageSource messageSource) {
         emailService.sendEmailOnUpdate(updatedRecord, gainUsersToNotify(), request, messageSource);
     }
 
@@ -251,7 +254,7 @@ public class OtherDocumentRecordService extends AbstractDocumentRecordService {
      * same {@link OtherDocumentRecord#getFileName() filename}, throws an exception.
      * <p>
      * Note that the method assigns the new ID to the document record as well.
-     * 
+     *
      * @return New ID of the given {@link OtherDocumentRecord} generated by the repository
      */
     public int save(final OtherDocumentRecord record) {
@@ -273,7 +276,7 @@ public class OtherDocumentRecordService extends AbstractDocumentRecordService {
      * persists these modifications.
      * <p>
      * Note that the method assigns the new ID to the document record as well.
-     * 
+     *
      * @param newRecord
      *            New document record
      * @param recordTypes
@@ -299,7 +302,7 @@ public class OtherDocumentRecordService extends AbstractDocumentRecordService {
      * <p>
      * NOTE: Analogy to the {@link #preparedAndSaveFileToFileSystem(OtherDocumentRecord, MultipartFile)
      * preparedAndSaveFileToFileSystem} method.
-     * 
+     *
      * @param newRecord
      *            New document record
      * @param attachedFile
@@ -325,7 +328,7 @@ public class OtherDocumentRecordService extends AbstractDocumentRecordService {
      * <p>
      * NOTE: Analogy to the {@link #prepareForSaveFileToDatabase(OtherDocumentRecord, MultipartFile)
      * prepareForSaveFileToDatabase} method.
-     * 
+     *
      * @param newRecord
      *            New document record
      * @param attachedFile
@@ -333,8 +336,8 @@ public class OtherDocumentRecordService extends AbstractDocumentRecordService {
      * @return New value of the new record's {@link OtherDocumentRecord#getFileName() file name}
      */
     @SuppressWarnings("unused")
-    private String preparedAndSaveFileToFileSystem(final OtherDocumentRecord newRecord, final MultipartFile attachedFile)
-            throws SQLException, IOException {
+    private String preparedAndSaveFileToFileSystem(final OtherDocumentRecord newRecord,
+            final MultipartFile attachedFile) throws SQLException, IOException {
         final String fileName = File.getUniqueFileName(attachedFile.getOriginalFilename());
         newRecord.setFileName(fileName);
         attachedFile.transferTo(File.getUploadedFile(fileName));
@@ -345,7 +348,7 @@ public class OtherDocumentRecordService extends AbstractDocumentRecordService {
      * First, the method performs the
      * {@link #save(OtherDocumentRecord, boolean[], MultipartFile, HttpServletRequest, MessageSource) save} method.
      * Then, this method notifies all users which have corresponding rights by email.
-     * 
+     *
      * @param newRecord
      *            New document record
      * @param recordTypes
@@ -355,9 +358,9 @@ public class OtherDocumentRecordService extends AbstractDocumentRecordService {
      * @param sendNotification
      *            If <code>true</code>, the notification is sent; otherwise not.
      */
-    public void saveAndNotifyUsers(final OtherDocumentRecord newRecord, final boolean[] recordTypes, final MultipartFile attachedFile,
-            final boolean sendNotification, final HttpServletRequest request, final MessageSource messageSource)
-            throws SQLException, IOException {
+    public void saveAndNotifyUsers(final OtherDocumentRecord newRecord, final boolean[] recordTypes,
+            final MultipartFile attachedFile, final boolean sendNotification, final HttpServletRequest request,
+            final MessageSource messageSource) throws SQLException, IOException {
         this.save(newRecord, recordTypes, attachedFile, request, messageSource);
 
         if (sendNotification) {
@@ -366,14 +369,15 @@ public class OtherDocumentRecordService extends AbstractDocumentRecordService {
     }
 
     @Override
-    public void notifyUsersOfCreation(final Object newRecord, final HttpServletRequest request, final MessageSource messageSource) {
+    public void notifyUsersOfCreation(final Object newRecord, final HttpServletRequest request,
+            final MessageSource messageSource) {
         emailService.sendEmailOnCreation(newRecord, gainUsersToNotify(), request, messageSource);
     }
 
     /**
      * Deletes the specified {@link OtherDocumentRecord} together with all its {@link OtherDocumentRecordTypeEnum types}
      * from the repository. Moreover, deletes the associated {@link java.io.File file}.
-     * 
+     *
      * @param recordId
      *            ID of the document record
      */
@@ -389,7 +393,7 @@ public class OtherDocumentRecordService extends AbstractDocumentRecordService {
     public static Map<OtherDocumentRecord, String> getLocalizedDeleteQuestions(final List<OtherDocumentRecord> records,
             final HttpServletRequest request, final MessageSource messageSource) {
         final String messageCode = "other-documents.do-you-really-want-to-delete-document";
-        final Map<OtherDocumentRecord, String> questions = new HashMap<OtherDocumentRecord, String>();
+        final Map<OtherDocumentRecord, String> questions = Maps.newHashMap();
 
         for (final OtherDocumentRecord record : records) {
             final Object[] messageParams = new Object[] { record.getName() };
@@ -399,12 +403,12 @@ public class OtherDocumentRecordService extends AbstractDocumentRecordService {
     }
 
     /**
-     * Gets a {@link Map} which for each constant of the {@link OtherDocumentRecordTypeEnum} enumeration contains a pair of
-     * its {@link OtherDocumentRecordTypeEnum#getOrdinal() ordinal} and ID of its checkbox.
+     * Gets a {@link Map} which for each constant of the {@link OtherDocumentRecordTypeEnum} enumeration contains a pair
+     * of its {@link OtherDocumentRecordTypeEnum#getOrdinal() ordinal} and ID of its checkbox.
      */
     public static Map<Long, String> getTypeCheckboxId() {
         final String commonIdFormat = "newTypes[%s]";
-        final Map<Long, String> checkboxIds = new HashMap<Long, String>();
+        final Map<Long, String> checkboxIds = Maps.newHashMap();
 
         for (final OtherDocumentRecordTypeEnum type : OtherDocumentRecordTypeEnum.values()) {
             final long typeOrdinal = type.getOrdinal();
@@ -414,11 +418,12 @@ public class OtherDocumentRecordService extends AbstractDocumentRecordService {
     }
 
     /**
-     * Gets a {@link Map} which for each constant of the {@link OtherDocumentRecordTypeEnum} enumeration contains a pair of
-     * its {@link OtherDocumentRecordTypeEnum#getOrdinal() ordinal} and its localized title.
+     * Gets a {@link Map} which for each constant of the {@link OtherDocumentRecordTypeEnum} enumeration contains a pair
+     * of its {@link OtherDocumentRecordTypeEnum#getOrdinal() ordinal} and its localized title.
      */
-    public static Map<Long, String> getLocalizedTypeTitles(final HttpServletRequest request, final MessageSource messageSource) {
-        final Map<Long, String> checkboxTitles = new HashMap<Long, String>();
+    public static Map<Long, String> getLocalizedTypeTitles(final HttpServletRequest request,
+            final MessageSource messageSource) {
+        final Map<Long, String> checkboxTitles = Maps.newHashMap();
 
         for (final OtherDocumentRecordTypeEnum type : OtherDocumentRecordTypeEnum.values()) {
             final String localizedTitle = Localization.findLocaleMessage(messageSource, request,
@@ -427,4 +432,5 @@ public class OtherDocumentRecordService extends AbstractDocumentRecordService {
         }
         return checkboxTitles;
     }
+
 }

@@ -1,6 +1,5 @@
 package com.svnavigatoru600.web;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -19,6 +18,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.support.SessionStatus;
 
+import com.google.common.collect.Lists;
 import com.svnavigatoru600.domain.users.User;
 import com.svnavigatoru600.service.users.UserService;
 import com.svnavigatoru600.url.LoginUrlParts;
@@ -67,7 +67,7 @@ public class ForgottenPasswordController extends AbstractMetaController {
         command.setUser(user);
 
         final List<User> adminsFromDb = userService.findAllAdministrators();
-        final List<User> newAdmins = new ArrayList<User>();
+        final List<User> newAdmins = Lists.newArrayList();
         // Excludes me (Tomas Skalicky).
         for (final User admin : adminsFromDb) {
             final boolean isMe = (admin.getEmail() != null) && "skalicky.tomas@gmail.com".equals(admin.getEmail());

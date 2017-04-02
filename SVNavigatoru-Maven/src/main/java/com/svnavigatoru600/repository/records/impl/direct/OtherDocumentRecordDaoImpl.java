@@ -2,8 +2,6 @@ package com.svnavigatoru600.repository.records.impl.direct;
 
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -17,6 +15,8 @@ import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.google.common.collect.Maps;
+import com.google.common.collect.Sets;
 import com.svnavigatoru600.domain.records.AbstractDocumentRecord;
 import com.svnavigatoru600.domain.records.OtherDocumentRecord;
 import com.svnavigatoru600.domain.records.OtherDocumentRecordTypeEnum;
@@ -58,9 +58,10 @@ public class OtherDocumentRecordDaoImpl extends NamedParameterJdbcDaoSupport imp
      * {@link AbstractDocumentRecord}.
      */
     private static final String SELECT_FROM_CLAUSE_WITHOUT_FILE = String.format(
-            "SELECT r.*, d.%s FROM %s r INNER JOIN %s d ON d.%s = r.%s", DocumentRecordFieldEnum.FILE_NAME.getColumnName(),
-            OtherDocumentRecordDaoImpl.TABLE_NAME, DocumentRecordDaoImpl.TABLE_NAME,
-            DocumentRecordFieldEnum.ID.getColumnName(), OtherDocumentRecordFieldEnum.ID.getColumnName());
+            "SELECT r.*, d.%s FROM %s r INNER JOIN %s d ON d.%s = r.%s",
+            DocumentRecordFieldEnum.FILE_NAME.getColumnName(), OtherDocumentRecordDaoImpl.TABLE_NAME,
+            DocumentRecordDaoImpl.TABLE_NAME, DocumentRecordFieldEnum.ID.getColumnName(),
+            OtherDocumentRecordFieldEnum.ID.getColumnName());
 
     private final DocumentRecordDaoImpl documentRecordDao;
     private final OtherDocumentRecordTypeRelationDao typeDao;
@@ -81,7 +82,7 @@ public class OtherDocumentRecordDaoImpl extends NamedParameterJdbcDaoSupport imp
      */
     private void populateTypes(final OtherDocumentRecord record) {
         final List<OtherDocumentRecordTypeRelation> types = typeDao.findByRecordId(record.getId());
-        record.setTypes(new HashSet<OtherDocumentRecordTypeRelation>(types));
+        record.setTypes(Sets.newHashSet(types));
     }
 
     /**
@@ -158,7 +159,7 @@ public class OtherDocumentRecordDaoImpl extends NamedParameterJdbcDaoSupport imp
      * Maps properties of the given {@link OtherDocumentRecord} to names of the corresponding database columns.
      */
     private Map<String, Object> getNamedParameters(final OtherDocumentRecord record) {
-        final Map<String, Object> parameters = new HashMap<String, Object>();
+        final Map<String, Object> parameters = Maps.newHashMap();
         parameters.put(OtherDocumentRecordFieldEnum.ID.getColumnName(), record.getId());
         parameters.put(OtherDocumentRecordFieldEnum.NAME.getColumnName(), record.getName());
         parameters.put(OtherDocumentRecordFieldEnum.DESCRIPTION.getColumnName(), record.getDescription());
@@ -202,8 +203,9 @@ public class OtherDocumentRecordDaoImpl extends NamedParameterJdbcDaoSupport imp
         final int recordId = documentRecordDao.save(record, getDataSource());
 
         final SimpleJdbcInsert insert = new SimpleJdbcInsert(getDataSource())
-                .withTableName(OtherDocumentRecordDaoImpl.TABLE_NAME).usingColumns(
-                        OtherDocumentRecordFieldEnum.ID.getColumnName(), OtherDocumentRecordFieldEnum.NAME.getColumnName(),
+                .withTableName(OtherDocumentRecordDaoImpl.TABLE_NAME)
+                .usingColumns(OtherDocumentRecordFieldEnum.ID.getColumnName(),
+                        OtherDocumentRecordFieldEnum.NAME.getColumnName(),
                         OtherDocumentRecordFieldEnum.DESCRIPTION.getColumnName(),
                         OtherDocumentRecordFieldEnum.CREATION_TIME.getColumnName(),
                         OtherDocumentRecordFieldEnum.LAST_SAVE_TIME.getColumnName());

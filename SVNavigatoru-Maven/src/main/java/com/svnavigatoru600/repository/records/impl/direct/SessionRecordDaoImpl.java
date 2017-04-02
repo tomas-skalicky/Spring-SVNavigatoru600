@@ -1,7 +1,6 @@
 package com.svnavigatoru600.repository.records.impl.direct;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -13,6 +12,7 @@ import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.google.common.collect.Maps;
 import com.svnavigatoru600.domain.records.AbstractDocumentRecord;
 import com.svnavigatoru600.domain.records.SessionRecord;
 import com.svnavigatoru600.domain.records.SessionRecordTypeEnum;
@@ -111,7 +111,7 @@ public class SessionRecordDaoImpl extends NamedParameterJdbcDaoSupport implement
      * Maps properties of the given {@link SessionRecord} to names of the corresponding database columns.
      */
     private Map<String, Object> getNamedParameters(final SessionRecord record) {
-        final Map<String, Object> parameters = new HashMap<String, Object>();
+        final Map<String, Object> parameters = Maps.newHashMap();
         parameters.put(SessionRecordFieldEnum.ID.getColumnName(), record.getId());
         parameters.put(SessionRecordFieldEnum.TYPE.getColumnName(), record.getType());
         parameters.put(SessionRecordFieldEnum.SESSION_DATE.getColumnName(), record.getSessionDate());

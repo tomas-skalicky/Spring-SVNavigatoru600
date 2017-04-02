@@ -18,7 +18,7 @@ import com.svnavigatoru600.url.forum.ContributionsUrlParts;
 
 /**
  * Provide sending of emails concerning notifications of new {@link ForumContribution contributions} and updated ones.
- * 
+ *
  * @author <a href="mailto:tomas.skalicky@gfk.com">Tomas Skalicky</a>
  */
 @Service
@@ -40,8 +40,8 @@ public class ContributionNotificationEmailService extends AbstractNotificationEm
     }
 
     @Override
-    public void sendEmailOnCreation(Object newContribution, List<User> usersToNotify, HttpServletRequest request,
-            MessageSource messageSource) {
+    public void sendEmailOnCreation(final Object newContribution, final List<User> usersToNotify, final HttpServletRequest request,
+            final MessageSource messageSource) {
         sendEmail((ForumContribution) newContribution,
                 ContributionNotificationEmailService.CONTRIBUTION_CREATED_SUBJECT_CODE,
                 ContributionNotificationEmailService.CONTRIBUTION_CREATED_TEXT_CODE, usersToNotify, request,
@@ -49,8 +49,8 @@ public class ContributionNotificationEmailService extends AbstractNotificationEm
     }
 
     @Override
-    public void sendEmailOnUpdate(Object updatedContribution, List<User> usersToNotify, HttpServletRequest request,
-            MessageSource messageSource) {
+    public void sendEmailOnUpdate(final Object updatedContribution, final List<User> usersToNotify, final HttpServletRequest request,
+            final MessageSource messageSource) {
         sendEmail((ForumContribution) updatedContribution,
                 ContributionNotificationEmailService.CONTRIBUTION_UPDATED_SUBJECT_CODE,
                 ContributionNotificationEmailService.CONTRIBUTION_UPDATED_TEXT_CODE, usersToNotify, request,
@@ -60,29 +60,29 @@ public class ContributionNotificationEmailService extends AbstractNotificationEm
     /**
      * Sends emails to the given {@link User Users} with notification of the newly posted or updated
      * {@link ForumContribution}.
-     * 
+     *
      * @param contribution
      *            Newly posted or updated {@link ForumContribution}
      */
-    private void sendEmail(ForumContribution contribution, String subjectLocalizationCode, String textLocalizationCode,
-            List<User> usersToNotify, HttpServletRequest request, MessageSource messageSource) {
+    private void sendEmail(final ForumContribution contribution, final String subjectLocalizationCode, final String textLocalizationCode,
+            final List<User> usersToNotify, final HttpServletRequest request, final MessageSource messageSource) {
 
-        String subject = getSubject(subjectLocalizationCode, contribution, request, messageSource);
+        final String subject = getSubject(subjectLocalizationCode, contribution, request, messageSource);
 
-        String threadName = contribution.getThread().getName();
-        String localizedAuthorLabel = getLocalizedContributionAuthorLabel(request, messageSource);
-        String authorFullName = contribution.getAuthor().getFullName();
-        String localizedContributionTextLabel = getLocalizedContributionTextLabel(request, messageSource);
-        String textWithConvertedUrls = Url.convertImageRelativeUrlsToAbsolute(contribution.getText(), request);
-        String wholeTextUrl = ContributionsUrlParts.getAbsoluteContributionUrl(contribution, request);
-        String croppedText = cropTooLongTextAndAddLink(textWithConvertedUrls, wholeTextUrl, request, messageSource);
+        final String threadName = contribution.getThread().getName();
+        final String localizedAuthorLabel = getLocalizedContributionAuthorLabel(request, messageSource);
+        final String authorFullName = contribution.getAuthor().getFullName();
+        final String localizedContributionTextLabel = getLocalizedContributionTextLabel(request, messageSource);
+        final String textWithConvertedUrls = Url.convertImageRelativeUrlsToAbsolute(contribution.getText(), request);
+        final String wholeTextUrl = ContributionsUrlParts.getAbsoluteContributionUrl(contribution, request);
+        final String croppedText = cropTooLongTextAndAddLink(textWithConvertedUrls, wholeTextUrl, request, messageSource);
 
-        for (User user : usersToNotify) {
-            String addressing = getLocalizedRecipientAddressing(user, request, messageSource);
-            String signature = getLocalizedNotificationSignature(user, request, messageSource);
-            Object[] messageParams = new Object[] { addressing, threadName, localizedAuthorLabel, authorFullName,
+        for (final User user : usersToNotify) {
+            final String addressing = getLocalizedRecipientAddressing(user, request, messageSource);
+            final String signature = getLocalizedNotificationSignature(user, request, messageSource);
+            final Object[] messageParams = new Object[] { addressing, threadName, localizedAuthorLabel, authorFullName,
                     localizedContributionTextLabel, croppedText, signature };
-            String messageText = Localization.findLocaleMessage(messageSource, request, textLocalizationCode,
+            final String messageText = Localization.findLocaleMessage(messageSource, request, textLocalizationCode,
                     messageParams);
 
             Email.sendMail(user, subject, messageText);
@@ -91,12 +91,12 @@ public class ContributionNotificationEmailService extends AbstractNotificationEm
 
     /**
      * Gets a localized subject of notification emails.
-     * 
+     *
      * @param contribution
      *            Newly posted or updated {@link ForumContribution}
      */
-    private String getSubject(String subjectLocalizationCode, ForumContribution contribution, HttpServletRequest request,
-            MessageSource messageSource) {
+    private String getSubject(final String subjectLocalizationCode, final ForumContribution contribution,
+            final HttpServletRequest request, final MessageSource messageSource) {
         return Localization.findLocaleMessage(messageSource, request, subjectLocalizationCode,
                 contribution.getThread().getName());
     }
@@ -104,7 +104,7 @@ public class ContributionNotificationEmailService extends AbstractNotificationEm
     /**
      * Trivial localization
      */
-    private String getLocalizedContributionAuthorLabel(HttpServletRequest request, MessageSource messageSource) {
+    private String getLocalizedContributionAuthorLabel(final HttpServletRequest request, final MessageSource messageSource) {
         return Localization.findLocaleMessage(messageSource, request,
                 ContributionNotificationEmailService.CONTRIBUTION_AUTHOR_CODE);
     }
@@ -112,8 +112,9 @@ public class ContributionNotificationEmailService extends AbstractNotificationEm
     /**
      * Trivial localization
      */
-    private String getLocalizedContributionTextLabel(HttpServletRequest request, MessageSource messageSource) {
+    private String getLocalizedContributionTextLabel(final HttpServletRequest request, final MessageSource messageSource) {
         return Localization.findLocaleMessage(messageSource, request,
                 ContributionNotificationEmailService.CONTRIBUTION_TEXT_CODE);
     }
+
 }
