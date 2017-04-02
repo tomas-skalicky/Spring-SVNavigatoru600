@@ -2,7 +2,7 @@
 <%@ include file="../../../include-preceding-html.jsp"%>
 
 <%@ page import="com.svnavigatoru600.viewmodel.users.ShowAllUsers"%>
-<%@ page import="com.svnavigatoru600.service.util.FullNameFormat"%>
+<%@ page import="com.svnavigatoru600.service.util.FullNameFormatEnum"%>
 
 <%-- For more details about the concepts used here, see the forgotten-password.jsp file. --%>
 
@@ -56,7 +56,7 @@ for (User user : users) {
 			boolean isLoggedUser = username.equals(loggedUser.getUsername());
 			if (!isLoggedUser) {%> <a href="<%=homeUrl%>/administrace-uzivatelu/existujici/<%=username%>/"
 		title="<spring:message code="user-administration.change-user-data" />"> <%}
-			out.print(user.getFullName(FullNameFormat.LAST_FIRST));
+			out.print(user.getFullName(FullNameFormatEnum.LAST_FIRST));
 			if (!isLoggedUser) {
 				%>
 	</a> <%-- Delete icon --%> <%-- Disabled since the forum contributions are bound to particular users. --%> <%--<a id="delete[<%=username%>]" href="#" title="<spring:message code="user-administration.delete-user" />" class="delete"

@@ -7,8 +7,8 @@
 <%@ page import="com.svnavigatoru600.web.users.administration.AbstractNewEditUserController"%>
 
 <%-- Constants --%>
-<spring:eval expression="T(com.svnavigatoru600.domain.users.AuthorityType).ROLE_MEMBER_OF_SV.ordinal" var="memberOfSvOrdinal" />
-<spring:eval expression="T(com.svnavigatoru600.domain.users.AuthorityType).ROLE_MEMBER_OF_BOARD.ordinal" var="memberOfBoardOrdinal" />
+<spring:eval expression="T(com.svnavigatoru600.domain.users.AuthorityTypeEnum).ROLE_MEMBER_OF_SV.ordinal" var="memberOfSvOrdinal" />
+<spring:eval expression="T(com.svnavigatoru600.domain.users.AuthorityTypeEnum).ROLE_MEMBER_OF_BOARD.ordinal" var="memberOfBoardOrdinal" />
 
 <c:forEach items="${newAuthorities}" var="roleCheck" varStatus="roleStatus">
 	<%-- Checkboxes are discussed in http://www.mkyong.com/spring-mvc/spring-mvc-checkbox-and-checkboxes-example/. --%>
@@ -17,7 +17,7 @@
 	<c:set var="checkboxTitle" value="${localizedRoleCheckboxTitles[roleCounter]}" />
 	
 	<%-- ROLE_MEMBER_OF_SV --%>
-	<spring:eval expression="${roleCounter} == T(com.svnavigatoru600.domain.users.AuthorityType).ROLE_MEMBER_OF_SV.ordinal" var="isMemberOfSv" />
+	<spring:eval expression="${roleCounter} == T(com.svnavigatoru600.domain.users.AuthorityTypeEnum).ROLE_MEMBER_OF_SV.ordinal" var="isMemberOfSv" />
 	<c:if test="${isMemberOfSv}">
 		<li><input type="checkbox" id="${checkboxId}" name="${checkboxId}" class="checkbox"
 			<c:if test="${roleCheck == true}">checked="checked"</c:if>
@@ -26,7 +26,7 @@
 	</c:if>
 	
 	<%-- ROLE_MEMBER_OF_BOARD --%>
-	<spring:eval expression="${roleCounter} == T(com.svnavigatoru600.domain.users.AuthorityType).ROLE_MEMBER_OF_BOARD.ordinal" var="isMemberOfBoard" />
+	<spring:eval expression="${roleCounter} == T(com.svnavigatoru600.domain.users.AuthorityTypeEnum).ROLE_MEMBER_OF_BOARD.ordinal" var="isMemberOfBoard" />
 	<c:if test="${isMemberOfBoard}">
 		<li><input type="checkbox" id="${checkboxId}" name="${checkboxId}" class="checkbox"
 			<c:if test="${roleCheck == true}">checked="checked"</c:if>
@@ -35,7 +35,7 @@
 	</c:if>
 	
 	<%-- the other except ROLE_REGISTERED_USER --%>
-	<spring:eval expression="${roleCounter} == T(com.svnavigatoru600.domain.users.AuthorityType).ROLE_REGISTERED_USER.ordinal" var="isRegisteredUser" />
+	<spring:eval expression="${roleCounter} == T(com.svnavigatoru600.domain.users.AuthorityTypeEnum).ROLE_REGISTERED_USER.ordinal" var="isRegisteredUser" />
 	<c:if test="${!isMemberOfSv && !isMemberOfBoard && !isRegisteredUser}">
 		<li><input type="checkbox" id="${checkboxId}" name="${checkboxId}" class="checkbox"
 			<c:if test="${roleCheck == true}">checked="checked"</c:if> /> <label for="${checkboxId}">${checkboxTitle}</label></li>
