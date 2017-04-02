@@ -234,13 +234,14 @@ public class User implements UserDetails, Serializable {
      */
     private GrantedAuthority getAuthority(final AuthorityTypeEnum authorityType) {
         final String typeName = authorityType.name();
+        final Collection<GrantedAuthority> ownedAuthorities = getAuthorities();
 
-        // @formatter:off
-        return getAuthorities().stream()
-                .filter(ownedAuthority -> typeName.equals(ownedAuthority.getAuthority()))
-                .findFirst()
-                .orElse(null);
-        // @formatter:on
+        for (final GrantedAuthority ownedAuthority : ownedAuthorities) {
+            if (ownedAuthority.getAuthority().equals(typeName)) {
+                return ownedAuthority;
+            }
+        }
+        return null;
     }
 
     /**
