@@ -9,7 +9,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-import com.svnavigatoru600.domain.records.OtherDocumentRecordType;
+import com.svnavigatoru600.domain.records.OtherDocumentRecordTypeEnum;
 import com.svnavigatoru600.service.records.OtherDocumentRecordService;
 import com.svnavigatoru600.url.records.RecordsCommonUrlParts;
 import com.svnavigatoru600.url.records.otherdocuments.RemostavDocumentsUrlParts;
@@ -24,7 +24,7 @@ public class RetrieveRemostavDocumentController extends AbstractRetrieveDocument
     @Inject
     public RetrieveRemostavDocumentController(final OtherDocumentRecordService recordService,
             final MessageSource messageSource) {
-        super(RemostavDocumentsUrlParts.BASE_URL, new PageViews(), OtherDocumentRecordType.REMOSTAV, recordService,
+        super(RemostavDocumentsUrlParts.BASE_URL, new PageViews(), OtherDocumentRecordTypeEnum.REMOSTAV, recordService,
                 messageSource);
     }
 

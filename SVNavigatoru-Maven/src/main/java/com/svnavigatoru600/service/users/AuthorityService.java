@@ -14,7 +14,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Service;
 
 import com.svnavigatoru600.domain.users.Authority;
-import com.svnavigatoru600.domain.users.AuthorityType;
+import com.svnavigatoru600.domain.users.AuthorityTypeEnum;
 import com.svnavigatoru600.repository.users.AuthorityDao;
 import com.svnavigatoru600.service.util.Localization;
 
@@ -40,7 +40,7 @@ public class AuthorityService {
      * <code>username</code>.
      */
     public List<Authority> findAll(final String username) {
-        return authorityDao.findAll(username);
+        return authorityDao.findByUsername(username);
     }
 
     /**
@@ -63,14 +63,14 @@ public class AuthorityService {
     }
 
     /**
-     * Gets a {@link Map} which for each constant of the {@link AuthorityType} enumeration contains a pair of its
-     * {@link AuthorityType#getOrdinal() ordinal} and ID of its checkbox.
+     * Gets a {@link Map} which for each constant of the {@link AuthorityTypeEnum} enumeration contains a pair of its
+     * {@link AuthorityTypeEnum#getOrdinal() ordinal} and ID of its checkbox.
      */
     public static Map<Long, String> getRoleCheckboxId() {
         final String commonIdFormat = "newAuthorities[%s]";
         final Map<Long, String> checkboxIds = new HashMap<Long, String>();
 
-        for (final AuthorityType type : AuthorityType.values()) {
+        for (final AuthorityTypeEnum type : AuthorityTypeEnum.values()) {
             final long typeOrdinal = type.getOrdinal();
             checkboxIds.put(typeOrdinal, String.format(commonIdFormat, typeOrdinal));
         }
@@ -78,14 +78,14 @@ public class AuthorityService {
     }
 
     /**
-     * Gets a {@link Map} which for each constant of the {@link AuthorityType} enumeration contains a pair of its
-     * {@link AuthorityType#getOrdinal() ordinal} and its localized title.
+     * Gets a {@link Map} which for each constant of the {@link AuthorityTypeEnum} enumeration contains a pair of its
+     * {@link AuthorityTypeEnum#getOrdinal() ordinal} and its localized title.
      */
     @Cacheable("localizedRoleTitles")
     public Map<Long, String> getLocalizedRoleTitles(final HttpServletRequest request, final MessageSource messageSource) {
         final Map<Long, String> ordinalTitleMap = new HashMap<Long, String>();
 
-        for (final AuthorityType type : AuthorityType.values()) {
+        for (final AuthorityTypeEnum type : AuthorityTypeEnum.values()) {
             final String localizedTitle = Localization.findLocaleMessage(messageSource, request,
                     type.getTitleLocalizationCode());
             ordinalTitleMap.put(type.getOrdinal(), localizedTitle);

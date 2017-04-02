@@ -9,7 +9,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 
-import com.svnavigatoru600.domain.records.OtherDocumentRecordType;
+import com.svnavigatoru600.domain.records.OtherDocumentRecordTypeEnum;
 import com.svnavigatoru600.service.records.OtherDocumentRecordService;
 import com.svnavigatoru600.url.CommonUrlParts;
 import com.svnavigatoru600.web.AbstractMetaController;
@@ -32,7 +32,7 @@ public abstract class AbstractDeleteDocumentController extends AbstractOtherDocu
 
     /**
      * Constructs a controller which considers all {@link com.svnavigatoru600.domain.records.OtherDocumentRecord
-     * OtherDocumentRecords} of all {@link OtherDocumentRecordType OtherDocumentRecordTypes}.
+     * OtherDocumentRecords} of all {@link OtherDocumentRecordTypeEnum OtherDocumentRecordTypes}.
      */
     public AbstractDeleteDocumentController(final String baseUrl, final AbstractPageViews views,
             final OtherDocumentRecordService recordService, final MessageSource messageSource) {
@@ -45,7 +45,7 @@ public abstract class AbstractDeleteDocumentController extends AbstractOtherDocu
      * Constructs a controller which considers all {@link com.svnavigatoru600.domain.records.OtherDocumentRecord
      * OtherDocumentRecords} of the given <code>recordType</code>.
      */
-    public AbstractDeleteDocumentController(final String baseUrl, final AbstractPageViews views, final OtherDocumentRecordType recordType,
+    public AbstractDeleteDocumentController(final String baseUrl, final AbstractPageViews views, final OtherDocumentRecordTypeEnum recordType,
             final OtherDocumentRecordService recordService, final MessageSource messageSource) {
         super(baseUrl, views, recordType, recordService, messageSource);
         successfulDeleteUrl = getBaseUrl() + CommonUrlParts.DELETED_EXTENSION;

@@ -5,7 +5,7 @@ package com.svnavigatoru600.domain.records;
  *
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
-public enum OtherDocumentRecordType {
+public enum OtherDocumentRecordTypeEnum {
 
     // @formatter:off
     //                   titleLocalizationCode
@@ -19,13 +19,13 @@ public enum OtherDocumentRecordType {
 
     private final String titleLocalizationCode;
 
-    private OtherDocumentRecordType(final String titleLocalizationCode) {
+    private OtherDocumentRecordTypeEnum(final String titleLocalizationCode) {
         this.titleLocalizationCode = titleLocalizationCode;
     }
 
     /**
-     * Gets the localization code of the title of this {@link OtherDocumentRecordType}. Values which correspond to this
-     * code are stored in <code>messages*.properties</code> files.
+     * Gets the localization code of the title of this {@link OtherDocumentRecordTypeEnum}. Values which correspond to
+     * this code are stored in <code>messages*.properties</code> files.
      */
     public String getTitleLocalizationCode() {
         return titleLocalizationCode;
@@ -39,4 +39,5 @@ public enum OtherDocumentRecordType {
     public long getOrdinal() {
         return ordinal();
     }
+
 }

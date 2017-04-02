@@ -15,7 +15,7 @@ public class SessionRecord extends AbstractDocumentRecord {
     /**
      * Type of this {@link SessionRecord}.
      */
-    private SessionRecordType type;
+    private SessionRecordTypeEnum type;
     /**
      * {@link Date} when an appropriate session took place. The date is determined by the user.
      */
@@ -35,7 +35,7 @@ public class SessionRecord extends AbstractDocumentRecord {
     /**
      * Initialises record's filename, file, type, session date and discussed topics. Other properties are not touched.
      */
-    public SessionRecord(final String fileName, final Blob file, final SessionRecordType type, final Date sessionDate, final String discussedTopics) {
+    public SessionRecord(final String fileName, final Blob file, final SessionRecordTypeEnum type, final Date sessionDate, final String discussedTopics) {
         super(fileName, file);
         this.type = type;
         this.sessionDate = sessionDate;
@@ -46,7 +46,7 @@ public class SessionRecord extends AbstractDocumentRecord {
      * Different - not "getType" - name of the getter method is necessary. Otherwise, the methods' signatures would be
      * identical.
      */
-    public SessionRecordType getTypedType() {
+    public SessionRecordTypeEnum getTypedType() {
         return type;
     }
 
@@ -57,7 +57,7 @@ public class SessionRecord extends AbstractDocumentRecord {
         return type.name();
     }
 
-    public void setType(final SessionRecordType type) {
+    public void setType(final SessionRecordTypeEnum type) {
         this.type = type;
     }
 
@@ -65,7 +65,7 @@ public class SessionRecord extends AbstractDocumentRecord {
      * This setter is necessary because of Hibernate.
      */
     public void setType(final String type) {
-        this.type = SessionRecordType.valueOf(type);
+        this.type = SessionRecordTypeEnum.valueOf(type);
     }
 
     public Date getSessionDate() {

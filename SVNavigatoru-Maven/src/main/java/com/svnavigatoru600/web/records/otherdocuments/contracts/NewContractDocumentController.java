@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.support.SessionStatus;
 
-import com.svnavigatoru600.domain.records.OtherDocumentRecordType;
+import com.svnavigatoru600.domain.records.OtherDocumentRecordTypeEnum;
 import com.svnavigatoru600.service.records.OtherDocumentRecordService;
 import com.svnavigatoru600.url.records.otherdocuments.ContractsUrlParts;
 import com.svnavigatoru600.viewmodel.records.otherdocuments.NewRecord;
@@ -30,7 +30,7 @@ public class NewContractDocumentController extends AbstractNewDocumentController
     public NewContractDocumentController(final OtherDocumentRecordService recordService,
             final SendNotificationNewModelFiller sendNotificationModelFiller, final NewRecordValidator validator,
             final MessageSource messageSource) {
-        super(ContractsUrlParts.BASE_URL, new PageViews(), OtherDocumentRecordType.CONTRACT, recordService,
+        super(ContractsUrlParts.BASE_URL, new PageViews(), OtherDocumentRecordTypeEnum.CONTRACT, recordService,
                 sendNotificationModelFiller, validator, messageSource);
     }
 

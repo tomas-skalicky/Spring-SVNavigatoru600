@@ -18,7 +18,7 @@ public abstract class AbstractNewEditSessionRecord implements SendNotificationVi
     private SendNotification sendNotification = null;
     /**
      * Holds a value of the <code>newType</code> radiobutton. The value equals a localization of the selected
-     * {@link com.svnavigatoru600.domain.records.SessionRecordType SessionRecordType}. See the
+     * {@link com.svnavigatoru600.domain.records.SessionRecordTypeEnum SessionRecordType}. See the
      * <code>NewEditRecordController.populateSessionRecordTypeList</code> method.
      */
     private String newType;

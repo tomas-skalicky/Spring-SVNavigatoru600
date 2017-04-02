@@ -36,7 +36,7 @@ public class OtherDocumentRecordTypeRelationService {
      *            The ID of the document record which desired type relations are associated with.
      */
     public List<OtherDocumentRecordTypeRelation> findAll(final int recordId) {
-        return typeRelationDao.findAll(recordId);
+        return typeRelationDao.findByRecordId(recordId);
     }
 
     /**

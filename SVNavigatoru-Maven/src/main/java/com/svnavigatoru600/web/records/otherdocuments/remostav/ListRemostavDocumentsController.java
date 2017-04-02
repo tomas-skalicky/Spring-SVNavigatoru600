@@ -8,7 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import com.svnavigatoru600.domain.records.OtherDocumentRecordType;
+import com.svnavigatoru600.domain.records.OtherDocumentRecordTypeEnum;
 import com.svnavigatoru600.service.records.OtherDocumentRecordService;
 import com.svnavigatoru600.url.records.otherdocuments.RemostavDocumentsUrlParts;
 import com.svnavigatoru600.web.records.otherdocuments.AbstractListDocumentsController;
@@ -22,7 +22,7 @@ public class ListRemostavDocumentsController extends AbstractListDocumentsContro
     @Inject
     public ListRemostavDocumentsController(final OtherDocumentRecordService recordService,
             final MessageSource messageSource) {
-        super(RemostavDocumentsUrlParts.BASE_URL, new PageViews(), OtherDocumentRecordType.REMOSTAV, recordService,
+        super(RemostavDocumentsUrlParts.BASE_URL, new PageViews(), OtherDocumentRecordTypeEnum.REMOSTAV, recordService,
                 messageSource);
     }
 

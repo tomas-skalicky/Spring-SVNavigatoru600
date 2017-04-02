@@ -6,7 +6,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.Errors;
 
-import com.svnavigatoru600.domain.records.SessionRecordType;
+import com.svnavigatoru600.domain.records.SessionRecordTypeEnum;
 import com.svnavigatoru600.viewmodel.records.validator.AbstractDocumentRecordValidator;
 
 /**
@@ -17,7 +17,7 @@ public abstract class AbstractSessionRecordValidator extends AbstractDocumentRec
 
     protected void checkNewType(String newType, Errors errors) {
         try {
-            SessionRecordType.valueOf(newType);
+            SessionRecordTypeEnum.valueOf(newType);
         } catch (IllegalArgumentException e) {
             // Cannot be correctly checked since the newType parameter contains
             // a localized string.

@@ -4,7 +4,7 @@ import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
-import com.svnavigatoru600.domain.users.AuthorityType;
+import com.svnavigatoru600.domain.users.AuthorityTypeEnum;
 import com.svnavigatoru600.domain.users.User;
 
 /**
@@ -17,7 +17,7 @@ public class AdministrateUserData {
 
     private User user = null;
     private String newPassword = "";
-    private boolean[] newAuthorities = new boolean[AuthorityType.values().length];
+    private boolean[] newAuthorities = new boolean[AuthorityTypeEnum.values().length];
     /**
      * Integer cannot be used as a key type since such a map cannot be accessed by JSTL (see
      * http://stackoverflow.com/questions/924451/jstl-access-a-map-value-by-key).

@@ -4,7 +4,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
-import com.svnavigatoru600.domain.records.OtherDocumentRecordType;
+import com.svnavigatoru600.domain.records.OtherDocumentRecordTypeEnum;
 import com.svnavigatoru600.domain.records.OtherDocumentRecordTypeRelation;
 
 /**
@@ -31,7 +31,7 @@ public final class OtherDocumentRecordUtils {
     }
 
     /**
-     * Gets an array of flags which say which {@link OtherDocumentRecordType OtherDocumentRecordTypes} are checked, and
+     * Gets an array of flags which say which {@link OtherDocumentRecordTypeEnum OtherDocumentRecordTypes} are checked, and
      * which types are not. The array is filled in according to the given array of checked
      * {@link OtherDocumentRecordTypeRelation} called <code>types</code>.
      */
@@ -45,10 +45,10 @@ public final class OtherDocumentRecordUtils {
     }
 
     /**
-     * Gets the default array of flags which say which {@link OtherDocumentRecordType OtherDocumentRecordTypes} are
+     * Gets the default array of flags which say which {@link OtherDocumentRecordTypeEnum OtherDocumentRecordTypes} are
      * checked (selected), and which types are not.
      * <p>
-     * <b>Precondition:</b> Ordinal values of all {@link OtherDocumentRecordType OtherDocumentRecordTypes} are exactly
+     * <b>Precondition:</b> Ordinal values of all {@link OtherDocumentRecordTypeEnum OtherDocumentRecordTypes} are exactly
      * in the range of <code>[0, 1, ..., OtherDocumentRecordType.values().length-1]</code>.
      */
     public static boolean[] getDefaultArrayOfCheckIndicators() {
@@ -56,7 +56,7 @@ public final class OtherDocumentRecordUtils {
     }
 
     private static boolean[] createArrayOfCheckIndicators() {
-        return CheckboxUtils.createArrayOfCheckIndicators(OtherDocumentRecordType.values().length);
+        return CheckboxUtils.createArrayOfCheckIndicators(OtherDocumentRecordTypeEnum.values().length);
     }
 
     /**
@@ -74,7 +74,7 @@ public final class OtherDocumentRecordUtils {
         for (int i = 0; i < indicators.length; ++i) {
             final boolean isRelationChecked = indicators[i];
             if (isRelationChecked) {
-                final OtherDocumentRecordType recordType = OtherDocumentRecordType.values()[i];
+                final OtherDocumentRecordTypeEnum recordType = OtherDocumentRecordTypeEnum.values()[i];
                 checkedTypes.add(OtherDocumentRecordTypeRelation.createFrom(recordId, recordType));
             }
         }

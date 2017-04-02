@@ -51,7 +51,7 @@ public class ListContributionsController extends AbstractContributionController 
                 ContributionService.getLocalizedDeleteQuestions(contributions, request, getMessageSource()));
 
         model.addAttribute(ListContributionsController.COMMAND, command);
-        return PageViews.LIST.getViewName();
+        return PageViewsEnum.LIST.getViewName();
     }
 
     @GetMapping(value = ListContributionsController.BASE_URL + ContributionsUrlParts.CONTRIBUTIONS_CREATED_EXTENSION)

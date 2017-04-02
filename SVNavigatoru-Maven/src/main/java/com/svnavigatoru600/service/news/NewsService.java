@@ -11,15 +11,15 @@ import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
 
 import com.svnavigatoru600.domain.News;
-import com.svnavigatoru600.domain.users.AuthorityType;
+import com.svnavigatoru600.domain.users.AuthorityTypeEnum;
 import com.svnavigatoru600.domain.users.User;
 import com.svnavigatoru600.repository.NewsDao;
 import com.svnavigatoru600.repository.news.impl.FindAllOrderedArguments;
-import com.svnavigatoru600.repository.news.impl.NewsField;
+import com.svnavigatoru600.repository.news.impl.NewsFieldEnum;
 import com.svnavigatoru600.service.SubjectOfNotificationService;
 import com.svnavigatoru600.service.users.UserService;
 import com.svnavigatoru600.service.util.Localization;
-import com.svnavigatoru600.service.util.OrderType;
+import com.svnavigatoru600.service.util.OrderTypeEnum;
 
 /**
  * Provides convenient methods to work with {@link News} objects.
@@ -70,7 +70,7 @@ public class NewsService implements SubjectOfNotificationService {
      * creation time} descending.
      */
     public List<News> findAllOrdered() {
-        return newsDao.findAllOrdered(new FindAllOrderedArguments(NewsField.creationTime, OrderType.DESCENDING));
+        return newsDao.findAllOrdered(new FindAllOrderedArguments(NewsFieldEnum.CREATION_TIME, OrderTypeEnum.DESCENDING));
     }
 
     /**
@@ -121,7 +121,7 @@ public class NewsService implements SubjectOfNotificationService {
 
     @Override
     public List<User> gainUsersToNotify() {
-        return userService.findAllWithEmailByAuthorityAndSubscription(AuthorityType.ROLE_MEMBER_OF_SV,
+        return userService.findAllWithEmailByAuthorityAndSubscription(AuthorityTypeEnum.ROLE_MEMBER_OF_SV,
                 emailService.getNotificationType());
     }
 

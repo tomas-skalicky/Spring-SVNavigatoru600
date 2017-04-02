@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
 
-import com.svnavigatoru600.domain.users.NotificationType;
+import com.svnavigatoru600.domain.users.NotificationTypeEnum;
 import com.svnavigatoru600.domain.users.User;
 import com.svnavigatoru600.service.util.HtmlUtils;
 import com.svnavigatoru600.service.util.Localization;
@@ -34,7 +34,7 @@ public abstract class AbstractNotificationEmailService extends AbstractEmailServ
      * 
      * @return the NOTIFICATION_TYPE
      */
-    protected abstract NotificationType getNotificationType();
+    protected abstract NotificationTypeEnum getNotificationType();
 
     /**
      * Gets a localized signature of emails which serve as notifications of news and changes.

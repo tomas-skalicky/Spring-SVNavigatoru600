@@ -12,7 +12,7 @@ public class WysiwygSection implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private WysiwygSectionName name;
+    private WysiwygSectionNameEnum name;
     /**
      * Date set by the application, not by the user.
      */
@@ -27,7 +27,7 @@ public class WysiwygSection implements Serializable {
         return name.name();
     }
 
-    public void setName(final WysiwygSectionName name) {
+    public void setName(final WysiwygSectionNameEnum name) {
         this.name = name;
     }
 
@@ -35,7 +35,7 @@ public class WysiwygSection implements Serializable {
      * This setter is necessary because of Hibernate.
      */
     public void setName(final String name) {
-        this.name = WysiwygSectionName.valueOf(name);
+        this.name = WysiwygSectionNameEnum.valueOf(name);
     }
 
     public Date getLastSaveTime() {

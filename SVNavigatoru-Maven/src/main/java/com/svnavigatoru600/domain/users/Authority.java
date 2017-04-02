@@ -20,7 +20,7 @@ public class Authority implements GrantedAuthority, Serializable {
     /**
      * Initialises authority's username and its type. Other properties are not touched.
      */
-    public Authority(final String username, final AuthorityType authorityType) {
+    public Authority(final String username, final AuthorityTypeEnum authorityType) {
         this(username, authorityType.name());
     }
 

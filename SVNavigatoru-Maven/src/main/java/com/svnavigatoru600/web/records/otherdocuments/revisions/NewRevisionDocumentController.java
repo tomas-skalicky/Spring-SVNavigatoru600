@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.support.SessionStatus;
 
-import com.svnavigatoru600.domain.records.OtherDocumentRecordType;
+import com.svnavigatoru600.domain.records.OtherDocumentRecordTypeEnum;
 import com.svnavigatoru600.service.records.OtherDocumentRecordService;
 import com.svnavigatoru600.url.records.otherdocuments.RevisionsUrlParts;
 import com.svnavigatoru600.viewmodel.records.otherdocuments.NewRecord;
@@ -30,7 +30,7 @@ public class NewRevisionDocumentController extends AbstractNewDocumentController
     public NewRevisionDocumentController(final OtherDocumentRecordService recordService,
             final SendNotificationNewModelFiller sendNotificationModelFiller, final NewRecordValidator validator,
             final MessageSource messageSource) {
-        super(RevisionsUrlParts.BASE_URL, new PageViews(), OtherDocumentRecordType.REGULAR_REVISION, recordService,
+        super(RevisionsUrlParts.BASE_URL, new PageViews(), OtherDocumentRecordTypeEnum.REGULAR_REVISION, recordService,
                 sendNotificationModelFiller, validator, messageSource);
     }
 

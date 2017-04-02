@@ -9,7 +9,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.Validator;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
-import com.svnavigatoru600.domain.records.SessionRecordType;
+import com.svnavigatoru600.domain.records.SessionRecordTypeEnum;
 import com.svnavigatoru600.service.records.SessionRecordService;
 import com.svnavigatoru600.viewmodel.records.session.validator.AbstractSessionRecordValidator;
 import com.svnavigatoru600.web.SendNotificationModelFiller;
@@ -38,7 +38,7 @@ public abstract class AbstractNewEditRecordController extends AbstractSessionRec
 
     /**
      * Constructs a controller which considers all {@link com.svnavigatoru600.domain.records.SessionRecord
-     * SessionRecords} of all {@link SessionRecordType SessionRecordTypes}.
+     * SessionRecords} of all {@link SessionRecordTypeEnum SessionRecordTypes}.
      */
     public AbstractNewEditRecordController(final String baseUrl, final AbstractPageViews views, final SessionRecordService recordService,
             final SendNotificationModelFiller sendNotificationModelFiller, final AbstractSessionRecordValidator validator,
@@ -52,7 +52,7 @@ public abstract class AbstractNewEditRecordController extends AbstractSessionRec
      * Constructs a controller which considers all {@link com.svnavigatoru600.domain.records.SessionRecord
      * SessionRecords} of the given <code>recordType</code>.
      */
-    public AbstractNewEditRecordController(final String baseUrl, final AbstractPageViews views, final SessionRecordType recordType,
+    public AbstractNewEditRecordController(final String baseUrl, final AbstractPageViews views, final SessionRecordTypeEnum recordType,
             final SessionRecordService recordService, final SendNotificationModelFiller sendNotificationModelFiller,
             final AbstractSessionRecordValidator validator, final MessageSource messageSource) {
         super(baseUrl, views, recordType, recordService, messageSource);
@@ -75,7 +75,7 @@ public abstract class AbstractNewEditRecordController extends AbstractSessionRec
     }
 
     /**
-     * Creates a {@link List} of localized names of {@link SessionRecordType SessionRecordTypes}. The forms which use
+     * Creates a {@link List} of localized names of {@link SessionRecordTypeEnum SessionRecordTypes}. The forms which use
      * this controller can access the resulting list.
      * <p>
      * This method is used for filling up the tag <em>radiobuttons</em> and the value of the selected radiobutton is

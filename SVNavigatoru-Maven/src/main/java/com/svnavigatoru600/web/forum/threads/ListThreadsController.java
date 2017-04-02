@@ -53,7 +53,7 @@ public class ListThreadsController extends AbstractThreadController {
         getUserService().loadAuthorsOfLastSavedContributions(command.getLastSavedContributions());
 
         model.addAttribute(ListThreadsController.COMMAND, command);
-        return PageViews.LIST.getViewName();
+        return PageViewsEnum.LIST.getViewName();
     }
 
     @GetMapping(value = ThreadsUrlParts.CREATED_URL)

@@ -3,8 +3,8 @@ package com.svnavigatoru600.repository.forum;
 import java.util.List;
 
 import com.svnavigatoru600.domain.forum.ForumContribution;
-import com.svnavigatoru600.repository.forum.impl.ContributionField;
-import com.svnavigatoru600.service.util.OrderType;
+import com.svnavigatoru600.repository.forum.impl.ContributionFieldEnum;
+import com.svnavigatoru600.service.util.OrderTypeEnum;
 
 /**
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
@@ -29,22 +29,22 @@ public interface ContributionDao {
      * @param threadId
      *            The ID of the thread
      */
-    List<ForumContribution> findAll(int threadId);
+    List<ForumContribution> findByThreadId(int threadId);
 
     /**
      * Returns all {@link ForumContribution Contributions} stored in the repository arranged according to the given
-     * {@link ContributionField sortField} and {@link OrderType sortDirection}.
+     * {@link ContributionFieldEnum sortField} and {@link OrderTypeEnum sortDirection}.
      * <p>
      * It returns only the first <code>maxResultSize</code> {@link ForumContribution Contributions}.
      * <p>
      * Returned contributions have their {@link ForumContribution#getThread() threads} and {@link ForumContribution#getAuthor()
      * authors} populated.
      */
-    List<ForumContribution> findAllOrdered(ContributionField sortField, OrderType sortDirection, int maxResultSize);
+    List<ForumContribution> findAllOrdered(ContributionFieldEnum sortField, OrderTypeEnum sortDirection, int maxResultSize);
 
     /**
      * Returns all {@link ForumContribution Contributions} stored in the repository arranged according to the given
-     * {@link ContributionField sortField} and {@link OrderType sortDirection}.
+     * {@link ContributionFieldEnum sortField} and {@link OrderTypeEnum sortDirection}.
      * <p>
      * Moreover, the resulting {@link ForumContribution Contributions} are only those which belong to the specified
      * {@link com.svnavigatoru600.domain.forum.ForumThread Thread}.
@@ -55,7 +55,7 @@ public interface ContributionDao {
      * @param threadId
      *            The ID of the thread
      */
-    List<ForumContribution> findAllOrdered(int threadId, ContributionField sortField, OrderType sortDirection);
+    List<ForumContribution> findAllOrdered(int threadId, ContributionFieldEnum sortField, OrderTypeEnum sortDirection);
 
     /**
      * Updates the given {@link ForumContribution} in the repository. The old version of this contribution should be already

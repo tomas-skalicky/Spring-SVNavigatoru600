@@ -17,7 +17,7 @@ public interface OtherDocumentRecordTypeRelationDao {
      * @param recordId
      *            The ID of the document record which desired type relations are associated with.
      */
-    List<OtherDocumentRecordTypeRelation> findAll(int recordId);
+    List<OtherDocumentRecordTypeRelation> findByRecordId(int recordId);
 
     /**
      * Stores the given {@link OtherDocumentRecordTypeRelation typeRelations} to the repository. If there is already a

@@ -9,7 +9,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-import com.svnavigatoru600.domain.records.OtherDocumentRecordType;
+import com.svnavigatoru600.domain.records.OtherDocumentRecordTypeEnum;
 import com.svnavigatoru600.service.records.OtherDocumentRecordService;
 import com.svnavigatoru600.url.CommonUrlParts;
 import com.svnavigatoru600.url.records.otherdocuments.AccountingUrlParts;
@@ -24,7 +24,7 @@ public class DeleteAccountingDocumentController extends AbstractDeleteDocumentCo
     @Inject
     public DeleteAccountingDocumentController(final OtherDocumentRecordService recordService,
             final MessageSource messageSource) {
-        super(AccountingUrlParts.BASE_URL, new PageViews(), OtherDocumentRecordType.ACCOUNTING, recordService,
+        super(AccountingUrlParts.BASE_URL, new PageViews(), OtherDocumentRecordTypeEnum.ACCOUNTING, recordService,
                 messageSource);
     }
 

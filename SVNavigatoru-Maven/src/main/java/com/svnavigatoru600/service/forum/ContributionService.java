@@ -12,14 +12,14 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import com.svnavigatoru600.domain.forum.ForumContribution;
-import com.svnavigatoru600.domain.users.AuthorityType;
+import com.svnavigatoru600.domain.users.AuthorityTypeEnum;
 import com.svnavigatoru600.domain.users.User;
 import com.svnavigatoru600.repository.forum.ContributionDao;
-import com.svnavigatoru600.repository.forum.impl.ContributionField;
+import com.svnavigatoru600.repository.forum.impl.ContributionFieldEnum;
 import com.svnavigatoru600.service.SubjectOfNotificationService;
 import com.svnavigatoru600.service.users.UserService;
 import com.svnavigatoru600.service.util.Localization;
-import com.svnavigatoru600.service.util.OrderType;
+import com.svnavigatoru600.service.util.OrderTypeEnum;
 
 /**
  * Provides convenient methods to work with {@link com.svnavigatoru600.domain.forum.ForumContribution Contribution} objects.
@@ -83,7 +83,7 @@ public class ContributionService implements SubjectOfNotificationService {
      *            ID of the thread
      */
     public List<ForumContribution> findAll(final int threadId) {
-        return contributionDao.findAll(threadId);
+        return contributionDao.findByThreadId(threadId);
     }
 
     /**
@@ -93,7 +93,7 @@ public class ContributionService implements SubjectOfNotificationService {
      * NOT IMPLEMENTED YET: It returns only the first <code>maxResultSize</code> {@link ForumContribution Contributions}.
      */
     public List<ForumContribution> findLimitedNumberOrdered(final int maxResultSize) {
-        return contributionDao.findAllOrdered(ContributionField.lastSaveTime, OrderType.DESCENDING, maxResultSize);
+        return contributionDao.findAllOrdered(ContributionFieldEnum.LAST_SAVE_TIME, OrderTypeEnum.DESCENDING, maxResultSize);
     }
 
     /**
@@ -107,7 +107,7 @@ public class ContributionService implements SubjectOfNotificationService {
      *            ID of the thread
      */
     public List<ForumContribution> findAllOrdered(final int threadId) {
-        return contributionDao.findAllOrdered(threadId, ContributionField.creationTime, OrderType.ASCENDING);
+        return contributionDao.findAllOrdered(threadId, ContributionFieldEnum.CREATION_TIME, OrderTypeEnum.ASCENDING);
     }
 
     /**
@@ -158,7 +158,7 @@ public class ContributionService implements SubjectOfNotificationService {
 
     @Override
     public List<User> gainUsersToNotify() {
-        return userService.findAllWithEmailByAuthorityAndSubscription(AuthorityType.ROLE_MEMBER_OF_SV,
+        return userService.findAllWithEmailByAuthorityAndSubscription(AuthorityTypeEnum.ROLE_MEMBER_OF_SV,
                 emailService.getNotificationType());
     }
 

@@ -9,9 +9,9 @@ import org.junit.experimental.categories.Category;
 import org.springframework.dao.EmptyResultDataAccessException;
 
 import com.svnavigatoru600.domain.eventcalendar.CalendarEvent;
-import com.svnavigatoru600.domain.eventcalendar.PriorityType;
+import com.svnavigatoru600.domain.eventcalendar.PriorityTypeEnum;
 import com.svnavigatoru600.service.util.DateUtils;
-import com.svnavigatoru600.service.util.OrderType;
+import com.svnavigatoru600.service.util.OrderTypeEnum;
 import com.svnavigatoru600.test.category.PersistenceTests;
 
 /**
@@ -37,7 +37,7 @@ public final class CalendarEventDaoTest extends AbstractRepositoryTest {
     /**
      * Priority of the edited test event.
      */
-    private static final PriorityType EDITED_EVENT_PRIORITY = PriorityType.HIGH;
+    private static final PriorityTypeEnum EDITED_EVENT_PRIORITY = PriorityTypeEnum.HIGH;
 
     @Test
     public void testSaveFindById() throws Exception {
@@ -68,7 +68,7 @@ public final class CalendarEventDaoTest extends AbstractRepositoryTest {
         int thirdNewsId = TEST_UTILS.createDefaultTestEvent(DateUtils.getDay(now, -1));
 
         // SELECT ALL
-        List<CalendarEvent> foundEvents = eventDao.findAllFutureEventsOrdered(now, OrderType.ASCENDING);
+        List<CalendarEvent> foundEvents = eventDao.findAllFutureEventsOrdered(now, OrderTypeEnum.ASCENDING);
         int expectedFoundEventCount = 2;
         Assert.assertEquals(expectedFoundEventCount, foundEvents.size());
         Assert.assertEquals(secondEventId, foundEvents.get(0).getId());

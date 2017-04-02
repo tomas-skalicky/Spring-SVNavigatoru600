@@ -4,7 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.svnavigatoru600.domain.eventcalendar.CalendarEvent;
-import com.svnavigatoru600.service.util.OrderType;
+import com.svnavigatoru600.service.util.OrderTypeEnum;
 
 /**
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
@@ -18,14 +18,14 @@ public interface CalendarEventDao {
 
     /**
      * Returns all {@link CalendarEvent CalendarEvents} stored in the repository arranged according to their
-     * {@link CalendarEvent#getDate() date} in the given {@link OrderType sortDirection}.
+     * {@link CalendarEvent#getDate() date} in the given {@link OrderTypeEnum sortDirection}.
      * <p>
      * Moreover, only {@link CalendarEvent CalendarEvents} which will take place are returned, the passed ones are not.
      * 
      * @param earliestDate
      *            Represents the time "now"
      */
-    List<CalendarEvent> findAllFutureEventsOrdered(Date earliestDate, OrderType sortDirection);
+    List<CalendarEvent> findAllFutureEventsOrdered(Date earliestDate, OrderTypeEnum sortDirection);
 
     /**
      * Updates the given {@link CalendarEvent} in the repository. The old version of this event should be already stored

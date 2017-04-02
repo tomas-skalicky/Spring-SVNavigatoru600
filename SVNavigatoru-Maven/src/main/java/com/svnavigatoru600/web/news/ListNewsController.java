@@ -53,6 +53,6 @@ public class ListNewsController extends AbstractNewsController {
 
         newNewsController.initForm(request, model);
 
-        return PageViews.LIST.getViewName();
+        return PageViewsEnum.LIST.getViewName();
     }
 }

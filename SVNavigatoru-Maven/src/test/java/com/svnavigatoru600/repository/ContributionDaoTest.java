@@ -13,8 +13,8 @@ import com.svnavigatoru600.domain.forum.ForumContribution;
 import com.svnavigatoru600.domain.forum.ForumThread;
 import com.svnavigatoru600.domain.users.User;
 import com.svnavigatoru600.repository.forum.ContributionDao;
-import com.svnavigatoru600.repository.forum.impl.ContributionField;
-import com.svnavigatoru600.service.util.OrderType;
+import com.svnavigatoru600.repository.forum.impl.ContributionFieldEnum;
+import com.svnavigatoru600.service.util.OrderTypeEnum;
 import com.svnavigatoru600.test.category.PersistenceTests;
 
 /**
@@ -75,7 +75,7 @@ public final class ContributionDaoTest extends AbstractRepositoryTest {
                 RepositoryTestUtils.CONTRIBUTION_DEFAULT_TEXT, this.defaultAuthor);
 
         // SELECT ALL
-        List<ForumContribution> foundContributions = contributionDao.findAll(this.defaultThread.getId());
+        List<ForumContribution> foundContributions = contributionDao.findByThreadId(this.defaultThread.getId());
         int expectedFoundContributionCount = 2;
         Assert.assertEquals(expectedFoundContributionCount, foundContributions.size());
         Assert.assertEquals(firstContributionId, foundContributions.get(0).getId());
@@ -95,8 +95,8 @@ public final class ContributionDaoTest extends AbstractRepositoryTest {
 
         // SELECT ALL
         int maxResultSize = 2;
-        List<ForumContribution> foundContributions = contributionDao.findAllOrdered(ContributionField.creationTime,
-                OrderType.DESCENDING, maxResultSize);
+        List<ForumContribution> foundContributions = contributionDao.findAllOrdered(ContributionFieldEnum.CREATION_TIME,
+                OrderTypeEnum.DESCENDING, maxResultSize);
         Assert.assertEquals(maxResultSize, foundContributions.size());
         Assert.assertEquals(thirdContributionId, foundContributions.get(0).getId());
         Assert.assertEquals(secondContributionId, foundContributions.get(1).getId());
@@ -115,7 +115,7 @@ public final class ContributionDaoTest extends AbstractRepositoryTest {
 
         // SELECT ALL
         List<ForumContribution> foundContributions = contributionDao.findAllOrdered(this.defaultThread.getId(),
-                ContributionField.lastSaveTime, OrderType.ASCENDING);
+                ContributionFieldEnum.LAST_SAVE_TIME, OrderTypeEnum.ASCENDING);
         int expectedFoundContributionCount = 2;
         Assert.assertEquals(expectedFoundContributionCount, foundContributions.size());
         Assert.assertEquals(firstContributionId, foundContributions.get(0).getId());

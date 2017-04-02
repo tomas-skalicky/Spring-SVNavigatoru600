@@ -7,10 +7,10 @@ import java.util.Set;
 import org.springframework.security.core.GrantedAuthority;
 
 import com.svnavigatoru600.domain.users.Authority;
-import com.svnavigatoru600.domain.users.AuthorityType;
+import com.svnavigatoru600.domain.users.AuthorityTypeEnum;
 
 /**
- * Provides a set of static functions related to {@link Authority authorities (= roles)} and their {@link AuthorityType
+ * Provides a set of static functions related to {@link Authority authorities (= roles)} and their {@link AuthorityTypeEnum
  * types}.
  * 
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
@@ -28,7 +28,7 @@ public final class AuthorityUtils {
     public static boolean[] getArrayOfCheckIndicators(Collection<GrantedAuthority> authorities) {
         boolean[] indicators = AuthorityUtils.createArrayOfCheckIndicators();
         for (GrantedAuthority authority : authorities) {
-            int authorityOrdinal = AuthorityType.valueOf(authority.getAuthority()).ordinal();
+            int authorityOrdinal = AuthorityTypeEnum.valueOf(authority.getAuthority()).ordinal();
             indicators[authorityOrdinal] = true;
         }
         return indicators;
@@ -38,17 +38,17 @@ public final class AuthorityUtils {
      * Gets the default array of flags which say which authorities (= roles) are checked (selected), and which
      * authorities are not checked.
      * <p>
-     * <b>Precondition:</b> Ordinal values of all {@link AuthorityType AuthorityTypes} are exactly in the range of
+     * <b>Precondition:</b> Ordinal values of all {@link AuthorityTypeEnum AuthorityTypes} are exactly in the range of
      * <code>[0, 1, ..., AuthorityType.values().length-1]</code>.
      */
     public static boolean[] getDefaultArrayOfCheckIndicators() {
         boolean[] indicators = AuthorityUtils.createArrayOfCheckIndicators();
-        indicators[AuthorityType.ROLE_MEMBER_OF_SV.ordinal()] = true;
+        indicators[AuthorityTypeEnum.ROLE_MEMBER_OF_SV.ordinal()] = true;
         return indicators;
     }
 
     private static boolean[] createArrayOfCheckIndicators() {
-        return CheckboxUtils.createArrayOfCheckIndicators(AuthorityType.values().length);
+        return CheckboxUtils.createArrayOfCheckIndicators(AuthorityTypeEnum.values().length);
     }
 
     /**
@@ -64,7 +64,7 @@ public final class AuthorityUtils {
         for (int i = 0; i < indicators.length; ++i) {
             boolean isAuthorityChecked = indicators[i];
             if (isAuthorityChecked) {
-                AuthorityType authorityType = AuthorityType.values()[i];
+                AuthorityTypeEnum authorityType = AuthorityTypeEnum.values()[i];
                 checkedAuthorities.add(new Authority(username, authorityType));
             }
         }

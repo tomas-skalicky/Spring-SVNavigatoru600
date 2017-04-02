@@ -8,7 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import com.svnavigatoru600.domain.records.SessionRecordType;
+import com.svnavigatoru600.domain.records.SessionRecordTypeEnum;
 import com.svnavigatoru600.service.records.SessionRecordService;
 import com.svnavigatoru600.url.records.session.SvUrlParts;
 import com.svnavigatoru600.web.records.session.AbstractListRecordsController;
@@ -21,7 +21,7 @@ public class ListSvSessionRecordsController extends AbstractListRecordsControlle
 
     @Inject
     public ListSvSessionRecordsController(final SessionRecordService recordService, final MessageSource messageSource) {
-        super(SvUrlParts.BASE_URL, new PageViews(), SessionRecordType.SESSION_RECORD_OF_SV, recordService,
+        super(SvUrlParts.BASE_URL, new PageViews(), SessionRecordTypeEnum.SESSION_RECORD_OF_SV, recordService,
                 messageSource);
     }
 

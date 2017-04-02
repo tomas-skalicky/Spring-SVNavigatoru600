@@ -23,7 +23,7 @@ import org.springframework.context.MessageSource;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestContextManager;
 
-import com.svnavigatoru600.domain.users.AuthorityType;
+import com.svnavigatoru600.domain.users.AuthorityTypeEnum;
 import com.svnavigatoru600.service.util.Localization;
 import com.svnavigatoru600.test.category.UnitTests;
 
@@ -58,15 +58,15 @@ public class AuthorityServiceTest {
     public void testGetLocalizedRoleTitlesCaching() throws Exception {
         PowerMockito.mockStatic(Localization.class);
 
-        for (AuthorityType type : AuthorityType.values()) {
+        for (AuthorityTypeEnum type : AuthorityTypeEnum.values()) {
             when(Localization.findLocaleMessage(any(MessageSource.class), any(HttpServletRequest.class),
                     eq(type.getTitleLocalizationCode()))).thenReturn(type.getTitleLocalizationCode());
         }
 
         // Calls the tested method the first time.
         Map<Long, String> localizedRoleTitles = this.authorityService.getLocalizedRoleTitles(null, null);
-        assertEquals(AuthorityType.ROLE_MEMBER_OF_BOARD.getTitleLocalizationCode(),
-                localizedRoleTitles.get(AuthorityType.ROLE_MEMBER_OF_BOARD.getOrdinal()));
+        assertEquals(AuthorityTypeEnum.ROLE_MEMBER_OF_BOARD.getTitleLocalizationCode(),
+                localizedRoleTitles.get(AuthorityTypeEnum.ROLE_MEMBER_OF_BOARD.getOrdinal()));
 
         // Calls the same method the second time.
         Map<Long, String> cachedLocalizedRoleTitles = this.authorityService.getLocalizedRoleTitles(null, null);

@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.support.SessionStatus;
 
 import com.svnavigatoru600.domain.WysiwygSection;
-import com.svnavigatoru600.domain.WysiwygSectionName;
+import com.svnavigatoru600.domain.WysiwygSectionNameEnum;
 import com.svnavigatoru600.service.WysiwygSectionService;
 
 /**
@@ -20,13 +20,13 @@ import com.svnavigatoru600.service.WysiwygSectionService;
 public abstract class AbstractWysiwygSectionController extends AbstractPrivateSectionMetaController {
 
     private final WysiwygSectionService sectionService;
-    private final WysiwygSectionName sectionName;
+    private final WysiwygSectionNameEnum sectionName;
     private final String viewPageView;
     private final String editPageView;
     private final String viewPageAddress;
 
     @Inject
-    public AbstractWysiwygSectionController(final WysiwygSectionService sectionService, final WysiwygSectionName sectionName,
+    public AbstractWysiwygSectionController(final WysiwygSectionService sectionService, final WysiwygSectionNameEnum sectionName,
             final String viewPageView, final String editPageView, final String viewPageAddress) {
         LogFactory.getLog(this.getClass()).debug("The WysiwygSectionController object created.");
         this.sectionService = sectionService;

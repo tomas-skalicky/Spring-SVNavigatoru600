@@ -15,91 +15,91 @@ import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcDaoSupport;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.svnavigatoru600.domain.records.AbstractDocumentRecord;
 import com.svnavigatoru600.domain.records.OtherDocumentRecord;
-import com.svnavigatoru600.domain.records.OtherDocumentRecordType;
+import com.svnavigatoru600.domain.records.OtherDocumentRecordTypeEnum;
 import com.svnavigatoru600.domain.records.OtherDocumentRecordTypeRelation;
-import com.svnavigatoru600.repository.impl.PersistedClass;
 import com.svnavigatoru600.repository.records.OtherDocumentRecordDao;
 import com.svnavigatoru600.repository.records.OtherDocumentRecordTypeRelationDao;
-import com.svnavigatoru600.repository.records.impl.DocumentRecordField;
-import com.svnavigatoru600.repository.records.impl.OtherDocumentRecordField;
-import com.svnavigatoru600.repository.records.impl.OtherDocumentRecordTypeRelationField;
-import com.svnavigatoru600.service.util.OrderType;
+import com.svnavigatoru600.repository.records.impl.DocumentRecordFieldEnum;
+import com.svnavigatoru600.repository.records.impl.OtherDocumentRecordFieldEnum;
+import com.svnavigatoru600.repository.records.impl.OtherDocumentRecordTypeRelationFieldEnum;
+import com.svnavigatoru600.service.util.OrderTypeEnum;
 
 /**
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
 @Repository("otherDocumentRecordDao")
+@Transactional
 public class OtherDocumentRecordDaoImpl extends NamedParameterJdbcDaoSupport implements OtherDocumentRecordDao {
 
     /**
      * Database table which provides a persistence of {@link OtherDocumentRecord OtherDocumentRecords}.
      */
-    private static final String TABLE_NAME = PersistedClass.OtherDocumentRecord.getTableName();
+    private static final String TABLE_NAME = "other_document_records";
 
     /**
      * The SELECT command for the return of a single document together with its BLOB file.
-     * 
+     *
      * Join is necessary in all SELECT queries since {@link OtherDocumentRecord} inherits from
      * {@link AbstractDocumentRecord}.
      */
     private static final String SELECT_FROM_CLAUSE_WITH_FILE = String.format(
             "SELECT r.*, d.%s, d.%s FROM %s r INNER JOIN %s d ON d.%s = r.%s",
-            DocumentRecordField.fileName.getColumnName(), DocumentRecordField.file.getColumnName(),
-            OtherDocumentRecordDaoImpl.TABLE_NAME, PersistedClass.AbstractDocumentRecord.getTableName(),
-            DocumentRecordField.id.getColumnName(), OtherDocumentRecordField.id.getColumnName());
+            DocumentRecordFieldEnum.FILE_NAME.getColumnName(), DocumentRecordFieldEnum.FILE.getColumnName(),
+            OtherDocumentRecordDaoImpl.TABLE_NAME, DocumentRecordDaoImpl.TABLE_NAME,
+            DocumentRecordFieldEnum.ID.getColumnName(), OtherDocumentRecordFieldEnum.ID.getColumnName());
     /**
      * The SELECT command for the return of a single or multiple documents without their BLOB files.
-     * 
+     *
      * Join is necessary in all SELECT queries since {@link OtherDocumentRecord} inherits from
      * {@link AbstractDocumentRecord}.
      */
     private static final String SELECT_FROM_CLAUSE_WITHOUT_FILE = String.format(
-            "SELECT r.*, d.%s FROM %s r INNER JOIN %s d ON d.%s = r.%s", DocumentRecordField.fileName.getColumnName(),
-            OtherDocumentRecordDaoImpl.TABLE_NAME, PersistedClass.AbstractDocumentRecord.getTableName(),
-            DocumentRecordField.id.getColumnName(), OtherDocumentRecordField.id.getColumnName());
+            "SELECT r.*, d.%s FROM %s r INNER JOIN %s d ON d.%s = r.%s", DocumentRecordFieldEnum.FILE_NAME.getColumnName(),
+            OtherDocumentRecordDaoImpl.TABLE_NAME, DocumentRecordDaoImpl.TABLE_NAME,
+            DocumentRecordFieldEnum.ID.getColumnName(), OtherDocumentRecordFieldEnum.ID.getColumnName());
 
-    @Inject
-    private DocumentRecordDaoImpl documentRecordDao;
-
-    @Inject
-    private OtherDocumentRecordTypeRelationDao typeDao;
+    private final DocumentRecordDaoImpl documentRecordDao;
+    private final OtherDocumentRecordTypeRelationDao typeDao;
 
     /**
      * NOTE: Added because of the final setter.
      */
     @Inject
-    public OtherDocumentRecordDaoImpl(DataSource dataSource) {
-        super();
+    public OtherDocumentRecordDaoImpl(final DataSource dataSource, final DocumentRecordDaoImpl documentRecordDao,
+            final OtherDocumentRecordTypeRelationDao typeDao) {
         setDataSource(dataSource);
+        this.documentRecordDao = documentRecordDao;
+        this.typeDao = typeDao;
     }
 
     /**
      * Populates the <code>types</code> property of the given <code>record</code>.
      */
-    private void populateTypes(OtherDocumentRecord record) {
-        List<OtherDocumentRecordTypeRelation> types = this.typeDao.findAll(record.getId());
+    private void populateTypes(final OtherDocumentRecord record) {
+        final List<OtherDocumentRecordTypeRelation> types = typeDao.findByRecordId(record.getId());
         record.setTypes(new HashSet<OtherDocumentRecordTypeRelation>(types));
     }
 
     /**
      * Populates the <code>types</code> property of all the given <code>records</code>.
      */
-    private void populateTypes(List<OtherDocumentRecord> records) {
-        for (OtherDocumentRecord record : records) {
+    private void populateTypes(final List<OtherDocumentRecord> records) {
+        for (final OtherDocumentRecord record : records) {
             this.populateTypes(record);
         }
     }
 
     @Override
-    public OtherDocumentRecord findById(int recordId) {
+    public OtherDocumentRecord findById(final int recordId) {
         return this.findById(recordId, true);
     }
 
     @Override
-    public OtherDocumentRecord findById(int recordId, boolean loadFile) {
+    public OtherDocumentRecord findById(final int recordId, final boolean loadFile) {
         String selectClause;
         if (loadFile) {
             selectClause = OtherDocumentRecordDaoImpl.SELECT_FROM_CLAUSE_WITH_FILE;
@@ -107,12 +107,12 @@ public class OtherDocumentRecordDaoImpl extends NamedParameterJdbcDaoSupport imp
             selectClause = OtherDocumentRecordDaoImpl.SELECT_FROM_CLAUSE_WITHOUT_FILE;
         }
 
-        String idColumn = OtherDocumentRecordField.id.getColumnName();
-        String query = String.format("%s WHERE r.%s = :%s", selectClause, idColumn, idColumn);
+        final String idColumn = OtherDocumentRecordFieldEnum.ID.getColumnName();
+        final String query = String.format("%s WHERE r.%s = :%s", selectClause, idColumn, idColumn);
 
-        Map<String, Integer> args = Collections.singletonMap(idColumn, recordId);
+        final Map<String, Integer> args = Collections.singletonMap(idColumn, recordId);
 
-        OtherDocumentRecord record = getNamedParameterJdbcTemplate().queryForObject(query, args,
+        final OtherDocumentRecord record = getNamedParameterJdbcTemplate().queryForObject(query, args,
                 new OtherDocumentRecordRowMapper(loadFile));
         if (record == null) {
             throw new DataRetrievalFailureException(String.format("No record with the ID '%s' exists.", recordId));
@@ -123,29 +123,31 @@ public class OtherDocumentRecordDaoImpl extends NamedParameterJdbcDaoSupport imp
     }
 
     @Override
-    public List<OtherDocumentRecord> findAllOrdered(OrderType order) {
-        String query = String.format("%s ORDER BY r.%s %s", OtherDocumentRecordDaoImpl.SELECT_FROM_CLAUSE_WITHOUT_FILE,
-                OtherDocumentRecordField.creationTime.getColumnName(), order.getDatabaseCode());
+    public List<OtherDocumentRecord> findAllOrdered(final OrderTypeEnum order) {
+        final String query = String.format("%s ORDER BY r.%s %s",
+                OtherDocumentRecordDaoImpl.SELECT_FROM_CLAUSE_WITHOUT_FILE,
+                OtherDocumentRecordFieldEnum.CREATION_TIME.getColumnName(), order.getDatabaseCode());
 
-        List<OtherDocumentRecord> records = getJdbcTemplate().query(query, new OtherDocumentRecordRowMapper(false));
+        final List<OtherDocumentRecord> records = getJdbcTemplate().query(query,
+                new OtherDocumentRecordRowMapper(false));
 
         this.populateTypes(records);
         return records;
     }
 
     @Override
-    public List<OtherDocumentRecord> findAllOrdered(OtherDocumentRecordType type, OrderType order) {
-        String typeColumn = OtherDocumentRecordTypeRelationField.type.getColumnName();
-        String query = String.format("%s INNER JOIN %s t ON t.%s = r.%s WHERE t.%s = :%s ORDER BY r.%s %s",
+    public List<OtherDocumentRecord> findAllOrdered(final OtherDocumentRecordTypeEnum type, final OrderTypeEnum order) {
+        final String typeColumn = OtherDocumentRecordTypeRelationFieldEnum.TYPE.getColumnName();
+        final String query = String.format("%s INNER JOIN %s t ON t.%s = r.%s WHERE t.%s = :%s ORDER BY r.%s %s",
                 OtherDocumentRecordDaoImpl.SELECT_FROM_CLAUSE_WITHOUT_FILE,
-                PersistedClass.OtherDocumentRecordTypeRelation.getTableName(),
-                OtherDocumentRecordTypeRelationField.recordId.getColumnName(),
-                OtherDocumentRecordField.id.getColumnName(), typeColumn, typeColumn,
-                OtherDocumentRecordField.creationTime.getColumnName(), order.getDatabaseCode());
+                OtherDocumentRecordTypeRelationDaoImpl.TABLE_NAME,
+                OtherDocumentRecordTypeRelationFieldEnum.RECORD_ID.getColumnName(),
+                OtherDocumentRecordFieldEnum.ID.getColumnName(), typeColumn, typeColumn,
+                OtherDocumentRecordFieldEnum.CREATION_TIME.getColumnName(), order.getDatabaseCode());
 
-        Map<String, String> args = Collections.singletonMap(typeColumn, type.name());
+        final Map<String, String> args = Collections.singletonMap(typeColumn, type.name());
 
-        List<OtherDocumentRecord> records = getNamedParameterJdbcTemplate().query(query, args,
+        final List<OtherDocumentRecord> records = getNamedParameterJdbcTemplate().query(query, args,
                 new OtherDocumentRecordRowMapper(false));
 
         this.populateTypes(records);
@@ -155,77 +157,77 @@ public class OtherDocumentRecordDaoImpl extends NamedParameterJdbcDaoSupport imp
     /**
      * Maps properties of the given {@link OtherDocumentRecord} to names of the corresponding database columns.
      */
-    private Map<String, Object> getNamedParameters(OtherDocumentRecord record) {
-        Map<String, Object> parameters = new HashMap<String, Object>();
-        parameters.put(OtherDocumentRecordField.id.getColumnName(), record.getId());
-        parameters.put(OtherDocumentRecordField.name.getColumnName(), record.getName());
-        parameters.put(OtherDocumentRecordField.description.getColumnName(), record.getDescription());
-        parameters.put(OtherDocumentRecordField.creationTime.getColumnName(), record.getCreationTime());
-        parameters.put(OtherDocumentRecordField.lastSaveTime.getColumnName(), record.getLastSaveTime());
+    private Map<String, Object> getNamedParameters(final OtherDocumentRecord record) {
+        final Map<String, Object> parameters = new HashMap<String, Object>();
+        parameters.put(OtherDocumentRecordFieldEnum.ID.getColumnName(), record.getId());
+        parameters.put(OtherDocumentRecordFieldEnum.NAME.getColumnName(), record.getName());
+        parameters.put(OtherDocumentRecordFieldEnum.DESCRIPTION.getColumnName(), record.getDescription());
+        parameters.put(OtherDocumentRecordFieldEnum.CREATION_TIME.getColumnName(), record.getCreationTime());
+        parameters.put(OtherDocumentRecordFieldEnum.LAST_SAVE_TIME.getColumnName(), record.getLastSaveTime());
         return parameters;
     }
 
     @Override
-    public void update(OtherDocumentRecord record) {
-        Date now = new Date();
+    public void update(final OtherDocumentRecord record) {
+        final Date now = new Date();
         record.setLastSaveTime(now);
 
         // NOTE: updates the record in both tables 'document_records' and
         // 'other_document_records'.
-        this.documentRecordDao.update(record, getDataSource());
+        documentRecordDao.update(record, getDataSource());
 
-        String idColumn = OtherDocumentRecordField.id.getColumnName();
-        String nameColumn = OtherDocumentRecordField.name.getColumnName();
-        String descriptionColumn = OtherDocumentRecordField.description.getColumnName();
-        String lastSaveTimeColumn = OtherDocumentRecordField.lastSaveTime.getColumnName();
-        String query = String.format("UPDATE %s SET %s = :%s, %s = :%s, %s = :%s WHERE %s = :%s",
+        final String idColumn = OtherDocumentRecordFieldEnum.ID.getColumnName();
+        final String nameColumn = OtherDocumentRecordFieldEnum.NAME.getColumnName();
+        final String descriptionColumn = OtherDocumentRecordFieldEnum.DESCRIPTION.getColumnName();
+        final String lastSaveTimeColumn = OtherDocumentRecordFieldEnum.LAST_SAVE_TIME.getColumnName();
+        final String query = String.format("UPDATE %s SET %s = :%s, %s = :%s, %s = :%s WHERE %s = :%s",
                 OtherDocumentRecordDaoImpl.TABLE_NAME, nameColumn, nameColumn, descriptionColumn, descriptionColumn,
                 lastSaveTimeColumn, lastSaveTimeColumn, idColumn, idColumn);
 
         getNamedParameterJdbcTemplate().update(query, getNamedParameters(record));
 
         // Updates types.
-        this.typeDao.delete(record.getId());
-        this.typeDao.save(record.getTypes());
+        typeDao.delete(record.getId());
+        typeDao.save(record.getTypes());
     }
 
     @Override
-    public int save(OtherDocumentRecord record) {
-        Date now = new Date();
+    public int save(final OtherDocumentRecord record) {
+        final Date now = new Date();
         record.setCreationTime(now);
         record.setLastSaveTime(now);
 
         // NOTE: inserts the new record into two tables: 'document_records' and
         // 'other_document_records'.
-        int recordId = this.documentRecordDao.save(record, getDataSource());
+        final int recordId = documentRecordDao.save(record, getDataSource());
 
-        SimpleJdbcInsert insert = new SimpleJdbcInsert(getDataSource())
+        final SimpleJdbcInsert insert = new SimpleJdbcInsert(getDataSource())
                 .withTableName(OtherDocumentRecordDaoImpl.TABLE_NAME).usingColumns(
-                        OtherDocumentRecordField.id.getColumnName(), OtherDocumentRecordField.name.getColumnName(),
-                        OtherDocumentRecordField.description.getColumnName(),
-                        OtherDocumentRecordField.creationTime.getColumnName(),
-                        OtherDocumentRecordField.lastSaveTime.getColumnName());
+                        OtherDocumentRecordFieldEnum.ID.getColumnName(), OtherDocumentRecordFieldEnum.NAME.getColumnName(),
+                        OtherDocumentRecordFieldEnum.DESCRIPTION.getColumnName(),
+                        OtherDocumentRecordFieldEnum.CREATION_TIME.getColumnName(),
+                        OtherDocumentRecordFieldEnum.LAST_SAVE_TIME.getColumnName());
 
-        Map<String, Object> parameters = getNamedParameters(record);
-        parameters.put(OtherDocumentRecordField.id.getColumnName(), recordId);
+        final Map<String, Object> parameters = getNamedParameters(record);
+        parameters.put(OtherDocumentRecordFieldEnum.ID.getColumnName(), recordId);
         insert.execute(parameters);
 
-        Set<OtherDocumentRecordTypeRelation> types = record.getTypes();
+        final Set<OtherDocumentRecordTypeRelation> types = record.getTypes();
         if (types != null) {
             // This IF is valid since the types may be saved later on when the
             // generated identifier is available. See
             // com.svnavigatoru600.web.records.otherdocuments.NewDocumentController.
 
             // NOTE: explicit save of the record's types.
-            this.typeDao.save(record.getTypes());
+            typeDao.save(record.getTypes());
         }
 
         return recordId;
     }
 
     @Override
-    public void delete(AbstractDocumentRecord record) {
+    public void delete(final AbstractDocumentRecord record) {
         // The 'ON DELETE CASCADE' clause is used.
-        this.documentRecordDao.delete(record, getDataSource());
+        documentRecordDao.delete(record, getDataSource());
     }
 }

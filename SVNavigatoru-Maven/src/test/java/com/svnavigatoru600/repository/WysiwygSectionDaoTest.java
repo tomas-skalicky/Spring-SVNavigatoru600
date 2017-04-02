@@ -7,7 +7,7 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
 import com.svnavigatoru600.domain.WysiwygSection;
-import com.svnavigatoru600.domain.WysiwygSectionName;
+import com.svnavigatoru600.domain.WysiwygSectionNameEnum;
 import com.svnavigatoru600.test.category.PersistenceTests;
 
 /**
@@ -21,7 +21,7 @@ public final class WysiwygSectionDaoTest extends AbstractRepositoryTest {
     /**
      * Name of a test section.
      */
-    private static final WysiwygSectionName TEST_SECTION_NAME = WysiwygSectionName.USEFUL_LINKS;
+    private static final WysiwygSectionNameEnum TEST_SECTION_NAME = WysiwygSectionNameEnum.USEFUL_LINKS;
     /**
      * Extension of the existing source code of a test section.
      */

@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.support.SessionStatus;
 
-import com.svnavigatoru600.domain.records.SessionRecordType;
+import com.svnavigatoru600.domain.records.SessionRecordTypeEnum;
 import com.svnavigatoru600.service.records.SessionRecordService;
 import com.svnavigatoru600.url.records.session.BoardSessionsUrlParts;
 import com.svnavigatoru600.viewmodel.records.session.NewSessionRecord;
@@ -30,7 +30,7 @@ public class NewBoardSessionRecordController extends AbstractNewRecordController
     public NewBoardSessionRecordController(final SessionRecordService recordService,
             final SendNotificationNewModelFiller sendNotificationModelFiller, final NewSessionRecordValidator validator,
             final MessageSource messageSource) {
-        super(BoardSessionsUrlParts.BASE_URL, new PageViews(), SessionRecordType.SESSION_RECORD_OF_BOARD, recordService,
+        super(BoardSessionsUrlParts.BASE_URL, new PageViews(), SessionRecordTypeEnum.SESSION_RECORD_OF_BOARD, recordService,
                 sendNotificationModelFiller, validator, messageSource);
     }
 
@@ -39,7 +39,7 @@ public class NewBoardSessionRecordController extends AbstractNewRecordController
      */
     @GetMapping(value = BoardSessionsUrlParts.NEW_URL)
     public String initForm(final HttpServletRequest request, final ModelMap model) {
-        return super.initForm(SessionRecordType.SESSION_RECORD_OF_BOARD, request, model);
+        return super.initForm(SessionRecordTypeEnum.SESSION_RECORD_OF_BOARD, request, model);
     }
 
     @Override

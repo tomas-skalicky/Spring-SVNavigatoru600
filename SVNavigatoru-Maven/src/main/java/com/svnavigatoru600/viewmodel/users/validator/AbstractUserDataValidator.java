@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
-import com.svnavigatoru600.domain.users.AuthorityType;
+import com.svnavigatoru600.domain.users.AuthorityTypeEnum;
 import com.svnavigatoru600.domain.users.User;
 import com.svnavigatoru600.service.util.FirstName;
 import com.svnavigatoru600.service.util.LastName;
@@ -76,8 +76,8 @@ public abstract class AbstractUserDataValidator implements Validator {
      * Checks whether the given <code>authorities</code> are valid.
      */
     protected void checkNewAuthorities(boolean[] authorities, Errors errors) {
-        if (authorities[AuthorityType.ROLE_MEMBER_OF_BOARD.ordinal()]
-                && !authorities[AuthorityType.ROLE_MEMBER_OF_SV.ordinal()]) {
+        if (authorities[AuthorityTypeEnum.ROLE_MEMBER_OF_BOARD.ordinal()]
+                && !authorities[AuthorityTypeEnum.ROLE_MEMBER_OF_SV.ordinal()]) {
             errors.rejectValue("newAuthorities", "user-roles.if_board_then_sv");
         }
     }

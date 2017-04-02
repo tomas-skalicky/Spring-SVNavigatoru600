@@ -9,7 +9,7 @@ import org.springframework.context.MessageSource;
 import org.springframework.validation.Validator;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
-import com.svnavigatoru600.domain.eventcalendar.PriorityType;
+import com.svnavigatoru600.domain.eventcalendar.PriorityTypeEnum;
 import com.svnavigatoru600.service.eventcalendar.CalendarEventService;
 import com.svnavigatoru600.service.util.Localization;
 import com.svnavigatoru600.viewmodel.eventcalendar.validator.AbstractEventValidator;
@@ -55,7 +55,7 @@ public abstract class AbstractNewEditEventController extends AbstractEventContro
     }
 
     /**
-     * Creates a {@link List} of localized names of {@link PriorityType PriorityTypes}. The forms which use this
+     * Creates a {@link List} of localized names of {@link PriorityTypeEnum PriorityTypes}. The forms which use this
      * controller can access the resulting list.
      * <p>
      * This method is used for filling up the tag <em>radiobuttons</em> and the value of the selected radiobutton is
@@ -65,7 +65,7 @@ public abstract class AbstractNewEditEventController extends AbstractEventContro
     public List<String> populatePriorityTypeList(final HttpServletRequest request) {
         final List<String> priorityTypeList = new ArrayList<String>();
 
-        for (final PriorityType type : PriorityType.values()) {
+        for (final PriorityTypeEnum type : PriorityTypeEnum.values()) {
             final String localizationCode = type.getLocalizationCode();
             priorityTypeList.add(Localization.findLocaleMessage(getMessageSource(), request, localizationCode));
         }

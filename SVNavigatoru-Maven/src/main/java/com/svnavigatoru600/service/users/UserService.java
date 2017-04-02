@@ -15,14 +15,14 @@ import org.springframework.stereotype.Service;
 
 import com.svnavigatoru600.domain.forum.ForumContribution;
 import com.svnavigatoru600.domain.forum.ForumThread;
-import com.svnavigatoru600.domain.users.AuthorityType;
+import com.svnavigatoru600.domain.users.AuthorityTypeEnum;
 import com.svnavigatoru600.domain.users.NotificationSubscriberVisitor;
-import com.svnavigatoru600.domain.users.NotificationType;
+import com.svnavigatoru600.domain.users.NotificationTypeEnum;
 import com.svnavigatoru600.domain.users.User;
 import com.svnavigatoru600.repository.users.UserDao;
 import com.svnavigatoru600.service.util.Hash;
 import com.svnavigatoru600.service.util.Localization;
-import com.svnavigatoru600.service.util.OrderType;
+import com.svnavigatoru600.service.util.OrderTypeEnum;
 import com.svnavigatoru600.service.util.Password;
 import com.svnavigatoru600.service.util.UserUtils;
 
@@ -77,11 +77,11 @@ public class UserService {
     }
 
     /**
-     * Returns all {@link User Users} stored in the repository which have the given {@link AuthorityType authority}.
+     * Returns all {@link User Users} stored in the repository which have the given {@link AuthorityTypeEnum authority}.
      * <p>
      * {@link com.svnavigatoru600.domain.users.Authority Authorities} of the returned users are populated.
      */
-    public List<User> findAllByAuthority(final AuthorityType authority) {
+    public List<User> findAllByAuthority(final AuthorityTypeEnum authority) {
         return userDao.findAllByAuthority(authority.name());
     }
 
@@ -91,27 +91,27 @@ public class UserService {
      * {@link com.svnavigatoru600.domain.users.Authority Authorities} of the returned administrators are populated.
      */
     public List<User> findAllAdministrators() {
-        return findAllByAuthority(AuthorityType.ROLE_USER_ADMINISTRATOR);
+        return findAllByAuthority(AuthorityTypeEnum.ROLE_USER_ADMINISTRATOR);
     }
 
     /**
-     * Returns all {@link User Users} stored in the repository which have the given {@link AuthorityType authority} and
-     * which are subscribed to the given {@link NotificationType notifications}.
+     * Returns all {@link User Users} stored in the repository which have the given {@link AuthorityTypeEnum authority} and
+     * which are subscribed to the given {@link NotificationTypeEnum notifications}.
      * <p>
      * {@link com.svnavigatoru600.domain.users.Authority Authorities} of the returned users are NOT populated.
      */
-    public List<User> findAllByAuthorityAndSubscription(final AuthorityType authority, final NotificationType notificationType) {
+    public List<User> findAllByAuthorityAndSubscription(final AuthorityTypeEnum authority, final NotificationTypeEnum notificationType) {
         return userDao.findAllByAuthorityAndSubscription(authority.name(), notificationType);
     }
 
     /**
-     * Returns all {@link User Users} with email stored in the repository which have the given {@link AuthorityType
-     * authority} and which are subscribed to the given {@link NotificationType notifications}.
+     * Returns all {@link User Users} with email stored in the repository which have the given {@link AuthorityTypeEnum
+     * authority} and which are subscribed to the given {@link NotificationTypeEnum notifications}.
      * <p>
      * {@link com.svnavigatoru600.domain.users.Authority Authorities} of the returned users are NOT populated.
      */
-    public List<User> findAllWithEmailByAuthorityAndSubscription(final AuthorityType authority,
-            final NotificationType notificationType) {
+    public List<User> findAllWithEmailByAuthorityAndSubscription(final AuthorityTypeEnum authority,
+            final NotificationTypeEnum notificationType) {
         final List<User> users = userDao.findAllByAuthorityAndSubscription(authority.name(), notificationType);
         final List<User> usersWithEmail = new ArrayList<User>(users.size());
         for (final User user : users) {
@@ -124,7 +124,7 @@ public class UserService {
 
     /**
      * Returns all {@link User Users} stored in the repository arranged according to their {@link User#getLastName()
-     * last names} and {@link User#getFirstName() first names} in the given {@link OrderType order}.
+     * last names} and {@link User#getFirstName() first names} in the given {@link OrderTypeEnum order}.
      * <p>
      * {@link com.svnavigatoru600.domain.users.Authority Authorities} of the returned users are populated.
      * 
@@ -132,7 +132,7 @@ public class UserService {
      *            If <code>true</code>, the method returns only test users. Otherwise, it returns only non-test users.
      *            Test users are those which are not accessible to the business user (= customer).
      */
-    public List<User> findAllOrdered(final OrderType order, final boolean testUsers) {
+    public List<User> findAllOrdered(final OrderTypeEnum order, final boolean testUsers) {
         return userDao.findAllOrdered(order, testUsers);
     }
 
@@ -143,7 +143,7 @@ public class UserService {
      * {@link com.svnavigatoru600.domain.users.Authority Authorities} of the returned users are populated.
      */
     public List<User> findAllOrdered() {
-        return this.findAllOrdered(OrderType.ASCENDING, false);
+        return this.findAllOrdered(OrderTypeEnum.ASCENDING, false);
     }
 
     /**
@@ -206,7 +206,7 @@ public class UserService {
      *            New not-hashed password of the persisted user
      * @param indicatorsOfNewAuthorities
      *            <code>true</code> in the index <code>x</code> in the array means that the authority with the
-     *            {@link AuthorityType#ordinal() ordinal}<code> == x</code> has been selected as one of the new
+     *            {@link AuthorityTypeEnum#ordinal() ordinal}<code> == x</code> has been selected as one of the new
      *            authorities of the persisted user; and vice versa.
      */
     public void updateAndNotifyUser(final User userToUpdate, final User newUser, final String newPassword,
@@ -259,7 +259,7 @@ public class UserService {
      *            New not-hashed password of the new user
      * @param indicatorsOfNewAuthorities
      *            <code>true</code> in the index <code>x</code> in the array means that the authority with the
-     *            {@link AuthorityType#ordinal() ordinal}<code> == x</code> has been selected as one of the new
+     *            {@link AuthorityTypeEnum#ordinal() ordinal}<code> == x</code> has been selected as one of the new
      *            authorities of the persisted user; and vice versa.
      */
     public void saveAndNotifyUser(final User newUser, final String newPassword, final boolean[] indicatorsOfNewAuthorities,
@@ -305,12 +305,12 @@ public class UserService {
 
     /**
      * Unsubscribes the specified {@link User} from receiving notifications which are of the given
-     * {@link NotificationType}. This change is persisted.
+     * {@link NotificationTypeEnum}. This change is persisted.
      * 
      * @param username
      *            Username (= login) of the affected user.
      */
-    public void unsubscribeFromNotifications(final String username, final NotificationType notificationType) {
+    public void unsubscribeFromNotifications(final String username, final NotificationTypeEnum notificationType) {
         final User user = userDao.findByUsername(username);
         notificationType.accept(new NotificationSubscriberVisitor(user, false));
         userDao.update(user, false);
@@ -396,14 +396,14 @@ public class UserService {
     }
 
     /**
-     * Gets a {@link Map} which for each constant of the {@link NotificationType} enumeration contains a pair of its
-     * {@link NotificationType#getOrdinal() ordinal} and its localized title.
+     * Gets a {@link Map} which for each constant of the {@link NotificationTypeEnum} enumeration contains a pair of its
+     * {@link NotificationTypeEnum#getOrdinal() ordinal} and its localized title.
      */
     public static Map<Long, String> getLocalizedNotificationTitles(final HttpServletRequest request,
             final MessageSource messageSource) {
         final Map<Long, String> ordinalTitleMap = new HashMap<Long, String>();
 
-        for (final NotificationType type : NotificationType.values()) {
+        for (final NotificationTypeEnum type : NotificationTypeEnum.values()) {
             final String localizedTitle = Localization.findLocaleMessage(messageSource, request,
                     type.getTitleLocalizationCode());
             ordinalTitleMap.put(type.getOrdinal(), localizedTitle);

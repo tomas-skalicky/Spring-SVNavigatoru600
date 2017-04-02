@@ -10,8 +10,8 @@ import org.springframework.dao.EmptyResultDataAccessException;
 
 import com.svnavigatoru600.domain.News;
 import com.svnavigatoru600.repository.news.impl.FindAllOrderedArguments;
-import com.svnavigatoru600.repository.news.impl.NewsField;
-import com.svnavigatoru600.service.util.OrderType;
+import com.svnavigatoru600.repository.news.impl.NewsFieldEnum;
+import com.svnavigatoru600.service.util.OrderTypeEnum;
 import com.svnavigatoru600.test.category.PersistenceTests;
 
 /**
@@ -59,7 +59,7 @@ public final class NewsDaoTest extends AbstractRepositoryTest {
 
         // SELECT ALL
         List<News> foundNews = newsDao
-                .findAllOrdered(new FindAllOrderedArguments(NewsField.creationTime, OrderType.ASCENDING));
+                .findAllOrdered(new FindAllOrderedArguments(NewsFieldEnum.CREATION_TIME, OrderTypeEnum.ASCENDING));
         int expectedFoundNewsCount = 2;
         Assert.assertEquals(expectedFoundNewsCount, foundNews.size());
         Assert.assertEquals(firstNewsId, foundNews.get(0).getId());

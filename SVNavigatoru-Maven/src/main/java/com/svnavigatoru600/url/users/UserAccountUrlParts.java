@@ -2,7 +2,7 @@ package com.svnavigatoru600.url.users;
 
 import javax.servlet.http.HttpServletRequest;
 
-import com.svnavigatoru600.domain.users.NotificationType;
+import com.svnavigatoru600.domain.users.NotificationTypeEnum;
 import com.svnavigatoru600.domain.users.User;
 import com.svnavigatoru600.service.util.HttpRequestUtils;
 import com.svnavigatoru600.url.CommonUrlParts;
@@ -28,10 +28,10 @@ public final class UserAccountUrlParts {
 
     /**
      * Gets URL which unsubscribes the given {@link User user} from receiving notifications of the given
-     * {@link NotificationType notificationType} if the user clicks on it. Moreover, controller associated with the URL
+     * {@link NotificationTypeEnum notificationType} if the user clicks on it. Moreover, controller associated with the URL
      * redirects the user to the user account settings page.
      */
-    public static String getUrlForUnsubscription(User user, NotificationType notificationType,
+    public static String getUrlForUnsubscription(User user, NotificationTypeEnum notificationType,
             HttpServletRequest request) {
         return String.format("%s%s%s/%s%d/", HttpRequestUtils.getContextHomeDirectory(request),
                 UserAccountUrlParts.BASE_URL, user.getUsername(), UserAccountUrlParts.UNSUBSCRIBE_EXTENSION,

@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.support.SessionStatus;
 
 import com.svnavigatoru600.domain.WysiwygSection;
-import com.svnavigatoru600.domain.WysiwygSectionName;
+import com.svnavigatoru600.domain.WysiwygSectionNameEnum;
 import com.svnavigatoru600.service.WysiwygSectionService;
 import com.svnavigatoru600.url.RemostavContactsUrlParts;
 
@@ -24,7 +24,7 @@ public class RemostavContactController extends AbstractWysiwygSectionController 
 
     @Inject
     public RemostavContactController(final WysiwygSectionService sectionService) {
-        super(sectionService, WysiwygSectionName.REMOSTAV_CONTACT, "viewRemostavContact", "editRemostavContact",
+        super(sectionService, WysiwygSectionNameEnum.REMOSTAV_CONTACT, "viewRemostavContact", "editRemostavContact",
                 RemostavContactsUrlParts.BASE_URL);
     }
 

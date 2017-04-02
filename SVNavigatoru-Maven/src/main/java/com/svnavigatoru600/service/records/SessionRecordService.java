@@ -16,14 +16,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.svnavigatoru600.domain.records.SessionRecord;
-import com.svnavigatoru600.domain.records.SessionRecordType;
-import com.svnavigatoru600.domain.users.AuthorityType;
+import com.svnavigatoru600.domain.records.SessionRecordTypeEnum;
+import com.svnavigatoru600.domain.users.AuthorityTypeEnum;
 import com.svnavigatoru600.domain.users.User;
 import com.svnavigatoru600.repository.records.SessionRecordDao;
 import com.svnavigatoru600.service.util.DateUtils;
 import com.svnavigatoru600.service.util.File;
 import com.svnavigatoru600.service.util.Localization;
-import com.svnavigatoru600.service.util.OrderType;
+import com.svnavigatoru600.service.util.OrderTypeEnum;
 
 /**
  * Provides convenient methods to work with {@link SessionRecord} objects.
@@ -70,18 +70,18 @@ public class SessionRecordService extends AbstractDocumentRecordService {
 
     /**
      * Returns all {@link SessionRecord SessionRecords} stored in the repository arranged according to their
-     * {@link SessionRecord#getSessionDate() sessionDates} in the given {@link OrderType order}.
+     * {@link SessionRecord#getSessionDate() sessionDates} in the given {@link OrderTypeEnum order}.
      */
-    public List<SessionRecord> findAllOrdered(final OrderType order) {
+    public List<SessionRecord> findAllOrdered(final OrderTypeEnum order) {
         return sessionRecordDao.findAllOrdered(order);
     }
 
     /**
      * Returns all {@link SessionRecord SessionRecords} stored in the repository which are of the given
-     * {@link SessionRecordType type}. The records are arranged according to their {@link SessionRecord#getSessionDate()
-     * sessionDates} in the given {@link OrderType order}.
+     * {@link SessionRecordTypeEnum type}. The records are arranged according to their {@link SessionRecord#getSessionDate()
+     * sessionDates} in the given {@link OrderTypeEnum order}.
      */
-    public List<SessionRecord> findAllOrdered(final SessionRecordType type, final OrderType order) {
+    public List<SessionRecord> findAllOrdered(final SessionRecordTypeEnum type, final OrderTypeEnum order) {
         return sessionRecordDao.findAllOrdered(type, order);
     }
 
@@ -91,12 +91,12 @@ public class SessionRecordService extends AbstractDocumentRecordService {
      * 
      * @param allRecordTypes
      *            If <code>true</code>, all session records are returned. Otherwise, only records which are of the given
-     *            {@link SessionRecordType recordType} are returned.
+     *            {@link SessionRecordTypeEnum recordType} are returned.
      * @param recordType
      *            see <code>allRecordTypes</code>
      */
-    public List<SessionRecord> findAllOrdered(final boolean allRecordTypes, final SessionRecordType recordType) {
-        final OrderType order = OrderType.DESCENDING;
+    public List<SessionRecord> findAllOrdered(final boolean allRecordTypes, final SessionRecordTypeEnum recordType) {
+        final OrderTypeEnum order = OrderTypeEnum.DESCENDING;
         if (allRecordTypes) {
             return this.findAllOrdered(order);
         } else {
@@ -136,7 +136,7 @@ public class SessionRecordService extends AbstractDocumentRecordService {
         final SessionRecord recordToUpdate = findByIdWithoutFile(recordToUpdateId);
         recordToUpdate.setSessionDate(newRecord.getSessionDate());
         recordToUpdate.setDiscussedTopics(newRecord.getDiscussedTopics());
-        recordToUpdate.setType(SessionRecordType.valueOfAccordingLocalization(newType, messageSource, request));
+        recordToUpdate.setType(SessionRecordTypeEnum.valueOfAccordingLocalization(newType, messageSource, request));
 
         updateRecordWithSaveFileToDatabase(recordToUpdate, isFileReplaced, newAttachedFile);
     }
@@ -238,7 +238,7 @@ public class SessionRecordService extends AbstractDocumentRecordService {
 
     @Override
     public List<User> gainUsersToNotify() {
-        return getUserService().findAllWithEmailByAuthorityAndSubscription(AuthorityType.ROLE_MEMBER_OF_SV,
+        return getUserService().findAllWithEmailByAuthorityAndSubscription(AuthorityTypeEnum.ROLE_MEMBER_OF_SV,
                 emailService.getNotificationType());
     }
 
@@ -277,7 +277,7 @@ public class SessionRecordService extends AbstractDocumentRecordService {
      */
     public void save(final SessionRecord newRecord, final String recordType, final MultipartFile attachedFile, final HttpServletRequest request,
             final MessageSource messageSource) throws SQLException, IOException {
-        newRecord.setType(SessionRecordType.valueOfAccordingLocalization(recordType, messageSource, request));
+        newRecord.setType(SessionRecordTypeEnum.valueOfAccordingLocalization(recordType, messageSource, request));
 
         prepareForSaveFileToDatabase(newRecord, attachedFile);
         this.save(newRecord);
@@ -356,7 +356,7 @@ public class SessionRecordService extends AbstractDocumentRecordService {
     }
 
     /**
-     * Deletes the specified {@link SessionRecord} together with all its {@link SessionRecordType types} from the
+     * Deletes the specified {@link SessionRecord} together with all its {@link SessionRecordTypeEnum types} from the
      * repository. Moreover, deletes the associated {@link java.io.File file}.
      * 
      * @param recordId
@@ -369,7 +369,7 @@ public class SessionRecordService extends AbstractDocumentRecordService {
 
     /**
      * Gets a {@link Map} which for each input {@link SessionRecord} contains a localized title of its
-     * {@link SessionRecordType type}.
+     * {@link SessionRecordTypeEnum type}.
      */
     public static Map<SessionRecord, String> getLocalizedTypeTitles(final List<SessionRecord> records,
             final HttpServletRequest request, final MessageSource messageSource) {
@@ -416,12 +416,12 @@ public class SessionRecordService extends AbstractDocumentRecordService {
     }
 
     /**
-     * Gets the {@link List} of all localized {@link SessionRecordType SessionRecordTypes}.
+     * Gets the {@link List} of all localized {@link SessionRecordTypeEnum SessionRecordTypes}.
      */
     public static List<String> getLocalizedTypes(final HttpServletRequest request, final MessageSource messageSource) {
         final List<String> localizedTypes = new ArrayList<String>();
 
-        for (final SessionRecordType type : SessionRecordType.values()) {
+        for (final SessionRecordTypeEnum type : SessionRecordTypeEnum.values()) {
             localizedTypes.add(Localization.findLocaleMessage(messageSource, request, type.getLocalizationCode()));
         }
         return localizedTypes;

@@ -7,8 +7,8 @@ import java.util.Date;
 import org.springframework.jdbc.core.RowMapper;
 
 import com.svnavigatoru600.domain.records.OtherDocumentRecord;
-import com.svnavigatoru600.repository.records.impl.DocumentRecordField;
-import com.svnavigatoru600.repository.records.impl.OtherDocumentRecordField;
+import com.svnavigatoru600.repository.records.impl.DocumentRecordFieldEnum;
+import com.svnavigatoru600.repository.records.impl.OtherDocumentRecordFieldEnum;
 
 /**
  * For more information, see {@link com.svnavigatoru600.repository.users.impl.direct.UserRowMapper UserRowMapper}.
@@ -33,21 +33,21 @@ public class OtherDocumentRecordRowMapper extends AbstractDocumentRecordRowMappe
     @Override
     public OtherDocumentRecord mapRow(final ResultSet rs, final int rowNum) throws SQLException {
         final OtherDocumentRecord record = new OtherDocumentRecord();
-        record.setId(rs.getInt(OtherDocumentRecordField.id.getColumnName()));
-        record.setFileName(rs.getString(DocumentRecordField.fileName.getColumnName()));
+        record.setId(rs.getInt(OtherDocumentRecordFieldEnum.ID.getColumnName()));
+        record.setFileName(rs.getString(DocumentRecordFieldEnum.FILE_NAME.getColumnName()));
 
         if (isLoadFile()) {
-            record.setFile(rs.getBlob(DocumentRecordField.file.getColumnName()));
+            record.setFile(rs.getBlob(DocumentRecordFieldEnum.FILE.getColumnName()));
         } else {
             record.setFile(null);
         }
 
-        record.setName(rs.getString(OtherDocumentRecordField.name.getColumnName()));
-        record.setDescription(rs.getString(OtherDocumentRecordField.description.getColumnName()));
+        record.setName(rs.getString(OtherDocumentRecordFieldEnum.name.getColumnName()));
+        record.setDescription(rs.getString(OtherDocumentRecordFieldEnum.DESCRIPTION.getColumnName()));
         record.setCreationTime(
-                new Date(rs.getTimestamp(OtherDocumentRecordField.creationTime.getColumnName()).getTime()));
+                new Date(rs.getTimestamp(OtherDocumentRecordFieldEnum.CREATION_TIME.getColumnName()).getTime()));
         record.setLastSaveTime(
-                new Date(rs.getTimestamp(OtherDocumentRecordField.lastSaveTime.getColumnName()).getTime()));
+                new Date(rs.getTimestamp(OtherDocumentRecordFieldEnum.LAST_SAVE_TIME.getColumnName()).getTime()));
         return record;
     }
 }

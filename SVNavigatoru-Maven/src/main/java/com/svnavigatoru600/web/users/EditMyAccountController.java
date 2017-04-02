@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.support.SessionStatus;
 
 import com.svnavigatoru600.domain.users.NotificationSubscriberVisitor;
-import com.svnavigatoru600.domain.users.NotificationType;
+import com.svnavigatoru600.domain.users.NotificationTypeEnum;
 import com.svnavigatoru600.domain.users.User;
 import com.svnavigatoru600.service.users.UserService;
 import com.svnavigatoru600.service.util.Localization;
@@ -154,7 +154,7 @@ public class EditMyAccountController extends AbstractPrivateSectionMetaControlle
             return AbstractMetaController.REDIRECTION_PAGE;
         }
 
-        final NotificationType notificationType = NotificationType.values()[notificationTypeOrdinal];
+        final NotificationTypeEnum notificationType = NotificationTypeEnum.values()[notificationTypeOrdinal];
         try {
             userService.unsubscribeFromNotifications(username, notificationType);
 
@@ -188,7 +188,7 @@ public class EditMyAccountController extends AbstractPrivateSectionMetaControlle
         final UpdateUserData command = (UpdateUserData) model.get(EditMyAccountController.COMMAND);
         command.setNotificationsUnsubscribed(true);
 
-        final String localizationCode = NotificationType.values()[notificationType].getTitleLocalizationCode();
+        final String localizationCode = NotificationTypeEnum.values()[notificationType].getTitleLocalizationCode();
         final String localizedTitle = Localization.findLocaleMessage(messageSource, request, localizationCode);
         command.setLocalizedUnsubscribedNotificationTitle(localizedTitle);
         return view;

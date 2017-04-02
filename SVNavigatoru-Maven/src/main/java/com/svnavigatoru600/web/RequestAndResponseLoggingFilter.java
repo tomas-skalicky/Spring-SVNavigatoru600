@@ -320,28 +320,36 @@ public class RequestAndResponseLoggingFilter extends OncePerRequestFilter {
     }
 
     private void beforeRequest(final RequestWrapper request) {
-        for (final String ignoredSuffix : IGNORED_URI_SUFFIXES) {
-            if (request.getRequestURI().endsWith(ignoredSuffix)) {
-                return;
-            }
-        }
+        if (checkIfShouldBeLogged(request)) {
 
-        final String message = buildBeforeMessage(request);
-        logger.info(message);
+            final String message = buildBeforeMessage(request);
+            logger.info(message);
+        }
     }
 
     private void afterRequest(final RequestWrapper request, final ResponseWrapper response) {
+        if (checkIfShouldBeLogged(request)) {
 
-        final String message = buildAfterMessage(request, response);
+            final String message = buildAfterMessage(request, response);
 
-        final HttpStatus httpStatus = HttpStatus.valueOf(response.getStatus());
-        if (httpStatus.is5xxServerError()) {
-            logger.error(message);
-        } else if (httpStatus.is4xxClientError()) {
-            logger.warn(message);
-        } else {
-            logger.info(message);
+            final HttpStatus httpStatus = HttpStatus.valueOf(response.getStatus());
+            if (httpStatus.is5xxServerError()) {
+                logger.error(message);
+            } else if (httpStatus.is4xxClientError()) {
+                logger.warn(message);
+            } else {
+                logger.info(message);
+            }
         }
+    }
+
+    private boolean checkIfShouldBeLogged(final RequestWrapper request) {
+        for (final String ignoredSuffix : IGNORED_URI_SUFFIXES) {
+            if (request.getRequestURI().endsWith(ignoredSuffix)) {
+                return false;
+            }
+        }
+        return true;
     }
 
     /**

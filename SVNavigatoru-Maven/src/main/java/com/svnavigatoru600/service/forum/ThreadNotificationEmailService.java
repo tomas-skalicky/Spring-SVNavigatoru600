@@ -8,7 +8,7 @@ import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
 
 import com.svnavigatoru600.domain.forum.ForumThread;
-import com.svnavigatoru600.domain.users.NotificationType;
+import com.svnavigatoru600.domain.users.NotificationTypeEnum;
 import com.svnavigatoru600.domain.users.User;
 import com.svnavigatoru600.service.AbstractNotificationEmailService;
 import com.svnavigatoru600.service.util.Email;
@@ -29,10 +29,10 @@ public class ThreadNotificationEmailService extends AbstractNotificationEmailSer
     private static final String THREAD_CREATED_SUBJECT_CODE = "notifications.email.thread.subject.thread-created";
     private static final String THREAD_CREATED_TEXT_CODE = "notifications.email.thread.text.thread-created";
 
-    private static final NotificationType NOTIFICATION_TYPE = NotificationType.IN_FORUM;
+    private static final NotificationTypeEnum NOTIFICATION_TYPE = NotificationTypeEnum.IN_FORUM;
 
     @Override
-    protected NotificationType getNotificationType() {
+    protected NotificationTypeEnum getNotificationType() {
         return ThreadNotificationEmailService.NOTIFICATION_TYPE;
     }
 

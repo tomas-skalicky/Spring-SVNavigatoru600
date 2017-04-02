@@ -11,7 +11,7 @@ import org.springframework.context.MessageSource;
 import org.springframework.dao.DataAccessException;
 import org.springframework.ui.ModelMap;
 
-import com.svnavigatoru600.domain.records.OtherDocumentRecordType;
+import com.svnavigatoru600.domain.records.OtherDocumentRecordTypeEnum;
 import com.svnavigatoru600.service.records.OtherDocumentRecordService;
 import com.svnavigatoru600.web.records.AbstractPageViews;
 
@@ -31,7 +31,7 @@ public abstract class AbstractRetrieveDocumentController extends AbstractOtherDo
 
     /**
      * Constructs a controller which considers all {@link com.svnavigatoru600.domain.records.OtherDocumentRecord
-     * OtherDocumentRecords} of all {@link OtherDocumentRecordType OtherDocumentRecordTypes}.
+     * OtherDocumentRecords} of all {@link OtherDocumentRecordTypeEnum OtherDocumentRecordTypes}.
      */
     public AbstractRetrieveDocumentController(final String baseUrl, final AbstractPageViews views,
             final OtherDocumentRecordService recordService, final MessageSource messageSource) {
@@ -44,7 +44,7 @@ public abstract class AbstractRetrieveDocumentController extends AbstractOtherDo
      * OtherDocumentRecords} of the given <code>recordType</code>.
      */
     public AbstractRetrieveDocumentController(final String baseUrl, final AbstractPageViews views,
-            final OtherDocumentRecordType recordType, final OtherDocumentRecordService recordService, final MessageSource messageSource) {
+            final OtherDocumentRecordTypeEnum recordType, final OtherDocumentRecordService recordService, final MessageSource messageSource) {
         super(baseUrl, views, recordType, recordService, messageSource);
     }
 

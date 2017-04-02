@@ -5,7 +5,7 @@ package com.svnavigatoru600.domain;
  * 
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
-public enum WysiwygSectionName {
+public enum WysiwygSectionNameEnum {
 
     BOARD, USEFUL_LINKS, REMOSTAV_CONTACT
 }

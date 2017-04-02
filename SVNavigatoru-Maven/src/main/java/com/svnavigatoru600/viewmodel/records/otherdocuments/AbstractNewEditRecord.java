@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.svnavigatoru600.domain.records.OtherDocumentRecord;
-import com.svnavigatoru600.domain.records.OtherDocumentRecordType;
+import com.svnavigatoru600.domain.records.OtherDocumentRecordTypeEnum;
 import com.svnavigatoru600.viewmodel.SendNotification;
 import com.svnavigatoru600.viewmodel.SendNotificationViewModel;
 
@@ -19,7 +19,7 @@ public abstract class AbstractNewEditRecord implements SendNotificationViewModel
 
     private OtherDocumentRecord record = null;
     private MultipartFile newFile = null;
-    private boolean[] newTypes = new boolean[OtherDocumentRecordType.values().length];
+    private boolean[] newTypes = new boolean[OtherDocumentRecordTypeEnum.values().length];
     private Map<Long, String> typeCheckboxId = null;
     private Map<Long, String> localizedTypeCheckboxTitles = null;
     private SendNotification sendNotification = null;

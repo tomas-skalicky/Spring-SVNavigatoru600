@@ -12,7 +12,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import com.svnavigatoru600.service.util.AuthorityUtils;
 import com.svnavigatoru600.service.util.CheckboxUtils;
-import com.svnavigatoru600.service.util.FullNameFormat;
+import com.svnavigatoru600.service.util.FullNameFormatEnum;
 import com.svnavigatoru600.service.util.UserFullNameFormatterVisitor;
 
 /**
@@ -114,16 +114,16 @@ public class User implements UserDetails, Serializable {
     }
 
     /**
-     * Gets the full name of this {@link User} in the default {@link FullNameFormat}.
+     * Gets the full name of this {@link User} in the default {@link FullNameFormatEnum}.
      */
     public String getFullName() {
-        return this.getFullName(FullNameFormat.FIRST_LAST);
+        return this.getFullName(FullNameFormatEnum.FIRST_LAST);
     }
 
     /**
-     * Gets the full name of this {@link User} in the given {@link FullNameFormat}.
+     * Gets the full name of this {@link User} in the given {@link FullNameFormatEnum}.
      */
-    public String getFullName(final FullNameFormat format) {
+    public String getFullName(final FullNameFormatEnum format) {
         return format.accept(new UserFullNameFormatterVisitor(this));
     }
 
@@ -228,10 +228,10 @@ public class User implements UserDetails, Serializable {
     }
 
     /**
-     * Returns an object of the authority with the given {@link AuthorityType authorityType} if this {@link User} has
+     * Returns an object of the authority with the given {@link AuthorityTypeEnum authorityType} if this {@link User} has
      * such a role (~ rights). Otherwise, returns <code>null</code>
      */
-    private GrantedAuthority getAuthority(final AuthorityType authorityType) {
+    private GrantedAuthority getAuthority(final AuthorityTypeEnum authorityType) {
         final String typeName = authorityType.name();
         final Collection<GrantedAuthority> ownedAuthorities = getAuthorities();
 
@@ -246,7 +246,7 @@ public class User implements UserDetails, Serializable {
     /**
      * Indicates whether this {@link User} has the given authority.
      */
-    public boolean hasAuthority(final AuthorityType authority) {
+    public boolean hasAuthority(final AuthorityTypeEnum authority) {
         return getAuthority(authority) != null;
     }
 
@@ -254,28 +254,28 @@ public class User implements UserDetails, Serializable {
      * Indicates whether this {@link User} can see published news.
      */
     public boolean canSeeNews() {
-        return hasAuthority(AuthorityType.ROLE_MEMBER_OF_SV);
+        return hasAuthority(AuthorityTypeEnum.ROLE_MEMBER_OF_SV);
     }
 
     /**
      * Indicates whether this {@link User} can edit published news.
      */
     public boolean canEditNews() {
-        return hasAuthority(AuthorityType.ROLE_MEMBER_OF_BOARD);
+        return hasAuthority(AuthorityTypeEnum.ROLE_MEMBER_OF_BOARD);
     }
 
     /**
      * Indicates whether this {@link User} can see all users of the application.
      */
     public boolean canSeeUsers() {
-        return hasAuthority(AuthorityType.ROLE_USER_ADMINISTRATOR);
+        return hasAuthority(AuthorityTypeEnum.ROLE_USER_ADMINISTRATOR);
     }
 
     /**
      * Indicates whether this {@link User} can see his user account.
      */
     public boolean canSeeHisAccount() {
-        return hasAuthority(AuthorityType.ROLE_REGISTERED_USER);
+        return hasAuthority(AuthorityTypeEnum.ROLE_REGISTERED_USER);
     }
 
     public int getSmtpPort() {
@@ -312,7 +312,7 @@ public class User implements UserDetails, Serializable {
      *
      * @param indicatorsOfNewAuthorities
      *            <code>true</code> in the index <code>x</code> in the array means that the authority with the
-     *            {@link AuthorityType#ordinal() ordinal}<code> == x</code> has been selected as one of the new
+     *            {@link AuthorityTypeEnum#ordinal() ordinal}<code> == x</code> has been selected as one of the new
      *            authorities of this user. And vice versa.
      * @return <code>true</code> if the new authorities are different from those before the method invocation; otherwise
      *         <code>false</code>.
@@ -321,7 +321,7 @@ public class User implements UserDetails, Serializable {
         final Set<GrantedAuthority> checkedAuthorities = AuthorityUtils
                 .convertIndicatorsToAuthorities(indicatorsOfNewAuthorities, username);
         // The role ROLE_REGISTERED_USER is automatically added.
-        checkedAuthorities.add(new Authority(username, AuthorityType.ROLE_REGISTERED_USER));
+        checkedAuthorities.add(new Authority(username, AuthorityTypeEnum.ROLE_REGISTERED_USER));
 
         boolean authoritiesChanged = true;
         final Collection<GrantedAuthority> currentAuthorities = getAuthorities();
@@ -399,7 +399,7 @@ public class User implements UserDetails, Serializable {
      * @param type
      *            Type of the authority which is to be added to this user.
      */
-    public void addAuthority(final AuthorityType type) {
+    public void addAuthority(final AuthorityTypeEnum type) {
         if (!hasAuthority(type)) {
             getAuthorities().add(new Authority(username, type));
         }
@@ -412,7 +412,7 @@ public class User implements UserDetails, Serializable {
      * @param type
      *            Type of the authority which is to be taken away from this user.
      */
-    public void removeAuthority(final AuthorityType type) {
+    public void removeAuthority(final AuthorityTypeEnum type) {
         final GrantedAuthority authority = getAuthority(type);
         if (authority != null) {
             getAuthorities().remove(authority);

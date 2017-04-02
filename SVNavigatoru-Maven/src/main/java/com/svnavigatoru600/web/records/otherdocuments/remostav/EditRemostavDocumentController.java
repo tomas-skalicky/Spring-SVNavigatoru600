@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.support.SessionStatus;
 
-import com.svnavigatoru600.domain.records.OtherDocumentRecordType;
+import com.svnavigatoru600.domain.records.OtherDocumentRecordTypeEnum;
 import com.svnavigatoru600.service.records.OtherDocumentRecordService;
 import com.svnavigatoru600.url.CommonUrlParts;
 import com.svnavigatoru600.url.records.otherdocuments.RemostavDocumentsUrlParts;
@@ -32,7 +32,7 @@ public class EditRemostavDocumentController extends AbstractEditDocumentControll
     public EditRemostavDocumentController(final OtherDocumentRecordService recordService,
             final SendNotificationEditModelFiller sendNotificationModelFiller, final EditRecordValidator validator,
             final MessageSource messageSource) {
-        super(RemostavDocumentsUrlParts.EXISTING_URL, new PageViews(), OtherDocumentRecordType.REMOSTAV, recordService,
+        super(RemostavDocumentsUrlParts.EXISTING_URL, new PageViews(), OtherDocumentRecordTypeEnum.REMOSTAV, recordService,
                 sendNotificationModelFiller, validator, messageSource);
     }
 

@@ -9,7 +9,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 
-import com.svnavigatoru600.domain.records.SessionRecordType;
+import com.svnavigatoru600.domain.records.SessionRecordTypeEnum;
 import com.svnavigatoru600.service.records.SessionRecordService;
 import com.svnavigatoru600.url.CommonUrlParts;
 import com.svnavigatoru600.web.AbstractMetaController;
@@ -31,7 +31,7 @@ public abstract class AbstractDeleteRecordController extends AbstractSessionReco
 
     /**
      * Constructs a controller which considers all {@link com.svnavigatoru600.domain.records.SessionRecord
-     * SessionRecords} of all {@link SessionRecordType SessionRecordTypes}.
+     * SessionRecords} of all {@link SessionRecordTypeEnum SessionRecordTypes}.
      */
     public AbstractDeleteRecordController(final String baseUrl, final AbstractPageViews views, final SessionRecordService recordService,
             final MessageSource messageSource) {
@@ -44,7 +44,7 @@ public abstract class AbstractDeleteRecordController extends AbstractSessionReco
      * Constructs a controller which considers all {@link com.svnavigatoru600.domain.records.SessionRecord
      * SessionRecords} of the given <code>recordType</code>.
      */
-    public AbstractDeleteRecordController(final String baseUrl, final AbstractPageViews views, final SessionRecordType recordType,
+    public AbstractDeleteRecordController(final String baseUrl, final AbstractPageViews views, final SessionRecordTypeEnum recordType,
             final SessionRecordService recordService, final MessageSource messageSource) {
         super(baseUrl, views, recordType, recordService, messageSource);
         successfulDeleteUrl = getBaseUrl() + CommonUrlParts.DELETED_EXTENSION;

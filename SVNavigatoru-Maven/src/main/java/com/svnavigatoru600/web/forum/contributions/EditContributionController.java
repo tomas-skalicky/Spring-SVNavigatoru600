@@ -59,7 +59,7 @@ public class EditContributionController extends AbstractNewEditContributionContr
         getSendNotificationModelFiller().populateSendNotificationInInitForm(command, request, getMessageSource());
 
         model.addAttribute(AbstractNewEditContributionController.COMMAND, command);
-        return PageViews.EDIT.getViewName();
+        return PageViewsEnum.EDIT.getViewName();
     }
 
     @GetMapping(value = EditContributionController.BASE_URL + CommonUrlParts.SAVED_EXTENSION)
@@ -84,7 +84,7 @@ public class EditContributionController extends AbstractNewEditContributionContr
 
         getValidator().validate(command, result);
         if (result.hasErrors()) {
-            return PageViews.EDIT.getViewName();
+            return PageViewsEnum.EDIT.getViewName();
         }
 
         final ContributionService contributionService = getContributionService();
@@ -109,6 +109,6 @@ public class EditContributionController extends AbstractNewEditContributionContr
             LogFactory.getLog(this.getClass()).error(originalContribution, e);
             result.reject(EditContributionController.DATABASE_ERROR_MESSAGE_CODE);
         }
-        return PageViews.EDIT.getViewName();
+        return PageViewsEnum.EDIT.getViewName();
     }
 }

@@ -13,7 +13,7 @@ import org.springframework.security.core.GrantedAuthority;
 
 import com.svnavigatoru600.domain.users.Authority;
 import com.svnavigatoru600.domain.users.AuthorityId;
-import com.svnavigatoru600.domain.users.AuthorityType;
+import com.svnavigatoru600.domain.users.AuthorityTypeEnum;
 import com.svnavigatoru600.domain.users.User;
 import com.svnavigatoru600.repository.users.AuthorityDao;
 import com.svnavigatoru600.test.category.PersistenceTests;
@@ -45,7 +45,7 @@ public final class AuthorityDaoTest extends AbstractRepositoryTest {
         TEST_UTILS.createDefaultTestAuthority(username);
 
         // SELECT ALL
-        List<Authority> authorities = authorityDao.findAll(username);
+        List<Authority> authorities = authorityDao.findByUsername(username);
         int expectedFoundAuthorityCount = 1;
         Assert.assertEquals(expectedFoundAuthorityCount, authorities.size());
         AuthorityId authority = authorities.get(0).getId();
@@ -59,13 +59,13 @@ public final class AuthorityDaoTest extends AbstractRepositoryTest {
 
         // THREE INSERTS
         String firstUsername = this.defaultAuthor.getUsername();
-        TEST_UTILS.createTestAuthority(firstUsername, AuthorityType.ROLE_REGISTERED_USER);
+        TEST_UTILS.createTestAuthority(firstUsername, AuthorityTypeEnum.ROLE_REGISTERED_USER);
         String secondUsername = TEST_UTILS.createSecondDefaultTestUser().getUsername();
-        TEST_UTILS.createTestAuthority(secondUsername, AuthorityType.ROLE_REGISTERED_USER);
-        TEST_UTILS.createTestAuthority(firstUsername, AuthorityType.ROLE_MEMBER_OF_SV);
+        TEST_UTILS.createTestAuthority(secondUsername, AuthorityTypeEnum.ROLE_REGISTERED_USER);
+        TEST_UTILS.createTestAuthority(firstUsername, AuthorityTypeEnum.ROLE_MEMBER_OF_SV);
 
         // SELECT ALL
-        List<Authority> authorities = authorityDao.findAll(firstUsername);
+        List<Authority> authorities = authorityDao.findByUsername(firstUsername);
         int expectedFoundAuthorityCount = 2;
         Assert.assertEquals(expectedFoundAuthorityCount, authorities.size());
     }
@@ -87,12 +87,12 @@ public final class AuthorityDaoTest extends AbstractRepositoryTest {
         String firstUsername = this.defaultAuthor.getUsername();
         String secondUsername = TEST_UTILS.createSecondDefaultTestUser().getUsername();
         List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
-        authorities.add(new Authority(firstUsername, AuthorityType.ROLE_REGISTERED_USER));
-        authorities.add(new Authority(secondUsername, AuthorityType.ROLE_REGISTERED_USER));
+        authorities.add(new Authority(firstUsername, AuthorityTypeEnum.ROLE_REGISTERED_USER));
+        authorities.add(new Authority(secondUsername, AuthorityTypeEnum.ROLE_REGISTERED_USER));
         authorityDao.save(authorities);
 
         // SELECT ALL
-        List<Authority> foundAuthorities = authorityDao.findAll(secondUsername);
+        List<Authority> foundAuthorities = authorityDao.findByUsername(secondUsername);
         int expectedFoundAuthorityCount = 1;
         Assert.assertEquals(expectedFoundAuthorityCount, foundAuthorities.size());
     }
@@ -109,7 +109,7 @@ public final class AuthorityDaoTest extends AbstractRepositoryTest {
         authorityDao.delete(username);
 
         // SELECT ALL
-        List<Authority> foundAuthorities = authorityDao.findAll(username);
+        List<Authority> foundAuthorities = authorityDao.findByUsername(username);
         int expectedFoundAuthorityCount = 0;
         Assert.assertEquals(expectedFoundAuthorityCount, foundAuthorities.size());
     }
@@ -127,7 +127,7 @@ public final class AuthorityDaoTest extends AbstractRepositoryTest {
         authorityDao.delete(secondUsername);
 
         // SELECT ALL
-        List<Authority> foundAuthorities = authorityDao.findAll(username);
+        List<Authority> foundAuthorities = authorityDao.findByUsername(username);
         int expectedFoundAuthorityCount = 1;
         Assert.assertEquals(expectedFoundAuthorityCount, foundAuthorities.size());
     }
@@ -145,7 +145,7 @@ public final class AuthorityDaoTest extends AbstractRepositoryTest {
         authorityDao.delete(username, RepositoryTestUtils.AUTHORITY_DEFAULT_TYPE);
 
         // SELECT ALL
-        List<Authority> foundAuthorities = authorityDao.findAll(username);
+        List<Authority> foundAuthorities = authorityDao.findByUsername(username);
         int expectedFoundAuthorityCount = 1;
         Assert.assertEquals(expectedFoundAuthorityCount, foundAuthorities.size());
         Collection<String> foundAuthorityTypes = TEST_UTILS.extractAuthorityTypes(foundAuthorities);
@@ -158,7 +158,7 @@ public final class AuthorityDaoTest extends AbstractRepositoryTest {
 
         // INSERT & DELETE
         String username = this.defaultAuthor.getUsername();
-        AuthorityType type = RepositoryTestUtils.AUTHORITY_DEFAULT_TYPE;
+        AuthorityTypeEnum type = RepositoryTestUtils.AUTHORITY_DEFAULT_TYPE;
         TEST_UTILS.createTestAuthority(username, type);
         authorityDao.delete(username, type);
 

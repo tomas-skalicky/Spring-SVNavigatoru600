@@ -9,10 +9,10 @@ import org.junit.experimental.categories.Category;
 import org.springframework.dao.EmptyResultDataAccessException;
 
 import com.svnavigatoru600.domain.records.SessionRecord;
-import com.svnavigatoru600.domain.records.SessionRecordType;
+import com.svnavigatoru600.domain.records.SessionRecordTypeEnum;
 import com.svnavigatoru600.repository.records.SessionRecordDao;
 import com.svnavigatoru600.service.util.DateUtils;
-import com.svnavigatoru600.service.util.OrderType;
+import com.svnavigatoru600.service.util.OrderTypeEnum;
 import com.svnavigatoru600.test.category.PersistenceTests;
 
 /**
@@ -26,7 +26,7 @@ public final class SessionRecordDaoTest extends AbstractRepositoryTest {
     /**
      * Type of the edited test session record.
      */
-    static final SessionRecordType EDITED_SESSION_RECORD_TYPE = SessionRecordType.SESSION_RECORD_OF_SV;
+    static final SessionRecordTypeEnum EDITED_SESSION_RECORD_TYPE = SessionRecordTypeEnum.SESSION_RECORD_OF_SV;
     /**
      * Session date of the edited test session record. It represents a day after 20 days from today.
      */
@@ -81,7 +81,7 @@ public final class SessionRecordDaoTest extends AbstractRepositoryTest {
         int secondRecordId = TEST_UTILS.createDefaultTestSessionRecord(DateUtils.getTomorrow());
 
         // SELECT ALL
-        List<SessionRecord> foundRecords = recordDao.findAllOrdered(OrderType.DESCENDING);
+        List<SessionRecord> foundRecords = recordDao.findAllOrdered(OrderTypeEnum.DESCENDING);
         int expectedFoundRecordCount = 2;
         Assert.assertEquals(expectedFoundRecordCount, foundRecords.size());
         Assert.assertEquals(secondRecordId, foundRecords.get(0).getId());
@@ -94,15 +94,15 @@ public final class SessionRecordDaoTest extends AbstractRepositoryTest {
         SessionRecordDao recordDao = TEST_UTILS.getSessionRecordDao();
 
         // THREE INSERTS
-        SessionRecordType type = SessionRecordType.SESSION_RECORD_OF_BOARD;
+        SessionRecordTypeEnum type = SessionRecordTypeEnum.SESSION_RECORD_OF_BOARD;
         int firstRecordId = TEST_UTILS.createDefaultTestSessionRecord(type, DateUtils.getYesterday());
         @SuppressWarnings("unused")
-        int secondRecordId = TEST_UTILS.createDefaultTestSessionRecord(SessionRecordType.SESSION_RECORD_OF_SV,
+        int secondRecordId = TEST_UTILS.createDefaultTestSessionRecord(SessionRecordTypeEnum.SESSION_RECORD_OF_SV,
                 DateUtils.getToday());
         int thirdRecordId = TEST_UTILS.createDefaultTestSessionRecord(type, DateUtils.getTomorrow());
 
         // SELECT ALL
-        List<SessionRecord> foundRecords = recordDao.findAllOrdered(type, OrderType.ASCENDING);
+        List<SessionRecord> foundRecords = recordDao.findAllOrdered(type, OrderTypeEnum.ASCENDING);
         int expectedFoundRecordCount = 2;
         Assert.assertEquals(expectedFoundRecordCount, foundRecords.size());
         Assert.assertEquals(firstRecordId, foundRecords.get(0).getId());

@@ -66,7 +66,7 @@ public class NewThreadController extends AbstractNewEditThreadController impleme
         sendNotificationModelFiller.populateSendNotificationInInitForm(command, request, getMessageSource());
 
         model.addAttribute(AbstractNewEditThreadController.COMMAND, command);
-        return PageViews.NEW.getViewName();
+        return PageViewsEnum.NEW.getViewName();
     }
 
     /**
@@ -85,7 +85,7 @@ public class NewThreadController extends AbstractNewEditThreadController impleme
 
         getValidator().validate(command, result);
         if (result.hasErrors()) {
-            return PageViews.NEW.getViewName();
+            return PageViewsEnum.NEW.getViewName();
         }
 
         // Updates the data of the new thread and its first contribution.
@@ -117,6 +117,6 @@ public class NewThreadController extends AbstractNewEditThreadController impleme
             LogFactory.getLog(this.getClass()).error(newThread, e);
             result.reject(NewThreadController.DATABASE_ERROR_MESSAGE_CODE);
         }
-        return PageViews.NEW.getViewName();
+        return PageViewsEnum.NEW.getViewName();
     }
 }

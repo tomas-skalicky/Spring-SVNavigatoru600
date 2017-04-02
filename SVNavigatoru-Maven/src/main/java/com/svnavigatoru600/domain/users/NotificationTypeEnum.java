@@ -8,7 +8,7 @@ import org.jpatterns.gof.VisitorPattern.Visitor;
  *
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
-public enum NotificationType {
+public enum NotificationTypeEnum {
 
     // @formatter:off
     //                 titleLocalizationCode
@@ -22,13 +22,13 @@ public enum NotificationType {
 
     private final String titleLocalizationCode;
 
-    private NotificationType(final String titleLocalizationCode) {
+    private NotificationTypeEnum(final String titleLocalizationCode) {
         this.titleLocalizationCode = titleLocalizationCode;
     }
 
     /**
-     * Gets the localization code of the title of this {@link NotificationType}. Values which correspond to this code
-     * are stored in <code>messages*.properties</code> files.
+     * Gets the localization code of the title of this {@link NotificationTypeEnum}. Values which correspond to this
+     * code are stored in <code>messages*.properties</code> files.
      */
     public String getTitleLocalizationCode() {
         return titleLocalizationCode;
@@ -61,4 +61,5 @@ public enum NotificationType {
 
         void visitInOtherSections();
     }
+
 }

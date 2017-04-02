@@ -13,13 +13,13 @@ import org.springframework.security.core.GrantedAuthority;
 
 import com.svnavigatoru600.domain.News;
 import com.svnavigatoru600.domain.eventcalendar.CalendarEvent;
-import com.svnavigatoru600.domain.eventcalendar.PriorityType;
+import com.svnavigatoru600.domain.eventcalendar.PriorityTypeEnum;
 import com.svnavigatoru600.domain.forum.ForumContribution;
 import com.svnavigatoru600.domain.forum.ForumThread;
 import com.svnavigatoru600.domain.records.SessionRecord;
-import com.svnavigatoru600.domain.records.SessionRecordType;
+import com.svnavigatoru600.domain.records.SessionRecordTypeEnum;
 import com.svnavigatoru600.domain.users.Authority;
-import com.svnavigatoru600.domain.users.AuthorityType;
+import com.svnavigatoru600.domain.users.AuthorityTypeEnum;
 import com.svnavigatoru600.domain.users.User;
 import com.svnavigatoru600.domain.users.UserBuilder;
 import com.svnavigatoru600.repository.forum.ContributionDao;
@@ -62,7 +62,7 @@ public final class RepositoryTestUtils {
     /**
      * Default priority of test event.
      */
-    static final PriorityType EVENT_DEFAULT_PRIORITY = PriorityType.LOW;
+    static final PriorityTypeEnum EVENT_DEFAULT_PRIORITY = PriorityTypeEnum.LOW;
     /**
      * Default title of test news.
      */
@@ -134,11 +134,11 @@ public final class RepositoryTestUtils {
     /**
      * Default type of user's test authority.
      */
-    static final AuthorityType AUTHORITY_DEFAULT_TYPE = AuthorityType.ROLE_REGISTERED_USER;
+    static final AuthorityTypeEnum AUTHORITY_DEFAULT_TYPE = AuthorityTypeEnum.ROLE_REGISTERED_USER;
     /**
      * Default type of user's second test authority. This type is different from {@link #AUTHORITY_DEFAULT_TYPE}.
      */
-    static final AuthorityType SECOND_AUTHORITY_DEFAULT_TYPE = AuthorityType.ROLE_MEMBER_OF_SV;
+    static final AuthorityTypeEnum SECOND_AUTHORITY_DEFAULT_TYPE = AuthorityTypeEnum.ROLE_MEMBER_OF_SV;
     /**
      * Default filename of test document record.
      */
@@ -158,7 +158,7 @@ public final class RepositoryTestUtils {
     /**
      * Default type of test session record.
      */
-    static final SessionRecordType SESSION_RECORD_DEFAULT_TYPE = SessionRecordType.SESSION_RECORD_OF_BOARD;
+    static final SessionRecordTypeEnum SESSION_RECORD_DEFAULT_TYPE = SessionRecordTypeEnum.SESSION_RECORD_OF_BOARD;
     /**
      * Default session date of test session record. It represents a day after 7 days from today.
      */
@@ -207,7 +207,7 @@ public final class RepositoryTestUtils {
      *
      * @return ID of the newly created event
      */
-    int createTestEvent(final String name, final Date date, final String description, final PriorityType priority) {
+    int createTestEvent(final String name, final Date date, final String description, final PriorityTypeEnum priority) {
         final CalendarEvent event = new CalendarEvent();
         event.setName(name);
         event.setDate(date);
@@ -368,7 +368,7 @@ public final class RepositoryTestUtils {
     /**
      * Creates and saves a test authority.
      */
-    void createTestAuthority(final String username, final AuthorityType authorityType) {
+    void createTestAuthority(final String username, final AuthorityTypeEnum authorityType) {
         final Authority authority = new Authority(username, authorityType);
         getAuthorityDao().save(authority);
     }
@@ -425,7 +425,7 @@ public final class RepositoryTestUtils {
      *
      * @return ID of the newly created record
      */
-    int createDefaultTestSessionRecord(final SessionRecordType type, final Date sessionDate) {
+    int createDefaultTestSessionRecord(final SessionRecordTypeEnum type, final Date sessionDate) {
         return createTestSessionRecord(DOCUMENT_RECORD_DEFAULT_FILE_NAME, DOCUMENT_RECORD_DEFAULT_FILE, type,
                 sessionDate, SESSION_RECORD_DEFAULT_DISCUSSED_TOPICS);
     }
@@ -435,7 +435,7 @@ public final class RepositoryTestUtils {
      *
      * @return ID of the newly created record
      */
-    int createTestSessionRecord(final String fileName, final Blob file, final SessionRecordType type,
+    int createTestSessionRecord(final String fileName, final Blob file, final SessionRecordTypeEnum type,
             final Date sessionDate, final String discussedTopics) {
         final SessionRecord record = new SessionRecord(fileName, file, type, sessionDate, discussedTopics);
         return getSessionRecordDao().save(record);

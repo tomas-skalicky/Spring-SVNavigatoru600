@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.support.SessionStatus;
 
-import com.svnavigatoru600.domain.records.SessionRecordType;
+import com.svnavigatoru600.domain.records.SessionRecordTypeEnum;
 import com.svnavigatoru600.service.records.SessionRecordService;
 import com.svnavigatoru600.url.CommonUrlParts;
 import com.svnavigatoru600.url.records.session.BoardSessionsUrlParts;
@@ -32,7 +32,7 @@ public class EditBoardSessionRecordController extends AbstractEditRecordControll
     public EditBoardSessionRecordController(final SessionRecordService recordService,
             final SendNotificationEditModelFiller sendNotificationModelFiller,
             final EditSessionRecordValidator validator, final MessageSource messageSource) {
-        super(BoardSessionsUrlParts.EXISTING_URL, new PageViews(), SessionRecordType.SESSION_RECORD_OF_BOARD,
+        super(BoardSessionsUrlParts.EXISTING_URL, new PageViews(), SessionRecordTypeEnum.SESSION_RECORD_OF_BOARD,
                 recordService, sendNotificationModelFiller, validator, messageSource);
     }
 

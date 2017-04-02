@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.support.SessionStatus;
 
-import com.svnavigatoru600.domain.records.OtherDocumentRecordType;
+import com.svnavigatoru600.domain.records.OtherDocumentRecordTypeEnum;
 import com.svnavigatoru600.service.records.OtherDocumentRecordService;
 import com.svnavigatoru600.url.CommonUrlParts;
 import com.svnavigatoru600.url.records.otherdocuments.OthersUrlParts;
@@ -32,7 +32,7 @@ public class EditOtherDocumentController extends AbstractEditDocumentController 
     public EditOtherDocumentController(final OtherDocumentRecordService recordService,
             final SendNotificationEditModelFiller sendNotificationModelFiller, final EditRecordValidator validator,
             final MessageSource messageSource) {
-        super(OthersUrlParts.EXISTING_URL, new PageViews(), OtherDocumentRecordType.OTHER, recordService,
+        super(OthersUrlParts.EXISTING_URL, new PageViews(), OtherDocumentRecordTypeEnum.OTHER, recordService,
                 sendNotificationModelFiller, validator, messageSource);
     }
 

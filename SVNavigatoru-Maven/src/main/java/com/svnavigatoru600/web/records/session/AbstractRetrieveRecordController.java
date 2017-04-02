@@ -11,7 +11,7 @@ import org.springframework.context.MessageSource;
 import org.springframework.dao.DataAccessException;
 import org.springframework.ui.ModelMap;
 
-import com.svnavigatoru600.domain.records.SessionRecordType;
+import com.svnavigatoru600.domain.records.SessionRecordTypeEnum;
 import com.svnavigatoru600.service.records.SessionRecordService;
 import com.svnavigatoru600.web.records.AbstractPageViews;
 
@@ -31,7 +31,7 @@ public abstract class AbstractRetrieveRecordController extends AbstractSessionRe
 
     /**
      * Constructs a controller which considers all {@link com.svnavigatoru600.domain.records.SessionRecord
-     * SessionRecords} of all {@link SessionRecordType SessionRecordTypes}.
+     * SessionRecords} of all {@link SessionRecordTypeEnum SessionRecordTypes}.
      */
     public AbstractRetrieveRecordController(final String baseUrl, final AbstractPageViews views, final SessionRecordService recordService,
             final MessageSource messageSource) {
@@ -43,7 +43,7 @@ public abstract class AbstractRetrieveRecordController extends AbstractSessionRe
      * Constructs a controller which considers all {@link com.svnavigatoru600.domain.records.SessionRecord
      * SessionRecords} of the given <code>recordType</code>.
      */
-    public AbstractRetrieveRecordController(final String baseUrl, final AbstractPageViews views, final SessionRecordType recordType,
+    public AbstractRetrieveRecordController(final String baseUrl, final AbstractPageViews views, final SessionRecordTypeEnum recordType,
             final SessionRecordService recordService, final MessageSource messageSource) {
         super(baseUrl, views, recordType, recordService, messageSource);
     }

@@ -9,7 +9,7 @@ import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
 
 import com.svnavigatoru600.domain.eventcalendar.CalendarEvent;
-import com.svnavigatoru600.domain.users.NotificationType;
+import com.svnavigatoru600.domain.users.NotificationTypeEnum;
 import com.svnavigatoru600.domain.users.User;
 import com.svnavigatoru600.service.AbstractNotificationEmailService;
 import com.svnavigatoru600.service.util.DateUtils;
@@ -33,10 +33,10 @@ public class CalendarEventNotificationEmailService extends AbstractNotificationE
     private static final String EVENT_UPDATED_SUBJECT_CODE = "notifications.email.event.subject.event-updated";
     private static final String EVENT_UPDATED_TEXT_CODE = "notifications.email.event.text.event-updated";
 
-    private static final NotificationType NOTIFICATION_TYPE = NotificationType.IN_EVENTS;
+    private static final NotificationTypeEnum NOTIFICATION_TYPE = NotificationTypeEnum.IN_EVENTS;
 
     @Override
-    protected NotificationType getNotificationType() {
+    protected NotificationTypeEnum getNotificationType() {
         return CalendarEventNotificationEmailService.NOTIFICATION_TYPE;
     }
 

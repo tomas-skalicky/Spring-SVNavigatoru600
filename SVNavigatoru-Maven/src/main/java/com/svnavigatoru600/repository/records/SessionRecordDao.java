@@ -3,8 +3,8 @@ package com.svnavigatoru600.repository.records;
 import java.util.List;
 
 import com.svnavigatoru600.domain.records.SessionRecord;
-import com.svnavigatoru600.domain.records.SessionRecordType;
-import com.svnavigatoru600.service.util.OrderType;
+import com.svnavigatoru600.domain.records.SessionRecordTypeEnum;
+import com.svnavigatoru600.service.util.OrderTypeEnum;
 
 /**
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
@@ -19,20 +19,20 @@ public interface SessionRecordDao extends DocumentRecordDao {
 
     /**
      * Returns all {@link SessionRecord SessionRecords} stored in the repository arranged according to their
-     * {@link SessionRecord#getSessionDate() sessionDates} in the given {@link OrderType order}.
+     * {@link SessionRecord#getSessionDate() sessionDates} in the given {@link OrderTypeEnum order}.
      * <p>
      * Records' associated {@link SessionRecord#getFile() files} are NOT loaded.
      */
-    List<SessionRecord> findAllOrdered(OrderType order);
+    List<SessionRecord> findAllOrdered(OrderTypeEnum order);
 
     /**
      * Returns all {@link SessionRecord SessionRecords} stored in the repository which are of the given
-     * {@link SessionRecordType type}. The records are arranged according to their {@link SessionRecord#getSessionDate()
-     * sessionDates} in the given {@link OrderType order}.
+     * {@link SessionRecordTypeEnum type}. The records are arranged according to their {@link SessionRecord#getSessionDate()
+     * sessionDates} in the given {@link OrderTypeEnum order}.
      * <p>
      * Records' associated {@link SessionRecord#getFile() files} are NOT loaded.
      */
-    List<SessionRecord> findAllOrdered(SessionRecordType type, OrderType order);
+    List<SessionRecord> findAllOrdered(SessionRecordTypeEnum type, OrderTypeEnum order);
 
     /**
      * Updates the given {@link SessionRecord} in the repository. The old version of this record should be already

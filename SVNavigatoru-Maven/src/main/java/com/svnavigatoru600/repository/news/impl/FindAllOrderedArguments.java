@@ -1,6 +1,6 @@
 package com.svnavigatoru600.repository.news.impl;
 
-import com.svnavigatoru600.service.util.OrderType;
+import com.svnavigatoru600.service.util.OrderTypeEnum;
 
 /**
  * Encapsulates arguments of the {@link com.svnavigatoru600.repository.NewsDao#findAllOrdered findAllOrdered} method in
@@ -14,22 +14,22 @@ public class FindAllOrderedArguments {
      * The field of the {@link com.svnavigatoru600.domain.News News} class according which the result records will be
      * sorted.
      */
-    private final NewsField sortField;
+    private final NewsFieldEnum sortField;
     /**
      * The direction of sorting.
      */
-    private final OrderType sortDirection;
+    private final OrderTypeEnum sortDirection;
 
-    public FindAllOrderedArguments(NewsField sortField, OrderType sortDirection) {
+    public FindAllOrderedArguments(NewsFieldEnum sortField, OrderTypeEnum sortDirection) {
         this.sortField = sortField;
         this.sortDirection = sortDirection;
     }
 
-    public NewsField getSortField() {
+    public NewsFieldEnum getSortField() {
         return sortField;
     }
 
-    public OrderType getSortDirection() {
+    public OrderTypeEnum getSortDirection() {
         return sortDirection;
     }
 

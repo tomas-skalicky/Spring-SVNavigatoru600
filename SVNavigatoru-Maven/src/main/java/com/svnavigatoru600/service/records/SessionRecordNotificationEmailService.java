@@ -9,7 +9,7 @@ import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
 
 import com.svnavigatoru600.domain.records.SessionRecord;
-import com.svnavigatoru600.domain.users.NotificationType;
+import com.svnavigatoru600.domain.users.NotificationTypeEnum;
 import com.svnavigatoru600.domain.users.User;
 import com.svnavigatoru600.service.AbstractNotificationEmailService;
 import com.svnavigatoru600.service.util.DateUtils;
@@ -35,10 +35,10 @@ public class SessionRecordNotificationEmailService extends AbstractNotificationE
     private static final String RECORD_UPDATED_SUBJECT_CODE = "notifications.email.session-record.subject.record-updated";
     private static final String RECORD_UPDATED_TEXT_CODE = "notifications.email.session-record.text.record-updated";
 
-    private static final NotificationType NOTIFICATION_TYPE = NotificationType.IN_OTHER_SECTIONS;
+    private static final NotificationTypeEnum NOTIFICATION_TYPE = NotificationTypeEnum.IN_OTHER_SECTIONS;
 
     @Override
-    protected NotificationType getNotificationType() {
+    protected NotificationTypeEnum getNotificationType() {
         return SessionRecordNotificationEmailService.NOTIFICATION_TYPE;
     }
 

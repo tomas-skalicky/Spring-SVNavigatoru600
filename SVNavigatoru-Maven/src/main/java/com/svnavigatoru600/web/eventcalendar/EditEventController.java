@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.support.SessionStatus;
 
 import com.svnavigatoru600.domain.eventcalendar.CalendarEvent;
-import com.svnavigatoru600.domain.eventcalendar.PriorityType;
+import com.svnavigatoru600.domain.eventcalendar.PriorityTypeEnum;
 import com.svnavigatoru600.service.eventcalendar.CalendarEventService;
 import com.svnavigatoru600.service.util.Localization;
 import com.svnavigatoru600.url.CommonUrlParts;
@@ -60,7 +60,7 @@ public class EditEventController extends AbstractNewEditEventController {
         getSendNotificationModelFiller().populateSendNotificationInInitForm(command, request, messageSource);
 
         model.addAttribute(AbstractNewEditEventController.COMMAND, command);
-        return PageViews.EDIT.getViewName();
+        return PageViewsEnum.EDIT.getViewName();
     }
 
     @GetMapping(value = EventsUrlParts.EXISTING_URL + "{eventId}/" + CommonUrlParts.SAVED_EXTENSION)
@@ -82,14 +82,14 @@ public class EditEventController extends AbstractNewEditEventController {
 
         getValidator().validate(command, result);
         if (result.hasErrors()) {
-            return PageViews.EDIT.getViewName();
+            return PageViewsEnum.EDIT.getViewName();
         }
 
         final CalendarEventService eventService = getEventService();
         CalendarEvent originalEvent = null;
         try {
             originalEvent = eventService.findById(eventId);
-            final PriorityType newPriority = PriorityType.valueOfAccordingLocalization(command.getNewPriority(),
+            final PriorityTypeEnum newPriority = PriorityTypeEnum.valueOfAccordingLocalization(command.getNewPriority(),
                     messageSource, request);
             eventService.updateAndNotifyUsers(originalEvent, command.getEvent(), newPriority,
                     command.getSendNotification().isStatus(), request, messageSource);
@@ -111,6 +111,6 @@ public class EditEventController extends AbstractNewEditEventController {
             LogFactory.getLog(this.getClass()).error(originalEvent, e);
             result.reject(EditEventController.DATABASE_ERROR_MESSAGE_CODE);
         }
-        return PageViews.EDIT.getViewName();
+        return PageViewsEnum.EDIT.getViewName();
     }
 }

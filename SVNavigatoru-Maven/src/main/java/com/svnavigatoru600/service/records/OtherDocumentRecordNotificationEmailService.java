@@ -8,7 +8,7 @@ import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
 
 import com.svnavigatoru600.domain.records.OtherDocumentRecord;
-import com.svnavigatoru600.domain.users.NotificationType;
+import com.svnavigatoru600.domain.users.NotificationTypeEnum;
 import com.svnavigatoru600.domain.users.User;
 import com.svnavigatoru600.service.AbstractNotificationEmailService;
 import com.svnavigatoru600.service.util.Email;
@@ -33,10 +33,10 @@ public class OtherDocumentRecordNotificationEmailService extends AbstractNotific
     private static final String RECORD_UPDATED_SUBJECT_CODE = "notifications.email.other-document.subject.record-updated";
     private static final String RECORD_UPDATED_TEXT_CODE = "notifications.email.other-document.text.record-updated";
 
-    private static final NotificationType NOTIFICATION_TYPE = NotificationType.IN_OTHER_DOCUMENTS;
+    private static final NotificationTypeEnum NOTIFICATION_TYPE = NotificationTypeEnum.IN_OTHER_DOCUMENTS;
 
     @Override
-    protected NotificationType getNotificationType() {
+    protected NotificationTypeEnum getNotificationType() {
         return OtherDocumentRecordNotificationEmailService.NOTIFICATION_TYPE;
     }
 

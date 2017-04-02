@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.support.SessionStatus;
 
 import com.svnavigatoru600.domain.WysiwygSection;
-import com.svnavigatoru600.domain.WysiwygSectionName;
+import com.svnavigatoru600.domain.WysiwygSectionNameEnum;
 import com.svnavigatoru600.service.WysiwygSectionService;
 import com.svnavigatoru600.url.BoardInfoUrlParts;
 
@@ -24,7 +24,7 @@ public class BoardController extends AbstractWysiwygSectionController {
 
     @Inject
     public BoardController(final WysiwygSectionService sectionService) {
-        super(sectionService, WysiwygSectionName.BOARD, "viewBoard", "editBoard", BoardInfoUrlParts.BASE_URL);
+        super(sectionService, WysiwygSectionNameEnum.BOARD, "viewBoard", "editBoard", BoardInfoUrlParts.BASE_URL);
     }
 
     @Override

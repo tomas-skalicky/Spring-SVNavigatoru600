@@ -6,7 +6,7 @@ import java.util.List;
 import org.springframework.security.core.GrantedAuthority;
 
 import com.svnavigatoru600.domain.users.Authority;
-import com.svnavigatoru600.domain.users.AuthorityType;
+import com.svnavigatoru600.domain.users.AuthorityTypeEnum;
 
 /**
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
@@ -17,7 +17,7 @@ public interface AuthorityDao {
      * Returns all {@link Authority Authorities} stored in the repository which are associated with the given
      * <code>username</code>.
      */
-    List<Authority> findAll(String username);
+    List<Authority> findByUsername(String username);
 
     /**
      * Stores the given {@link Authority authority} to the repository. If there is already an authority with the same
@@ -51,7 +51,7 @@ public interface AuthorityDao {
 
     /**
      * Deletes a persisted {@link Authority Authority} of the specified {@link com.svnavigatoru600.domain.users.User
-     * User} and the given {@link AuthorityType authorityType} if such an authority exists. If it does not exist, NO
+     * User} and the given {@link AuthorityTypeEnum authorityType} if such an authority exists. If it does not exist, NO
      * exception is thrown.
      * 
      * @param username
@@ -59,5 +59,5 @@ public interface AuthorityDao {
      * @param authorityType
      *            Type of the authority which is to be deleted
      */
-    void delete(String username, AuthorityType authorityType);
+    void delete(String username, AuthorityTypeEnum authorityType);
 }

@@ -11,15 +11,15 @@ import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
 
 import com.svnavigatoru600.domain.eventcalendar.CalendarEvent;
-import com.svnavigatoru600.domain.eventcalendar.PriorityType;
-import com.svnavigatoru600.domain.users.AuthorityType;
+import com.svnavigatoru600.domain.eventcalendar.PriorityTypeEnum;
+import com.svnavigatoru600.domain.users.AuthorityTypeEnum;
 import com.svnavigatoru600.domain.users.User;
 import com.svnavigatoru600.repository.CalendarEventDao;
 import com.svnavigatoru600.service.SubjectOfNotificationService;
 import com.svnavigatoru600.service.users.UserService;
 import com.svnavigatoru600.service.util.DateUtils;
 import com.svnavigatoru600.service.util.Localization;
-import com.svnavigatoru600.service.util.OrderType;
+import com.svnavigatoru600.service.util.OrderTypeEnum;
 
 /**
  * Provides convenient methods to work with {@link CalendarEvent} objects.
@@ -36,24 +36,17 @@ public class CalendarEventService implements SubjectOfNotificationService {
     /**
      * Does the work which concerns mainly notification of {@link User users}.
      */
-    private UserService userService;
+    private final UserService userService;
     /**
      * Assembles notification emails and sends them to authorized {@link User users}.
      */
-    private CalendarEventNotificationEmailService emailService;
+    private final CalendarEventNotificationEmailService emailService;
 
     @Inject
-    public CalendarEventService(final CalendarEventDao eventDao) {
+    public CalendarEventService(final CalendarEventDao eventDao, final UserService userService,
+            final CalendarEventNotificationEmailService emailService) {
         this.eventDao = eventDao;
-    }
-
-    @Inject
-    public void setUserService(final UserService userService) {
         this.userService = userService;
-    }
-
-    @Inject
-    public void setEmailService(final CalendarEventNotificationEmailService emailService) {
         this.emailService = emailService;
     }
 
@@ -71,7 +64,7 @@ public class CalendarEventService implements SubjectOfNotificationService {
      * Moreover, only {@link CalendarEvent CalendarEvents} which will take place are returned, the passed ones are not.
      */
     public List<CalendarEvent> findAllFutureEventsOrdered() {
-        return eventDao.findAllFutureEventsOrdered(DateUtils.getToday(), OrderType.ASCENDING);
+        return eventDao.findAllFutureEventsOrdered(DateUtils.getToday(), OrderTypeEnum.ASCENDING);
     }
 
     /**
@@ -94,7 +87,8 @@ public class CalendarEventService implements SubjectOfNotificationService {
      * @param newPriority
      *            Priority which is to be the new one of the <code>eventToUpdate</code>
      */
-    public void update(final CalendarEvent eventToUpdate, final CalendarEvent newEvent, final PriorityType newPriority) {
+    public void update(final CalendarEvent eventToUpdate, final CalendarEvent newEvent,
+            final PriorityTypeEnum newPriority) {
         eventToUpdate.setName(newEvent.getName());
         eventToUpdate.setDate(newEvent.getDate());
         eventToUpdate.setDescription(newEvent.getDescription());
@@ -118,8 +112,9 @@ public class CalendarEventService implements SubjectOfNotificationService {
      * @param sendNotification
      *            If <code>true</code>, the notification is sent; otherwise not.
      */
-    public void updateAndNotifyUsers(final CalendarEvent eventToUpdate, final CalendarEvent newEvent, final PriorityType newPriority,
-            final boolean sendNotification, final HttpServletRequest request, final MessageSource messageSource) {
+    public void updateAndNotifyUsers(final CalendarEvent eventToUpdate, final CalendarEvent newEvent,
+            final PriorityTypeEnum newPriority, final boolean sendNotification, final HttpServletRequest request,
+            final MessageSource messageSource) {
         this.update(eventToUpdate, newEvent, newPriority);
 
         if (sendNotification) {
@@ -129,12 +124,13 @@ public class CalendarEventService implements SubjectOfNotificationService {
 
     @Override
     public List<User> gainUsersToNotify() {
-        return userService.findAllWithEmailByAuthorityAndSubscription(AuthorityType.ROLE_MEMBER_OF_SV,
+        return userService.findAllWithEmailByAuthorityAndSubscription(AuthorityTypeEnum.ROLE_MEMBER_OF_SV,
                 emailService.getNotificationType());
     }
 
     @Override
-    public void notifyUsersOfUpdate(final Object updatedEvent, final HttpServletRequest request, final MessageSource messageSource) {
+    public void notifyUsersOfUpdate(final Object updatedEvent, final HttpServletRequest request,
+            final MessageSource messageSource) {
         emailService.sendEmailOnUpdate(updatedEvent, gainUsersToNotify(), request, messageSource);
     }
 
@@ -156,8 +152,8 @@ public class CalendarEventService implements SubjectOfNotificationService {
      * @param sendNotification
      *            If <code>true</code>, the notification is sent; otherwise not.
      */
-    public void saveAndNotifyUsers(final CalendarEvent newEvent, final boolean sendNotification, final HttpServletRequest request,
-            final MessageSource messageSource) {
+    public void saveAndNotifyUsers(final CalendarEvent newEvent, final boolean sendNotification,
+            final HttpServletRequest request, final MessageSource messageSource) {
         save(newEvent);
 
         if (sendNotification) {
@@ -166,7 +162,8 @@ public class CalendarEventService implements SubjectOfNotificationService {
     }
 
     @Override
-    public void notifyUsersOfCreation(final Object newEvent, final HttpServletRequest request, final MessageSource messageSource) {
+    public void notifyUsersOfCreation(final Object newEvent, final HttpServletRequest request,
+            final MessageSource messageSource) {
         emailService.sendEmailOnCreation(newEvent, gainUsersToNotify(), request, messageSource);
     }
 

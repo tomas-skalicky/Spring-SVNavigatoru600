@@ -12,7 +12,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import com.svnavigatoru600.domain.forum.ForumThread;
-import com.svnavigatoru600.domain.users.AuthorityType;
+import com.svnavigatoru600.domain.users.AuthorityTypeEnum;
 import com.svnavigatoru600.domain.users.User;
 import com.svnavigatoru600.repository.forum.ThreadDao;
 import com.svnavigatoru600.service.SubjectOfNotificationService;
@@ -105,7 +105,7 @@ public class ThreadService implements SubjectOfNotificationService {
 
     @Override
     public List<User> gainUsersToNotify() {
-        return userService.findAllWithEmailByAuthorityAndSubscription(AuthorityType.ROLE_MEMBER_OF_SV,
+        return userService.findAllWithEmailByAuthorityAndSubscription(AuthorityTypeEnum.ROLE_MEMBER_OF_SV,
                 emailService.getNotificationType());
     }
 

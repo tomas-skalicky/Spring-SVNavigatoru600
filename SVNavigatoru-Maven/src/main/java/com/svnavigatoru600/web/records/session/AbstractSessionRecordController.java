@@ -2,7 +2,7 @@ package com.svnavigatoru600.web.records.session;
 
 import org.springframework.context.MessageSource;
 
-import com.svnavigatoru600.domain.records.SessionRecordType;
+import com.svnavigatoru600.domain.records.SessionRecordTypeEnum;
 import com.svnavigatoru600.service.records.SessionRecordService;
 import com.svnavigatoru600.web.records.AbstractDocumentRecordController;
 import com.svnavigatoru600.web.records.AbstractPageViews;
@@ -20,13 +20,13 @@ public abstract class AbstractSessionRecordController extends AbstractDocumentRe
      * this controller, <code>allRecordTypes</code> equals <code>true</code>. Otherwise, <code>allRecordTypes</code>
      * equals <code>false</code> and <code>RECORD_TYPE</code> determines the exact type of treated records.
      */
-    private final SessionRecordType recordType;
+    private final SessionRecordTypeEnum recordType;
     private boolean allRecordTypes = false;
     private SessionRecordService recordService = null;
 
     /**
      * Constructs a controller which considers all {@link com.svnavigatoru600.domain.records.SessionRecord
-     * SessionRecords} of all {@link SessionRecordType SessionRecordTypes}.
+     * SessionRecords} of all {@link SessionRecordTypeEnum SessionRecordTypes}.
      */
     public AbstractSessionRecordController(final String baseUrl, final AbstractPageViews views, final SessionRecordService recordService,
             final MessageSource messageSource) {
@@ -38,7 +38,7 @@ public abstract class AbstractSessionRecordController extends AbstractDocumentRe
      * Constructs a controller which considers all {@link com.svnavigatoru600.domain.records.SessionRecord
      * SessionRecords} of the given <code>recordType</code>.
      */
-    public AbstractSessionRecordController(final String baseUrl, final AbstractPageViews views, final SessionRecordType recordType,
+    public AbstractSessionRecordController(final String baseUrl, final AbstractPageViews views, final SessionRecordTypeEnum recordType,
             final SessionRecordService recordService, final MessageSource messageSource) {
         super(baseUrl, views, messageSource);
         this.recordType = recordType;
@@ -48,7 +48,7 @@ public abstract class AbstractSessionRecordController extends AbstractDocumentRe
     /**
      * Trivial getter
      */
-    protected SessionRecordType getRecordType() {
+    protected SessionRecordTypeEnum getRecordType() {
         return recordType;
     }
 

@@ -14,8 +14,8 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.security.core.GrantedAuthority;
 
 import com.svnavigatoru600.domain.users.Authority;
-import com.svnavigatoru600.domain.users.AuthorityType;
-import com.svnavigatoru600.domain.users.NotificationType;
+import com.svnavigatoru600.domain.users.AuthorityTypeEnum;
+import com.svnavigatoru600.domain.users.NotificationTypeEnum;
 import com.svnavigatoru600.domain.users.User;
 import com.svnavigatoru600.repository.users.AuthorityDao;
 import com.svnavigatoru600.repository.users.UserDao;
@@ -32,13 +32,13 @@ public final class UserDaoTest extends AbstractRepositoryTest {
     /**
      * Default rights of the first test user.
      */
-    private static final AuthorityType[] FIRST_USER_DEFAULT_AUTHORITIES = new AuthorityType[] {
-            AuthorityType.ROLE_REGISTERED_USER, AuthorityType.ROLE_MEMBER_OF_SV };
+    private static final AuthorityTypeEnum[] FIRST_USER_DEFAULT_AUTHORITIES = new AuthorityTypeEnum[] {
+            AuthorityTypeEnum.ROLE_REGISTERED_USER, AuthorityTypeEnum.ROLE_MEMBER_OF_SV };
     /**
      * Default rights of the second test user.
      */
-    private static final AuthorityType[] SECOND_USER_DEFAULT_AUTHORITIES = new AuthorityType[] {
-            AuthorityType.ROLE_USER_ADMINISTRATOR };
+    private static final AuthorityTypeEnum[] SECOND_USER_DEFAULT_AUTHORITIES = new AuthorityTypeEnum[] {
+            AuthorityTypeEnum.ROLE_USER_ADMINISTRATOR };
     /**
      * Default username of the third test user.
      */
@@ -121,7 +121,7 @@ public final class UserDaoTest extends AbstractRepositoryTest {
         AuthorityDao authorityDao = TEST_UTILS.getAuthorityDao();
 
         // TWO DELETES & ONE INSERT
-        AuthorityType authorityType = RepositoryTestUtils.AUTHORITY_DEFAULT_TYPE;
+        AuthorityTypeEnum authorityType = RepositoryTestUtils.AUTHORITY_DEFAULT_TYPE;
         authorityDao.delete(this.firstUser.getUsername(), authorityType);
         authorityDao.delete(this.secondUser.getUsername(), authorityType);
         authorityDao.save(new Authority(this.secondUser.getUsername(), authorityType));
@@ -139,7 +139,7 @@ public final class UserDaoTest extends AbstractRepositoryTest {
         AuthorityDao authorityDao = TEST_UTILS.getAuthorityDao();
 
         // TWO DELETES
-        AuthorityType authorityType = RepositoryTestUtils.SECOND_AUTHORITY_DEFAULT_TYPE;
+        AuthorityTypeEnum authorityType = RepositoryTestUtils.SECOND_AUTHORITY_DEFAULT_TYPE;
         authorityDao.delete(this.firstUser.getUsername(), authorityType);
         authorityDao.delete(this.secondUser.getUsername(), authorityType);
 
@@ -154,8 +154,8 @@ public final class UserDaoTest extends AbstractRepositoryTest {
         UserDao userDao = TEST_UTILS.getUserDao();
 
         // THREE UPDATES
-        AuthorityType authorityType = RepositoryTestUtils.AUTHORITY_DEFAULT_TYPE;
-        NotificationType notificationType = NotificationType.IN_OTHER_DOCUMENTS;
+        AuthorityTypeEnum authorityType = RepositoryTestUtils.AUTHORITY_DEFAULT_TYPE;
+        NotificationTypeEnum notificationType = NotificationTypeEnum.IN_OTHER_DOCUMENTS;
         this.firstUser.addAuthority(authorityType);
         this.firstUser.setSubscribedToOtherDocuments(false);
         userDao.update(this.firstUser);
@@ -163,7 +163,7 @@ public final class UserDaoTest extends AbstractRepositoryTest {
         this.secondUser.setSubscribedToOtherDocuments(true);
         userDao.update(this.secondUser);
         User thirdUser = createThirdDefaultTestUser();
-        thirdUser.addAuthority(AuthorityType.ROLE_USER_ADMINISTRATOR);
+        thirdUser.addAuthority(AuthorityTypeEnum.ROLE_USER_ADMINISTRATOR);
         thirdUser.setSubscribedToOtherDocuments(true);
         userDao.update(thirdUser);
 
@@ -179,8 +179,8 @@ public final class UserDaoTest extends AbstractRepositoryTest {
         UserDao userDao = TEST_UTILS.getUserDao();
 
         // THREE UPDATES
-        AuthorityType authorityType = RepositoryTestUtils.AUTHORITY_DEFAULT_TYPE;
-        NotificationType notificationType = NotificationType.IN_OTHER_DOCUMENTS;
+        AuthorityTypeEnum authorityType = RepositoryTestUtils.AUTHORITY_DEFAULT_TYPE;
+        NotificationTypeEnum notificationType = NotificationTypeEnum.IN_OTHER_DOCUMENTS;
         this.firstUser.addAuthority(authorityType);
         this.firstUser.setSubscribedToOtherDocuments(true);
         userDao.update(this.firstUser);
@@ -235,10 +235,10 @@ public final class UserDaoTest extends AbstractRepositoryTest {
      * @param desiredAuthorities
      *            Authorities which are to be assigned to the user.
      */
-    private void updateTestUser(User user, AuthorityType[] desiredAuthorities) {
+    private void updateTestUser(User user, AuthorityTypeEnum[] desiredAuthorities) {
         String username = user.getUsername();
         Collection<GrantedAuthority> userAuthorities = user.getAuthorities();
-        for (AuthorityType authorityType : desiredAuthorities) {
+        for (AuthorityTypeEnum authorityType : desiredAuthorities) {
             userAuthorities.add(new Authority(username, authorityType));
         }
 

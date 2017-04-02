@@ -16,7 +16,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.support.SessionStatus;
 
 import com.svnavigatoru600.domain.records.SessionRecord;
-import com.svnavigatoru600.domain.records.SessionRecordType;
+import com.svnavigatoru600.domain.records.SessionRecordTypeEnum;
 import com.svnavigatoru600.service.records.SessionRecordService;
 import com.svnavigatoru600.service.util.Localization;
 import com.svnavigatoru600.url.CommonUrlParts;
@@ -40,7 +40,7 @@ public abstract class AbstractEditRecordController extends AbstractNewEditRecord
     private final Log logger = LogFactory.getLog(this.getClass());
 
     /**
-     * Constructs a controller which considers all {@link SessionRecord SessionRecords} of all {@link SessionRecordType
+     * Constructs a controller which considers all {@link SessionRecord SessionRecords} of all {@link SessionRecordTypeEnum
      * SessionRecordTypes}.
      */
     public AbstractEditRecordController(final String baseUrl, final AbstractPageViews views, final SessionRecordService recordService,
@@ -53,7 +53,7 @@ public abstract class AbstractEditRecordController extends AbstractNewEditRecord
      * Constructs a controller which considers all {@link SessionRecord SessionRecords} of the given
      * <code>recordType</code>.
      */
-    public AbstractEditRecordController(final String baseUrl, final AbstractPageViews views, final SessionRecordType recordType,
+    public AbstractEditRecordController(final String baseUrl, final AbstractPageViews views, final SessionRecordTypeEnum recordType,
             final SessionRecordService recordService, final SendNotificationModelFiller sendNotificationModelFiller,
             final EditSessionRecordValidator validator, final MessageSource messageSource) {
         super(baseUrl, views, recordType, recordService, sendNotificationModelFiller, validator, messageSource);

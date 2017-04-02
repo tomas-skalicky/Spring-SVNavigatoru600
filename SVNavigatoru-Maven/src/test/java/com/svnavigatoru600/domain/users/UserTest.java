@@ -29,7 +29,7 @@ public final class UserTest extends AbstractUserTest {
         User user = getDefaultUser();
 
         // Adds
-        AuthorityType newAuthority = AuthorityType.ROLE_MEMBER_OF_BOARD;
+        AuthorityTypeEnum newAuthority = AuthorityTypeEnum.ROLE_MEMBER_OF_BOARD;
         user.addAuthority(newAuthority);
 
         // Checks
@@ -41,7 +41,7 @@ public final class UserTest extends AbstractUserTest {
         User user = getDefaultUser();
 
         // Adds more times.
-        AuthorityType newAuthority = AuthorityType.ROLE_MEMBER_OF_BOARD;
+        AuthorityTypeEnum newAuthority = AuthorityTypeEnum.ROLE_MEMBER_OF_BOARD;
         user.addAuthority(newAuthority);
         user.addAuthority(newAuthority);
         // OK since the remoteAuthority method should not throw an exception.
@@ -55,18 +55,18 @@ public final class UserTest extends AbstractUserTest {
         User user = getDefaultUser();
 
         // Adds two authorities.
-        user.addAuthority(AuthorityType.ROLE_MEMBER_OF_BOARD);
-        user.addAuthority(AuthorityType.ROLE_USER_ADMINISTRATOR);
+        user.addAuthority(AuthorityTypeEnum.ROLE_MEMBER_OF_BOARD);
+        user.addAuthority(AuthorityTypeEnum.ROLE_USER_ADMINISTRATOR);
 
         // Checks
         this.checkAuthorities(user,
-                Arrays.asList(AuthorityType.ROLE_MEMBER_OF_BOARD, AuthorityType.ROLE_USER_ADMINISTRATOR));
+                Arrays.asList(AuthorityTypeEnum.ROLE_MEMBER_OF_BOARD, AuthorityTypeEnum.ROLE_USER_ADMINISTRATOR));
 
         // Removes
-        user.removeAuthority(AuthorityType.ROLE_MEMBER_OF_BOARD);
+        user.removeAuthority(AuthorityTypeEnum.ROLE_MEMBER_OF_BOARD);
 
         // Checks
-        this.checkAuthorities(user, AuthorityType.ROLE_USER_ADMINISTRATOR);
+        this.checkAuthorities(user, AuthorityTypeEnum.ROLE_USER_ADMINISTRATOR);
     }
 
     @Test
@@ -74,7 +74,7 @@ public final class UserTest extends AbstractUserTest {
         User user = getDefaultUser();
 
         // Adds
-        AuthorityType newAuthority = AuthorityType.ROLE_MEMBER_OF_BOARD;
+        AuthorityTypeEnum newAuthority = AuthorityTypeEnum.ROLE_MEMBER_OF_BOARD;
         user.addAuthority(newAuthority);
 
         // Removes more times.
@@ -83,13 +83,13 @@ public final class UserTest extends AbstractUserTest {
         // OK since the remoteAuthority method should not throw an exception.
 
         // Checks
-        this.checkAuthorities(user, new ArrayList<AuthorityType>());
+        this.checkAuthorities(user, new ArrayList<AuthorityTypeEnum>());
     }
 
     /**
      * Checks that the given {@link User user} has just the given <code>ownedAuthority</code> and no other.
      */
-    private void checkAuthorities(User user, AuthorityType ownedAuthority) {
+    private void checkAuthorities(User user, AuthorityTypeEnum ownedAuthority) {
         this.checkAuthorities(user, Arrays.asList(ownedAuthority));
     }
 
@@ -97,8 +97,8 @@ public final class UserTest extends AbstractUserTest {
      * Checks that the given {@link User user} has exactly the given <code>ownedAuthorities</code>, i.e. he has all of
      * them and no other.
      */
-    private void checkAuthorities(User user, List<AuthorityType> ownedAuthorities) {
-        for (AuthorityType authority : AuthorityType.values()) {
+    private void checkAuthorities(User user, List<AuthorityTypeEnum> ownedAuthorities) {
+        for (AuthorityTypeEnum authority : AuthorityTypeEnum.values()) {
             if (ownedAuthorities.contains(authority)) {
                 Assert.assertTrue(user.hasAuthority(authority));
             } else {

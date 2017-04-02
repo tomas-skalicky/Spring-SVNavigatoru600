@@ -5,40 +5,28 @@ import org.jpatterns.gof.VisitorPattern.Visitor;
 
 /**
  * Enumeration of all possible formats of the full name of the {@link com.svnavigatoru600.domain.users.User}.
- * 
+ *
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
-public enum FullNameFormat {
+public enum FullNameFormatEnum {
 
+    // @formatter:off
     /**
      * For example: "Tomas Skalicky"
      */
-    FIRST_LAST {
-        @Override
-        public <E> E accept(FullNameFormatVisitor<E> visitor) {
-            return visitor.visitFirstLast();
-        }
-    },
+    FIRST_LAST          { @Override public <E> E accept(final FullNameFormatVisitor<E> visitor) { return visitor.visitFirstLast(); } },
 
     /**
      * For example: "Skalicky Tomas"
      */
-    LAST_FIRST {
-        @Override
-        public <E> E accept(FullNameFormatVisitor<E> visitor) {
-            return visitor.visitLastFirst();
-        }
-    },
+    LAST_FIRST          { @Override public <E> E accept(final FullNameFormatVisitor<E> visitor) { return visitor.visitLastFirst(); } },
 
     /**
      * For example: "Skalicky, Tomas"
      */
-    LAST_COMMA_FIRST {
-        @Override
-        public <E> E accept(FullNameFormatVisitor<E> visitor) {
-            return visitor.visitLastCommaFirst();
-        }
-    };
+    LAST_COMMA_FIRST    { @Override public <E> E accept(final FullNameFormatVisitor<E> visitor) { return visitor.visitLastCommaFirst(); } },
+    ;
+    // @formatter:on
 
     public abstract <E> E accept(FullNameFormatVisitor<E> visitor);
 
@@ -54,4 +42,5 @@ public enum FullNameFormat {
 
         E visitLastCommaFirst();
     }
+
 }

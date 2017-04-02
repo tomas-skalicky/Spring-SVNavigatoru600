@@ -2,9 +2,9 @@ package com.svnavigatoru600.repository.users;
 
 import java.util.List;
 
-import com.svnavigatoru600.domain.users.NotificationType;
+import com.svnavigatoru600.domain.users.NotificationTypeEnum;
 import com.svnavigatoru600.domain.users.User;
-import com.svnavigatoru600.service.util.OrderType;
+import com.svnavigatoru600.service.util.OrderTypeEnum;
 
 /**
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
@@ -39,15 +39,15 @@ public interface UserDao {
 
     /**
      * Returns all {@link User Users} stored in the repository which have the given <code>authority</code> and which are
-     * subscribed to the given {@link NotificationType notifications}.
+     * subscribed to the given {@link NotificationTypeEnum notifications}.
      * <p>
      * {@link com.svnavigatoru600.domain.users.Authority Authorities} of the returned users are NOT populated.
      */
-    List<User> findAllByAuthorityAndSubscription(String authority, NotificationType notificationType);
+    List<User> findAllByAuthorityAndSubscription(String authority, NotificationTypeEnum notificationType);
 
     /**
      * Returns all {@link User Users} stored in the repository arranged according to their {@link User#getLastName()
-     * last names} and {@link User#getFirstName() first names} in the given {@link OrderType order}.
+     * last names} and {@link User#getFirstName() first names} in the given {@link OrderTypeEnum order}.
      * <p>
      * {@link com.svnavigatoru600.domain.users.Authority Authorities} of the returned users are populated.
      * 
@@ -55,7 +55,7 @@ public interface UserDao {
      *            If <code>true</code>, the method returns only test users. Otherwise, it returns only non-test users.
      *            Test users are those which are not accessible to the business user (= customer).
      */
-    List<User> findAllOrdered(OrderType order, boolean testUsers);
+    List<User> findAllOrdered(OrderTypeEnum order, boolean testUsers);
 
     /**
      * Updates the given {@link User} in the repository. The old version of this user should be already stored there.

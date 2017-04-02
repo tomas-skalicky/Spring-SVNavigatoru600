@@ -19,7 +19,7 @@ public abstract class AbstractNewEditEvent implements SendNotificationViewModel 
     private Map<Integer, String> localizedPriorityCheckboxTitles = null;
     /**
      * Holds a value of the <code>newPriority</code> radiobutton. The value equals a localization of the selected
-     * {@link com.svnavigatoru600.domain.eventcalendar.PriorityType PriorityType}. See the
+     * {@link com.svnavigatoru600.domain.eventcalendar.PriorityTypeEnum PriorityType}. See the
      * <code>NewEditEventController.populatePriorityTypeList</code> method.
      */
     private String newPriority;

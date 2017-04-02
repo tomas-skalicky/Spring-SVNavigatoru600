@@ -10,9 +10,9 @@ public class OtherDocumentRecordTypeRelationId implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private int recordId;
-    private OtherDocumentRecordType type;
+    private OtherDocumentRecordTypeEnum type;
 
-    public OtherDocumentRecordTypeRelationId(final int recordId, final OtherDocumentRecordType type) {
+    public OtherDocumentRecordTypeRelationId(final int recordId, final OtherDocumentRecordTypeEnum type) {
         this.recordId = recordId;
         this.type = type;
     }
@@ -29,7 +29,7 @@ public class OtherDocumentRecordTypeRelationId implements Serializable {
      * Different - not "getType" - name of the getter method is necessary. Otherwise, the methods' signatures would be
      * identical.
      */
-    public OtherDocumentRecordType getTypedType() {
+    public OtherDocumentRecordTypeEnum getTypedType() {
         return type;
     }
 
@@ -40,7 +40,7 @@ public class OtherDocumentRecordTypeRelationId implements Serializable {
         return type.name();
     }
 
-    public void setType(final OtherDocumentRecordType type) {
+    public void setType(final OtherDocumentRecordTypeEnum type) {
         this.type = type;
     }
 
@@ -48,7 +48,7 @@ public class OtherDocumentRecordTypeRelationId implements Serializable {
      * This setter is necessary because of Hibernate.
      */
     public void setType(final String type) {
-        this.type = OtherDocumentRecordType.valueOf(type);
+        this.type = OtherDocumentRecordTypeEnum.valueOf(type);
     }
 
     /**

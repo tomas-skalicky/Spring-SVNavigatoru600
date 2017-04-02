@@ -16,47 +16,48 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcDaoSupport;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.svnavigatoru600.domain.users.Authority;
-import com.svnavigatoru600.domain.users.NotificationType;
+import com.svnavigatoru600.domain.users.NotificationTypeEnum;
 import com.svnavigatoru600.domain.users.User;
-import com.svnavigatoru600.repository.impl.PersistedClass;
+import com.svnavigatoru600.repository.QueryUtil;
 import com.svnavigatoru600.repository.users.AuthorityDao;
 import com.svnavigatoru600.repository.users.UserDao;
-import com.svnavigatoru600.repository.users.impl.AuthorityField;
-import com.svnavigatoru600.repository.users.impl.UserField;
-import com.svnavigatoru600.service.util.OrderType;
+import com.svnavigatoru600.repository.users.impl.AuthorityFieldEnum;
+import com.svnavigatoru600.repository.users.impl.UserFieldEnum;
+import com.svnavigatoru600.service.util.OrderTypeEnum;
 
 /**
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
 @Repository("userDao")
+@Transactional
 public class UserDaoImpl extends NamedParameterJdbcDaoSupport implements UserDao {
-
-    private final Log logger = LogFactory.getLog(this.getClass());
 
     /**
      * Database table which provides a persistence of {@link User Users}.
      */
-    private static final String TABLE_NAME = PersistedClass.User.getTableName();
+    private static final String TABLE_NAME = "users";
 
-    @Inject
-    private AuthorityDao authorityDao;
+    private final Log logger = LogFactory.getLog(this.getClass());
+
+    private final AuthorityDao authorityDao;
 
     /**
      * NOTE: Added because of the final setter.
      */
     @Inject
-    public UserDaoImpl(final DataSource dataSource) {
-        super();
+    public UserDaoImpl(final DataSource dataSource, final AuthorityDao authorityDao) {
         setDataSource(dataSource);
+        this.authorityDao = authorityDao;
     }
 
     /**
      * Populates the <code>authorities</code> property of the given <code>user</code>.
      */
     private void populateAuthorities(final User user) {
-        final List<Authority> authorities = authorityDao.findAll(user.getUsername());
+        final List<Authority> authorities = authorityDao.findByUsername(user.getUsername());
         user.setAuthorities(new HashSet<GrantedAuthority>(authorities));
     }
 
@@ -81,9 +82,8 @@ public class UserDaoImpl extends NamedParameterJdbcDaoSupport implements UserDao
     public User findByUsername(final String username, final boolean lazy) {
         logger.info(String.format("Load an user with the username '%s'", username));
 
-        final String usernameColumn = UserField.username.getColumnName();
-        final String query = String.format("SELECT * FROM %s u WHERE u.%s = :%s", UserDaoImpl.TABLE_NAME,
-                usernameColumn, usernameColumn);
+        final String usernameColumn = UserFieldEnum.USERNAME.getColumnName();
+        final String query = QueryUtil.selectQuery(UserDaoImpl.TABLE_NAME, usernameColumn, usernameColumn);
 
         final Map<String, String> args = Collections.singletonMap(usernameColumn, username);
 
@@ -107,9 +107,8 @@ public class UserDaoImpl extends NamedParameterJdbcDaoSupport implements UserDao
 
         logger.info(String.format("Load an user with the email '%s'", lowerCasedEmail));
 
-        final String emailColumn = UserField.email.getColumnName();
-        final String query = String.format("SELECT * FROM %s u WHERE u.%s = :%s", UserDaoImpl.TABLE_NAME, emailColumn,
-                emailColumn);
+        final String emailColumn = UserFieldEnum.EMAIL.getColumnName();
+        final String query = QueryUtil.selectQuery(UserDaoImpl.TABLE_NAME, emailColumn, emailColumn);
 
         final Map<String, String> args = Collections.singletonMap(emailColumn, lowerCasedEmail);
 
@@ -127,10 +126,10 @@ public class UserDaoImpl extends NamedParameterJdbcDaoSupport implements UserDao
     public List<User> findAllByAuthority(final String authority) {
         logger.info(String.format("Load all users with the authority '%s')", authority));
 
-        final String authorityColumn = AuthorityField.authority.getColumnName();
+        final String authorityColumn = AuthorityFieldEnum.AUTHORITY.getColumnName();
         final String query = String.format("SELECT u.* FROM %s u INNER JOIN %s a ON a.%s = u.%s WHERE a.%s = :%s",
-                UserDaoImpl.TABLE_NAME, PersistedClass.Authority.getTableName(),
-                AuthorityField.username.getColumnName(), UserField.username.getColumnName(), authorityColumn,
+                UserDaoImpl.TABLE_NAME, AuthorityDaoImpl.TABLE_NAME,
+                AuthorityFieldEnum.USERNAME.getColumnName(), UserFieldEnum.USERNAME.getColumnName(), authorityColumn,
                 authorityColumn);
 
         final Map<String, String> args = Collections.singletonMap(authorityColumn, authority);
@@ -143,16 +142,16 @@ public class UserDaoImpl extends NamedParameterJdbcDaoSupport implements UserDao
 
     @Override
     public List<User> findAllByAuthorityAndSubscription(final String authority,
-            final NotificationType notificationType) {
+            final NotificationTypeEnum notificationType) {
         logger.info(String.format("Load all users with the authority '%s' and subscription '%s')", authority,
                 notificationType.name()));
 
-        final String authorityColumn = AuthorityField.authority.getColumnName();
-        final String subscriptionColumn = UserField.getSubscriptionField(notificationType).getColumnName();
+        final String authorityColumn = AuthorityFieldEnum.AUTHORITY.getColumnName();
+        final String subscriptionColumn = UserFieldEnum.getSubscriptionField(notificationType).getColumnName();
         final String query = String.format(
                 "SELECT u.* FROM %s u INNER JOIN %s a ON a.%s = u.%s WHERE a.%s = :%s AND u.%s = :%s",
-                UserDaoImpl.TABLE_NAME, PersistedClass.Authority.getTableName(),
-                AuthorityField.username.getColumnName(), UserField.username.getColumnName(), authorityColumn,
+                UserDaoImpl.TABLE_NAME, AuthorityDaoImpl.TABLE_NAME,
+                AuthorityFieldEnum.USERNAME.getColumnName(), UserFieldEnum.USERNAME.getColumnName(), authorityColumn,
                 authorityColumn, subscriptionColumn, subscriptionColumn);
 
         final Map<String, Object> args = new HashMap<String, Object>();
@@ -163,13 +162,13 @@ public class UserDaoImpl extends NamedParameterJdbcDaoSupport implements UserDao
     }
 
     @Override
-    public List<User> findAllOrdered(final OrderType order, final boolean testUsers) {
+    public List<User> findAllOrdered(final OrderTypeEnum order, final boolean testUsers) {
         logger.info(String.format("Load all users ordered %s.", order.name()));
 
-        final String isTestUserColumn = UserField.isTestUser.getColumnName();
+        final String isTestUserColumn = UserFieldEnum.IS_TEST_USER.getColumnName();
         final String query = String.format("SELECT * FROM %s u WHERE u.%s = :%s ORDER BY u.%s, u.%s %s",
-                UserDaoImpl.TABLE_NAME, isTestUserColumn, isTestUserColumn, UserField.lastName.getColumnName(),
-                UserField.firstName.getColumnName(), order.getDatabaseCode());
+                UserDaoImpl.TABLE_NAME, isTestUserColumn, isTestUserColumn, UserFieldEnum.LAST_NAME.getColumnName(),
+                UserFieldEnum.FIRST_NAME.getColumnName(), order.getDatabaseCode());
 
         final Map<String, Boolean> args = Collections.singletonMap(isTestUserColumn, testUsers);
 
@@ -184,21 +183,21 @@ public class UserDaoImpl extends NamedParameterJdbcDaoSupport implements UserDao
      */
     private Map<String, Object> getNamedParameters(final User user) {
         final Map<String, Object> parameters = new HashMap<String, Object>();
-        parameters.put(UserField.username.getColumnName(), user.getUsername());
-        parameters.put(UserField.password.getColumnName(), user.getPassword());
-        parameters.put(UserField.enabled.getColumnName(), user.isEnabled());
-        parameters.put(UserField.firstName.getColumnName(), user.getFirstName());
-        parameters.put(UserField.lastName.getColumnName(), user.getLastName());
-        parameters.put(UserField.email.getColumnName(), user.getLowerCasedEmail());
-        parameters.put(UserField.phone.getColumnName(), user.getPhone());
-        parameters.put(UserField.isTestUser.getColumnName(), user.isTestUser());
-        parameters.put(UserField.subscribedToNews.getColumnName(), user.isSubscribedToNews());
-        parameters.put(UserField.subscribedToEvents.getColumnName(), user.isSubscribedToEvents());
-        parameters.put(UserField.subscribedToForum.getColumnName(), user.isSubscribedToForum());
-        parameters.put(UserField.subscribedToOtherDocuments.getColumnName(), user.isSubscribedToOtherDocuments());
-        parameters.put(UserField.subscribedToOtherSections.getColumnName(), user.isSubscribedToOtherSections());
-        parameters.put(UserField.smtpPort.getColumnName(), user.getSmtpPort());
-        parameters.put(UserField.redirectEmail.getColumnName(), user.getRedirectEmail());
+        parameters.put(UserFieldEnum.USERNAME.getColumnName(), user.getUsername());
+        parameters.put(UserFieldEnum.PASSWORD.getColumnName(), user.getPassword());
+        parameters.put(UserFieldEnum.ENABLED.getColumnName(), user.isEnabled());
+        parameters.put(UserFieldEnum.FIRST_NAME.getColumnName(), user.getFirstName());
+        parameters.put(UserFieldEnum.LAST_NAME.getColumnName(), user.getLastName());
+        parameters.put(UserFieldEnum.EMAIL.getColumnName(), user.getLowerCasedEmail());
+        parameters.put(UserFieldEnum.PHONE.getColumnName(), user.getPhone());
+        parameters.put(UserFieldEnum.IS_TEST_USER.getColumnName(), user.isTestUser());
+        parameters.put(UserFieldEnum.SUBSCRIBED_TO_NEWS.getColumnName(), user.isSubscribedToNews());
+        parameters.put(UserFieldEnum.SUBSCRIBED_TO_EVENTS.getColumnName(), user.isSubscribedToEvents());
+        parameters.put(UserFieldEnum.SUBSCRIBED_TO_FORUM.getColumnName(), user.isSubscribedToForum());
+        parameters.put(UserFieldEnum.SUBSCRIBED_TO_OTHER_DOCUMENTS.getColumnName(), user.isSubscribedToOtherDocuments());
+        parameters.put(UserFieldEnum.SUBSCRIBED_TO_OTHER_SECTIONS.getColumnName(), user.isSubscribedToOtherSections());
+        parameters.put(UserFieldEnum.SMTP_PORT.getColumnName(), user.getSmtpPort());
+        parameters.put(UserFieldEnum.REDIRECT_EMAIL.getColumnName(), user.getRedirectEmail());
         return parameters;
     }
 
@@ -212,21 +211,21 @@ public class UserDaoImpl extends NamedParameterJdbcDaoSupport implements UserDao
         logger.info("Update an user " + user);
 
         // Parameters are those words which begin with ':' in the following query.
-        final String usernameColumn = UserField.username.getColumnName();
-        final String passwordColumn = UserField.password.getColumnName();
-        final String enabledColumn = UserField.enabled.getColumnName();
-        final String firstNameColumn = UserField.firstName.getColumnName();
-        final String lastNameColumn = UserField.lastName.getColumnName();
-        final String emailColumn = UserField.email.getColumnName();
-        final String phoneColumn = UserField.phone.getColumnName();
-        final String isTestUserColumn = UserField.isTestUser.getColumnName();
-        final String subscribedToNewsColumn = UserField.subscribedToNews.getColumnName();
-        final String subscribedToEventsColumn = UserField.subscribedToEvents.getColumnName();
-        final String subscribedToForumColumn = UserField.subscribedToForum.getColumnName();
-        final String subscribedToOtherDocumentsColumn = UserField.subscribedToOtherDocuments.getColumnName();
-        final String subscribedToOtherSectionsColumn = UserField.subscribedToOtherSections.getColumnName();
-        final String smtpPortColumn = UserField.smtpPort.getColumnName();
-        final String redirectEmailColumn = UserField.redirectEmail.getColumnName();
+        final String usernameColumn = UserFieldEnum.USERNAME.getColumnName();
+        final String passwordColumn = UserFieldEnum.PASSWORD.getColumnName();
+        final String enabledColumn = UserFieldEnum.ENABLED.getColumnName();
+        final String firstNameColumn = UserFieldEnum.FIRST_NAME.getColumnName();
+        final String lastNameColumn = UserFieldEnum.LAST_NAME.getColumnName();
+        final String emailColumn = UserFieldEnum.EMAIL.getColumnName();
+        final String phoneColumn = UserFieldEnum.PHONE.getColumnName();
+        final String isTestUserColumn = UserFieldEnum.IS_TEST_USER.getColumnName();
+        final String subscribedToNewsColumn = UserFieldEnum.SUBSCRIBED_TO_NEWS.getColumnName();
+        final String subscribedToEventsColumn = UserFieldEnum.SUBSCRIBED_TO_EVENTS.getColumnName();
+        final String subscribedToForumColumn = UserFieldEnum.SUBSCRIBED_TO_FORUM.getColumnName();
+        final String subscribedToOtherDocumentsColumn = UserFieldEnum.SUBSCRIBED_TO_OTHER_DOCUMENTS.getColumnName();
+        final String subscribedToOtherSectionsColumn = UserFieldEnum.SUBSCRIBED_TO_OTHER_SECTIONS.getColumnName();
+        final String smtpPortColumn = UserFieldEnum.SMTP_PORT.getColumnName();
+        final String redirectEmailColumn = UserFieldEnum.REDIRECT_EMAIL.getColumnName();
         final String query = String.format(
                 "UPDATE %s SET %s = :%s, %s = :%s, %s = :%s, %s = :%s,"
                         + " %s = :%s, %s = :%s, %s = :%s, %s = :%s, %s = :%s, %s = :%s, %s = :%s, %s = :%s, %s = :%s, %s = :%s"
@@ -253,15 +252,15 @@ public class UserDaoImpl extends NamedParameterJdbcDaoSupport implements UserDao
         logger.info("Save a new user " + user);
 
         final SimpleJdbcInsert insert = new SimpleJdbcInsert(getDataSource()).withTableName(UserDaoImpl.TABLE_NAME)
-                .usingColumns(UserField.username.getColumnName(), UserField.password.getColumnName(),
-                        UserField.enabled.getColumnName(), UserField.firstName.getColumnName(),
-                        UserField.lastName.getColumnName(), UserField.email.getColumnName(),
-                        UserField.phone.getColumnName(), UserField.isTestUser.getColumnName(),
-                        UserField.subscribedToNews.getColumnName(), UserField.subscribedToEvents.getColumnName(),
-                        UserField.subscribedToForum.getColumnName(),
-                        UserField.subscribedToOtherDocuments.getColumnName(),
-                        UserField.subscribedToOtherSections.getColumnName(), UserField.smtpPort.getColumnName(),
-                        UserField.redirectEmail.getColumnName());
+                .usingColumns(UserFieldEnum.USERNAME.getColumnName(), UserFieldEnum.PASSWORD.getColumnName(),
+                        UserFieldEnum.ENABLED.getColumnName(), UserFieldEnum.FIRST_NAME.getColumnName(),
+                        UserFieldEnum.LAST_NAME.getColumnName(), UserFieldEnum.EMAIL.getColumnName(),
+                        UserFieldEnum.PHONE.getColumnName(), UserFieldEnum.IS_TEST_USER.getColumnName(),
+                        UserFieldEnum.SUBSCRIBED_TO_NEWS.getColumnName(), UserFieldEnum.SUBSCRIBED_TO_EVENTS.getColumnName(),
+                        UserFieldEnum.SUBSCRIBED_TO_FORUM.getColumnName(),
+                        UserFieldEnum.SUBSCRIBED_TO_OTHER_DOCUMENTS.getColumnName(),
+                        UserFieldEnum.SUBSCRIBED_TO_OTHER_SECTIONS.getColumnName(), UserFieldEnum.SMTP_PORT.getColumnName(),
+                        UserFieldEnum.REDIRECT_EMAIL.getColumnName());
 
         insert.execute(getNamedParameters(user));
 
@@ -276,9 +275,8 @@ public class UserDaoImpl extends NamedParameterJdbcDaoSupport implements UserDao
 
     @Override
     public void delete(final String username) {
-        final String usernameColumn = UserField.username.getColumnName();
-        final String query = String.format("DELETE FROM %s WHERE %s = :%s", UserDaoImpl.TABLE_NAME, usernameColumn,
-                usernameColumn);
+        final String usernameColumn = UserFieldEnum.USERNAME.getColumnName();
+        final String query = QueryUtil.deleteQuery(UserDaoImpl.TABLE_NAME, usernameColumn, usernameColumn);
 
         final Map<String, String> args = Collections.singletonMap(usernameColumn, username);
 

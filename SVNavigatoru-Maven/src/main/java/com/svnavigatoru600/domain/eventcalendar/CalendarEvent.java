@@ -17,7 +17,7 @@ public class CalendarEvent implements Serializable {
     @DateTimeFormat(style = "M-")
     private Date date;
     private String description;
-    private PriorityType priority;
+    private PriorityTypeEnum priority;
 
     public int getId() {
         return id;
@@ -55,7 +55,7 @@ public class CalendarEvent implements Serializable {
      * Different - not "getPriority" - name of the getter method is necessary. Otherwise, the methods' signatures would
      * be identical.
      */
-    public PriorityType getTypedPriority() {
+    public PriorityTypeEnum getTypedPriority() {
         return priority;
     }
 
@@ -66,7 +66,7 @@ public class CalendarEvent implements Serializable {
         return priority.name();
     }
 
-    public void setPriority(final PriorityType priority) {
+    public void setPriority(final PriorityTypeEnum priority) {
         this.priority = priority;
     }
 
@@ -74,7 +74,7 @@ public class CalendarEvent implements Serializable {
      * This setter is necessary because of Hibernate.
      */
     public void setPriority(final String priority) {
-        this.priority = PriorityType.valueOf(priority);
+        this.priority = PriorityTypeEnum.valueOf(priority);
     }
 
     @Override

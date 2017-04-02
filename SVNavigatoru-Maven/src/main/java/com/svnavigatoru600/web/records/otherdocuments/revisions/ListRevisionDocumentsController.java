@@ -8,7 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import com.svnavigatoru600.domain.records.OtherDocumentRecordType;
+import com.svnavigatoru600.domain.records.OtherDocumentRecordTypeEnum;
 import com.svnavigatoru600.service.records.OtherDocumentRecordService;
 import com.svnavigatoru600.url.records.otherdocuments.RevisionsUrlParts;
 import com.svnavigatoru600.web.records.otherdocuments.AbstractListDocumentsController;
@@ -22,7 +22,7 @@ public class ListRevisionDocumentsController extends AbstractListDocumentsContro
     @Inject
     public ListRevisionDocumentsController(final OtherDocumentRecordService recordService,
             final MessageSource messageSource) {
-        super(RevisionsUrlParts.BASE_URL, new PageViews(), OtherDocumentRecordType.REGULAR_REVISION, recordService,
+        super(RevisionsUrlParts.BASE_URL, new PageViews(), OtherDocumentRecordTypeEnum.REGULAR_REVISION, recordService,
                 messageSource);
     }
 

@@ -8,7 +8,7 @@ import org.springframework.jdbc.core.RowMapper;
 
 import com.svnavigatoru600.domain.forum.ForumThread;
 import com.svnavigatoru600.domain.users.User;
-import com.svnavigatoru600.repository.forum.impl.ThreadField;
+import com.svnavigatoru600.repository.forum.impl.ThreadFieldEnum;
 
 /**
  * For more information, see {@link com.svnavigatoru600.repository.users.impl.direct.UserRowMapper UserRowMapper}.
@@ -20,12 +20,12 @@ public class ThreadRowMapper implements RowMapper<ForumThread> {
     @Override
     public ForumThread mapRow(ResultSet rs, int rowNum) throws SQLException {
         ForumThread thread = new ForumThread();
-        thread.setId(rs.getInt(ThreadField.id.getColumnName()));
-        thread.setName(rs.getString(ThreadField.name.getColumnName()));
-        thread.setCreationTime(new Date(rs.getTimestamp(ThreadField.creationTime.getColumnName()).getTime()));
+        thread.setId(rs.getInt(ThreadFieldEnum.ID.getColumnName()));
+        thread.setName(rs.getString(ThreadFieldEnum.NAME.getColumnName()));
+        thread.setCreationTime(new Date(rs.getTimestamp(ThreadFieldEnum.CREATION_TIME.getColumnName()).getTime()));
 
         User author = new User();
-        author.setUsername(rs.getString(ThreadField.authorUsername.getColumnName()));
+        author.setUsername(rs.getString(ThreadFieldEnum.AUTHOR_USERNAME.getColumnName()));
         thread.setAuthor(author);
         return thread;
     }

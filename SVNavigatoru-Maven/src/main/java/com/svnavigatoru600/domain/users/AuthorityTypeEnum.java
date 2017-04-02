@@ -5,7 +5,7 @@ package com.svnavigatoru600.domain.users;
  *
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
-public enum AuthorityType {
+public enum AuthorityTypeEnum {
 
     /**
      * Parent of all regular users.
@@ -29,13 +29,13 @@ public enum AuthorityType {
 
     private final String titleLocalizationCode;
 
-    private AuthorityType(final String titleLocalizationCode) {
+    private AuthorityTypeEnum(final String titleLocalizationCode) {
         this.titleLocalizationCode = titleLocalizationCode;
     }
 
     /**
-     * Gets the localization code of the title of this {@link AuthorityType}. Values which correspond to this code are
-     * stored in <code>messages*.properties</code> files.
+     * Gets the localization code of the title of this {@link AuthorityTypeEnum}. Values which correspond to this code
+     * are stored in <code>messages*.properties</code> files.
      */
     public String getTitleLocalizationCode() {
         return titleLocalizationCode;
@@ -49,4 +49,5 @@ public enum AuthorityType {
     public long getOrdinal() {
         return ordinal();
     }
+
 }

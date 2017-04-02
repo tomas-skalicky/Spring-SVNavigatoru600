@@ -16,7 +16,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.support.SessionStatus;
 
 import com.svnavigatoru600.domain.records.OtherDocumentRecord;
-import com.svnavigatoru600.domain.records.OtherDocumentRecordType;
+import com.svnavigatoru600.domain.records.OtherDocumentRecordTypeEnum;
 import com.svnavigatoru600.service.records.OtherDocumentRecordService;
 import com.svnavigatoru600.service.util.OtherDocumentRecordUtils;
 import com.svnavigatoru600.url.CommonUrlParts;
@@ -41,7 +41,7 @@ public abstract class AbstractNewDocumentController extends AbstractNewEditDocum
 
     /**
      * Constructs a controller which considers all {@link OtherDocumentRecord OtherDocumentRecords} of all
-     * {@link OtherDocumentRecordType OtherDocumentRecordTypes}.
+     * {@link OtherDocumentRecordTypeEnum OtherDocumentRecordTypes}.
      */
     public AbstractNewDocumentController(final String baseUrl, final AbstractPageViews views,
             final OtherDocumentRecordService recordService, final SendNotificationModelFiller sendNotificationModelFiller,
@@ -53,7 +53,7 @@ public abstract class AbstractNewDocumentController extends AbstractNewEditDocum
      * Constructs a controller which considers all {@link OtherDocumentRecord OtherDocumentRecords} of the given
      * <code>recordType</code>.
      */
-    public AbstractNewDocumentController(final String baseUrl, final AbstractPageViews views, final OtherDocumentRecordType recordType,
+    public AbstractNewDocumentController(final String baseUrl, final AbstractPageViews views, final OtherDocumentRecordTypeEnum recordType,
             final OtherDocumentRecordService recordService, final SendNotificationModelFiller sendNotificationModelFiller,
             final NewRecordValidator validator, final MessageSource messageSource) {
         super(baseUrl, views, recordType, recordService, sendNotificationModelFiller, validator, messageSource);

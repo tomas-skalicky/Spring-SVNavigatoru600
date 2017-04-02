@@ -8,7 +8,7 @@ import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
 
 import com.svnavigatoru600.domain.forum.ForumContribution;
-import com.svnavigatoru600.domain.users.NotificationType;
+import com.svnavigatoru600.domain.users.NotificationTypeEnum;
 import com.svnavigatoru600.domain.users.User;
 import com.svnavigatoru600.service.AbstractNotificationEmailService;
 import com.svnavigatoru600.service.util.Email;
@@ -32,10 +32,10 @@ public class ContributionNotificationEmailService extends AbstractNotificationEm
     private static final String CONTRIBUTION_UPDATED_SUBJECT_CODE = "notifications.email.contribution.subject.contribution-updated";
     private static final String CONTRIBUTION_UPDATED_TEXT_CODE = "notifications.email.contribution.text.contribution-updated";
 
-    private static final NotificationType NOTIFICATION_TYPE = NotificationType.IN_FORUM;
+    private static final NotificationTypeEnum NOTIFICATION_TYPE = NotificationTypeEnum.IN_FORUM;
 
     @Override
-    protected NotificationType getNotificationType() {
+    protected NotificationTypeEnum getNotificationType() {
         return ContributionNotificationEmailService.NOTIFICATION_TYPE;
     }
 

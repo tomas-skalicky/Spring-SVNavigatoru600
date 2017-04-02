@@ -44,7 +44,7 @@ public class ListEventsController extends AbstractEventController {
                 CalendarEventService.getLocalizedDeleteQuestions(events, request, getMessageSource()));
 
         model.addAttribute(ListEventsController.COMMAND, command);
-        return PageViews.LIST.getViewName();
+        return PageViewsEnum.LIST.getViewName();
     }
 
     @GetMapping(value = EventsUrlParts.CREATED_URL)

@@ -8,7 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import com.svnavigatoru600.domain.records.SessionRecordType;
+import com.svnavigatoru600.domain.records.SessionRecordTypeEnum;
 import com.svnavigatoru600.service.records.SessionRecordService;
 import com.svnavigatoru600.url.records.session.BoardSessionsUrlParts;
 import com.svnavigatoru600.web.records.session.AbstractListRecordsController;
@@ -22,7 +22,7 @@ public class ListBoardSessionRecordsController extends AbstractListRecordsContro
     @Inject
     public ListBoardSessionRecordsController(final SessionRecordService recordService,
             final MessageSource messageSource) {
-        super(BoardSessionsUrlParts.BASE_URL, new PageViews(), SessionRecordType.SESSION_RECORD_OF_BOARD, recordService,
+        super(BoardSessionsUrlParts.BASE_URL, new PageViews(), SessionRecordTypeEnum.SESSION_RECORD_OF_BOARD, recordService,
                 messageSource);
     }
 

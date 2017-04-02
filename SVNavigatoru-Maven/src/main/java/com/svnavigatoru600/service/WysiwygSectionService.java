@@ -5,7 +5,7 @@ import javax.inject.Inject;
 import org.springframework.stereotype.Service;
 
 import com.svnavigatoru600.domain.WysiwygSection;
-import com.svnavigatoru600.domain.WysiwygSectionName;
+import com.svnavigatoru600.domain.WysiwygSectionNameEnum;
 import com.svnavigatoru600.repository.WysiwygSectionDao;
 
 /**
@@ -27,9 +27,9 @@ public class WysiwygSectionService {
     }
 
     /**
-     * Returns a {@link WysiwygSection} stored in the repository which has the given {@link WysiwygSectionName name}.
+     * Returns a {@link WysiwygSection} stored in the repository which has the given {@link WysiwygSectionNameEnum name}.
      */
-    public WysiwygSection findByName(final WysiwygSectionName name) {
+    public WysiwygSection findByName(final WysiwygSectionNameEnum name) {
         return sectionDao.findByName(name);
     }
 

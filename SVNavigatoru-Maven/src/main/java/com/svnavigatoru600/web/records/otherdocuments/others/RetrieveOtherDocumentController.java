@@ -9,7 +9,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-import com.svnavigatoru600.domain.records.OtherDocumentRecordType;
+import com.svnavigatoru600.domain.records.OtherDocumentRecordTypeEnum;
 import com.svnavigatoru600.service.records.OtherDocumentRecordService;
 import com.svnavigatoru600.url.records.RecordsCommonUrlParts;
 import com.svnavigatoru600.url.records.otherdocuments.OthersUrlParts;
@@ -24,7 +24,7 @@ public class RetrieveOtherDocumentController extends AbstractRetrieveDocumentCon
     @Inject
     public RetrieveOtherDocumentController(final OtherDocumentRecordService recordService,
             final MessageSource messageSource) {
-        super(OthersUrlParts.BASE_URL, new PageViews(), OtherDocumentRecordType.OTHER, recordService, messageSource);
+        super(OthersUrlParts.BASE_URL, new PageViews(), OtherDocumentRecordTypeEnum.OTHER, recordService, messageSource);
     }
 
     @Override

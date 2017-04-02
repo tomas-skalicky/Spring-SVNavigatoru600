@@ -4,7 +4,7 @@ import org.jpatterns.gof.VisitorPattern;
 import org.jpatterns.gof.VisitorPattern.ConcreteVisitor;
 
 import com.svnavigatoru600.domain.users.User;
-import com.svnavigatoru600.service.util.FullNameFormat.FullNameFormatVisitor;
+import com.svnavigatoru600.service.util.FullNameFormatEnum.FullNameFormatVisitor;
 
 /**
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>

@@ -11,67 +11,67 @@ import javax.sql.DataSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcDaoSupport;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.svnavigatoru600.domain.records.AbstractDocumentRecord;
 import com.svnavigatoru600.domain.records.SessionRecord;
-import com.svnavigatoru600.domain.records.SessionRecordType;
-import com.svnavigatoru600.repository.impl.PersistedClass;
+import com.svnavigatoru600.domain.records.SessionRecordTypeEnum;
 import com.svnavigatoru600.repository.records.SessionRecordDao;
-import com.svnavigatoru600.repository.records.impl.DocumentRecordField;
-import com.svnavigatoru600.repository.records.impl.SessionRecordField;
-import com.svnavigatoru600.service.util.OrderType;
+import com.svnavigatoru600.repository.records.impl.DocumentRecordFieldEnum;
+import com.svnavigatoru600.repository.records.impl.SessionRecordFieldEnum;
+import com.svnavigatoru600.service.util.OrderTypeEnum;
 
 /**
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
 @Repository("sessionRecordDao")
+@Transactional
 public class SessionRecordDaoImpl extends NamedParameterJdbcDaoSupport implements SessionRecordDao {
 
     /**
      * Database table which provides a persistence of {@link SessionRecord SessionRecords}.
      */
-    private static final String TABLE_NAME = PersistedClass.SessionRecord.getTableName();
+    private static final String TABLE_NAME = "session_records";
 
     /**
      * The SELECT command for the return of a single document together with its BLOB file.
-     * 
+     *
      * Join is necessary in all SELECT queries since {@link SessionRecord} inherits from {@link AbstractDocumentRecord}.
      */
     private static final String SELECT_FROM_CLAUSE_WITH_FILE = String.format(
             "SELECT r.*, d.%s, d.%s FROM %s r INNER JOIN %s d ON d.%s = r.%s",
-            DocumentRecordField.fileName.getColumnName(), DocumentRecordField.file.getColumnName(),
-            SessionRecordDaoImpl.TABLE_NAME, PersistedClass.AbstractDocumentRecord.getTableName(),
-            DocumentRecordField.id.getColumnName(), SessionRecordField.id.getColumnName());
+            DocumentRecordFieldEnum.FILE_NAME.getColumnName(), DocumentRecordFieldEnum.FILE.getColumnName(),
+            SessionRecordDaoImpl.TABLE_NAME, DocumentRecordDaoImpl.TABLE_NAME, DocumentRecordFieldEnum.ID.getColumnName(),
+            SessionRecordFieldEnum.ID.getColumnName());
     /**
      * The SELECT command for the return of a single or multiple documents without their BLOB files.
-     * 
+     *
      * Join is necessary in all SELECT queries since {@link com.svnavigatoru600.domain.records.OtherDocumentRecord
      * OtherDocumentRecord} inherits from {@link AbstractDocumentRecord}.
      */
     private static final String SELECT_FROM_CLAUSE_WITHOUT_FILE = String.format(
-            "SELECT r.*, d.%s FROM %s r INNER JOIN %s d ON d.%s = r.%s", DocumentRecordField.fileName.getColumnName(),
-            SessionRecordDaoImpl.TABLE_NAME, PersistedClass.AbstractDocumentRecord.getTableName(),
-            DocumentRecordField.id.getColumnName(), SessionRecordField.id.getColumnName());
+            "SELECT r.*, d.%s FROM %s r INNER JOIN %s d ON d.%s = r.%s", DocumentRecordFieldEnum.FILE_NAME.getColumnName(),
+            SessionRecordDaoImpl.TABLE_NAME, DocumentRecordDaoImpl.TABLE_NAME, DocumentRecordFieldEnum.ID.getColumnName(),
+            SessionRecordFieldEnum.ID.getColumnName());
 
-    @Inject
-    private DocumentRecordDaoImpl documentRecordDao;
+    private final DocumentRecordDaoImpl documentRecordDao;
 
     /**
      * NOTE: Added because of the final setter.
      */
     @Inject
-    public SessionRecordDaoImpl(DataSource dataSource) {
-        super();
+    public SessionRecordDaoImpl(final DataSource dataSource, final DocumentRecordDaoImpl documentRecordDao) {
         setDataSource(dataSource);
+        this.documentRecordDao = documentRecordDao;
     }
 
     @Override
-    public SessionRecord findById(int recordId) {
+    public SessionRecord findById(final int recordId) {
         return this.findById(recordId, true);
     }
 
     @Override
-    public SessionRecord findById(int recordId, boolean loadFile) {
+    public SessionRecord findById(final int recordId, final boolean loadFile) {
         String selectClause;
         if (loadFile) {
             selectClause = SessionRecordDaoImpl.SELECT_FROM_CLAUSE_WITH_FILE;
@@ -79,30 +79,30 @@ public class SessionRecordDaoImpl extends NamedParameterJdbcDaoSupport implement
             selectClause = SessionRecordDaoImpl.SELECT_FROM_CLAUSE_WITHOUT_FILE;
         }
 
-        String idColumn = SessionRecordField.id.getColumnName();
-        String query = String.format("%s WHERE r.%s = :%s", selectClause, idColumn, idColumn);
+        final String idColumn = SessionRecordFieldEnum.ID.getColumnName();
+        final String query = String.format("%s WHERE r.%s = :%s", selectClause, idColumn, idColumn);
 
-        Map<String, Integer> args = Collections.singletonMap(idColumn, recordId);
+        final Map<String, Integer> args = Collections.singletonMap(idColumn, recordId);
 
         return getNamedParameterJdbcTemplate().queryForObject(query, args, new SessionRecordRowMapper(loadFile));
     }
 
     @Override
-    public List<SessionRecord> findAllOrdered(OrderType order) {
-        String query = String.format("%s ORDER BY r.%s %s", SessionRecordDaoImpl.SELECT_FROM_CLAUSE_WITHOUT_FILE,
-                SessionRecordField.sessionDate.getColumnName(), order.getDatabaseCode());
+    public List<SessionRecord> findAllOrdered(final OrderTypeEnum order) {
+        final String query = String.format("%s ORDER BY r.%s %s", SessionRecordDaoImpl.SELECT_FROM_CLAUSE_WITHOUT_FILE,
+                SessionRecordFieldEnum.SESSION_DATE.getColumnName(), order.getDatabaseCode());
 
         return getJdbcTemplate().query(query, new SessionRecordRowMapper(false));
     }
 
     @Override
-    public List<SessionRecord> findAllOrdered(SessionRecordType type, OrderType order) {
-        String typeColumn = SessionRecordField.type.getColumnName();
-        String query = String.format("%s WHERE r.%s = :%s ORDER BY r.%s %s",
+    public List<SessionRecord> findAllOrdered(final SessionRecordTypeEnum type, final OrderTypeEnum order) {
+        final String typeColumn = SessionRecordFieldEnum.TYPE.getColumnName();
+        final String query = String.format("%s WHERE r.%s = :%s ORDER BY r.%s %s",
                 SessionRecordDaoImpl.SELECT_FROM_CLAUSE_WITHOUT_FILE, typeColumn, typeColumn,
-                SessionRecordField.sessionDate.getColumnName(), order.getDatabaseCode());
+                SessionRecordFieldEnum.SESSION_DATE.getColumnName(), order.getDatabaseCode());
 
-        Map<String, String> args = Collections.singletonMap(typeColumn, type.name());
+        final Map<String, String> args = Collections.singletonMap(typeColumn, type.name());
 
         return getNamedParameterJdbcTemplate().query(query, args, new SessionRecordRowMapper(false));
     }
@@ -110,26 +110,26 @@ public class SessionRecordDaoImpl extends NamedParameterJdbcDaoSupport implement
     /**
      * Maps properties of the given {@link SessionRecord} to names of the corresponding database columns.
      */
-    private Map<String, Object> getNamedParameters(SessionRecord record) {
-        Map<String, Object> parameters = new HashMap<String, Object>();
-        parameters.put(SessionRecordField.id.getColumnName(), record.getId());
-        parameters.put(SessionRecordField.type.getColumnName(), record.getType());
-        parameters.put(SessionRecordField.sessionDate.getColumnName(), record.getSessionDate());
-        parameters.put(SessionRecordField.discussedTopics.getColumnName(), record.getDiscussedTopics());
+    private Map<String, Object> getNamedParameters(final SessionRecord record) {
+        final Map<String, Object> parameters = new HashMap<String, Object>();
+        parameters.put(SessionRecordFieldEnum.ID.getColumnName(), record.getId());
+        parameters.put(SessionRecordFieldEnum.TYPE.getColumnName(), record.getType());
+        parameters.put(SessionRecordFieldEnum.SESSION_DATE.getColumnName(), record.getSessionDate());
+        parameters.put(SessionRecordFieldEnum.DISCUSSED_TOPICS.getColumnName(), record.getDiscussedTopics());
         return parameters;
     }
 
     @Override
-    public void update(SessionRecord record) {
+    public void update(final SessionRecord record) {
         // NOTE: updates the record in both tables 'document_records' and
         // 'session_records'.
-        this.documentRecordDao.update(record, getDataSource());
+        documentRecordDao.update(record, getDataSource());
 
-        String idColumn = SessionRecordField.id.getColumnName();
-        String typeColumn = SessionRecordField.type.getColumnName();
-        String sessionDateColumn = SessionRecordField.sessionDate.getColumnName();
-        String discussedTopicsColumn = SessionRecordField.discussedTopics.getColumnName();
-        String query = String.format("UPDATE %s SET %s = :%s, %s = :%s, %s = :%s WHERE %s = :%s",
+        final String idColumn = SessionRecordFieldEnum.ID.getColumnName();
+        final String typeColumn = SessionRecordFieldEnum.TYPE.getColumnName();
+        final String sessionDateColumn = SessionRecordFieldEnum.SESSION_DATE.getColumnName();
+        final String discussedTopicsColumn = SessionRecordFieldEnum.DISCUSSED_TOPICS.getColumnName();
+        final String query = String.format("UPDATE %s SET %s = :%s, %s = :%s, %s = :%s WHERE %s = :%s",
                 SessionRecordDaoImpl.TABLE_NAME, typeColumn, typeColumn, sessionDateColumn, sessionDateColumn,
                 discussedTopicsColumn, discussedTopicsColumn, idColumn, idColumn);
 
@@ -137,26 +137,26 @@ public class SessionRecordDaoImpl extends NamedParameterJdbcDaoSupport implement
     }
 
     @Override
-    public int save(SessionRecord record) {
+    public int save(final SessionRecord record) {
         // NOTE: inserts the new record into two tables: 'document_records' and
         // 'session_records'.
-        int recordId = this.documentRecordDao.save(record, getDataSource());
+        final int recordId = documentRecordDao.save(record, getDataSource());
 
-        SimpleJdbcInsert insert = new SimpleJdbcInsert(getDataSource()).withTableName(SessionRecordDaoImpl.TABLE_NAME)
-                .usingColumns(SessionRecordField.id.getColumnName(), SessionRecordField.type.getColumnName(),
-                        SessionRecordField.sessionDate.getColumnName(),
-                        SessionRecordField.discussedTopics.getColumnName());
+        final SimpleJdbcInsert insert = new SimpleJdbcInsert(getDataSource())
+                .withTableName(SessionRecordDaoImpl.TABLE_NAME).usingColumns(SessionRecordFieldEnum.ID.getColumnName(),
+                        SessionRecordFieldEnum.TYPE.getColumnName(), SessionRecordFieldEnum.SESSION_DATE.getColumnName(),
+                        SessionRecordFieldEnum.DISCUSSED_TOPICS.getColumnName());
 
-        Map<String, Object> parameters = getNamedParameters(record);
-        parameters.put(SessionRecordField.id.getColumnName(), recordId);
+        final Map<String, Object> parameters = getNamedParameters(record);
+        parameters.put(SessionRecordFieldEnum.ID.getColumnName(), recordId);
         insert.execute(parameters);
 
         return recordId;
     }
 
     @Override
-    public void delete(AbstractDocumentRecord record) {
+    public void delete(final AbstractDocumentRecord record) {
         // The 'ON DELETE CASCADE' clause is used.
-        this.documentRecordDao.delete(record, getDataSource());
+        documentRecordDao.delete(record, getDataSource());
     }
 }

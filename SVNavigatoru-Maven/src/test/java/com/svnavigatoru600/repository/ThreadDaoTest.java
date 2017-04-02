@@ -67,7 +67,7 @@ public final class ThreadDaoTest extends AbstractRepositoryTest {
         final ForumThread thread = threadDao.findById(threadId);
         final int expectedContributionCount = 1;
         Assert.assertEquals(expectedContributionCount, thread.getContributions().size());
-        final int expectedContributionId = TEST_UTILS.getContributionDao().findAll(threadId).get(0).getId();
+        final int expectedContributionId = TEST_UTILS.getContributionDao().findByThreadId(threadId).get(0).getId();
         final int actualContributionId = thread.getContributions().get(0).getId();
         Assert.assertEquals(expectedContributionId, actualContributionId);
     }
@@ -99,7 +99,7 @@ public final class ThreadDaoTest extends AbstractRepositoryTest {
         final List<ForumThread> foundThreads = threadDao.loadAll();
         final ForumThread thread = foundThreads.get(0);
         Assert.assertEquals(defaultAuthor.getUsername(), thread.getAuthor().getUsername());
-        final int expectedContributionId = TEST_UTILS.getContributionDao().findAll(threadId).get(0).getId();
+        final int expectedContributionId = TEST_UTILS.getContributionDao().findByThreadId(threadId).get(0).getId();
         final int actualContributionId = thread.getContributions().get(0).getId();
         Assert.assertEquals(expectedContributionId, actualContributionId);
     }

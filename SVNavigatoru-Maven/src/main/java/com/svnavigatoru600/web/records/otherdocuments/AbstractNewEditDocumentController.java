@@ -4,7 +4,7 @@ import org.springframework.context.MessageSource;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.Validator;
 
-import com.svnavigatoru600.domain.records.OtherDocumentRecordType;
+import com.svnavigatoru600.domain.records.OtherDocumentRecordTypeEnum;
 import com.svnavigatoru600.service.records.OtherDocumentRecordService;
 import com.svnavigatoru600.viewmodel.records.otherdocuments.validator.AbstractOtherDocumentRecordValidator;
 import com.svnavigatoru600.web.SendNotificationModelFiller;
@@ -33,7 +33,7 @@ public abstract class AbstractNewEditDocumentController extends AbstractOtherDoc
 
     /**
      * Constructs a controller which considers all {@link com.svnavigatoru600.domain.records.OtherDocumentRecord
-     * OtherDocumentRecords} of all {@link OtherDocumentRecordType OtherDocumentRecordTypes}.
+     * OtherDocumentRecords} of all {@link OtherDocumentRecordTypeEnum OtherDocumentRecordTypes}.
      */
     public AbstractNewEditDocumentController(final String baseUrl, final AbstractPageViews views,
             final OtherDocumentRecordService recordService, final SendNotificationModelFiller sendNotificationModelFiller,
@@ -48,7 +48,7 @@ public abstract class AbstractNewEditDocumentController extends AbstractOtherDoc
      * OtherDocumentRecords} of the given <code>recordType</code>.
      */
     public AbstractNewEditDocumentController(final String baseUrl, final AbstractPageViews views,
-            final OtherDocumentRecordType recordType, final OtherDocumentRecordService recordService,
+            final OtherDocumentRecordTypeEnum recordType, final OtherDocumentRecordService recordService,
             final SendNotificationModelFiller sendNotificationModelFiller, final AbstractOtherDocumentRecordValidator validator,
             final MessageSource messageSource) {
         super(baseUrl, views, recordType, recordService, messageSource);

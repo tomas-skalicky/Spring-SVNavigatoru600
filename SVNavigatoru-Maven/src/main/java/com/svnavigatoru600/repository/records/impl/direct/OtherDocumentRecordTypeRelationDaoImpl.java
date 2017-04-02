@@ -2,7 +2,6 @@ package com.svnavigatoru600.repository.records.impl.direct;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -12,17 +11,20 @@ import javax.sql.DataSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcDaoSupport;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.google.common.collect.Maps;
 import com.svnavigatoru600.domain.records.OtherDocumentRecordTypeRelation;
 import com.svnavigatoru600.domain.records.OtherDocumentRecordTypeRelationId;
-import com.svnavigatoru600.repository.impl.PersistedClass;
+import com.svnavigatoru600.repository.QueryUtil;
 import com.svnavigatoru600.repository.records.OtherDocumentRecordTypeRelationDao;
-import com.svnavigatoru600.repository.records.impl.OtherDocumentRecordTypeRelationField;
+import com.svnavigatoru600.repository.records.impl.OtherDocumentRecordTypeRelationFieldEnum;
 
 /**
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
 @Repository("otherDocumentRecordTypeRelationDao")
+@Transactional
 public class OtherDocumentRecordTypeRelationDaoImpl extends NamedParameterJdbcDaoSupport
         implements OtherDocumentRecordTypeRelationDao {
 
@@ -30,24 +32,23 @@ public class OtherDocumentRecordTypeRelationDaoImpl extends NamedParameterJdbcDa
      * Database table which provides a persistence of {@link OtherDocumentRecordTypeRelation
      * OtherDocumentRecordTypeRelations}.
      */
-    private static final String TABLE_NAME = PersistedClass.OtherDocumentRecordTypeRelation.getTableName();
+    static final String TABLE_NAME = "other_document_record_type_relations";
 
     /**
      * NOTE: Added because of the final setter.
      */
     @Inject
-    public OtherDocumentRecordTypeRelationDaoImpl(DataSource dataSource) {
-        super();
+    public OtherDocumentRecordTypeRelationDaoImpl(final DataSource dataSource) {
         setDataSource(dataSource);
     }
 
     @Override
-    public List<OtherDocumentRecordTypeRelation> findAll(int recordId) {
-        String recordIdColumn = OtherDocumentRecordTypeRelationField.recordId.getColumnName();
-        String query = String.format("SELECT * FROM %s r WHERE r.%s = :%s",
-                OtherDocumentRecordTypeRelationDaoImpl.TABLE_NAME, recordIdColumn, recordIdColumn);
+    public List<OtherDocumentRecordTypeRelation> findByRecordId(final int recordId) {
+        final String recordIdColumn = OtherDocumentRecordTypeRelationFieldEnum.RECORD_ID.getColumnName();
+        final String query = QueryUtil.selectQuery(OtherDocumentRecordTypeRelationDaoImpl.TABLE_NAME, recordIdColumn,
+                recordIdColumn);
 
-        Map<String, Integer> args = Collections.singletonMap(recordIdColumn, recordId);
+        final Map<String, Integer> args = Collections.singletonMap(recordIdColumn, recordId);
 
         return getNamedParameterJdbcTemplate().query(query, args, new OtherDocumentRecordTypeRelationRowMapper());
     }
@@ -56,40 +57,40 @@ public class OtherDocumentRecordTypeRelationDaoImpl extends NamedParameterJdbcDa
      * Maps properties of the given {@link OtherDocumentRecordTypeRelation typeRelation} to names of the corresponding
      * database column.
      */
-    private Map<String, Object> getNamedParameters(OtherDocumentRecordTypeRelation typeRelation) {
-        Map<String, Object> parameters = new HashMap<String, Object>();
-        OtherDocumentRecordTypeRelationId id = typeRelation.getId();
-        parameters.put(OtherDocumentRecordTypeRelationField.recordId.getColumnName(), id.getRecordId());
-        parameters.put(OtherDocumentRecordTypeRelationField.type.getColumnName(), id.getType());
+    private Map<String, Object> getNamedParameters(final OtherDocumentRecordTypeRelation typeRelation) {
+        final Map<String, Object> parameters = Maps.newHashMap();
+        final OtherDocumentRecordTypeRelationId id = typeRelation.getId();
+        parameters.put(OtherDocumentRecordTypeRelationFieldEnum.RECORD_ID.getColumnName(), id.getRecordId());
+        parameters.put(OtherDocumentRecordTypeRelationFieldEnum.TYPE.getColumnName(), id.getType());
         return parameters;
     }
 
     /**
      * Saves the given {@link OtherDocumentRecordTypeRelation typeRelation} to the repository.
      */
-    public void save(OtherDocumentRecordTypeRelation typeRelation) {
-        SimpleJdbcInsert insert = new SimpleJdbcInsert(getDataSource())
+    public void save(final OtherDocumentRecordTypeRelation typeRelation) {
+        final SimpleJdbcInsert insert = new SimpleJdbcInsert(getDataSource())
                 .withTableName(OtherDocumentRecordTypeRelationDaoImpl.TABLE_NAME)
-                .usingColumns(OtherDocumentRecordTypeRelationField.recordId.getColumnName(),
-                        OtherDocumentRecordTypeRelationField.type.getColumnName());
+                .usingColumns(OtherDocumentRecordTypeRelationFieldEnum.RECORD_ID.getColumnName(),
+                        OtherDocumentRecordTypeRelationFieldEnum.TYPE.getColumnName());
 
         insert.execute(getNamedParameters(typeRelation));
     }
 
     @Override
-    public void save(Collection<OtherDocumentRecordTypeRelation> typeRelations) {
-        for (OtherDocumentRecordTypeRelation typeRelation : typeRelations) {
+    public void save(final Collection<OtherDocumentRecordTypeRelation> typeRelations) {
+        for (final OtherDocumentRecordTypeRelation typeRelation : typeRelations) {
             this.save(typeRelation);
         }
     }
 
     @Override
-    public void delete(int recordId) {
-        String idColumn = OtherDocumentRecordTypeRelationField.recordId.getColumnName();
-        String query = String.format("DELETE FROM %s WHERE %s = :%s", OtherDocumentRecordTypeRelationDaoImpl.TABLE_NAME,
-                idColumn, idColumn);
+    public void delete(final int recordId) {
+        final String idColumn = OtherDocumentRecordTypeRelationFieldEnum.RECORD_ID.getColumnName();
+        final String query = QueryUtil.deleteQuery(OtherDocumentRecordTypeRelationDaoImpl.TABLE_NAME, idColumn,
+                idColumn);
 
-        Map<String, Integer> args = Collections.singletonMap(idColumn, recordId);
+        final Map<String, Integer> args = Collections.singletonMap(idColumn, recordId);
 
         getNamedParameterJdbcTemplate().update(query, args);
     }

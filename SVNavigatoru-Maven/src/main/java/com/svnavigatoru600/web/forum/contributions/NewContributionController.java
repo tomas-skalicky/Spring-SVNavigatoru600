@@ -67,7 +67,7 @@ public class NewContributionController extends AbstractNewEditContributionContro
         getSendNotificationModelFiller().populateSendNotificationInInitForm(command, request, getMessageSource());
 
         model.addAttribute(AbstractNewEditContributionController.COMMAND, command);
-        return PageViews.NEW.getViewName();
+        return PageViewsEnum.NEW.getViewName();
     }
 
     /**
@@ -87,7 +87,7 @@ public class NewContributionController extends AbstractNewEditContributionContro
 
         getValidator().validate(command, result);
         if (result.hasErrors()) {
-            return PageViews.NEW.getViewName();
+            return PageViewsEnum.NEW.getViewName();
         }
 
         // Updates the data of the new contribution.
@@ -114,6 +114,6 @@ public class NewContributionController extends AbstractNewEditContributionContro
             LogFactory.getLog(this.getClass()).error(newContribution, e);
             result.reject(NewContributionController.DATABASE_ERROR_MESSAGE_CODE);
         }
-        return PageViews.NEW.getViewName();
+        return PageViewsEnum.NEW.getViewName();
     }
 }

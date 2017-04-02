@@ -10,40 +10,40 @@ import javax.sql.DataSource;
 
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcDaoSupport;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.svnavigatoru600.domain.WysiwygSection;
-import com.svnavigatoru600.domain.WysiwygSectionName;
+import com.svnavigatoru600.domain.WysiwygSectionNameEnum;
+import com.svnavigatoru600.repository.QueryUtil;
 import com.svnavigatoru600.repository.WysiwygSectionDao;
-import com.svnavigatoru600.repository.impl.PersistedClass;
-import com.svnavigatoru600.repository.wysiwyg.impl.WysiwygSectionField;
+import com.svnavigatoru600.repository.wysiwyg.impl.WysiwygSectionFieldEnum;
 
 /**
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
 @Repository("wysiwygSectionDao")
+@Transactional
 public class WysiwygSectionDaoImpl extends NamedParameterJdbcDaoSupport implements WysiwygSectionDao {
 
     /**
      * Database table which provides a persistence of {@link WysiwygSection WysiwygSections}.
      */
-    private static final String TABLE_NAME = PersistedClass.WysiwygSection.getTableName();
+    private static final String TABLE_NAME = "wysiwyg_sections";
 
     /**
      * NOTE: Added because of the final setter.
      */
     @Inject
-    public WysiwygSectionDaoImpl(DataSource dataSource) {
-        super();
+    public WysiwygSectionDaoImpl(final DataSource dataSource) {
         setDataSource(dataSource);
     }
 
     @Override
-    public WysiwygSection findByName(WysiwygSectionName name) {
-        String nameColumn = WysiwygSectionField.name.getColumnName();
-        String query = String.format("SELECT * FROM %s s WHERE s.%s = :%s", WysiwygSectionDaoImpl.TABLE_NAME,
-                nameColumn, nameColumn);
+    public WysiwygSection findByName(final WysiwygSectionNameEnum name) {
+        final String nameColumn = WysiwygSectionFieldEnum.NAME.getColumnName();
+        final String query = QueryUtil.selectQuery(WysiwygSectionDaoImpl.TABLE_NAME, nameColumn, nameColumn);
 
-        Map<String, String> args = Collections.singletonMap(nameColumn, name.name());
+        final Map<String, String> args = Collections.singletonMap(nameColumn, name.name());
 
         return getNamedParameterJdbcTemplate().queryForObject(query, args, new WysiwygSectionRowMapper());
     }
@@ -51,23 +51,23 @@ public class WysiwygSectionDaoImpl extends NamedParameterJdbcDaoSupport implemen
     /**
      * Maps properties of the given {@link WysiwygSection} to names of the corresponding database columns.
      */
-    private Map<String, Object> getNamedParameters(WysiwygSection section) {
-        Map<String, Object> parameters = new HashMap<String, Object>();
-        parameters.put(WysiwygSectionField.name.getColumnName(), section.getName());
-        parameters.put(WysiwygSectionField.lastSaveTime.getColumnName(), section.getLastSaveTime());
-        parameters.put(WysiwygSectionField.sourceCode.getColumnName(), section.getSourceCode());
+    private Map<String, Object> getNamedParameters(final WysiwygSection section) {
+        final Map<String, Object> parameters = new HashMap<String, Object>();
+        parameters.put(WysiwygSectionFieldEnum.NAME.getColumnName(), section.getName());
+        parameters.put(WysiwygSectionFieldEnum.LAST_SAVE_TIME.getColumnName(), section.getLastSaveTime());
+        parameters.put(WysiwygSectionFieldEnum.SOURCE_CODE.getColumnName(), section.getSourceCode());
         return parameters;
     }
 
     @Override
-    public void update(WysiwygSection section) {
-        Date now = new Date();
+    public void update(final WysiwygSection section) {
+        final Date now = new Date();
         section.setLastSaveTime(now);
 
-        String nameColumn = WysiwygSectionField.name.getColumnName();
-        String lastSaveTimeColumn = WysiwygSectionField.lastSaveTime.getColumnName();
-        String sourceCodeColumn = WysiwygSectionField.sourceCode.getColumnName();
-        String query = String.format("UPDATE %s SET %s = :%s, %s = :%s WHERE %s = :%s",
+        final String nameColumn = WysiwygSectionFieldEnum.NAME.getColumnName();
+        final String lastSaveTimeColumn = WysiwygSectionFieldEnum.LAST_SAVE_TIME.getColumnName();
+        final String sourceCodeColumn = WysiwygSectionFieldEnum.SOURCE_CODE.getColumnName();
+        final String query = String.format("UPDATE %s SET %s = :%s, %s = :%s WHERE %s = :%s",
                 WysiwygSectionDaoImpl.TABLE_NAME, lastSaveTimeColumn, lastSaveTimeColumn, sourceCodeColumn,
                 sourceCodeColumn, nameColumn, nameColumn);
 

@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
-import com.svnavigatoru600.domain.records.SessionRecordType;
+import com.svnavigatoru600.domain.records.SessionRecordTypeEnum;
 import com.svnavigatoru600.service.util.DateUtils;
 
 /**
@@ -38,7 +38,7 @@ public abstract class AbstractEventValidator implements Validator {
 
     protected void checkNewPriority(String newPriority, Errors errors) {
         try {
-            SessionRecordType.valueOf(newPriority);
+            SessionRecordTypeEnum.valueOf(newPriority);
         } catch (IllegalArgumentException e) {
             // Cannot be correctly checked since the newPriority parameter
             // contains a localized string.

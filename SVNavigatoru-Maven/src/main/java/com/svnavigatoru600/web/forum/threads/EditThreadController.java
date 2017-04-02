@@ -53,7 +53,7 @@ public class EditThreadController extends AbstractNewEditThreadController {
         command.setThread(thread);
 
         model.addAttribute(AbstractNewEditThreadController.COMMAND, command);
-        return PageViews.EDIT.getViewName();
+        return PageViewsEnum.EDIT.getViewName();
     }
 
     @GetMapping(value = ThreadsUrlParts.EXISTING_URL + "{threadId}/" + CommonUrlParts.SAVED_EXTENSION)
@@ -75,7 +75,7 @@ public class EditThreadController extends AbstractNewEditThreadController {
 
         getValidator().validate(command, result);
         if (result.hasErrors()) {
-            return PageViews.EDIT.getViewName();
+            return PageViewsEnum.EDIT.getViewName();
         }
 
         ForumThread originalThread = null;
@@ -96,6 +96,6 @@ public class EditThreadController extends AbstractNewEditThreadController {
             LogFactory.getLog(this.getClass()).error(originalThread, e);
             result.reject(EditThreadController.DATABASE_ERROR_MESSAGE_CODE);
         }
-        return PageViews.EDIT.getViewName();
+        return PageViewsEnum.EDIT.getViewName();
     }
 }

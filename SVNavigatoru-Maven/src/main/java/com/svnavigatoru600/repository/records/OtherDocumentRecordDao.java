@@ -3,8 +3,8 @@ package com.svnavigatoru600.repository.records;
 import java.util.List;
 
 import com.svnavigatoru600.domain.records.OtherDocumentRecord;
-import com.svnavigatoru600.domain.records.OtherDocumentRecordType;
-import com.svnavigatoru600.service.util.OrderType;
+import com.svnavigatoru600.domain.records.OtherDocumentRecordTypeEnum;
+import com.svnavigatoru600.service.util.OrderTypeEnum;
 
 /**
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
@@ -19,16 +19,16 @@ public interface OtherDocumentRecordDao extends DocumentRecordDao {
 
     /**
      * Returns all {@link OtherDocumentRecord OtherDocumentRecords} stored in the repository arranged according to their
-     * {@link OtherDocumentRecord#getCreationTime() creationTimes} in the given {@link OrderType order}.
+     * {@link OtherDocumentRecord#getCreationTime() creationTimes} in the given {@link OrderTypeEnum order}.
      */
-    List<OtherDocumentRecord> findAllOrdered(OrderType order);
+    List<OtherDocumentRecord> findAllOrdered(OrderTypeEnum order);
 
     /**
      * Returns all {@link OtherDocumentRecord OtherDocumentRecords} stored in the repository which are of the given
-     * {@link OtherDocumentRecordType type}. The {@link OtherDocumentRecord} are arranged according to their
-     * {@link OtherDocumentRecord#getCreationTime() creationTimes} in the given {@link OrderType order}.
+     * {@link OtherDocumentRecordTypeEnum type}. The {@link OtherDocumentRecord} are arranged according to their
+     * {@link OtherDocumentRecord#getCreationTime() creationTimes} in the given {@link OrderTypeEnum order}.
      */
-    List<OtherDocumentRecord> findAllOrdered(OtherDocumentRecordType type, OrderType order);
+    List<OtherDocumentRecord> findAllOrdered(OtherDocumentRecordTypeEnum type, OrderTypeEnum order);
 
     /**
      * Updates the given {@link OtherDocumentRecord} in the repository. The old version of this document record should

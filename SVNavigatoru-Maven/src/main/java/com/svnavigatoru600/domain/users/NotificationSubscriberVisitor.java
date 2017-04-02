@@ -3,7 +3,7 @@ package com.svnavigatoru600.domain.users;
 import org.jpatterns.gof.VisitorPattern;
 import org.jpatterns.gof.VisitorPattern.ConcreteVisitor;
 
-import com.svnavigatoru600.domain.users.NotificationType.NotificationTypeVisitor;
+import com.svnavigatoru600.domain.users.NotificationTypeEnum.NotificationTypeVisitor;
 
 /**
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>

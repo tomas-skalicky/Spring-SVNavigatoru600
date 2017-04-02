@@ -9,7 +9,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.ui.ModelMap;
 
 import com.svnavigatoru600.domain.records.OtherDocumentRecord;
-import com.svnavigatoru600.domain.records.OtherDocumentRecordType;
+import com.svnavigatoru600.domain.records.OtherDocumentRecordTypeEnum;
 import com.svnavigatoru600.service.records.OtherDocumentRecordService;
 import com.svnavigatoru600.viewmodel.records.otherdocuments.ShowAllRecords;
 import com.svnavigatoru600.web.records.AbstractPageViews;
@@ -28,7 +28,7 @@ public abstract class AbstractListDocumentsController extends AbstractOtherDocum
 
     /**
      * Constructs a controller which considers all {@link OtherDocumentRecord OtherDocumentRecords} of all
-     * {@link OtherDocumentRecordType OtherDocumentRecordTypes}.
+     * {@link OtherDocumentRecordTypeEnum OtherDocumentRecordTypes}.
      */
     public AbstractListDocumentsController(final String baseUrl, final AbstractPageViews views,
             final OtherDocumentRecordService recordService, final MessageSource messageSource) {
@@ -39,7 +39,7 @@ public abstract class AbstractListDocumentsController extends AbstractOtherDocum
      * Constructs a controller which considers all {@link OtherDocumentRecord OtherDocumentRecords} of the given
      * <code>recordType</code>.
      */
-    public AbstractListDocumentsController(final String baseUrl, final AbstractPageViews views, final OtherDocumentRecordType recordType,
+    public AbstractListDocumentsController(final String baseUrl, final AbstractPageViews views, final OtherDocumentRecordTypeEnum recordType,
             final OtherDocumentRecordService recordService, final MessageSource messageSource) {
         super(baseUrl, views, recordType, recordService, messageSource);
     }

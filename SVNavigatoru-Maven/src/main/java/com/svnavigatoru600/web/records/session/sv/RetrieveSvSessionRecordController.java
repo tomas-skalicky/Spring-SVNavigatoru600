@@ -9,7 +9,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-import com.svnavigatoru600.domain.records.SessionRecordType;
+import com.svnavigatoru600.domain.records.SessionRecordTypeEnum;
 import com.svnavigatoru600.service.records.SessionRecordService;
 import com.svnavigatoru600.url.records.RecordsCommonUrlParts;
 import com.svnavigatoru600.url.records.session.SvUrlParts;
@@ -24,7 +24,7 @@ public class RetrieveSvSessionRecordController extends AbstractRetrieveRecordCon
     @Inject
     public RetrieveSvSessionRecordController(final SessionRecordService recordService,
             final MessageSource messageSource) {
-        super(SvUrlParts.BASE_URL, new PageViews(), SessionRecordType.SESSION_RECORD_OF_SV, recordService,
+        super(SvUrlParts.BASE_URL, new PageViews(), SessionRecordTypeEnum.SESSION_RECORD_OF_SV, recordService,
                 messageSource);
     }
 

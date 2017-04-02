@@ -15,13 +15,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.svnavigatoru600.domain.records.OtherDocumentRecord;
-import com.svnavigatoru600.domain.records.OtherDocumentRecordType;
-import com.svnavigatoru600.domain.users.AuthorityType;
+import com.svnavigatoru600.domain.records.OtherDocumentRecordTypeEnum;
+import com.svnavigatoru600.domain.users.AuthorityTypeEnum;
 import com.svnavigatoru600.domain.users.User;
 import com.svnavigatoru600.repository.records.OtherDocumentRecordDao;
 import com.svnavigatoru600.service.util.File;
 import com.svnavigatoru600.service.util.Localization;
-import com.svnavigatoru600.service.util.OrderType;
+import com.svnavigatoru600.service.util.OrderTypeEnum;
 import com.svnavigatoru600.service.util.OtherDocumentRecordUtils;
 
 /**
@@ -69,18 +69,18 @@ public class OtherDocumentRecordService extends AbstractDocumentRecordService {
 
     /**
      * Returns all {@link OtherDocumentRecord OtherDocumentRecords} stored in the repository arranged according to their
-     * {@link OtherDocumentRecord#getCreationTime() creationTimes} in the given {@link OrderType order}.
+     * {@link OtherDocumentRecord#getCreationTime() creationTimes} in the given {@link OrderTypeEnum order}.
      */
-    public List<OtherDocumentRecord> findAllOrdered(final OrderType order) {
+    public List<OtherDocumentRecord> findAllOrdered(final OrderTypeEnum order) {
         return otherDocumentDao.findAllOrdered(order);
     }
 
     /**
      * Returns all {@link OtherDocumentRecord OtherDocumentRecords} stored in the repository which are of the given
-     * {@link OtherDocumentRecordType type}. The {@link OtherDocumentRecord} are arranged according to their
-     * {@link OtherDocumentRecord#getCreationTime() creationTimes} in the given {@link OrderType order}.
+     * {@link OtherDocumentRecordTypeEnum type}. The {@link OtherDocumentRecord} are arranged according to their
+     * {@link OtherDocumentRecord#getCreationTime() creationTimes} in the given {@link OrderTypeEnum order}.
      */
-    public List<OtherDocumentRecord> findAllOrdered(final OtherDocumentRecordType type, final OrderType order) {
+    public List<OtherDocumentRecord> findAllOrdered(final OtherDocumentRecordTypeEnum type, final OrderTypeEnum order) {
         return otherDocumentDao.findAllOrdered(type, order);
     }
 
@@ -90,12 +90,12 @@ public class OtherDocumentRecordService extends AbstractDocumentRecordService {
      * 
      * @param allRecordTypes
      *            If <code>true</code>, all document records are returned. Otherwise, only records which are of the
-     *            given {@link OtherDocumentRecordType recordType} are returned.
+     *            given {@link OtherDocumentRecordTypeEnum recordType} are returned.
      * @param recordType
      *            see <code>allRecordTypes</code>
      */
-    public List<OtherDocumentRecord> findAllOrdered(final boolean allRecordTypes, final OtherDocumentRecordType recordType) {
-        final OrderType order = OrderType.DESCENDING;
+    public List<OtherDocumentRecord> findAllOrdered(final boolean allRecordTypes, final OtherDocumentRecordTypeEnum recordType) {
+        final OrderTypeEnum order = OrderTypeEnum.DESCENDING;
         if (allRecordTypes) {
             return this.findAllOrdered(order);
         } else {
@@ -237,7 +237,7 @@ public class OtherDocumentRecordService extends AbstractDocumentRecordService {
 
     @Override
     public List<User> gainUsersToNotify() {
-        return getUserService().findAllWithEmailByAuthorityAndSubscription(AuthorityType.ROLE_MEMBER_OF_SV,
+        return getUserService().findAllWithEmailByAuthorityAndSubscription(AuthorityTypeEnum.ROLE_MEMBER_OF_SV,
                 emailService.getNotificationType());
     }
 
@@ -371,7 +371,7 @@ public class OtherDocumentRecordService extends AbstractDocumentRecordService {
     }
 
     /**
-     * Deletes the specified {@link OtherDocumentRecord} together with all its {@link OtherDocumentRecordType types}
+     * Deletes the specified {@link OtherDocumentRecord} together with all its {@link OtherDocumentRecordTypeEnum types}
      * from the repository. Moreover, deletes the associated {@link java.io.File file}.
      * 
      * @param recordId
@@ -399,14 +399,14 @@ public class OtherDocumentRecordService extends AbstractDocumentRecordService {
     }
 
     /**
-     * Gets a {@link Map} which for each constant of the {@link OtherDocumentRecordType} enumeration contains a pair of
-     * its {@link OtherDocumentRecordType#getOrdinal() ordinal} and ID of its checkbox.
+     * Gets a {@link Map} which for each constant of the {@link OtherDocumentRecordTypeEnum} enumeration contains a pair of
+     * its {@link OtherDocumentRecordTypeEnum#getOrdinal() ordinal} and ID of its checkbox.
      */
     public static Map<Long, String> getTypeCheckboxId() {
         final String commonIdFormat = "newTypes[%s]";
         final Map<Long, String> checkboxIds = new HashMap<Long, String>();
 
-        for (final OtherDocumentRecordType type : OtherDocumentRecordType.values()) {
+        for (final OtherDocumentRecordTypeEnum type : OtherDocumentRecordTypeEnum.values()) {
             final long typeOrdinal = type.getOrdinal();
             checkboxIds.put(typeOrdinal, String.format(commonIdFormat, typeOrdinal));
         }
@@ -414,13 +414,13 @@ public class OtherDocumentRecordService extends AbstractDocumentRecordService {
     }
 
     /**
-     * Gets a {@link Map} which for each constant of the {@link OtherDocumentRecordType} enumeration contains a pair of
-     * its {@link OtherDocumentRecordType#getOrdinal() ordinal} and its localized title.
+     * Gets a {@link Map} which for each constant of the {@link OtherDocumentRecordTypeEnum} enumeration contains a pair of
+     * its {@link OtherDocumentRecordTypeEnum#getOrdinal() ordinal} and its localized title.
      */
     public static Map<Long, String> getLocalizedTypeTitles(final HttpServletRequest request, final MessageSource messageSource) {
         final Map<Long, String> checkboxTitles = new HashMap<Long, String>();
 
-        for (final OtherDocumentRecordType type : OtherDocumentRecordType.values()) {
+        for (final OtherDocumentRecordTypeEnum type : OtherDocumentRecordTypeEnum.values()) {
             final String localizedTitle = Localization.findLocaleMessage(messageSource, request,
                     type.getTitleLocalizationCode());
             checkboxTitles.put(type.getOrdinal(), localizedTitle);

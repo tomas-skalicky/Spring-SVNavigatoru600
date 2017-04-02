@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.support.SessionStatus;
 
 import com.svnavigatoru600.domain.eventcalendar.CalendarEvent;
-import com.svnavigatoru600.domain.eventcalendar.PriorityType;
+import com.svnavigatoru600.domain.eventcalendar.PriorityTypeEnum;
 import com.svnavigatoru600.service.eventcalendar.CalendarEventService;
 import com.svnavigatoru600.service.util.Localization;
 import com.svnavigatoru600.url.eventcalendar.EventsUrlParts;
@@ -56,12 +56,12 @@ public class NewEventController extends AbstractNewEditEventController {
 
         final MessageSource messageSource = getMessageSource();
         command.setNewPriority(
-                Localization.findLocaleMessage(messageSource, request, PriorityType.NORMAL.getLocalizationCode()));
+                Localization.findLocaleMessage(messageSource, request, PriorityTypeEnum.NORMAL.getLocalizationCode()));
 
         getSendNotificationModelFiller().populateSendNotificationInInitForm(command, request, messageSource);
 
         model.addAttribute(AbstractNewEditEventController.COMMAND, command);
-        return PageViews.NEW.getViewName();
+        return PageViewsEnum.NEW.getViewName();
     }
 
     /**
@@ -81,13 +81,13 @@ public class NewEventController extends AbstractNewEditEventController {
 
         getValidator().validate(command, result);
         if (result.hasErrors()) {
-            return PageViews.NEW.getViewName();
+            return PageViewsEnum.NEW.getViewName();
         }
 
         // Updates the data of the new calendar event.
         final CalendarEvent newEvent = command.getEvent();
         newEvent.setPriority(
-                PriorityType.valueOfAccordingLocalization(command.getNewPriority(), messageSource, request));
+                PriorityTypeEnum.valueOfAccordingLocalization(command.getNewPriority(), messageSource, request));
 
         try {
             // Saves the event to the repository.
@@ -106,6 +106,6 @@ public class NewEventController extends AbstractNewEditEventController {
             LogFactory.getLog(this.getClass()).error(newEvent, e);
             result.reject(NewEventController.DATABASE_ERROR_MESSAGE_CODE);
         }
-        return PageViews.NEW.getViewName();
+        return PageViewsEnum.NEW.getViewName();
     }
 }
