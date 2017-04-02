@@ -234,14 +234,13 @@ public class User implements UserDetails, Serializable {
      */
     private GrantedAuthority getAuthority(final AuthorityTypeEnum authorityType) {
         final String typeName = authorityType.name();
-        final Collection<GrantedAuthority> ownedAuthorities = getAuthorities();
 
-        for (final GrantedAuthority ownedAuthority : ownedAuthorities) {
-            if (ownedAuthority.getAuthority().equals(typeName)) {
-                return ownedAuthority;
-            }
-        }
-        return null;
+        // @formatter:off
+        return getAuthorities().stream()
+                .filter(ownedAuthority -> typeName.equals(ownedAuthority.getAuthority()))
+                .findFirst()
+                .orElse(null);
+        // @formatter:on
     }
 
     /**
@@ -426,7 +425,7 @@ public class User implements UserDetails, Serializable {
      * @return All users from the <code>users</code> who have email.
      */
     public static List<User> filterWithNoEmailOut(final List<User> users) {
-        final List<User> usersWithEmail = new ArrayList<User>(users.size());
+        final List<User> usersWithEmail = new ArrayList<>(users.size());
         for (final User user : users) {
             if (StringUtils.isNotBlank(user.getEmail())) {
                 usersWithEmail.add(user);

@@ -100,10 +100,7 @@ public class UserDaoImpl extends NamedParameterJdbcDaoSupport implements UserDao
 
     @Override
     public User findByEmail(final String email) {
-        String lowerCasedEmail = null;
-        if (email != null) {
-            lowerCasedEmail = email.toLowerCase();
-        }
+        final String lowerCasedEmail = (email != null) ? email.toLowerCase() : null;
 
         logger.info(String.format("Load an user with the email '%s'", lowerCasedEmail));
 
