@@ -50,7 +50,7 @@ public class EditNewsController extends AbstractNewEditNewsController {
     }
 
     /**
-     * Initialises the form.
+     * Initializes the form.
      */
     @GetMapping(value = NewsUrlParts.EXISTING_URL + "{" + Vars.NEWS_ID
             + "}/", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
