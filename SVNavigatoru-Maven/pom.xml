@@ -6,7 +6,7 @@
     <groupId>com</groupId>
     <artifactId>svnavigatoru600</artifactId>
     <packaging>war</packaging>
-    <version>1.0.21-SNAPSHOT</version>
+    <version>1.0.21</version>
 
     <name>The SVNavigatoru600 web app</name>
     <url>http://svnavigatoru600.com</url>
@@ -43,7 +43,7 @@
         <connection>scm:git:git://github.com/tomas-skalicky/Spring-SVNavigatoru600.git</connection>
         <developerConnection>scm:git:[fetch=]https://github.com/tomas-skalicky/Spring-SVNavigatoru600.git[push=]git@github.com:tomas-skalicky/Spring-SVNavigatoru600.git</developerConnection>
         <url>https://github.com/tomas-skalicky/Spring-SVNavigatoru600</url>
-        <tag>HEAD</tag>
+        <tag>svnavigatoru600-1.0.21</tag>
     </scm>
 
 
