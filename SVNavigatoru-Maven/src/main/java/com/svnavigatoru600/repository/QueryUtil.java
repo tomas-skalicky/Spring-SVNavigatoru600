@@ -2,7 +2,7 @@ package com.svnavigatoru600.repository;
 
 /**
  * @author Tomas Skalicky
- * @date 02.04.2017
+ * @since 02.04.2017
  */
 public final class QueryUtil {
 
