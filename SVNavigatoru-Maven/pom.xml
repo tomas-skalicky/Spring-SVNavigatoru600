@@ -606,10 +606,11 @@
                 <version>1.6.12</version>
             </dependency>
 
+            <!-- ATTENTION: Version 3.* requires JDK 8. -->
             <dependency>
                 <groupId>org.assertj</groupId>
                 <artifactId>assertj-core</artifactId>
-                <version>3.6.2</version>
+                <version>2.6.0</version>
                 <scope>test</scope>
             </dependency>
 
