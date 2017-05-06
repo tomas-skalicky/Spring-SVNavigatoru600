@@ -52,7 +52,7 @@
         <!-- (see http://maven.apache.org/guides/introduction/introduction-to-the-pom.html#Available_Variables) -->
         <maven.build.timestamp.format>yyyy-MM-dd HH:mm:ss</maven.build.timestamp.format>
 
-        <jdk.version>1.7</jdk.version>
+        <jdk.version>1.8</jdk.version>
 
         <!-- Unless we set up an encoding, we would receive a warning during the compilation of this project via a "mvn" 
             command. This warning is noticeable in Jenkins. -->
@@ -63,8 +63,7 @@
         <dependency.spring.version>4.3.7.RELEASE</dependency.spring.version>
         <dependency.spring-security.version>3.1.7.RELEASE</dependency.spring-security.version>
         <dependency.powermock.version>1.6.6</dependency.powermock.version>
-        <!-- ATTENTION: Ensure that the desired Jackson version is compatible with target JDK. -->
-        <dependency.jackson.version>2.7.9</dependency.jackson.version>
+        <dependency.jackson.version>2.8.8</dependency.jackson.version>
 
         <checkstyle.configLocation>D:/Documents/Private/SW/Eclipse/checkstyle.xml</checkstyle.configLocation>
 
@@ -606,11 +605,10 @@
                 <version>1.6.12</version>
             </dependency>
 
-            <!-- ATTENTION: Version 3.* requires JDK 8. -->
             <dependency>
                 <groupId>org.assertj</groupId>
                 <artifactId>assertj-core</artifactId>
-                <version>2.6.0</version>
+                <version>3.6.2</version>
                 <scope>test</scope>
             </dependency>
 
@@ -662,11 +660,10 @@
                 <version>2.7.0</version>
             </dependency>
 
-            <!-- ATTENTION: Before you update, be sure the version is compatible with target JDK version -->
             <dependency>
                 <groupId>com.google.guava</groupId>
                 <artifactId>guava</artifactId>
-                <version>20.0</version>
+                <version>21.0</version>
             </dependency>
 
             <dependency>

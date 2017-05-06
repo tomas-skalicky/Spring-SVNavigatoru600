@@ -2,6 +2,8 @@ package com.svnavigatoru600.service.news;
 
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
@@ -9,7 +11,6 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
 
-import com.google.common.collect.Maps;
 import com.svnavigatoru600.domain.News;
 import com.svnavigatoru600.domain.users.AuthorityTypeEnum;
 import com.svnavigatoru600.domain.users.User;
@@ -70,7 +71,8 @@ public class NewsService implements SubjectOfNotificationService {
      * creation time} descending.
      */
     public List<News> findAllOrdered() {
-        return newsDao.findAllOrdered(new FindAllOrderedArguments(NewsFieldEnum.CREATION_TIME, OrderTypeEnum.DESCENDING));
+        return newsDao
+                .findAllOrdered(new FindAllOrderedArguments(NewsFieldEnum.CREATION_TIME, OrderTypeEnum.DESCENDING));
     }
 
     /**
@@ -126,7 +128,8 @@ public class NewsService implements SubjectOfNotificationService {
     }
 
     @Override
-    public void notifyUsersOfUpdate(final Object updatedNews, final HttpServletRequest request, final MessageSource messageSource) {
+    public void notifyUsersOfUpdate(final Object updatedNews, final HttpServletRequest request,
+            final MessageSource messageSource) {
         emailService.sendEmailOnUpdate(updatedNews, gainUsersToNotify(), request, messageSource);
     }
 
@@ -159,7 +162,8 @@ public class NewsService implements SubjectOfNotificationService {
     }
 
     @Override
-    public void notifyUsersOfCreation(final Object newNews, final HttpServletRequest request, final MessageSource messageSource) {
+    public void notifyUsersOfCreation(final Object newNews, final HttpServletRequest request,
+            final MessageSource messageSource) {
         emailService.sendEmailOnCreation(newNews, gainUsersToNotify(), request, messageSource);
     }
 
@@ -185,13 +189,10 @@ public class NewsService implements SubjectOfNotificationService {
      * Gets a {@link Map} which for each input {@link News} contains a corresponding localized delete question which is
      * asked before deletion of that news.
      */
-    public static Map<News, String> getLocalizedDeleteQuestions(final List<News> newss, final HttpServletRequest request,
-            final MessageSource messageSource) {
-        final Map<News, String> questions = Maps.newHashMap();
-        for (final News news : newss) {
-            questions.put(news, getLocalizedDeleteQuestion(news, messageSource, request));
-        }
-        return questions;
+    public static Map<News, String> getLocalizedDeleteQuestions(final List<News> newss,
+            final HttpServletRequest request, final MessageSource messageSource) {
+        return newss.stream().collect(
+                Collectors.toMap(Function.identity(), n -> getLocalizedDeleteQuestion(n, messageSource, request)));
     }
 
     /**
