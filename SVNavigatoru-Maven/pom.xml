@@ -64,6 +64,8 @@
         <dependency.spring-security.version>3.1.7.RELEASE</dependency.spring-security.version>
         <dependency.powermock.version>1.6.6</dependency.powermock.version>
         <dependency.jackson.version>2.8.8</dependency.jackson.version>
+        <dependency.slf4j.version>1.7.25</dependency.slf4j.version>
+        <dependency.tomcat.version>8.5.8</dependency.tomcat.version>
 
         <checkstyle.configLocation>D:/Documents/Private/SW/Eclipse/checkstyle.xml</checkstyle.configLocation>
 
@@ -444,16 +446,6 @@
         </dependency>
 
         <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>jcl-over-slf4j</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>joda-time</groupId>
-            <artifactId>joda-time</artifactId>
-        </dependency>
-
-        <dependency>
             <groupId>org.jpatterns</groupId>
             <artifactId>jpatterns</artifactId>
         </dependency>
@@ -481,6 +473,17 @@
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
         </dependency>
+
+        <!-- Logging -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>jcl-over-slf4j</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+        </dependency>
+        <!-- /Logging -->
 
         <dependency>
             <groupId>javax.mail</groupId>
@@ -517,11 +520,6 @@
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-server</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-log4j12</artifactId>
         </dependency>
 
         <!-- Spring -->
@@ -658,6 +656,12 @@
                 <groupId>net.sf.ehcache</groupId>
                 <artifactId>ehcache</artifactId>
                 <version>2.7.0</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.slf4j</groupId>
+                        <artifactId>slf4j-api</artifactId>
+                    </exclusion>
+                </exclusions>
             </dependency>
 
             <dependency>
@@ -703,18 +707,6 @@
             </dependency>
 
             <dependency>
-                <groupId>org.slf4j</groupId>
-                <artifactId>jcl-over-slf4j</artifactId>
-                <version>1.6.4</version>
-            </dependency>
-
-            <dependency>
-                <groupId>joda-time</groupId>
-                <artifactId>joda-time</artifactId>
-                <version>2.0</version>
-            </dependency>
-
-            <dependency>
                 <groupId>org.jpatterns</groupId>
                 <artifactId>jpatterns</artifactId>
                 <version>0.0.1</version>
@@ -723,7 +715,7 @@
             <dependency>
                 <groupId>org.jsoup</groupId>
                 <artifactId>jsoup</artifactId>
-                <version>1.10.1</version>
+                <version>1.10.2</version>
                 <scope>test</scope>
             </dependency>
 
@@ -749,6 +741,19 @@
                 <version>4.12</version>
                 <scope>test</scope>
             </dependency>
+
+            <!-- Logging -->
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>jcl-over-slf4j</artifactId>
+                <version>${dependency.slf4j.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-log4j12</artifactId>
+                <version>${dependency.slf4j.version}</version>
+            </dependency>
+            <!-- /Logging -->
 
             <dependency>
                 <groupId>javax.mail</groupId>
@@ -812,12 +817,6 @@
                         <artifactId>servlet-api-2.5</artifactId>
                     </exclusion>
                 </exclusions>
-            </dependency>
-
-            <dependency>
-                <groupId>org.slf4j</groupId>
-                <artifactId>slf4j-log4j12</artifactId>
-                <version>1.7.21</version>
             </dependency>
 
             <!-- Spring -->
@@ -913,13 +912,13 @@
             <dependency>
                 <groupId>org.apache.tomcat</groupId>
                 <artifactId>tomcat-jsp-api</artifactId>
-                <version>7.0.23</version>
+                <version>${dependency.tomcat.version}</version>
                 <scope>provided</scope>
             </dependency>
             <dependency>
                 <groupId>org.apache.tomcat</groupId>
                 <artifactId>tomcat-servlet-api</artifactId>
-                <version>7.0.23</version>
+                <version>${dependency.tomcat.version}</version>
                 <!-- (see http://maven.apache.org/guides/introduction/introduction-to-dependency-mechanism.html#Dependency_Scope) -->
                 <scope>provided</scope>
             </dependency>
