@@ -134,12 +134,13 @@ public class RequestAndResponseLoggingFilter extends OncePerRequestFilter {
                 // Not entirely sure what this does.
                 @Override
                 public boolean isReady() {
-                    return false;
+                    throw new RuntimeException("unsupported method");
                 }
 
                 // Not entirely sure what this does.
                 @Override
                 public void setReadListener(final ReadListener listener) {
+                    throw new RuntimeException("unsupported method");
                 }
             };
             return servletInputStream;
@@ -292,12 +293,13 @@ public class RequestAndResponseLoggingFilter extends OncePerRequestFilter {
         // Not entirely sure what this does.
         @Override
         public boolean isReady() {
-            return false;
+            throw new RuntimeException("unsupported method");
         }
 
         // Not entirely sure what this does.
         @Override
         public void setWriteListener(final WriteListener listener) {
+            throw new RuntimeException("unsupported method");
         }
 
     }
