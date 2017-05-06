@@ -772,7 +772,7 @@
                 <groupId>org.mybatis</groupId>
                 <artifactId>mybatis</artifactId>
                 <version>3.1.1</version>
-                <scope>compile</scope>
+                <scope>test</scope>
             </dependency>
 
             <dependency>

@@ -17,9 +17,11 @@ import java.util.Map;
 import java.util.regex.Pattern;
 
 import javax.servlet.FilterChain;
+import javax.servlet.ReadListener;
 import javax.servlet.ServletException;
 import javax.servlet.ServletInputStream;
 import javax.servlet.ServletOutputStream;
+import javax.servlet.WriteListener;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.HttpServletResponse;
@@ -113,9 +115,31 @@ public class RequestAndResponseLoggingFilter extends OncePerRequestFilter {
         public ServletInputStream getInputStream() throws IOException {
             final ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(cachedPayload.getBytes());
             final ServletInputStream servletInputStream = new ServletInputStream() {
+                boolean finished = false;
+
                 @Override
                 public int read() throws IOException {
-                    return byteArrayInputStream.read();
+                    final int nextByte = byteArrayInputStream.read();
+                    if (!finished && nextByte == -1) {
+                        finished = true;
+                    }
+                    return nextByte;
+                }
+
+                @Override
+                public boolean isFinished() {
+                    return finished;
+                }
+
+                // Not entirely sure what this does.
+                @Override
+                public boolean isReady() {
+                    return false;
+                }
+
+                // Not entirely sure what this does.
+                @Override
+                public void setReadListener(final ReadListener listener) {
                 }
             };
             return servletInputStream;
@@ -263,6 +287,17 @@ public class RequestAndResponseLoggingFilter extends OncePerRequestFilter {
         public void close() throws IOException {
             super.close();
             targetStream.close();
+        }
+
+        // Not entirely sure what this does.
+        @Override
+        public boolean isReady() {
+            return false;
+        }
+
+        // Not entirely sure what this does.
+        @Override
+        public void setWriteListener(final WriteListener listener) {
         }
 
     }
