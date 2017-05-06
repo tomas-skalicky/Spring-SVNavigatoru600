@@ -131,16 +131,14 @@ public class RequestAndResponseLoggingFilter extends OncePerRequestFilter {
                     return finished;
                 }
 
-                // Not entirely sure what this does.
                 @Override
                 public boolean isReady() {
-                    throw new RuntimeException("unsupported method");
+                    throw new RuntimeException("came with Tomcat 8.5, unsupported method");
                 }
 
-                // Not entirely sure what this does.
                 @Override
                 public void setReadListener(final ReadListener listener) {
-                    throw new RuntimeException("unsupported method");
+                    throw new RuntimeException("came with Tomcat 8.5, unsupported method");
                 }
             };
             return servletInputStream;
@@ -290,16 +288,14 @@ public class RequestAndResponseLoggingFilter extends OncePerRequestFilter {
             targetStream.close();
         }
 
-        // Not entirely sure what this does.
         @Override
         public boolean isReady() {
-            throw new RuntimeException("unsupported method");
+            throw new RuntimeException("came with Tomcat 8.5, unsupported method");
         }
 
-        // Not entirely sure what this does.
         @Override
         public void setWriteListener(final WriteListener listener) {
-            throw new RuntimeException("unsupported method");
+            throw new RuntimeException("came with Tomcat 8.5, unsupported method");
         }
 
     }
