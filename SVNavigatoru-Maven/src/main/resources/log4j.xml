@@ -22,16 +22,25 @@
         </layout>
     </appender>
 
-    <logger name="com.svnavigatoru600.service.util.Email" additivity="true">
+    <!-- additivity=false means that log messages that are coming to the child appenders won't be propagated to the parent
+    appenders. It means each logger having additivity=false should have an appended explicitly defined. -->
+    <logger name="com.svnavigatoru600.service.util.Email" additivity="false">
         <level value="info" />
+        <appender-ref ref="logfile"/>
     </logger>
 
-    <logger name="org.springframework.security" additivity="true">
+    <logger name="org.springframework" additivity="false">
         <level value="info" />
+        <appender-ref ref="logfile"/>
+    </logger>
+
+    <logger name="org.springframework.jdbc" additivity="false">
+        <level value="debug" />
+        <appender-ref ref="logfile"/>
     </logger>
 
     <root>
-        <priority value="info" />
+        <priority value="warn" />
         <appender-ref ref="logfile"/>
     </root>
 

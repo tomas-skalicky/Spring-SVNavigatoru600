@@ -1,0 +1,13 @@
+Issue 1
+--------
+Diacritic signs does not work in production. Locally it's OK.
+
+Solution
+--------
+Add the following line to bin/setenv.sh in CATALINA_HOME:
+
+JAVA_OPTS="$JAVA_OPTS -Dfile.encoding=UTF8"
+
+This doesn't solve the issue for characters 'ě' ,'č', 'ř' and 'ů'
+
+

@@ -14,6 +14,7 @@ required_java_version=1.8.0
 assert_java_version() {
     local -r java_command=${1:?}
     local -r first_line_of_java_version="$(head --lines=1 <($java_command -version 2>&1))"
+    # Bash replacement construct
     local -r java_version_with_quotes="${first_line_of_java_version/java version /}"
     if [[ ! $java_version_with_quotes =~ ^\"${required_java_version}_.*\"$ ]]; then
         print_error "Required Java version is $required_java_version"
