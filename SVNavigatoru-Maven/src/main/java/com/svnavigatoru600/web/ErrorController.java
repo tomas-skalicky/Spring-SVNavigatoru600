@@ -3,7 +3,7 @@ package com.svnavigatoru600.web;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.svnavigatoru600.url.ErrorsUrlParts;
+import com.svnavigatoru600.web.url.ErrorsUrlParts;
 
 /**
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>

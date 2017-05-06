@@ -5,9 +5,9 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
 
+import com.svnavigatoru600.common.constants.CommonConstants;
 import com.svnavigatoru600.domain.users.User;
 import com.svnavigatoru600.service.AbstractEmailService;
-import com.svnavigatoru600.service.Configuration;
 import com.svnavigatoru600.service.util.Email;
 import com.svnavigatoru600.service.util.Localization;
 
@@ -57,7 +57,7 @@ public class UserEmailService extends AbstractEmailService {
         String emailLabel = Localization.findLocaleMessage(messageSource, request, UserEmailService.EMAIL_CODE);
         String passwordLabel = Localization.findLocaleMessage(messageSource, request, UserEmailService.PASSWORD_CODE);
         String signature = getLocalizedAdminSignature(request, messageSource);
-        Object[] messageParams = new Object[] { addressing, Configuration.DOMAIN, usernameLabel, newUser.getUsername(),
+        Object[] messageParams = new Object[] { addressing, CommonConstants.DOMAIN, usernameLabel, newUser.getUsername(),
                 emailLabel, email, passwordLabel, newPassword, signature };
         String messageText = Localization.findLocaleMessage(messageSource, request,
                 UserEmailService.EMAIL_TEXT_NEW_USER_CODE, messageParams);
@@ -82,7 +82,7 @@ public class UserEmailService extends AbstractEmailService {
 
         String addressing = getLocalizedRecipientAddressing(user, request, messageSource);
         String signature = getLocalizedAdminSignature(request, messageSource);
-        Object[] messageParams = new Object[] { addressing, Configuration.DOMAIN, newPassword, signature };
+        Object[] messageParams = new Object[] { addressing, CommonConstants.DOMAIN, newPassword, signature };
         String messageText = Localization.findLocaleMessage(messageSource, request,
                 UserEmailService.EMAIL_TEXT_PASSWORD_RESET_CODE, messageParams);
 
@@ -101,7 +101,7 @@ public class UserEmailService extends AbstractEmailService {
 
         String addressing = getLocalizedRecipientAddressing(user, request, messageSource);
         String signature = getLocalizedAdminSignature(request, messageSource);
-        Object[] messageParams = new Object[] { addressing, Configuration.DOMAIN, newPassword, signature };
+        Object[] messageParams = new Object[] { addressing, CommonConstants.DOMAIN, newPassword, signature };
         String messageText = Localization.findLocaleMessage(messageSource, request,
                 UserEmailService.EMAIL_TEXT_PASSWORD_CHANGED_CODE, messageParams);
 
@@ -153,7 +153,7 @@ public class UserEmailService extends AbstractEmailService {
         String addressing = getLocalizedRecipientAddressing(user, request, messageSource);
         String newAuthorities = convertAuthoritiesForEmail(user, request, messageSource);
         String signature = getLocalizedAdminSignature(request, messageSource);
-        Object[] messageParams = new Object[] { addressing, Configuration.DOMAIN, newAuthorities, signature };
+        Object[] messageParams = new Object[] { addressing, CommonConstants.DOMAIN, newAuthorities, signature };
         String messageText = Localization.findLocaleMessage(messageSource, request,
                 UserEmailService.EMAIL_TEXT_AUTHORITIES_CHANGED_CODE, messageParams);
 

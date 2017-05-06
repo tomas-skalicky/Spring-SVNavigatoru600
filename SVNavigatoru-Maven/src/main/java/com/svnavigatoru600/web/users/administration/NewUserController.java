@@ -20,10 +20,10 @@ import org.springframework.web.bind.support.SessionStatus;
 import com.svnavigatoru600.domain.users.User;
 import com.svnavigatoru600.service.users.AuthorityService;
 import com.svnavigatoru600.service.util.AuthorityUtils;
-import com.svnavigatoru600.url.users.UserAdministrationUrlParts;
 import com.svnavigatoru600.viewmodel.users.AdministrateUserData;
 import com.svnavigatoru600.viewmodel.users.validator.NewUserValidator;
 import com.svnavigatoru600.web.AbstractMetaController;
+import com.svnavigatoru600.web.url.users.UserAdministrationUrlParts;
 
 /**
  * The controller bound to the <i>new-user.jsp</i> page.

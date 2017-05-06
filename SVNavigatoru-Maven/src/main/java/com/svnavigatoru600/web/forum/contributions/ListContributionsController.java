@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import com.svnavigatoru600.domain.forum.ForumContribution;
 import com.svnavigatoru600.service.forum.ContributionService;
 import com.svnavigatoru600.service.forum.ThreadService;
-import com.svnavigatoru600.url.forum.ContributionsUrlParts;
 import com.svnavigatoru600.viewmodel.forum.contributions.ShowAllContributions;
+import com.svnavigatoru600.web.url.forum.ContributionsUrlParts;
 
 /**
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>

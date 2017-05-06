@@ -1,10 +1,10 @@
 <%@ page pageEncoding="UTF-8"%>
 <%@ include file="include-preceding-html.jsp"%>
 
-<%@page import="com.svnavigatoru600.url.ErrorsUrlParts"%>
-<%@page import="com.svnavigatoru600.url.news.NewsUrlParts"%>
-<%@page import="com.svnavigatoru600.url.users.UserAccountUrlParts"%>
-<%@page import="com.svnavigatoru600.url.users.UserAdministrationUrlParts"%>
+<%@page import="com.svnavigatoru600.web.url.ErrorsUrlParts"%>
+<%@page import="com.svnavigatoru600.web.url.news.NewsUrlParts"%>
+<%@page import="com.svnavigatoru600.web.url.users.UserAccountUrlParts"%>
+<%@page import="com.svnavigatoru600.web.url.users.UserAdministrationUrlParts"%>
 
 
 <c:set var="homepage" value="<%=ErrorsUrlParts.ERROR_403%>" />

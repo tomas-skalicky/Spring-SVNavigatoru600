@@ -19,11 +19,11 @@ import org.springframework.web.bind.support.SessionStatus;
 
 import com.svnavigatoru600.domain.News;
 import com.svnavigatoru600.service.news.NewsService;
-import com.svnavigatoru600.url.news.NewsUrlParts;
 import com.svnavigatoru600.viewmodel.EditControllerSendNotification;
 import com.svnavigatoru600.viewmodel.SendNotification;
 import com.svnavigatoru600.viewmodel.news.EditNews;
 import com.svnavigatoru600.viewmodel.news.validator.EditNewsValidator;
+import com.svnavigatoru600.web.url.news.NewsUrlParts;
 
 /**
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>

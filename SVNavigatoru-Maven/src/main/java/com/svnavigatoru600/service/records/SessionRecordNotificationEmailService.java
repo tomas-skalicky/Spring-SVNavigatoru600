@@ -16,7 +16,7 @@ import com.svnavigatoru600.service.util.DateUtils;
 import com.svnavigatoru600.service.util.Email;
 import com.svnavigatoru600.service.util.Localization;
 import com.svnavigatoru600.service.util.Url;
-import com.svnavigatoru600.url.records.session.SessionsCommonUrlParts;
+import com.svnavigatoru600.web.url.records.session.SessionsCommonUrlParts;
 
 /**
  * Provide sending of emails concerning notifications of new {@link SessionRecord session records} and updated ones.

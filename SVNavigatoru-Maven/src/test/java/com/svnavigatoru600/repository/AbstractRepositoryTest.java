@@ -7,15 +7,16 @@ import javax.sql.DataSource;
 import org.junit.After;
 import org.junit.Before;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.FileSystemXmlApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
+import com.svnavigatoru600.common.config.WebAppConfig;
 import com.svnavigatoru600.repository.util.AbstractDatabaseLoader;
 import com.svnavigatoru600.repository.util.HsqlDatabaseLoader;
 
 /**
  * The parent of all tests of DAO interfaces (MyBatis Mapper respectively).
- * 
+ *
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
 public abstract class AbstractRepositoryTest {
@@ -23,8 +24,8 @@ public abstract class AbstractRepositoryTest {
     /**
      * Application context which contains necessary beans.
      */
-    protected static final ApplicationContext APPLICATION_CONTEXT = new FileSystemXmlApplicationContext(
-            "classpath:spring/applicationContext-business.xml");
+    protected static final ApplicationContext APPLICATION_CONTEXT = new AnnotationConfigApplicationContext(
+            WebAppConfig.class);
     /**
      * Utility functions for retrieving DAO objects or creation default representants of persisted classes.
      */
@@ -44,10 +45,10 @@ public abstract class AbstractRepositoryTest {
 
     @Before
     public void initializeConnection() throws Exception {
-        this.dataSource = APPLICATION_CONTEXT.getBean(DataSource.class);
-        prepareDatabase(this.dataSource);
-        this.sqlConnection = this.dataSource.getConnection();
-        this.sqlConnection.setAutoCommit(DEFAULT_AUTO_COMMIT);
+        dataSource = APPLICATION_CONTEXT.getBean(DataSource.class);
+        prepareDatabase(dataSource);
+        sqlConnection = dataSource.getConnection();
+        sqlConnection.setAutoCommit(DEFAULT_AUTO_COMMIT);
     }
 
     /**
@@ -57,17 +58,17 @@ public abstract class AbstractRepositoryTest {
      */
     @After
     public void closeConnection() throws Exception {
-        this.sqlConnection.close();
-        emptyDatabase(this.dataSource);
+        sqlConnection.close();
+        emptyDatabase(dataSource);
     }
 
-    private static void prepareDatabase(DataSource dataSource) throws Exception {
+    private static void prepareDatabase(final DataSource dataSource) throws Exception {
         synchronized (DataSource.class) {
             getDatabaseLoader(dataSource).loadDatabase(dataSource);
         }
     }
 
-    private static void emptyDatabase(DataSource dataSource) throws Exception {
+    private static void emptyDatabase(final DataSource dataSource) throws Exception {
         synchronized (DataSource.class) {
             getDatabaseLoader(dataSource).emptyDatabase(dataSource);
         }
@@ -76,10 +77,10 @@ public abstract class AbstractRepositoryTest {
     /**
      * Gets a {@link AbstractDatabaseLoader database loader} which is able to prepare a database for tests.
      */
-    private static AbstractDatabaseLoader getDatabaseLoader(DataSource dataSource) {
+    private static AbstractDatabaseLoader getDatabaseLoader(final DataSource dataSource) {
         if (dataSource instanceof ComboPooledDataSource) {
-            ComboPooledDataSource source = (ComboPooledDataSource) dataSource;
-            String driverClass = source.getDriverClass();
+            final ComboPooledDataSource source = (ComboPooledDataSource) dataSource;
+            final String driverClass = source.getDriverClass();
 
             if ("org.hsqldb.jdbcDriver".equals(driverClass)) {
                 return new HsqlDatabaseLoader();

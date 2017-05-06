@@ -14,7 +14,7 @@ import com.svnavigatoru600.service.AbstractNotificationEmailService;
 import com.svnavigatoru600.service.util.Email;
 import com.svnavigatoru600.service.util.Localization;
 import com.svnavigatoru600.service.util.Url;
-import com.svnavigatoru600.url.forum.ContributionsUrlParts;
+import com.svnavigatoru600.web.url.forum.ContributionsUrlParts;
 
 /**
  * Provide sending of emails concerning notifications of new {@link ForumContribution contributions} and updated ones.

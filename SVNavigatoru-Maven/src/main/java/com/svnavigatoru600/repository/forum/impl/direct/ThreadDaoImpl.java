@@ -6,9 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
-import javax.sql.DataSource;
 
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcDaoSupport;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.google.common.collect.Maps;
 import com.svnavigatoru600.domain.forum.ForumContribution;
 import com.svnavigatoru600.domain.forum.ForumThread;
+import com.svnavigatoru600.repository.AbstractDaoImpl;
 import com.svnavigatoru600.repository.QueryUtil;
 import com.svnavigatoru600.repository.forum.ContributionDao;
 import com.svnavigatoru600.repository.forum.ThreadDao;
@@ -28,7 +27,7 @@ import com.svnavigatoru600.repository.users.impl.direct.UserDaoImpl;
  */
 @Repository("threadDao")
 @Transactional
-public class ThreadDaoImpl extends NamedParameterJdbcDaoSupport implements ThreadDao {
+public class ThreadDaoImpl extends AbstractDaoImpl implements ThreadDao {
 
     /**
      * Database table which provides a persistence of {@link ForumThread Threads}.
@@ -47,8 +46,7 @@ public class ThreadDaoImpl extends NamedParameterJdbcDaoSupport implements Threa
      * NOTE: Added because of the final setter.
      */
     @Inject
-    public ThreadDaoImpl(final DataSource dataSource, final UserDao userDao) {
-        setDataSource(dataSource);
+    public ThreadDaoImpl(final UserDao userDao) {
         this.userDao = userDao;
     }
 

@@ -6,8 +6,8 @@ import org.springframework.context.MessageSource;
 
 import com.svnavigatoru600.domain.News;
 import com.svnavigatoru600.service.util.Localization;
-import com.svnavigatoru600.url.news.NewsUrlParts;
 import com.svnavigatoru600.viewmodel.SendNotification;
+import com.svnavigatoru600.web.url.news.NewsUrlParts;
 
 /**
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>

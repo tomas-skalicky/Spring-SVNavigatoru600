@@ -22,13 +22,13 @@ import com.svnavigatoru600.domain.forum.ForumThread;
 import com.svnavigatoru600.domain.users.User;
 import com.svnavigatoru600.service.forum.ThreadService;
 import com.svnavigatoru600.service.util.UserUtils;
-import com.svnavigatoru600.url.forum.ThreadsUrlParts;
 import com.svnavigatoru600.viewmodel.forum.threads.NewThread;
 import com.svnavigatoru600.viewmodel.forum.threads.validator.NewThreadValidator;
 import com.svnavigatoru600.web.AbstractMetaController;
 import com.svnavigatoru600.web.SendNotificationController;
 import com.svnavigatoru600.web.SendNotificationModelFiller;
 import com.svnavigatoru600.web.SendNotificationNewModelFiller;
+import com.svnavigatoru600.web.url.forum.ThreadsUrlParts;
 
 /**
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>

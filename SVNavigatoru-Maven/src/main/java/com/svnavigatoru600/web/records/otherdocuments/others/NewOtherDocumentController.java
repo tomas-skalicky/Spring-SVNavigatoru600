@@ -14,11 +14,11 @@ import org.springframework.web.bind.support.SessionStatus;
 
 import com.svnavigatoru600.domain.records.OtherDocumentRecordTypeEnum;
 import com.svnavigatoru600.service.records.OtherDocumentRecordService;
-import com.svnavigatoru600.url.records.otherdocuments.OthersUrlParts;
 import com.svnavigatoru600.viewmodel.records.otherdocuments.NewRecord;
 import com.svnavigatoru600.viewmodel.records.otherdocuments.validator.NewRecordValidator;
 import com.svnavigatoru600.web.SendNotificationNewModelFiller;
 import com.svnavigatoru600.web.records.otherdocuments.AbstractNewDocumentController;
+import com.svnavigatoru600.web.url.records.otherdocuments.OthersUrlParts;
 
 /**
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>

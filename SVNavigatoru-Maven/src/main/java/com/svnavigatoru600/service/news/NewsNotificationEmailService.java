@@ -14,7 +14,7 @@ import com.svnavigatoru600.service.AbstractNotificationEmailService;
 import com.svnavigatoru600.service.util.Email;
 import com.svnavigatoru600.service.util.Localization;
 import com.svnavigatoru600.service.util.Url;
-import com.svnavigatoru600.url.news.NewsUrlParts;
+import com.svnavigatoru600.web.url.news.NewsUrlParts;
 
 /**
  * Provide sending of emails concerning notifications of new {@link News news} and updated ones.

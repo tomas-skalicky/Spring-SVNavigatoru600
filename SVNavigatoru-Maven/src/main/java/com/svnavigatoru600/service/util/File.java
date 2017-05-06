@@ -7,7 +7,7 @@ import javax.sql.rowset.serial.SerialBlob;
 
 import org.apache.commons.lang3.ArrayUtils;
 
-import com.svnavigatoru600.service.Configuration;
+import com.svnavigatoru600.common.constants.CommonConstants;
 
 /**
  * Provides a set of static functions related to files.
@@ -17,7 +17,6 @@ import com.svnavigatoru600.service.Configuration;
 public final class File {
 
     private static final String[] SUPPORTED_EXTENSIONS = new String[] { "pdf", "doc", "docx", "txt" };
-
     private File() {
     }
 
@@ -60,7 +59,7 @@ public final class File {
      * Gets the path of the uploaded file with the given <code>fileName</code>.
      */
     public static java.io.File getUploadedFile(String fileName) {
-        return new java.io.File(String.format("/%s%s", Configuration.FILE_STORAGE, fileName));
+        return new java.io.File(String.format("/%s%s", CommonConstants.FILE_STORAGE, fileName));
     }
 
     /**

@@ -62,7 +62,7 @@ if (records.size() > 0) {
 	<%}
 
 String homeUrl = request.getContextPath();
-String fileStorageUrl = String.format("%s/%s", homeUrl, Configuration.FILE_STORAGE);
+String fileStorageUrl = String.format("%s/%s", homeUrl, CommonConstants.FILE_STORAGE);
 for (SessionRecord record : records) {
 	int recordId = record.getId();
 %>

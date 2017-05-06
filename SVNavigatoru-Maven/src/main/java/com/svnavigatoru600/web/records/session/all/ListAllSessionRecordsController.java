@@ -9,8 +9,8 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import com.svnavigatoru600.service.records.SessionRecordService;
-import com.svnavigatoru600.url.records.session.AllSessionsUrlParts;
 import com.svnavigatoru600.web.records.session.AbstractListRecordsController;
+import com.svnavigatoru600.web.url.records.session.AllSessionsUrlParts;
 
 /**
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>

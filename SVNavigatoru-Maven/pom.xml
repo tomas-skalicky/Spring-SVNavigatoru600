@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project
+    xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd"
+>
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com</groupId>
@@ -61,7 +65,7 @@
         <!-- Versions of plugins and dependencies which are used more than once. -->
         <plugin.properties-maven-plugin.version>1.0-alpha-2</plugin.properties-maven-plugin.version>
         <dependency.spring.version>4.3.7.RELEASE</dependency.spring.version>
-        <dependency.spring-security.version>4.2.2.RELEASE</dependency.spring-security.version>
+        <dependency.spring-security.version>3.1.7.RELEASE</dependency.spring-security.version>
         <dependency.powermock.version>1.6.6</dependency.powermock.version>
         <dependency.jackson.version>2.8.8</dependency.jackson.version>
         <dependency.slf4j.version>1.7.25</dependency.slf4j.version>
@@ -319,6 +323,7 @@
                     </executions>
                 </plugin>
 
+                <!-- There is not a similar Maven plugin for Tomcat 8.5, but as far as I've tested this plugin works as well. -->
                 <!-- (see http://tomcat.apache.org/maven-plugin-2.0/tomcat7-maven-plugin/index.html) -->
                 <plugin>
                     <groupId>org.apache.tomcat.maven</groupId>

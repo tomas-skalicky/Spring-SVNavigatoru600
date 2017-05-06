@@ -11,9 +11,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
 
 import com.svnavigatoru600.domain.users.User;
-import com.svnavigatoru600.url.ErrorsUrlParts;
-import com.svnavigatoru600.url.users.UserAccountUrlParts;
-import com.svnavigatoru600.url.users.UserAdministrationUrlParts;
+import com.svnavigatoru600.web.url.ErrorsUrlParts;
+import com.svnavigatoru600.web.url.users.UserAccountUrlParts;
+import com.svnavigatoru600.web.url.users.UserAdministrationUrlParts;
 
 /**
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>

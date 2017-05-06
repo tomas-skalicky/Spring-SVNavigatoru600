@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import com.svnavigatoru600.service.records.SessionRecordService;
-import com.svnavigatoru600.url.records.RecordsCommonUrlParts;
-import com.svnavigatoru600.url.records.session.AllSessionsUrlParts;
 import com.svnavigatoru600.web.records.session.AbstractRetrieveRecordController;
+import com.svnavigatoru600.web.url.records.RecordsCommonUrlParts;
+import com.svnavigatoru600.web.url.records.session.AllSessionsUrlParts;
 
 /**
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>

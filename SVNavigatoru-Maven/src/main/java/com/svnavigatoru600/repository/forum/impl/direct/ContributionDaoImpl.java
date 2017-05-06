@@ -6,15 +6,14 @@ import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
-import javax.sql.DataSource;
 
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcDaoSupport;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.google.common.collect.Maps;
 import com.svnavigatoru600.domain.forum.ForumContribution;
+import com.svnavigatoru600.repository.AbstractDaoImpl;
 import com.svnavigatoru600.repository.QueryUtil;
 import com.svnavigatoru600.repository.forum.ContributionDao;
 import com.svnavigatoru600.repository.forum.ThreadDao;
@@ -28,7 +27,7 @@ import com.svnavigatoru600.service.util.OrderTypeEnum;
  */
 @Repository("contributionDao")
 @Transactional
-public class ContributionDaoImpl extends NamedParameterJdbcDaoSupport implements ContributionDao {
+public class ContributionDaoImpl extends AbstractDaoImpl implements ContributionDao {
 
     /**
      * Database table which provides a persistence of {@link ForumContribution Contributions}.
@@ -47,8 +46,7 @@ public class ContributionDaoImpl extends NamedParameterJdbcDaoSupport implements
      * NOTE: Added because of the final setter.
      */
     @Inject
-    public ContributionDaoImpl(final DataSource dataSource, final UserDao userDao) {
-        setDataSource(dataSource);
+    public ContributionDaoImpl(final UserDao userDao) {
         this.userDao = userDao;
     }
 

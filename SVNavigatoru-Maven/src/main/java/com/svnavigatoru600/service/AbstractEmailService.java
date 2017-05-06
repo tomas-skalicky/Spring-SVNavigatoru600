@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
 
+import com.svnavigatoru600.common.constants.CommonConstants;
 import com.svnavigatoru600.domain.users.User;
 import com.svnavigatoru600.service.util.Localization;
 
@@ -36,6 +37,6 @@ public abstract class AbstractEmailService {
      */
     protected String getLocalizedAdminSignature(HttpServletRequest request, MessageSource messageSource) {
         return Localization.findLocaleMessage(messageSource, request,
-                AbstractEmailService.EMAIL_TEXT_ADMIN_SIGNATURE_CODE, Configuration.DOMAIN);
+                AbstractEmailService.EMAIL_TEXT_ADMIN_SIGNATURE_CODE, CommonConstants.DOMAIN);
     }
 }

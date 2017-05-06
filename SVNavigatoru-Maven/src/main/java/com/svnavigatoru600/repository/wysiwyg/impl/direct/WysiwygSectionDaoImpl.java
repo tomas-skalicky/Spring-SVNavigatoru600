@@ -4,16 +4,13 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.Map;
 
-import javax.inject.Inject;
-import javax.sql.DataSource;
-
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcDaoSupport;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.google.common.collect.Maps;
 import com.svnavigatoru600.domain.WysiwygSection;
 import com.svnavigatoru600.domain.WysiwygSectionNameEnum;
+import com.svnavigatoru600.repository.AbstractDaoImpl;
 import com.svnavigatoru600.repository.QueryUtil;
 import com.svnavigatoru600.repository.WysiwygSectionDao;
 import com.svnavigatoru600.repository.wysiwyg.impl.WysiwygSectionFieldEnum;
@@ -23,20 +20,12 @@ import com.svnavigatoru600.repository.wysiwyg.impl.WysiwygSectionFieldEnum;
  */
 @Repository("wysiwygSectionDao")
 @Transactional
-public class WysiwygSectionDaoImpl extends NamedParameterJdbcDaoSupport implements WysiwygSectionDao {
+public class WysiwygSectionDaoImpl extends AbstractDaoImpl implements WysiwygSectionDao {
 
     /**
      * Database table which provides a persistence of {@link WysiwygSection WysiwygSections}.
      */
     private static final String TABLE_NAME = "wysiwyg_sections";
-
-    /**
-     * NOTE: Added because of the final setter.
-     */
-    @Inject
-    public WysiwygSectionDaoImpl(final DataSource dataSource) {
-        setDataSource(dataSource);
-    }
 
     @Override
     public WysiwygSection findByName(final WysiwygSectionNameEnum name) {

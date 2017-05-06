@@ -17,8 +17,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import com.svnavigatoru600.common.constants.CommonConstants;
 import com.svnavigatoru600.domain.users.User;
-import com.svnavigatoru600.service.Configuration;
 
 /**
  * Provides a set of common static functions related to emails. The implementation borrowed from
@@ -219,7 +219,7 @@ public final class Email {
         MimeBodyPart messageBodyPart = new MimeBodyPart();
 
         // Fills the message
-        messageBodyPart.setText(messageText, Configuration.DEFAULT_ENCODING, "html");
+        messageBodyPart.setText(messageText, CommonConstants.DEFAULT_CHARSET_VALUE, "html");
 
         Multipart multipart = new MimeMultipart();
         multipart.addBodyPart(messageBodyPart);

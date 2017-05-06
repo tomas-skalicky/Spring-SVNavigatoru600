@@ -15,12 +15,12 @@ import org.springframework.web.bind.support.SessionStatus;
 
 import com.svnavigatoru600.domain.records.SessionRecordTypeEnum;
 import com.svnavigatoru600.service.records.SessionRecordService;
-import com.svnavigatoru600.url.CommonUrlParts;
-import com.svnavigatoru600.url.records.session.SvUrlParts;
 import com.svnavigatoru600.viewmodel.records.session.EditSessionRecord;
 import com.svnavigatoru600.viewmodel.records.session.validator.EditSessionRecordValidator;
 import com.svnavigatoru600.web.SendNotificationEditModelFiller;
 import com.svnavigatoru600.web.records.session.AbstractEditRecordController;
+import com.svnavigatoru600.web.url.CommonUrlParts;
+import com.svnavigatoru600.web.url.records.session.SvUrlParts;
 
 /**
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>

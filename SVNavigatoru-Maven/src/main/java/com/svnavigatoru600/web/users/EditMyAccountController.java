@@ -24,11 +24,11 @@ import com.svnavigatoru600.domain.users.User;
 import com.svnavigatoru600.service.users.UserService;
 import com.svnavigatoru600.service.util.Localization;
 import com.svnavigatoru600.service.util.UserUtils;
-import com.svnavigatoru600.url.users.UserAccountUrlParts;
 import com.svnavigatoru600.viewmodel.users.UpdateUserData;
 import com.svnavigatoru600.viewmodel.users.validator.UpdateUserDataValidator;
 import com.svnavigatoru600.web.AbstractMetaController;
 import com.svnavigatoru600.web.AbstractPrivateSectionMetaController;
+import com.svnavigatoru600.web.url.users.UserAccountUrlParts;
 
 /**
  * The controller bound to the <i>user-account.jsp</i> and <i>user-administration.jsp</i> form. For more details about

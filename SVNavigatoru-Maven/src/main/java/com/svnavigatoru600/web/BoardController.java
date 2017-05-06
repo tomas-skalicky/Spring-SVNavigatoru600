@@ -14,7 +14,7 @@ import org.springframework.web.bind.support.SessionStatus;
 import com.svnavigatoru600.domain.WysiwygSection;
 import com.svnavigatoru600.domain.WysiwygSectionNameEnum;
 import com.svnavigatoru600.service.WysiwygSectionService;
-import com.svnavigatoru600.url.BoardInfoUrlParts;
+import com.svnavigatoru600.web.url.BoardInfoUrlParts;
 
 /**
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>

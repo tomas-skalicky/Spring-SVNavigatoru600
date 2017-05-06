@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import com.svnavigatoru600.domain.News;
 import com.svnavigatoru600.service.news.NewsService;
-import com.svnavigatoru600.url.news.NewsUrlParts;
 import com.svnavigatoru600.viewmodel.news.ShowAllNews;
+import com.svnavigatoru600.web.url.news.NewsUrlParts;
 
 /**
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>

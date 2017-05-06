@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import com.svnavigatoru600.domain.eventcalendar.CalendarEvent;
 import com.svnavigatoru600.service.eventcalendar.CalendarEventService;
-import com.svnavigatoru600.url.eventcalendar.EventsUrlParts;
 import com.svnavigatoru600.viewmodel.eventcalendar.ShowAllEvents;
+import com.svnavigatoru600.web.url.eventcalendar.EventsUrlParts;
 
 /**
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>

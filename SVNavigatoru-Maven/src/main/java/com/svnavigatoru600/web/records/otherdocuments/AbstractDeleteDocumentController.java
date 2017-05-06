@@ -11,9 +11,9 @@ import org.springframework.ui.ModelMap;
 
 import com.svnavigatoru600.domain.records.OtherDocumentRecordTypeEnum;
 import com.svnavigatoru600.service.records.OtherDocumentRecordService;
-import com.svnavigatoru600.url.CommonUrlParts;
 import com.svnavigatoru600.web.AbstractMetaController;
 import com.svnavigatoru600.web.records.AbstractPageViews;
+import com.svnavigatoru600.web.url.CommonUrlParts;
 
 /**
  * Parent of all controllers which delete the {@link com.svnavigatoru600.domain.records.OtherDocumentRecord

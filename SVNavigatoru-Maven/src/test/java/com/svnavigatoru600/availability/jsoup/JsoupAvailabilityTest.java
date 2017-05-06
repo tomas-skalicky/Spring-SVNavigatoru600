@@ -6,7 +6,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
-import com.svnavigatoru600.service.Configuration;
+import com.svnavigatoru600.common.constants.CommonConstants;
 import com.svnavigatoru600.test.category.JsoupTests;
 
 /**
@@ -20,7 +20,7 @@ public final class JsoupAvailabilityTest {
     /**
      * Is to be set to {@code www.svnavigatoru600.com}.
      */
-    private static final String LOGIN_PAGE = Configuration.DEFAULT_PROTOCOL + Configuration.DOMAIN;
+    private static final String LOGIN_PAGE = CommonConstants.DEFAULT_PROTOCOL + CommonConstants.DOMAIN;
 
     @Test
     public void testLoginPage() throws Exception {

@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import com.svnavigatoru600.domain.forum.ForumThread;
 import com.svnavigatoru600.service.forum.ThreadService;
-import com.svnavigatoru600.url.forum.ThreadsUrlParts;
 import com.svnavigatoru600.viewmodel.forum.threads.ShowAllThreads;
+import com.svnavigatoru600.web.url.forum.ThreadsUrlParts;
 
 /**
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>

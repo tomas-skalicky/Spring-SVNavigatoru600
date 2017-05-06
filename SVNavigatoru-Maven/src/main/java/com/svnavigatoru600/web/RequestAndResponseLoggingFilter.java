@@ -330,9 +330,9 @@ public class RequestAndResponseLoggingFilter extends OncePerRequestFilter {
     private static final String RESPONSE_PREFIX = " << ";
 
     private static final List<String> IGNORED_URI_SUFFIXES = ImmutableList.of(
-            CommonConstants.CSS_FILE_EXCEPTION_WITH_DOT, CommonConstants.JAVASCRIPT_FILE_EXCEPTION_WITH_DOT,
-            CommonConstants.PNG_FILE_EXCEPTION_WITH_DOT, CommonConstants.JPG_FILE_EXCEPTION_WITH_DOT,
-            CommonConstants.JPEG_FILE_EXCEPTION_WITH_DOT);
+            CommonConstants.CSS_FILE_EXTENSION_WITH_DOT, CommonConstants.JAVASCRIPT_FILE_EXTENSION_WITH_DOT,
+            CommonConstants.PNG_FILE_EXTENSION_WITH_DOT, CommonConstants.JPG_FILE_EXTENSION_WITH_DOT,
+            CommonConstants.JPEG_FILE_EXTENSION_WITH_DOT);
 
     private static final String PASSWORD_LOG_IN_PARAMETER_NAME = "j_password";
     private static final String PASSWORD_PLACEHOLDER = "******************************";

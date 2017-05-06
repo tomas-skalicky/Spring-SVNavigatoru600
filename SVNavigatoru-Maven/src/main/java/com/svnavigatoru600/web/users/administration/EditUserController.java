@@ -22,11 +22,11 @@ import com.svnavigatoru600.domain.users.User;
 import com.svnavigatoru600.service.users.AuthorityService;
 import com.svnavigatoru600.service.users.UserService;
 import com.svnavigatoru600.service.util.AuthorityUtils;
-import com.svnavigatoru600.url.CommonUrlParts;
-import com.svnavigatoru600.url.users.UserAdministrationUrlParts;
 import com.svnavigatoru600.viewmodel.users.AdministrateUserData;
 import com.svnavigatoru600.viewmodel.users.validator.AdministrateUserDataValidator;
 import com.svnavigatoru600.web.AbstractMetaController;
+import com.svnavigatoru600.web.url.CommonUrlParts;
+import com.svnavigatoru600.web.url.users.UserAdministrationUrlParts;
 
 /**
  * The controller bound mainly to the <i>user/administration/edit-user.jsp</i> page.

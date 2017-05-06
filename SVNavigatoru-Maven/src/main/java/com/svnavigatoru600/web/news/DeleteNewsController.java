@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.svnavigatoru600.service.news.NewsService;
-import com.svnavigatoru600.url.CommonUrlParts;
-import com.svnavigatoru600.url.news.NewsUrlParts;
+import com.svnavigatoru600.web.url.CommonUrlParts;
+import com.svnavigatoru600.web.url.news.NewsUrlParts;
 
 /**
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>

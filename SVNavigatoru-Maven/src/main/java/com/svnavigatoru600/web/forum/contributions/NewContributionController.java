@@ -20,11 +20,11 @@ import com.svnavigatoru600.domain.forum.ForumContribution;
 import com.svnavigatoru600.service.forum.ContributionService;
 import com.svnavigatoru600.service.forum.ThreadService;
 import com.svnavigatoru600.service.util.UserUtils;
-import com.svnavigatoru600.url.forum.ContributionsUrlParts;
 import com.svnavigatoru600.viewmodel.forum.contributions.NewContribution;
 import com.svnavigatoru600.viewmodel.forum.contributions.validator.NewContributionValidator;
 import com.svnavigatoru600.web.AbstractMetaController;
 import com.svnavigatoru600.web.SendNotificationNewModelFiller;
+import com.svnavigatoru600.web.url.forum.ContributionsUrlParts;
 
 /**
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>

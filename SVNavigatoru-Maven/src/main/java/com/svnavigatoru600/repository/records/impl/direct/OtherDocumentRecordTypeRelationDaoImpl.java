@@ -5,10 +5,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-import javax.inject.Inject;
-import javax.sql.DataSource;
-
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcDaoSupport;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.google.common.collect.Maps;
 import com.svnavigatoru600.domain.records.OtherDocumentRecordTypeRelation;
 import com.svnavigatoru600.domain.records.OtherDocumentRecordTypeRelationId;
+import com.svnavigatoru600.repository.AbstractDaoImpl;
 import com.svnavigatoru600.repository.QueryUtil;
 import com.svnavigatoru600.repository.records.OtherDocumentRecordTypeRelationDao;
 import com.svnavigatoru600.repository.records.impl.OtherDocumentRecordTypeRelationFieldEnum;
@@ -25,7 +22,7 @@ import com.svnavigatoru600.repository.records.impl.OtherDocumentRecordTypeRelati
  */
 @Repository("otherDocumentRecordTypeRelationDao")
 @Transactional
-public class OtherDocumentRecordTypeRelationDaoImpl extends NamedParameterJdbcDaoSupport
+public class OtherDocumentRecordTypeRelationDaoImpl extends AbstractDaoImpl
         implements OtherDocumentRecordTypeRelationDao {
 
     /**
@@ -33,14 +30,6 @@ public class OtherDocumentRecordTypeRelationDaoImpl extends NamedParameterJdbcDa
      * OtherDocumentRecordTypeRelations}.
      */
     static final String TABLE_NAME = "other_document_record_type_relations";
-
-    /**
-     * NOTE: Added because of the final setter.
-     */
-    @Inject
-    public OtherDocumentRecordTypeRelationDaoImpl(final DataSource dataSource) {
-        setDataSource(dataSource);
-    }
 
     @Override
     public List<OtherDocumentRecordTypeRelation> findByRecordId(final int recordId) {

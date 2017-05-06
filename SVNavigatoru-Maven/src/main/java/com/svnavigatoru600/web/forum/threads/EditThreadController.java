@@ -18,11 +18,11 @@ import org.springframework.web.bind.support.SessionStatus;
 
 import com.svnavigatoru600.domain.forum.ForumThread;
 import com.svnavigatoru600.service.forum.ThreadService;
-import com.svnavigatoru600.url.CommonUrlParts;
-import com.svnavigatoru600.url.forum.ThreadsUrlParts;
 import com.svnavigatoru600.viewmodel.forum.threads.EditThread;
 import com.svnavigatoru600.viewmodel.forum.threads.validator.EditThreadValidator;
 import com.svnavigatoru600.web.AbstractMetaController;
+import com.svnavigatoru600.web.url.CommonUrlParts;
+import com.svnavigatoru600.web.url.forum.ThreadsUrlParts;
 
 /**
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>

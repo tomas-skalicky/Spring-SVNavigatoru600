@@ -6,12 +6,10 @@ import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
-import javax.sql.DataSource;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.dao.DataRetrievalFailureException;
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcDaoSupport;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Repository;
@@ -21,6 +19,7 @@ import com.google.common.collect.Maps;
 import com.svnavigatoru600.domain.users.Authority;
 import com.svnavigatoru600.domain.users.NotificationTypeEnum;
 import com.svnavigatoru600.domain.users.User;
+import com.svnavigatoru600.repository.AbstractDaoImpl;
 import com.svnavigatoru600.repository.QueryUtil;
 import com.svnavigatoru600.repository.users.AuthorityDao;
 import com.svnavigatoru600.repository.users.UserDao;
@@ -33,7 +32,7 @@ import com.svnavigatoru600.service.util.OrderTypeEnum;
  */
 @Repository("userDao")
 @Transactional
-public class UserDaoImpl extends NamedParameterJdbcDaoSupport implements UserDao {
+public class UserDaoImpl extends AbstractDaoImpl implements UserDao {
 
     /**
      * Database table which provides a persistence of {@link User Users}.
@@ -48,8 +47,7 @@ public class UserDaoImpl extends NamedParameterJdbcDaoSupport implements UserDao
      * NOTE: Added because of the final setter.
      */
     @Inject
-    public UserDaoImpl(final DataSource dataSource, final AuthorityDao authorityDao) {
-        setDataSource(dataSource);
+    public UserDaoImpl(final AuthorityDao authorityDao) {
         this.authorityDao = authorityDao;
     }
 

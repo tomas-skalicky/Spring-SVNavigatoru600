@@ -6,15 +6,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.inject.Inject;
-import javax.sql.DataSource;
-
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcDaoSupport;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.svnavigatoru600.domain.eventcalendar.CalendarEvent;
+import com.svnavigatoru600.repository.AbstractDaoImpl;
 import com.svnavigatoru600.repository.CalendarEventDao;
 import com.svnavigatoru600.repository.QueryUtil;
 import com.svnavigatoru600.repository.eventcalendar.impl.CalendarEventFieldEnum;
@@ -25,20 +22,12 @@ import com.svnavigatoru600.service.util.OrderTypeEnum;
  */
 @Repository("calendarEventDao")
 @Transactional
-public class CalendarEventDaoImpl extends NamedParameterJdbcDaoSupport implements CalendarEventDao {
+public class CalendarEventDaoImpl extends AbstractDaoImpl implements CalendarEventDao {
 
     /**
      * Database table which provides a persistence of {@link CalendarEvent CalendarEvents}.
      */
     private static final String TABLE_NAME = "calendar_events";
-
-    /**
-     * NOTE: Added because of the final setter.
-     */
-    @Inject
-    public CalendarEventDaoImpl(final DataSource dataSource) {
-        setDataSource(dataSource);
-    }
 
     @Override
     public CalendarEvent findById(final int eventId) {

@@ -3,10 +3,10 @@ package com.svnavigatoru600.availability.selenium;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
-import com.svnavigatoru600.url.CommonUrlParts;
-import com.svnavigatoru600.url.LoginUrlParts;
-import com.svnavigatoru600.url.news.NewsUrlParts;
-import com.svnavigatoru600.url.users.UserAccountUrlParts;
+import com.svnavigatoru600.web.url.CommonUrlParts;
+import com.svnavigatoru600.web.url.LoginUrlParts;
+import com.svnavigatoru600.web.url.news.NewsUrlParts;
+import com.svnavigatoru600.web.url.users.UserAccountUrlParts;
 
 /**
  * Appends to the {@link AbstractSeleniumTest} class useful constants and methods which are application-specific.

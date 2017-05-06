@@ -18,12 +18,12 @@ import org.springframework.web.bind.support.SessionStatus;
 
 import com.svnavigatoru600.domain.forum.ForumContribution;
 import com.svnavigatoru600.service.forum.ContributionService;
-import com.svnavigatoru600.url.CommonUrlParts;
-import com.svnavigatoru600.url.forum.ContributionsUrlParts;
 import com.svnavigatoru600.viewmodel.forum.contributions.EditContribution;
 import com.svnavigatoru600.viewmodel.forum.contributions.validator.EditContributionValidator;
 import com.svnavigatoru600.web.AbstractMetaController;
 import com.svnavigatoru600.web.SendNotificationEditModelFiller;
+import com.svnavigatoru600.web.url.CommonUrlParts;
+import com.svnavigatoru600.web.url.forum.ContributionsUrlParts;
 
 /**
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>

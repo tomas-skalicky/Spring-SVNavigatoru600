@@ -5,16 +5,13 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import javax.inject.Inject;
-import javax.sql.DataSource;
-
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcDaoSupport;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.google.common.collect.Maps;
 import com.svnavigatoru600.domain.News;
+import com.svnavigatoru600.repository.AbstractDaoImpl;
 import com.svnavigatoru600.repository.NewsDao;
 import com.svnavigatoru600.repository.QueryUtil;
 import com.svnavigatoru600.repository.news.impl.FindAllOrderedArguments;
@@ -25,20 +22,12 @@ import com.svnavigatoru600.repository.news.impl.NewsFieldEnum;
  */
 @Repository("newsDao")
 @Transactional
-public class NewsDaoImpl extends NamedParameterJdbcDaoSupport implements NewsDao {
+public class NewsDaoImpl extends AbstractDaoImpl implements NewsDao {
 
     /**
      * Database table which provides a persistence of {@link News}.
      */
     private static final String TABLE_NAME = "news";
-
-    /**
-     * NOTE: Added because of the final setter.
-     */
-    @Inject
-    public NewsDaoImpl(final DataSource dataSource) {
-        setDataSource(dataSource);
-    }
 
     @Override
     public News findById(final int newsId) {

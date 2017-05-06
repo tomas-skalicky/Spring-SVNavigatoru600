@@ -21,9 +21,9 @@ import org.springframework.web.bind.support.SessionStatus;
 import com.google.common.collect.Lists;
 import com.svnavigatoru600.domain.users.User;
 import com.svnavigatoru600.service.users.UserService;
-import com.svnavigatoru600.url.LoginUrlParts;
 import com.svnavigatoru600.viewmodel.users.SendNewPassword;
 import com.svnavigatoru600.viewmodel.users.validator.SendNewPasswordValidator;
+import com.svnavigatoru600.web.url.LoginUrlParts;
 
 /**
  * The controller bound to the <i>forgotten-password.jsp</i> form.

@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import com.svnavigatoru600.domain.users.User;
 import com.svnavigatoru600.service.users.UserService;
-import com.svnavigatoru600.url.users.UserAdministrationUrlParts;
 import com.svnavigatoru600.viewmodel.users.ShowAllUsers;
+import com.svnavigatoru600.web.url.users.UserAdministrationUrlParts;
 
 /**
  * The controller bound mainly to the <i>users/administration/list.jsp</i> page. For more details about the concepts

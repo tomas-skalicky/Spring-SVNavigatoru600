@@ -5,9 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
-import javax.sql.DataSource;
 
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcDaoSupport;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,6 +14,7 @@ import com.google.common.collect.Maps;
 import com.svnavigatoru600.domain.records.AbstractDocumentRecord;
 import com.svnavigatoru600.domain.records.SessionRecord;
 import com.svnavigatoru600.domain.records.SessionRecordTypeEnum;
+import com.svnavigatoru600.repository.AbstractDaoImpl;
 import com.svnavigatoru600.repository.records.SessionRecordDao;
 import com.svnavigatoru600.repository.records.impl.DocumentRecordFieldEnum;
 import com.svnavigatoru600.repository.records.impl.SessionRecordFieldEnum;
@@ -26,7 +25,7 @@ import com.svnavigatoru600.service.util.OrderTypeEnum;
  */
 @Repository("sessionRecordDao")
 @Transactional
-public class SessionRecordDaoImpl extends NamedParameterJdbcDaoSupport implements SessionRecordDao {
+public class SessionRecordDaoImpl extends AbstractDaoImpl implements SessionRecordDao {
 
     /**
      * Database table which provides a persistence of {@link SessionRecord SessionRecords}.
@@ -60,8 +59,7 @@ public class SessionRecordDaoImpl extends NamedParameterJdbcDaoSupport implement
      * NOTE: Added because of the final setter.
      */
     @Inject
-    public SessionRecordDaoImpl(final DataSource dataSource, final DocumentRecordDaoImpl documentRecordDao) {
-        setDataSource(dataSource);
+    public SessionRecordDaoImpl(final DocumentRecordDaoImpl documentRecordDao) {
         this.documentRecordDao = documentRecordDao;
     }
 

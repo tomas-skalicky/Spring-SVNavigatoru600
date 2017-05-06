@@ -10,9 +10,9 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-import com.svnavigatoru600.url.CommonUrlParts;
-import com.svnavigatoru600.url.users.UserAdministrationUrlParts;
 import com.svnavigatoru600.web.AbstractMetaController;
+import com.svnavigatoru600.web.url.CommonUrlParts;
+import com.svnavigatoru600.web.url.users.UserAdministrationUrlParts;
 
 /**
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>

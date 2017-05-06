@@ -9,8 +9,8 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import com.svnavigatoru600.service.records.OtherDocumentRecordService;
-import com.svnavigatoru600.url.records.otherdocuments.AllDocumentsUrlParts;
 import com.svnavigatoru600.web.records.otherdocuments.AbstractListDocumentsController;
+import com.svnavigatoru600.web.url.records.otherdocuments.AllDocumentsUrlParts;
 
 /**
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>

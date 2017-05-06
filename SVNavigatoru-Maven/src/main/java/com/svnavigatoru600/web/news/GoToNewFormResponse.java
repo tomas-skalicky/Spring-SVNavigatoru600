@@ -5,8 +5,8 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.context.MessageSource;
 
 import com.svnavigatoru600.domain.News;
-import com.svnavigatoru600.url.CommonUrlParts;
 import com.svnavigatoru600.viewmodel.SendNotification;
+import com.svnavigatoru600.web.url.CommonUrlParts;
 
 /**
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>

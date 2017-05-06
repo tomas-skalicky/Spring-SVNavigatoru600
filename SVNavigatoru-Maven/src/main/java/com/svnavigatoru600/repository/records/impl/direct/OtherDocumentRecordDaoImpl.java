@@ -7,10 +7,8 @@ import java.util.Map;
 import java.util.Set;
 
 import javax.inject.Inject;
-import javax.sql.DataSource;
 
 import org.springframework.dao.DataRetrievalFailureException;
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcDaoSupport;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,6 +19,7 @@ import com.svnavigatoru600.domain.records.AbstractDocumentRecord;
 import com.svnavigatoru600.domain.records.OtherDocumentRecord;
 import com.svnavigatoru600.domain.records.OtherDocumentRecordTypeEnum;
 import com.svnavigatoru600.domain.records.OtherDocumentRecordTypeRelation;
+import com.svnavigatoru600.repository.AbstractDaoImpl;
 import com.svnavigatoru600.repository.records.OtherDocumentRecordDao;
 import com.svnavigatoru600.repository.records.OtherDocumentRecordTypeRelationDao;
 import com.svnavigatoru600.repository.records.impl.DocumentRecordFieldEnum;
@@ -33,7 +32,7 @@ import com.svnavigatoru600.service.util.OrderTypeEnum;
  */
 @Repository("otherDocumentRecordDao")
 @Transactional
-public class OtherDocumentRecordDaoImpl extends NamedParameterJdbcDaoSupport implements OtherDocumentRecordDao {
+public class OtherDocumentRecordDaoImpl extends AbstractDaoImpl implements OtherDocumentRecordDao {
 
     /**
      * Database table which provides a persistence of {@link OtherDocumentRecord OtherDocumentRecords}.
@@ -70,9 +69,8 @@ public class OtherDocumentRecordDaoImpl extends NamedParameterJdbcDaoSupport imp
      * NOTE: Added because of the final setter.
      */
     @Inject
-    public OtherDocumentRecordDaoImpl(final DataSource dataSource, final DocumentRecordDaoImpl documentRecordDao,
+    public OtherDocumentRecordDaoImpl(final DocumentRecordDaoImpl documentRecordDao,
             final OtherDocumentRecordTypeRelationDao typeDao) {
-        setDataSource(dataSource);
         this.documentRecordDao = documentRecordDao;
         this.typeDao = typeDao;
     }

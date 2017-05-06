@@ -7,11 +7,12 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
 
+import com.svnavigatoru600.common.constants.CommonConstants;
 import com.svnavigatoru600.domain.users.NotificationTypeEnum;
 import com.svnavigatoru600.domain.users.User;
 import com.svnavigatoru600.service.util.HtmlUtils;
 import com.svnavigatoru600.service.util.Localization;
-import com.svnavigatoru600.url.users.UserAccountUrlParts;
+import com.svnavigatoru600.web.url.users.UserAccountUrlParts;
 
 /**
  * Ancestor of all {@link Service Services} which provide sending of emails concerning notifications of new posts and
@@ -52,7 +53,7 @@ public abstract class AbstractNotificationEmailService extends AbstractEmailServ
         String unsubscriptionUrl = UserAccountUrlParts.getUrlForUnsubscription(user, getNotificationType(), request);
         String hereClickToUnsubscribe = String.format("<a href='%s'>%s</a>", unsubscriptionUrl, linkText);
 
-        Object[] messageParams = new Object[] { Configuration.DOMAIN, sectionWhichIsToBeUnsubscribed,
+        Object[] messageParams = new Object[] { CommonConstants.DOMAIN, sectionWhichIsToBeUnsubscribed,
                 hereClickToUnsubscribe };
         return Localization.findLocaleMessage(messageSource, request,
                 AbstractNotificationEmailService.NOTIFICATIONS_EMAIL_TEXT_SIGNATURE_CODE, messageParams);

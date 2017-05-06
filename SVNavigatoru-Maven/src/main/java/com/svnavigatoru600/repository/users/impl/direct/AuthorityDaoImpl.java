@@ -5,10 +5,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-import javax.inject.Inject;
-import javax.sql.DataSource;
-
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcDaoSupport;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Repository;
@@ -18,6 +14,7 @@ import com.google.common.collect.Maps;
 import com.svnavigatoru600.domain.users.Authority;
 import com.svnavigatoru600.domain.users.AuthorityId;
 import com.svnavigatoru600.domain.users.AuthorityTypeEnum;
+import com.svnavigatoru600.repository.AbstractDaoImpl;
 import com.svnavigatoru600.repository.QueryUtil;
 import com.svnavigatoru600.repository.users.AuthorityDao;
 import com.svnavigatoru600.repository.users.impl.AuthorityFieldEnum;
@@ -27,20 +24,12 @@ import com.svnavigatoru600.repository.users.impl.AuthorityFieldEnum;
  */
 @Repository("authorityDao")
 @Transactional
-public class AuthorityDaoImpl extends NamedParameterJdbcDaoSupport implements AuthorityDao {
+public class AuthorityDaoImpl extends AbstractDaoImpl implements AuthorityDao {
 
     /**
      * Database table which provides a persistence of {@link Authority Authorities}.
      */
     static final String TABLE_NAME = "authorities";
-
-    /**
-     * NOTE: Added because of the final setter.
-     */
-    @Inject
-    public AuthorityDaoImpl(final DataSource dataSource) {
-        setDataSource(dataSource);
-    }
 
     @Override
     public List<Authority> findByUsername(final String username) {

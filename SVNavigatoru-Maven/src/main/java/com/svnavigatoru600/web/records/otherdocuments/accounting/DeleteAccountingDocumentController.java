@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import com.svnavigatoru600.domain.records.OtherDocumentRecordTypeEnum;
 import com.svnavigatoru600.service.records.OtherDocumentRecordService;
-import com.svnavigatoru600.url.CommonUrlParts;
-import com.svnavigatoru600.url.records.otherdocuments.AccountingUrlParts;
 import com.svnavigatoru600.web.records.otherdocuments.AbstractDeleteDocumentController;
+import com.svnavigatoru600.web.url.CommonUrlParts;
+import com.svnavigatoru600.web.url.records.otherdocuments.AccountingUrlParts;
 
 /**
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>

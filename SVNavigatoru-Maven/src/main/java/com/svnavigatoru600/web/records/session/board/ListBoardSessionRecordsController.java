@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import com.svnavigatoru600.domain.records.SessionRecordTypeEnum;
 import com.svnavigatoru600.service.records.SessionRecordService;
-import com.svnavigatoru600.url.records.session.BoardSessionsUrlParts;
 import com.svnavigatoru600.web.records.session.AbstractListRecordsController;
+import com.svnavigatoru600.web.url.records.session.BoardSessionsUrlParts;
 
 /**
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>

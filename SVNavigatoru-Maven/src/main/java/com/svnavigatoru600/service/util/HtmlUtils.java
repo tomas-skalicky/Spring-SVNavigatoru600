@@ -7,7 +7,7 @@ import java.io.StringReader;
 
 import org.apache.commons.lang3.StringEscapeUtils;
 
-import com.svnavigatoru600.service.Configuration;
+import com.svnavigatoru600.common.constants.CommonConstants;
 
 import nu.xom.Attribute;
 import nu.xom.Builder;
@@ -129,12 +129,12 @@ public final class HtmlUtils {
 
         ByteArrayOutputStream byteArrayOut = new ByteArrayOutputStream(maxLength);
         BufferedOutputStream bufferedOut = new BufferedOutputStream(byteArrayOut);
-        Serializer serializer = new Serializer(bufferedOut, Configuration.DEFAULT_ENCODING);
+        Serializer serializer = new Serializer(bufferedOut, CommonConstants.DEFAULT_CHARSET_VALUE);
         serializer.write(root.getDocument());
         serializer.flush();
         // The serializer adds automatically the XML header and "amp;" behind all "&", hence let's undo these
         // changes.
-        return byteArrayOut.toString(Configuration.DEFAULT_ENCODING)
+        return byteArrayOut.toString(CommonConstants.DEFAULT_CHARSET_VALUE)
                 .replaceFirst("<[?]xml version=\"1.0\" encoding=\"UTF-8\"[?]>\r\n", "").replaceAll("amp;", "");
     }
 

@@ -19,11 +19,11 @@ import com.svnavigatoru600.domain.eventcalendar.CalendarEvent;
 import com.svnavigatoru600.domain.eventcalendar.PriorityTypeEnum;
 import com.svnavigatoru600.service.eventcalendar.CalendarEventService;
 import com.svnavigatoru600.service.util.Localization;
-import com.svnavigatoru600.url.eventcalendar.EventsUrlParts;
 import com.svnavigatoru600.viewmodel.eventcalendar.NewEvent;
 import com.svnavigatoru600.viewmodel.eventcalendar.validator.NewEventValidator;
 import com.svnavigatoru600.web.AbstractMetaController;
 import com.svnavigatoru600.web.SendNotificationNewModelFiller;
+import com.svnavigatoru600.web.url.eventcalendar.EventsUrlParts;
 
 /**
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>

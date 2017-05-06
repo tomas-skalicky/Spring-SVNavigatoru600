@@ -12,8 +12,8 @@ import com.svnavigatoru600.service.news.NewsService;
 import com.svnavigatoru600.service.util.DateUtils;
 import com.svnavigatoru600.service.util.Localization;
 import com.svnavigatoru600.service.util.UserUtils;
-import com.svnavigatoru600.url.news.NewsUrlParts;
 import com.svnavigatoru600.viewmodel.news.AbstractNewEditNews;
+import com.svnavigatoru600.web.url.news.NewsUrlParts;
 
 /**
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
