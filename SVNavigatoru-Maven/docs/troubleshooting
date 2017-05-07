@@ -1,13 +1,14 @@
 Issue 1
 --------
-Diacritic signs does not work in production. Locally it's OK.
+Diacritic signs are not properly handled in production. Locally it's OK.
+
 
 Solution
 --------
 Add the following line to bin/setenv.sh in CATALINA_HOME:
 
-JAVA_OPTS="$JAVA_OPTS -Dfile.encoding=UTF8"
+  JAVA_OPTS="$JAVA_OPTS -Dfile.encoding=UTF8"
 
-This doesn't solve the issue for characters 'ě' ,'č', 'ř' and 'ů'
+Moreover, tell the JDBC connector which encoding to use (jdbc*.properties):
 
-
+  jdbc.url=*?useUnicode=true&characterEncoding=UTF-8
