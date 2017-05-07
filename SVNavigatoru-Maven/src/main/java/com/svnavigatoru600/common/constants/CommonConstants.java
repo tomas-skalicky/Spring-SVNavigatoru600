@@ -33,7 +33,7 @@ public final class CommonConstants {
      * The directory where all files of all {@link com.svnavigatoru600.domain.records.AbstractDocumentRecord
      * AbstractDocumentRecord} are stored.
      */
-    public static final String FILE_STORAGE = "uploaded-files/";
+    public static final String UPLOADED_FILES_DIR = "uploaded-files/";
 
     /**
      * The default protocol used during browsing on the web page.

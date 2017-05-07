@@ -59,7 +59,7 @@ public final class File {
      * Gets the path of the uploaded file with the given <code>fileName</code>.
      */
     public static java.io.File getUploadedFile(String fileName) {
-        return new java.io.File(String.format("/%s%s", CommonConstants.FILE_STORAGE, fileName));
+        return new java.io.File(String.format("/%s%s", CommonConstants.UPLOADED_FILES_DIR, fileName));
     }
 
     /**

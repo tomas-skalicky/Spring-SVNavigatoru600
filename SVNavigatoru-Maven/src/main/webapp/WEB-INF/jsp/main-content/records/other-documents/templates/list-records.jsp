@@ -60,7 +60,7 @@ if (records.size() > 0) {
 	<%}
 
 String homeUrl = request.getContextPath();
-String fileStorageUrl = String.format("%s/%s", homeUrl, CommonConstants.FILE_STORAGE);
+String fileStorageUrl = String.format("%s/%s", homeUrl, CommonConstants.UPLOADED_FILES_DIR);
 Locale locale = Localization.getLocale(request);
 for (OtherDocumentRecord record : records) {
 	int recordId = record.getId();

@@ -43,7 +43,7 @@ public class MvcConfig extends WebMvcConfigurerAdapter {
                 .put("/lib/**", "/lib/")
                 .put("/tigra_calendar/**", "/tigra_calendar/")
                 .put("/tinymce/**", "/tinymce/")
-                .put("/uploaded-files/**", "/uploaded-files/")
+                .put("/" + CommonConstants.UPLOADED_FILES_DIR + "**", "/" + CommonConstants.UPLOADED_FILES_DIR)
                 .build();
         // @formatter:on
 
