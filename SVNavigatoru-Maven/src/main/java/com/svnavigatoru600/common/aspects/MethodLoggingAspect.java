@@ -34,7 +34,8 @@ public class MethodLoggingAspect {
 
         final Object result = joinPoint.proceed();
 
-        logger.info("After {}(..), return value: {}", joinPoint.toString(), result);
+        final Object loggedResult = logMethodAnnotation.logReturnValue() ? result : "<not logged>";
+        logger.info("After {}(..), return value: {}", joinPoint.toString(), loggedResult);
 
         return result;
     }

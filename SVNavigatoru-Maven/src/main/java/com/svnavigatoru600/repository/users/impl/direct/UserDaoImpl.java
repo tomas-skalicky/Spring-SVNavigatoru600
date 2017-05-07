@@ -7,8 +7,6 @@ import java.util.Map;
 
 import javax.inject.Inject;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.security.core.GrantedAuthority;
@@ -16,6 +14,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.google.common.collect.Maps;
+import com.svnavigatoru600.common.annotations.LogMethod;
 import com.svnavigatoru600.domain.users.Authority;
 import com.svnavigatoru600.domain.users.NotificationTypeEnum;
 import com.svnavigatoru600.domain.users.User;
@@ -38,8 +37,6 @@ public class UserDaoImpl extends AbstractDaoImpl implements UserDao {
      * Database table which provides a persistence of {@link User Users}.
      */
     private static final String TABLE_NAME = "users";
-
-    private final Log logger = LogFactory.getLog(this.getClass());
 
     private final AuthorityDao authorityDao;
 
@@ -69,6 +66,7 @@ public class UserDaoImpl extends AbstractDaoImpl implements UserDao {
     }
 
     @Override
+    @LogMethod
     public User findByUsername(final String username) {
         return this.findByUsername(username, false);
     }
@@ -77,8 +75,8 @@ public class UserDaoImpl extends AbstractDaoImpl implements UserDao {
      * @param lazy
      *            If <code>true</code>, {@link Authority authorities} of the desired {@link User} are not populated.
      */
+    @LogMethod
     public User findByUsername(final String username, final boolean lazy) {
-        logger.info(String.format("Load an user with the username '%s'", username));
 
         final String usernameColumn = UserFieldEnum.USERNAME.getColumnName();
         final String query = QueryUtil.selectQuery(UserDaoImpl.TABLE_NAME, usernameColumn, usernameColumn);
@@ -97,10 +95,10 @@ public class UserDaoImpl extends AbstractDaoImpl implements UserDao {
     }
 
     @Override
+    @LogMethod(logReturnValue = false)
     public User findByEmail(final String email) {
-        final String lowerCasedEmail = (email != null) ? email.toLowerCase() : null;
 
-        logger.info(String.format("Load an user with the email '%s'", lowerCasedEmail));
+        final String lowerCasedEmail = (email != null) ? email.toLowerCase() : null;
 
         final String emailColumn = UserFieldEnum.EMAIL.getColumnName();
         final String query = QueryUtil.selectQuery(UserDaoImpl.TABLE_NAME, emailColumn, emailColumn);
@@ -118,8 +116,8 @@ public class UserDaoImpl extends AbstractDaoImpl implements UserDao {
     }
 
     @Override
+    @LogMethod(logReturnValue = false)
     public List<User> findAllByAuthority(final String authority) {
-        logger.info(String.format("Load all users with the authority '%s')", authority));
 
         final String authorityColumn = AuthorityFieldEnum.AUTHORITY.getColumnName();
         final String query = String.format("SELECT u.* FROM %s u INNER JOIN %s a ON a.%s = u.%s WHERE a.%s = :%s",
@@ -135,10 +133,9 @@ public class UserDaoImpl extends AbstractDaoImpl implements UserDao {
     }
 
     @Override
+    @LogMethod(logReturnValue = false)
     public List<User> findAllByAuthorityAndSubscription(final String authority,
             final NotificationTypeEnum notificationType) {
-        logger.info(String.format("Load all users with the authority '%s' and subscription '%s')", authority,
-                notificationType.name()));
 
         final String authorityColumn = AuthorityFieldEnum.AUTHORITY.getColumnName();
         final String subscriptionColumn = UserFieldEnum.getSubscriptionField(notificationType).getColumnName();
@@ -156,8 +153,8 @@ public class UserDaoImpl extends AbstractDaoImpl implements UserDao {
     }
 
     @Override
+    @LogMethod
     public List<User> findAllOrdered(final OrderTypeEnum order, final boolean testUsers) {
-        logger.info(String.format("Load all users ordered %s.", order.name()));
 
         final String isTestUserColumn = UserFieldEnum.IS_TEST_USER.getColumnName();
         final String query = String.format("SELECT * FROM %s u WHERE u.%s = :%s ORDER BY u.%s, u.%s %s",
@@ -197,13 +194,14 @@ public class UserDaoImpl extends AbstractDaoImpl implements UserDao {
     }
 
     @Override
+    @LogMethod
     public void update(final User user) {
         this.update(user, true);
     }
 
     @Override
+    @LogMethod
     public void update(final User user, final boolean persistAuthorities) {
-        logger.info("Update an user " + user);
 
         // Parameters are those words which begin with ':' in the following query.
         final String usernameColumn = UserFieldEnum.USERNAME.getColumnName();
@@ -243,8 +241,8 @@ public class UserDaoImpl extends AbstractDaoImpl implements UserDao {
     }
 
     @Override
+    @LogMethod
     public void save(final User user) {
-        logger.info("Save a new user " + user);
 
         final SimpleJdbcInsert insert = new SimpleJdbcInsert(getDataSource()).withTableName(UserDaoImpl.TABLE_NAME)
                 .usingColumns(UserFieldEnum.USERNAME.getColumnName(), UserFieldEnum.PASSWORD.getColumnName(),

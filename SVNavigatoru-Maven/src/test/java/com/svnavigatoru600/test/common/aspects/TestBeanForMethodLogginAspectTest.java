@@ -12,7 +12,12 @@ import com.svnavigatoru600.common.annotations.LogMethod;
 public class TestBeanForMethodLogginAspectTest {
 
     @LogMethod
-    public long annotatedMethod(final String param1, final int param2) {
+    public long logEverything(final String param1, final int param2) {
+        return param2;
+    }
+
+    @LogMethod(logReturnValue = false)
+    public long doNotLogReturnValue(final String param1, final int param2) {
         return param2;
     }
 

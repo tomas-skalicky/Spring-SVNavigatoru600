@@ -53,14 +53,26 @@ public class MethodLoggingAspectTest {
     }
 
     @Test
-    public void testAnnotatedMethod() {
-        testBean.annotatedMethod("Ahoj", 1122);
+    public void testLogEverything() {
+        testBean.logEverything("Ahoj", 1122);
 
         //@formatter:off
         assertThat(newAppender.getMessages())
                 .hasSize(2)
-                .contains("Before execution(long com.svnavigatoru600.test.common.aspects.TestBeanForMethodLogginAspectTest.annotatedMethod(String,int)) with args: [Ahoj, 1122]",
-                          "After execution(long com.svnavigatoru600.test.common.aspects.TestBeanForMethodLogginAspectTest.annotatedMethod(String,int))(..), return value: 1122");
+                .contains("Before execution(long com.svnavigatoru600.test.common.aspects.TestBeanForMethodLogginAspectTest.logEverything(String,int)) with args: [Ahoj, 1122]",
+                          "After execution(long com.svnavigatoru600.test.common.aspects.TestBeanForMethodLogginAspectTest.logEverything(String,int))(..), return value: 1122");
+        //@formatter:on
+    }
+
+    @Test
+    public void testDoNotLogReturnValue() {
+        testBean.doNotLogReturnValue("Ahoj", 1122);
+
+        //@formatter:off
+        assertThat(newAppender.getMessages())
+                .hasSize(2)
+                .contains("Before execution(long com.svnavigatoru600.test.common.aspects.TestBeanForMethodLogginAspectTest.doNotLogReturnValue(String,int)) with args: [Ahoj, 1122]",
+                          "After execution(long com.svnavigatoru600.test.common.aspects.TestBeanForMethodLogginAspectTest.doNotLogReturnValue(String,int))(..), return value: <not logged>");
         //@formatter:on
     }
 
