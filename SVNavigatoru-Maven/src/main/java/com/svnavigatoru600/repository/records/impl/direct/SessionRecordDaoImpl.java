@@ -131,7 +131,7 @@ public class SessionRecordDaoImpl extends AbstractDaoImpl implements SessionReco
                 SessionRecordDaoImpl.TABLE_NAME, typeColumn, typeColumn, sessionDateColumn, sessionDateColumn,
                 discussedTopicsColumn, discussedTopicsColumn, idColumn, idColumn);
 
-        getNamedParameterJdbcTemplate().update(query, getNamedParameters(record));
+        doUpdate(query, getNamedParameters(record));
     }
 
     @Override

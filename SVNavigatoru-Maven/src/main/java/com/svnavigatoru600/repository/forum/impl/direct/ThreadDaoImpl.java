@@ -143,7 +143,7 @@ public class ThreadDaoImpl extends AbstractDaoImpl implements ThreadDao {
         final String query = String.format("UPDATE %s SET %s = :%s, %s = :%s WHERE %s = :%s", ThreadDaoImpl.TABLE_NAME,
                 nameColumn, nameColumn, authorUsernameColumn, authorUsernameColumn, idColumn, idColumn);
 
-        getNamedParameterJdbcTemplate().update(query, getNamedParameters(thread));
+        doUpdate(query, getNamedParameters(thread));
     }
 
     @Override
@@ -176,6 +176,6 @@ public class ThreadDaoImpl extends AbstractDaoImpl implements ThreadDao {
 
         final Map<String, Integer> args = Collections.singletonMap(idColumn, thread.getId());
 
-        getNamedParameterJdbcTemplate().update(query, args);
+        doUpdate(query, args);
     }
 }

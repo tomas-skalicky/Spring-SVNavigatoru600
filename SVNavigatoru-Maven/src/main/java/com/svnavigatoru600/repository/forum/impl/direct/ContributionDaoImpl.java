@@ -156,7 +156,7 @@ public class ContributionDaoImpl extends AbstractDaoImpl implements Contribution
 
         final Date now = new Date();
         contribution.setLastSaveTime(now);
-        getNamedParameterJdbcTemplate().update(query, getNamedParameters(contribution));
+        doUpdate(query, getNamedParameters(contribution));
     }
 
     @Override
@@ -193,6 +193,6 @@ public class ContributionDaoImpl extends AbstractDaoImpl implements Contribution
 
         final Map<String, Integer> args = Collections.singletonMap(idColumn, contribution.getId());
 
-        getNamedParameterJdbcTemplate().update(query, args);
+        doUpdate(query, args);
     }
 }

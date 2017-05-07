@@ -66,7 +66,7 @@ public class UserDaoImpl extends AbstractDaoImpl implements UserDao {
     }
 
     @Override
-    @LogMethod
+    @LogMethod(logReturnValue = false)
     public User findByUsername(final String username) {
         return this.findByUsername(username, false);
     }
@@ -75,7 +75,7 @@ public class UserDaoImpl extends AbstractDaoImpl implements UserDao {
      * @param lazy
      *            If <code>true</code>, {@link Authority authorities} of the desired {@link User} are not populated.
      */
-    @LogMethod
+    @LogMethod(logReturnValue = false)
     public User findByUsername(final String username, final boolean lazy) {
 
         final String usernameColumn = UserFieldEnum.USERNAME.getColumnName();
@@ -153,7 +153,7 @@ public class UserDaoImpl extends AbstractDaoImpl implements UserDao {
     }
 
     @Override
-    @LogMethod
+    @LogMethod(logReturnValue = false)
     public List<User> findAllOrdered(final OrderTypeEnum order, final boolean testUsers) {
 
         final String isTestUserColumn = UserFieldEnum.IS_TEST_USER.getColumnName();
@@ -231,7 +231,7 @@ public class UserDaoImpl extends AbstractDaoImpl implements UserDao {
                 subscribedToOtherSectionsColumn, smtpPortColumn, smtpPortColumn, redirectEmailColumn,
                 redirectEmailColumn, usernameColumn, usernameColumn);
 
-        getNamedParameterJdbcTemplate().update(query, getNamedParameters(user));
+        doUpdate(query, getNamedParameters(user));
 
         if (persistAuthorities) {
             // Updates authorities.
@@ -274,6 +274,6 @@ public class UserDaoImpl extends AbstractDaoImpl implements UserDao {
 
         final Map<String, String> args = Collections.singletonMap(usernameColumn, username);
 
-        getNamedParameterJdbcTemplate().update(query, args);
+        doUpdate(query, args);
     }
 }

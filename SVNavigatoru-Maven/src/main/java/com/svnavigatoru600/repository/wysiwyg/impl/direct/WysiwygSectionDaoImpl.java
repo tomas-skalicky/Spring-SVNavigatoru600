@@ -60,7 +60,7 @@ public class WysiwygSectionDaoImpl extends AbstractDaoImpl implements WysiwygSec
                 WysiwygSectionDaoImpl.TABLE_NAME, lastSaveTimeColumn, lastSaveTimeColumn, sourceCodeColumn,
                 sourceCodeColumn, nameColumn, nameColumn);
 
-        getNamedParameterJdbcTemplate().update(query, getNamedParameters(section));
+        doUpdate(query, getNamedParameters(section));
     }
 
 }

@@ -183,7 +183,7 @@ public class OtherDocumentRecordDaoImpl extends AbstractDaoImpl implements Other
                 OtherDocumentRecordDaoImpl.TABLE_NAME, nameColumn, nameColumn, descriptionColumn, descriptionColumn,
                 lastSaveTimeColumn, lastSaveTimeColumn, idColumn, idColumn);
 
-        getNamedParameterJdbcTemplate().update(query, getNamedParameters(record));
+        doUpdate(query, getNamedParameters(record));
 
         // Updates types.
         typeDao.delete(record.getId());

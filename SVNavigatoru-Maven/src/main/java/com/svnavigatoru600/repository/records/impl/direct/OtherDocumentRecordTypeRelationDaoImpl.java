@@ -81,6 +81,6 @@ public class OtherDocumentRecordTypeRelationDaoImpl extends AbstractDaoImpl
 
         final Map<String, Integer> args = Collections.singletonMap(idColumn, recordId);
 
-        getNamedParameterJdbcTemplate().update(query, args);
+        doUpdate(query, args);
     }
 }

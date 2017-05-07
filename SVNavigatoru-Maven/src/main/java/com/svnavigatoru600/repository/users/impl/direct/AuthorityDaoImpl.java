@@ -74,7 +74,7 @@ public class AuthorityDaoImpl extends AbstractDaoImpl implements AuthorityDao {
 
         final Map<String, String> args = Collections.singletonMap(usernameColumn, username);
 
-        getNamedParameterJdbcTemplate().update(query, args);
+        doUpdate(query, args);
     }
 
     @Override
@@ -88,6 +88,6 @@ public class AuthorityDaoImpl extends AbstractDaoImpl implements AuthorityDao {
         args.put(usernameColumn, username);
         args.put(typeColumn, authorityType.name());
 
-        getNamedParameterJdbcTemplate().update(query, args);
+        doUpdate(query, args);
     }
 }

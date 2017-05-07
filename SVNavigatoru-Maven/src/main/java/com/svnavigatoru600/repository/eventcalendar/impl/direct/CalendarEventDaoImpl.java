@@ -74,7 +74,7 @@ public class CalendarEventDaoImpl extends AbstractDaoImpl implements CalendarEve
                 CalendarEventDaoImpl.TABLE_NAME, nameColumn, nameColumn, dateColumn, dateColumn, descriptionColumn,
                 descriptionColumn, priorityColumn, priorityColumn, idColumn, idColumn);
 
-        getNamedParameterJdbcTemplate().update(query, getNamedParameters(event));
+        doUpdate(query, getNamedParameters(event));
     }
 
     @Override
@@ -95,6 +95,6 @@ public class CalendarEventDaoImpl extends AbstractDaoImpl implements CalendarEve
 
         final Map<String, Integer> args = Collections.singletonMap(idColumn, event.getId());
 
-        getNamedParameterJdbcTemplate().update(query, args);
+        doUpdate(query, args);
     }
 }

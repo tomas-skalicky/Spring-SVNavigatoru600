@@ -31,7 +31,7 @@ public abstract class AbstractDaoImpl extends NamedParameterJdbcDaoSupport {
      * @return the number of rows affected
      */
     @LogMethod
-    protected int doUpdate(final String query, final Map<String, Object> namedParameters) {
+    protected int doUpdate(final String query, final Map<String, ?> namedParameters) {
         return getNamedParameterJdbcTemplate().update(query, namedParameters);
     }
 

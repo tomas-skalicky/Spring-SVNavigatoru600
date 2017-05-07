@@ -109,6 +109,6 @@ public class NewsDaoImpl extends AbstractDaoImpl implements NewsDao {
 
         final Map<String, Integer> args = Collections.singletonMap(idColumn, news.getId());
 
-        getNamedParameterJdbcTemplate().update(query, args);
+        doUpdate(query, args);
     }
 }
