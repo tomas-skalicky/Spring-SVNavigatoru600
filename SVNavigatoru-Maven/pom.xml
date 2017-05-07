@@ -267,16 +267,6 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-surefire-plugin</artifactId>
                     <version>${maven-surefire-plugin.version}</version>
-                    <dependencies>
-                        <dependency>
-                            <!-- Necessary dependency. Otherwise, groups element does not work. The problem should be fixed 
-                                in the version 2.13 of maven-surefire-plugin. -->
-                            <!-- (see http://stackoverflow.com/questions/4970196/running-all-tests-from-a-category-using-maven) -->
-                            <groupId>org.apache.maven.surefire</groupId>
-                            <artifactId>surefire-junit47</artifactId>
-                            <version>2.12.4</version>
-                        </dependency>
-                    </dependencies>
                     <configuration>
                         <!-- Example of usage (on the command line): -->
                         <!-- mvn test -Dtests.category="com.svnavigatoru600.test.category.FastTests" -->
