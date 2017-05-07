@@ -66,6 +66,7 @@
         <dependency.jackson.version>2.8.8</dependency.jackson.version>
         <dependency.slf4j.version>1.7.25</dependency.slf4j.version>
         <dependency.tomcat.version>8.5.8</dependency.tomcat.version>
+        <dependency.aspectj.version>1.8.10</dependency.aspectj.version>
 
         <checkstyle.configLocation>D:/Documents/Private/SW/Eclipse/checkstyle.xml</checkstyle.configLocation>
 
@@ -595,13 +596,13 @@
             <dependency>
                 <groupId>org.aspectj</groupId>
                 <artifactId>aspectjrt</artifactId>
-                <version>1.6.12</version>
+                <version>${dependency.aspectj.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>org.aspectj</groupId>
                 <artifactId>aspectjweaver</artifactId>
-                <version>1.6.12</version>
+                <version>${dependency.aspectj.version}</version>
             </dependency>
 
             <dependency>
