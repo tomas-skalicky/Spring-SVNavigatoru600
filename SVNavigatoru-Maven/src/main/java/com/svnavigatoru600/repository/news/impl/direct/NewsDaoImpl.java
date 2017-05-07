@@ -6,6 +6,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.inject.Inject;
+
+import org.springframework.context.annotation.Lazy;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,6 +27,13 @@ import com.svnavigatoru600.repository.news.impl.NewsFieldEnum;
 @Repository("newsDao")
 @Transactional
 public class NewsDaoImpl extends AbstractDaoImpl implements NewsDao {
+
+    /**
+     * Purpose: To be able to use aspects.
+     */
+    @Inject
+    @Lazy
+    private NewsDaoImpl self;
 
     /**
      * Database table which provides a persistence of {@link News}.
@@ -74,15 +84,15 @@ public class NewsDaoImpl extends AbstractDaoImpl implements NewsDao {
 
         final Date now = new Date();
         news.setLastSaveTime(now);
-        getNamedParameterJdbcTemplate().update(query, getNamedParameters(news));
+        self.doUpdate(query, getNamedParameters(news));
     }
 
     @Override
     public int save(final News news) {
         final SimpleJdbcInsert insert = new SimpleJdbcInsert(getDataSource()).withTableName(NewsDaoImpl.TABLE_NAME)
-                .usingGeneratedKeyColumns(NewsFieldEnum.ID.getColumnName()).usingColumns(NewsFieldEnum.TITLE.getColumnName(),
-                        NewsFieldEnum.TEXT.getColumnName(), NewsFieldEnum.CREATION_TIME.getColumnName(),
-                        NewsFieldEnum.LAST_SAVE_TIME.getColumnName());
+                .usingGeneratedKeyColumns(NewsFieldEnum.ID.getColumnName())
+                .usingColumns(NewsFieldEnum.TITLE.getColumnName(), NewsFieldEnum.TEXT.getColumnName(),
+                        NewsFieldEnum.CREATION_TIME.getColumnName(), NewsFieldEnum.LAST_SAVE_TIME.getColumnName());
 
         final Date now = new Date();
         news.setCreationTime(now);
