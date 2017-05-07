@@ -35,7 +35,7 @@
     </logger>
 
     <logger name="org.springframework.jdbc" additivity="false">
-        <level value="info" />
+        <level value="debug" />
         <appender-ref ref="logfile"/>
     </logger>
 

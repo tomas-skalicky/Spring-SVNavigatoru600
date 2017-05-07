@@ -57,7 +57,7 @@ public class PersistenceConfig {
         dataSource.setMinPoolSize(3);
 
         // Maximum number of connections a pool will maintain at any given time.
-        dataSource.setMaxPoolSize(10);
+        dataSource.setMaxPoolSize(30);
 
         // Determines how many connections at a time c3p0 will try to acquire when the
         // pool is exhausted, i.e. all create connections are engaged and the current
@@ -66,11 +66,26 @@ public class PersistenceConfig {
 
         // Seconds a connection can remain pooled but unused before being discarded.
         // Zero means idle connections never expire.
-        dataSource.setMaxIdleTime(0);
+        //
+        // NOTE 1: It doesn't make sense to set maxIdleTime to a larger value than the value of MySQL variable
+        // wait_timeout (180 seconds in production).
+        //
+        // NOTE 2: wait_timeout = he number of seconds the server waits for activity on a non-interactive connection
+        // before closing it (see
+        // https://dev.mysql.com/doc/refman/5.7/en/server-system-variables.html#sysvar_wait_timeout)
+        //
+        // NOTE 3: IMHO JDBC connector is by default a non-interactive client. SQL Developer and similar are interactive
+        // clients.
+        //
+        // NOTE 4: The current values of production server variables can be found in cPanel > phpMyAdmin > variables
+        // (search without underscores).
+        dataSource.setMaxIdleTime(180);
 
         // If this is a number greater than 0, c3p0 will test all idle,
         // pooled but unchecked-out connections, every this number of seconds.
-        dataSource.setIdleConnectionTestPeriod(3000);
+        //
+        // NOTE: It doesn't make sense to set idleConnectionTestPeriod to values larger than maxIdleTime.
+        dataSource.setIdleConnectionTestPeriod(60);
 
         // If true, an operation will be performed asynchronously at every connection checkin
         // to verify that the connection is valid. Use in combination with idleConnectionTestPeriod
