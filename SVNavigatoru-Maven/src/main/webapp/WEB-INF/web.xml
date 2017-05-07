@@ -27,7 +27,7 @@
         Fully-qualified packages may also be specified for component-scanning -->
     <context-param>
         <param-name>contextConfigLocation</param-name>
-        <param-value>com.svnavigatoru600.common.config.WebAppConfig</param-value>
+        <param-value>com.svnavigatoru600.common.config.AppConfig</param-value>
     </context-param>
 
     <context-param>

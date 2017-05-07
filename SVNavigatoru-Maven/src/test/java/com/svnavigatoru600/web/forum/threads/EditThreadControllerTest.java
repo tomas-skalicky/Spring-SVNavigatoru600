@@ -25,14 +25,14 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import com.svnavigatoru600.domain.forum.ForumThread;
 import com.svnavigatoru600.service.forum.ThreadService;
-import com.svnavigatoru600.test.category.ControllerIntegrationTests;
+import com.svnavigatoru600.test.category.IntegrationTests;
 import com.svnavigatoru600.test.web.forum.threads.TestConfigForEditThreadControllerTest;
 import com.svnavigatoru600.web.url.forum.ThreadsUrlParts;
 
 /**
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
-@Category(ControllerIntegrationTests.class)
+@Category(IntegrationTests.class)
 @WebAppConfiguration
 @ContextConfiguration(classes = TestConfigForEditThreadControllerTest.class)
 public final class EditThreadControllerTest {

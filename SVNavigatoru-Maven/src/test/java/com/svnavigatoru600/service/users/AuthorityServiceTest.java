@@ -23,7 +23,7 @@ import org.springframework.context.MessageSource;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestContextManager;
 
-import com.svnavigatoru600.common.config.WebAppConfig;
+import com.svnavigatoru600.common.config.AppConfig;
 import com.svnavigatoru600.domain.users.AuthorityTypeEnum;
 import com.svnavigatoru600.service.util.Localization;
 import com.svnavigatoru600.test.category.UnitTests;
@@ -35,7 +35,7 @@ import com.svnavigatoru600.test.category.UnitTests;
 @RunWith(PowerMockRunner.class)
 @PrepareForTest(Localization.class)
 @PowerMockIgnore(value = "javax.management.*")
-@ContextConfiguration(classes = WebAppConfig.class)
+@ContextConfiguration(classes = AppConfig.class)
 public class AuthorityServiceTest {
 
     private TestContextManager testContextManager;

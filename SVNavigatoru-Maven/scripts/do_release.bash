@@ -6,7 +6,7 @@ set -e
 # If so, it performs release.
 (cd ../ \
     && mvn clean compile \
-    && mvn test -Dtests.category=com.svnavigatoru600.test.category.ControllerIntegrationTests \
+    && mvn test -Dtests.category=com.svnavigatoru600.test.category.IntegrationTests \
     && mvn test -Dtests.category=com.svnavigatoru600.test.category.PersistenceTests \
     && mvn test -Dtests.category=com.svnavigatoru600.test.category.UnitTests \
     && mvn -DskipTests release:prepare -Darguments=-DskipTests \

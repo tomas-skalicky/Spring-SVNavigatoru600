@@ -10,6 +10,7 @@ import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.svnavigatoru600.common.annotations.LogMethod;
 import com.svnavigatoru600.domain.News;
 import com.svnavigatoru600.repository.AbstractDaoImpl;
 import com.svnavigatoru600.repository.NewsDao;
@@ -61,6 +62,7 @@ public class NewsDaoImpl extends AbstractDaoImpl implements NewsDao {
     }
 
     @Override
+    @LogMethod
     public void update(final News news) {
         final String idColumn = NewsFieldEnum.ID.getColumnName();
         final String titleColumn = NewsFieldEnum.TITLE.getColumnName();

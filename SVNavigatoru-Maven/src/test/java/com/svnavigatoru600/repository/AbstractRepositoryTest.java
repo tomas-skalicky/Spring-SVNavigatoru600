@@ -10,7 +10,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
-import com.svnavigatoru600.common.config.WebAppConfig;
+import com.svnavigatoru600.common.config.AppConfig;
 import com.svnavigatoru600.repository.util.AbstractDatabaseLoader;
 import com.svnavigatoru600.repository.util.HsqlDatabaseLoader;
 
@@ -25,7 +25,7 @@ public abstract class AbstractRepositoryTest {
      * Application context which contains necessary beans.
      */
     protected static final ApplicationContext APPLICATION_CONTEXT = new AnnotationConfigApplicationContext(
-            WebAppConfig.class);
+            AppConfig.class);
     /**
      * Utility functions for retrieving DAO objects or creation default representants of persisted classes.
      */

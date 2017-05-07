@@ -31,7 +31,7 @@ project_home=$(pwd)
 mvn clean package -DskipTests
 mvn verify -P coverage,run-integration-tests --debug -Dtests.category=com.svnavigatoru600.test.category.UnitTests
 mvn verify -P coverage,run-integration-tests --debug -Dtests.category=com.svnavigatoru600.test.category.PersistenceTests
-mvn verify -P coverage,run-integration-tests --debug -Dtests.category=com.svnavigatoru600.test.category.ControllerIntegrationTests
+mvn verify -P coverage,run-integration-tests --debug -Dtests.category=com.svnavigatoru600.test.category.IntegrationTests
 
 build_home=$project_home/target
 cd "$build_home"

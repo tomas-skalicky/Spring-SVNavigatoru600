@@ -21,14 +21,14 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 
 import com.svnavigatoru600.service.users.UserService;
-import com.svnavigatoru600.test.category.ControllerIntegrationTests;
+import com.svnavigatoru600.test.category.IntegrationTests;
 import com.svnavigatoru600.test.web.users.administration.threads.TestConfigForNewUserControllerTest;
 import com.svnavigatoru600.web.url.users.UserAdministrationUrlParts;
 
 /**
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
-@Category(ControllerIntegrationTests.class)
+@Category(IntegrationTests.class)
 @WebAppConfiguration
 @ContextConfiguration(classes = TestConfigForNewUserControllerTest.class)
 public final class NewUserControllerTest {

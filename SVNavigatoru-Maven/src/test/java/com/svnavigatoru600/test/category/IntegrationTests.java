@@ -5,5 +5,5 @@ package com.svnavigatoru600.test.category;
  * 
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
-public interface ControllerIntegrationTests {
+public interface IntegrationTests {
 }

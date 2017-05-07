@@ -6,7 +6,9 @@ import javax.inject.Inject;
 import javax.sql.DataSource;
 
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
@@ -20,7 +22,9 @@ import com.svnavigatoru600.common.settings.JdbcSettings;
  */
 @Configuration
 @EnableTransactionManagement(proxyTargetClass = CommonConstants.USE_CGLIB_PROXY)
-public class DataSourceConfig {
+@ComponentScan(basePackageClasses = com.svnavigatoru600.repository.PackageMarker.class)
+@Import(CommonConfig.class)
+public class PersistenceConfig {
 
     @Inject
     private JdbcSettings jdbcSettings;

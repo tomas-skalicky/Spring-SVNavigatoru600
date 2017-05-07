@@ -12,14 +12,12 @@ import org.springframework.context.annotation.ImportResource;
 @Configuration
 // @formatter:off
 @ComponentScan(basePackageClasses = {
-        com.svnavigatoru600.common.settings.PackageMarker.class,
         com.svnavigatoru600.domain.PackageMarker.class,
-        com.svnavigatoru600.repository.PackageMarker.class,
         com.svnavigatoru600.service.PackageMarker.class,
         })
 //@formatter:on
 @ImportResource({ "classpath:spring/applicationContext-security.xml" })
-@Import({ DataSourceConfig.class, CacheConfig.class })
-public class WebAppConfig {
+@Import(PersistenceConfig.class)
+public class AppConfig {
 
 }
