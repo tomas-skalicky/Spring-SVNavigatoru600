@@ -3,11 +3,10 @@ package com.svnavigatoru600.service.util;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.TimeZone;
-
-import com.google.common.collect.Maps;
 
 /**
  * Provides a set of static functions related to {@link Date Dates}.
@@ -43,12 +42,12 @@ public final class DateUtils {
      * Static constructor.
      */
     static {
-        SHORT_DATE_FORMATS = Maps.newHashMap();
-        MIDDLE_DATE_FORMATS = Maps.newHashMap();
-        LONG_DATE_FORMATS = Maps.newHashMap();
-        SHORT_DAY_FORMATS = Maps.newHashMap();
-        LONG_MONTH_FORMATS = Maps.newHashMap();
-        DEFAULT_DATE_TIME_FORMATS = Maps.newHashMap();
+        SHORT_DATE_FORMATS = new HashMap<>();
+        MIDDLE_DATE_FORMATS = new HashMap<>();
+        LONG_DATE_FORMATS = new HashMap<>();
+        SHORT_DAY_FORMATS = new HashMap<>();
+        LONG_MONTH_FORMATS = new HashMap<>();
+        DEFAULT_DATE_TIME_FORMATS = new HashMap<>();
 
         final Locale csCZLocale = new Locale("cs", "CZ");
         SHORT_DATE_FORMATS.put(csCZLocale, "d.M.yy");

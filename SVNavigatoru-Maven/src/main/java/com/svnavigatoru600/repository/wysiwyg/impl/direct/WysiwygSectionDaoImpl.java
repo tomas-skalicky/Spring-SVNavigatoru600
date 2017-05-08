@@ -2,12 +2,12 @@ package com.svnavigatoru600.repository.wysiwyg.impl.direct;
 
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.google.common.collect.Maps;
 import com.svnavigatoru600.domain.WysiwygSection;
 import com.svnavigatoru600.domain.WysiwygSectionNameEnum;
 import com.svnavigatoru600.repository.AbstractDaoImpl;
@@ -41,7 +41,7 @@ public class WysiwygSectionDaoImpl extends AbstractDaoImpl implements WysiwygSec
      * Maps properties of the given {@link WysiwygSection} to names of the corresponding database columns.
      */
     private Map<String, Object> getNamedParameters(final WysiwygSection section) {
-        final Map<String, Object> parameters = Maps.newHashMap();
+        final Map<String, Object> parameters = new HashMap<>();
         parameters.put(WysiwygSectionFieldEnum.NAME.getColumnName(), section.getName());
         parameters.put(WysiwygSectionFieldEnum.LAST_SAVE_TIME.getColumnName(), section.getLastSaveTime());
         parameters.put(WysiwygSectionFieldEnum.SOURCE_CODE.getColumnName(), section.getSourceCode());

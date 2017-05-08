@@ -2,6 +2,7 @@ package com.svnavigatoru600.service.records;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -13,7 +14,6 @@ import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.google.common.collect.Maps;
 import com.svnavigatoru600.domain.records.OtherDocumentRecord;
 import com.svnavigatoru600.domain.records.OtherDocumentRecordTypeEnum;
 import com.svnavigatoru600.domain.users.AuthorityTypeEnum;
@@ -393,7 +393,7 @@ public class OtherDocumentRecordService extends AbstractDocumentRecordService {
     public static Map<OtherDocumentRecord, String> getLocalizedDeleteQuestions(final List<OtherDocumentRecord> records,
             final HttpServletRequest request, final MessageSource messageSource) {
         final String messageCode = "other-documents.do-you-really-want-to-delete-document";
-        final Map<OtherDocumentRecord, String> questions = Maps.newHashMap();
+        final Map<OtherDocumentRecord, String> questions = new HashMap<>();
 
         for (final OtherDocumentRecord record : records) {
             final Object[] messageParams = new Object[] { record.getName() };
@@ -408,7 +408,7 @@ public class OtherDocumentRecordService extends AbstractDocumentRecordService {
      */
     public static Map<Long, String> getTypeCheckboxId() {
         final String commonIdFormat = "newTypes[%s]";
-        final Map<Long, String> checkboxIds = Maps.newHashMap();
+        final Map<Long, String> checkboxIds = new HashMap<>();
 
         for (final OtherDocumentRecordTypeEnum type : OtherDocumentRecordTypeEnum.values()) {
             final long typeOrdinal = type.getOrdinal();
@@ -423,7 +423,7 @@ public class OtherDocumentRecordService extends AbstractDocumentRecordService {
      */
     public static Map<Long, String> getLocalizedTypeTitles(final HttpServletRequest request,
             final MessageSource messageSource) {
-        final Map<Long, String> checkboxTitles = Maps.newHashMap();
+        final Map<Long, String> checkboxTitles = new HashMap<>();
 
         for (final OtherDocumentRecordTypeEnum type : OtherDocumentRecordTypeEnum.values()) {
             final String localizedTitle = Localization.findLocaleMessage(messageSource, request,

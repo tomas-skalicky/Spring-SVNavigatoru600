@@ -1,6 +1,7 @@
 package com.svnavigatoru600.service.users;
 
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -12,7 +13,6 @@ import org.springframework.context.MessageSource;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Service;
 
-import com.google.common.collect.Maps;
 import com.svnavigatoru600.domain.users.Authority;
 import com.svnavigatoru600.domain.users.AuthorityTypeEnum;
 import com.svnavigatoru600.repository.users.AuthorityDao;
@@ -68,7 +68,7 @@ public class AuthorityService {
      */
     public static Map<Long, String> getRoleCheckboxId() {
         final String commonIdFormat = "newAuthorities[%s]";
-        final Map<Long, String> checkboxIds = Maps.newHashMap();
+        final Map<Long, String> checkboxIds = new HashMap<>();
 
         for (final AuthorityTypeEnum type : AuthorityTypeEnum.values()) {
             final long typeOrdinal = type.getOrdinal();
@@ -83,7 +83,7 @@ public class AuthorityService {
      */
     @Cacheable("localizedRoleTitles")
     public Map<Long, String> getLocalizedRoleTitles(final HttpServletRequest request, final MessageSource messageSource) {
-        final Map<Long, String> ordinalTitleMap = Maps.newHashMap();
+        final Map<Long, String> ordinalTitleMap = new HashMap<>();
 
         for (final AuthorityTypeEnum type : AuthorityTypeEnum.values()) {
             final String localizedTitle = Localization.findLocaleMessage(messageSource, request,

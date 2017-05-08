@@ -2,6 +2,7 @@ package com.svnavigatoru600.repository.records.impl.direct;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -9,7 +10,6 @@ import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.google.common.collect.Maps;
 import com.svnavigatoru600.domain.records.OtherDocumentRecordTypeRelation;
 import com.svnavigatoru600.domain.records.OtherDocumentRecordTypeRelationId;
 import com.svnavigatoru600.repository.AbstractDaoImpl;
@@ -47,7 +47,7 @@ public class OtherDocumentRecordTypeRelationDaoImpl extends AbstractDaoImpl
      * database column.
      */
     private Map<String, Object> getNamedParameters(final OtherDocumentRecordTypeRelation typeRelation) {
-        final Map<String, Object> parameters = Maps.newHashMap();
+        final Map<String, Object> parameters = new HashMap<>();
         final OtherDocumentRecordTypeRelationId id = typeRelation.getId();
         parameters.put(OtherDocumentRecordTypeRelationFieldEnum.RECORD_ID.getColumnName(), id.getRecordId());
         parameters.put(OtherDocumentRecordTypeRelationFieldEnum.TYPE.getColumnName(), id.getType());

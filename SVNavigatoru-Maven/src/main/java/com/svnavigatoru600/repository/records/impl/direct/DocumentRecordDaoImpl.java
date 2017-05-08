@@ -1,6 +1,7 @@
 package com.svnavigatoru600.repository.records.impl.direct;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.sql.DataSource;
@@ -10,7 +11,6 @@ import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.google.common.collect.Maps;
 import com.svnavigatoru600.domain.records.AbstractDocumentRecord;
 import com.svnavigatoru600.repository.AbstractDaoImpl;
 import com.svnavigatoru600.repository.QueryUtil;
@@ -32,7 +32,7 @@ public class DocumentRecordDaoImpl extends AbstractDaoImpl {
      * Maps properties of the given {@link AbstractDocumentRecord} to names of the corresponding database column.
      */
     private Map<String, Object> getNamedParameters(final AbstractDocumentRecord record) {
-        final Map<String, Object> parameters = Maps.newHashMap();
+        final Map<String, Object> parameters = new HashMap<>();
         parameters.put(DocumentRecordFieldEnum.ID.getColumnName(), record.getId());
         parameters.put(DocumentRecordFieldEnum.FILE_NAME.getColumnName(), record.getFileName());
         parameters.put(DocumentRecordFieldEnum.FILE.getColumnName(), record.getFile());

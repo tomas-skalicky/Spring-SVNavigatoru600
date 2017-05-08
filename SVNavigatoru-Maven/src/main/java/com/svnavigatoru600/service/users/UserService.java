@@ -1,6 +1,7 @@
 package com.svnavigatoru600.service.users;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -12,7 +13,6 @@ import org.springframework.context.MessageSource;
 import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.stereotype.Service;
 
-import com.google.common.collect.Maps;
 import com.svnavigatoru600.domain.forum.ForumContribution;
 import com.svnavigatoru600.domain.forum.ForumThread;
 import com.svnavigatoru600.domain.users.AuthorityTypeEnum;
@@ -113,7 +113,7 @@ public class UserService {
     public List<User> findAllWithEmailByAuthorityAndSubscription(final AuthorityTypeEnum authority,
             final NotificationTypeEnum notificationType) {
         final List<User> users = userDao.findAllByAuthorityAndSubscription(authority.name(), notificationType);
-        final List<User> usersWithEmail = new ArrayList<User>(users.size());
+        final List<User> usersWithEmail = new ArrayList<>(users.size());
         for (final User user : users) {
             if (StringUtils.isNotBlank(user.getEmail())) {
                 usersWithEmail.add(user);
@@ -386,7 +386,7 @@ public class UserService {
     public static Map<User, String> getLocalizedDeleteQuestions(final List<User> users, final HttpServletRequest request,
             final MessageSource messageSource) {
         final String messageCode = "user-administration.do-you-really-want-to-delete-user";
-        final Map<User, String> questions = Maps.newHashMap();
+        final Map<User, String> questions = new HashMap<>();
 
         for (final User user : users) {
             final Object[] messageParams = new Object[] { user.getUsername(), user.getFullName() };
@@ -401,7 +401,7 @@ public class UserService {
      */
     public static Map<Long, String> getLocalizedNotificationTitles(final HttpServletRequest request,
             final MessageSource messageSource) {
-        final Map<Long, String> ordinalTitleMap = Maps.newHashMap();
+        final Map<Long, String> ordinalTitleMap = new HashMap<>();
 
         for (final NotificationTypeEnum type : NotificationTypeEnum.values()) {
             final String localizedTitle = Localization.findLocaleMessage(messageSource, request,

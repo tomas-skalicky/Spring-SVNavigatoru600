@@ -1,5 +1,6 @@
 package com.svnavigatoru600.service.forum;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -10,7 +11,6 @@ import org.springframework.context.MessageSource;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
-import com.google.common.collect.Maps;
 import com.svnavigatoru600.domain.forum.ForumThread;
 import com.svnavigatoru600.domain.users.AuthorityTypeEnum;
 import com.svnavigatoru600.domain.users.User;
@@ -162,7 +162,7 @@ public class ThreadService implements SubjectOfNotificationService {
     public static Map<ForumThread, String> getLocalizedDeleteQuestions(final List<ForumThread> threads,
             final HttpServletRequest request, final MessageSource messageSource) {
         final String messageCode = "forum.threads.do-you-really-want-to-delete-thread";
-        final Map<ForumThread, String> questions = Maps.newHashMap();
+        final Map<ForumThread, String> questions = new HashMap<>();
 
         for (final ForumThread thread : threads) {
             final Object[] messageParams = new Object[] { thread.getName() };

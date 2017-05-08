@@ -1,6 +1,7 @@
 package com.svnavigatoru600.repository.users.impl.direct;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -13,7 +14,6 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.google.common.collect.Maps;
 import com.svnavigatoru600.common.annotations.LogMethod;
 import com.svnavigatoru600.domain.users.Authority;
 import com.svnavigatoru600.domain.users.NotificationTypeEnum;
@@ -145,7 +145,7 @@ public class UserDaoImpl extends AbstractDaoImpl implements UserDao {
                 UserFieldEnum.USERNAME.getColumnName(), authorityColumn, authorityColumn, subscriptionColumn,
                 subscriptionColumn);
 
-        final Map<String, Object> args = Maps.newHashMap();
+        final Map<String, Object> args = new HashMap<>();
         args.put(authorityColumn, authority);
         args.put(subscriptionColumn, Boolean.TRUE);
 
@@ -173,7 +173,7 @@ public class UserDaoImpl extends AbstractDaoImpl implements UserDao {
      * Maps properties of the given {@link User} to names of the corresponding database columns.
      */
     private Map<String, Object> getNamedParameters(final User user) {
-        final Map<String, Object> parameters = Maps.newHashMap();
+        final Map<String, Object> parameters = new HashMap<>();
         parameters.put(UserFieldEnum.USERNAME.getColumnName(), user.getUsername());
         parameters.put(UserFieldEnum.PASSWORD.getColumnName(), user.getPassword());
         parameters.put(UserFieldEnum.ENABLED.getColumnName(), user.isEnabled());

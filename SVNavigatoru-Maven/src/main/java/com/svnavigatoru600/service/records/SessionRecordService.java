@@ -2,6 +2,7 @@ package com.svnavigatoru600.service.records;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -14,7 +15,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
 import com.svnavigatoru600.domain.records.SessionRecord;
 import com.svnavigatoru600.domain.records.SessionRecordTypeEnum;
 import com.svnavigatoru600.domain.users.AuthorityTypeEnum;
@@ -373,7 +373,7 @@ public class SessionRecordService extends AbstractDocumentRecordService {
      */
     public static Map<SessionRecord, String> getLocalizedTypeTitles(final List<SessionRecord> records,
             final HttpServletRequest request, final MessageSource messageSource) {
-        final Map<SessionRecord, String> recordLocalizedTypeMap = Maps.newHashMap();
+        final Map<SessionRecord, String> recordLocalizedTypeMap = new HashMap<>();
 
         for (final SessionRecord record : records) {
             final String localizationCode = record.getTypedType().getLocalizationCode();
@@ -390,7 +390,7 @@ public class SessionRecordService extends AbstractDocumentRecordService {
     public static Map<SessionRecord, String> getLocalizedSessionDates(final List<SessionRecord> records,
             final HttpServletRequest request) {
         final Locale locale = Localization.getLocale(request);
-        final Map<SessionRecord, String> sessionDates = Maps.newHashMap();
+        final Map<SessionRecord, String> sessionDates = new HashMap<>();
 
         for (final SessionRecord record : records) {
             final String date = DateUtils.format(record.getSessionDate(), DateUtils.LONG_DATE_FORMATS.get(locale), locale);
@@ -406,7 +406,7 @@ public class SessionRecordService extends AbstractDocumentRecordService {
     public static Map<SessionRecord, String> getLocalizedDeleteQuestions(final List<SessionRecord> records,
             final HttpServletRequest request, final Map<SessionRecord, String> localizedSessionDates, final MessageSource messageSource) {
         final String messageCode = "session-records.do-you-really-want-to-delete-record";
-        final Map<SessionRecord, String> questions = Maps.newHashMap();
+        final Map<SessionRecord, String> questions = new HashMap<>();
 
         for (final SessionRecord record : records) {
             final Object[] messageParams = new Object[] { localizedSessionDates.get(record) };

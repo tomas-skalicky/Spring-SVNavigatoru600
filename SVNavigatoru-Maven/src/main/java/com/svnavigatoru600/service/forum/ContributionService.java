@@ -1,5 +1,6 @@
 package com.svnavigatoru600.service.forum;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -10,7 +11,6 @@ import org.springframework.context.MessageSource;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
-import com.google.common.collect.Maps;
 import com.svnavigatoru600.domain.forum.ForumContribution;
 import com.svnavigatoru600.domain.users.AuthorityTypeEnum;
 import com.svnavigatoru600.domain.users.User;
@@ -233,7 +233,7 @@ public class ContributionService implements SubjectOfNotificationService {
             final MessageSource messageSource) {
         final String messageCode = "forum.contributions.do-you-really-want-to-delete-contribution";
         final String question = Localization.findLocaleMessage(messageSource, request, messageCode);
-        final Map<ForumContribution, String> questions = Maps.newHashMap();
+        final Map<ForumContribution, String> questions = new HashMap<>();
 
         for (final ForumContribution contribution : contributions) {
             questions.put(contribution, question);

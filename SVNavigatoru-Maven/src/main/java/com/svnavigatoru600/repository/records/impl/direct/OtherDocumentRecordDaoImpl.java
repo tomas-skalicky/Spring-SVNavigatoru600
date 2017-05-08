@@ -2,6 +2,7 @@ package com.svnavigatoru600.repository.records.impl.direct;
 
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -13,7 +14,6 @@ import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import com.svnavigatoru600.domain.records.AbstractDocumentRecord;
 import com.svnavigatoru600.domain.records.OtherDocumentRecord;
@@ -157,7 +157,7 @@ public class OtherDocumentRecordDaoImpl extends AbstractDaoImpl implements Other
      * Maps properties of the given {@link OtherDocumentRecord} to names of the corresponding database columns.
      */
     private Map<String, Object> getNamedParameters(final OtherDocumentRecord record) {
-        final Map<String, Object> parameters = Maps.newHashMap();
+        final Map<String, Object> parameters = new HashMap<>();
         parameters.put(OtherDocumentRecordFieldEnum.ID.getColumnName(), record.getId());
         parameters.put(OtherDocumentRecordFieldEnum.NAME.getColumnName(), record.getName());
         parameters.put(OtherDocumentRecordFieldEnum.DESCRIPTION.getColumnName(), record.getDescription());

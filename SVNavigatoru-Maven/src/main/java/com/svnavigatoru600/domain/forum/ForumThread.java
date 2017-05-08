@@ -2,12 +2,12 @@ package com.svnavigatoru600.domain.forum;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
-import com.google.common.collect.Maps;
 import com.svnavigatoru600.domain.users.User;
 
 /**
@@ -66,7 +66,7 @@ public class ForumThread implements Serializable, Comparable<ForumThread> {
      * method finds the author of such a contribution.
      */
     public static Map<ForumThread, ForumContribution> getLastSavedContributions(final List<ForumThread> threads) {
-        final Map<ForumThread, ForumContribution> lastSavedContributions = Maps.newHashMap();
+        final Map<ForumThread, ForumContribution> lastSavedContributions = new HashMap<>();
 
         for (final ForumThread thread : threads) {
             lastSavedContributions.put(thread, thread.getLastSavedContribution());
