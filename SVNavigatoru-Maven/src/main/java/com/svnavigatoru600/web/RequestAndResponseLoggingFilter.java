@@ -2,16 +2,14 @@ package com.svnavigatoru600.web;
 
 import static com.svnavigatoru600.common.constants.CommonConstants.NEW_LINE;
 
-import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.Collections;
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
@@ -44,7 +42,6 @@ import com.google.common.annotations.VisibleForTesting;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Iterators;
 import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
 import com.svnavigatoru600.common.constants.CommonConstants;
 
 /**
@@ -74,46 +71,37 @@ public class RequestAndResponseLoggingFilter extends OncePerRequestFilter {
      */
     @VisibleForTesting
     class RequestWrapper extends HttpServletRequestWrapper {
-        private final String cachedPayload;
-        private final Map<String, String[]> parameterMap = Maps.newHashMap();
+        private final byte[] cachedPayload;
+        private final Map<String, String[]> parameterMap = new HashMap<>();
 
         public RequestWrapper(final HttpServletRequest request) {
             super(request);
             cachedPayload = retrievePayload(request);
         }
 
-        private String retrievePayload(final HttpServletRequest request) {
-            final StringBuilder stringBuilder = new StringBuilder();
-            BufferedReader bufferedReader = null;
+        private byte[] retrievePayload(final HttpServletRequest request) {
             try {
-                final InputStream inputStream = request.getInputStream();
-                if (inputStream != null) {
-                    bufferedReader = createReader(inputStream);
-                    final char[] charBuffer = new char[128];
-                    int bytesRead = -1;
-                    while ((bytesRead = bufferedReader.read(charBuffer)) > 0) {
-                        stringBuilder.append(charBuffer, 0, bytesRead);
-                    }
-                } else {
-                    stringBuilder.append("");
+                final ServletInputStream inputStream = request.getInputStream();
+                if (inputStream == null) {
+                    return new byte[0];
                 }
-            } catch (final IOException ex) {
-                throw new RuntimeException(ex);
-            } finally {
-                if (bufferedReader != null) {
-                    try {
-                        bufferedReader.close();
-                    } catch (final IOException ex) {
-                        throw new RuntimeException(ex);
+
+                try (final ByteArrayOutputStream outputStream = new ByteArrayOutputStream()) {
+                    final byte[] byteBuffer = new byte[1024];
+                    int readByteCount = 0;
+                    while ((readByteCount = inputStream.read(byteBuffer)) > 0) {
+                        outputStream.write(byteBuffer, 0, readByteCount);
                     }
+                    return outputStream.toByteArray();
                 }
+            } catch (final IOException e) {
+                throw new RuntimeException(e);
             }
-            return stringBuilder.toString();
         }
 
         @Override
         public ServletInputStream getInputStream() throws IOException {
-            final ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(cachedPayload.getBytes());
+            final ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(cachedPayload);
             final ServletInputStream servletInputStream = new ServletInputStream() {
                 boolean finished = false;
 
@@ -142,10 +130,6 @@ public class RequestAndResponseLoggingFilter extends OncePerRequestFilter {
                 }
             };
             return servletInputStream;
-        }
-
-        private BufferedReader createReader(final InputStream inputStream) throws IOException {
-            return new BufferedReader(new InputStreamReader(inputStream, CommonConstants.DEFAULT_CHARSET));
         }
 
         @Override
@@ -191,16 +175,22 @@ public class RequestAndResponseLoggingFilter extends OncePerRequestFilter {
                     && HttpMethod.POST.matches(getMethod()));
         }
 
+        public boolean isMultipartFormPost() {
+            final String contentType = getContentType();
+            return (contentType != null && contentType.contains(MediaType.MULTIPART_FORM_DATA_VALUE)
+                    && HttpMethod.POST.matches(getMethod()));
+        }
+
         private void readRequestParametersFromCachedPayload() {
             if (parameterMap.size() == 0) {
-                parameterMap.putAll(retrieveRequestParametersFromPayload(cachedPayload));
+                parameterMap.putAll(retrieveRequestParametersFromPayload(getCachedPayloadString()));
             }
         }
 
         @VisibleForTesting
         Map<String, String[]> retrieveRequestParametersFromPayload(final String input) {
 
-            final Map<String, String[]> resultMap = Maps.newHashMap();
+            final Map<String, String[]> resultMap = new HashMap<>();
 
             try {
                 final String[] parameterNameValuePairs = input.split("&");
@@ -210,21 +200,25 @@ public class RequestAndResponseLoggingFilter extends OncePerRequestFilter {
 
                     final String parameterName = parameter[0];
                     // Cached payload is still encoded.
-                    final String decoredParameterValue = java.net.URLDecoder.decode(parameter[1],
+                    final String decodedParameterValue = java.net.URLDecoder.decode(parameter[1],
                             CommonConstants.DEFAULT_CHARSET.name());
 
                     // Hides passwords.
                     final String parameterValueToLog = PASSWORD_LOG_IN_PARAMETER_NAME.equals(parameterName)
-                            ? PASSWORD_PLACEHOLDER : decoredParameterValue;
+                            ? PASSWORD_PLACEHOLDER : decodedParameterValue;
                     logger.info("parameter name=" + parameterName + ", value=" + parameterValueToLog);
 
-                    resultMap.put(parameterName, new String[] { decoredParameterValue });
+                    resultMap.put(parameterName, new String[] { decodedParameterValue });
                 }
             } catch (final UnsupportedEncodingException ex) {
                 throw new IllegalStateException(ex);
             }
 
             return resultMap;
+        }
+
+        private String getCachedPayloadString() {
+            return new String(cachedPayload, CommonConstants.DEFAULT_CHARSET);
         }
     }
 
@@ -395,11 +389,11 @@ public class RequestAndResponseLoggingFilter extends OncePerRequestFilter {
         appendToRequestMessage(message, "user", request.getRemoteUser());
         appendHeadersToMessage(message, request);
 
-        if (StringUtils.isNotBlank(request.cachedPayload)) {
+        if (!request.isMultipartFormPost() && request.cachedPayload != null && request.cachedPayload.length > 0) {
             message.append(NEW_LINE);
 
             // Hides passwords.
-            final String payloadWithHiddenPassword = hideLogInPasswordInPayload(request.cachedPayload);
+            final String payloadWithHiddenPassword = hideLogInPasswordInPayload(request.getCachedPayloadString());
             appendToRequestMessage(message, "payload", payloadWithHiddenPassword);
         }
 
