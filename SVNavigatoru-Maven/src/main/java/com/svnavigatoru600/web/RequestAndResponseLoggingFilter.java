@@ -200,8 +200,8 @@ public class RequestAndResponseLoggingFilter extends OncePerRequestFilter {
 
                     final String parameterName = parameter[0];
                     // Cached payload is still encoded.
-                    final String decodedParameterValue = java.net.URLDecoder.decode(parameter[1],
-                            CommonConstants.DEFAULT_CHARSET.name());
+                    final String decodedParameterValue = parameter.length == 2
+                            ? java.net.URLDecoder.decode(parameter[1], CommonConstants.DEFAULT_CHARSET.name()) : null;
 
                     // Hides passwords.
                     final String parameterValueToLog = PASSWORD_LOG_IN_PARAMETER_NAME.equals(parameterName)
