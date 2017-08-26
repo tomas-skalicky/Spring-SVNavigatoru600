@@ -19,7 +19,8 @@
 
 6) Database
    - Either use mysql-workbench command to start a database client or
-   - Go to the scripts folder and execute ./connect_to_test_database.bash
+   - Use
+     cd /home/tom/Documents/development/Java/SourceFiles/Spring/SVNavigatoru/SVNavigatoru-Maven/scripts; ./connect_to_test_database.bash
 
 7) Execute tail -F /home/tom/Documents/development/Java/SourceFiles/Spring/SVNavigatoru/SVNavigatoru-Maven/target/tomcat/logs/svnavigatoru600.log
    to observe a log file.

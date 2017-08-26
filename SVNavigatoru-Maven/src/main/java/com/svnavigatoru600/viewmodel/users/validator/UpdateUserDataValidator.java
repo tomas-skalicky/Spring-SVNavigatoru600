@@ -13,20 +13,20 @@ import com.svnavigatoru600.viewmodel.users.UpdateUserData;
 /**
  * Validates the data of the current {@link com.svnavigatoru600.domain.users.User User} filled in in the
  * <i>user-account.jsp</i> form.
- * 
+ *
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
 @Service
 public class UpdateUserDataValidator implements Validator {
 
     @Override
-    public boolean supports(Class<?> clazz) {
+    public boolean supports(final Class<?> clazz) {
         return UpdateUserData.class.isAssignableFrom(clazz);
     }
 
     @Override
-    public void validate(Object target, Errors errors) {
-        UpdateUserData command = (UpdateUserData) target;
+    public void validate(final Object target, final Errors errors) {
+        final UpdateUserData command = (UpdateUserData) target;
         checkNewPassword(command.getNewPassword(), command.getNewPasswordConfirmation(), errors);
         checkNewEmail(command.getUser().getEmail(), errors);
         checkNewPhone(command.getUser().getPhone(), errors);
@@ -35,7 +35,7 @@ public class UpdateUserDataValidator implements Validator {
     /**
      * Checks whether the given <code>password</code> and its <code>confirmation</code> are equal and whether they
      * represent the valid password. If both of them are blank, the parameters are OK.
-     * 
+     *
      * @param password
      *            Password which is to be checked.
      * @param confirmation
@@ -43,26 +43,25 @@ public class UpdateUserDataValidator implements Validator {
      * @param errors
      *            Validations of the passwords are stored there.
      */
-    private void checkNewPassword(String password, String confirmation, Errors errors) {
-        boolean arePasswordsEqual = password.equals(confirmation);
-        if (arePasswordsEqual) {
-            if (StringUtils.isBlank(password)) {
-                // The passwords are not filled in -> will not be changed.
-                ;
-            } else {
-                if (!Password.isValid(password)) {
-                    errors.rejectValue("newPassword", "password.bad-format");
-                }
-            }
+    private void checkNewPassword(final String password, final String confirmation, final Errors errors) {
+        if (StringUtils.isBlank(password)) {
+            // The passwords are not filled in -> will not be changed.
+            ;
         } else {
-            errors.rejectValue("newPasswordConfirmation", "password.not-same");
+            final boolean arePasswordsEqual = password.equals(confirmation);
+            if (!arePasswordsEqual) {
+                errors.rejectValue("newPasswordConfirmation", "password.not-same");
+            }
+            if (!Password.isValid(password)) {
+                errors.rejectValue("newPassword", "password.bad-format");
+            }
         }
     }
 
     /**
      * Checks whether the given <code>email</code> is in the valid format unless it is blank.
      */
-    private void checkNewEmail(String email, Errors errors) {
+    private void checkNewEmail(final String email, final Errors errors) {
         if (StringUtils.isBlank(email)) {
             // The email address is blank. It is not an error since this
             // information is optional.
@@ -77,7 +76,7 @@ public class UpdateUserDataValidator implements Validator {
     /**
      * Checks whether the given <code>phone</code> number is in the valid format unless it is blank.
      */
-    private void checkNewPhone(String phone, Errors errors) {
+    private void checkNewPhone(final String phone, final Errors errors) {
         if (StringUtils.isBlank(phone)) {
             // The phone number is blank. It is not an error since this
             // information is optional.
