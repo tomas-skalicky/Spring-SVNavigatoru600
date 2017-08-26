@@ -6,13 +6,15 @@
    - Go to Jenkins on http://localhost:8080/ (credentials are in KeePass)
 
 3) Execute tests on the command line (all should be successful):
+   - cd /home/tom/Documents/development/Java/SourceFiles/Spring/SVNavigatoru/SVNavigatoru-Maven
    - mvn verify -P coverage,run-integration-tests --debug -Dtests.category=com.svnavigatoru600.test.category.UnitTests
    - mvn verify -P coverage,run-integration-tests --debug -Dtests.category=com.svnavigatoru600.test.category.PersistenceTests
-   - mvn verify -P coverage,run-integration-tests --debug -Dtests.category=com.svnavigatoru600.test.category.ControllerIntegrationTests
+   - mvn verify -P coverage,run-integration-tests --debug -Dtests.category=com.svnavigatoru600.test.category.IntegrationTests
 
 4) Trigger a Jenkins job http://localhost:8080/job/svnavigatoru--unit-and-integration-tests/ which should be successful.
 
-5) Start the Tomcat locally by ./tomcat_debug.sh
+5) Start the Tomcat locally by
+   - cd /home/tom/Documents/development/Java/SourceFiles/Spring/SVNavigatoru/SVNavigatoru-Maven; ./tomcat-debug.sh
    - Prove it works by going on http://localhost:9080/svnavigatoru600
 
 6) Database

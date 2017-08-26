@@ -17,5 +17,5 @@ import com.svnavigatoru600.test.category.IntegrationTests;
 @RunWith(Categories.class)
 @IncludeCategory(IntegrationTests.class)
 @SuiteClasses(AllTests.class)
-public final class ControllerIntegrationTestSuite {
+public final class IntegrationTestSuite {
 }
