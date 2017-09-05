@@ -199,6 +199,8 @@ public class RequestAndResponseLoggingFilter extends OncePerRequestFilter {
                     final String[] parameter = parameterNameValuePair.split("=");
                     Assert.isTrue(parameter.length <= 2, "It is a parameter name-value pair where value may be empty.");
 
+                    // Decoding of the parameter name necessary for instance due to special characters in array
+                    // parameters like authorities[1]=on.
                     final String parameterName = java.net.URLDecoder.decode(parameter[0], DEFAULT_CHARSET.name());
                     // Cached payload is still encoded.
                     final String decodedParameterValue = parameter.length == 2
