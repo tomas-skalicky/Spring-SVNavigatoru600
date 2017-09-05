@@ -254,7 +254,11 @@ public class UserDaoImpl extends AbstractDaoImpl implements UserDao {
                         UserFieldEnum.SUBSCRIBED_TO_FORUM.getColumnName(),
                         UserFieldEnum.SUBSCRIBED_TO_OTHER_DOCUMENTS.getColumnName(),
                         UserFieldEnum.SUBSCRIBED_TO_OTHER_SECTIONS.getColumnName(),
-                        UserFieldEnum.SMTP_PORT.getColumnName(), UserFieldEnum.REDIRECT_EMAIL.getColumnName());
+                        UserFieldEnum.REDIRECT_EMAIL.getColumnName());
+
+        if (user.getSmtpPort() != null) {
+            insert.usingColumns(UserFieldEnum.SMTP_PORT.getColumnName());
+        }
 
         insert.execute(getNamedParameters(user));
 
