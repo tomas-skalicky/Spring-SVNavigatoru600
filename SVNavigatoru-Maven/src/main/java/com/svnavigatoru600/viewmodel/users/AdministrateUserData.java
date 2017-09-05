@@ -2,8 +2,6 @@ package com.svnavigatoru600.viewmodel.users;
 
 import java.util.Map;
 
-import org.springframework.stereotype.Service;
-
 import com.svnavigatoru600.domain.users.AuthorityTypeEnum;
 import com.svnavigatoru600.domain.users.User;
 
@@ -12,7 +10,6 @@ import com.svnavigatoru600.domain.users.User;
  * 
  * @author <a href="mailto:skalicky.tomas@gmail.com">Tomas Skalicky</a>
  */
-@Service
 public class AdministrateUserData {
 
     private User user = null;
@@ -27,50 +24,50 @@ public class AdministrateUserData {
     private boolean dataSaved = false;
 
     public User getUser() {
-        return this.user;
+        return user;
     }
 
-    public void setUser(User user) {
+    public void setUser(final User user) {
         this.user = user;
     }
 
     public String getNewPassword() {
-        return this.newPassword;
+        return newPassword;
     }
 
-    public void setNewPassword(String newPassword) {
+    public void setNewPassword(final String newPassword) {
         this.newPassword = newPassword;
     }
 
     public boolean[] getNewAuthorities() {
-        return this.newAuthorities;
+        return newAuthorities;
     }
 
-    public void setNewAuthorities(boolean[] newAuthorities) {
+    public void setNewAuthorities(final boolean[] newAuthorities) {
         this.newAuthorities = newAuthorities;
     }
 
     public Map<Long, String> getRoleCheckboxId() {
-        return this.roleCheckboxId;
+        return roleCheckboxId;
     }
 
-    public void setRoleCheckboxId(Map<Long, String> roleCheckboxId) {
+    public void setRoleCheckboxId(final Map<Long, String> roleCheckboxId) {
         this.roleCheckboxId = roleCheckboxId;
     }
 
     public Map<Long, String> getLocalizedRoleCheckboxTitles() {
-        return this.localizedRoleCheckboxTitles;
+        return localizedRoleCheckboxTitles;
     }
 
-    public void setLocalizedRoleCheckboxTitles(Map<Long, String> localizedRoleCheckboxTitles) {
+    public void setLocalizedRoleCheckboxTitles(final Map<Long, String> localizedRoleCheckboxTitles) {
         this.localizedRoleCheckboxTitles = localizedRoleCheckboxTitles;
     }
 
     public boolean isDataSaved() {
-        return this.dataSaved;
+        return dataSaved;
     }
 
-    public void setDataSaved(boolean dataSaved) {
+    public void setDataSaved(final boolean dataSaved) {
         this.dataSaved = dataSaved;
     }
 }

@@ -1,5 +1,6 @@
 package com.svnavigatoru600.web;
 
+import static com.svnavigatoru600.common.constants.CommonConstants.DEFAULT_CHARSET;
 import static com.svnavigatoru600.common.constants.CommonConstants.NEW_LINE;
 
 import java.io.ByteArrayInputStream;
@@ -198,10 +199,10 @@ public class RequestAndResponseLoggingFilter extends OncePerRequestFilter {
                     final String[] parameter = parameterNameValuePair.split("=");
                     Assert.isTrue(parameter.length <= 2, "It is a parameter name-value pair where value may be empty.");
 
-                    final String parameterName = parameter[0];
+                    final String parameterName = java.net.URLDecoder.decode(parameter[0], DEFAULT_CHARSET.name());
                     // Cached payload is still encoded.
                     final String decodedParameterValue = parameter.length == 2
-                            ? java.net.URLDecoder.decode(parameter[1], CommonConstants.DEFAULT_CHARSET.name()) : null;
+                            ? java.net.URLDecoder.decode(parameter[1], DEFAULT_CHARSET.name()) : null;
 
                     // Hides passwords.
                     final String parameterValueToLog = PASSWORD_LOG_IN_PARAMETER_NAME.equals(parameterName)
