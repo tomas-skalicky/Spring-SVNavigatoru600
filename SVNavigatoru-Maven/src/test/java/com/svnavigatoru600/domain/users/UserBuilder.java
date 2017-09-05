@@ -25,57 +25,57 @@ public final class UserBuilder {
         return new UserBuilder();
     }
 
-    public UserBuilder withUsername(String username) {
-        this.user.setUsername(username);
+    public UserBuilder withUsername(final String username) {
+        user.setUsername(username);
         return this;
     }
 
-    public UserBuilder withPassword(String password) {
-        this.user.setPassword(password);
+    public UserBuilder withPassword(final String password) {
+        user.setPassword(password);
         return this;
     }
 
-    public UserBuilder enabled(boolean enabled) {
-        this.user.setEnabled(enabled);
+    public UserBuilder enabled(final boolean enabled) {
+        user.setEnabled(enabled);
         return this;
     }
 
-    public UserBuilder withFirstName(String firstName) {
-        this.user.setFirstName(firstName);
+    public UserBuilder withFirstName(final String firstName) {
+        user.setFirstName(firstName);
         return this;
     }
 
-    public UserBuilder withLastName(String lastName) {
-        this.user.setLastName(lastName);
+    public UserBuilder withLastName(final String lastName) {
+        user.setLastName(lastName);
         return this;
     }
 
-    public UserBuilder withEmail(String email) {
-        this.user.setEmail(email);
+    public UserBuilder withEmail(final String email) {
+        user.setEmail(email);
         return this;
     }
 
-    public UserBuilder withPhone(String phone) {
-        this.user.setPhone(phone);
+    public UserBuilder withPhone(final String phone) {
+        user.setPhone(phone);
         return this;
     }
 
-    public UserBuilder withSmtpPort(int smtpPort) {
-        this.user.setSmtpPort(smtpPort);
+    public UserBuilder withSmtpPort(final Integer smtpPort) {
+        user.setSmtpPort(smtpPort);
         return this;
     }
 
-    public UserBuilder forTestPurposes(boolean isTestUser) {
-        this.user.setTestUser(isTestUser);
+    public UserBuilder forTestPurposes(final boolean isTestUser) {
+        user.setTestUser(isTestUser);
         return this;
     }
 
-    public UserBuilder withAuthorities(Set<GrantedAuthority> authorities) {
-        this.user.setAuthorities(authorities);
+    public UserBuilder withAuthorities(final Set<GrantedAuthority> authorities) {
+        user.setAuthorities(authorities);
         return this;
     }
 
     public User build() {
-        return this.user;
+        return user;
     }
 }

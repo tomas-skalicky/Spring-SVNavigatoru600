@@ -27,7 +27,7 @@ public abstract class AbstractUserTest {
     static final boolean DEFAULT_SUBSCRIBED_TO_OTHER_DOCUMENTS = false;
     static final boolean DEFAULT_SUBSCRIBED_TO_OTHER_SECTIONS = false;
     static final Set<GrantedAuthority> DEFAULT_AUTHORITIES = Sets.newHashSet();
-    static final int DEFAULT_SMTP_PORT = 2525;
+    static final Integer DEFAULT_SMTP_PORT = 2525;
 
     private User defaultUser = null;
 

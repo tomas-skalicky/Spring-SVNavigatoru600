@@ -45,7 +45,7 @@ public class User implements UserDetails, Serializable {
     private boolean subscribedToForum;
     private boolean subscribedToOtherDocuments;
     private boolean subscribedToOtherSections;
-    private int smtpPort;
+    private Integer smtpPort;
     private Set<GrantedAuthority> authorities;
 
     /**
@@ -279,11 +279,11 @@ public class User implements UserDetails, Serializable {
         return hasAuthority(AuthorityTypeEnum.ROLE_REGISTERED_USER);
     }
 
-    public int getSmtpPort() {
+    public Integer getSmtpPort() {
         return smtpPort;
     }
 
-    public void setSmtpPort(final int smtpPort) {
+    public void setSmtpPort(final Integer smtpPort) {
         this.smtpPort = smtpPort;
     }
 

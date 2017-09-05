@@ -275,7 +275,8 @@ public class UserService {
         save(newUser);
 
         if (!StringUtils.isBlank(newUser.getEmail())) {
-            emailService.sendEmailOnUserCreation(newUser, newPassword, request, messageSource);
+            final User storedUser = findByUsername(newUser.getUsername());
+            emailService.sendEmailOnUserCreation(storedUser, newPassword, request, messageSource);
         }
     }
 
